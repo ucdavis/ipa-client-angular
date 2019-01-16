@@ -1,12 +1,16 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
-<div ng-if="!view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="overlay">
+<div ng-if="!noAccess && !view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="overlay">
   <spinner class="vertical-center"></spinner>
 </div>
-  
-<ipa-header ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" page-title="Budget Comparison Report"></ipa-header>
 
-<div ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="budget-comparison-report__scenario-selector-tray">
+<ipa-header page-title="Budget Comparison Report"></ipa-header>
+
+<div ng-if="noAccess">
+  <no-access workgroup-name="sharedState.workgroup.name"></no-access>
+</div>
+
+<div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="budget-comparison-report__scenario-selector-tray">
   <div class="budget-comparison-report__scenario-selector-container">
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
                               selected-budget-scenario="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario"

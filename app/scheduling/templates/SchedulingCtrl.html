@@ -9,7 +9,11 @@
 	</scheduling-filter>
 </ipa-header>
 
-<div>
+<div ng-if="noAccess">
+	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+</div>
+
+<div ng-if="!noAccess">
 	<div>
 		<div class="activity-page-header">
 			<div class="activity-filters">

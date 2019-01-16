@@ -91,6 +91,7 @@ import spinner from './directives/spinner.js';
 import stickyHeader from './directives/stickyHeader.js';
 import stopEvent from './directives/stopEvent.js';
 import termFilter from './directives/termFilter/termFilter.js';
+import noAccess from './directives/noAccess/noAccess.js';
 
 // Filters
 import lastCommaFirst from './filters/lastCommaFirst.js';
@@ -293,6 +294,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .directive('stickyHeader', stickyHeader)
 .directive('stopEvent', stopEvent)
 .directive('termFilter', termFilter)
+.directive('noAccess', noAccess)
 .filter('lastCommaFirst', lastCommaFirst)
 .filter('lastSpaceInitial', lastSpaceInitial)
 .filter('ordinal', ordinal)

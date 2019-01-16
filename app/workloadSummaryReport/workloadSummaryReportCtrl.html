@@ -2,7 +2,11 @@
 
 <ipa-header page-title="Workload Summary Report"></ipa-header>
 
-<div ng-if="view.state && view.state.calculations.isInitialFetchComplete && view.state.calculations.dwCallsCompleted == view.state.calculations.dwCallsOpened">
+<div ng-if="noAccess">
+	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+</div>
+
+<div ng-if="!noAccess && view.state && view.state.calculations.isInitialFetchComplete && view.state.calculations.dwCallsCompleted == view.state.calculations.dwCallsOpened">
 	<div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-class="{'workload-table__last':$last }">
 		<div class="workload-summary__table-label">
 			{{ view.state.instructorTypes.list[instructorTypeId].description }}

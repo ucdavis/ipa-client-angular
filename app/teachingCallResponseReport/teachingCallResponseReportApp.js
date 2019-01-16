@@ -33,7 +33,13 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, TeachingCallResponseReportActionCreators) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						TeachingCallResponseReportActionCreators.getInitialState();
+						var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+
+						if (hasAccess) {
+							return TeachingCallResponseReportActionCreators.getInitialState();
+						} else {
+							return { noAccess: true };
+						}
 					}
 				});
 			}

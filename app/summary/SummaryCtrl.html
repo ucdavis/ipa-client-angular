@@ -1,9 +1,29 @@
 <nav></nav>
 <ipa-header page-title="Summary"></ipa-header>
 
-<instructor-summary ng-if="view.mode == 'instructor'"></instructor-summary>
-<workgroup-summary ng-if="view.mode == 'workgroup'"></workgroup-summary>
-<support-summary ng-if="view.mode == 'instructionalSupport'"></support-summary>
+<div ng-hide="view.state">
+  <spinner></spinner>
+</div>
+
+<instructor-summary ng-if="view.mode == 'instructor'"
+                    state="view.state"
+                    workgroup="view.sharedState.workgroup"
+                    has-access="hasInstructorSummaryAccess">
+</instructor-summary>
+
+<workgroup-summary ng-if="view.mode == 'workgroup'"
+                   workgroup="sharedState.workgroup"
+                   state="state"
+                   has-access="hasAcademicPlannerSummaryAccess">
+</workgroup-summary>
+
+<support-summary ng-if="view.mode == 'instructionalSupport'"
+                 schedule="view.state.schedule"
+                 workgroup="sharedState.workgroup"
+                 student-supportCall-responses="view.state.studentSupportCallResponses"
+                 has-access="hasInstructionalSupportSummaryAccess"
+                 year="year">
+</support-summary>
 
 <p class="text-center" ng-if="view.mode == 'unknown'">
 	Unknown User Role

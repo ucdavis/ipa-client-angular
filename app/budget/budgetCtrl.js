@@ -1,5 +1,5 @@
 class BudgetCtrl {
-	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $timeout, BudgetActions, AuthService) {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $timeout, BudgetActions, AuthService, validate) {
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$window = $window;
@@ -11,6 +11,7 @@ class BudgetCtrl {
 		this.AuthService = AuthService;
 		var _self = this;
 
+		$scope.noAccess = validate ? validate.noAccess : null;
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 
@@ -45,6 +46,6 @@ class BudgetCtrl {
 	}
 }
 
-BudgetCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$timeout', 'BudgetActions', 'AuthService'];
+BudgetCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$timeout', 'BudgetActions', 'AuthService', 'validate'];
 
 export default BudgetCtrl;

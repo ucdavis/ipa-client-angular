@@ -21,6 +21,17 @@
 		$scope.year = this.$routeParams.year;
 		$scope.view = {};
 
+    var currentUser = AuthService.getCurrentUser();
+    var isAdmin = currentUser.isAdmin();
+    var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
+    var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
+    var isInstructor = currentUser.isInstructor($scope.workgroupId);
+    var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], $scope.workgroupId);
+
+    $scope.hasAcademicPlannerSummaryAccess = isAcademicPlanner || isAdmin || isReviewer;
+    $scope.hasInstructorSummaryAccess = isInstructor || isAdmin;
+    $scope.hasInstructionalSupportSummaryAccess = isInstructionalSupport || isAdmin;
+
 		var self = this;
 		// Update the view mode when the url param changes
 		$scope.$on('$routeUpdate', function () {

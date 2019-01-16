@@ -10,12 +10,8 @@
 </spinner>
 
 <!-- handle lack of access -->
-<div ng-show="view.state && isAllowed == false">
-	<div class="jumbotron student-support-call-form__no-access">
-		<p class="lead">You have not been invited to review the {{ sharedState.workgroup.name }} {{ year }}-{{ nextYear }} Support Call</p>
-		<br />
-		<p class="lead">If you feel this is in error please contact the Academic Planner for {{ sharedState.workgroup.name }}.</p>
-	</div>
+<div ng-show="view.state && !isAllowed">
+	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
 </div>
 
 <!-- regular display -->

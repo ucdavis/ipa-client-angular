@@ -41,7 +41,13 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, RegistrarReconciliationReportActionCreators) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						return RegistrarReconciliationReportActionCreators.getInitialState();
+						var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+
+						if (hasAccess) {
+							return RegistrarReconciliationReportActionCreators.getInitialState();
+						} else {
+							return { noAccess: true };
+						}
 					}
 				});
 			}
