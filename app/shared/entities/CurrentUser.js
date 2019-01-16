@@ -100,7 +100,6 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 					return false;
 				}
 				if (!this.userRoles) { return false; }
-
 				return this.userRoles
 					.some(function (userRole) {
 						return roleNames.indexOf(userRole.roleName) >= 0 && userRole.workgroupId == workgroupId;
