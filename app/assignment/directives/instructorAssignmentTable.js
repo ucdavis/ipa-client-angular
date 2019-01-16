@@ -212,7 +212,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					var theStaffLength = _.keys(scope.view.state.theStaff.termCodes).length;
 					var unassignedLength = _.keys(unassignedTermCodes).length;
 
-					if ((theStaffLength == 0) && (unassignedLength == 0) && unassignedInstructorTypeLength == 0) {
+					if ((theStaffLength == 0) && (unassignedLength == 0) && (unassignedInstructorTypeLength == 0)) {
 						// Nothing to show for 'Instructors TBD'
 						return;
 					}
