@@ -93,7 +93,6 @@
 .scheduled-courses-table__cell {
 	flex: 1;
 	padding: 10px;
-	text-align: center;
 	background-color: #F8F8F8;
 	border-bottom: none !important;
 	overflow: hidden;
