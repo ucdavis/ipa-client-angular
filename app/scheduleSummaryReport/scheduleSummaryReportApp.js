@@ -40,7 +40,13 @@ function config ($routeProvider) {
 				validate: function (AuthService, $route, ScheduleSummaryReportActionCreators) {
 					return AuthService.validate().then(function () {
 						if ($route.current.params.workgroupId) {
-							return ScheduleSummaryReportActionCreators.getInitialState();
+							var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+
+							if (hasAccess) {
+								return ScheduleSummaryReportActionCreators.getInitialState();
+							} else {
+								return { noAccess: true };
+							}
 						}
 					});
 				}

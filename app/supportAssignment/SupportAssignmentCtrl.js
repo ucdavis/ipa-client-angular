@@ -63,7 +63,7 @@ class SupportAssignmentCtrl {
 
 			// Determine access level
 			userRoles.forEach(function(userRole) {
-				if (userRole.roleName == "academicPlanner" || userRole.roleName == "admin") {
+				if ((userRole.roleName == "academicPlanner" || userRole.roleName == "admin") && userRole.workgroupId == _self.$scope.workgroupId) {
 					_self.$scope.isAllowed = true;
 					_self.$scope.readOnlyMode = false;
 				}
@@ -74,7 +74,7 @@ class SupportAssignmentCtrl {
 				// Check if this is an instructor reviewing the support assignments
 				if (isInstructorReviewOpen) {
 					userRoles.forEach(function(userRole) {
-						if (userRole.roleName == "instructor") {
+						if (userRole.roleName == "instructor" && userRole.workgroupId == _self.$scope.workgroupId) {
 							_self.$scope.isAllowed = true;
 							_self.$scope.readOnlyMode = true;
 						}
@@ -84,7 +84,7 @@ class SupportAssignmentCtrl {
 				// Check if this is a student reviewing the support assignments
 				if (isStudentReviewOpen) {
 					userRoles.forEach(function(userRole) {
-						if (userRole.roleName == "studentPhd" || userRole.roleName == "studentMasters" || userRole.roleName == "instructionalSupport") {
+						if ((userRole.roleName == "studentPhd" || userRole.roleName == "studentMasters" || userRole.roleName == "instructionalSupport") && userRole.workgroupId == _self.$scope.workgroupId) {
 							_self.$scope.isAllowed = true;
 							_self.$scope.readOnlyMode = true;
 						}

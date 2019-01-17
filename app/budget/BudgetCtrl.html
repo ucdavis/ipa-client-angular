@@ -3,11 +3,15 @@
 <ipa-header page-title="Budget"></ipa-header>
 
 <div class="budget-view">
-	<spinner ng-if="!view.state"
+	<spinner ng-if="!noAccess && !view.state"
 		size="20" style="padding-top: 200px;">
 	</spinner>
 
-	<div ng-if="view.state">
+	<div ng-if="noAccess">
+		<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+	</div>
+
+	<div ng-if="!noAccess && view.state">
 		<!-- Modals -->
 		<ipa-modal is-visible="view.state.openAddBudgetScenario"
 		           header-text="Create Budget Scenario">

@@ -1,5 +1,5 @@
 class ScheduleSummaryReportCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, Term, ScheduleSummaryReportActionCreators, AuthService, ScheduleSummaryReportService) {
+	constructor ($scope, $rootScope, $route, $routeParams, Term, ScheduleSummaryReportActionCreators, AuthService, ScheduleSummaryReportService, validate) {
 		var _self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
@@ -13,6 +13,8 @@ class ScheduleSummaryReportCtrl {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
+		$scope.noAccess = validate ? validate.noAccess : null;
+		$scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
 		if (!$scope.termShortCode) {
 			var termStates = AuthService.getTermStates();
@@ -92,6 +94,6 @@ class ScheduleSummaryReportCtrl {
 	}
 }
 
-ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Term', 'ScheduleSummaryReportActionCreators', 'AuthService', 'ScheduleSummaryReportService'];
+ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Term', 'ScheduleSummaryReportActionCreators', 'AuthService', 'ScheduleSummaryReportService', 'validate'];
 
 export default ScheduleSummaryReportCtrl;

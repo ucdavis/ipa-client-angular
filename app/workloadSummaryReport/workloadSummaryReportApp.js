@@ -34,7 +34,15 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, WorkloadSummaryActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						WorkloadSummaryActions.getInitialState();
+						if ($route.current.params.workgroupId) {
+							var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+
+							if (hasAccess) {
+								return WorkloadSummaryActions.getInitialState();
+							} else {
+								return { noAccess: true };
+							}
+						}
 					}
 				});
 			}

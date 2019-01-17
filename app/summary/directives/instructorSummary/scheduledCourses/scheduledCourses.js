@@ -13,8 +13,8 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 			});
 
 			scope.isCurrentTerm = function (termCode) {
-				if (scope.view.state.terms) {
-					var term = scope.view.state.terms.list[termCode];
+				if (scope.state.terms) {
+					var term = scope.state.terms.list[termCode];
 					return isCurrentTerm(term.startDate, term.endDate);
 				}
 			};
@@ -64,6 +64,8 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 						scope.termCodes.push(teachingAssignment.termCode);
 					}
 				});
+
+				scope.state.scheduledCourses = scheduledCourses;
 			};
 
 			scope.generateScheduledCourse = function(sectionGroup, data) {
@@ -218,8 +220,8 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 				return false;
 			};
 
-			if (scope.view.state) {
-				scope.mapDataToState(scope.view.state);
+			if (scope.state) {
+				scope.mapDataToState(scope.state);
 			}
 		}
 	};

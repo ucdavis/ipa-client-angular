@@ -75,8 +75,7 @@
 			</div>
 		</div>
 	</div>
-
-	<div ng-if="view.state.scheduledCourses && view.state.scheduledCourses.terms.length === 0" class="scheduled-courses__empty-message">
+	<div ng-if="!instructorAssignments || instructorAssignments.length == 0" class="scheduled-courses__empty-message">
 		No Scheduled Courses
 	</div>
 </div>

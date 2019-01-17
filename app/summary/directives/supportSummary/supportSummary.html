@@ -1,62 +1,61 @@
 <div class="instructional-support-summary content-container">
-	<div ng-hide="view.state">
-		<spinner></spinner>
-	</div>
-	<div ng-show="view.state">
-		<div>
-			<div class="course-table-row">
-				<!-- table header -->
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Support Call
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Due Date
-						</div>
-					</div>
-				</div>
-				<div class="course-table__header">
-					<div class="course-table__header-detail">
-						<div>
-							Submitted Preferences
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- table header -->
+  <no-access ng-if="schedule && !hasAccess" workgroup-name="sharedState.workgroup.name"></no-access>
 
-			<div ng-repeat="supportCallResponse in view.state.studentSupportCallResponses" class="course-table-row">
-				<div class="course-table__row-detail">
-					<div>
-						<a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/studentSupportCallForm">
-							View Support Call Form
-						</a>
-					</div>
-				</div>
-				<div class="course-table__row-detail">
-					{{ supportCallResponse.dueDate }}
-				</div>
-				<div class="course-table__row-detail">
-					<i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
-				</div>
-			</div>
-		</div>
+  <div ng-show="schedule && hasAccess">
+    <div>
+      <div class="course-table-row">
+        <!-- table header -->
+        <div class="course-table__header">
+          <div class="course-table__header-detail">
+            <div>
+              Support Call
+            </div>
+          </div>
+        </div>
+        <div class="course-table__header">
+          <div class="course-table__header-detail">
+            <div>
+              Due Date
+            </div>
+          </div>
+        </div>
+        <div class="course-table__header">
+          <div class="course-table__header-detail">
+            <div>
+              Submitted Preferences
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- table header -->
 
-		<div ng-if="view.state.studentSupportCallResponses.length == 0" style="margin-left: 15px; margin-top: 15px; text-align: center;">
-			No available support calls.
-		</div>
+      <div ng-repeat="supportCallResponse in studentSupportCallResponses" class="course-table-row">
+        <div class="course-table__row-detail">
+          <div>
+            <a ng-href="{{ urlRoot }}/instructionalSupport/{{ workgroup.id }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/studentSupportCallForm">
+              View Support Call Form
+            </a>
+          </div>
+        </div>
+        <div class="course-table__row-detail">
+          {{ supportCallResponse.dueDate }}
+        </div>
+        <div class="course-table__row-detail">
+          <i class="glyphicon glyphicon-ok" ng-if="supportCallResponse.submitted"></i>
+        </div>
+      </div>
+    </div>
 
-		<div ng-repeat="term in orderedTerms">
-			<div ng-if="isReviewOpenForTerm(term, view.state.schedule.supportStaffSupportCallReviewOpen)" style="margin-top: 10px; margin-left: 15px">
-				<a ng-href="{{ urlRoot }}/supportAssignments/{{ workgroupId }}/{{ year }}/{{ term }}">
-					Schedule {{ year.yearToAcademicYear() }} is open for review in {{ termDescription(term) }}
-				</a>
-			</div>
-		</div>
-	</div>
+    <div ng-if="view.state.studentSupportCallResponses.length == 0" style="margin-left: 15px; margin-top: 15px; text-align: center;">
+      No available support calls.
+    </div>
+
+    <div ng-repeat="term in orderedTerms">
+      <div ng-if="isReviewOpenForTerm(term, schedule.supportStaffSupportCallReviewOpen)" style="margin-top: 10px; margin-left: 15px">
+        <a ng-href="{{ urlRoot }}/supportAssignments/{{ workgroupId }}/{{ year }}/{{ term }}">
+          Schedule {{ year.yearToAcademicYear() }} is open for review in {{ termDescription(term) }}
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
