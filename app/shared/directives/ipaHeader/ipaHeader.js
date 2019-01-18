@@ -1,4 +1,4 @@
-let ipaHeader = function ($window, $location, $rootScope, AuthService, $routeParams) {
+let ipaHeader = function ($window, $location, $rootScope, AuthService) {
 	return {
 		restrict: 'E', // Use this via an element selector <dss-modal></dss-modal>
 		template: require('./ipaHeader.html'), // directive html found here:
@@ -21,10 +21,8 @@ let ipaHeader = function ($window, $location, $rootScope, AuthService, $routePar
 			scope.changeWorkgroup = function(originalWorkgroupId, newWorkgroupId) {
 				var originalWorkgroupId = originalWorkgroupId.toString();
 				var newWorkgroupId = newWorkgroupId.toString();
-				var year = $routeParams.year;
-				var url = "/summary/" + newWorkgroupId + "/" + year;
-
-				$window.location.href = url;
+				var newUrl = $window.location.href.replace(originalWorkgroupId, newWorkgroupId);
+				$window.location.href = newUrl;
 			};
 
 			scope.loadWorkgroupPage = function(workgroupId) {

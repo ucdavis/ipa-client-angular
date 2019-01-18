@@ -6,7 +6,7 @@
  * Controller of the ipaClientAngularApp
  */
 class WorkgroupCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, $location, WorkgroupActionCreators, AuthService) {
+	constructor ($scope, $rootScope, $route, $routeParams, $location, WorkgroupActionCreators, AuthService, validate) {
 		this.$scope = $scope;
 		this.AuthService = AuthService;
 		this.$route = $route;
@@ -19,6 +19,8 @@ class WorkgroupCtrl {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.view = {};
+		$scope.noAccess = validate ? validate.noAccess : null;
+		$scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
 		$rootScope.$on('workgroupStateChanged', function (event, data) {
 			$scope.view.state = data;
@@ -53,6 +55,6 @@ class WorkgroupCtrl {
 	}
 }
 
-WorkgroupCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$location', 'WorkgroupActionCreators', 'AuthService'];
+WorkgroupCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', '$location', 'WorkgroupActionCreators', 'AuthService', 'validate'];
 
 export default WorkgroupCtrl;

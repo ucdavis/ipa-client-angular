@@ -6,7 +6,7 @@
  * Controller of the ipaClientAngularApp
  */
 class AssignmentCtrl {
-	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, AssignmentActionCreators, AssignmentService, AuthService) {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, AssignmentActionCreators, AssignmentService, AuthService, validate) {
 		var self = this;
 		this.$rootScope = $rootScope;
 		this.$window = $window;
@@ -21,6 +21,8 @@ class AssignmentCtrl {
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
+		$scope.noAccess = validate ? validate.noAccess : null;
+
 		$scope.view = {
 			workgroupId: $routeParams.workgroupId,
 			sharedState: AuthService.getSharedState()
@@ -171,6 +173,6 @@ class AssignmentCtrl {
 	}
 }
 
-AssignmentCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', 'AssignmentActionCreators', 'AssignmentService', 'AuthService'];
+AssignmentCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', 'AssignmentActionCreators', 'AssignmentService', 'AuthService', 'validate'];
 
 export default AssignmentCtrl;

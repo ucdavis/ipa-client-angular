@@ -1,0 +1,12 @@
+.no-access {
+  width: 100%;
+  height: 100%;
+  font-size: 21px;
+  font-weight: 200;
+  text-align: center;
+  padding: 20px;
+}
+
+.no-access__header {
+  margin-bottom: 10px;
+}

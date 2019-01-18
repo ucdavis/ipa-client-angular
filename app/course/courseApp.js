@@ -39,7 +39,12 @@ function config ($routeProvider) {
       validate: function (AuthService, $route, CourseActionCreators) {
         return AuthService.validate().then(function () {
           if ($route.current.params.workgroupId) {
-            CourseActionCreators.getInitialState();
+            var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+            if (hasAccess) {
+              CourseActionCreators.getInitialState();
+            } else {
+              return { noAccess: true };
+            }
           }
         });
       }

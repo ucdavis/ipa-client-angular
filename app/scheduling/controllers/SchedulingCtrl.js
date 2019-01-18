@@ -8,7 +8,7 @@ import { nextSequenceNumber } from 'shared/helpers/sections';
  * Controller of the ipaClientAngularApp
  */
 class SchedulingCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService, ActivityService) {
+	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService, ActivityService, validate) {
 		var self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
@@ -19,6 +19,7 @@ class SchedulingCtrl {
 		this.SchedulingActionCreators = SchedulingActionCreators;
 		this.AuthService = AuthService;
 
+    $scope.noAccess = validate ? validate.noAccess : null;
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
@@ -273,6 +274,6 @@ class SchedulingCtrl {
 	}
 }
 
-SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService', 'ActivityService'];
+SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService', 'ActivityService', 'validate'];
 
 export default SchedulingCtrl;

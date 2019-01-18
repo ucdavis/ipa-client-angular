@@ -10,7 +10,7 @@ import './studentSupportCallForm.css';
  * Controller of the ipaClientAngularApp
  */
 class StudentSupportCallFormCtrl {
-	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, StudentFormActions, TermService, AuthService) {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, StudentFormActions, TermService, AuthService, validate) {
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$window = $window;
@@ -26,7 +26,9 @@ class StudentSupportCallFormCtrl {
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
-	
+		$scope.noAccess = validate ? validate.noAccess : null;
+		$scope.sharedState = $scope.sharedState || AuthService.getSharedState();
+
 		$scope.view = {};
 	
 		$rootScope.$on('studentStateChanged', function (event, data) {
@@ -72,6 +74,6 @@ class StudentSupportCallFormCtrl {
 	}
 }
 
-StudentSupportCallFormCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'StudentFormActions', 'TermService', 'AuthService'];
+StudentSupportCallFormCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'StudentFormActions', 'TermService', 'AuthService', 'validate'];
 
 export default StudentSupportCallFormCtrl;

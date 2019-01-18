@@ -83,14 +83,21 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 						return userRole.roleName == roleName && userRole.workgroupId == workgroupId;
 					});
 			},
+			hasAccess: function (roleNames, workgroupId) {
+				if (this.isAdmin()) { return true; }
 
+				if (roleNames instanceof Array) {
+					return this.hasRoles(roleNames, workgroupId);
+				} else {
+					return this.hasRole(roleNames, workgroupId);
+				}
+			},
 			hasRoles: function (roleNames, workgroupId) {
 				if (roleNames instanceof Array === false) {
 					console.error("Parameter passed to hasRoles() is not valid", roleNames); // eslint-disable-line no-console
 					return false;
 				}
 				if (!this.userRoles) { return false; }
-
 				return this.userRoles
 					.some(function (userRole) {
 						return roleNames.indexOf(userRole.roleName) >= 0 && userRole.workgroupId == workgroupId;

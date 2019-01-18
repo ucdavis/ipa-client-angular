@@ -27,6 +27,7 @@ let ipaInput = function ($timeout) {
 				element.on('keydown', function (e) {
 					// Unicode character codes that represent an actual key on the keyboard.
 					var PERIOD = 190;
+					var NUMPAD_PERIOD = 110;
 					var BACK_SPACE = 8;
 					var LEFT_ARROW = 37;
 					var RIGHT_ARROW = 39;
@@ -36,6 +37,7 @@ let ipaInput = function ($timeout) {
 
 					var acceptableMiscValues = [
 						PERIOD,
+						NUMPAD_PERIOD,
 						BACK_SPACE,
 						LEFT_ARROW,
 						RIGHT_ARROW,

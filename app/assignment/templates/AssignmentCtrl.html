@@ -4,6 +4,10 @@
 <div class="assignments-container">
 	<ipa-header page-title="Assignments"></ipa-header>
 
+	<div ng-if="noAccess">
+		<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+	</div>
+
 	<div class="main-content">
 		<ipa-modal is-visible="modals.isCommentModalOpen"
 		           header-text="Instructor Comments">
@@ -28,13 +32,13 @@
 			                      is-visible="modals.isUnavailabilityModalOpen">
 			</unavailability-modal>
 		</ipa-modal>
-		<div class="row hidden-print" style="margin-bottom: 2em;">
+		<div ng-if="!noAccess" class="row hidden-print" style="margin-bottom: 2em;">
 			<div class="col-sm-offset-3 col-sm-6">
 				<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)"/>
 			</div>
 		</div>
 
-		<div ng-class="{'invisible': !view.state}" style="margin-bottom: 1em;" class="hidden-print">
+		<div ng-class="{'invisible': noAccess || !view.state}" style="margin-bottom: 1em;" class="hidden-print">
 			<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-white btn-sm view-pivot-btn" id="courses-pivot" ng-click="setActiveTab('courses')"
 				       ng-class="{ 'active': view.state.userInterface.showCourses }">
@@ -51,7 +55,7 @@
 			</div>
 		</div>
 
-		<div class="row hidden-print">
+		<div ng-if="!noAccess" class="row hidden-print">
 			<div class="table-toolbar">
 
 				<div class="btn-group">
@@ -100,7 +104,7 @@
 			</div> <!-- .table-toolbar -->
 		</div> <!-- .row -->
 
-		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"
+		<div course-assignment-table id="courses-table" ng-show="(!view.state || view.state.userInterface.showCourses) && !noAccess"
 		     state="view.state"
 		     current-user="view.sharedState.currentUser"
 		     work-group-id="view.sharedState.workgroup.id"
@@ -110,7 +114,7 @@
 		     graduate-table="false"
 		     professional-table="false">
 		</div>
-		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"
+		<div course-assignment-table id="courses-table" ng-show="(!view.state || view.state.userInterface.showCourses)  && !noAccess"
 		     state="view.state"
 		     current-user="view.sharedState.currentUser"
 		     work-group-id="view.sharedState.workgroup.id"
@@ -119,7 +123,7 @@
 		     graduate-table="false"
 		     professional-table="false">
 		</div>
-		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"
+		<div course-assignment-table id="courses-table" ng-show="(!view.state || view.state.userInterface.showCourses) && !noAccess"
 		     state="view.state"
 		     current-user="view.sharedState.currentUser"
 		     work-group-id="view.sharedState.workgroup.id"
@@ -128,7 +132,7 @@
 		     graduate-table="true"
 		     professional-table="false">
 		</div>
-		<div course-assignment-table id="courses-table" ng-show="!view.state || view.state.userInterface.showCourses"
+		<div course-assignment-table id="courses-table" ng-show="(!view.state || view.state.userInterface.showCourses) && !noAccess"
 		     state="view.state"
 		     current-user="view.sharedState.currentUser"
 		     work-group-id="view.sharedState.workgroup.id"
@@ -138,7 +142,7 @@
 		     professional-table="true">
 		</div>
 
-		<div ng-if="view.state" ng-show="view.state.userInterface.showInstructors">
+		<div ng-if="view.state" ng-show="view.state.userInterface.showInstructors && !noAccess">
 			<div ng-repeat="instructorTypeId in view.state.instructorTypes.ids">
 				<div instructor-assignment-table id="instructors-table"
 				     state="view.state"

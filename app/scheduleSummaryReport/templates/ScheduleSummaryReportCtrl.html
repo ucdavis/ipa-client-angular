@@ -2,7 +2,11 @@
 <div class="schedule-summary-report-container">
 	<ipa-header class="hidden-print" page-title="Schedule Summary Report"></ipa-header>
 
-	<div class="main-content">
+	<div ng-if="noAccess">
+		<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+	</div>
+
+	<div ng-if="!noAccess" class="main-content">
 		<div class="row hidden-print">
 			<div class="col-sm-12">
 				<div class="table-toolbar">

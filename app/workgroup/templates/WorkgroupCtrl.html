@@ -20,7 +20,11 @@
 	</div>
 </ipa-header>
 
-<div class="main-content">
+<div ng-if="noAccess">
+	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+</div>
+
+<div ng-if="!noAccess" class="main-content">
 	<div class="panel minimal minimal-gray">
 		<!-- 	nav tab  -->
 		<div class="panel-heading people-and-roles-nav-tab">

@@ -1,5 +1,5 @@
 class SupportCallStatusCtrl {
-	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportCallStatusActionCreators, AuthService) {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportCallStatusActionCreators, AuthService, validate) {
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.$location = $location;
@@ -15,6 +15,8 @@ class SupportCallStatusCtrl {
 		$scope.year = _self.$routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 		$scope.termShortCode = _self.$routeParams.termShortCode;
+		$scope.noAccess = validate ? validate.noAccess : null;
+		$scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
 		$scope.instructorsSelected = false;
 		$scope.supportStaffSelected = false;
@@ -150,6 +152,6 @@ class SupportCallStatusCtrl {
 	}
 }
 
-SupportCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportCallStatusActionCreators', 'AuthService'];
+SupportCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportCallStatusActionCreators', 'AuthService', 'validate'];
 
 export default SupportCallStatusCtrl;

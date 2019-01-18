@@ -4,7 +4,11 @@
 
 	<ipa-header page-title="Registrar Reconciliation Report"></ipa-header>
 
-	<div class="container-fluid">
+	<div ng-if="noAccess">
+		<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+	</div>
+
+	<div ng-if="!noAccess" class="container-fluid">
 
 		<div class="col-md-9 hidden-print">
 			<div class="row">
