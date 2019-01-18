@@ -1,0 +1,15 @@
+.ipa-dropdown-select {
+	word-wrap: break-word;
+	position: relative;
+}
+
+.ipa-dropdown-select .dropdown-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	display: block;
+	width: 100vw;
+	height: 100vh;
+}
+

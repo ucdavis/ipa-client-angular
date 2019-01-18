@@ -1,0 +1,12 @@
+<div class="ipa-dropdown-select">
+
+    <input id="searchInput" placeholder="Assign.."  ng-model="searchInput">
+
+    <div >
+        <ul>
+          <li ng-repeat="item in items | filter: searchInput">
+            <div>{{ item.description }}</div>
+          </li>
+        </ul>
+    </div>
+</div>
