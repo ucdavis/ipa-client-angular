@@ -91,7 +91,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						var location = scope.locations.list[locationId];
 
 						if (location.hasConflict) {
-							return "<span>" + location.description + " <i class=\"entypo-attention activity__event--location-conflict\" tooltip-append-to-body=\"true\" uib-tooltip=\"Room conflict\"></i>" + "</span>";
+							location.hasConflict = false;
+							return "<span>" + location.description + " <i class=\"entypo-attention activity__event--location-conflict\"></i>" + "</span>";
 						} else {
 							return "<span>" + location.description + "</span>";
 						}
@@ -183,15 +184,12 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 				// Flags custom location and time conflicted activities
 				for (let index = 0; index < calendarActivities.length; index++) {
 					var slotActivity = calendarActivities[index];
-					var slotActivityLocationIndex = slotActivity.locationIndex;
-					var slotActivityStartTime = slotActivity.start;
-					var slotActivityEndTime = slotActivity.end;
 
 					calendarActivities.forEach(function (activity) {
-						if (activity.activityId !== slotActivity.activityId && activity.locationIndex === slotActivityLocationIndex
-								&& activity.start < slotActivityEndTime && slotActivityStartTime < activity.end) {
+						if (activity.activityId !== slotActivity.activityId && activity.locationIndex === slotActivity.locationIndex && activity.start < slotActivity.end && slotActivity.start < activity.end) {
 							slotActivity.locationConflict = true;
-							scope.locations.list[activity.locationIndex].hasConflict = true;
+							var slotLocationId = scope.locations.ids[slotActivity.locationIndex];
+							scope.locations.list[slotLocationId].hasConflict = true;
 						}
 					});
 				}
