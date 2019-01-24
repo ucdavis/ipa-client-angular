@@ -66,6 +66,20 @@ class BudgetComparisonReportCalculations {
 					}
 				};
 
+				sectionGroups.ids.forEach((sectionGroupId) => {
+					var sectionGroup = sectionGroups.list[sectionGroupId];
+					var course = courses.list[sectionGroup.courseId];
+					var courseNumber = parseInt(course.courseNumber);
+					if (courseNumber < 100) {
+						miscStats.lower.courses += 1;
+					} else if (courseNumber >= 200) {
+						miscStats.grad.courses += 1;
+					}
+					else {
+						miscStats.upper.courses += 1;
+					}
+				});
+
 				sections.ids.forEach((sectionId) => {
 					var section = sections.list[sectionId];
 					var sectionGroup = sectionGroups.list[section.sectionGroupId];
@@ -75,13 +89,10 @@ class BudgetComparisonReportCalculations {
 					var seats = section.seats;
 
 					if (courseNumber < 100) {
-						miscStats.lower.courses += 1;
 						miscStats.lower.seats += seats;
 					} else if (courseNumber >= 200) {
-						miscStats.grad.courses += 1;
 						miscStats.grad.seats = 0; // Intentionally always zero, as this total is not relevant
 					} else {
-						miscStats.upper.courses += 1;
 						miscStats.upper.seats += seats;
 					}
 				});
