@@ -27,6 +27,12 @@ class BudgetActions {
 					// BudgetScenario was not set in localStorage, or it didn't correspond to an existing scenario
 					if (!selectedBudgetScenarioId) {
 						if (results.budgetScenarios && results.budgetScenarios.length > 0) {
+							results.budgetScenarios.forEach(function(budgetScenario) {
+								if (budgetScenario.fromLiveData) {
+									selectedBudgetScenarioId = budgetScenario.id;
+								}
+							});
+
 							selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
 							localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
 						}
