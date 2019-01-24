@@ -479,7 +479,8 @@ class BudgetCalculations {
 					replacementCosts: {
 						overall: 0,
 						instructorTypeIds: [],
-						byInstructorTypeId: {}
+						byInstructorTypeId: {},
+						instructorTypeCount: {}
 					},
 					totalCosts: 0,
 					funds: 0,
@@ -505,7 +506,8 @@ class BudgetCalculations {
 						replacementCosts: {
 							overall: 0,
 							instructorTypeIds: [],
-							byInstructorTypeId: {}
+							byInstructorTypeId: {},
+							instructorTypeCount: {},
 						},
 						totalCosts: 0,
 						totalSCH: 0,
@@ -612,6 +614,9 @@ class BudgetCalculations {
 	
 				if (index == -1) {
 					replacementCosts.instructorTypeIds.push(instructorTypeId);
+					replacementCosts.instructorTypeCount[instructorTypeId] = 1;
+				} else {
+					replacementCosts.instructorTypeCount[instructorTypeId] += 1;
 				}
 	
 				replacementCosts.byInstructorTypeId[instructorTypeId] = replacementCosts.byInstructorTypeId[instructorTypeId] || 0;
@@ -627,6 +632,9 @@ class BudgetCalculations {
 					var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
 					if (index == -1) {
 						replacementCosts.instructorTypeIds.push(instructorTypeId);
+						replacementCosts.instructorTypeCount[instructorTypeId] = 1;
+					} else {
+						replacementCosts.instructorTypeCount[instructorTypeId] += 1;
 					}
 		
 					// Ensure not null (un-initialized)
