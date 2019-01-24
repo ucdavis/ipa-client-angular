@@ -889,6 +889,7 @@ class BudgetReducers {
 						};
 						return ui;
 					case ActionTypes.SELECT_BUDGET_SCENARIO:
+						ui.shouldShowCourseList = !action.payload.fromLiveData;
 						ui.selectedBudgetScenarioId = parseInt(action.payload.budgetScenarioId);
 						return ui;
 					case ActionTypes.DELETE_BUDGET_SCENARIO:
