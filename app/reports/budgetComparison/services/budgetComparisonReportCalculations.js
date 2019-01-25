@@ -106,7 +106,7 @@ class BudgetComparisonReportCalculations {
 			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId, sectionGroups) {
 				var costs = {
 					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId),
-					supportCosts:this. _generateSupportCosts(budget, sectionGroups, selectedScenarioId),
+					supportCosts:this. _generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts),
 					total: null
 				};
 
@@ -204,9 +204,7 @@ class BudgetComparisonReportCalculations {
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
-			_generateSupportCosts(budget, sectionGroups, selectedScenarioId) {
-				var _self = this;
-
+			_generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts) {
 				var supportCosts = {
 					taCount: 0,
 					readerCount: 0,
@@ -216,20 +214,12 @@ class BudgetComparisonReportCalculations {
 					totalCount: 0,
 				};
 
-				sectionGroups.ids.forEach(function(sectionGroupId) {
-					var sectionGroup = sectionGroups.list[sectionGroupId];
-					var taCount = sectionGroup.teachingAssistantAppointments || 0;
-					var readerCount = sectionGroup.readerAppointments || 0;
+				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+					if (sectionGroupCost.budgetScenarioId != selectedScenarioId || sectionGroupCost.disabled) { return; }
 
-					var sectionGroupCost = _self._getSectionGroupCost(sectionGroupId, selectedScenarioId);
-
-					if (sectionGroupCost) {
-						taCount = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount : taCount; 
-						readerCount = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount : readerCount; 
-					}
-
-					supportCosts.taCount += taCount;
-					supportCosts.readerCount += readerCount;	
+					supportCosts.taCount += sectionGroupCost.taCount || 0;
+					supportCosts.readerCount += sectionGroupCost.readerCount || 0;	
 				});
 
 				supportCosts.taCost = supportCosts.taCount * budget.taCost;
