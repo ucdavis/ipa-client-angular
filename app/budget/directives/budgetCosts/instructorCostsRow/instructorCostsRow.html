@@ -5,13 +5,13 @@
 			Instructor <span ng-if="sectionGroupCost.instructor.instructorTypeDescription">({{ sectionGroupCost.instructor.instructorTypeDescription }})</span>
 		</div>
 		<div class="instructor-costs__instructor-container">
-			<div class="instructor-costs__instructor-dropdown-container">
+			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-dropdown-container">
 				<instructor-assignment-dropdown mode="'instructor'"
 				                                section-group-cost="sectionGroupCost"
 				                                instructors="instructorAssignmentOptions">
 				</instructor-assignment-dropdown>
 			</div>
-			<div class="instructor-costs__instructor-reversion-ui">
+			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-reversion-ui">
 				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
 				     uib-tooltip="Update to {{ sectionGroupCost.reversionDisplayName }}"
 				     tooltip-append-to-body="true"
@@ -21,6 +21,9 @@
 				     no="Cancel"
 				     ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
 				</div>
+			</div>
+			<div ng-show="isLiveDataScenario">
+				{{ sectionGroupCost.instructorDescription }}
 			</div>
 		</div>
 	</td>
