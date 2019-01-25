@@ -761,7 +761,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 				var note = e.target.value;
 
-				AssignmentActionCreators.createOrUpdateScheduleInstructorNote(instructorId, scheduleId, note, scheduleInstructorNoteId);
+				AssignmentActionCreators.createOrUpdateScheduleInstructorNote(scheduleId, instructorId, note, scheduleInstructorNoteId);
 			});
 
 			// Handle Instructor UI events
