@@ -659,24 +659,20 @@ class BudgetActions {
 
 				// If scenarioId was not provided, attempt to use currently selected scenario
 				if (selectedScenarioId == null) {
-					selectedScenarioId = angular.copy(BudgetReducers._state.ui.selectedBudgetScenarioId); // eslint-disable-line no-undef
-	
-					// If a scenario was not already selected, default to first scenario
-					if (selectedScenarioId == null) {
-						BudgetReducers._state.budgetScenarios.ids.forEach(function(budgetScenarioId) {
-							var budgetScenario = BudgetReducers._state.budgetScenarios.list[budgetScenarioId];
 
-							if (budgetScenario.fromLiveData) {
-								selectedScenarioId = budgetScenario.id;
-								fromLiveData = true;
-							}
-						});
-					}
+					BudgetReducers._state.budgetScenarios.ids.forEach(function(budgetScenarioId) {
+						var budgetScenario = BudgetReducers._state.budgetScenarios.list[budgetScenarioId];
+
+						if (budgetScenario.fromLiveData) {
+							selectedScenarioId = budgetScenario.id;
+							fromLiveData = true;
+						}
+					});
 				} else {
 					var budgetScenario = BudgetReducers._state.budgetScenarios.list[selectedScenarioId];
 					fromLiveData = budgetScenario.fromLiveData;
 				}
-	
+
 				localStorage.setItem('selectedBudgetScenarioId', selectedScenarioId);
 
 				var action = {

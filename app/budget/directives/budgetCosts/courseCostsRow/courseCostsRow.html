@@ -13,8 +13,12 @@
 			<div class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.enrollment"
-				           on-update="updateSectionGroupCost(sectionGroupCost)">
+				           on-update="updateSectionGroupCost(sectionGroupCost)"
+				           ng-show="!isLiveDataScenario">
 				</ipa-input>
+				<div ng-show="isLiveDataScenario">
+					{{ sectionGroupCost.enrollment }}
+				</div>
 			</div>
 			<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 			     uib-tooltip="Update to schedule total seats of {{ !!(sectionGroupCost.sectionGroup.totalSeats) ? sectionGroupCost.sectionGroup.totalSeats : 'none' }}"
@@ -33,7 +37,7 @@
 			Sections
 		</div>
 		<div class="course-costs__edit-container">
-			<div class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.sectionCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -47,6 +51,9 @@
 			     yes="Update"
 			     no="Cancel"
 			     ng-show="sectionGroupCost.sectionCount != sectionGroupCost.sectionGroup.sectionCount && sectionGroupCost.sectionGroup">
+			</div>
+			<div ng-show="isLiveDataScenario">
+				{{ sectionGroupCost.enrollment }}
 			</div>
 		</div>
 	</td>
