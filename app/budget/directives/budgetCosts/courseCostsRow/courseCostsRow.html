@@ -63,7 +63,7 @@
 			TAs
 		</div>
 		<div class="course-costs__edit-container">
-			<div class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.taCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -77,6 +77,9 @@
 			     yes="Update"
 			     no="Cancel"
 			     ng-show="sectionGroupCost.taCount != sectionGroupCost.sectionGroup.teachingAssistantAppointments && sectionGroupCost.sectionGroup">
+			</div>
+			<div ng-show="isLiveDataScenario">
+				{{ sectionGroupCost.taCount || 0 }}
 			</div>
 		</div>
 	</td>
@@ -95,7 +98,7 @@
 			Readers
 		</div>
 		<div class="course-costs__edit-container">
-			<div class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.readerCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -109,6 +112,9 @@
 			     yes="Update"
 			     no="Cancel"
 			     ng-show="sectionGroupCost.readerCount != sectionGroupCost.sectionGroup.readerAppointments && sectionGroupCost.sectionGroup">
+			</div>
+			<div ng-show="isLiveDataScenario">
+				{{ sectionGroupCost.readerCount || 0 }}
 			</div>
 		</div>
 	</td>
