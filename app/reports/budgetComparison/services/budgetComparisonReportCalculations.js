@@ -21,7 +21,7 @@ class BudgetComparisonReportCalculations {
 						previousBudgetScenarios: this._getBudgetScenarios(BudgetComparisonReportReducers._state.budgetScenarios.previous)
 					},
 					current: {
-						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId, sectionGroups.current),
+						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId),
 						funding: this._generateFunding(lineItems.current, budgetScenarios.currentSelectedScenarioId),
 						miscStats: this._generateMiscStats(courses.current, sectionGroups.current, sections.current)
 					},
@@ -103,7 +103,7 @@ class BudgetComparisonReportCalculations {
 				return miscStats;
 			},
 			// Generates calculations for instructor and support (reader, TA) costs
-			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId, sectionGroups) {
+			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId) {
 				var costs = {
 					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId),
 					supportCosts:this. _generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts),
