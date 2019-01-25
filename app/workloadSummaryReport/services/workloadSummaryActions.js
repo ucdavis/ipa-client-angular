@@ -64,12 +64,15 @@ class WorkloadSummaryActions {
 				WorkloadSummaryService.getSections(workgroupId, year).then(function (rawSections) {
 					let sections = {
 						ids: [],
-						list: {}
+						list: {},
+						bySectionGroupId: {}
 					};
 
 					rawSections.forEach(function(section) {
 						sections.ids.push(section.id);
 						sections.list[section.id] = section;
+						sections.bySectionGroupId[section.sectionGroupId] = sections.bySectionGroupId[section.sectionGroupId] || [];
+						sections.bySectionGroupId[section.sectionGroupId].push(section);
 					});
 
 					WorkloadSummaryReducers.reduce({
@@ -341,12 +344,20 @@ class WorkloadSummaryActions {
 						if (teachingAssignment.sectionGroupId > 0) {
 							assignment.sequencePattern = course.sequencePattern;
 							assignment.enrollment = _self._getEnrollment(sectionGroup);
+
 							assignment.actualEnrollment = sectionGroup.actualEnrollment;
 							assignment.maxEnrollment = sectionGroup.maxEnrollment;
+
+							var seats = 0;
+							WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id].forEach(function(section) {
+								seats += section.seats;
+							});
+
+							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = _self._getUnits(course);
-							assignment.studentCreditHours = assignment.enrollment * assignment.units;
+							assignment.studentCreditHours = assignment.seats * assignment.units;
 
 							calculatedView.totals.assignmentCount += 1;
 							calculatedView.totals.enrollment += assignment.enrollment;
