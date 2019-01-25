@@ -349,6 +349,7 @@ class WorkloadSummaryActions {
 							assignment.maxEnrollment = sectionGroup.maxEnrollment;
 
 							var seats = 0;
+
 							WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id].forEach(function(section) {
 								seats += section.seats;
 							});
