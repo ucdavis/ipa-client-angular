@@ -15,7 +15,21 @@
 	</ipa-dropdown>
 </div> -->
 
-<div class="instructor-assignment-dropdown">
-		<ipa-dropdown-select items="instructors"> </ipa-dropdown-select>
-</div>
-	
+
+	<div class="instructor-assignment-dropdown">
+
+		<ipa-dropdown-select 
+			ng-show="mode == 'originalInstructor'"
+			button-text="sectionGroupCost.originalInstructorDescription || 'Assign instructor'"
+			items="instructors"
+			header-text="headerText">
+		</ipa-dropdown-select>
+
+		<ipa-dropdown-select 
+			ng-show="mode == 'instructor'"
+			button-text="sectionGroupCost.instructorDescription || 'Assign instructor'"
+			items="instructors"
+			header-text="headerText">
+		</ipa-dropdown-select>
+
+	</div>
