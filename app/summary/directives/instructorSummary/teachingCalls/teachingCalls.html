@@ -3,7 +3,7 @@
 		<h5>Teaching Call for Review</h5>
 	</div>
 
-	<div ng-if="view.state.teachingCallReceipt">
+	<div ng-if="state.teachingCallReceipt">
 		<div class="teaching-calls-table">
 			<div class="teaching-calls-table__row teaching-calls-table__row--border">
 				<div class="teaching-calls-table__header-cell teaching-calls-table__header-cell--left">Teaching Call</div>
@@ -13,31 +13,31 @@
 
 			<div class="teaching-calls-table__row">
 				<div class="teaching-calls-table__cell teaching-calls-table__cell--left">
-					<a ng-href="{{ urlRoot }}/teachingCalls/{{ workgroupId }}/{{ year }}/teachingCall">
+					<a ng-href="{{ urlRoot }}/teachingCalls/{{ state.teachingCallReceipt.workgroupId }}/{{ state.teachingCallReceipt.academicYear }}/teachingCall">
 						<button class="btn btn-default teaching-calls-table__button">
 							View Teaching Call Form
-							<i ng-if="view.state.teachingCallReceipt.isDone == false" class="entypo-attention instructor-summary__corner-alert"></i>
+							<i ng-if="state.teachingCallReceipt.isDone == false" class="entypo-attention instructor-summary__corner-alert"></i>
 						</button>
 					</a>
 				</div>
 				<div class="teaching-calls-table__cell">
-					<div ng-if="view.state.teachingCallReceipt.dueDateDescription">
-						{{ view.state.teachingCallReceipt.dueDateDescription }}
+					<div ng-if="state.teachingCallReceipt.dueDateDescription">
+						{{ state.teachingCallReceipt.dueDateDescription }}
 					</div>
 					<div
 					class="teaching-calls-table__cell teaching-calls-table__cell--gray"
-					ng-if="!(view.state.teachingCallReceipt.dueDateDescription)">
+					ng-if="!(state.teachingCallReceipt.dueDateDescription)">
 						No due date set
 					</div>
 				</div>
 				<div class="teaching-calls-table__cell">
-					<i class="glyphicon glyphicon-ok" ng-if="view.state.teachingCallReceipt.isDone"></i>
+					<i class="glyphicon glyphicon-ok" ng-if="state.teachingCallReceipt.isDone"></i>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div ng-if="!view.state.teachingCallReceipt" class="teaching-calls__empty-message">
+	<div ng-if="!state.teachingCallReceipt" class="teaching-calls__empty-message">
 		No Active Teaching Calls
 	</div>
 </div>
