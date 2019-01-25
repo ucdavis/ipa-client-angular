@@ -13,7 +13,7 @@
 
 			<div class="teaching-calls-table__row">
 				<div class="teaching-calls-table__cell teaching-calls-table__cell--left">
-					<a ng-href="{{ urlRoot }}/teachingCalls/{{ workgroupId }}/{{ year }}/teachingCall">
+					<a ng-href="{{ urlRoot }}/teachingCalls/{{ state.teachingCallReceipt.workgroupId }}/{{ state.teachingCallReceipt.academicYear }}/teachingCall">
 						<button class="btn btn-default teaching-calls-table__button">
 							View Teaching Call Form
 							<i ng-if="state.teachingCallReceipt.isDone == false" class="entypo-attention instructor-summary__corner-alert"></i>
