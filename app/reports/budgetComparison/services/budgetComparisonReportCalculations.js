@@ -21,7 +21,7 @@ class BudgetComparisonReportCalculations {
 						previousBudgetScenarios: this._getBudgetScenarios(BudgetComparisonReportReducers._state.budgetScenarios.previous)
 					},
 					current: {
-						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId, sectionGroups.current),
+						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId),
 						funding: this._generateFunding(lineItems.current, budgetScenarios.currentSelectedScenarioId),
 						miscStats: this._generateMiscStats(courses.current, sectionGroups.current, sections.current)
 					},
@@ -103,10 +103,10 @@ class BudgetComparisonReportCalculations {
 				return miscStats;
 			},
 			// Generates calculations for instructor and support (reader, TA) costs
-			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId, sectionGroups) {
+			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId) {
 				var costs = {
 					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId),
-					supportCosts:this. _generateSupportCosts(budget, sectionGroups, selectedScenarioId),
+					supportCosts:this. _generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts),
 					total: null
 				};
 
@@ -204,9 +204,7 @@ class BudgetComparisonReportCalculations {
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
-			_generateSupportCosts(budget, sectionGroups, selectedScenarioId) {
-				var _self = this;
-
+			_generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts) {
 				var supportCosts = {
 					taCount: 0,
 					readerCount: 0,
@@ -216,20 +214,12 @@ class BudgetComparisonReportCalculations {
 					totalCount: 0,
 				};
 
-				sectionGroups.ids.forEach(function(sectionGroupId) {
-					var sectionGroup = sectionGroups.list[sectionGroupId];
-					var taCount = sectionGroup.teachingAssistantAppointments || 0;
-					var readerCount = sectionGroup.readerAppointments || 0;
+				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+					if (sectionGroupCost.budgetScenarioId != selectedScenarioId || sectionGroupCost.disabled) { return; }
 
-					var sectionGroupCost = _self._getSectionGroupCost(sectionGroupId, selectedScenarioId);
-
-					if (sectionGroupCost) {
-						taCount = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount : taCount; 
-						readerCount = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount : readerCount; 
-					}
-
-					supportCosts.taCount += taCount;
-					supportCosts.readerCount += readerCount;	
+					supportCosts.taCount += sectionGroupCost.taCount || 0;
+					supportCosts.readerCount += sectionGroupCost.readerCount || 0;	
 				});
 
 				supportCosts.taCost = supportCosts.taCount * budget.taCost;
