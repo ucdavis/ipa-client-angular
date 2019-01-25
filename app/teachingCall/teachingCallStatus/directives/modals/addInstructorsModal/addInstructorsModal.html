@@ -99,6 +99,14 @@
           <label>Ask for unavailabilities</label>
         </div>
       </div>
+      <div ng-click="startTeachingCallConfig.hideNonCourseOptions = !startTeachingCallConfig.hideNonCourseOptions" style="padding-left: 20px;">
+        <div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': startTeachingCallConfig.hideNonCourseOptions }">
+          <label class="cb-wrapper">
+            <div class="checked"></div>
+          </label>
+          <label>Hide non-course options (e.g. sabbatical)</label>
+        </div>
+      </div>
     </div>
 
     <textarea ng-if="startTeachingCallConfig.sendEmail == true"
