@@ -350,9 +350,13 @@ class WorkloadSummaryActions {
 
 							var seats = 0;
 
-							WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id].forEach(function(section) {
-								seats += section.seats;
-							});
+							var sections = WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id];
+
+							if (sections) {
+								sections.forEach(function(section) {
+									seats += section.seats;
+								});
+							}
 
 							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
