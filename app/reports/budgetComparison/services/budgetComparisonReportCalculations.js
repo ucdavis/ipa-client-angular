@@ -5,9 +5,7 @@ class BudgetComparisonReportCalculations {
 				var budget = BudgetComparisonReportReducers._state.budget;
 				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios;
 				var lineItems = BudgetComparisonReportReducers._state.lineItems;
-				var courses = BudgetComparisonReportReducers._state.courses;
 				var sectionGroups = BudgetComparisonReportReducers._state.sectionGroups;
-				var sections = BudgetComparisonReportReducers._state.sections;
 				var teachingAssignments = BudgetComparisonReportReducers._state.teachingAssignments;
 				var instructorTypeCosts = BudgetComparisonReportReducers._state.instructorTypeCosts;
 				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts;
@@ -23,12 +21,12 @@ class BudgetComparisonReportCalculations {
 					current: {
 						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId),
 						funding: this._generateFunding(lineItems.current, budgetScenarios.currentSelectedScenarioId),
-						miscStats: this._generateMiscStats(courses.current, sectionGroups.current, sections.current)
+						miscStats: this._generateMiscStats(sectionGroupCosts.current)
 					},
 					previous: {
 						costs: this._generateCosts(teachingAssignments.previous, instructorTypeCosts.previous, instructorCosts.previous, sectionGroupCosts.previous, budget.previous, budgetScenarios.previousSelectedScenarioId, sectionGroups.previous),
 						funding: this._generateFunding(lineItems.previous, budgetScenarios.previousSelectedScenarioId),
-						miscStats: this._generateMiscStats(courses.previous, sectionGroups.previous, sections.previous)
+						miscStats: this._generateMiscStats(sectionGroupCosts.previous)
 					}
 				};
 
@@ -46,7 +44,7 @@ class BudgetComparisonReportCalculations {
 				});
 			},
 			// Generates stats on seats and # of courses per area
-			_generateMiscStats(courses, sectionGroups, sections) {
+			_generateMiscStats(sectionGroupCosts) {
 				var miscStats = {
 					lower: {
 						courses: 0,
@@ -66,33 +64,22 @@ class BudgetComparisonReportCalculations {
 					}
 				};
 
-				sectionGroups.ids.forEach((sectionGroupId) => {
-					var sectionGroup = sectionGroups.list[sectionGroupId];
-					var course = courses.list[sectionGroup.courseId];
-					var courseNumber = parseInt(course.courseNumber);
+				sectionGroupCosts.ids.forEach((sectionGroupCostId) => {
+					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+
+					if (sectionGroupCost.disabled) { return; }
+
+					var courseNumber = parseInt(sectionGroupCost.courseNumber);
+					var seats = sectionGroupCost.enrollment;
+
 					if (courseNumber < 100) {
 						miscStats.lower.courses += 1;
-					} else if (courseNumber >= 200) {
-						miscStats.grad.courses += 1;
-					}
-					else {
-						miscStats.upper.courses += 1;
-					}
-				});
-
-				sections.ids.forEach((sectionId) => {
-					var section = sections.list[sectionId];
-					var sectionGroup = sectionGroups.list[section.sectionGroupId];
-					var course = courses.list[sectionGroup.courseId];
-
-					var courseNumber = parseInt(course.courseNumber);
-					var seats = section.seats;
-
-					if (courseNumber < 100) {
 						miscStats.lower.seats += seats;
 					} else if (courseNumber >= 200) {
-						miscStats.grad.seats = 0; // Intentionally always zero, as this total is not relevant
+						miscStats.grad.courses += 1;
+						miscStats.grad.seats +=  0; // Intentionally always zero, as this total is not relevant
 					} else {
+						miscStats.upper.courses += 1;
 						miscStats.upper.seats += seats;
 					}
 				});
