@@ -170,11 +170,13 @@ class BudgetComparisonReportCalculations {
 					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
 					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
+					if (sectionGroupCost.disabled) { return; }
 
 					var teachingAssignment = _self._getTeachingAssignment(sectionGroupCost.sectionGroupId);
 					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments);
 
 					if (!assignmentCosts) { return; }
+
 
 					var instructorTypeId = assignmentCosts.instructorTypeId;
 					var assignmentCost = assignmentCosts.cost;
@@ -189,6 +191,7 @@ class BudgetComparisonReportCalculations {
 					instructionCosts.total.cost += assignmentCost;
 					instructionCosts.total.courses += 1;
 				});
+
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
