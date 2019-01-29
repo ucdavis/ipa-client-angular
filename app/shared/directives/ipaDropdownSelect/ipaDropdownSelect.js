@@ -4,9 +4,9 @@ let ipaDropdownSelect = function() {
 		template: require('./ipaDropdownSelect.html'),
 		replace: true,
 		scope: {
-			items: '<',
+			items: '<', // Each item is expected to have an id, description (display value), and selected (bool flag). A rowType value = 'subheader' will display as header for another list group
 			buttonText: '<',
-			headerText: '<?',
+			selectItem: '&',
 		},
 		link: function(scope){
 
@@ -21,6 +21,12 @@ let ipaDropdownSelect = function() {
 			scope.openDropdown = function() {
 				scope.expanded = true;
 			};
+
+			scope.selectDropdownItem = function(item) {
+				scope.selectItem({item: item});
+				scope.closeDropdown();
+			};
+
 		}
 
 	};
