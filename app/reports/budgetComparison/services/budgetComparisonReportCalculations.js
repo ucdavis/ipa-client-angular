@@ -21,12 +21,12 @@ class BudgetComparisonReportCalculations {
 					current: {
 						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId),
 						funding: this._generateFunding(lineItems.current, budgetScenarios.currentSelectedScenarioId),
-						miscStats: this._generateMiscStats(sectionGroupCosts.current)
+						miscStats: this._generateMiscStats(sectionGroupCosts.current, budgetScenarios.currentSelectedScenarioId)
 					},
 					previous: {
 						costs: this._generateCosts(teachingAssignments.previous, instructorTypeCosts.previous, instructorCosts.previous, sectionGroupCosts.previous, budget.previous, budgetScenarios.previousSelectedScenarioId, sectionGroups.previous),
 						funding: this._generateFunding(lineItems.previous, budgetScenarios.previousSelectedScenarioId),
-						miscStats: this._generateMiscStats(sectionGroupCosts.previous)
+						miscStats: this._generateMiscStats(sectionGroupCosts.previous, budgetScenarios.previousSelectedScenarioId)
 					}
 				};
 
@@ -44,7 +44,7 @@ class BudgetComparisonReportCalculations {
 				});
 			},
 			// Generates stats on seats and # of courses per area
-			_generateMiscStats(sectionGroupCosts) {
+			_generateMiscStats(sectionGroupCosts, currentSelectedScenarioId) {
 				var miscStats = {
 					lower: {
 						courses: 0,
@@ -68,6 +68,7 @@ class BudgetComparisonReportCalculations {
 					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
 					if (sectionGroupCost.disabled) { return; }
+					if (sectionGroupCost.budgetScenarioId != currentSelectedScenarioId) { return; }
 
 					var courseNumber = parseInt(sectionGroupCost.courseNumber);
 					var seats = sectionGroupCost.enrollment;
