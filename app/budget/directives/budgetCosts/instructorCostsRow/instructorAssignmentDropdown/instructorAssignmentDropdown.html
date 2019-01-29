@@ -22,14 +22,14 @@
 			ng-show="mode == 'originalInstructor'"
 			button-text="sectionGroupCost.originalInstructorDescription || 'Assign instructor'"
 			items="instructors"
-			header-text="headerText">
+			select-item="setOriginalInstructor(item)">
 		</ipa-dropdown-select>
 
 		<ipa-dropdown-select 
 			ng-show="mode == 'instructor'"
 			button-text="sectionGroupCost.instructorDescription || 'Assign instructor'"
 			items="instructors"
-			header-text="headerText">
+			select-item="setInstructor(item)">
 		</ipa-dropdown-select>
 
 	</div>
