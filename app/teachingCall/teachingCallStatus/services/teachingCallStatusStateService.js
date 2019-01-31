@@ -169,9 +169,7 @@ class TeachingCallStatusStateService {
 						action.payload.instructors.forEach(function(instructor) {
 							var user = users.byLoginId[instructor.loginId.toLowerCase()];
 							// Instructor may not have an associated user
-							if (!user) {
-								return;
-							}
+							if (!user) { return; }
 	
 							var userRole = userRoles.byUserId[user.id];
 							instructor.instructorTypeId = userRole.instructorTypeId;
