@@ -589,8 +589,6 @@ class BudgetCalculations {
 			_calculateReplacementCost: function (replacementCosts, sectionGroup) {
 				var replacementCost = sectionGroup.overrideInstructorCost;
 
-				if (!replacementCost) { return replacementCosts; }
-
         var instructorTypeId = null;
 
         if (sectionGroup.overrideInstructorTypeId) {
@@ -621,6 +619,7 @@ class BudgetCalculations {
 	
 				replacementCosts.byInstructorTypeId[instructorTypeId] = replacementCosts.byInstructorTypeId[instructorTypeId] || 0;
 	
+				if (!replacementCost) { return replacementCosts; }
 				// Add cost
 				replacementCosts.byInstructorTypeId[instructorTypeId] += replacementCost;
 
