@@ -3,6 +3,12 @@
 	position: relative;
 }
 
+.ipa-dropdown-select .assign-dropdown-btn {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .ipa-dropdown-select .dropdown-container {
 	position: absolute;
 	margin: 3px 6px 3px 1px;
@@ -75,5 +81,4 @@
 
 #searchInput{
 	min-width: 150px;
-	border-color: #3399cc
 }

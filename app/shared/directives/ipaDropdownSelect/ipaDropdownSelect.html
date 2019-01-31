@@ -1,35 +1,60 @@
 <div class="ipa-dropdown-select">
+    <!-- Show as button -->
+    <div ng-if="showAs =='button'">
+        <div class="expand-button"
+            ng-class="{'ipa-dropdown__expand-button-skin--default': !style, 'ipa-dropdown__expand-button-skin--minimal': style == 'minimal', 'ipa-dropdown__wide': isWide}"
+            ng-click="openDropdown()"
+            ng-class="{ 'selected': expanded == true }">
+            <div>
+                {{ buttonText }}
+            </div>
+            <div class="ipa-dropdown__caret-container">
+                <span class="caret"></span>
+            </div>
+        </div>
 
-    <div class="expand-button"
-    ng-class="{'ipa-dropdown__expand-button-skin--default': !style, 'ipa-dropdown__expand-button-skin--minimal': style == 'minimal', 'ipa-dropdown__wide': isWide}"
-			ng-click="openDropdown()"
-			ng-class="{ 'selected': expanded == true }">
-
-			<div>
-          {{ buttonText }}
-			</div>
-			<div class="ipa-dropdown__caret-container">
-				<span class="caret"></span>
-			</div>
-	</div>
-
-  <div ng-if="expanded" class="dropdown-container" ng-style="overrideStyles">
-      <div class="dropdown-mask" ng-click="closeDropdown()">
-      </div>
-
-      <div class="dropdown"> 
-        <input id="searchInput" placeholder="Search.."  ng-model="searchInput" autofocus>
-        <div  class="dropdown">
-          <div ng-repeat="item in items | filter: searchInput">
-              <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
-                  {{ item.description }}
-              </div>
-              <div class="item" ng-show="!item.rowType" ng-click="selectDropdownItem(item)">
-              {{ item.description }}
-              </div>
+        <div ng-if="expanded" class="dropdown-container" ng-style="overrideStyles">
+            <div class="dropdown-mask" ng-click="closeDropdown()">
+            </div>
+        
+            <div  class="dropdown">
+                <input id="searchInput" placeholder="Search"  ng-model="searchInput" autofocus>
+                <div ng-repeat="item in items | filter: searchInput">
+                    <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
+                        {{ item.description }}
+                    </div>
+                    <div class="item" ng-show="!item.rowType" ng-click="selectDropdownItem(item)">
+                    {{ item.description }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-  </div>
+
+    <!-- Show as input -->
+    <div ng-if="showAs =='input'">
+            <div class=""
+                ng-click="openDropdown()"
+                ng-class="{ 'selected': expanded == true }">
+                <input id="searchInput" placeholder="{{ buttonText }}"  ng-model="searchInput"><span class="caret"></span>
+
+            </div>
+    
+            <div ng-if="expanded" class="dropdown-container" ng-style="overrideStyles">
+                <div class="dropdown-mask" ng-click="closeDropdown()">
+                </div>
+            
+                <div  class="dropdown">
+                    <div ng-repeat="item in items | filter: searchInput">
+                        <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
+                            {{ item.description }}
+                        </div>
+                        <div class="item" ng-show="!item.rowType" ng-click="selectDropdownItem(item)">
+                        {{ item.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 </div>
