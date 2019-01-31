@@ -306,7 +306,8 @@ class SchedulingStateService {
 					case ActionTypes.INIT_STATE:
 						activities = {
 							list: {},
-							ids: []
+							ids: [],
+							customLocationConflictActivityIds: []
 						};
 						var activitiesList = {};
 						var length = action.payload.activities ? action.payload.activities.length : 0;
@@ -318,6 +319,26 @@ class SchedulingStateService {
 							activities.ids.push(activityData.id);
 						}
 						activities.list = activitiesList;
+
+						// Filter and flag custom locations
+						var customLocationActivities = [];
+						activities.ids.forEach(function(activityId) {
+							if (activities.list[activityId].locationType === "custom") {
+								customLocationActivities.push(activities.list[activityId]);
+							}
+						});
+
+						for (let index = 0; index < customLocationActivities.length; index++) {
+							var slotActivity = customLocationActivities[index];
+
+							customLocationActivities.forEach(function(activity) {
+								if (activity.id !== slotActivity.id && activity.dayIndicator === slotActivity.dayIndicator && activity.locationId === slotActivity.locationId && activity.startTime < slotActivity.endTime && slotActivity.startTime < activity.endTime) {
+									activities.list[slotActivity.id].locationConflict = true;
+									activities.customLocationConflictActivityIds.push(slotActivity.id);
+								}
+							});
+						}
+
 						return activities;
 					case ActionTypes.REMOVE_ACTIVITY:
 						var activityIndex = activities.ids.indexOf(action.payload.activity.id);
@@ -490,7 +511,8 @@ class SchedulingStateService {
 							term: new Term(action.payload.term),
 							calendarMode: {
 								activeTab: "Weekly",
-								allTabs: ["Weekly", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+								allTabs: ["Weekly", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+								tabIcons: {"Weekly": "", "Sunday": "", "Monday": "", "Tuesday": "", "Wednesday": "", "Thursday": "", "Friday": "", "Saturday": ""}
 							},
 						};
 						return uiState;
@@ -576,7 +598,41 @@ class SchedulingStateService {
 				newState.filters = scope._filterReducers(action, scope._state.filters);
 				newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
-	
+
+				newState.activities.customLocationConflictActivityIds.forEach(function(activityId) {
+					var conflictDays = newState.activities.list[activityId].dayIndicator.split("");
+					
+					conflictDays.forEach(function(conflictDay, index) {
+						var conflictDay = parseInt(conflictDay);
+						var tabIconClasses = "entypo-attention activity__event--location-conflict";
+						switch (index) {
+							case 0:
+								newState.uiState.calendarMode.tabIcons["Sunday"] = conflictDay ? tabIconClasses : "";
+								break;
+							case 1:
+								newState.uiState.calendarMode.tabIcons["Monday"] = conflictDay ? tabIconClasses : "";
+								break;
+							case 2:
+								newState.uiState.calendarMode.tabIcons["Tuesday"] = conflictDay ? tabIconClasses : "";
+								break;
+							case 3:
+								newState.uiState.calendarMode.tabIcons["Wednesday"] = conflictDay ? tabIconClasses : "";
+								break;
+							case 4:
+								newState.uiState.calendarMode.tabIcons["Thursday"] = conflictDay ? tabIconClasses : "";
+								break;
+							case 5:
+								newState.uiState.calendarMode.tabIcons["Friday"] = conflictDay ? tabIconClasses : "";
+								break;
+							case 6:
+								newState.uiState.calendarMode.tabIcons["Saturday"] = conflictDay ? tabIconClasses : "";
+								break;
+							default:
+								break;
+						}
+					});
+				});
+
 				scope._state = newState;
 				$rootScope.$emit('schedulingStateChanged', {
 					state: scope._state,
