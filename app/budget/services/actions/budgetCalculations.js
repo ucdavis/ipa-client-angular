@@ -552,7 +552,7 @@ class BudgetCalculations {
 							summary.byTerm[term].totalUnits += units;
 							summary.byTerm[term].totalSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
 							summary.byTerm[term].lowerDivCount += (parseInt(sectionGroupCost.courseNumber) < 100 ? 1 : 0);
-							summary.byTerm[term].upperDivCount += (parseInt(sectionGroupCost.courseNumber) > 100 && parseInt(sectionGroupCost.courseNumber) < 200 ? 1 : 0);
+							summary.byTerm[term].upperDivCount += (parseInt(sectionGroupCost.courseNumber) >= 100 && parseInt(sectionGroupCost.courseNumber) < 200 ? 1 : 0);
 							summary.byTerm[term].graduateCount += (parseInt(sectionGroupCost.courseNumber) > 199 ? 1 : 0);
 							summary.byTerm[term].enrollment += sectionGroupCost.enrollment || 0;
 							summary.byTerm[term].sectionCount += sectionGroupCost.sectionCount || 0;
@@ -632,9 +632,9 @@ class BudgetCalculations {
 					var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
 					if (index == -1) {
 						replacementCosts.instructorTypeIds.push(instructorTypeId);
-						replacementCosts.instructorTypeCount[instructorTypeId] = 1;
+						replacementCosts.instructorTypeCount[instructorTypeId] = termCosts.instructorTypeCount[instructorTypeId];
 					} else {
-						replacementCosts.instructorTypeCount[instructorTypeId] += 1;
+						replacementCosts.instructorTypeCount[instructorTypeId] += termCosts.instructorTypeCount[instructorTypeId];
 					}
 		
 					// Ensure not null (un-initialized)

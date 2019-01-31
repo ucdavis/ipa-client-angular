@@ -8,6 +8,7 @@ class TeachingCallFormStateService {
 					case ActionTypes.INIT_STATE: {
 						pageState = {
 							showUnavailabilities: null, // False
+							hideNonCourseOptions: null, // Defaults to False
 							dueDate: null, // "dec 15th 2016"
 							comment: null, // "Only Fridays please"
 							isDone: null, // True
@@ -32,6 +33,7 @@ class TeachingCallFormStateService {
 	
 							pageState.isInstructorInTeachingCall = true;
 							pageState.showUnavailabilities = teachingCallReceipt.showUnavailabilities;
+							pageState.hideNonCourseOptions = teachingCallReceipt.hideNonCourseOptions;
 							pageState.termsBlob = teachingCallReceipt.termsBlob;
 							pageState.isDone = teachingCallReceipt.isDone;
 							pageState.dueDate = teachingCallReceipt.dueDate;
@@ -81,7 +83,7 @@ class TeachingCallFormStateService {
 						// Process data into preferences, assignments, and scheduledCourses
 						pageState.terms.forEach(function(termData) {
 							termData.preferences = self.generatePreferences(action.payload.scheduleId, termData.termCode, action.payload.instructorId, teachingAssignments, pageState.sectionGroupsIndex, pageState.coursesIndex);
-							termData.preferenceOptions = self.generatePreferenceOptions(action.payload.scheduleId, action.payload.instructorId, termData.termCode, termData.preferences, termData.assignments, pageState.sectionGroups, pageState.coursesIndex);
+							termData.preferenceOptions = self.generatePreferenceOptions(action.payload.scheduleId, action.payload.instructorId, termData.termCode, termData.preferences, termData.assignments, pageState.sectionGroups, pageState.coursesIndex, pageState.hideNonCourseOptions);
 						});
 	
 						// Set selectedTermCode
@@ -485,7 +487,7 @@ class TeachingCallFormStateService {
 	
 				return allCourses;
 			},
-			generatePreferenceOptions: function (scheduleId, instructorId, termCode, preferences, assignments, sectionGroups, courses) {
+			generatePreferenceOptions: function (scheduleId, instructorId, termCode, preferences, assignments, sectionGroups, courses, hideNonCourseOptions) {
 				// Gather all course identifiers that already exist as a preference or assignment
 				var courseIdentifiersToFilter = [];
 	
@@ -500,55 +502,58 @@ class TeachingCallFormStateService {
 	
 				// Build the scheduledCourses as a subset of all Courses
 				var preferenceOptions = [];
-				preferenceOptions.push({
-					buyout: true,
-					description: "Buyout",
-					scheduleId: scheduleId,
-					instructorId: instructorId,
-					termCode: termCode
-				});
-				preferenceOptions.push({
-					courseRelease: true,
-					description: "Course Release",
-					scheduleId: scheduleId,
-					instructorId: instructorId,
-					termCode: termCode
-				});
-				preferenceOptions.push({
-					sabbatical: true,
-					description: "Sabbatical",
-					scheduleId: scheduleId,
-					instructorId: instructorId,
-					termCode: termCode
-				});
-				preferenceOptions.push({
-					inResidence: true,
-					description: "In Residence",
-					scheduleId: scheduleId,
-					instructorId: instructorId,
-					termCode: termCode
-				});
-				preferenceOptions.push({
-					workLifeBalance: true,
-					description: "Work Life Balance",
-					scheduleId: scheduleId,
-					instructorId: instructorId,
-					termCode: termCode
-				});
-				preferenceOptions.push({
-					leaveOfAbsence: true,
-					description: "Leave of Absence",
-					scheduleId: scheduleId,
-					instructorId: instructorId,
-					termCode: termCode
-				});
-				preferenceOptions.push({
-					sabbaticalInResidence: true,
-					description: "Sabbatical In Residence",
-					scheduleId: scheduleId,
-					instructorId: instructorId,
-					termCode: termCode
-				});
+				if (!hideNonCourseOptions) {
+					preferenceOptions.push({
+						buyout: true,
+						description: "Buyout",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						courseRelease: true,
+						description: "Course Release",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						sabbatical: true,
+						description: "Sabbatical",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						inResidence: true,
+						description: "In Residence",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						workLifeBalance: true,
+						description: "Work Life Balance",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						leaveOfAbsence: true,
+						description: "Leave of Absence",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						sabbaticalInResidence: true,
+						description: "Sabbatical In Residence",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+				}
+
 				allCourses.forEach(function (course) {
 					// Skip courses that are already an assignment or preference
 					if (courseIdentifiersToFilter.indexOf(course.uniqueIdentifier) > -1) {
