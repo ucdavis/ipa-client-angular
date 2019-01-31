@@ -632,9 +632,9 @@ class BudgetCalculations {
 					var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
 					if (index == -1) {
 						replacementCosts.instructorTypeIds.push(instructorTypeId);
-						replacementCosts.instructorTypeCount[instructorTypeId] = 1;
+						replacementCosts.instructorTypeCount[instructorTypeId] = termCosts.instructorTypeCount[instructorTypeId];
 					} else {
-						replacementCosts.instructorTypeCount[instructorTypeId] += 1;
+						replacementCosts.instructorTypeCount[instructorTypeId] += termCosts.instructorTypeCount[instructorTypeId];
 					}
 		
 					// Ensure not null (un-initialized)
