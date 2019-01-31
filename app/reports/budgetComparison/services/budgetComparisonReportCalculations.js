@@ -147,7 +147,7 @@ class BudgetComparisonReportCalculations {
 				} else if (instructorTypeCost) {
 					cost = instructorTypeCost;
 				} else {
-					return null;
+					cost = null;
 				}
 
 				return {
@@ -176,7 +176,6 @@ class BudgetComparisonReportCalculations {
 					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments);
 
 					if (!assignmentCosts) { return; }
-
 
 					var instructorTypeId = assignmentCosts.instructorTypeId;
 					var assignmentCost = assignmentCosts.cost;
