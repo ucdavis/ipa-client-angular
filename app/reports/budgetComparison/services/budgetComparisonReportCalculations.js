@@ -260,13 +260,13 @@ class BudgetComparisonReportCalculations {
 					},
 					supportCosts: {
 						ta: {
-							rawCount: currentCosts.supportCosts.taCount - previousCosts.supportCosts.taCount,
+							rawCount: (currentCosts.supportCosts.taCount - previousCosts.supportCosts.taCount).toFixed(2),
 							percentageCount: this._percentageChange(previousCosts.supportCosts.taCount, currentCosts.supportCosts.taCount),
 							rawCost: currentCosts.supportCosts.taCost - previousCosts.supportCosts.taCost,
 							percentageCost: this._percentageChange(previousCosts.supportCosts.taCost, currentCosts.supportCosts.taCost)
 						},
 						reader: {
-							rawCount: currentCosts.supportCosts.readerCount - previousCosts.supportCosts.readerCount,
+							rawCount: (currentCosts.supportCosts.readerCount - previousCosts.supportCosts.readerCount).toFixed(2),
 							percentageCount: this._percentageChange(previousCosts.supportCosts.readerCount, currentCosts.supportCosts.readerCount),
 							rawCost: currentCosts.supportCosts.readerCost - previousCosts.supportCosts.readerCost,
 							percentageCost: this._percentageChange(previousCosts.supportCosts.readerCost, currentCosts.supportCosts.readerCost),
