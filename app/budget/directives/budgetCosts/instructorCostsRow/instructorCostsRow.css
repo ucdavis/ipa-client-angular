@@ -69,10 +69,11 @@
 }
 
 .instructor-costs-row__hidden {
-	visibility: hidden;
+	display: none;
 }
 
 .instructor-costs-row__divider {
 	border-bottom: 1px solid #ddd;
 	margin-bottom: -2px;
 }
+
