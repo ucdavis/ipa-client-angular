@@ -119,6 +119,10 @@ class ScheduleCostCalculations {
         // Sort termCourses
         activeTerms.forEach(function(term) {
           scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
+
+          scheduleCosts.byTerm[term].forEach(function(scheduleCost) {
+            scheduleCost.sectionGroupCosts = _array_sortByProperty(scheduleCost.sectionGroupCosts, "sequencePattern");
+          });
         });
 
         BudgetReducers.reduce({
