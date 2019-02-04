@@ -2,7 +2,7 @@ class TeachingCallStatusStateService {
 	constructor ($rootScope, $log, ActionTypes) {
 		return {
 			_state: {},
-			_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
+			_teachingCallReceiptReducers: function (action, teachingCallReceipts, UserService) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						teachingCallReceipts = {
@@ -167,7 +167,8 @@ class TeachingCallStatusStateService {
 							userRoles.byUserId[userRole.userId] = userRole;
 						});
 						action.payload.instructors.forEach(function(instructor) {
-							var user = users.byLoginId[instructor.loginId.toLowerCase()];
+							var user = UserService.getUserByInstructor(instructor, users);
+
 							// Instructor may not have an associated user
 							if (!user) { return; }
 	

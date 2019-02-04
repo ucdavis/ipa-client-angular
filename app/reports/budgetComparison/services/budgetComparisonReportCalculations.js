@@ -421,7 +421,7 @@ class BudgetComparisonReportCalculations {
 				var instructor = instructors.list[instructorId];
 				if (!instructor) { return null; }
 
-				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+				var user = UserService.getUserByInstructor(instructor, users);
 
 				if (!user) { return; }
 

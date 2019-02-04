@@ -1,7 +1,7 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
 
 class BudgetCalculations {
-	constructor (BudgetReducers, TermService, Roles, ActionTypes, ScheduleCostCalculations) {
+	constructor (BudgetReducers, TermService, Roles, ActionTypes, ScheduleCostCalculations, UserService) {
 		return {
 			calculateScenarioTerms: function() {
 				var allTermTabs = [];
@@ -337,7 +337,8 @@ class BudgetCalculations {
 					if (instructorCost.instructorId != instructor.id) { return; }
 
 					instructor.instructorCost = instructorCost;
-					var user = users.byLoginId[instructor.loginId.toLowerCase()];
+					var user = UserService.getUserByInstructor(instructor, users);
+
           if (!user) { return; }
 
 					var instructorTypeId = null;
@@ -427,7 +428,7 @@ class BudgetCalculations {
 				var instructorTypes = BudgetReducers._state.instructorTypes;
 	
 				var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
-				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+					var user = UserService.getUserByInstructor(instructor, users);
 	
 				if (!user) { return; }
 	

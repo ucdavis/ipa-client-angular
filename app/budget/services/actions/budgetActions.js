@@ -792,7 +792,7 @@ class BudgetActions {
 				var userRoles = BudgetReducers._state.userRoles;
 				var instructorTypes = BudgetReducers._state.instructorTypes;
 
-				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+				var user = instructor.loginId ? users.byLoginId[instructor.loginId.toLowerCase()] : null;
         if (!user) { return null; }
 
 				var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
