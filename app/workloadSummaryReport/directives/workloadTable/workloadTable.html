@@ -70,7 +70,7 @@
 							{{ assignment.actualEnrollment }}&nbsp;/&nbsp;{{ assignment.seats }}&nbsp;<span ng-if="assignment.actualEnrollment" class="workload-table__enrollment-percent">(&nbsp;{{ assignment.enrollmentPercentage }}%&nbsp;)</span>
 						</div>
 						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals" ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
-							{{ instructor.totals.enrollment }} / {{ instructor.totals.seats }}
+							{{ instructor.totals.actualEnrollment }} / {{ instructor.totals.seats }}
 						</div>
 					</td>
 					<td>

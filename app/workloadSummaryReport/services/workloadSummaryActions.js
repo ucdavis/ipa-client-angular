@@ -316,6 +316,7 @@ class WorkloadSummaryActions {
 						studentCreditHours: 0,
 						enrollment: 0,
 						seats: 0,
+						actualEnrollment: 0,
 						previousEnrollment: 0,
 						assignmentCount: 0
 					};
@@ -384,6 +385,7 @@ class WorkloadSummaryActions {
 						instructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
 						instructor.totals.enrollment += assignment.enrollment || 0;
 						instructor.totals.seats += assignment.seats || 0;
+						instructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
 						instructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
 						instructor.totals.assignmentCount += 1;
 					});
