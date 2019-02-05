@@ -1,11 +1,11 @@
 import { toCurrency } from 'shared/helpers/string';
 
-import './yearTable.css';
+import './supportAndFunds.css';
 
-let yearTable = function (StringService) {
+let supportAndFunds = function (StringService) {
 	return {
 		restrict: 'E',
-		template: require('./yearTable.html'),
+		template: require('./supportAndFunds.html'),
 		replace: true,
 		scope: {
 			year: '<',
@@ -28,4 +28,4 @@ let yearTable = function (StringService) {
 	};
 };
 
-export default yearTable;
+export default supportAndFunds;

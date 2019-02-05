@@ -10,7 +10,7 @@
       <tr>
         <th colspan="4">
           <div class="dean-report__header-cell dean-report__header-cell--collapse-centered dean-report__header-cell--large-header">
-            {{ toAcademicYear(year) }}
+            {{ toAcademicYear(year) }} <span class="show-when-printing">{{ budgetScenarioName }}</span>
           </div>
         </th>
       </tr>
@@ -73,7 +73,15 @@
        </td>
       </tr>
     </tbody>
-    <!-- TAs and readers -->
+  </table>
+  <!-- TAs and readers -->
+  <table>
+    <colgroup>
+      <col style="width: 35%;">
+      <col style="width: 22.5%;">
+      <col style="width: 22.5%;">
+      <col style="width: 20%;">
+    </colgroup>
     <thead>
       <tr>
         <th>
@@ -152,7 +160,6 @@
         </td>
       </tr>
     </tbody>
-    <!-- Funding -->
     <thead>
       <tr>
         <th>
@@ -207,7 +214,17 @@
         </td>
       </tr>
     </tbody>
-    <!-- Misc stats (courses) -->
+  </table>
+
+  <!-- Misc stats (courses) -->
+  <table class="year-table__courses-offered">
+    <colgroup>
+      <col style="width: 35%;">
+      <col style="width: 22.5%;">
+      <col style="width: 22.5%;">
+      <col style="width: 20%;">
+    </colgroup>
+
     <thead>
       <tr>
         <th colspan="4">

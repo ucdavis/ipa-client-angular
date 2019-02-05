@@ -1,8 +1,12 @@
 .budget-comparison-report {
-  display: flex;
   width: 100%;
   padding: 20px;
   font-size: 12px;
+}
+
+.budget-comparison-report__section-container {
+  display: flex;
+  width: 100%;
 }
 
 .budget-comparison-report table {
@@ -30,4 +34,39 @@
   margin-right: 10px;
   display: flex;
   justify-content: center;
+}
+
+.show-when-printing {
+  display: none;
+}
+
+
+.budget-comparison-report__section-container {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.budget-comparison-report__section {
+  flex: 1 1 0px;
+  border-radius: 3px;
+  border: 1px solid #ebebeb;
+  margin-right: 10px;
+}
+
+@media print {
+  @page {
+    margin: 1cm;
+  }
+
+  div, span, td {
+    font-size: 8px !important;
+  }
+
+  .do-not-print {
+    display: none;
+  }
+
+  .show-when-printing {
+    display: block;
+  }
 }

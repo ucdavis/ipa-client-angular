@@ -1,31 +1,25 @@
 import { toCurrency } from 'shared/helpers/string';
 
-import './yearTable.css';
+import './miscStatChanges.css';
 
-let yearTable = function (StringService) {
+let miscStatChanges = function () {
 	return {
 		restrict: 'E',
-		template: require('./yearTable.html'),
+		template: require('./miscStatChanges.html'),
 		replace: true,
 		scope: {
-			year: '<',
 			lineItemCategories: '<',
 			instructorTypes: '<',
 			costs: '<',
 			funding: '<',
 			miscStats: '<',
-      budgetScenarioName: '<'
 		},
 		link: function (scope) {
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};
-
-			scope.toAcademicYear = function (year) {
-				return StringService.toAcademicYear(year);
-			};
 		}
 	};
 };
 
-export default yearTable;
+export default miscStatChanges;
