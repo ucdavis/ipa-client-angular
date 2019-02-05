@@ -82,3 +82,11 @@
 #searchInput{
 	min-width: 150px;
 }
+
+.divider {
+	height: 1px;
+	width:100%;
+	display:block;
+	overflow: hidden;
+	background-color: #000;
+}

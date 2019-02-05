@@ -21,10 +21,10 @@
                 <input id="searchInput" placeholder="Search"  ng-model="searchInput" autofocus>
                 <div ng-repeat="item in items | filter: searchInput">
                     <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
-                        {{ item.description }}
+                        {{ item[itemDescription] }}
                     </div>
                     <div class="item" ng-show="!item.rowType" ng-click="selectDropdownItem(item)">
-                    {{ item.description }}
+                        {{ item[itemDescription] }}
                     </div>
                 </div>
             </div>
@@ -47,11 +47,15 @@
                 <div  class="dropdown">
                     <div ng-repeat="item in items | filter: searchInput">
                         <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
-                            {{ item.description }}
+                            {{ item[itemDescription] }}
                         </div>
+                        
                         <div class="item" ng-show="!item.rowType" ng-click="selectDropdownItem(item)">
-                        {{ item.description }}
+                            {{ item[itemDescription] }}
                         </div>
+                        <div ng-show="item.rowType == 'separator'">
+                                <div role="presentation" class="divider courses-separator"></div>
+                            </div>
                     </div>
                 </div>
             </div>

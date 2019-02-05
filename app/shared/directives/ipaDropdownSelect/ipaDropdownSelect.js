@@ -6,6 +6,7 @@ let ipaDropdownSelect = function() {
 		
 		scope: {
 			items: '<', // Each item is expected to have an id, description (display value), and selected (bool flag). A rowType value = 'subheader' will display as header for another list group
+			itemDescription: '@',
 			buttonText: '<',
 			selectItem: '&',
 			showAs: '@', // Use 'button' or 'input' to show the component as such. Input is default.
@@ -16,6 +17,7 @@ let ipaDropdownSelect = function() {
 				button-text="'Search Person'"
 				show-as="input"
 				items="data"
+				item-description="displayName"
 				select-item="addItem(item)">
 			</ipa-dropdown-select>
 		*/
