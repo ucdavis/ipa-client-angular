@@ -90,7 +90,7 @@
 					</td>
 					<td>
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
-							{{ assignment.lastOffered }}
+							{{ assignment.lastOfferedEnrollment }}
 						</div>
 						<div class="workload-table__value workload-table__value--totals" ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
 							<!-- Intentionally blank -->
@@ -134,6 +134,11 @@
 					<td>
 						<div class="workload-table__value workload-table__value--type-totals-bar">
 							{{ totals.previousEnrollment }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							<!-- Intentionally blank -->
 						</div>
 					</td>
 					<td>

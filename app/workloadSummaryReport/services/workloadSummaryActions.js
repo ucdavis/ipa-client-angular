@@ -46,6 +46,20 @@ class WorkloadSummaryActions {
 						courses.list[course.id] = course;
 					});
 
+					// Adding census data to find last offering
+					courses.ids.forEach(function (courseId) {
+						var course = courses.list[courseId];
+						course.census = [];
+						var SNAPSHOT_CODE = "CURRENT";
+						DwService.getDwCensusData(course.subjectCode, course.courseNumber).then(function (courseCensus) {
+							courseCensus.forEach(function (census) {
+								if (census.snapshotCode === SNAPSHOT_CODE) {
+									course.census.push(census);
+								}
+							});
+						});
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_COURSES,
 						payload: {
@@ -340,6 +354,20 @@ class WorkloadSummaryActions {
 						assignment.termCode = termCode;
 
 						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
+
+						// Find last offering with enrollment count
+						if (course && course.census.length > 0) {
+							var lastOfferedEnrollment = 0;
+
+							for (var i = course.census.length - 1; i > 0; i--) {
+								if (course.census[i].currentEnrolledCount !== 0) {
+									lastOfferedEnrollment = course.census[i].currentEnrolledCount;
+									break;
+								}
+							}
+
+							assignment.lastOfferedEnrollment = lastOfferedEnrollment;
+						}
 
 						if (teachingAssignment.sectionGroupId > 0) {
 							assignment.sequencePattern = course.sequencePattern;
