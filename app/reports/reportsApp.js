@@ -11,8 +11,6 @@ import BudgetComparisonReportService from './budgetComparison/services/budgetCom
 import BudgetComparisonReportCalculations from './budgetComparison/services/budgetComparisonReportCalculations.js';
 
 // Directives
-import changeTable from './budgetComparison/directives/changeTable/changeTable.js';
-import yearTable from './budgetComparison/directives/yearTable/yearTable.js';
 import budgetScenarioSelector from './budgetComparison/directives/budgetScenarioSelector/budgetScenarioSelector.js';
 import courseCosts from './budgetComparison/directives/courseCosts/courseCosts.js';
 import courseCostChanges from './budgetComparison/directives/courseCostChanges/courseCostChanges.js';
@@ -61,14 +59,12 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                           .service('BudgetComparisonReportService', BudgetComparisonReportService)
                           .service('BudgetComparisonReportCalculations', BudgetComparisonReportCalculations)
                           .service('StringService', StringService)
-                          .directive('yearTable', yearTable)
                           .directive('courseCosts', courseCosts)
                           .directive('courseCostChanges', courseCostChanges)
                           .directive('miscStats', miscStats)
                           .directive('miscStatChanges', miscStatChanges)
                           .directive('supportAndFunds', supportAndFunds)
                           .directive('supportAndFundChanges', supportAndFundChanges)
-                          .directive('changeTable', changeTable)
                           .directive('budgetScenarioSelector', budgetScenarioSelector)
                           .config(config)
                           .constant('ActionTypes', {
