@@ -347,6 +347,27 @@ class SchedulingStateService {
 						return activities;
 					case ActionTypes.UPDATE_ACTIVITY:
 						activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
+
+						activities.customLocationConflictActivityIds = [];
+						// Filter and flag custom locations
+						var customLocationActivities = [];
+						activities.ids.forEach(function (activityId) {
+							if (activities.list[activityId].locationType === "custom") {
+								customLocationActivities.push(activities.list[activityId]);
+							}
+						});
+
+						for (let index = 0; index < customLocationActivities.length; index++) {
+							var slotActivity = customLocationActivities[index];
+
+							customLocationActivities.forEach(function (activity) {
+								if (activity.id !== slotActivity.id && activity.dayIndicator === slotActivity.dayIndicator && activity.locationId === slotActivity.locationId && activity.startTime < slotActivity.endTime && slotActivity.startTime < activity.endTime) {
+									activities.list[slotActivity.id].locationConflict = true;
+									activities.customLocationConflictActivityIds.push(slotActivity.id);
+								}
+							});
+						}
+
 						return activities;
 					case ActionTypes.DELETE_SECTION:
 						action.payload.section.activityIds.forEach(function(activityId) {
@@ -599,6 +620,7 @@ class SchedulingStateService {
 				newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 
+				newState.uiState.calendarMode.tabIcons = {};
 				newState.activities.customLocationConflictActivityIds.forEach(function(activityId) {
 					var conflictDays = newState.activities.list[activityId].dayIndicator.split("");
 					
