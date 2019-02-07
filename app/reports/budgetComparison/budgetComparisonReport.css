@@ -162,3 +162,8 @@
 .year-table__courses-offered {
   width: 100%;
 }
+
+.dean-report__header-cell--left {
+  text-align: left;
+  padding-left: 20px;
+}
