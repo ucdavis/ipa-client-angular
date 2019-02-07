@@ -11,9 +11,13 @@ import BudgetComparisonReportService from './budgetComparison/services/budgetCom
 import BudgetComparisonReportCalculations from './budgetComparison/services/budgetComparisonReportCalculations.js';
 
 // Directives
-import changeTable from './budgetComparison/directives/changeTable/changeTable.js';
-import yearTable from './budgetComparison/directives/yearTable/yearTable.js';
 import budgetScenarioSelector from './budgetComparison/directives/budgetScenarioSelector/budgetScenarioSelector.js';
+import courseCosts from './budgetComparison/directives/courseCosts/courseCosts.js';
+import courseCostChanges from './budgetComparison/directives/courseCostChanges/courseCostChanges.js';
+import supportAndFunds from './budgetComparison/directives/supportAndFunds/supportAndFunds.js';
+import supportAndFundChanges from './budgetComparison/directives/supportAndFundChanges/supportAndFundChanges.js';
+import miscStats from './budgetComparison/directives/miscStats/miscStats.js';
+import miscStatChanges from './budgetComparison/directives/miscStatChanges/miscStatChanges.js';
 
 // Dependencies
 var dependencies = [
@@ -55,8 +59,12 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                           .service('BudgetComparisonReportService', BudgetComparisonReportService)
                           .service('BudgetComparisonReportCalculations', BudgetComparisonReportCalculations)
                           .service('StringService', StringService)
-                          .directive('yearTable', yearTable)
-                          .directive('changeTable', changeTable)
+                          .directive('courseCosts', courseCosts)
+                          .directive('courseCostChanges', courseCostChanges)
+                          .directive('miscStats', miscStats)
+                          .directive('miscStatChanges', miscStatChanges)
+                          .directive('supportAndFunds', supportAndFunds)
+                          .directive('supportAndFundChanges', supportAndFundChanges)
                           .directive('budgetScenarioSelector', budgetScenarioSelector)
                           .config(config)
                           .constant('ActionTypes', {
