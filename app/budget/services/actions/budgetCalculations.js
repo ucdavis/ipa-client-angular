@@ -605,7 +605,7 @@ class BudgetCalculations {
 				if (!instructorTypeId && !instructor) { return replacementCosts; }
 
 				if (!instructorTypeId) {
-					instructorTypeId = instructor.instructorType.id;
+					instructorTypeId = this._calculateInstructorType(instructor.id).id;
 				}
 
 				var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
