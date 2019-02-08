@@ -605,6 +605,40 @@ class SchedulingStateService {
 				activities.locationConflictDays = locationConflictDays;
 				activities.locationConflictActivityIds = locationConflictActivityIds;
 			},
+			_generateCalendarTabIcons: function (locationConflictDays, tabIcons) {
+				var tabIconClasses = "entypo-attention activity__event--location-conflict";
+				tabIcons = { "Weekly": "", "Sunday": "", "Monday": "", "Tuesday": "", "Wednesday": "", "Thursday": "", "Friday": "", "Saturday": "" };
+
+				locationConflictDays.forEach(function (_, index) {
+					switch (index) {
+						case 0:
+							tabIcons["Sunday"] = tabIconClasses;
+							break;
+						case 1:
+							tabIcons["Monday"] = tabIconClasses;
+							break;
+						case 2:
+							tabIcons["Tuesday"] = tabIconClasses;
+							break;
+						case 3:
+							tabIcons["Wednesday"] = tabIconClasses;
+							break;
+						case 4:
+							tabIcons["Thursday"] = tabIconClasses;
+							break;
+						case 5:
+							tabIcons["Friday"] = tabIconClasses;
+							break;
+						case 6:
+							tabIcons["Saturday"] = tabIconClasses;
+							break;
+						default:
+							break;
+					}
+				});
+
+				return tabIcons;
+			},
 			reduce: function (action) {
 				var scope = this;
 	
@@ -626,35 +660,7 @@ class SchedulingStateService {
 				newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 
-				newState.uiState.calendarMode.tabIcons = {};
-				var tabIconClasses = "entypo-attention activity__event--location-conflict";
-				newState.activities.locationConflictDays.forEach(function (hasConflict, index) {
-					switch (index) {
-						case 0:
-							newState.uiState.calendarMode.tabIcons["Sunday"] = hasConflict ? tabIconClasses : "";
-							break;
-						case 1:
-							newState.uiState.calendarMode.tabIcons["Monday"] = hasConflict ? tabIconClasses : "";
-							break;
-						case 2:
-							newState.uiState.calendarMode.tabIcons["Tuesday"] = hasConflict ? tabIconClasses : "";
-							break;
-						case 3:
-							newState.uiState.calendarMode.tabIcons["Wednesday"] = hasConflict ? tabIconClasses : "";
-							break;
-						case 4:
-							newState.uiState.calendarMode.tabIcons["Thursday"] = hasConflict ? tabIconClasses : "";
-							break;
-						case 5:
-							newState.uiState.calendarMode.tabIcons["Friday"] = hasConflict ? tabIconClasses : "";
-							break;
-						case 6:
-							newState.uiState.calendarMode.tabIcons["Saturday"] = hasConflict ? tabIconClasses : "";
-							break;
-						default:
-							break;
-					}
-				});
+				newState.uiState.calendarMode.tabIcons = this._generateCalendarTabIcons(newState.activities.locationConflictDays, newState.uiState.calendarMode.tabIcons);
 
 				scope._state = newState;
 				$rootScope.$emit('schedulingStateChanged', {
