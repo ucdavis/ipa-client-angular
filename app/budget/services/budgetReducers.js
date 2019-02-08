@@ -590,15 +590,19 @@ class BudgetReducers {
 							sectionGroup.assignedInstructorTypeNames = [];
 	
 							// calculate assignedInstructors
-							teachingAssignments.ids.forEach(function(instructorId) {
-								var teachingAssignment = teachingAssignments.list[instructorId];
+							teachingAssignments.ids.forEach(function(teachingAssignmentId) {
+								var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
+
 								if (teachingAssignment.sectionGroupId != sectionGroup.id || !(teachingAssignment.approved)) { return; }
-	
+
 								if (teachingAssignment.instructorId) {
 									sectionGroup.assignedInstructorIds.push(teachingAssignment.instructorId);
 									var instructor = assignedInstructors.list[teachingAssignment.instructorId];
 									var instructorName = instructor.lastName + ", " + instructor.firstName;
+									var instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
 									sectionGroup.assignedInstructorNames.push(instructorName);
+									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
+									sectionGroup.assignedInstructorTypeNames.push(instructorType.description);
 								} else if (teachingAssignment.instructorTypeId > 0 && !(teachingAssignment.instructorId)) {
 									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
 									var instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
