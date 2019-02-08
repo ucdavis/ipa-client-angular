@@ -306,8 +306,7 @@ class SchedulingStateService {
 					case ActionTypes.INIT_STATE:
 						activities = {
 							list: {},
-							ids: [],
-							customLocationConflictActivityIds: []
+							ids: []
 						};
 						var activitiesList = {};
 						var length = action.payload.activities ? action.payload.activities.length : 0;
@@ -320,25 +319,7 @@ class SchedulingStateService {
 						}
 						activities.list = activitiesList;
 
-						// Filter and flag custom locations
-						var customLocationActivities = [];
-						activities.ids.forEach(function(activityId) {
-							if (activities.list[activityId].locationType === "custom") {
-								customLocationActivities.push(activities.list[activityId]);
-							}
-						});
-
-						for (let index = 0; index < customLocationActivities.length; index++) {
-							var slotActivity = customLocationActivities[index];
-
-							customLocationActivities.forEach(function(activity) {
-								if (activity.id !== slotActivity.id && activity.dayIndicator === slotActivity.dayIndicator && activity.locationId === slotActivity.locationId && activity.startTime < slotActivity.endTime && slotActivity.startTime < activity.endTime) {
-									activities.list[slotActivity.id].locationConflict = true;
-									activities.customLocationConflictActivityIds.push(slotActivity.id);
-								}
-							});
-						}
-
+						this._calculateLocationConflicts(activities);
 						return activities;
 					case ActionTypes.REMOVE_ACTIVITY:
 						var activityIndex = activities.ids.indexOf(action.payload.activity.id);
@@ -347,27 +328,7 @@ class SchedulingStateService {
 						return activities;
 					case ActionTypes.UPDATE_ACTIVITY:
 						activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
-
-						activities.customLocationConflictActivityIds = [];
-						// Filter and flag custom locations
-						var customLocationActivities = [];
-						activities.ids.forEach(function (activityId) {
-							if (activities.list[activityId].locationType === "custom") {
-								customLocationActivities.push(activities.list[activityId]);
-							}
-						});
-
-						for (let index = 0; index < customLocationActivities.length; index++) {
-							var slotActivity = customLocationActivities[index];
-
-							customLocationActivities.forEach(function (activity) {
-								if (activity.id !== slotActivity.id && activity.dayIndicator === slotActivity.dayIndicator && activity.locationId === slotActivity.locationId && activity.startTime < slotActivity.endTime && slotActivity.startTime < activity.endTime) {
-									activities.list[slotActivity.id].locationConflict = true;
-									activities.customLocationConflictActivityIds.push(slotActivity.id);
-								}
-							});
-						}
-
+						this._calculateLocationConflicts(activities);
 						return activities;
 					case ActionTypes.DELETE_SECTION:
 						action.payload.section.activityIds.forEach(function(activityId) {
@@ -599,6 +560,47 @@ class SchedulingStateService {
 						return uiState;
 				}
 			},
+			_calculateLocationConflicts: function (activities) {
+				var locationConflictDays = [];
+				var customLocationByDays = {
+					0: [],
+					1: [],
+					2: [],
+					3: [],
+					4: [],
+					5: [],
+					6: [],
+				};
+
+				activities.ids.forEach(function (activityId) {
+					if (activities.list[activityId].locationType === "custom") {
+						var dayIndicator = activities.list[activityId].dayIndicator;
+						var dayIndicatorArray = dayIndicator.split("");
+						dayIndicatorArray.forEach(function (day, index) {
+							if (parseInt(day)) {
+								customLocationByDays[index].push(activities.list[activityId]);
+							}
+						});
+					}
+				});
+
+				for (var day in customLocationByDays) {
+					var customLocationActivities = customLocationByDays[day];
+
+					for (var index = 0; index < customLocationActivities.length; index++) {
+						var slotActivity = customLocationActivities[index];
+
+						customLocationActivities.forEach(function (activity) {
+							if (activity.id !== slotActivity.id && activity.locationId === slotActivity.locationId && activity.startTime < slotActivity.endTime && slotActivity.startTime < activity.endTime) {
+								activities.list[slotActivity.id].locationConflict = true;
+								locationConflictDays[day] = true;
+							}
+						});
+					}
+				}
+
+				activities.locationConflictDays = locationConflictDays;
+			},
 			reduce: function (action) {
 				var scope = this;
 	
@@ -621,38 +623,33 @@ class SchedulingStateService {
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
 
 				newState.uiState.calendarMode.tabIcons = {};
-				newState.activities.customLocationConflictActivityIds.forEach(function(activityId) {
-					var conflictDays = newState.activities.list[activityId].dayIndicator.split("");
-					
-					conflictDays.forEach(function(conflictDay, index) {
-						var conflictDay = parseInt(conflictDay);
-						var tabIconClasses = "entypo-attention activity__event--location-conflict";
-						switch (index) {
-							case 0:
-								newState.uiState.calendarMode.tabIcons["Sunday"] = conflictDay ? tabIconClasses : "";
-								break;
-							case 1:
-								newState.uiState.calendarMode.tabIcons["Monday"] = conflictDay ? tabIconClasses : "";
-								break;
-							case 2:
-								newState.uiState.calendarMode.tabIcons["Tuesday"] = conflictDay ? tabIconClasses : "";
-								break;
-							case 3:
-								newState.uiState.calendarMode.tabIcons["Wednesday"] = conflictDay ? tabIconClasses : "";
-								break;
-							case 4:
-								newState.uiState.calendarMode.tabIcons["Thursday"] = conflictDay ? tabIconClasses : "";
-								break;
-							case 5:
-								newState.uiState.calendarMode.tabIcons["Friday"] = conflictDay ? tabIconClasses : "";
-								break;
-							case 6:
-								newState.uiState.calendarMode.tabIcons["Saturday"] = conflictDay ? tabIconClasses : "";
-								break;
-							default:
-								break;
-						}
-					});
+				var tabIconClasses = "entypo-attention activity__event--location-conflict";
+				newState.activities.locationConflictDays.forEach(function (hasConflict, index) {
+					switch (index) {
+						case 0:
+							newState.uiState.calendarMode.tabIcons["Sunday"] = hasConflict ? tabIconClasses : "";
+							break;
+						case 1:
+							newState.uiState.calendarMode.tabIcons["Monday"] = hasConflict ? tabIconClasses : "";
+							break;
+						case 2:
+							newState.uiState.calendarMode.tabIcons["Tuesday"] = hasConflict ? tabIconClasses : "";
+							break;
+						case 3:
+							newState.uiState.calendarMode.tabIcons["Wednesday"] = hasConflict ? tabIconClasses : "";
+							break;
+						case 4:
+							newState.uiState.calendarMode.tabIcons["Thursday"] = hasConflict ? tabIconClasses : "";
+							break;
+						case 5:
+							newState.uiState.calendarMode.tabIcons["Friday"] = hasConflict ? tabIconClasses : "";
+							break;
+						case 6:
+							newState.uiState.calendarMode.tabIcons["Saturday"] = hasConflict ? tabIconClasses : "";
+							break;
+						default:
+							break;
+					}
 				});
 
 				scope._state = newState;
