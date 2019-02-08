@@ -306,7 +306,8 @@ class SchedulingStateService {
 					case ActionTypes.INIT_STATE:
 						activities = {
 							list: {},
-							ids: []
+							ids: [],
+							locationConflictActivityIds: []
 						};
 						var activitiesList = {};
 						var length = action.payload.activities ? action.payload.activities.length : 0;
@@ -562,6 +563,7 @@ class SchedulingStateService {
 			},
 			_calculateLocationConflicts: function (activities) {
 				var locationConflictDays = [];
+				var locationConflictActivityIds = [];
 				var customLocationByDays = {
 					0: [],
 					1: [],
@@ -594,12 +596,14 @@ class SchedulingStateService {
 							if (activity.id !== slotActivity.id && activity.locationId === slotActivity.locationId && activity.startTime < slotActivity.endTime && slotActivity.startTime < activity.endTime) {
 								activities.list[slotActivity.id].locationConflict = true;
 								locationConflictDays[day] = true;
+								locationConflictActivityIds.push(slotActivity.id);
 							}
 						});
 					}
 				}
 
 				activities.locationConflictDays = locationConflictDays;
+				activities.locationConflictActivityIds = locationConflictActivityIds;
 			},
 			reduce: function (action) {
 				var scope = this;

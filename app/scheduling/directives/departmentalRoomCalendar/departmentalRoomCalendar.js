@@ -90,8 +90,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						var locationId = scope.locations.ids[locationIndex];
 						var location = scope.locations.list[locationId];
 
-						if (location.hasConflict) {
-							location.hasConflict = false;
+						if (location.hasLocationConflict) {
+							location.hasLocationConflict = false;
 							return "<span>" + location.description + " <i class=\"entypo-attention activity__event--location-conflict\"></i>" + "</span>";
 						} else {
 							return "<span>" + location.description + "</span>";
@@ -129,7 +129,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						});
 					},
 					eventRender: function(event, element) {
-						if (event.locationConflict) {
+						if (event.hasLocationConflict) {
 							element.find(".fc-title").append("<i class=\"entypo-attention activity__event--location-conflict\"></i>");
 						}
 					},
@@ -181,18 +181,12 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 					});
 				}
 
-				// Flags custom location and time conflicted activities
-				for (let index = 0; index < calendarActivities.length; index++) {
-					var slotActivity = calendarActivities[index];
-
-					calendarActivities.forEach(function (activity) {
-						if (activity.activityId !== slotActivity.activityId && activity.locationIndex === slotActivity.locationIndex && activity.start < slotActivity.end && slotActivity.start < activity.end) {
-							slotActivity.locationConflict = true;
-							var slotLocationId = scope.locations.ids[slotActivity.locationIndex];
-							scope.locations.list[slotLocationId].hasConflict = true;
-						}
-					});
-				}
+				calendarActivities.forEach(function (calendarActivity) {
+					if (scope.view.state.activities.locationConflictActivityIds.includes(calendarActivity.activityId)) {
+						calendarActivity.hasLocationConflict = true;
+						scope.locations.list[scope.locations.ids[calendarActivity.locationIndex]].hasLocationConflict = true;
+					}
+				});
 
 				return calendarActivities;
 			};
