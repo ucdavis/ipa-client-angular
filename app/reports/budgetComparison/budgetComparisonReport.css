@@ -167,3 +167,15 @@
   text-align: left;
   padding-left: 20px;
 }
+
+.budget-comparison-report__workgroup-title {
+  font-size: 18px;
+  display: none;
+  justify-content: center;
+}
+
+@media print {
+  .budget-comparison-report__workgroup-title {
+    display: flex;
+  }
+}

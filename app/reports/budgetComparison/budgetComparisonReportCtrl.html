@@ -10,6 +10,10 @@
   <no-access workgroup-name="sharedState.workgroup.name"></no-access>
 </div>
 
+<div class="budget-comparison-report__workgroup-title">
+  {{ sharedState.workgroup.name }} Budget Comparison Report
+</div>
+
 <div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="do-not-print budget-comparison-report__scenario-selector-tray">
   <div class="budget-comparison-report__scenario-selector-container">
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
