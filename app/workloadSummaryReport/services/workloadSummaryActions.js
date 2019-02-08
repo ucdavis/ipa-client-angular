@@ -365,15 +365,18 @@ class WorkloadSummaryActions {
 						// Find last offering with enrollment count
 						if (course && course.census.length > 0) {
 							var lastOfferedEnrollment = 0;
+							var lastOfferedTermCode = "";
 
 							for (var i = course.census.length - 1; i > 0; i--) {
 								if (course.census[i].currentEnrolledCount !== 0) {
 									lastOfferedEnrollment = course.census[i].currentEnrolledCount;
+									lastOfferedTermCode = course.census[i].termCode.toString();
 									break;
 								}
 							}
 
 							assignment.lastOfferedEnrollment = lastOfferedEnrollment || 0;
+							assignment.lastOfferedTermDescription = TermService.getTermName(lastOfferedTermCode, true);
 						}
 
 						if (teachingAssignment.sectionGroupId > 0) {
