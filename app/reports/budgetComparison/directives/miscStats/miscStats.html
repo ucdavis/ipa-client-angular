@@ -1,0 +1,120 @@
+<table class="year-table__courses-offered">
+  <colgroup>
+    <col style="width: 35%;">
+    <col style="width: 22.5%;">
+    <col style="width: 22.5%;">
+    <col style="width: 20%;">
+  </colgroup>
+
+  <thead>
+    <tr>
+      <th colspan="4">
+        <div class="dean-report__header-cell dean-report__header-cell--collapse-centered">
+          Courses Offered
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container">
+          # Lower div.
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          # Upper div.
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          # Grad.
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+          Total
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ miscStats.lower.courses }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ miscStats.upper.courses }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ miscStats.grad.courses }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+          {{ miscStats.total.courses }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!-- Misc stats (seats) -->
+  <thead>
+    <tr>
+      <th colspan="4">
+        <div class="dean-report__header-cell dean-report__header-cell--collapse-centered">
+          Total Seats Offered (excluding Grad)
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container">
+          # Lower div.
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          # Upper div.
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          # Grad.
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+          Total
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container">
+          {{ miscStats.lower.seats }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ miscStats.upper.seats }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          N/A
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+          {{ miscStats.total.seats }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

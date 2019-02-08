@@ -306,6 +306,7 @@ class WorkloadSummaryActions {
 						byInstructorTypeId: {},
 						units: 0,
 						studentCreditHours: 0,
+						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
 						instructorCount: 0,
@@ -329,6 +330,8 @@ class WorkloadSummaryActions {
 						units: 0,
 						studentCreditHours: 0,
 						enrollment: 0,
+						seats: 0,
+						actualEnrollment: 0,
 						previousEnrollment: 0,
 						assignmentCount: 0
 					};
@@ -336,6 +339,7 @@ class WorkloadSummaryActions {
 					calculatedView.totals.byInstructorTypeId[instructorTypeId] = calculatedView.totals.byInstructorTypeId[instructorTypeId] || {
 						units: 0,
 						studentCreditHours: 0,
+						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
 						assignmentCount: 0
@@ -393,13 +397,15 @@ class WorkloadSummaryActions {
 							assignment.studentCreditHours = assignment.seats * assignment.units;
 
 							calculatedView.totals.assignmentCount += 1;
-							calculatedView.totals.enrollment += assignment.enrollment;
+							calculatedView.totals.seats += assignment.seats;
+							calculatedView.totals.enrollment += assignment.actualEnrollment;
 							calculatedView.totals.previousEnrollment += assignment.previousEnrollment;
 							calculatedView.totals.units += assignment.units;
 							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
 
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].assignmentCount += 1;
-							calculatedView.totals.byInstructorTypeId[instructorTypeId].enrollment += assignment.enrollment;
+							calculatedView.totals.byInstructorTypeId[instructorTypeId].seats += assignment.seats;
+							calculatedView.totals.byInstructorTypeId[instructorTypeId].enrollment += assignment.actualEnrollment;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].previousEnrollment += assignment.previousEnrollment;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].units += assignment.units;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentCreditHours += assignment.studentCreditHours;
@@ -410,6 +416,8 @@ class WorkloadSummaryActions {
 						instructor.totals.units += assignment.units || 0;
 						instructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
 						instructor.totals.enrollment += assignment.enrollment || 0;
+						instructor.totals.seats += assignment.seats || 0;
+						instructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
 						instructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
 						instructor.totals.assignmentCount += 1;
 					});

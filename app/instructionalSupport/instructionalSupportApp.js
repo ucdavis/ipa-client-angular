@@ -76,7 +76,7 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, StudentFormActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						var roles = ['academicPlanner', 'studentMaster', 'studentPhd', 'instructionalSupport'];
+						var roles = ['academicPlanner', 'studentMasters', 'studentPhd', 'instructionalSupport'];
 						var hasAccess = AuthService.getCurrentUser().hasAccess(roles, $route.current.params.workgroupId);
 
 						if (hasAccess) {
