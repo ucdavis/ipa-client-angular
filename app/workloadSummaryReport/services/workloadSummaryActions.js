@@ -402,6 +402,100 @@ class WorkloadSummaryActions {
 
 				calculatedView.instructorTypeIds = InstructorTypeService.orderInstructorTypeIdsAlphabetically(calculatedView.instructorTypeIds, instructorTypes);
 
+				// Generic Instructor/Assignment Totals
+				var genericInstructors = {
+					instructorTypeIds: [],
+					byInstructorType: {},
+				};
+
+				teachingAssignments.ids.forEach(function (teachingAssignmentId) {
+					var slotTeachingAssignment = teachingAssignments.list[teachingAssignmentId];
+
+					if (slotTeachingAssignment.instructorId === null) {
+						var instructorTypeId = slotTeachingAssignment.instructorTypeId;
+
+						if (genericInstructors.instructorTypeIds.indexOf(instructorTypeId) == -1) {
+							genericInstructors.instructorTypeIds.push(instructorTypeId);
+							genericInstructors.byInstructorType[instructorTypeId] = {
+								fullName: "Unassigned " + slotTeachingAssignment.instructorDisplayName,
+								instructorAssignments: [],
+								assignments: [],
+								totals: {
+									units: 0,
+									studentCreditHours: 0,
+									enrollment: 0,
+									seats: 0,
+									actualEnrollment: 0,
+									previousEnrollment: 0,
+									assignmentCount: 0
+								}
+							};
+						}
+
+						genericInstructors.byInstructorType[slotTeachingAssignment.instructorTypeId].instructorAssignments.push(slotTeachingAssignment);
+					}
+				});
+
+				genericInstructors.instructorTypeIds.forEach(function (genericInstructorTypeId) {
+					var genericInstructor = genericInstructors.byInstructorType[genericInstructorTypeId];
+
+					genericInstructor.instructorAssignments.forEach(function (teachingAssignment) {
+						var assignment = {};
+						var termCode = teachingAssignment.termCode;
+						var sectionGroup = teachingAssignment.sectionGroupId > 0 ? sectionGroups.list[teachingAssignment.sectionGroupId] : null;
+						var course = sectionGroup ? courses.list[sectionGroup.courseId] : null;
+
+						assignment.term = TermService.getTermName(termCode);
+						assignment.termCode = termCode;
+
+						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
+
+						if (teachingAssignment.sectionGroupId > 0) {
+							assignment.sequencePattern = course.sequencePattern;
+							assignment.enrollment = _self._getEnrollment(sectionGroup);
+
+							assignment.actualEnrollment = sectionGroup.actualEnrollment;
+							assignment.maxEnrollment = sectionGroup.maxEnrollment;
+
+							var seats = 0;
+
+							var sections = WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id];
+
+							if (sections) {
+								sections.forEach(function (section) {
+									seats += section.seats;
+								});
+							}
+
+							assignment.seats = seats;
+							assignment.previousEnrollment = sectionGroup.previousEnrollment;
+							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
+							assignment.units = _self._getUnits(course);
+							assignment.studentCreditHours = assignment.seats * assignment.units;
+
+							calculatedView.totals.assignmentCount += 1;
+							calculatedView.totals.seats += assignment.seats;
+							calculatedView.totals.enrollment += assignment.actualEnrollment;
+							calculatedView.totals.previousEnrollment += assignment.previousEnrollment;
+							calculatedView.totals.units += assignment.units;
+							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
+
+							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].assignmentCount += 1;
+							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].seats += assignment.seats;
+							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].enrollment += assignment.actualEnrollment;
+							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].previousEnrollment += assignment.previousEnrollment;
+							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].units += assignment.units;
+							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentCreditHours += assignment.studentCreditHours;
+						}
+					});
+				});
+				// Generic Instructor/Assignment Totals
+
+				debugger;
+				genericInstructors.instructorTypeIds.forEach(function(instructorTypeId) {
+					calculatedView.byInstructorType[instructorTypeId].push(genericInstructors.byInstructorType[instructorTypeId]);
+				});
+
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
 					payload: {
