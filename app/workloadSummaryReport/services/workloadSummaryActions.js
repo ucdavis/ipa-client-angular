@@ -362,15 +362,15 @@ class WorkloadSummaryActions {
 
 						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
 
-						// Find last offering with enrollment count
 						if (course && course.census.length > 0) {
 							var lastOfferedEnrollment = 0;
 							var lastOfferedTermCode = "";
 
 							for (var i = course.census.length - 1; i > 0; i--) {
-								if (course.census[i].currentEnrolledCount !== 0) {
-									lastOfferedEnrollment = course.census[i].currentEnrolledCount;
-									lastOfferedTermCode = course.census[i].termCode.toString();
+								var slotCensus = course.census[i];
+								if (slotCensus.currentEnrolledCount !== 0 && slotCensus.termCode < parseInt(termCode)) {
+									lastOfferedEnrollment = slotCensus.currentEnrolledCount;
+									lastOfferedTermCode = slotCensus.termCode.toString();
 									break;
 								}
 							}
