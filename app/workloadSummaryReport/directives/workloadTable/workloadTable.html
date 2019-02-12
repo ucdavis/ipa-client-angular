@@ -40,7 +40,8 @@
 				</tr>
 				<tr ng-repeat="instructor in instructors | orderBy: 'lastName'" class="workload-table__row">
 					<td class="workload-table__name-cell">
-						{{ instructor.lastName }}, {{ instructor.firstName }}
+						<span ng-if="instructor.lastName">{{ instructor.lastName }}, {{ instructor.firstName }}</span>
+						<span ng-if="!instructor.lastName">{{ instructor.fullName }}</span>
 					</td>
 					<td>
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
