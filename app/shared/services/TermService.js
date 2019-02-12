@@ -43,7 +43,7 @@ class TermService {
 				shortTermCode = termCode.slice(-2);
 	
 				if (short) {
-					return this.termCodeShortDescriptions[shortTermCode] + year.substring(0,2);
+					return this.termCodeShortDescriptions[shortTermCode] + year.substring(2);
 				}
 				return this.termCodeDescriptions[shortTermCode] + " " + year;
 			},
