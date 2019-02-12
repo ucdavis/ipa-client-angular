@@ -32,7 +32,7 @@ class TermService {
 			 * @param {string} termCode
 			 * @returns {string} Full term description with year, e.g. "Fall Quarter 2017"
 			 */
-			getTermName: function(termCode, short = false) {
+			getTermName: function(termCode, shortDescription = false) {
 				var year, shortTermCode;
 
 				if (!termCode || termCode.length != 6) {
@@ -42,8 +42,8 @@ class TermService {
 				year = termCode.substring(0, 4);
 				shortTermCode = termCode.slice(-2);
 	
-				if (short) {
-					return this.termCodeShortDescriptions[shortTermCode] + year.substring(2);
+				if (shortDescription) {
+					return this.termCodeShortDescriptions[shortTermCode] + " " + year.substring(2);
 				}
 				return this.termCodeDescriptions[shortTermCode] + " " + year;
 			},
