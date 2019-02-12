@@ -417,7 +417,7 @@ class WorkloadSummaryActions {
 						if (genericInstructors.instructorTypeIds.indexOf(instructorTypeId) == -1) {
 							genericInstructors.instructorTypeIds.push(instructorTypeId);
 							genericInstructors.byInstructorType[instructorTypeId] = {
-								fullName: "Unassigned " + slotTeachingAssignment.instructorDisplayName,
+								fullName: "TBD " + slotTeachingAssignment.instructorDisplayName,
 								instructorAssignments: [],
 								assignments: [],
 								totals: {
@@ -487,14 +487,23 @@ class WorkloadSummaryActions {
 							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].units += assignment.units;
 							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentCreditHours += assignment.studentCreditHours;
 						}
-					});
-				});
-				// Generic Instructor/Assignment Totals
 
-				debugger;
-				genericInstructors.instructorTypeIds.forEach(function(instructorTypeId) {
-					calculatedView.byInstructorType[instructorTypeId].push(genericInstructors.byInstructorType[instructorTypeId]);
-				});
+						genericInstructor.assignments.push(assignment);
+
+						genericInstructor.totals.units += assignment.units || 0;
+						genericInstructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
+						genericInstructor.totals.enrollment += assignment.enrollment || 0;
+						genericInstructor.totals.seats += assignment.seats || 0;
+						genericInstructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
+						genericInstructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
+						genericInstructor.totals.assignmentCount += 1;
+					});
+
+					genericInstructor.assignments = _array_sortByProperty(genericInstructor.assignments, ["termCode", "description"]);
+
+					calculatedView.byInstructorType[genericInstructorTypeId].push(genericInstructor);
+					calculatedView.totals.instructorCount += 1;
+				}); // Generic Instructor/Assignment Totals
 
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
