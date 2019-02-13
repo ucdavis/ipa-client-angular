@@ -1,4 +1,4 @@
-import './workloadUnassignedTable.css';
+import '../workloadTable/workloadTable.css';
 
 let workloadUnassignedTable = function () {
 	return {
