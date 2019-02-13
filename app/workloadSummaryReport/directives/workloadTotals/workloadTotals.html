@@ -1,5 +1,5 @@
 <div class="workload-totals">
-	<div class="workload-totals__header">
+	<div class="workload-summary__table-label">
 		Assignment Totals
 	</div>
 	<div class="workload-totals__content">
@@ -17,13 +17,14 @@
 			<tbody>
 				<tr>
 					<td class="workload-table__header-cell workload-table__header-cell--first">
+						Totals
+					</td>
+					<td class="workload-table__header-cell workload-table__header-cell--first">
 						Instructors
 					</td>
-					<td class="workload-table__header-cell"></td>
 					<td class="workload-table__header-cell">
 						Assignments
 					</td>
-					<td class="workload-table__header-cell"></td>
 					<td class="workload-table__header-cell">
 						Enrollment
 					</td>
@@ -37,17 +38,20 @@
 						SCH
 					</td>
 				</tr>
-				<tr ng-repeat="totals in state.calculations.calculatedView.workloadTotals">
+				<tr ng-repeat="(key, totals)  in state.calculations.calculatedView.workloadTotals">
+					<td class="workload-totals__cell workload-totals__cell--first">
+						<div>
+							{{ key }}
+						</div>
+					</td>
 					<td class="workload-totals__cell workload-totals__cell--first">
 						<div>
 							{{ totals.instructorCount }}
 						</div>
 					</td>
-					<td class="workload-totals__cell"></td>
 					<td class="workload-totals__cell">
 							{{ totals.assignmentCount }}
 					</td>
-					<td class="workload-totals__cell"></td>
 					<td class="workload-totals__cell">
 						<div>
 							{{ totals.enrollment }}
@@ -69,6 +73,42 @@
 						</div>
 					</td>
 				</tr>
+
+				<!-- Table totals -->
+				<tr class="workload-table__row">
+						<td class="workload-table__name-cell workload-table__value workload-table__value--totals">Totals</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+								{{ state.calculations.calculatedView.workloadTotals["Assigned"].instructorCount + state.calculations.calculatedView.workloadTotals["Unassigned"].instructorCount + state.calculations.calculatedView.workloadTotals["TBD Instructor"].instructorCount }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+								{{ state.calculations.calculatedView.workloadTotals["Assigned"].assignmentCount + state.calculations.calculatedView.workloadTotals["Unassigned"].assignmentCount + state.calculations.calculatedView.workloadTotals["TBD Instructor"].assignmentCount }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+								{{ state.calculations.calculatedView.workloadTotals["Assigned"].enrollment + state.calculations.calculatedView.workloadTotals["Unassigned"].enrollment + state.calculations.calculatedView.workloadTotals["TBD Instructor"].enrollment }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+								{{ state.calculations.calculatedView.workloadTotals["Assigned"].previousEnrollment + state.calculations.calculatedView.workloadTotals["Unassigned"].previousEnrollment + state.calculations.calculatedView.workloadTotals["TBD Instructor"].previousEnrollment }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+									{{ state.calculations.calculatedView.workloadTotals["Assigned"].units + state.calculations.calculatedView.workloadTotals["Unassigned"].units + state.calculations.calculatedView.workloadTotals["TBD Instructor"].units }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+									{{ state.calculations.calculatedView.workloadTotals["Assigned"].studentCreditHours + state.calculations.calculatedView.workloadTotals["Unassigned"].studentCreditHours + state.calculations.calculatedView.workloadTotals["TBD Instructor"].studentCreditHours }}
+							</div>
+						</td>
+
+					</tr>
 			</tbody>
 		</table>
 	</div>
