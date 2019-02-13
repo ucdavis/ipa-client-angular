@@ -39,14 +39,9 @@
 					</td>
 				</tr>
 				<tr ng-repeat="unassignedCourse in courses" class="workload-table__row">
-
 					<td>
 						<div class="workload-table__value">
 							{{ unassignedCourse.term }}
-						</div>
-						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
-							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
-							Totals
 						</div>
 					</td>
 					<td>
@@ -63,36 +58,53 @@
 						<div class="workload-table__value">
 							{{ unassignedCourse.seats }}
 						</div>
-						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
-							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
-							{{ instructor.totals.seats }}
-						</div>
 					</td>
 					<td>
 						<div class="workload-table__value">
 							{{ unassignedCourse.previousEnrollment }}
-						</div>
-						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
-							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
-							{{ instructor.totals.previousEnrollment }}
 						</div>
 					</td>
 					<td>
 						<div class="workload-table__value">
 							{{ unassignedCourse.units }}
 						</div>
-						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
-							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
-							{{ instructor.totals.units }}
-						</div>
 					</td>
 					<td>
 						<div class="workload-table__value">
 							{{ unassignedCourse.studentCreditHours }}
 						</div>
-						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
-							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
-							{{ instructor.totals.studentCreditHours }}
+					</td>
+				</tr>
+
+				<!-- Table totals -->
+				<tr class="workload-table__row">
+					<td class="workload-table__name-cell"></td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ courses.length }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar"></div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.seats }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.previousEnrollment }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.units }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.studentCreditHours }}
 						</div>
 					</td>
 				</tr>

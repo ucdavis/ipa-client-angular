@@ -296,6 +296,12 @@ class WorkloadSummaryActions {
 				});
 
 				var unassignedCourses = [];
+				var unassignedTotals = {
+					seats: 0,
+					previousEnrollment: 0,
+					units: 0,
+					studentCreditHours: 0
+				};
 				unassignedSectionGroupIds.forEach(function(sectionGroupId) {
 					var unassignedCourse = {};
 					var sectionGroup = sectionGroups.list[sectionGroupId];
@@ -309,9 +315,12 @@ class WorkloadSummaryActions {
 					unassignedCourse.units = _self._getUnits(course);
 					unassignedCourse.studentCreditHours = unassignedCourse.seats * unassignedCourse.units;
 
+					unassignedTotals.seats += unassignedCourse.seats;
+					unassignedTotals.previousEnrollment += unassignedCourse.previousEnrollment;
+					unassignedTotals.units += unassignedCourse.units;
+					unassignedTotals.studentCreditHours += unassignedCourse.studentCreditHours;
+
 					unassignedCourses.push(unassignedCourse);
-					// TODO: tally unassigned courses totals
-					// TODO: display unassignedCourses on workloadTable
 				});
 
 				var calculatedView = {
@@ -535,6 +544,7 @@ class WorkloadSummaryActions {
 				}); // Generic Instructor/Assignment Totals
 
 				calculatedView.unassignedCourses = unassignedCourses;
+				calculatedView.unassignedTotals = unassignedTotals;
 
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
