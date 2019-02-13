@@ -297,10 +297,13 @@ class WorkloadSummaryActions {
 
 				var unassignedCourses = [];
 				var unassignedTotals = {
+					assignmentCount: 0,
 					seats: 0,
+					enrollment: 0,
 					previousEnrollment: 0,
 					units: 0,
-					studentCreditHours: 0
+					studentCreditHours: 0,
+					instructorCount: 0
 				};
 				unassignedSectionGroupIds.forEach(function(sectionGroupId) {
 					var unassignedCourse = {};
@@ -315,7 +318,9 @@ class WorkloadSummaryActions {
 					unassignedCourse.units = _self._getUnits(course);
 					unassignedCourse.studentCreditHours = unassignedCourse.seats * unassignedCourse.units;
 
+					unassignedTotals.assignmentCount += 1;
 					unassignedTotals.seats += unassignedCourse.seats;
+					unassignedTotals.enrollment += _self._getEnrollment(sectionGroup);
 					unassignedTotals.previousEnrollment += unassignedCourse.previousEnrollment;
 					unassignedTotals.units += unassignedCourse.units;
 					unassignedTotals.studentCreditHours += unassignedCourse.studentCreditHours;
@@ -328,6 +333,15 @@ class WorkloadSummaryActions {
 					byInstructorType: {},
 					totals: {
 						byInstructorTypeId: {},
+						units: 0,
+						studentCreditHours: 0,
+						seats: 0,
+						enrollment: 0,
+						previousEnrollment: 0,
+						instructorCount: 0,
+						assignmentCount: 0
+					},
+					genericInstructorTotals: {
 						units: 0,
 						studentCreditHours: 0,
 						seats: 0,
@@ -511,19 +525,13 @@ class WorkloadSummaryActions {
 							assignment.units = _self._getUnits(course);
 							assignment.studentCreditHours = assignment.seats * assignment.units;
 
-							calculatedView.totals.assignmentCount += 1;
-							calculatedView.totals.seats += assignment.seats;
-							calculatedView.totals.enrollment += assignment.actualEnrollment;
-							calculatedView.totals.previousEnrollment += assignment.previousEnrollment;
-							calculatedView.totals.units += assignment.units;
-							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
-
-							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].assignmentCount += 1;
-							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].seats += assignment.seats;
-							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].enrollment += assignment.actualEnrollment;
-							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].previousEnrollment += assignment.previousEnrollment;
-							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].units += assignment.units;
-							calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentCreditHours += assignment.studentCreditHours;
+							calculatedView.genericInstructorTotals.assignmentCount += 1;
+							calculatedView.genericInstructorTotals.seats += assignment.seats;
+							calculatedView.genericInstructorTotals.enrollment += assignment.actualEnrollment;
+							calculatedView.genericInstructorTotals.previousEnrollment += assignment.previousEnrollment;
+							calculatedView.genericInstructorTotals.units += assignment.units;
+							calculatedView.genericInstructorTotals.studentCreditHours += assignment.studentCreditHours;
+							calculatedView.genericInstructorTotals.instructorCount += 1;
 						}
 
 						genericInstructor.assignments.push(assignment);
@@ -545,6 +553,12 @@ class WorkloadSummaryActions {
 
 				calculatedView.unassignedCourses = unassignedCourses;
 				calculatedView.unassignedTotals = unassignedTotals;
+
+				calculatedView.workloadTotals = {
+					assignedTotals: calculatedView.totals,
+					unassignedTotals: calculatedView.unassignedTotals,
+					genericInstructorTotals: calculatedView.genericInstructorTotals
+				};
 
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,

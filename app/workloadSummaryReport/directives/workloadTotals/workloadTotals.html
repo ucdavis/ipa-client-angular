@@ -37,35 +37,35 @@
 						SCH
 					</td>
 				</tr>
-				<tr>
+				<tr ng-repeat="totals in state.calculations.calculatedView.workloadTotals">
 					<td class="workload-totals__cell workload-totals__cell--first">
 						<div>
-							{{ state.calculations.calculatedView.totals.instructorCount }}
+							{{ totals.instructorCount }}
 						</div>
 					</td>
 					<td class="workload-totals__cell"></td>
 					<td class="workload-totals__cell">
-							{{ state.calculations.calculatedView.totals.assignmentCount }}
+							{{ totals.assignmentCount }}
 					</td>
 					<td class="workload-totals__cell"></td>
 					<td class="workload-totals__cell">
 						<div>
-							{{ state.calculations.calculatedView.totals.enrollment }}
+							{{ totals.enrollment }}
 						</div>
 					</td>
 					<td class="workload-totals__cell">
 						<div>
-							{{ state.calculations.calculatedView.totals.previousEnrollment }}
+							{{ totals.previousEnrollment }}
 						</div>
 					</td>
 					<td class="workload-totals__cell">
 						<div>
-							{{ state.calculations.calculatedView.totals.units }}
+							{{ totals.units }}
 						</div>
 					</td>
 					<td class="workload-totals__cell workload-totals__cell--last">
 						<div>
-							{{ state.calculations.calculatedView.totals.studentCreditHours }}
+							{{ totals.studentCreditHours }}
 						</div>
 					</td>
 				</tr>
