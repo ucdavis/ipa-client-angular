@@ -63,7 +63,7 @@ class SupportAssignmentCtrl {
 
 			// Determine access level
 			userRoles.forEach(function(userRole) {
-				if ((userRole.roleName == "academicPlanner" || userRole.roleName == "admin") && userRole.workgroupId == _self.$scope.workgroupId) {
+				if ((userRole.roleName == "academicPlanner" && userRole.workgroupId == _self.$scope.workgroupId) || userRole.roleName == "admin") {
 					_self.$scope.isAllowed = true;
 					_self.$scope.readOnlyMode = false;
 				}

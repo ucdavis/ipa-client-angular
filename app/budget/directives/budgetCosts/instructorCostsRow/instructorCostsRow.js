@@ -31,6 +31,12 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 
+			scope.removeInstructor = function(sectionGroupCost) {
+				sectionGroupCost.instructorTypeId = null;
+				sectionGroupCost.instructorId = null;
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};

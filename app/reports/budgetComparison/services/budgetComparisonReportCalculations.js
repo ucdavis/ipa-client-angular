@@ -120,7 +120,8 @@ class BudgetComparisonReportCalculations {
 					if (!instructorType) { return null; }
 
 					instructorTypeId = instructorType.id;
-					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+					var instructorTypeCostId = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+					instructorTypeCost = instructorTypeCosts.list[instructorTypeCostId] ? instructorTypeCosts.list[instructorTypeCostId].cost : null;
 				// If an instructorType is set
 				} else if (sectionGroupCost.instructorTypeId) {
 					var instructorTypeCostId = instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
@@ -147,7 +148,7 @@ class BudgetComparisonReportCalculations {
 				} else if (instructorTypeCost) {
 					cost = instructorTypeCost;
 				} else {
-					return null;
+					cost = null;
 				}
 
 				return {
@@ -176,7 +177,6 @@ class BudgetComparisonReportCalculations {
 					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments);
 
 					if (!assignmentCosts) { return; }
-
 
 					var instructorTypeId = assignmentCosts.instructorTypeId;
 					var assignmentCost = assignmentCosts.cost;
@@ -260,13 +260,13 @@ class BudgetComparisonReportCalculations {
 					},
 					supportCosts: {
 						ta: {
-							rawCount: currentCosts.supportCosts.taCount - previousCosts.supportCosts.taCount,
+							rawCount: (currentCosts.supportCosts.taCount - previousCosts.supportCosts.taCount).toFixed(2),
 							percentageCount: this._percentageChange(previousCosts.supportCosts.taCount, currentCosts.supportCosts.taCount),
 							rawCost: currentCosts.supportCosts.taCost - previousCosts.supportCosts.taCost,
 							percentageCost: this._percentageChange(previousCosts.supportCosts.taCost, currentCosts.supportCosts.taCost)
 						},
 						reader: {
-							rawCount: currentCosts.supportCosts.readerCount - previousCosts.supportCosts.readerCount,
+							rawCount: (currentCosts.supportCosts.readerCount - previousCosts.supportCosts.readerCount).toFixed(2),
 							percentageCount: this._percentageChange(previousCosts.supportCosts.readerCount, currentCosts.supportCosts.readerCount),
 							rawCost: currentCosts.supportCosts.readerCost - previousCosts.supportCosts.readerCost,
 							percentageCost: this._percentageChange(previousCosts.supportCosts.readerCost, currentCosts.supportCosts.readerCost),

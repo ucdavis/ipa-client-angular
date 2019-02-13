@@ -11,15 +11,25 @@
 				                                instructors="instructorAssignmentOptions">
 				</instructor-assignment-dropdown>
 			</div>
-			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-reversion-ui">
+
+			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
 				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
 				     uib-tooltip="Update to {{ sectionGroupCost.reversionDisplayName }}"
 				     tooltip-append-to-body="true"
 				     confirm-button="syncInstructor()"
 				     message="Update to {{ sectionGroupCost.reversionDisplayName }}?"
 				     yes="Update"
-				     no="Cancel"
-				     ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
+				     no="Cancel">
+				</div>
+			</div>
+			<div class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.instructorId ||  sectionGroupCost.instructorTypeId) }">
+				<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
+				      tooltip-append-to-body="true"
+				      uib-tooltip="Remove instructor"
+				      confirm-button="removeInstructor(sectionGroupCost)"
+				      message="Are you sure you want to remove this instructor?"
+				      yes="Remove"
+				      no="Cancel">
 				</div>
 			</div>
 			<div ng-show="isLiveDataScenario">

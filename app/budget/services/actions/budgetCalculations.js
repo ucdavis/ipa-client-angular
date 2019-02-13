@@ -589,8 +589,6 @@ class BudgetCalculations {
 			_calculateReplacementCost: function (replacementCosts, sectionGroup) {
 				var replacementCost = sectionGroup.overrideInstructorCost;
 
-				if (!replacementCost) { return replacementCosts; }
-
         var instructorTypeId = null;
 
         if (sectionGroup.overrideInstructorTypeId) {
@@ -607,7 +605,7 @@ class BudgetCalculations {
 				if (!instructorTypeId && !instructor) { return replacementCosts; }
 
 				if (!instructorTypeId) {
-					instructorTypeId = instructor.instructorType.id;
+					instructorTypeId = this._calculateInstructorType(instructor.id).id;
 				}
 
 				var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
@@ -621,6 +619,7 @@ class BudgetCalculations {
 	
 				replacementCosts.byInstructorTypeId[instructorTypeId] = replacementCosts.byInstructorTypeId[instructorTypeId] || 0;
 	
+				if (!replacementCost) { return replacementCosts; }
 				// Add cost
 				replacementCosts.byInstructorTypeId[instructorTypeId] += replacementCost;
 
