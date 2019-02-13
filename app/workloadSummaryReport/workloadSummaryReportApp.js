@@ -4,6 +4,7 @@ import './workloadSummaryReport.css';
 // Directives
 import workloadTable from './directives/workloadTable/workloadTable.js';
 import workloadTotals from './directives/workloadTotals/workloadTotals.js';
+import workloadUnassignedTable from './directives/workloadUnassignedTable/workloadUnassignedTable.js';
 
 // Services
 import WorkloadSummaryActions from './services/workloadSummaryActions.js';
@@ -61,6 +62,7 @@ config.$inject = ['$routeProvider'];
 const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", dependencies) // eslint-disable-line no-undef
 .directive('workloadTable', workloadTable)
 .directive('workloadTotals', workloadTotals)
+.directive('workloadUnassignedTable', workloadUnassignedTable)
 .controller('WorkloadSummaryReportCtrl', WorkloadSummaryReportCtrl)
 .service('WorkloadSummaryActions', WorkloadSummaryActions)
 .service('WorkloadSummaryReducers', WorkloadSummaryReducers)

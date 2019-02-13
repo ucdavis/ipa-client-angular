@@ -301,7 +301,7 @@ class WorkloadSummaryActions {
 					var sectionGroup = sectionGroups.list[sectionGroupId];
 					var course = courses.list[sectionGroup.courseId];
 
-					unassignedCourse.term = sectionGroup.termCode;
+					unassignedCourse.term = TermService.getTermName(sectionGroup.termCode);
 					unassignedCourse.description = course.subjectCode + " " + course.courseNumber;
 					unassignedCourse.sequencePattern = course.sequencePattern;
 					unassignedCourse.seats = sectionGroup.plannedSeats;
