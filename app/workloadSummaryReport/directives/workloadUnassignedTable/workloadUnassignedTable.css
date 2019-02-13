@@ -1,0 +1,36 @@
+.workload-totals__content {
+	padding-bottom: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.workload-totals__cell {
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.workload-totals__cell--first {
+	border-left: 1px solid #ddd;
+}
+
+.workload-totals__cell--last {
+	border-right: 1px solid #ddd;
+}
+
+.workload-totals__header {
+	font-weight: bold;
+	padding-bottom: 5px;
+	padding-left: 20px;
+	font-size: 12px;
+}
+
+.workload-totals__warning {
+	font-size: 10px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	color: gray;
+}

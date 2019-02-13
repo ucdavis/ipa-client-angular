@@ -1,0 +1,104 @@
+<div class="workload-totals">
+	<div class="workload-totals__header">
+		Unassigned Courses
+	</div>
+	<div class="workload-totals__content">
+		<table class="workload-table__table">
+			<colgroup>
+				<col style="width: 16%;">
+				<col style="width: 16%;">
+				<col style="width: 16%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+			</colgroup>
+			<tbody>
+				<tr>
+					<td class="workload-table__header-cell workload-table__header-cell--first">
+						Term
+					</td>
+					<td class="workload-table__header-cell">
+						Description
+					</td>
+					<td class="workload-table__header-cell">
+						Offering
+					</td>
+					<td class="workload-table__header-cell">
+						Seats
+					</td>
+					<td class="workload-table__header-cell">
+						Previous Enrollment
+					</td>
+					<td class="workload-table__header-cell">
+						Units
+					</td>
+					<td class="workload-table__header-cell workload-table__header-cell--last">
+						SCH
+					</td>
+				</tr>
+				<tr ng-repeat="unassignedCourse in courses" class="workload-table__row">
+
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.term }}
+						</div>
+						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+							Totals
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.description }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.sequencePattern }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.seats }}
+						</div>
+						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+							{{ instructor.totals.seats }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.previousEnrollment }}
+						</div>
+						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+							{{ instructor.totals.previousEnrollment }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.units }}
+						</div>
+						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+							{{ instructor.totals.units }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.studentCreditHours }}
+						</div>
+						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+							ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+							{{ instructor.totals.studentCreditHours }}
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+
+</div>
