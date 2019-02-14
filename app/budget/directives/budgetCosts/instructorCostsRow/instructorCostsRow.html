@@ -34,6 +34,9 @@
 			</div>
 			<div ng-show="isLiveDataScenario">
 				{{ sectionGroupCost.instructorDescription }}
+        <span class="instructor-costs-row__no-instructor" ng-if="!sectionGroupCost.instructorDescription">
+          None assigned
+        </span>
 			</div>
 		</div>
 	</td>
