@@ -20,14 +20,19 @@
 
 		<ipa-dropdown-select 
 			ng-show="mode == 'originalInstructor'"
+			show-as="input"
 			button-text="sectionGroupCost.originalInstructorDescription || 'Assign instructor'"
+			item-description="description"
 			items="instructors"
-			select-item="setOriginalInstructor(item)">
+			select-item="setOriginalInstructor(item)"
+			queryCallback="someFunction">
 		</ipa-dropdown-select>
 
 		<ipa-dropdown-select 
 			ng-show="mode == 'instructor'"
+			show-as="button"
 			button-text="sectionGroupCost.instructorDescription || 'Assign instructor'"
+			item-description="description"
 			items="instructors"
 			select-item="setInstructor(item)">
 		</ipa-dropdown-select>

@@ -8,417 +8,16 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 		scope: {
 			userRoles: '<',
 			activeRoleId: '<',
-			users: '=',
+			users: '<',
 			ui: '<'
 		},
 		link: function(scope) {
+
+			
 			scope.view = {
 				loadingPeople: false,
 				noResults: false
 			};
-
-			scope.users = [{
-				"id": 1,
-				"description": "Victoria Havis",
-				"email": "vhavis0@abc.net.au"
-				}, {
-				"id": 2,
-				"description": "Lara Edensor",
-				"email": "ledensor1@house.gov"
-				}, {
-				"id": 3,
-				"description": "Harriott Depka",
-				"email": "hdepka2@globo.com"
-				}, {
-				"id": 4,
-				"description": "Halette Caddick",
-				"email": "hcaddick3@t-online.de"
-				}, {
-				"id": 5,
-				"description": "Lenora Di Lucia",
-				"email": "ldi4@discovery.com"
-				}, {
-				"id": 6,
-				"description": "Jerrine Tremlett",
-				"email": "jtremlett5@ca.gov"
-				}, {
-				"id": 7,
-				"description": "Tamqrah Prettjohn",
-				"email": "tprettjohn6@blogspot.com"
-				}, {
-				"id": 8,
-				"description": "Nichols Winnett",
-				"email": "nwinnett7@cargocollective.com"
-				}, {
-				"id": 9,
-				"description": "Anthiathia Housaman",
-				"email": "ahousaman8@guardian.co.uk"
-				}, {
-				"id": 10,
-				"description": "Curt Lilly",
-				"email": "clilly9@is.gd"
-				}, {
-				"id": 11,
-				"description": "Phelia Ranaghan",
-				"email": "pranaghana@exblog.jp"
-				}, {
-				"id": 12,
-				"description": "Matty Zorro",
-				"email": "mzorrob@usa.gov"
-				}, {
-				"id": 13,
-				"description": "Olimpia Farquharson",
-				"email": "ofarquharsonc@meetup.com"
-				}, {
-				"id": 14,
-				"description": "Shayla Cod",
-				"email": "scodd@samsung.com"
-				}, {
-				"id": 15,
-				"description": "Kathye Brimm",
-				"email": "kbrimme@canalblog.com"
-				}, {
-				"id": 16,
-				"description": "Jermain Bromell",
-				"email": "jbromellf@engadget.com"
-				}, {
-				"id": 17,
-				"description": "Margarethe Zute",
-				"email": "mzuteg@blinklist.com"
-				}, {
-				"id": 18,
-				"description": "Randy Meiner",
-				"email": "rmeinerh@buzzfeed.com"
-				}, {
-				"id": 19,
-				"description": "Angelle McGarvie",
-				"email": "amcgarviei@skype.com"
-				}, {
-				"id": 20,
-				"description": "Ari Baylie",
-				"email": "abayliej@spiegel.de"
-				}, {
-				"id": 21,
-				"description": "Mitzi Bebbington",
-				"email": "mbebbingtonk@wisc.edu"
-				}, {
-				"id": 22,
-				"description": "Francis Bines",
-				"email": "fbinesl@craigslist.org"
-				}, {
-				"id": 23,
-				"description": "Agneta Redmore",
-				"email": "aredmorem@pbs.org"
-				}, {
-				"id": 24,
-				"description": "Jeane Brognot",
-				"email": "jbrognotn@usnews.com"
-				}, {
-				"id": 25,
-				"description": "Jaye Hakewell",
-				"email": "jhakewello@vimeo.com"
-				}, {
-				"id": 26,
-				"description": "Malinde Elgey",
-				"email": "melgeyp@ovh.net"
-				}, {
-				"id": 27,
-				"description": "Lev Organer",
-				"email": "lorganerq@booking.com"
-				}, {
-				"id": 28,
-				"description": "Nathalie Sarney",
-				"email": "nsarneyr@vk.com"
-				}, {
-				"id": 29,
-				"description": "Jolene Mournian",
-				"email": "jmournians@google.ru"
-				}, {
-				"id": 30,
-				"description": "Kandy MacGill",
-				"email": "kmacgillt@deviantart.com"
-				}, {
-				"id": 31,
-				"description": "Guinna Poad",
-				"email": "gpoadu@tumblr.com"
-				}, {
-				"id": 32,
-				"description": "Daile Mothersole",
-				"email": "dmothersolev@about.me"
-				}, {
-				"id": 33,
-				"description": "Meggie Kebbell",
-				"email": "mkebbellw@chronoengine.com"
-				}, {
-				"id": 34,
-				"description": "Trevar Gooms",
-				"email": "tgoomsx@seesaa.net"
-				}, {
-				"id": 35,
-				"description": "Glori Matussevich",
-				"email": "gmatussevichy@about.com"
-				}, {
-				"id": 36,
-				"description": "Noam Cackett",
-				"email": "ncackettz@wunderground.com"
-				}, {
-				"id": 37,
-				"description": "Kevon Pretsell",
-				"email": "kpretsell10@elegantthemes.com"
-				}, {
-				"id": 38,
-				"description": "Mandi M'cowis",
-				"email": "mmcowis11@shutterfly.com"
-				}, {
-				"id": 39,
-				"description": "Griffy Yakubovics",
-				"email": "gyakubovics12@businessinsider.com"
-				}, {
-				"id": 40,
-				"description": "Eleni Tarbet",
-				"email": "etarbet13@ted.com"
-				}, {
-				"id": 41,
-				"description": "Byrom Geldeford",
-				"email": "bgeldeford14@lycos.com"
-				}, {
-				"id": 42,
-				"description": "Elsinore Rainy",
-				"email": "erainy15@gizmodo.com"
-				}, {
-				"id": 43,
-				"description": "Rayshell Schonfeld",
-				"email": "rschonfeld16@nih.gov"
-				}, {
-				"id": 44,
-				"description": "Zena Beatey",
-				"email": "zbeatey17@hostgator.com"
-				}, {
-				"id": 45,
-				"description": "Shurlocke Blackmuir",
-				"email": "sblackmuir18@japanpost.jp"
-				}, {
-				"id": 46,
-				"description": "Agneta Aleksahkin",
-				"email": "aaleksahkin19@163.com"
-				}, {
-				"id": 47,
-				"description": "Riobard Keilloh",
-				"email": "rkeilloh1a@cmu.edu"
-				}, {
-				"id": 48,
-				"description": "Seka Hurworth",
-				"email": "shurworth1b@nsw.gov.au"
-				}, {
-				"id": 49,
-				"description": "Valerye Grimshaw",
-				"email": "vgrimshaw1c@canalblog.com"
-				}, {
-				"id": 50,
-				"description": "Dulsea Lilleman",
-				"email": "dlilleman1d@paginegialle.it"
-				}, {
-				"id": 51,
-				"description": "Anatollo Betchley",
-				"email": "abetchley1e@flickr.com"
-				}, {
-				"id": 52,
-				"description": "Adelind Cicchetto",
-				"email": "acicchetto1f@theatlantic.com"
-				}, {
-				"id": 53,
-				"description": "Giuseppe Niland",
-				"email": "gniland1g@google.it"
-				}, {
-				"id": 54,
-				"description": "Anna Strickett",
-				"email": "astrickett1h@acquirethisname.com"
-				}, {
-				"id": 55,
-				"description": "Catlee Sisneros",
-				"email": "csisneros1i@ed.gov"
-				}, {
-				"id": 56,
-				"description": "Moshe Meekins",
-				"email": "mmeekins1j@delicious.com"
-				}, {
-				"id": 57,
-				"description": "Garnet Shoulder",
-				"email": "gshoulder1k@washingtonpost.com"
-				}, {
-				"id": 58,
-				"description": "Brianne Battershall",
-				"email": "bbattershall1l@so-net.ne.jp"
-				}, {
-				"id": 59,
-				"description": "Belinda Pettis",
-				"email": "bpettis1m@miitbeian.gov.cn"
-				}, {
-				"id": 60,
-				"description": "Fairfax Arzu",
-				"email": "farzu1n@cloudflare.com"
-				}, {
-				"id": 61,
-				"description": "Jsandye Beecraft",
-				"email": "jbeecraft1o@naver.com"
-				}, {
-				"id": 62,
-				"description": "Bethina Podbury",
-				"email": "bpodbury1p@pcworld.com"
-				}, {
-				"id": 63,
-				"description": "Vilhelmina Arent",
-				"email": "varent1q@youku.com"
-				}, {
-				"id": 64,
-				"description": "Annissa Wardhough",
-				"email": "awardhough1r@tuttocitta.it"
-				}, {
-				"id": 65,
-				"description": "Merry Woodhams",
-				"email": "mwoodhams1s@wordpress.com"
-				}, {
-				"id": 66,
-				"description": "Frankie Yon",
-				"email": "fyon1t@nbcnews.com"
-				}, {
-				"id": 67,
-				"description": "Kerrin Brogioni",
-				"email": "kbrogioni1u@wikispaces.com"
-				}, {
-				"id": 68,
-				"description": "Darrin Gillions",
-				"email": "dgillions1v@nih.gov"
-				}, {
-				"id": 69,
-				"description": "Susi Scalera",
-				"email": "sscalera1w@rakuten.co.jp"
-				}, {
-				"id": 70,
-				"description": "Trish Bernt",
-				"email": "tbernt1x@theglobeandmail.com"
-				}, {
-				"id": 71,
-				"description": "Keriann Sabate",
-				"email": "ksabate1y@yale.edu"
-				}, {
-				"id": 72,
-				"description": "Devora Merrydew",
-				"email": "dmerrydew1z@samsung.com"
-				}, {
-				"id": 73,
-				"description": "Caspar Golson",
-				"email": "cgolson20@acquirethisname.com"
-				}, {
-				"id": 74,
-				"description": "Mae Bradder",
-				"email": "mbradder21@friendfeed.com"
-				}, {
-				"id": 75,
-				"description": "Shoshanna MacCumiskey",
-				"email": "smaccumiskey22@bravesites.com"
-				}, {
-				"id": 76,
-				"description": "Bud Stubbings",
-				"email": "bstubbings23@devhub.com"
-				}, {
-				"id": 77,
-				"description": "Vite Gregorio",
-				"email": "vgregorio24@myspace.com"
-				}, {
-				"id": 78,
-				"description": "Bailey Bogays",
-				"email": "bbogays25@tamu.edu"
-				}, {
-				"id": 79,
-				"description": "Ashlin Mousley",
-				"email": "amousley26@howstuffworks.com"
-				}, {
-				"id": 80,
-				"description": "Matt Edie",
-				"email": "medie27@icio.us"
-				}, {
-				"id": 81,
-				"description": "Theressa Croston",
-				"email": "tcroston28@yellowpages.com"
-				}, {
-				"id": 82,
-				"description": "Aymer Norgate",
-				"email": "anorgate29@ifeng.com"
-				}, {
-				"id": 83,
-				"description": "Freeman Striker",
-				"email": "fstriker2a@seesaa.net"
-				}, {
-				"id": 84,
-				"description": "Pierre Eichmann",
-				"email": "peichmann2b@nasa.gov"
-				}, {
-				"id": 85,
-				"description": "Bary Birkenhead",
-				"email": "bbirkenhead2c@vk.com"
-				}, {
-				"id": 86,
-				"description": "Eudora Spencelayh",
-				"email": "espencelayh2d@dell.com"
-				}, {
-				"id": 87,
-				"description": "Whitney McPartling",
-				"email": "wmcpartling2e@ted.com"
-				}, {
-				"id": 88,
-				"description": "Lorilyn Mangeot",
-				"email": "lmangeot2f@amazon.com"
-				}, {
-				"id": 89,
-				"description": "Lutero Jonuzi",
-				"email": "ljonuzi2g@ed.gov"
-				}, {
-				"id": 90,
-				"description": "Nettle Trevenu",
-				"email": "ntrevenu2h@dot.gov"
-				}, {
-				"id": 91,
-				"description": "Greer Barkworth",
-				"email": "gbarkworth2i@theatlantic.com"
-				}, {
-				"id": 92,
-				"description": "Brenda Cottham",
-				"email": "bcottham2j@macromedia.com"
-				}, {
-				"id": 93,
-				"description": "Lalo Duddle",
-				"email": "lduddle2k@goo.ne.jp"
-				}, {
-				"id": 94,
-				"description": "Joshua Nardrup",
-				"email": "jnardrup2l@elegantthemes.com"
-				}, {
-				"id": 95,
-				"description": "Franky Banks",
-				"email": "fbanks2m@engadget.com"
-				}, {
-				"id": 96,
-				"description": "Archibald Ashness",
-				"email": "aashness2n@virginia.edu"
-				}, {
-				"id": 97,
-				"description": "Paulo Beneze",
-				"email": "pbeneze2o@cloudflare.com"
-				}, {
-				"id": 98,
-				"description": "Krystle Kornel",
-				"email": "kkornel2p@adobe.com"
-				}, {
-				"id": 99,
-				"description": "Leesa Lavrick",
-				"email": "llavrick2q@sitemeter.com"
-				}, {
-				"id": 100,
-				"description": "Bernetta Addlestone",
-				"email": "baddlestone2r@jimdo.com"
-				}];
-
 
 			scope.removeUserRole = function (userRole) {
 				WorkgroupActionCreators.removeRoleFromUser(userRole.userId, userRole.roleId, userRole);
@@ -433,6 +32,7 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 			scope.searchOnChange = function () {
 				scope.view.noResults = false;
 				scope.users.newUser = {};
+				console.log(scope.users.list) // eslint-disable-line
 			};
 
 			scope.searchUsers = function (query) {
@@ -452,6 +52,1480 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 				WorkgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
 				scope.clearUserSearch();
 			};
+
+			scope.result = [{  
+				"id":3,
+				"email":"ltwheeler@ucdavis.edu",
+				"firstName":"Lloyd",
+				"lastName":"Wheeler",
+				"displayName":"Lloyd Wheeler",
+				"lastAccessed":1544777988000,
+				"userRoles":[  
+					{  
+						"id":5029,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":3,
+						"role":"academicPlanner"
+					},
+					{  
+						"id":6789,
+						"workgroupId":20,
+						"roleId":15,
+						"instructorTypeId":3,
+						"userId":3,
+						"role":"instructor"
+					},
+					{  
+						"id":8301,
+						"workgroupId":0,
+						"roleId":3,
+						"instructorTypeId":null,
+						"userId":3,
+						"role":"admin"
+					}
+				],
+				"placeholder":false,
+				"iamId":1000025788,
+				"name":"Wheeler, Lloyd",
+				"loginId":"guilden"
+			},
+			{  
+				"id":1,
+				"email":"cmthielen@ucdavis.edu",
+				"firstName":"Christopher",
+				"lastName":"Thielen",
+				"displayName":"Christopher Thielen",
+				"lastAccessed":1548268972000,
+				"userRoles":[  
+					{  
+						"id":5066,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":5112,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"academicPlanner"
+					},
+					{  
+						"id":5140,
+						"workgroupId":46,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":5145,
+						"workgroupId":77,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":5146,
+						"workgroupId":77,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"academicPlanner"
+					},
+					{  
+						"id":5338,
+						"workgroupId":0,
+						"roleId":3,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"admin"
+					},
+					{  
+						"id":5433,
+						"workgroupId":74,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":5435,
+						"workgroupId":74,
+						"roleId":12,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"studentMasters"
+					},
+					{  
+						"id":5456,
+						"workgroupId":13,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":6908,
+						"workgroupId":20,
+						"roleId":15,
+						"instructorTypeId":4,
+						"userId":1,
+						"role":"instructor"
+					},
+					{  
+						"id":6909,
+						"workgroupId":74,
+						"roleId":15,
+						"instructorTypeId":4,
+						"userId":1,
+						"role":"instructor"
+					},
+					{  
+						"id":6911,
+						"workgroupId":46,
+						"roleId":15,
+						"instructorTypeId":4,
+						"userId":1,
+						"role":"instructor"
+					},
+					{  
+						"id":8297,
+						"workgroupId":11,
+						"roleId":13,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"studentPhd"
+					},
+					{  
+						"id":8298,
+						"workgroupId":11,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":9385,
+						"workgroupId":87,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":9475,
+						"workgroupId":87,
+						"roleId":15,
+						"instructorTypeId":7,
+						"userId":1,
+						"role":"instructor"
+					},
+					{  
+						"id":9491,
+						"workgroupId":69,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":10173,
+						"workgroupId":24,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":10174,
+						"workgroupId":24,
+						"roleId":15,
+						"instructorTypeId":6,
+						"userId":1,
+						"role":"instructor"
+					},
+					{  
+						"id":10175,
+						"workgroupId":24,
+						"roleId":11,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"instructionalSupport"
+					},
+					{  
+						"id":11038,
+						"workgroupId":66,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":11044,
+						"workgroupId":66,
+						"roleId":15,
+						"instructorTypeId":6,
+						"userId":1,
+						"role":"instructor"
+					},
+					{  
+						"id":11229,
+						"workgroupId":15,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":11230,
+						"workgroupId":15,
+						"roleId":15,
+						"instructorTypeId":7,
+						"userId":1,
+						"role":"instructor"
+					},
+					{  
+						"id":11473,
+						"workgroupId":75,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"presence"
+					},
+					{  
+						"id":11476,
+						"workgroupId":75,
+						"roleId":15,
+						"instructorTypeId":4,
+						"userId":1,
+						"role":"instructor"
+					},
+					{  
+						"id":11477,
+						"workgroupId":75,
+						"roleId":13,
+						"instructorTypeId":null,
+						"userId":1,
+						"role":"studentPhd"
+					}
+				],
+				"placeholder":false,
+				"iamId":1000031958,
+				"name":"Thielen, Christopher",
+				"loginId":"cthielen"
+			},
+			{  
+				"id":2399,
+				"email":"cwjwong@ucdavis.edu",
+				"firstName":"Jarold",
+				"lastName":"Wong",
+				"displayName":"Jarold Wong",
+				"lastAccessed":1548268942000,
+				"userRoles":[  
+					{  
+						"id":8299,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":2399,
+						"role":"academicPlanner"
+					},
+					{  
+						"id":8300,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":2399,
+						"role":"presence"
+					},
+					{  
+						"id":8311,
+						"workgroupId":20,
+						"roleId":15,
+						"instructorTypeId":7,
+						"userId":2399,
+						"role":"instructor"
+					},
+					{  
+						"id":11525,
+						"workgroupId":20,
+						"roleId":13,
+						"instructorTypeId":null,
+						"userId":2399,
+						"role":"studentPhd"
+					}
+				],
+				"placeholder":false,
+				"iamId":null,
+				"name":"Wong, Jarold",
+				"loginId":"jiwung"
+			},
+			{  
+				"id":569,
+				"email":"jeremy@ucdavis.edu",
+				"firstName":"Jeremy",
+				"lastName":"Phillips",
+				"displayName":"Jeremy M Phillips",
+				"lastAccessed":1541419847000,
+				"userRoles":[  
+					{  
+						"id":5149,
+						"workgroupId":77,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":569,
+						"role":"presence"
+					},
+					{  
+						"id":5150,
+						"workgroupId":77,
+						"roleId":12,
+						"instructorTypeId":null,
+						"userId":569,
+						"role":"studentMasters"
+					},
+					{  
+						"id":9497,
+						"workgroupId":20,
+						"roleId":15,
+						"instructorTypeId":4,
+						"userId":569,
+						"role":"instructor"
+					},
+					{  
+						"id":10398,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":569,
+						"role":"academicPlanner"
+					},
+					{  
+						"id":11526,
+						"workgroupId":20,
+						"roleId":13,
+						"instructorTypeId":null,
+						"userId":569,
+						"role":"studentPhd"
+					}
+				],
+				"placeholder":false,
+				"iamId":1000016994,
+				"name":"Phillips, Jeremy",
+				"loginId":"jeremy"
+			},
+			{  
+				"id":741,
+				"email":"cbeck@ucdavis.edu",
+				"firstName":"Carol",
+				"lastName":"McMasters-Stone",
+				"displayName":"Carol McMasters-Stone",
+				"lastAccessed":null,
+				"userRoles":[  
+					{  
+						"id":11207,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":741,
+						"role":"presence"
+					},
+					{  
+						"id":11208,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":741,
+						"role":"academicPlanner"
+					}
+				],
+				"placeholder":false,
+				"iamId":1000004626,
+				"name":"McMasters-Stone, Carol",
+				"loginId":"carolm"
+			},
+			{  
+				"id":743,
+				"email":"cjbrick@ucdavis.edu",
+				"firstName":"Christopher",
+				"lastName":"Brick",
+				"displayName":"Christopher Brick",
+				"lastAccessed":null,
+				"userRoles":[  
+					{  
+						"id":11209,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":743,
+						"role":"presence"
+					},
+					{  
+						"id":11210,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":743,
+						"role":"academicPlanner"
+					}
+				],
+				"placeholder":false,
+				"iamId":1000023177,
+				"name":"Brick, Christopher",
+				"loginId":"cjbrick"
+			},
+			{  
+				"id":742,
+				"email":"jwtrask@ucdavis.edu",
+				"firstName":"Jeff",
+				"lastName":"Trask",
+				"displayName":"Jeff Trask",
+				"lastAccessed":null,
+				"userRoles":[  
+					{  
+						"id":11211,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":742,
+						"role":"presence"
+					},
+					{  
+						"id":11212,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":742,
+						"role":"academicPlanner"
+					}
+				],
+				"placeholder":false,
+				"iamId":1000024728,
+				"name":"Trask, Jeff",
+				"loginId":"jwtrask"
+			},
+			{  
+				"id":1299,
+				"email":"jmcarlson@ucdavis.edu",
+				"firstName":"Janine",
+				"lastName":"Carlson",
+				"displayName":"Janine Carlson",
+				"lastAccessed":1511861631000,
+				"userRoles":[  
+					{  
+						"id":11214,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":1299,
+						"role":"academicPlanner"
+					},
+					{  
+						"id":11215,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":1299,
+						"role":"presence"
+					}
+				],
+				"placeholder":false,
+				"iamId":1000030369,
+				"name":"Carlson, Janine",
+				"loginId":"jmcarlso"
+			},
+			{  
+				"id":3709,
+				"email":"bvbaker@ucdavis.edu",
+				"firstName":"Brandon",
+				"lastName":"Baker",
+				"displayName":"Brandon Vernon Baker",
+				"lastAccessed":null,
+				"userRoles":[  
+					{  
+						"id":11216,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":3709,
+						"role":"presence"
+					},
+					{  
+						"id":11217,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":3709,
+						"role":"academicPlanner"
+					}
+				],
+				"placeholder":false,
+				"iamId":null,
+				"name":"Baker, Brandon",
+				"loginId":"bvbaker"
+			},
+			{  
+				"id":3710,
+				"email":"hsotelo@ucdavis.edu",
+				"firstName":"Hector",
+				"lastName":"Sotelo",
+				"displayName":"Hector Sotelo",
+				"lastAccessed":null,
+				"userRoles":[  
+					{  
+						"id":11218,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":3710,
+						"role":"presence"
+					},
+					{  
+						"id":11219,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":3710,
+						"role":"academicPlanner"
+					}
+				],
+				"placeholder":false,
+				"iamId":null,
+				"name":"Sotelo, Hector",
+				"loginId":"hsotelo"
+			},
+			{  
+				"id":744,
+				"email":"sadyer@ucdavis.edu",
+				"firstName":"Scott",
+				"lastName":"Dyer",
+				"displayName":"Scott A Dyer",
+				"lastAccessed":null,
+				"userRoles":[  
+					{  
+						"id":11220,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":744,
+						"role":"academicPlanner"
+					},
+					{  
+						"id":11221,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":744,
+						"role":"presence"
+					}
+				],
+				"placeholder":false,
+				"iamId":1000021195,
+				"name":"Dyer, Scott",
+				"loginId":"sadyer"
+			},
+			{  
+				"id":3711,
+				"email":"sjmosher@ucdavis.edu",
+				"firstName":"Samuel",
+				"lastName":"Mosher",
+				"displayName":"Samuel J Mosher",
+				"lastAccessed":null,
+				"userRoles":[  
+					{  
+						"id":11222,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":3711,
+						"role":"presence"
+					},
+					{  
+						"id":11223,
+						"workgroupId":20,
+						"roleId":2,
+						"instructorTypeId":null,
+						"userId":3711,
+						"role":"academicPlanner"
+					}
+				],
+				"placeholder":false,
+				"iamId":null,
+				"name":"Mosher, Samuel",
+				"loginId":"sjmosher"
+			},
+			{  
+				"id":3712,
+				"email":"sarshad@ucdavis.edu",
+				"firstName":"Sadaf",
+				"lastName":"Arshad",
+				"displayName":"Sadaf Arshad",
+				"lastAccessed":1544714437000,
+				"userRoles":[  
+					{  
+						"id":11226,
+						"workgroupId":20,
+						"roleId":13,
+						"instructorTypeId":null,
+						"userId":3712,
+						"role":"studentPhd"
+					},
+					{  
+						"id":11227,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":3712,
+						"role":"presence"
+					}
+				],
+				"placeholder":false,
+				"iamId":null,
+				"name":"Arshad, Sadaf",
+				"loginId":"sdf9235"
+			},
+			{  
+				"id":3813,
+				"email":"mromeroval@ucdavis.edu",
+				"firstName":"Mauricio",
+				"lastName":"Romero Valenzuela",
+				"displayName":"Mauricio Romero Valenzuela",
+				"lastAccessed":1549308721000,
+				"userRoles":[  
+					{  
+						"id":11527,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":3813,
+						"role":"presence"
+					},
+					{  
+						"id":11528,
+						"workgroupId":20,
+						"roleId":15,
+						"instructorTypeId":7,
+						"userId":3813,
+						"role":"instructor"
+					},
+					{  
+						"id":11534,
+						"workgroupId":0,
+						"roleId":3,
+						"instructorTypeId":null,
+						"userId":3813,
+						"role":"admin"
+					}
+				],
+				"placeholder":false,
+				"iamId":null,
+				"name":"Romero Valenzuela, Mauricio",
+				"loginId":"romerov"
+			},
+			{  
+				"id":3815,
+				"email":"sadshah@ucdavis.edu",
+				"firstName":"Sadaf",
+				"lastName":"Shah",
+				"displayName":"Sadaf Ali Shah",
+				"lastAccessed":null,
+				"userRoles":[  
+					{  
+						"id":11536,
+						"workgroupId":20,
+						"roleId":9,
+						"instructorTypeId":null,
+						"userId":3815,
+						"role":"presence"
+					}
+				],
+				"placeholder":false,
+				"iamId":null,
+				"name":"Shah, Sadaf",
+				"loginId":"ssha1520"
+			},
+			{
+				"rowType":"subheader",
+				"displayName":"Courses"
+			},{  
+				"id":83429,
+				"displayName":"Prob & Sta Model for CS",
+				"subjectCode":"ECS",
+				"courseNumber":"132",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83430,
+				"displayName":"Ethics in an Age of Tech",
+				"subjectCode":"ECS",
+				"courseNumber":"188",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83432,
+				"displayName":"Programming Languages",
+				"subjectCode":"ECS",
+				"courseNumber":"140A",
+				"effectiveTermCode":"201701",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83433,
+				"displayName":"Computer Architecture",
+				"subjectCode":"ECS",
+				"courseNumber":"154A",
+				"effectiveTermCode":"201701",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83450,
+				"displayName":"Prog Lang&Compilers",
+				"subjectCode":"ECS",
+				"courseNumber":"289C",
+				"effectiveTermCode":"198510",
+				"sequencePattern":"001",
+				"unitsLow":1.0,
+				"unitsHigh":5.0,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83451,
+				"displayName":"Computer Sci Theory",
+				"subjectCode":"ECS",
+				"courseNumber":"189A",
+				"effectiveTermCode":"200103",
+				"sequencePattern":"001",
+				"unitsLow":1.0,
+				"unitsHigh":5.0,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83452,
+				"displayName":"Computer Architecture",
+				"subjectCode":"ECS",
+				"courseNumber":"201A",
+				"effectiveTermCode":"200210",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83456,
+				"displayName":"Parallel Architectures",
+				"subjectCode":"ECS",
+				"courseNumber":"158",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83457,
+				"displayName":"Software Engineering",
+				"subjectCode":"ECS",
+				"courseNumber":"160",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83462,
+				"displayName":"Programming Tools",
+				"subjectCode":"ECS",
+				"courseNumber":"161",
+				"effectiveTermCode":"201710",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83464,
+				"displayName":"Ethics in an Age of Tech",
+				"subjectCode":"ECS",
+				"courseNumber":"188",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"002",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83466,
+				"displayName":"Ethics in an Age of Tech",
+				"subjectCode":"ECS",
+				"courseNumber":"188",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"003",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83471,
+				"displayName":"Intro to Programming",
+				"subjectCode":"ECS",
+				"courseNumber":"010",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":"This is too many instructors.",
+				"scheduleId":221
+			},
+			{  
+				"id":83472,
+				"displayName":"Theory Computation",
+				"subjectCode":"ECS",
+				"courseNumber":"120",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83473,
+				"displayName":"Algorithm Design",
+				"subjectCode":"ECS",
+				"courseNumber":"122A",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{
+				"rowType":"divider"
+			},
+			{  
+				"id":83474,
+				"displayName":"Computer Networks",
+				"subjectCode":"ECS",
+				"courseNumber":"152A",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				98
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83476,
+				"displayName":"Discrete Math for CS",
+				"subjectCode":"ECS",
+				"courseNumber":"020",
+				"effectiveTermCode":"201701",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83477,
+				"displayName":"Software &Obj-Orient Prg",
+				"subjectCode":"ECS",
+				"courseNumber":"040",
+				"effectiveTermCode":"201701",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83478,
+				"displayName":"Machine Dependent Prog",
+				"subjectCode":"ECS",
+				"courseNumber":"050",
+				"effectiveTermCode":"201701",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				98
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83479,
+				"displayName":"Programming Languages",
+				"subjectCode":"ECS",
+				"courseNumber":"140A",
+				"effectiveTermCode":"201701",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83480,
+				"displayName":"Computer Architecture",
+				"subjectCode":"ECS",
+				"courseNumber":"154A",
+				"effectiveTermCode":"201701",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83481,
+				"displayName":"Programming&Prob Solving",
+				"subjectCode":"ECS",
+				"courseNumber":"030",
+				"effectiveTermCode":"201703",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83482,
+				"displayName":"Data Structures and Prog",
+				"subjectCode":"ECS",
+				"courseNumber":"060",
+				"effectiveTermCode":"201703",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83483,
+				"displayName":"Bioinformatics",
+				"subjectCode":"ECS",
+				"courseNumber":"124",
+				"effectiveTermCode":"201703",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				98
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83484,
+				"displayName":"Intro to Programming",
+				"subjectCode":"ECS",
+				"courseNumber":"010",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"B",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83485,
+				"displayName":"Algorithm Design",
+				"subjectCode":"ECS",
+				"courseNumber":"122A",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"B",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83486,
+				"displayName":"Computer Sci Theory",
+				"subjectCode":"ECS",
+				"courseNumber":"289A",
+				"effectiveTermCode":"198510",
+				"sequencePattern":"001",
+				"unitsLow":1.0,
+				"unitsHigh":5.0,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83489,
+				"displayName":"Security",
+				"subjectCode":"ECS",
+				"courseNumber":"289M",
+				"effectiveTermCode":"200101",
+				"sequencePattern":"001",
+				"unitsLow":1.0,
+				"unitsHigh":5.0,
+				"year":2018,
+				"tagIds":[  
+				98
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83490,
+				"displayName":"Theory Of Computation",
+				"subjectCode":"ECS",
+				"courseNumber":"220",
+				"effectiveTermCode":"200210",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83492,
+				"displayName":"Comp Structural Bioinfo",
+				"subjectCode":"ECS",
+				"courseNumber":"129",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				98
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83493,
+				"displayName":"Scripting Languages",
+				"subjectCode":"ECS",
+				"courseNumber":"145",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83494,
+				"displayName":"Computer Architecture",
+				"subjectCode":"ECS",
+				"courseNumber":"154B",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83495,
+				"displayName":"Information Interfaces",
+				"subjectCode":"ECS",
+				"courseNumber":"163",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83503,
+				"displayName":"Algorithm Design",
+				"subjectCode":"ECS",
+				"courseNumber":"122B",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83506,
+				"displayName":"Adv Topics Com Networks",
+				"subjectCode":"ECS",
+				"courseNumber":"152C",
+				"effectiveTermCode":"201410",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83507,
+				"displayName":"Media Computation",
+				"subjectCode":"ECS",
+				"courseNumber":"012",
+				"effectiveTermCode":"201503",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83508,
+				"displayName":"Analysis of Algorithms",
+				"subjectCode":"ECS",
+				"courseNumber":"222A",
+				"effectiveTermCode":"201603",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83509,
+				"displayName":"Algorithm Design",
+				"subjectCode":"ECS",
+				"courseNumber":"122B",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83510,
+				"displayName":"Computer Networks",
+				"subjectCode":"ECS",
+				"courseNumber":"152A",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				98
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83511,
+				"displayName":"Computer Networks",
+				"subjectCode":"ECS",
+				"courseNumber":"152B",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				98
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83512,
+				"displayName":"Software Engineering",
+				"subjectCode":"ECS",
+				"courseNumber":"260",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83515,
+				"displayName":"Network Theory",
+				"subjectCode":"ECS",
+				"courseNumber":"253",
+				"effectiveTermCode":"201803",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83516,
+				"displayName":"Ethics in an Age of Tech",
+				"subjectCode":"ECS",
+				"courseNumber":"188",
+				"effectiveTermCode":"201801",
+				"sequencePattern":"004",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				100
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83517,
+				"displayName":"Intro to Computers",
+				"subjectCode":"ECS",
+				"courseNumber":"015",
+				"effectiveTermCode":"201110",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				98
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83518,
+				"displayName":"Programming Languages",
+				"subjectCode":"ECS",
+				"courseNumber":"140B",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83520,
+				"displayName":"Database Systems",
+				"subjectCode":"ECS",
+				"courseNumber":"165A",
+				"effectiveTermCode":"201610",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":83522,
+				"displayName":"Web Programming",
+				"subjectCode":"ECS",
+				"courseNumber":"162",
+				"effectiveTermCode":"201710",
+				"sequencePattern":"A",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				99
+				],
+				"note":null,
+				"scheduleId":221
+			},
+			{  
+				"id":84392,
+				"displayName":"Hist Theor Ant Ling",
+				"subjectCode":"ANT",
+				"courseNumber":"205",
+				"effectiveTermCode":"199001",
+				"sequencePattern":"001",
+				"unitsLow":4.0,
+				"unitsHigh":null,
+				"year":2018,
+				"tagIds":[  
+				],
+				"note":null,
+				"scheduleId":221
+			}
+			];
+
 		}
 	};
 };
