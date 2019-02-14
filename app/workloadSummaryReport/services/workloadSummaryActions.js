@@ -555,9 +555,9 @@ class WorkloadSummaryActions {
 				calculatedView.unassignedTotals = unassignedTotals;
 
 				calculatedView.workloadTotals = {
-					assignedTotals: calculatedView.totals,
-					unassignedTotals: calculatedView.unassignedTotals,
-					genericInstructorTotals: calculatedView.genericInstructorTotals
+					"Assigned": calculatedView.totals,
+					"Unassigned": calculatedView.unassignedTotals,
+					"TBD Instructor": calculatedView.genericInstructorTotals
 				};
 
 				WorkloadSummaryReducers.reduce({
