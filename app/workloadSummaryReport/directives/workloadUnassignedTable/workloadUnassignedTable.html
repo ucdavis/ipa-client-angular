@@ -26,7 +26,7 @@
 						Offering
 					</td>
 					<td class="workload-table__header-cell">
-						Seats
+						Enrollment / Seats
 					</td>
 					<td class="workload-table__header-cell">
 						Previous Enrollment
@@ -56,7 +56,7 @@
 					</td>
 					<td>
 						<div class="workload-table__value">
-							{{ unassignedCourse.seats }}
+							{{ unassignedCourse.enrollment }} / {{ unassignedCourse.seats }}
 						</div>
 					</td>
 					<td>
@@ -89,7 +89,7 @@
 					</td>
 					<td>
 						<div class="workload-table__value workload-table__value--type-totals-bar">
-							{{ totals.seats }}
+							{{ totals.enrollment }} / {{ totals.seats }}
 						</div>
 					</td>
 					<td>

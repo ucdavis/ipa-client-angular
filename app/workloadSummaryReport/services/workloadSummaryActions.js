@@ -314,13 +314,14 @@ class WorkloadSummaryActions {
 					unassignedCourse.description = course.subjectCode + " " + course.courseNumber;
 					unassignedCourse.sequencePattern = course.sequencePattern;
 					unassignedCourse.seats = sectionGroup.plannedSeats;
+					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
 					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
 					unassignedCourse.units = _self._getUnits(course);
 					unassignedCourse.studentCreditHours = unassignedCourse.seats * unassignedCourse.units;
 
 					unassignedTotals.assignmentCount += 1;
 					unassignedTotals.seats += unassignedCourse.seats;
-					unassignedTotals.enrollment += _self._getEnrollment(sectionGroup);
+					unassignedTotals.enrollment += unassignedCourse.enrollment;
 					unassignedTotals.previousEnrollment += unassignedCourse.previousEnrollment;
 					unassignedTotals.units += unassignedCourse.units;
 					unassignedTotals.studentCreditHours += unassignedCourse.studentCreditHours;
