@@ -85,8 +85,9 @@
 
 .divider {
 	height: 1px;
-	width:100%;
+	width:95%;
 	display:block;
 	overflow: hidden;
 	background-color: #000;
+	margin: auto;
 }
