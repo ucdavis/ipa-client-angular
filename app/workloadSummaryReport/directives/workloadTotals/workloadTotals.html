@@ -26,7 +26,7 @@
 						Assignments
 					</td>
 					<td class="workload-table__header-cell">
-						Enrollment
+						Enrollment / Seats
 					</td>
 					<td class="workload-table__header-cell">
 						Previous Enrollment
@@ -54,7 +54,7 @@
 					</td>
 					<td class="workload-totals__cell">
 						<div>
-							{{ totals.enrollment }}
+							{{ totals.enrollment }} / {{ totals.seats }}
 						</div>
 					</td>
 					<td class="workload-totals__cell">
@@ -90,6 +90,7 @@
 						<td>
 							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
 								{{ workloadTotals["Assigned"].enrollment + workloadTotals["Unassigned"].enrollment + workloadTotals["TBD Instructor"].enrollment }}
+								/ {{ workloadTotals["Assigned"].seats + workloadTotals["Unassigned"].seats + workloadTotals["TBD Instructor"].seats }}
 							</div>
 						</td>
 						<td>
