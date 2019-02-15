@@ -537,10 +537,10 @@ class BudgetCalculations {
 
 							var units = 0;
 
-							if (sectionGroupCost.unitsHigh && sectionGroupCost.unitsHigh >= sectionGroupCost.unitsLow) {
-								units = sectionGroupCost.unitsHigh;
-							} else if (sectionGroupCost.unitsLow && sectionGroupCost.unitsLow > sectionGroupCost.unitsHigh) {
+							if (sectionGroupCost.unitsLow) {
 								units = sectionGroupCost.unitsLow;
+							} else if (sectionGroupCost.unitsHigh) {
+								units = sectionGroupCost.unitsHigh;
 							}
 
 							if (sectionGroupCost.courseNumber >= 200) {
