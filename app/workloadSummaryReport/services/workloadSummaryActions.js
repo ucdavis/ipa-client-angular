@@ -309,11 +309,19 @@ class WorkloadSummaryActions {
 					var unassignedCourse = {};
 					var sectionGroup = sectionGroups.list[sectionGroupId];
 					var course = courses.list[sectionGroup.courseId];
+					var sections = WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id];
+					var seats = 0;
+
+					if (sections) {
+						sections.forEach(function (section) {
+							seats += section.seats;
+						});
+					}
 
 					unassignedCourse.term = TermService.getTermName(sectionGroup.termCode);
 					unassignedCourse.description = course.subjectCode + " " + course.courseNumber;
 					unassignedCourse.sequencePattern = course.sequencePattern;
-					unassignedCourse.seats = sectionGroup.plannedSeats;
+					unassignedCourse.seats = seats;
 					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
 					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
 					unassignedCourse.units = _self._getUnits(course);
