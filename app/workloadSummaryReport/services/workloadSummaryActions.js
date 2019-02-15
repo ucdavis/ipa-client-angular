@@ -285,58 +285,6 @@ class WorkloadSummaryActions {
 				var instructors = WorkloadSummaryReducers._state.instructors;
 				var instructorTypes = WorkloadSummaryReducers._state.instructorTypes;
 
-				// Unassigned Courses
-				var AssignedSectionGroupIds = [];
-				teachingAssignments.ids.forEach(function(teachingAssignmentId) {
-					var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
-					AssignedSectionGroupIds.push(teachingAssignment.sectionGroupId);
-				});
-				var unassignedSectionGroupIds = sectionGroups.ids.filter(function (sectionGroupId) {
-					return AssignedSectionGroupIds.indexOf(sectionGroupId) == -1;
-				});
-
-				var unassignedCourses = [];
-				var unassignedTotals = {
-					assignmentCount: 0,
-					seats: 0,
-					enrollment: 0,
-					previousEnrollment: 0,
-					units: 0,
-					studentCreditHours: 0,
-					instructorCount: 0
-				};
-				unassignedSectionGroupIds.forEach(function(sectionGroupId) {
-					var unassignedCourse = {};
-					var sectionGroup = sectionGroups.list[sectionGroupId];
-					var course = courses.list[sectionGroup.courseId];
-					var sections = WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id];
-					var seats = 0;
-
-					if (sections) {
-						sections.forEach(function (section) {
-							seats += section.seats;
-						});
-					}
-
-					unassignedCourse.term = TermService.getTermName(sectionGroup.termCode);
-					unassignedCourse.description = course.subjectCode + " " + course.courseNumber;
-					unassignedCourse.sequencePattern = course.sequencePattern;
-					unassignedCourse.seats = seats;
-					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
-					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
-					unassignedCourse.units = _self._getUnits(course);
-					unassignedCourse.studentCreditHours = unassignedCourse.seats * unassignedCourse.units;
-
-					unassignedTotals.assignmentCount += 1;
-					unassignedTotals.seats += unassignedCourse.seats;
-					unassignedTotals.enrollment += unassignedCourse.enrollment;
-					unassignedTotals.previousEnrollment += unassignedCourse.previousEnrollment;
-					unassignedTotals.units += unassignedCourse.units;
-					unassignedTotals.studentCreditHours += unassignedCourse.studentCreditHours;
-
-					unassignedCourses.push(unassignedCourse);
-				});
-
 				var calculatedView = {
 					instructorTypeIds: [],
 					byInstructorType: {},
@@ -349,6 +297,15 @@ class WorkloadSummaryActions {
 						previousEnrollment: 0,
 						instructorCount: 0,
 						assignmentCount: 0
+					},
+					unassignedTotals: {
+						assignmentCount: 0,
+						seats: 0,
+						enrollment: 0,
+						previousEnrollment: 0,
+						units: 0,
+						studentCreditHours: 0,
+						instructorCount: 0
 					},
 					genericInstructorTotals: {
 						units: 0,
@@ -463,7 +420,41 @@ class WorkloadSummaryActions {
 
 				calculatedView.instructorTypeIds = InstructorTypeService.orderInstructorTypeIdsAlphabetically(calculatedView.instructorTypeIds, instructorTypes);
 
-				// Generic Instructor/Assignment Totals
+				var assignedSectionGroupIds = teachingAssignments.ids.map(function (teachingAssignmentId) { return teachingAssignments.list[teachingAssignmentId].sectionGroupId; });
+				var unassignedSectionGroupIds = sectionGroups.ids.filter(function (sectionGroupId) { return assignedSectionGroupIds.indexOf(sectionGroupId) === -1; });
+
+				var unassignedCourses = unassignedSectionGroupIds.map(function (sectionGroupId) {
+					var unassignedCourse = {};
+					var sectionGroup = sectionGroups.list[sectionGroupId];
+					var course = courses.list[sectionGroup.courseId];
+					var sections = WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id];
+					var seats = 0;
+
+					if (sections) {
+						sections.forEach(function (section) {
+							seats += section.seats;
+						});
+					}
+
+					unassignedCourse.term = TermService.getTermName(sectionGroup.termCode);
+					unassignedCourse.description = course.subjectCode + " " + course.courseNumber;
+					unassignedCourse.sequencePattern = course.sequencePattern;
+					unassignedCourse.seats = seats;
+					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
+					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
+					unassignedCourse.units = _self._getUnits(course);
+					unassignedCourse.studentCreditHours = unassignedCourse.seats * unassignedCourse.units;
+
+					calculatedView.unassignedTotals.assignmentCount += 1;
+					calculatedView.unassignedTotals.seats += unassignedCourse.seats;
+					calculatedView.unassignedTotals.enrollment += unassignedCourse.enrollment;
+					calculatedView.unassignedTotals.previousEnrollment += unassignedCourse.previousEnrollment;
+					calculatedView.unassignedTotals.units += unassignedCourse.units;
+					calculatedView.unassignedTotals.studentCreditHours += unassignedCourse.studentCreditHours;
+
+					return unassignedCourse;
+				});
+
 				var genericInstructors = {
 					instructorTypeIds: [],
 					byInstructorType: {},
@@ -558,10 +549,9 @@ class WorkloadSummaryActions {
 
 					calculatedView.byInstructorType[genericInstructorTypeId].push(genericInstructor);
 					calculatedView.totals.instructorCount += 1;
-				}); // Generic Instructor/Assignment Totals
+				});
 
 				calculatedView.unassignedCourses = unassignedCourses;
-				calculatedView.unassignedTotals = unassignedTotals;
 
 				calculatedView.workloadTotals = {
 					"Assigned": calculatedView.totals,
