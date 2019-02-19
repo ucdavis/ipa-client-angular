@@ -167,6 +167,8 @@ class BudgetActions {
 						}
 					};
 					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateInstructorTypeCosts();
+					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
