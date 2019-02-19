@@ -18,6 +18,7 @@
 .instructor-costs__instructor-container {
 	display: flex;
 	align-items: center;
+	height: 29px;
 }
 
 .instructor-costs__cost-container {
