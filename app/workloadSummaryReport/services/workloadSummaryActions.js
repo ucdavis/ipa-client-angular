@@ -46,6 +46,21 @@ class WorkloadSummaryActions {
 						courses.list[course.id] = course;
 					});
 
+					// Adding census data to find last offering
+					courses.ids.forEach(function (courseId) {
+						var course = courses.list[courseId];
+						course.census = [];
+						var SNAPSHOT_CODE = "CURRENT";
+
+						DwService.getDwCensusData(course.subjectCode, course.courseNumber).then(function (courseCensus) {
+							courseCensus.forEach(function (census) {
+								if (census.snapshotCode === SNAPSHOT_CODE) {
+									course.census.push(census);
+								}
+							});
+						});
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_COURSES,
 						payload: {
@@ -295,6 +310,7 @@ class WorkloadSummaryActions {
 						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
+						lastOfferedEnrollment: 0,
 						instructorCount: 0,
 						assignmentCount: 0
 					}
@@ -319,6 +335,7 @@ class WorkloadSummaryActions {
 						seats: 0,
 						actualEnrollment: 0,
 						previousEnrollment: 0,
+						lastOfferedEnrollment: 0,
 						assignmentCount: 0
 					};
 
@@ -328,6 +345,7 @@ class WorkloadSummaryActions {
 						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
+						lastOfferedEnrollment: 0,
 						assignmentCount: 0
 					};
 
@@ -344,6 +362,24 @@ class WorkloadSummaryActions {
 						assignment.termCode = termCode;
 
 						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
+
+						if (course && course.census.length > 0) {
+							var lastOfferedEnrollment = 0;
+							var lastOfferedTermCode = "";
+
+							for (var i = course.census.length - 1; i > 0; i--) {
+								var slotCensus = course.census[i];
+
+								if (slotCensus.currentEnrolledCount !== 0 && slotCensus.termCode < parseInt(termCode)) {
+									lastOfferedEnrollment = slotCensus.currentEnrolledCount;
+									lastOfferedTermCode = slotCensus.termCode.toString();
+									break;
+								}
+							}
+
+							assignment.lastOfferedEnrollment = lastOfferedEnrollment || 0;
+							assignment.lastOfferedTermDescription = TermService.getTermName(lastOfferedTermCode, true);
+						}
 
 						if (teachingAssignment.sectionGroupId > 0) {
 							assignment.sequencePattern = course.sequencePattern;
@@ -372,6 +408,7 @@ class WorkloadSummaryActions {
 							calculatedView.totals.seats += assignment.seats;
 							calculatedView.totals.enrollment += assignment.actualEnrollment;
 							calculatedView.totals.previousEnrollment += assignment.previousEnrollment;
+							calculatedView.totals.lastOfferedEnrollment += assignment.lastOfferedEnrollment;
 							calculatedView.totals.units += assignment.units;
 							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
 
@@ -379,6 +416,7 @@ class WorkloadSummaryActions {
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].seats += assignment.seats;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].enrollment += assignment.actualEnrollment;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].previousEnrollment += assignment.previousEnrollment;
+							calculatedView.totals.byInstructorTypeId[instructorTypeId].lastOfferedEnrollment += assignment.lastOfferedEnrollment;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].units += assignment.units;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentCreditHours += assignment.studentCreditHours;
 						}
@@ -391,6 +429,7 @@ class WorkloadSummaryActions {
 						instructor.totals.seats += assignment.seats || 0;
 						instructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
 						instructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
+						instructor.totals.lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
 						instructor.totals.assignmentCount += 1;
 					});
 
