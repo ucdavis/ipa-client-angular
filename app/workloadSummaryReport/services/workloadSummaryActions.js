@@ -51,6 +51,7 @@ class WorkloadSummaryActions {
 						var course = courses.list[courseId];
 						course.census = [];
 						var SNAPSHOT_CODE = "CURRENT";
+
 						DwService.getDwCensusData(course.subjectCode, course.courseNumber).then(function (courseCensus) {
 							courseCensus.forEach(function (census) {
 								if (census.snapshotCode === SNAPSHOT_CODE) {
@@ -368,6 +369,7 @@ class WorkloadSummaryActions {
 
 							for (var i = course.census.length - 1; i > 0; i--) {
 								var slotCensus = course.census[i];
+
 								if (slotCensus.currentEnrolledCount !== 0 && slotCensus.termCode < parseInt(termCode)) {
 									lastOfferedEnrollment = slotCensus.currentEnrolledCount;
 									lastOfferedTermCode = slotCensus.termCode.toString();
