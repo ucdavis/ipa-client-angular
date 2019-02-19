@@ -17,6 +17,7 @@ let ipaTabs = function () {
 			tabNames: '<',
 			activeTab: '<',
 			tabOverrides: '<?', // Can provide a hash with tab names and their override values, example: {"Presence" : "Unassigned", "Teachers" : "Instructor People"}
+			tabIcons: '<?', // Hash with tab names and icon class, example: {"Monday": "entypo-attention", "Tuesday": ""}
 			selectTab: '&',
 			slim: '<?',
 			containerClass: '<?', // Can provide classes to transclusion container
