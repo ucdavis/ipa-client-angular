@@ -49,7 +49,7 @@ class BudgetActions {
 
 					// Ensure budgetScenario is properly set
 					self.attachInstructorTypesToInstructors();
-					self.selectBudgetScenario();
+					self.selectBudgetScenario(selectedBudgetScenarioId);
 
 					// Perform follow up calculations
 					BudgetCalculations.calculateInstructors();
