@@ -39,12 +39,11 @@
                 <input id="searchInput" placeholder="{{ buttonText }}"  ng-model="searchInput"><span class="caret"></span>
 
             </div>
-    
             <div ng-if="expanded" class="dropdown-container" ng-style="overrideStyles">
                 <div class="dropdown-mask" ng-click="closeDropdown()">
                 </div>
-            
-                <div  class="dropdown">
+
+                <div ng-if="!hasCustomItemTemplate" class="dropdown">
                     <div ng-repeat="item in items | filter: searchInput">
                         <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
                             {{ item[itemDescription] }}
@@ -57,6 +56,10 @@
                                 <div role="presentation" class="divider courses-separator"></div>
                             </div>
                     </div>
+                </div>
+
+                <div ng-if="hasCustomItemTemplate" class="dropdown">
+                    <div ng-transclude="custom-item-template"></div>
                 </div>
             </div>
         </div>

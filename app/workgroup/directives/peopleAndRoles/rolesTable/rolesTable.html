@@ -8,6 +8,13 @@
 					items="result"
 					item-description="displayName"
 					select-item="addUserToWorkgroup()">
+					<custom-item-template>
+						<div ng-repeat="item in result">
+							<strong>{{ item["displayName"] }}</strong> <br>
+							{{ item["email"] }}
+							<hr>
+						</div>
+					</custom-item-template>
 				</ipa-dropdown-select>
 		</div>
 		<!-- <br><br><br>

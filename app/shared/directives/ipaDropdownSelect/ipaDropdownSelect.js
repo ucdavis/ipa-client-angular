@@ -3,7 +3,9 @@ let ipaDropdownSelect = function() {
 		restrict: 'E',
 		template: require('./ipaDropdownSelect.html'),
 		replace: true,
-		
+		transclude: {
+			'custom-item-template': '?customItemTemplate'
+		},
 		scope: {
 			items: '<', // Each item is expected to have an id, description (display value), and selected (bool flag). A rowType value = 'subheader' will display as header for another list group
 			itemDescription: '@',
@@ -11,7 +13,7 @@ let ipaDropdownSelect = function() {
 			selectItem: '&',
 			showAs: '@', // Use 'button' or 'input' to show the component as such. Input is default.
 		},
-		link: function(scope) {
+		link: function(scope, el, attrs, ctrl, transclude) {
 		/* Example Usage:
 			<ipa-dropdown-select 
 				button-text="'Search Person'"
@@ -21,6 +23,8 @@ let ipaDropdownSelect = function() {
 				select-item="addItem(item)">
 			</ipa-dropdown-select>
 		*/
+
+			scope.hasCustomItemTemplate = transclude.isSlotFilled('custom-item-template');
 
 			scope.toggleDropdown = function() {
 				scope.expanded = !scope.expanded;
