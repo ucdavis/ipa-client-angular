@@ -3,13 +3,13 @@ class BudgetActions {
 		return {
 			getInitialState: function () {
 				var self = this;
-				var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
+				var selectedBudgets = JSON.parse(localStorage.getItem('selectedBudgets')) || {};
 				var selectedTerm = localStorage.getItem('selectedTerm');
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
+				var selectedBudgetScenarioId = selectedBudgets[year];
 
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
-
 					// BudgetScenario was set in localStorage, need to sanity check
 					if (selectedBudgetScenarioId) {
 						var scenarioFound = false;
@@ -34,7 +34,8 @@ class BudgetActions {
 							});
 
 							selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
-							localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
+							selectedBudgets[year] = selectedBudgetScenarioId;
+							localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 						}
 					}
 
@@ -675,7 +676,10 @@ class BudgetActions {
 					fromLiveData = budgetScenario.fromLiveData;
 				}
 
-				localStorage.setItem('selectedBudgetScenarioId', selectedScenarioId);
+				var year = BudgetReducers._state.ui.year;
+				var selectedBudgets = JSON.parse(localStorage.getItem('selectedBudgets')) || {};
+				selectedBudgets[year] = selectedScenarioId;
+				localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 
 				var action = {
 					type: ActionTypes.SELECT_BUDGET_SCENARIO,
