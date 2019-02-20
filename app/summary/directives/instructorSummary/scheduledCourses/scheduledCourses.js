@@ -9,7 +9,7 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 		replace: true,
 		link: function (scope) {
 			$rootScope.$on('summaryStateChanged', function (event, data) {
-				scope.mapDataToState(data);
+				scope.calculateAssignments(data);
 			});
 
 			scope.isCurrentTerm = function (termCode) {
@@ -39,7 +39,7 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 				return dayCodes;
 			};
 
-			scope.mapDataToState = function(data) {
+			scope.calculateAssignments = function(data) {
 				scope.instructorAssignments = [];
 				scope.termCodes = [];
 
@@ -221,7 +221,7 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 			};
 
 			if (scope.state) {
-				scope.mapDataToState(scope.state);
+				scope.calculateAssignments(scope.state);
 			}
 		}
 	};
