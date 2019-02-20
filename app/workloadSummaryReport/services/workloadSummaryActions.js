@@ -431,9 +431,7 @@ class WorkloadSummaryActions {
 					var seats = 0;
 
 					if (sections) {
-						sections.forEach(function (section) {
-							seats += section.seats;
-						});
+						seats = sections.reduce(function (acc, section) { return acc + section.seats; }, 0);
 					}
 
 					unassignedCourse.term = TermService.getTermName(sectionGroup.termCode);
