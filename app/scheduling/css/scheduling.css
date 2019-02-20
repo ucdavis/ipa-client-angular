@@ -245,6 +245,10 @@ a.activity-event i.activity-remove,
 	align-items: center;
 }
 
+.activity__event--location-conflict {
+	color: #f4bd00;
+}
+
 .cursor-default {
 	cursor: default;
 }

@@ -155,6 +155,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 				if (scope.showInstructorUndeterminedTable == true) {
 					var unassignedTermCodes = {};
+					var unassignedInstructorTypes = {};
+					var unassignedInstructorTypeLength = 0;
+					var unassignedInstructorTypeIds = [];
 
 					scope.view.state.sectionGroups.ids.forEach(function(sectionGroupId) {
 						var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
@@ -165,13 +168,27 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							}
 
 							unassignedTermCodes[sectionGroup.termCode].push(sectionGroup.id);
+						} else {
+							sectionGroup.teachingAssignmentIds.forEach(function(teachingAssignmentId) {
+								var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+								if (!teachingAssignment.instructorId && teachingAssignment.instructorTypeId) {
+									unassignedInstructorTypes[teachingAssignment.instructorTypeId] = unassignedInstructorTypes[teachingAssignment.instructorTypeId] || {};
+									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] = unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] || [];
+									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode].push(teachingAssignment.sectionGroupId);
+									unassignedInstructorTypeLength += 1;
+
+									if (unassignedInstructorTypeIds.indexOf(teachingAssignment.instructorTypeId) == -1) {
+										unassignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
+									}
+								}
+							});
 						}
 					});
 
 					var theStaffLength = _.keys(scope.view.state.theStaff.termCodes).length; // eslint-disable-line no-undef
 					var unassignedLength = _.keys(unassignedTermCodes).length; // eslint-disable-line no-undef
 
-					if ((theStaffLength == 0) && (unassignedLength == 0)) {
+					if ((theStaffLength == 0) && (unassignedLength == 0) && (unassignedInstructorTypeLength == 0)) {
 						// Nothing to show for 'Instructors TBD'
 						return;
 					}
@@ -189,7 +206,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "<span style=\"margin-right:5px;\"></span>";
 
 						// Instructor assignmentCompleted UI
-						coursesHtml += "<div><strong>The Staff</strong></div>";
+						coursesHtml += '<div class="instructor-title">The Staff</div>';
 
 						// Instructor Comment UI
 						coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
@@ -216,19 +233,16 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										var unitsLow = "";
 
 										var course = scope.view.state.courses.list[sectionGroup.courseId];
-
+										var subTitle = course.title;
 										displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+
 										var plannedSeats = sectionGroup.plannedSeats || "0";
 										plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 										unitsLow = "<small>Units: " + course.unitsLow + "</small>";
 
-										coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
-										coursesHtml += "<p>" + displayTitle + "</p>";
-										coursesHtml += "<div class=\"tile-assignment-details\">";
-										coursesHtml += plannedSeatsHtml;
-										coursesHtml += "<br />";
-										coursesHtml += unitsLow;
-										coursesHtml += "</div>";
+										coursesHtml += '<div class="alert alert-info tile-assignment">';
+
+										coursesHtml += '<p class="instructors-table__preference-title"><span class="instructor-assignment-table__course-definition">' + displayTitle + '</span>';
 
 										var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
 											"<div class='text-center'><button class='btn btn-red' data-event-type='removeTheStaff' data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
@@ -238,6 +252,16 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										coursesHtml += " data-section-group-id=\"" + sectionGroup.id + "\" data-event-type=\"removeTheStaffPop\" " +
 											"data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
 
+										coursesHtml += "</p>";
+
+										coursesHtml += '<div class="instructor-assignment-table__course-title">' + subTitle + '</div>';
+
+										coursesHtml += "<div class=\"tile-assignment-details\">";
+										coursesHtml += plannedSeatsHtml;
+										coursesHtml += "<br />";
+										coursesHtml += unitsLow;
+										coursesHtml += "</div>";
+
 										coursesHtml += "</div>";
 									});
 								}
@@ -245,6 +269,80 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							});
 						coursesHtml += "</div>"; // Ending course-row div
 					}
+
+					if (unassignedInstructorTypeLength) {
+						unassignedInstructorTypeIds.forEach(function(instructorTypeId) {
+							coursesHtml += "<div class=\"course-list-row\">";
+							coursesHtml += "<div class=\"description-cell\">";
+							coursesHtml += "<div>";
+							coursesHtml += "<span style=\"margin-right:5px;\"></span>";
+
+							// Instructor assignmentCompleted UI
+							coursesHtml += '<div class="instructor-title">' + scope.view.state.instructorTypes.list[instructorTypeId].description + '</div>';
+
+							// Instructor Comment UI
+							coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
+
+							// If they don't have any teachingCallResponses, there won't be any unavailabilities to show
+							coursesHtml += "<div class=\"description-cell__avail-btn-container\"></div>";
+							coursesHtml += "</div>";
+							coursesHtml += "</div>"; // end description-cell
+
+							// Loop over active terms
+							$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
+								var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
+								var sorted = scope.sortCourses(unassignedInstructorTypes[instructorTypeId][termCode]);
+
+								coursesHtml += "<div class=\"term-cell\">";
+
+								sorted.forEach(function(sectionGroupId) {
+									var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+
+									if (sectionGroup.termCode != termCode) { return; }
+
+									var displayTitle = "";
+									var plannedSeatsHtml = "";
+									var unitsLow = "";
+
+									var course = scope.view.state.courses.list[sectionGroup.courseId];
+									displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
+									var plannedSeats = sectionGroup.plannedSeats || "0";
+									plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
+									unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+
+									coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
+									coursesHtml += '<p class="instructors-table__preference-title">';
+									coursesHtml += '<span class="instructor-assignment-table__course-definition">' + displayTitle + '</span>';
+
+									if (scope.userCanEdit()) {
+										var popoverTemplate = "Are you sure you want to delete this assignment? <br /><br />" +
+										"<div class='text-center'><button class='btn btn-red' data-event-type='deleteAssignmentType' data-instructor-type-id=" + instructorTypeId + " data-section-group-id='" + sectionGroup.id + "'>Delete</button>" +
+										"<button class='btn btn-white' data-event-type='dismissDeleteAssignmentPop'>Cancel</button></div>";
+
+										coursesHtml += "<i class=\"btn glyphicon glyphicon-remove assignment-remove text-primary hidden-print\"";
+										coursesHtml += " data-section-group-id=\"" + sectionGroupId + "\" data-event-type=\"deleteAssignmentPop\" ";
+										coursesHtml += " data-instructor-type-id=\"" + instructorTypeId + " ";
+										coursesHtml += "data-toggle=\"popover\" data-placement='left' data-html=\"true\" data-content=\"" + popoverTemplate + "\"></i>";
+									}
+
+									coursesHtml += '</span></p>';
+
+									coursesHtml += '<div class="instructor-assignment-table__course-title">' + course.title + '</div>';
+									coursesHtml += "<div class=\"tile-assignment-details\">";
+									coursesHtml += plannedSeatsHtml;
+									coursesHtml += "<br />";
+									coursesHtml += unitsLow;
+									coursesHtml += "</div>";
+									coursesHtml += "</div>";
+								});
+
+								coursesHtml += "</div>"; // Ending term-cell div
+							});
+
+							coursesHtml += "</div>"; // Ending course-row div
+						});
+					}
+
 					if (unassignedLength > 0) {
 						coursesHtml += "<div class=\"course-list-row\">";
 						coursesHtml += "<div class=\"description-cell\">";
@@ -252,7 +350,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						coursesHtml += "<span style=\"margin-right:5px;\"></span>";
 
 						// Instructor assignmentCompleted UI
-						coursesHtml += "<div><strong>Unassigned</strong></div>";
+						coursesHtml += '<div class="instructor-title">Unassigned</div>';
 
 						// Instructor Comment UI
 						coursesHtml += "<div class=\"description-cell__comment-btn-container hidden-print\"></div>";
@@ -761,7 +859,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 				var note = e.target.value;
 
-				AssignmentActionCreators.createOrUpdateScheduleInstructorNote(scheduleId, instructorId, note, scheduleInstructorNoteId);
+				AssignmentActionCreators.createOrUpdateScheduleInstructorNote(instructorId, scheduleId, note, scheduleInstructorNoteId);
 			});
 
 			// Handle Instructor UI events
@@ -817,6 +915,22 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				// User has confirmed deletion of the assignment
 				else if ($el.data('event-type') == 'deleteAssignment') {
 					teachingAssignmentId = $el.data('teaching-assignment-id');
+					teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+					AssignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
+				}
+
+				if ($el.data('event-type') == 'deleteAssignmentType') {
+					sectionGroupId = $el.data('section-group-id');
+					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+					var teachingAssignmentId = null;
+
+					scope.view.state.teachingAssignments.ids.forEach(function(slotTeachingAssignmentId) {
+						var slotTeachingAssignment = scope.view.state.teachingAssignments.list[slotTeachingAssignmentId];
+						if (!slotTeachingAssignment.instructorId && slotTeachingAssignment.instructorTypeId && slotTeachingAssignment.sectionGroupId == sectionGroupId) {
+							teachingAssignmentId = slotTeachingAssignment.id;
+						}
+					});
+
 					teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 					AssignmentActionCreators.unapproveInstructorAssignment(teachingAssignment);
 				}

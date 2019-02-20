@@ -35,12 +35,12 @@
 				</td>
 				<td ng-repeat="term in summary.terms">
 					<div class="budget-summary__cell-container">
-						{{ summary.byTerm[term].taCount }}
+						{{ summary.byTerm[term].taCount.toFixed(2) }}
 					</div>
 				</td>
 				<td>
 					<div class="budget-summary__cell-container budget-summary__cell-container--last">
-						{{ summary.combinedTerms.taCount }}
+						{{ summary.combinedTerms.taCount.toFixed(2) }}
 					</div>
 				</td>
 			</tr>
@@ -130,12 +130,12 @@
 				</td>
 				<td ng-repeat="term in summary.terms">
 					<div class="budget-summary__cell-container">
-						{{ toCurrency(summary.byTerm[term].replacementCosts.byInstructorTypeId[instructorTypeId]) }}
+						{{ toCurrency(summary.byTerm[term].replacementCosts.byInstructorTypeId[instructorTypeId]) }} ({{ summary.byTerm[term].replacementCosts.instructorTypeCount[instructorTypeId] || 0 }})
 					</div>
 				</td>
 				<td>
 					<div class="budget-summary__cell-container budget-summary__cell-container--last">
-						{{ toCurrency(summary.combinedTerms.replacementCosts.byInstructorTypeId[instructorTypeId]) }}
+						{{ toCurrency(summary.combinedTerms.replacementCosts.byInstructorTypeId[instructorTypeId]) }} ({{ summary.combinedTerms.replacementCosts.instructorTypeCount[instructorTypeId] || 0 }})
 					</div>
 				</td>
 			</tr>

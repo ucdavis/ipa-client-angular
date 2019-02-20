@@ -1,0 +1,148 @@
+<div class="page-break-before">
+  <!-- TAs and readers -->
+  <table class="support-and-fund-changes__table">
+    <colgroup>
+      <col style="width: 35%;">
+      <col style="width: 22.5%;">
+      <col style="width: 22.5%;">
+      <col style="width: 20%;">
+    </colgroup>
+
+    <thead>
+      <tr>
+        <th>
+          <div class="dean-report__header-cell">Cost</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">Count</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">% Cost</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell dean-report__header-cell--right">% Count</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.supportCosts.ta.rawCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ costs.supportCosts.ta.rawCount }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ costs.supportCosts.ta.percentageCost || 'N/A' }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last">
+            {{ costs.supportCosts.ta.percentageCount || 'N/A' }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.supportCosts.reader.rawCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ costs.supportCosts.reader.rawCount }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ costs.supportCosts.reader.percentageCost || 'N/A' }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last">
+            {{ costs.supportCosts.reader.percentageCount || 'N/A' }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+            {{ toCurrency(costs.supportCosts.rawTotalCost) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total"></div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+              {{ costs.supportCosts.percentageTotalCost || 'N/A' }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last"></div>
+        </td>
+      </tr>
+    </tbody> 
+  </table>
+
+  <table>
+    <colgroup>
+      <col style="width: 33%;">
+      <col style="width: 41%;">
+      <col style="width: 25%;">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>
+          <div class="dean-report__header-cell dean-report__header-cell--left">
+            Funding
+          </div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">Amount</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell dean-report__header-cell--right">% Change</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="lineItemCategoryId in lineItemCategories.current.ids">
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--left">
+            {{ lineItemCategories.current.list[lineItemCategoryId].description }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container">
+              {{ toCurrency(funding.types[lineItemCategoryId].raw) }}
+            </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last">
+              {{ funding.types[lineItemCategoryId].percentage || 'N/A' }}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--left">
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+            {{ toCurrency(funding.rawTotal) }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total"></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

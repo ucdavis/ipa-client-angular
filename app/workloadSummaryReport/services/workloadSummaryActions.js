@@ -46,6 +46,21 @@ class WorkloadSummaryActions {
 						courses.list[course.id] = course;
 					});
 
+					// Adding census data to find last offering
+					courses.ids.forEach(function (courseId) {
+						var course = courses.list[courseId];
+						course.census = [];
+						var SNAPSHOT_CODE = "CURRENT";
+
+						DwService.getDwCensusData(course.subjectCode, course.courseNumber).then(function (courseCensus) {
+							courseCensus.forEach(function (census) {
+								if (census.snapshotCode === SNAPSHOT_CODE) {
+									course.census.push(census);
+								}
+							});
+						});
+					});
+
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.GET_COURSES,
 						payload: {
@@ -64,12 +79,15 @@ class WorkloadSummaryActions {
 				WorkloadSummaryService.getSections(workgroupId, year).then(function (rawSections) {
 					let sections = {
 						ids: [],
-						list: {}
+						list: {},
+						bySectionGroupId: {}
 					};
 
 					rawSections.forEach(function(section) {
 						sections.ids.push(section.id);
 						sections.list[section.id] = section;
+						sections.bySectionGroupId[section.sectionGroupId] = sections.bySectionGroupId[section.sectionGroupId] || [];
+						sections.bySectionGroupId[section.sectionGroupId].push(section);
 					});
 
 					WorkloadSummaryReducers.reduce({
@@ -289,8 +307,10 @@ class WorkloadSummaryActions {
 						byInstructorTypeId: {},
 						units: 0,
 						studentCreditHours: 0,
+						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
+						lastOfferedEnrollment: 0,
 						instructorCount: 0,
 						assignmentCount: 0
 					}
@@ -312,15 +332,20 @@ class WorkloadSummaryActions {
 						units: 0,
 						studentCreditHours: 0,
 						enrollment: 0,
+						seats: 0,
+						actualEnrollment: 0,
 						previousEnrollment: 0,
+						lastOfferedEnrollment: 0,
 						assignmentCount: 0
 					};
 
 					calculatedView.totals.byInstructorTypeId[instructorTypeId] = calculatedView.totals.byInstructorTypeId[instructorTypeId] || {
 						units: 0,
 						studentCreditHours: 0,
+						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
+						lastOfferedEnrollment: 0,
 						assignmentCount: 0
 					};
 
@@ -338,25 +363,60 @@ class WorkloadSummaryActions {
 
 						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
 
+						if (course && course.census.length > 0) {
+							var lastOfferedEnrollment = 0;
+							var lastOfferedTermCode = "";
+
+							for (var i = course.census.length - 1; i > 0; i--) {
+								var slotCensus = course.census[i];
+
+								if (slotCensus.currentEnrolledCount !== 0 && slotCensus.termCode < parseInt(termCode)) {
+									lastOfferedEnrollment = slotCensus.currentEnrolledCount;
+									lastOfferedTermCode = slotCensus.termCode.toString();
+									break;
+								}
+							}
+
+							assignment.lastOfferedEnrollment = lastOfferedEnrollment || 0;
+							assignment.lastOfferedTermDescription = TermService.getTermName(lastOfferedTermCode, true);
+						}
+
 						if (teachingAssignment.sectionGroupId > 0) {
 							assignment.sequencePattern = course.sequencePattern;
 							assignment.enrollment = _self._getEnrollment(sectionGroup);
+
 							assignment.actualEnrollment = sectionGroup.actualEnrollment;
 							assignment.maxEnrollment = sectionGroup.maxEnrollment;
+
+							var seats = 0;
+
+							var sections = WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id];
+
+							if (sections) {
+								sections.forEach(function(section) {
+									seats += section.seats;
+								});
+							}
+
+							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = _self._getUnits(course);
-							assignment.studentCreditHours = assignment.enrollment * assignment.units;
+							assignment.studentCreditHours = assignment.seats * assignment.units;
 
 							calculatedView.totals.assignmentCount += 1;
-							calculatedView.totals.enrollment += assignment.enrollment;
+							calculatedView.totals.seats += assignment.seats;
+							calculatedView.totals.enrollment += assignment.actualEnrollment;
 							calculatedView.totals.previousEnrollment += assignment.previousEnrollment;
+							calculatedView.totals.lastOfferedEnrollment += assignment.lastOfferedEnrollment;
 							calculatedView.totals.units += assignment.units;
 							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
 
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].assignmentCount += 1;
-							calculatedView.totals.byInstructorTypeId[instructorTypeId].enrollment += assignment.enrollment;
+							calculatedView.totals.byInstructorTypeId[instructorTypeId].seats += assignment.seats;
+							calculatedView.totals.byInstructorTypeId[instructorTypeId].enrollment += assignment.actualEnrollment;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].previousEnrollment += assignment.previousEnrollment;
+							calculatedView.totals.byInstructorTypeId[instructorTypeId].lastOfferedEnrollment += assignment.lastOfferedEnrollment;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].units += assignment.units;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentCreditHours += assignment.studentCreditHours;
 						}
@@ -366,7 +426,10 @@ class WorkloadSummaryActions {
 						instructor.totals.units += assignment.units || 0;
 						instructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
 						instructor.totals.enrollment += assignment.enrollment || 0;
+						instructor.totals.seats += assignment.seats || 0;
+						instructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
 						instructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
+						instructor.totals.lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
 						instructor.totals.assignmentCount += 1;
 					});
 

@@ -81,7 +81,7 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						start: moment().startOf('week').format('YYYY-MM-DD'), // eslint-disable-line no-undef
 						end: moment().startOf('week').add(scope.locations.ids.length, 'days').format('YYYY-MM-DD') // eslint-disable-line no-undef
 					},
-					columnHeaderText: function(mom) {
+					columnHeaderHtml: function(mom) {
 						var day = mom.startOf('day');
 
 						// The third param 'true' avoids moments timezone conversion errors and instead gives the raw exact difference in days
@@ -89,7 +89,13 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 
 						var locationId = scope.locations.ids[locationIndex];
 						var location = scope.locations.list[locationId];
-						return location.description;
+
+						if (location.hasLocationConflict) {
+							location.hasLocationConflict = false;
+							return "<span>" + location.description + " <i class=\"entypo-attention activity__event--location-conflict\"></i>" + "</span>";
+						} else {
+							return "<span>" + location.description + "</span>";
+						}
 					},
 					eventSources: [
 						getActivities()
@@ -121,6 +127,11 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						$timeout(function () {
 							scope.$apply();
 						});
+					},
+					eventRender: function(event, element) {
+						if (event.hasLocationConflict) {
+							element.find(".fc-title").append("<i class=\"entypo-attention activity__event--location-conflict\"></i>");
+						}
 					},
 					eventAfterAllRender: function () {
 						var eventRemove = angular.element('<i class="glyphicon glyphicon-remove hoverable activity-remove"></i>'); // eslint-disable-line no-undef
@@ -169,6 +180,13 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						}
 					});
 				}
+
+				calendarActivities.forEach(function (calendarActivity) {
+					if (scope.view.state.activities.locationConflictActivityIds.includes(calendarActivity.activityId)) {
+						calendarActivity.hasLocationConflict = true;
+						scope.locations.list[scope.locations.ids[calendarActivity.locationIndex]].hasLocationConflict = true;
+					}
+				});
 
 				return calendarActivities;
 			};
@@ -220,7 +238,8 @@ let departmentalRoomCalendar = function ($rootScope, $timeout, SchedulingActionC
 						end: activityEnd,
 						activityId: activity.id,
 						sectionGroupId: activity.sectionGroupId,
-						className: activityClasses
+						className: activityClasses,
+						locationIndex: locationIndex
 					});
 				}
 

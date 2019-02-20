@@ -306,7 +306,8 @@ class SchedulingStateService {
 					case ActionTypes.INIT_STATE:
 						activities = {
 							list: {},
-							ids: []
+							ids: [],
+							locationConflictActivityIds: []
 						};
 						var activitiesList = {};
 						var length = action.payload.activities ? action.payload.activities.length : 0;
@@ -318,6 +319,8 @@ class SchedulingStateService {
 							activities.ids.push(activityData.id);
 						}
 						activities.list = activitiesList;
+
+						this._calculateLocationConflicts(activities);
 						return activities;
 					case ActionTypes.REMOVE_ACTIVITY:
 						var activityIndex = activities.ids.indexOf(action.payload.activity.id);
@@ -326,6 +329,7 @@ class SchedulingStateService {
 						return activities;
 					case ActionTypes.UPDATE_ACTIVITY:
 						activities.list[action.payload.activity.id] = new Activity(action.payload.activity);
+						this._calculateLocationConflicts(activities);
 						return activities;
 					case ActionTypes.DELETE_SECTION:
 						action.payload.section.activityIds.forEach(function(activityId) {
@@ -490,7 +494,8 @@ class SchedulingStateService {
 							term: new Term(action.payload.term),
 							calendarMode: {
 								activeTab: "Weekly",
-								allTabs: ["Weekly", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+								allTabs: ["Weekly", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+								tabIcons: {"Weekly": "", "Sunday": "", "Monday": "", "Tuesday": "", "Wednesday": "", "Thursday": "", "Friday": "", "Saturday": ""}
 							},
 						};
 						return uiState;
@@ -556,6 +561,84 @@ class SchedulingStateService {
 						return uiState;
 				}
 			},
+			_calculateLocationConflicts: function (activities) {
+				var locationConflictDays = [];
+				var locationConflictActivityIds = [];
+				var customLocationByDays = {
+					0: [],
+					1: [],
+					2: [],
+					3: [],
+					4: [],
+					5: [],
+					6: [],
+				};
+
+				activities.ids.forEach(function (activityId) {
+					if (activities.list[activityId].locationType === "custom") {
+						var dayIndicator = activities.list[activityId].dayIndicator;
+						var dayIndicatorArray = dayIndicator.split("");
+						dayIndicatorArray.forEach(function (day, index) {
+							if (parseInt(day)) {
+								customLocationByDays[index].push(activities.list[activityId]);
+							}
+						});
+					}
+				});
+
+				for (var day in customLocationByDays) {
+					var customLocationActivities = customLocationByDays[day];
+
+					for (var index = 0; index < customLocationActivities.length; index++) {
+						var slotActivity = customLocationActivities[index];
+
+						customLocationActivities.forEach(function (activity) {
+							if (activity.id !== slotActivity.id && activity.locationId === slotActivity.locationId && activity.startTime < slotActivity.endTime && slotActivity.startTime < activity.endTime) {
+								activities.list[slotActivity.id].locationConflict = true;
+								locationConflictDays[day] = true;
+								locationConflictActivityIds.push(slotActivity.id);
+							}
+						});
+					}
+				}
+
+				activities.locationConflictDays = locationConflictDays;
+				activities.locationConflictActivityIds = locationConflictActivityIds;
+			},
+			_generateCalendarTabIcons: function (locationConflictDays, tabIcons) {
+				var tabIconClasses = "entypo-attention activity__event--location-conflict";
+				tabIcons = { "Weekly": "", "Sunday": "", "Monday": "", "Tuesday": "", "Wednesday": "", "Thursday": "", "Friday": "", "Saturday": "" };
+
+				locationConflictDays.forEach(function (_, index) {
+					switch (index) {
+						case 0:
+							tabIcons["Sunday"] = tabIconClasses;
+							break;
+						case 1:
+							tabIcons["Monday"] = tabIconClasses;
+							break;
+						case 2:
+							tabIcons["Tuesday"] = tabIconClasses;
+							break;
+						case 3:
+							tabIcons["Wednesday"] = tabIconClasses;
+							break;
+						case 4:
+							tabIcons["Thursday"] = tabIconClasses;
+							break;
+						case 5:
+							tabIcons["Friday"] = tabIconClasses;
+							break;
+						case 6:
+							tabIcons["Saturday"] = tabIconClasses;
+							break;
+						default:
+							break;
+					}
+				});
+
+				return tabIcons;
+			},
 			reduce: function (action) {
 				var scope = this;
 	
@@ -576,7 +659,9 @@ class SchedulingStateService {
 				newState.filters = scope._filterReducers(action, scope._state.filters);
 				newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
 				newState.instructorTypes = scope._instructorTypeReducers(action, scope._state.instructorTypes);
-	
+
+				newState.uiState.calendarMode.tabIcons = this._generateCalendarTabIcons(newState.activities.locationConflictDays, newState.uiState.calendarMode.tabIcons);
+
 				scope._state = newState;
 				$rootScope.$emit('schedulingStateChanged', {
 					state: scope._state,
