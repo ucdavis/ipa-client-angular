@@ -52,6 +52,8 @@
 	border: 1px solid rgba(27,31,35,0.15);
 	border-radius: 3px;
 	box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+	max-height: 80vh;
+	overflow-y: scroll;
 }
 
 .ipa-dropdown .item {
