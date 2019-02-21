@@ -157,7 +157,7 @@ class SupportSelectors {
 					newSectionGroups.push(sectionGroup);
 				});
 	
-				var sortedSectionGroups = _array_sortByProperty(newSectionGroups, ["subjectCode", "courseNumber"]);
+				var sortedSectionGroups = _array_sortByProperty(newSectionGroups, ["subjectCode", "courseNumber", "sequencePattern"]);
 	
 				return sortedSectionGroups;
 			},
