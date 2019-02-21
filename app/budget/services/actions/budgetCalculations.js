@@ -479,7 +479,8 @@ class BudgetCalculations {
 					replacementCosts: {
 						overall: 0,
 						instructorTypeIds: [],
-						byInstructorTypeId: {}
+						byInstructorTypeId: {},
+						instructorTypeCount: {}
 					},
 					totalCosts: 0,
 					funds: 0,
@@ -505,7 +506,8 @@ class BudgetCalculations {
 						replacementCosts: {
 							overall: 0,
 							instructorTypeIds: [],
-							byInstructorTypeId: {}
+							byInstructorTypeId: {},
+							instructorTypeCount: {},
 						},
 						totalCosts: 0,
 						totalSCH: 0,
@@ -550,7 +552,7 @@ class BudgetCalculations {
 							summary.byTerm[term].totalUnits += units;
 							summary.byTerm[term].totalSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
 							summary.byTerm[term].lowerDivCount += (parseInt(sectionGroupCost.courseNumber) < 100 ? 1 : 0);
-							summary.byTerm[term].upperDivCount += (parseInt(sectionGroupCost.courseNumber) > 100 && parseInt(sectionGroupCost.courseNumber) < 200 ? 1 : 0);
+							summary.byTerm[term].upperDivCount += (parseInt(sectionGroupCost.courseNumber) >= 100 && parseInt(sectionGroupCost.courseNumber) < 200 ? 1 : 0);
 							summary.byTerm[term].graduateCount += (parseInt(sectionGroupCost.courseNumber) > 199 ? 1 : 0);
 							summary.byTerm[term].enrollment += sectionGroupCost.enrollment || 0;
 							summary.byTerm[term].sectionCount += sectionGroupCost.sectionCount || 0;
@@ -587,8 +589,6 @@ class BudgetCalculations {
 			_calculateReplacementCost: function (replacementCosts, sectionGroup) {
 				var replacementCost = sectionGroup.overrideInstructorCost;
 
-				if (!replacementCost) { return replacementCosts; }
-
         var instructorTypeId = null;
 
         if (sectionGroup.overrideInstructorTypeId) {
@@ -605,17 +605,21 @@ class BudgetCalculations {
 				if (!instructorTypeId && !instructor) { return replacementCosts; }
 
 				if (!instructorTypeId) {
-					instructorTypeId = instructor.instructorType.id;
+					instructorTypeId = this._calculateInstructorType(instructor.id).id;
 				}
 
 				var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
 	
 				if (index == -1) {
 					replacementCosts.instructorTypeIds.push(instructorTypeId);
+					replacementCosts.instructorTypeCount[instructorTypeId] = 1;
+				} else {
+					replacementCosts.instructorTypeCount[instructorTypeId] += 1;
 				}
 	
 				replacementCosts.byInstructorTypeId[instructorTypeId] = replacementCosts.byInstructorTypeId[instructorTypeId] || 0;
 	
+				if (!replacementCost) { return replacementCosts; }
 				// Add cost
 				replacementCosts.byInstructorTypeId[instructorTypeId] += replacementCost;
 
@@ -627,6 +631,9 @@ class BudgetCalculations {
 					var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
 					if (index == -1) {
 						replacementCosts.instructorTypeIds.push(instructorTypeId);
+						replacementCosts.instructorTypeCount[instructorTypeId] = termCosts.instructorTypeCount[instructorTypeId];
+					} else {
+						replacementCosts.instructorTypeCount[instructorTypeId] += termCosts.instructorTypeCount[instructorTypeId];
 					}
 		
 					// Ensure not null (un-initialized)

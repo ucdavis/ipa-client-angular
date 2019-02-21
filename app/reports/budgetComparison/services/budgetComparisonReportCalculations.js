@@ -5,9 +5,7 @@ class BudgetComparisonReportCalculations {
 				var budget = BudgetComparisonReportReducers._state.budget;
 				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios;
 				var lineItems = BudgetComparisonReportReducers._state.lineItems;
-				var courses = BudgetComparisonReportReducers._state.courses;
 				var sectionGroups = BudgetComparisonReportReducers._state.sectionGroups;
-				var sections = BudgetComparisonReportReducers._state.sections;
 				var teachingAssignments = BudgetComparisonReportReducers._state.teachingAssignments;
 				var instructorTypeCosts = BudgetComparisonReportReducers._state.instructorTypeCosts;
 				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts;
@@ -21,14 +19,14 @@ class BudgetComparisonReportCalculations {
 						previousBudgetScenarios: this._getBudgetScenarios(BudgetComparisonReportReducers._state.budgetScenarios.previous)
 					},
 					current: {
-						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId, sectionGroups.current),
+						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId),
 						funding: this._generateFunding(lineItems.current, budgetScenarios.currentSelectedScenarioId),
-						miscStats: this._generateMiscStats(courses.current, sectionGroups.current, sections.current)
+						miscStats: this._generateMiscStats(sectionGroupCosts.current, budgetScenarios.currentSelectedScenarioId)
 					},
 					previous: {
 						costs: this._generateCosts(teachingAssignments.previous, instructorTypeCosts.previous, instructorCosts.previous, sectionGroupCosts.previous, budget.previous, budgetScenarios.previousSelectedScenarioId, sectionGroups.previous),
 						funding: this._generateFunding(lineItems.previous, budgetScenarios.previousSelectedScenarioId),
-						miscStats: this._generateMiscStats(courses.previous, sectionGroups.previous, sections.previous)
+						miscStats: this._generateMiscStats(sectionGroupCosts.previous, budgetScenarios.previousSelectedScenarioId)
 					}
 				};
 
@@ -46,7 +44,7 @@ class BudgetComparisonReportCalculations {
 				});
 			},
 			// Generates stats on seats and # of courses per area
-			_generateMiscStats(courses, sectionGroups, sections) {
+			_generateMiscStats(sectionGroupCosts, currentSelectedScenarioId) {
 				var miscStats = {
 					lower: {
 						courses: 0,
@@ -66,20 +64,21 @@ class BudgetComparisonReportCalculations {
 					}
 				};
 
-				sections.ids.forEach((sectionId) => {
-					var section = sections.list[sectionId];
-					var sectionGroup = sectionGroups.list[section.sectionGroupId];
-					var course = courses.list[sectionGroup.courseId];
+				sectionGroupCosts.ids.forEach((sectionGroupCostId) => {
+					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
-					var courseNumber = parseInt(course.courseNumber);
-					var seats = section.seats;
+					if (sectionGroupCost.disabled) { return; }
+					if (sectionGroupCost.budgetScenarioId != currentSelectedScenarioId) { return; }
+
+					var courseNumber = parseInt(sectionGroupCost.courseNumber);
+					var seats = sectionGroupCost.enrollment;
 
 					if (courseNumber < 100) {
 						miscStats.lower.courses += 1;
 						miscStats.lower.seats += seats;
 					} else if (courseNumber >= 200) {
 						miscStats.grad.courses += 1;
-						miscStats.grad.seats = 0; // Intentionally always zero, as this total is not relevant
+						miscStats.grad.seats +=  0; // Intentionally always zero, as this total is not relevant
 					} else {
 						miscStats.upper.courses += 1;
 						miscStats.upper.seats += seats;
@@ -92,10 +91,10 @@ class BudgetComparisonReportCalculations {
 				return miscStats;
 			},
 			// Generates calculations for instructor and support (reader, TA) costs
-			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId, sectionGroups) {
+			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId) {
 				var costs = {
 					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId),
-					supportCosts:this. _generateSupportCosts(budget, sectionGroups, selectedScenarioId),
+					supportCosts:this. _generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts),
 					total: null
 				};
 
@@ -121,7 +120,8 @@ class BudgetComparisonReportCalculations {
 					if (!instructorType) { return null; }
 
 					instructorTypeId = instructorType.id;
-					instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+					var instructorTypeCostId = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+					instructorTypeCost = instructorTypeCosts.list[instructorTypeCostId] ? instructorTypeCosts.list[instructorTypeCostId].cost : null;
 				// If an instructorType is set
 				} else if (sectionGroupCost.instructorTypeId) {
 					var instructorTypeCostId = instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
@@ -148,7 +148,7 @@ class BudgetComparisonReportCalculations {
 				} else if (instructorTypeCost) {
 					cost = instructorTypeCost;
 				} else {
-					return null;
+					cost = null;
 				}
 
 				return {
@@ -171,6 +171,7 @@ class BudgetComparisonReportCalculations {
 					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
 					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
+					if (sectionGroupCost.disabled) { return; }
 
 					var teachingAssignment = _self._getTeachingAssignment(sectionGroupCost.sectionGroupId);
 					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments);
@@ -190,12 +191,11 @@ class BudgetComparisonReportCalculations {
 					instructionCosts.total.cost += assignmentCost;
 					instructionCosts.total.courses += 1;
 				});
+
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
-			_generateSupportCosts(budget, sectionGroups, selectedScenarioId) {
-				var _self = this;
-
+			_generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts) {
 				var supportCosts = {
 					taCount: 0,
 					readerCount: 0,
@@ -205,20 +205,12 @@ class BudgetComparisonReportCalculations {
 					totalCount: 0,
 				};
 
-				sectionGroups.ids.forEach(function(sectionGroupId) {
-					var sectionGroup = sectionGroups.list[sectionGroupId];
-					var taCount = sectionGroup.teachingAssistantAppointments || 0;
-					var readerCount = sectionGroup.readerAppointments || 0;
+				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+					if (sectionGroupCost.budgetScenarioId != selectedScenarioId || sectionGroupCost.disabled) { return; }
 
-					var sectionGroupCost = _self._getSectionGroupCost(sectionGroupId, selectedScenarioId);
-
-					if (sectionGroupCost) {
-						taCount = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount : taCount; 
-						readerCount = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount : readerCount; 
-					}
-
-					supportCosts.taCount += taCount;
-					supportCosts.readerCount += readerCount;	
+					supportCosts.taCount += sectionGroupCost.taCount || 0;
+					supportCosts.readerCount += sectionGroupCost.readerCount || 0;	
 				});
 
 				supportCosts.taCost = supportCosts.taCount * budget.taCost;
@@ -268,13 +260,13 @@ class BudgetComparisonReportCalculations {
 					},
 					supportCosts: {
 						ta: {
-							rawCount: currentCosts.supportCosts.taCount - previousCosts.supportCosts.taCount,
+							rawCount: (currentCosts.supportCosts.taCount - previousCosts.supportCosts.taCount).toFixed(2),
 							percentageCount: this._percentageChange(previousCosts.supportCosts.taCount, currentCosts.supportCosts.taCount),
 							rawCost: currentCosts.supportCosts.taCost - previousCosts.supportCosts.taCost,
 							percentageCost: this._percentageChange(previousCosts.supportCosts.taCost, currentCosts.supportCosts.taCost)
 						},
 						reader: {
-							rawCount: currentCosts.supportCosts.readerCount - previousCosts.supportCosts.readerCount,
+							rawCount: (currentCosts.supportCosts.readerCount - previousCosts.supportCosts.readerCount).toFixed(2),
 							percentageCount: this._percentageChange(previousCosts.supportCosts.readerCount, currentCosts.supportCosts.readerCount),
 							rawCost: currentCosts.supportCosts.readerCost - previousCosts.supportCosts.readerCost,
 							percentageCost: this._percentageChange(previousCosts.supportCosts.readerCost, currentCosts.supportCosts.readerCost),

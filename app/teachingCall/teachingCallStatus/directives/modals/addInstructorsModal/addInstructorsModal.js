@@ -17,6 +17,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
       scope.startTeachingCallConfig = {};
       scope.startTeachingCallConfig.dueDate = "";
       scope.startTeachingCallConfig.showUnavailabilities = true;
+      scope.startTeachingCallConfig.hideNonCourseOptions = false;
       scope.startTeachingCallConfig.sendEmail = true;
       scope.startTeachingCallConfig.message = "Please consider your teaching for next year in light of what you have taught in recent years.";
       scope.startTeachingCallConfig.message += " As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
@@ -32,7 +33,9 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
       });
 
       scope.invitedInstructorsCount = function() {
-        return scope.startTeachingCallConfig.invitedInstructors.filter(function(el) { return el.invited == true; }).length;
+        if (scope.startTeachingCallConfig.invitedInstructors) {
+          return scope.startTeachingCallConfig.invitedInstructors.filter(function (el) { return el.invited == true; }).length;
+        }
       };
 
       scope.close = function() {

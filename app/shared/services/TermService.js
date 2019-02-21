@@ -19,13 +19,20 @@ class TermService {
 				'02': 'Spring Semester',
 				'03': 'Spring Quarter'
 			},
+			termCodeShortDescriptions: {
+				'05': 'SS1',
+				'07': 'SS2',
+				'10': 'FQ',
+				'01': 'WQ',
+				'03': 'SQ'
+			},
 
 			/**
 			 * Returns full term description given termCode, e.g. 201710 -> "Fall Quarter 2017"
 			 * @param {string} termCode
 			 * @returns {string} Full term description with year, e.g. "Fall Quarter 2017"
 			 */
-			getTermName: function(termCode) {
+			getTermName: function(termCode, shortDescription = false) {
 				var year, shortTermCode;
 
 				if (!termCode || termCode.length != 6) {
@@ -35,6 +42,9 @@ class TermService {
 				year = termCode.substring(0, 4);
 				shortTermCode = termCode.slice(-2);
 	
+				if (shortDescription) {
+					return this.termCodeShortDescriptions[shortTermCode] + " " + year.substring(2);
+				}
 				return this.termCodeDescriptions[shortTermCode] + " " + year;
 			},
 			// Example: '10' -> 'Fall Quarter'

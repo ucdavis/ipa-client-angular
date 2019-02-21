@@ -4,13 +4,17 @@
   <spinner class="vertical-center"></spinner>
 </div>
 
-<ipa-header page-title="Budget Comparison Report"></ipa-header>
+<ipa-header page-title="Budget Comparison Report" class="do-not-print"></ipa-header>
 
 <div ng-if="noAccess">
   <no-access workgroup-name="sharedState.workgroup.name"></no-access>
 </div>
 
-<div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="budget-comparison-report__scenario-selector-tray">
+<div class="budget-comparison-report__workgroup-title">
+  {{ sharedState.workgroup.name }} Budget Comparison Report
+</div>
+
+<div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="do-not-print budget-comparison-report__scenario-selector-tray">
   <div class="budget-comparison-report__scenario-selector-container">
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
                               selected-budget-scenario="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario"
@@ -27,28 +31,108 @@
   </div>
   <div class="budget-comparison-report__scenario-selector-container"></div>
 </div>
+
 <div ng-show="view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="budget-comparison-report">
-  <year-table costs="view.state.calculations.calculatedView.previous.costs"
-              funding="view.state.calculations.calculatedView.previous.funding"
-              misc-stats="view.state.calculations.calculatedView.previous.miscStats"
-              is-current="false"
-              instructor-types="view.state.instructorTypes"
-              line-item-categories="view.state.lineItemCategories"
-              year="(year-1)">
-  </year-table>
-  <year-table costs="view.state.calculations.calculatedView.current.costs"
-              funding="view.state.calculations.calculatedView.current.funding"
-              misc-stats="view.state.calculations.calculatedView.current.miscStats"
-              is-current="true"
-              instructor-types="view.state.instructorTypes"
-              line-item-categories="view.state.lineItemCategories"
-              year="year">
-  </year-table>
-  <change-table costs="view.state.calculations.calculatedView.change.costs"
-                funding="view.state.calculations.calculatedView.change.funding"
-                misc-stats="view.state.calculations.calculatedView.change.miscStats"
-                is-current="true"
-                instructor-types="view.state.instructorTypes"
-                line-item-categories="view.state.lineItemCategories">
-  </change-table>
+  <!-- Course Costs -->
+  <div class="budget-comparison-report__section-container ">
+    <div class="budget-comparison-report__section">
+      <course-costs costs="view.state.calculations.calculatedView.previous.costs"
+                    funding="view.state.calculations.calculatedView.previous.funding"
+                    misc-stats="view.state.calculations.calculatedView.previous.miscStats"
+                    is-current="false"
+                    instructor-types="view.state.instructorTypes"
+                    line-item-categories="view.state.lineItemCategories"
+                    year="(year-1)"
+                    budget-scenario-name="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario.name">
+      </course-costs>
+    </div>
+    <div class="budget-comparison-report__section">
+      <course-costs costs="view.state.calculations.calculatedView.current.costs"
+                    funding="view.state.calculations.calculatedView.current.funding"
+                    misc-stats="view.state.calculations.calculatedView.current.miscStats"
+                    is-current="true"
+                    instructor-types="view.state.instructorTypes"
+                    line-item-categories="view.state.lineItemCategories"
+                    year="year"
+                    budget-scenario-name="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario.name">
+      </course-costs>
+    </div>
+    <div class="budget-comparison-report__section">
+      <course-cost-changes costs="view.state.calculations.calculatedView.change.costs"
+                           funding="view.state.calculations.calculatedView.change.funding"
+                           misc-stats="view.state.calculations.calculatedView.change.miscStats"
+                           is-current="true"
+                           instructor-types="view.state.instructorTypes"
+                           line-item-categories="view.state.lineItemCategories">
+      </course-cost-changes>
+    </div>
+  </div>
+  <!-- TA/Reader & funds -->
+  <div class="budget-comparison-report__section-container">
+    <div class="budget-comparison-report__section">
+      <support-and-funds costs="view.state.calculations.calculatedView.previous.costs"
+                         funding="view.state.calculations.calculatedView.previous.funding"
+                         misc-stats="view.state.calculations.calculatedView.previous.miscStats"
+                         is-current="false"
+                         instructor-types="view.state.instructorTypes"
+                         line-item-categories="view.state.lineItemCategories"
+                         year="(year-1)"
+                         budget-scenario-name="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario.name">
+      </support-and-funds>
+    </div>
+    <div class="budget-comparison-report__section">
+      <support-and-funds costs="view.state.calculations.calculatedView.current.costs"
+                         funding="view.state.calculations.calculatedView.current.funding"
+                         misc-stats="view.state.calculations.calculatedView.current.miscStats"
+                         is-current="true"
+                         instructor-types="view.state.instructorTypes"
+                         line-item-categories="view.state.lineItemCategories"
+                         year="year"
+                         budget-scenario-name="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario.name">
+      </support-and-funds>
+    </div>
+    <div class="budget-comparison-report__section">
+      <support-and-fund-changes costs="view.state.calculations.calculatedView.change.costs"
+                                funding="view.state.calculations.calculatedView.change.funding"
+                                misc-stats="view.state.calculations.calculatedView.change.miscStats"
+                                is-current="true"
+                                instructor-types="view.state.instructorTypes"
+                                line-item-categories="view.state.lineItemCategories">
+      </support-and-fund-changes>
+    </div>
+  </div>
+  <!-- misc -->
+  <div class="budget-comparison-report__section-container">
+    <div class="budget-comparison-report__section">
+      <misc-stats costs="view.state.calculations.calculatedView.previous.costs"
+                  funding="view.state.calculations.calculatedView.previous.funding"
+                  misc-stats="view.state.calculations.calculatedView.previous.miscStats"
+                  is-current="false"
+                  instructor-types="view.state.instructorTypes"
+                  line-item-categories="view.state.lineItemCategories"
+                  year="(year-1)"
+                  budget-scenario-name="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario.name">
+      </misc-stats>
+    </div>
+    <div class="budget-comparison-report__section">
+      <misc-stats costs="view.state.calculations.calculatedView.current.costs"
+                  funding="view.state.calculations.calculatedView.current.funding"
+                  misc-stats="view.state.calculations.calculatedView.current.miscStats"
+                  is-current="true"
+                  instructor-types="view.state.instructorTypes"
+                  line-item-categories="view.state.lineItemCategories"
+                  year="year"
+                  budget-scenario-name="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario.name">
+      </misc-stats>
+    </div>
+    <div class="budget-comparison-report__section">
+      <misc-stat-changes costs="view.state.calculations.calculatedView.change.costs"
+                         funding="view.state.calculations.calculatedView.change.funding"
+                         misc-stats="view.state.calculations.calculatedView.change.miscStats"
+                         is-current="true"
+                         instructor-types="view.state.instructorTypes"
+                         line-item-categories="view.state.lineItemCategories">
+      </misc-stat-changes>
+    </div>
+  </div>
 </div>

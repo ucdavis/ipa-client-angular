@@ -33,7 +33,7 @@ class TeachingCallStatusCtrl {
 			if (instructor.message) { return true; }
 
 			// Are instructor preferences set?
-			var teachingAssignments = $scope.view.state.teachingAssignments.byInstructorId[instructor.instructorId];
+			var teachingAssignments = $scope.view.state.teachingAssignments.byInstructorId[instructor.instructorId] || [];
 
 			var hasData = false;
 
@@ -44,7 +44,7 @@ class TeachingCallStatusCtrl {
 			if (hasData) { return true; }
 
 			// Is unavailability set?
-			var teachingCallResponses = $scope.view.state.teachingCallResponses.byInstructorId[instructor.instructorId];
+			var teachingCallResponses = $scope.view.state.teachingCallResponses.byInstructorId[instructor.instructorId] || [];
 
 			teachingCallResponses.forEach(function(teachingCallResponse) {
 				if (teachingCallResponse.availabilityBlob.indexOf("0") > -1) { hasData = true; }

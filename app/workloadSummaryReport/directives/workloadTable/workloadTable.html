@@ -9,7 +9,8 @@
 				<col style="width: 10%;">
 				<col style="width: 10%;">
 				<col style="width: 10%;">
-				<col style="width: 10%;">
+				<col style="width: 6%;">
+				<col style="width: 6%;">
 			</colgroup>
 			<tbody>
 				<tr>
@@ -26,10 +27,13 @@
 						Offering
 					</td>
 					<td class="workload-table__header-cell">
-						Enrollment
+						Enrollment / Seats
 					</td>
 					<td class="workload-table__header-cell">
-						Previous Enrollment
+						Previous Enrollment (YoY)
+					</td>
+					<td class="workload-table__header-cell">
+						Previous Enrollment (Last Offered)
 					</td>
 					<td class="workload-table__header-cell">
 						Units
@@ -67,13 +71,10 @@
 					</td>
 					<td>
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
-							{{ assignment.enrollment }}
-							<span ng-if="assignment.actualEnrollment"> / {{ assignment.maxEnrollment }}
-								<span class="workload-table__enrollment-percent">(&nbsp;{{ assignment.enrollmentPercentage }}%&nbsp;)</span>
-							</span>
+							{{ assignment.actualEnrollment }}&nbsp;/&nbsp;{{ assignment.seats }}&nbsp;<span ng-if="assignment.actualEnrollment" class="workload-table__enrollment-percent">(&nbsp;{{ assignment.enrollmentPercentage }}%&nbsp;)</span>
 						</div>
 						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals" ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
-							{{ instructor.totals.enrollment }}
+							{{ instructor.totals.actualEnrollment }} / {{ instructor.totals.seats }}
 						</div>
 					</td>
 					<td>
@@ -82,6 +83,14 @@
 						</div>
 						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals" ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.previousEnrollment }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+							{{ assignment.lastOfferedEnrollment }} <span ng-if="assignment.lastOfferedTermDescription" class="workload-table__last-offered-term">({{ assignment.lastOfferedTermDescription }})</span>
+						</div>
+						<div class="workload-table__value workload-table__value--totals" ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+							{{ instructor.totals.lastOfferedEnrollment }}
 						</div>
 					</td>
 					<td>
@@ -116,12 +125,17 @@
 					</td>
 					<td>
 						<div class="workload-table__value workload-table__value--type-totals-bar">
-							{{ totals.enrollment }}
+							{{ totals.enrollment }} / {{ totals.seats }}
 						</div>
 					</td>
 					<td>
 						<div class="workload-table__value workload-table__value--type-totals-bar">
 							{{ totals.previousEnrollment }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.lastOfferedEnrollment }}
 						</div>
 					</td>
 					<td>

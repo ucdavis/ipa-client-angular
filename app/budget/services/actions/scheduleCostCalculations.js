@@ -69,7 +69,7 @@ class ScheduleCostCalculations {
           }
 
           if (assignedInstructor) {
-            sectionGroupCost.sectionGroup.assignedInstructorType = _this._getInstructorType(assignedInstructor);
+            sectionGroupCost.sectionGroup.assignedInstructorType = sectionGroupCost.sectionGroup.assignedInstructorType ? sectionGroupCost.sectionGroup.assignedInstructorType : _this._getInstructorType(assignedInstructor);
           }
 
           // Set sectionGroup instructor descriptions
@@ -119,6 +119,10 @@ class ScheduleCostCalculations {
         // Sort termCourses
         activeTerms.forEach(function(term) {
           scheduleCosts.byTerm[term] = _array_sortByProperty(scheduleCosts.byTerm[term], "uniqueKey");
+
+          scheduleCosts.byTerm[term].forEach(function(scheduleCost) {
+            scheduleCost.sectionGroupCosts = _array_sortByProperty(scheduleCost.sectionGroupCosts, "sequencePattern");
+          });
         });
 
         BudgetReducers.reduce({

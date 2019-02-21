@@ -154,7 +154,7 @@ class TeachingCallStatusStateService {
 						action.payload.users.forEach(function(user) {
 							users.ids.push(user.id);
 							users.list[user.id] = user;
-							users.byLoginId[user.loginId] = user;
+							users.byLoginId[user.loginId.toLowerCase()] = user;
 						});
 						let userRoles = {
 							ids: [],
@@ -167,7 +167,7 @@ class TeachingCallStatusStateService {
 							userRoles.byUserId[userRole.userId] = userRole;
 						});
 						action.payload.instructors.forEach(function(instructor) {
-							var user = users.byLoginId[instructor.loginId];
+							var user = users.byLoginId[instructor.loginId.toLowerCase()];
 							// Instructor may not have an associated user
 							if (!user) { return; }
 	
