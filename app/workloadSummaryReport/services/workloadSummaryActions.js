@@ -774,6 +774,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'WorkloadTotalCategories', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', '$route'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', '$route'];
 
 export default WorkloadSummaryActions;
