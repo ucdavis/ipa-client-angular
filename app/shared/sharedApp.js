@@ -61,6 +61,7 @@ import ipaCheckbox from './directives/ipaCheckbox/ipaCheckbox.js';
 import ipaCurrencyInput from './directives/ipaCurrencyInput/ipaCurrencyInput.js';
 import ipaDatePicker from './directives/ipaDatePicker/ipaDatePicker.js';
 import ipaDropdown from './directives/ipaDropdown/ipaDropdown.js';
+import ipaDropdownSelect from './directives/ipaDropdownSelect/ipaDropdownSelect.js';
 import ipaHeader from './directives/ipaHeader/ipaHeader.js';
 import ipaInput from './directives/ipaInput/ipaInput.js';
 import currencyInput from './directives/ipaInput/currencyInput.js';
@@ -264,6 +265,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .directive('ipaCurrencyInput', ipaCurrencyInput)
 .directive('ipaDatePicker', ipaDatePicker)
 .directive('ipaDropdown', ipaDropdown)
+.directive('ipaDropdownSelect', ipaDropdownSelect)
 .directive('ipaHeader', ipaHeader)
 .directive('ipaInput', ipaInput)
 .directive('currencyInput', currencyInput)

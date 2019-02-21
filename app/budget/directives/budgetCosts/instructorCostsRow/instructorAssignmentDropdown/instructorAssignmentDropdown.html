@@ -1,4 +1,4 @@
-<div class="instructor-assignment-dropdown">
+<!-- <div class="instructor-assignment-dropdown">
 	<ipa-dropdown ng-show="mode == 'originalInstructor'"
 	              expanded="sectionGroupCost.originalInstructorDropdown"
 	              style="'minimal'"
@@ -13,4 +13,28 @@
 	              items="instructors"
 	              select-item="setInstructor(item)">
 	</ipa-dropdown>
-</div>
+</div> -->
+
+
+	<div class="instructor-assignment-dropdown">
+
+		<ipa-dropdown-select 
+			ng-show="mode == 'originalInstructor'"
+			show-as="input"
+			button-text="sectionGroupCost.originalInstructorDescription || 'Assign instructor'"
+			item-description="description"
+			items="instructors"
+			select-item="setOriginalInstructor(item)"
+			queryCallback="someFunction">
+		</ipa-dropdown-select>
+
+		<ipa-dropdown-select 
+			ng-show="mode == 'instructor'"
+			show-as="button"
+			button-text="sectionGroupCost.instructorDescription || 'Assign instructor'"
+			item-description="description"
+			items="instructors"
+			select-item="setInstructor(item)">
+		</ipa-dropdown-select>
+
+	</div>

@@ -1,7 +1,28 @@
 <div class="roles-table">
 	<div class="row roles-table__search-container">
 		<!-- this is search bar -->
+		<div class="col-md-4 pull-left">
+				<ipa-dropdown-select 
+					button-text="'Search Person'"
+					show-as="input"
+					items="result"
+					item-description="displayName"
+					select-item="addUserToWorkgroup()">
+					<custom-item-template>
+						<div ng-repeat="item in result">
+							<strong>{{ item["displayName"] }}</strong> <br>
+							{{ item["email"] }}
+							<hr>
+						</div>
+					</custom-item-template>
+				</ipa-dropdown-select>
+		</div>
+		<!-- <br><br><br>
+		Data:<br>
+	<pre>{{data | json}}</pre> -->
 		<div class="col-md-4 pull-right">
+			
+
 			<div class="input-group search-input">
 				<input type="text" ng-model="users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
 					ng-change="searchOnChange()" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"

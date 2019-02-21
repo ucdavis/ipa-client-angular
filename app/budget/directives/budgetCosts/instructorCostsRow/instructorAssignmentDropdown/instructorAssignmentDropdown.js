@@ -9,6 +9,7 @@ let instructorAssignmentDropdown = function ($rootScope, BudgetActions) {
 			instructors: '<'
 		},
 		link: function (scope) {
+			// console.log(scope.instructors); //eslint-disable-line
 			scope.setInstructor = function(instructor) {
 				if (instructor.isInstructorType) {
 					scope.sectionGroupCost.instructorId = null;
@@ -26,6 +27,7 @@ let instructorAssignmentDropdown = function ($rootScope, BudgetActions) {
 				BudgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 			};
 		}
+		
 	};
 };
 
