@@ -318,15 +318,6 @@ class WorkloadSummaryActions {
 						previousEnrollment: 0,
 						instructorCount: 0,
 						assignmentCount: 0
-					},
-					combinedTotals: {
-						instructorCount: 0,
-						assignmentCount: 0,
-						enrollment: 0,
-						seats: 0,
-						previousEnrollment: 0,
-						units: 0,
-						studentCreditHours: 0
 					}
 				};
 
@@ -562,20 +553,6 @@ class WorkloadSummaryActions {
 				});
 
 				calculatedView.unassignedCourses = unassignedCourses;
-
-				calculatedView.workloadTotals = [calculatedView.totals, calculatedView.unassignedTotals, calculatedView.genericInstructorTotals];
-
-				calculatedView.combinedTotals = calculatedView.workloadTotals.reduce(function(acc, total) {
-					acc.instructorCount += total.instructorCount || 0;
-					acc.assignmentCount += total.assignmentCount || 0;
-					acc.enrollment += total.enrollment || 0;
-					acc.seats += total.seats || 0;
-					acc.previousEnrollment += total.previousEnrollment || 0;
-					acc.units += total.units || 0;
-					acc.studentCreditHours += total.studentCreditHours || 0;
-
-					return acc;
-				}, calculatedView.combinedTotals);
 
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
