@@ -289,6 +289,7 @@ class WorkloadSummaryActions {
 					instructorTypeIds: [],
 					byInstructorType: {},
 					totals: {
+						displayName: "Assigned",
 						byInstructorTypeId: {},
 						units: 0,
 						studentCreditHours: 0,
@@ -299,6 +300,7 @@ class WorkloadSummaryActions {
 						assignmentCount: 0
 					},
 					unassignedTotals: {
+						displayName: "Unassigned",
 						assignmentCount: 0,
 						seats: 0,
 						enrollment: 0,
@@ -308,6 +310,7 @@ class WorkloadSummaryActions {
 						instructorCount: 0
 					},
 					genericInstructorTotals: {
+						displayName: "TBD Instructors",
 						units: 0,
 						studentCreditHours: 0,
 						seats: 0,
@@ -315,6 +318,15 @@ class WorkloadSummaryActions {
 						previousEnrollment: 0,
 						instructorCount: 0,
 						assignmentCount: 0
+					},
+					combinedTotals: {
+						instructorCount: 0,
+						assignmentCount: 0,
+						enrollment: 0,
+						seats: 0,
+						previousEnrollment: 0,
+						units: 0,
+						studentCreditHours: 0
 					}
 				};
 
@@ -551,11 +563,19 @@ class WorkloadSummaryActions {
 
 				calculatedView.unassignedCourses = unassignedCourses;
 
-				calculatedView.workloadTotals = {
-					"Assigned": calculatedView.totals,
-					"Unassigned": calculatedView.unassignedTotals,
-					"TBD Instructor": calculatedView.genericInstructorTotals
-				};
+				calculatedView.workloadTotals = [calculatedView.totals, calculatedView.unassignedTotals, calculatedView.genericInstructorTotals];
+
+				calculatedView.combinedTotals = calculatedView.workloadTotals.reduce(function(acc, total) {
+					acc.instructorCount += total.instructorCount || 0;
+					acc.assignmentCount += total.assignmentCount || 0;
+					acc.enrollment += total.enrollment || 0;
+					acc.seats += total.seats || 0;
+					acc.previousEnrollment += total.previousEnrollment || 0;
+					acc.units += total.units || 0;
+					acc.studentCreditHours += total.studentCreditHours || 0;
+
+					return acc;
+				}, calculatedView.combinedTotals);
 
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
@@ -754,6 +774,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', '$route'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'WorkloadTotalCategories', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', '$route'];
 
 export default WorkloadSummaryActions;

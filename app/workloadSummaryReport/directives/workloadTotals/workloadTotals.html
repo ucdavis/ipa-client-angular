@@ -38,38 +38,38 @@
 						SCH
 					</td>
 				</tr>
-				<tr ng-repeat="(key, totals)  in workloadTotals">
+				<tr ng-repeat="total in workloadTotals">
 					<td class="workload-totals__cell workload-totals__cell--first">
 						<div>
-							{{ key }}
+							{{ total.displayName }}
 						</div>
 					</td>
 					<td class="workload-totals__cell workload-totals__cell--first">
 						<div>
-							{{ totals.instructorCount }}
+							{{ total.instructorCount }}
 						</div>
 					</td>
 					<td class="workload-totals__cell">
-							{{ totals.assignmentCount }}
+							{{ total.assignmentCount }}
 					</td>
 					<td class="workload-totals__cell">
 						<div>
-							{{ totals.enrollment }} / {{ totals.seats }}
-						</div>
-					</td>
-					<td class="workload-totals__cell">
-						<div>
-							{{ totals.previousEnrollment }}
+							{{ total.enrollment }} / {{ total.seats }}
 						</div>
 					</td>
 					<td class="workload-totals__cell">
 						<div>
-							{{ totals.units }}
+							{{ total.previousEnrollment }}
+						</div>
+					</td>
+					<td class="workload-totals__cell">
+						<div>
+							{{ total.units }}
 						</div>
 					</td>
 					<td class="workload-totals__cell workload-totals__cell--last">
 						<div>
-							{{ totals.studentCreditHours }}
+							{{ total.studentCreditHours }}
 						</div>
 					</td>
 				</tr>
@@ -79,33 +79,33 @@
 						<td class="workload-table__name-cell workload-table__value workload-table__value--totals">Totals</td>
 						<td>
 							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
-								{{ workloadTotals["Assigned"].instructorCount + workloadTotals["Unassigned"].instructorCount + workloadTotals["TBD Instructor"].instructorCount }}
+								{{ combinedTotals.instructorCount }}
 							</div>
 						</td>
 						<td>
 							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
-								{{ workloadTotals["Assigned"].assignmentCount + workloadTotals["Unassigned"].assignmentCount + workloadTotals["TBD Instructor"].assignmentCount }}
+								{{ combinedTotals.assignmentCount }}
 							</div>
 						</td>
 						<td>
 							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
-								{{ workloadTotals["Assigned"].enrollment + workloadTotals["Unassigned"].enrollment + workloadTotals["TBD Instructor"].enrollment }}
-								/ {{ workloadTotals["Assigned"].seats + workloadTotals["Unassigned"].seats + workloadTotals["TBD Instructor"].seats }}
+								{{ combinedTotals.enrollment }}
+								/ {{ combinedTotals.seats }}
 							</div>
 						</td>
 						<td>
 							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
-								{{ workloadTotals["Assigned"].previousEnrollment + workloadTotals["Unassigned"].previousEnrollment + workloadTotals["TBD Instructor"].previousEnrollment }}
+								{{ combinedTotals.previousEnrollment }}
 							</div>
 						</td>
 						<td>
 							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
-									{{ workloadTotals["Assigned"].units + workloadTotals["Unassigned"].units + workloadTotals["TBD Instructor"].units }}
+									{{ combinedTotals.units }}
 							</div>
 						</td>
 						<td>
 							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
-									{{ workloadTotals["Assigned"].studentCreditHours + workloadTotals["Unassigned"].studentCreditHours + workloadTotals["TBD Instructor"].studentCreditHours }}
+									{{ combinedTotals.studentCreditHours }}
 							</div>
 						</td>
 
