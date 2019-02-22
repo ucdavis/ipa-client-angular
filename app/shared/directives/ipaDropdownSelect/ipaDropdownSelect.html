@@ -43,14 +43,19 @@
                 <div class="dropdown-mask" ng-click="closeDropdown()">
                 </div>
 
-                <div ng-if="!hasCustomItemTemplate" class="dropdown">
-                    <div ng-repeat="item in items | filter: searchInput">
+                <div class="dropdown"></div>
+                    <div ng-repeat="item in items | filter: searchInput ">
                         <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
                             {{ item[itemDescription] }}
                         </div>
                         
                         <div class="item" ng-show="!item.rowType" ng-click="selectDropdownItem(item)">
-                            {{ item[itemDescription] }}
+                            <div ng-if="!hasCustomItemTemplate" >
+                                {{ item[itemDescription] }}
+                            </div>
+                            <div ng-if="hasCustomItemTemplate">
+                                <div ng-transclude="custom-item-template"></div>
+                            </div>
                         </div>
                         <div ng-show="item.rowType == 'divider'">
                                 <div role="presentation" class="divider courses-separator"></div>
@@ -58,9 +63,7 @@
                     </div>
                 </div>
 
-                <div ng-if="hasCustomItemTemplate" class="dropdown">
-                    <div ng-transclude="custom-item-template"></div>
-                </div>
+                
             </div>
         </div>
 

@@ -9,9 +9,9 @@
 					item-description="displayName"
 					select-item="addUserToWorkgroup()">
 					<custom-item-template>
-						<div ng-repeat="item in result">
-							<strong>{{ item["displayName"] }}</strong> <br>
-							{{ item["email"] }}
+						<div>
+							<strong>{{ $parent.item.displayName }}</strong> <br>
+							{{ $parent.item.email }}<br>
 							<hr>
 						</div>
 					</custom-item-template>
