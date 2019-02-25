@@ -1,8 +1,8 @@
 class TeachingCallStatusStateService {
-	constructor ($rootScope, $log, ActionTypes) {
+	constructor ($rootScope, $log, ActionTypes, UserService) {
 		return {
 			_state: {},
-			_teachingCallReceiptReducers: function (action, teachingCallReceipts, UserService) {
+			_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						teachingCallReceipts = {

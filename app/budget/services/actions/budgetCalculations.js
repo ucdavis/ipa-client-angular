@@ -428,7 +428,7 @@ class BudgetCalculations {
 				var instructorTypes = BudgetReducers._state.instructorTypes;
 	
 				var instructor = assignedInstructors.list[instructorId] || activeInstructors.list[instructorId];
-					var user = UserService.getUserByInstructor(instructor, users);
+				var user = UserService.getUserByInstructor(instructor, users);
 	
 				if (!user) { return; }
 	
@@ -728,6 +728,6 @@ class BudgetCalculations {
 	}
 }
 
-BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes', 'ScheduleCostCalculations'];
+BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes', 'ScheduleCostCalculations', 'UserService'];
 
 export default BudgetCalculations;
