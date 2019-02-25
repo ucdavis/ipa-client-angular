@@ -69,7 +69,7 @@ class ScheduleCostCalculations {
           }
 
           if (assignedInstructor) {
-            sectionGroupCost.sectionGroup.assignedInstructorType = _this._getInstructorType(assignedInstructor);
+            sectionGroupCost.sectionGroup.assignedInstructorType = sectionGroupCost.sectionGroup.assignedInstructorType ? sectionGroupCost.sectionGroup.assignedInstructorType : _this._getInstructorType(assignedInstructor);
           }
 
           // Set sectionGroup instructor descriptions
