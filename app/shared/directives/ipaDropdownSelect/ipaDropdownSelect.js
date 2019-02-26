@@ -25,7 +25,8 @@ let ipaDropdownSelect = function() {
 		*/
 
 			scope.hasCustomItemTemplate = transclude.isSlotFilled('custom-item-template');
-			scope.searchInput;
+			scope.searchInput = "";
+
 			scope.toggleDropdown = function() {
 				scope.expanded = !scope.expanded;
 			};

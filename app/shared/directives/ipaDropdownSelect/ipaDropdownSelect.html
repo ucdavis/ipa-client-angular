@@ -1,54 +1,50 @@
 <div class="ipa-dropdown-select">
-    <!-- Show as button -->
-    <div ng-if="showAs =='button'">
-        <div class="expand-button"
-            ng-class="{'ipa-dropdown__expand-button-skin--default': !style, 'ipa-dropdown__expand-button-skin--minimal': style == 'minimal', 'ipa-dropdown__wide': isWide}"
-            ng-click="openDropdown()"
-            ng-class="{ 'selected': expanded == true }">
-            <div>
-                {{ buttonText }}
-            </div>
-            <div class="caret-container">
-                <span class="ipa-dropdown-select-caret caret"></span>
-            </div>
-        </div>
-
+  <!-- Show as button -->
+  <div ng-show="showAs =='button'">
+    <div class="ipa-dropdown-select__expand-button"
+         ng-click="openDropdown()"
+         ng-class="{ 'selected': expanded == true }">
+      <div>
+        {{ buttonText }}
+      </div>
+      <div class="caret-container">
+        <span class="ipa-dropdown-select__caret caret"></span>
+      </div>
     </div>
+  </div>
 
-    <!-- Show as input -->
-    <div ng-if="showAs =='input'">
-        <div 
-            ng-class="{'ipa-dropdown__expand-button-skin--default': !style, 'ipa-dropdown__expand-button-skin--minimal': style == 'minimal', 'ipa-dropdown__wide': isWide}"
-            ng-click="openDropdown()"
-            ng-class="{ 'selected': expanded == true }">
-            <input class="dropdown-search-input" id="searchInput" placeholder="{{ buttonText }}" ng-model="searchInput"><span class="ipa-dropdown-select-caret caret"></span>
-        </div>
+  <!-- Show as input -->
+  <div ng-show="showAs =='input'">
+    <div class="ipa-dropdown-select__expand-input"
+         ng-click="openDropdown()"
+         ng-class="{ 'selected': expanded == true }">
+      <input class="ipa-dropdown-select__search-input" placeholder="{{ buttonText }}" ng-model="searchInput"><span class="ipa-dropdown-select__caret caret"></span>
     </div>
+  </div>
 
-    <!-- Dropdown -->
-    <div ng-if="expanded" class="dropdown-container" ng-style="overrideStyles">
-        <div class="dropdown-mask" ng-click="closeDropdown()"></div>
-        <div class="dropdown">
-            <div ng-if="showAs =='button'">
-                <input id="searchInput" class="dropdown-search-input" placeholder="Filter.." ng-model="searchInput">
-            </div>    
-            <div ng-repeat="item in items | filter: searchInput ">
-                <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
-                    {{ item[itemDescription] }}
-                </div>
-                <div class="item" ng-show="!item.rowType" ng-click="selectDropdownItem(item)">
-                    <div ng-if="!hasCustomItemTemplate" >
-                        {{ item[itemDescription] }}
-                    </div>
-                    <div ng-if="hasCustomItemTemplate">
-                        <div ng-transclude="custom-item-template"></div>
-                    </div>
-                </div>
-                <div ng-show="item.rowType == 'divider'">
-                    <div role="presentation" class="divider courses-separator"></div>
-                </div>
-            </div>
+  <!-- Dropdown -->
+  <div ng-show="expanded" class="dropdown-container" ng-style="overrideStyles">
+    <div class="dropdown-mask" ng-click="closeDropdown()"></div>
+    <div class="dropdown">
+      <div ng-show="showAs =='button'">
+        <input class="ipa-dropdown-select__search-input" placeholder="Filter.." ng-model="searchInput">
+      </div>
+      <div ng-repeat="item in items | filter: searchInput">
+        <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
+          {{ item[itemDescription] }}
         </div>
+        <div class="item" ng-show="!item.rowType" ng-click="selectDropdownItem(item)">
+          <div ng-show="!hasCustomItemTemplate" >
+            {{ item[itemDescription] }}
+          </div>
+          <div ng-show="hasCustomItemTemplate">
+            <div ng-transclude="custom-item-template"></div>
+          </div>
+        </div>
+        <div ng-show="item.rowType == 'divider'">
+          <div role="presentation" class="divider courses-separator"></div>
+        </div>
+      </div>
     </div>
-
+  </div>
 </div>
