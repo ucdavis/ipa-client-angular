@@ -1,50 +1,66 @@
 <div class="staff-preferences ipa-table__body-cell--small">
-	<div class="staff-preferences__review-header" ng-show="state.ui.readOnlyMode && state.ui.viewType == 'Readers' && supportStaff.readerAssignmentCount > 0">
-		Assignments
-	</div>
-	<div class="staff-preferences__review-header" ng-show="state.ui.readOnlyMode && state.ui.viewType == 'Teaching Assistants' && supportStaff.taAssignmentCount > 0">
-		Assignments
-	</div>
+  <div class="staff-preferences__review-header" ng-show="state.ui.readOnlyMode && state.ui.viewType == 'Readers' && supportStaff.readerAssignmentCount > 0">
+    Assignments
+  </div>
+  <div class="staff-preferences__review-header" ng-show="state.ui.readOnlyMode && state.ui.viewType == 'Teaching Assistants' && supportStaff.taAssignmentCount > 0">
+    Assignments
+  </div>
 
-	<div class="staff-preferences__assignment"
-		ng-repeat="supportAssignment in supportStaff.supportAssignments"
-		ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
-		<support-assignment-row
-			read-only="state.ui.readOnlyMode"
-			name="supportAssignment.description"
-			on-delete="deleteAssignment"
-			support-assignment="supportAssignment">
-		</support-assignment-row>
-	</div>
+  <div class="staff-preferences__assignment"
+    ng-repeat="supportAssignment in supportStaff.supportAssignments"
+    ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
+    <support-assignment-row
+      read-only="state.ui.readOnlyMode"
+      name="supportAssignment.description"
+      on-delete="deleteAssignment"
+      support-assignment="supportAssignment">
+    </support-assignment-row>
+  </div>
 
-	<div ng-hide="state.ui.readOnlyMode" class="staff-preferences__assignment">
-		<assign-course ng-show="state.ui.viewType == 'Readers'"
-			support-staff="supportStaff"
-			assignment-options="supportStaff.assignmentOptions.reader"
-			view-type="state.ui.viewType">
-		</assign-course>
-		<assign-course ng-show="state.ui.viewType == 'Teaching Assistants'"
-			support-staff="supportStaff"
-			assignment-options="supportStaff.assignmentOptions.ta"
-			view-type="state.ui.viewType">
-		</assign-course>
-	</div>
+  <div ng-hide="state.ui.readOnlyMode" class="staff-preferences__assignment">
+    <assign-course ng-show="state.ui.viewType == 'Readers'"
+      support-staff="supportStaff"
+      assignment-options="supportStaff.assignmentOptions.reader"
+      view-type="state.ui.viewType">
+    </assign-course>
+    <assign-course ng-show="state.ui.viewType == 'Teaching Assistants'"
+      support-staff="supportStaff"
+      assignment-options="supportStaff.assignmentOptions.ta"
+      view-type="state.ui.viewType">
+    </assign-course>
 
-	<div ng-show="state.ui.readOnlyMode">
-		<div class="staff-preferences__review-header" ng-show="state.ui.viewType == 'Readers' && supportStaff.readerPreferenceCount > 0">
-			Preferences
-		</div>
-		<div class="staff-preferences__review-header" ng-show="state.ui.viewType == 'Teaching Assistants' && supportStaff.taPreferenceCount > 0">
-			Preferences
-		</div>
+    <ipa-dropdown-select ng-show="state.ui.viewType == 'Readers'"
+                         button-text="state.ui.viewType"
+                         show-as="button"
+                         items="result"
+                         item-description="displayName"
+                         select-item="addUserToWorkgroup()">
+    </ipa-dropdown-select>
+    <ipa-dropdown-select ng-show="state.ui.viewType == 'Teaching Assistants'"
+                         button-text="state.ui.viewType"
+                         show-as="button"
+                         items="result"
+                         item-description="displayName"
+                         select-item="addUserToWorkgroup()">
+    </ipa-dropdown-select>
 
-		<div ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
-			ng-show="state.ui.viewType == 'Readers' && preference.type == 'reader'">
-			<preference-display-row text="preference.description"></preference-display-row>
-		</div>
-		<div ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
-			ng-show="state.ui.viewType == 'Teaching Assistants' && preference.type == 'teachingAssistant'">
-			<preference-display-row text="preference.description"></preference-display-row>
-		</div>
-	</div>
+  </div>
+
+  <div ng-show="state.ui.readOnlyMode">
+    <div class="staff-preferences__review-header" ng-show="state.ui.viewType == 'Readers' && supportStaff.readerPreferenceCount > 0">
+      Preferences
+    </div>
+    <div class="staff-preferences__review-header" ng-show="state.ui.viewType == 'Teaching Assistants' && supportStaff.taPreferenceCount > 0">
+      Preferences
+    </div>
+
+    <div ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
+      ng-show="state.ui.viewType == 'Readers' && preference.type == 'reader'">
+      <preference-display-row text="preference.description"></preference-display-row>
+    </div>
+    <div ng-repeat="preference in supportStaff.supportStaffPreferences | orderBy: 'priority'"
+      ng-show="state.ui.viewType == 'Teaching Assistants' && preference.type == 'teachingAssistant'">
+      <preference-display-row text="preference.description"></preference-display-row>
+    </div>
+  </div>
 </div>
