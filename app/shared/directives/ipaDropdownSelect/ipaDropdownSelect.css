@@ -10,7 +10,7 @@
 	width: 95%;
 	align-content: center;
 }
-.caret {
+.ipa-dropdown-select-caret.caret {
     position: absolute;
     top: 50%;
     right: 12px;
