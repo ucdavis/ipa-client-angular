@@ -304,6 +304,7 @@ class WorkloadSummaryActions {
 					instructorTypeIds: [],
 					byInstructorType: {},
 					totals: {
+						displayName: "Assigned",
 						byInstructorTypeId: {},
 						units: 0,
 						studentCreditHours: 0,
@@ -313,6 +314,35 @@ class WorkloadSummaryActions {
 						lastOfferedEnrollment: 0,
 						instructorCount: 0,
 						assignmentCount: 0
+					},
+					unassignedTotals: {
+						displayName: "Unassigned",
+						assignmentCount: 0,
+						seats: 0,
+						enrollment: 0,
+						previousEnrollment: 0,
+						units: 0,
+						studentCreditHours: 0,
+						instructorCount: 0
+					},
+					genericInstructorTotals: {
+						displayName: "TBD Instructors",
+						units: 0,
+						studentCreditHours: 0,
+						seats: 0,
+						enrollment: 0,
+						previousEnrollment: 0,
+						instructorCount: 0,
+						assignmentCount: 0
+					},
+					combinedTotals: {
+						instructorCount: 0,
+						assignmentCount: 0,
+						enrollment: 0,
+						seats: 0,
+						previousEnrollment: 0,
+						units: 0,
+						studentCreditHours: 0
 					}
 				};
 
@@ -440,6 +470,151 @@ class WorkloadSummaryActions {
 				});
 
 				calculatedView.instructorTypeIds = InstructorTypeService.orderInstructorTypeIdsAlphabetically(calculatedView.instructorTypeIds, instructorTypes);
+
+				var assignedSectionGroupIds = teachingAssignments.ids.map(function (teachingAssignmentId) { return teachingAssignments.list[teachingAssignmentId].sectionGroupId; });
+				var unassignedSectionGroupIds = sectionGroups.ids.filter(function (sectionGroupId) { return assignedSectionGroupIds.indexOf(sectionGroupId) === -1; });
+
+				var unassignedCourses = unassignedSectionGroupIds.map(function (sectionGroupId) {
+					var unassignedCourse = {};
+					var sectionGroup = sectionGroups.list[sectionGroupId];
+					var course = courses.list[sectionGroup.courseId];
+					var sections = WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id];
+					var seats = 0;
+
+					if (sections) {
+						seats = sections.reduce(function (acc, section) { return acc + section.seats; }, 0);
+					}
+
+					unassignedCourse.term = TermService.getTermName(sectionGroup.termCode);
+					unassignedCourse.description = course.subjectCode + " " + course.courseNumber;
+					unassignedCourse.sequencePattern = course.sequencePattern;
+					unassignedCourse.seats = seats;
+					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
+					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
+					unassignedCourse.units = _self._getUnits(course);
+					unassignedCourse.studentCreditHours = unassignedCourse.seats * unassignedCourse.units;
+
+					calculatedView.unassignedTotals.assignmentCount += 1;
+					calculatedView.unassignedTotals.seats += unassignedCourse.seats;
+					calculatedView.unassignedTotals.enrollment += unassignedCourse.enrollment;
+					calculatedView.unassignedTotals.previousEnrollment += unassignedCourse.previousEnrollment;
+					calculatedView.unassignedTotals.units += unassignedCourse.units;
+					calculatedView.unassignedTotals.studentCreditHours += unassignedCourse.studentCreditHours;
+
+					return unassignedCourse;
+				});
+
+				var genericInstructors = {
+					instructorTypeIds: [],
+					byInstructorType: {},
+				};
+
+				teachingAssignments.ids.forEach(function (teachingAssignmentId) {
+					var slotTeachingAssignment = teachingAssignments.list[teachingAssignmentId];
+
+					if (slotTeachingAssignment.instructorId === null) {
+						var instructorTypeId = slotTeachingAssignment.instructorTypeId;
+
+						if (genericInstructors.instructorTypeIds.indexOf(instructorTypeId) == -1) {
+							genericInstructors.instructorTypeIds.push(instructorTypeId);
+							genericInstructors.byInstructorType[instructorTypeId] = {
+								fullName: "TBD " + slotTeachingAssignment.instructorDisplayName,
+								instructorAssignments: [],
+								assignments: [],
+								totals: {
+									units: 0,
+									studentCreditHours: 0,
+									enrollment: 0,
+									seats: 0,
+									actualEnrollment: 0,
+									previousEnrollment: 0,
+									assignmentCount: 0
+								}
+							};
+						}
+
+						genericInstructors.byInstructorType[slotTeachingAssignment.instructorTypeId].instructorAssignments.push(slotTeachingAssignment);
+					}
+				});
+
+				genericInstructors.instructorTypeIds.forEach(function (genericInstructorTypeId) {
+					var genericInstructor = genericInstructors.byInstructorType[genericInstructorTypeId];
+
+					genericInstructor.instructorAssignments.forEach(function (teachingAssignment) {
+						var assignment = {};
+						var termCode = teachingAssignment.termCode;
+						var sectionGroup = teachingAssignment.sectionGroupId > 0 ? sectionGroups.list[teachingAssignment.sectionGroupId] : null;
+						var course = sectionGroup ? courses.list[sectionGroup.courseId] : null;
+
+						assignment.term = TermService.getTermName(termCode);
+						assignment.termCode = termCode;
+
+						assignment.description = TeachingAssignmentService.getDescription(teachingAssignment, course);
+
+						if (teachingAssignment.sectionGroupId > 0) {
+							assignment.sequencePattern = course.sequencePattern;
+							assignment.enrollment = _self._getEnrollment(sectionGroup);
+
+							assignment.actualEnrollment = sectionGroup.actualEnrollment;
+							assignment.maxEnrollment = sectionGroup.maxEnrollment;
+
+							var seats = 0;
+
+							var sections = WorkloadSummaryReducers._state.sections.bySectionGroupId[sectionGroup.id];
+
+							if (sections) {
+								sections.forEach(function (section) {
+									seats += section.seats;
+								});
+							}
+
+							assignment.seats = seats;
+							assignment.previousEnrollment = sectionGroup.previousEnrollment;
+							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
+							assignment.units = _self._getUnits(course);
+							assignment.studentCreditHours = assignment.seats * assignment.units;
+
+							calculatedView.genericInstructorTotals.assignmentCount += 1;
+							calculatedView.genericInstructorTotals.seats += assignment.seats;
+							calculatedView.genericInstructorTotals.enrollment += assignment.actualEnrollment;
+							calculatedView.genericInstructorTotals.previousEnrollment += assignment.previousEnrollment;
+							calculatedView.genericInstructorTotals.units += assignment.units;
+							calculatedView.genericInstructorTotals.studentCreditHours += assignment.studentCreditHours;
+							calculatedView.genericInstructorTotals.instructorCount += 1;
+						}
+
+						genericInstructor.assignments.push(assignment);
+
+						genericInstructor.totals.units += assignment.units || 0;
+						genericInstructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
+						genericInstructor.totals.enrollment += assignment.enrollment || 0;
+						genericInstructor.totals.seats += assignment.seats || 0;
+						genericInstructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
+						genericInstructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
+						genericInstructor.totals.assignmentCount += 1;
+					});
+
+					genericInstructor.assignments = _array_sortByProperty(genericInstructor.assignments, ["termCode", "description"]);
+
+					calculatedView.byInstructorType[genericInstructorTypeId].push(genericInstructor);
+					calculatedView.totals.instructorCount += 1;
+				});
+
+				calculatedView.unassignedCourses = unassignedCourses;
+
+				calculatedView.workloadTotals = [calculatedView.totals, calculatedView.unassignedTotals, calculatedView.genericInstructorTotals];
+
+				calculatedView.combinedTotals = calculatedView.workloadTotals.reduce(function(acc, total) {
+					acc.instructorCount += total.instructorCount || 0;
+					acc.assignmentCount += total.assignmentCount || 0;
+					acc.enrollment += total.enrollment || 0;
+					acc.seats += total.seats || 0;
+					acc.previousEnrollment += total.previousEnrollment || 0;
+					acc.units += total.units || 0;
+					acc.studentCreditHours += total.studentCreditHours || 0;
+
+					return acc;
+				}, calculatedView.combinedTotals);
 
 				WorkloadSummaryReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,

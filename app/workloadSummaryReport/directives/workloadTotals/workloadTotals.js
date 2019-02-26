@@ -6,7 +6,8 @@ let workloadTotals = function () {
 		template: require('./workloadTotals.html'),
 		replace: true,
 		scope: {
-			state: '<'
+			workloadTotals: '<',
+			combinedTotals: '<'
 		},
 		link: function() {
 			// Intentionally blank

@@ -1,0 +1,114 @@
+<div>
+	<div class="workload-totals__header">
+		Unassigned Courses
+	</div>
+	<div class="workload-totals__content">
+		<table class="workload-table__table">
+			<colgroup>
+				<col style="width: 16%;">
+				<col style="width: 16%;">
+				<col style="width: 16%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+				<col style="width: 10%;">
+			</colgroup>
+			<tbody>
+				<tr>
+					<td class="workload-table__header-cell workload-table__header-cell--first">
+						Term
+					</td>
+					<td class="workload-table__header-cell">
+						Description
+					</td>
+					<td class="workload-table__header-cell">
+						Offering
+					</td>
+					<td class="workload-table__header-cell">
+						Enrollment / Seats
+					</td>
+					<td class="workload-table__header-cell">
+						Previous Enrollment
+					</td>
+					<td class="workload-table__header-cell">
+						Units
+					</td>
+					<td class="workload-table__header-cell workload-table__header-cell--last">
+						SCH
+					</td>
+				</tr>
+				<tr ng-repeat="unassignedCourse in courses" class="workload-table__row">
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.term }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.description }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.sequencePattern }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.enrollment }} / {{ unassignedCourse.seats }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.previousEnrollment }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.units }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value">
+							{{ unassignedCourse.studentCreditHours }}
+						</div>
+					</td>
+				</tr>
+
+				<!-- Table totals -->
+				<tr class="workload-table__row">
+					<td class="workload-table__name-cell"></td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ courses.length }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar"></div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.enrollment }} / {{ totals.seats }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.previousEnrollment }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.units }}
+						</div>
+					</td>
+					<td>
+						<div class="workload-table__value workload-table__value--type-totals-bar">
+							{{ totals.studentCreditHours }}
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

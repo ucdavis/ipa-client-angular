@@ -1,5 +1,5 @@
 <div class="workload-totals">
-	<div class="workload-totals__header">
+	<div class="workload-summary__table-label">
 		Assignment Totals
 	</div>
 	<div class="workload-totals__content">
@@ -17,15 +17,16 @@
 			<tbody>
 				<tr>
 					<td class="workload-table__header-cell workload-table__header-cell--first">
+						Totals
+					</td>
+					<td class="workload-table__header-cell workload-table__header-cell--first">
 						Instructors
 					</td>
-					<td class="workload-table__header-cell"></td>
 					<td class="workload-table__header-cell">
 						Assignments
 					</td>
-					<td class="workload-table__header-cell"></td>
 					<td class="workload-table__header-cell">
-						Enrollment
+						Enrollment / Seats
 					</td>
 					<td class="workload-table__header-cell">
 						Previous Enrollment
@@ -37,48 +38,79 @@
 						SCH
 					</td>
 				</tr>
-				<tr>
+				<tr ng-repeat="total in workloadTotals">
 					<td class="workload-totals__cell workload-totals__cell--first">
 						<div>
-							{{ state.calculations.calculatedView.totals.instructorCount }}
+							{{ total.displayName }}
 						</div>
 					</td>
-					<td class="workload-totals__cell"></td>
-					<td class="workload-totals__cell">
-							{{ state.calculations.calculatedView.totals.assignmentCount }}
-					</td>
-					<td class="workload-totals__cell"></td>
-					<td class="workload-totals__cell">
+					<td class="workload-totals__cell workload-totals__cell--first">
 						<div>
-							{{ state.calculations.calculatedView.totals.enrollment }}
+							{{ total.instructorCount }}
 						</div>
 					</td>
 					<td class="workload-totals__cell">
+							{{ total.assignmentCount }}
+					</td>
+					<td class="workload-totals__cell">
 						<div>
-							{{ state.calculations.calculatedView.totals.previousEnrollment }}
+							{{ total.enrollment }} / {{ total.seats }}
 						</div>
 					</td>
 					<td class="workload-totals__cell">
 						<div>
-							{{ state.calculations.calculatedView.totals.units }}
+							{{ total.previousEnrollment }}
+						</div>
+					</td>
+					<td class="workload-totals__cell">
+						<div>
+							{{ total.units }}
 						</div>
 					</td>
 					<td class="workload-totals__cell workload-totals__cell--last">
 						<div>
-							{{ state.calculations.calculatedView.totals.studentCreditHours }}
+							{{ total.studentCreditHours }}
 						</div>
 					</td>
 				</tr>
+
+				<!-- Table totals -->
+				<tr class="workload-table__row">
+						<td class="workload-table__name-cell workload-table__value workload-table__value--totals">Totals</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+								{{ combinedTotals.instructorCount }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+								{{ combinedTotals.assignmentCount }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+								{{ combinedTotals.enrollment }}
+								/ {{ combinedTotals.seats }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+								{{ combinedTotals.previousEnrollment }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+									{{ combinedTotals.units }}
+							</div>
+						</td>
+						<td>
+							<div class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+									{{ combinedTotals.studentCreditHours }}
+							</div>
+						</td>
+
+					</tr>
 			</tbody>
 		</table>
 	</div>
-	<div class="workload-totals__warning">
-		<div>
-			Enrollment, previous enrollment and SCH are based on classes with instructor assignments.
-		</div>
-		<div>
-			Calculations that include classes without assignments (or with generic instructor type assignments) can be found in the budget summary report.
-		</div>
-	</div>
-
 </div>

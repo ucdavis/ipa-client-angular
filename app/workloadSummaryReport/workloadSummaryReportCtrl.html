@@ -3,17 +3,20 @@
 <ipa-header page-title="Workload Summary Report"></ipa-header>
 
 <div ng-if="noAccess">
-	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
+  <no-access workgroup-name="sharedState.workgroup.name"></no-access>
 </div>
 
 <div ng-if="!noAccess && view.state && view.state.calculations.isInitialFetchComplete && view.state.calculations.dwCallsCompleted == view.state.calculations.dwCallsOpened">
-	<div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-class="{'workload-table__last':$last }">
-		<div class="workload-summary__table-label">
-			{{ view.state.instructorTypes.list[instructorTypeId].description }}
-		</div>
-		<workload-table instructors="view.state.calculations.calculatedView.byInstructorType[instructorTypeId]"
-		                totals="view.state.calculations.calculatedView.totals.byInstructorTypeId[instructorTypeId]"></workload-table>
-	</div>
+  <div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-class="{'workload-table__last':$last }">
+    <div class="workload-summary__table-label">
+      {{ view.state.instructorTypes.list[instructorTypeId].description }}
+    </div>
+    <workload-table instructors="view.state.calculations.calculatedView.byInstructorType[instructorTypeId]"
+                    totals="view.state.calculations.calculatedView.totals.byInstructorTypeId[instructorTypeId]"></workload-table>
+  </div>
+  <workload-unassigned-table courses="view.state.calculations.calculatedView.unassignedCourses"
+                             totals="view.state.calculations.calculatedView.unassignedTotals"></workload-unassigned-table>
 
-	 <workload-totals state="view.state"></workload-totals>
+  <workload-totals workload-totals="view.state.calculations.calculatedView.workloadTotals"
+                   combined-totals="view.state.calculations.calculatedView.combinedTotals"></workload-totals>
 </div>
