@@ -1,26 +1,40 @@
 <div class="roles-table">
 	<div class="row roles-table__search-container">
 		<!-- this is search bar -->
-		<div class="col-md-4 pull-left">
+		<div class="col-sm-4 pull-left">
+				<ipa-dropdown-select 
+					button-text="'Search Person'"
+					show-as="button"
+					items="result"
+					item-description="displayName"
+					select-item="addUserToWorkgroup()">
+					<!-- <custom-item-template>
+						<div>
+							<strong>{{ $parent.item.displayName }}</strong><br/>
+							Email: {{ $parent.item.email }}<br/>
+							Id: {{ $parent.item.id}}
+						</div>
+					</custom-item-template> -->
+				</ipa-dropdown-select>
+		</div>
+		<div class="col-sm-4 pull-left">
 				<ipa-dropdown-select 
 					button-text="'Search Person'"
 					show-as="input"
 					items="result"
 					item-description="displayName"
 					select-item="addUserToWorkgroup()">
-					<custom-item-template>
+					<!-- <custom-item-template>
 						<div>
-							<strong>{{ $parent.item.displayName }}</strong> <br>
-							{{ $parent.item.email }}<br>
-							<hr>
+							<strong>{{ $parent.item.displayName }}</strong><br/>
+							Email: {{ $parent.item.email }}<br/>
+							Id: {{ $parent.item.id}}
 						</div>
-					</custom-item-template>
+					</custom-item-template> -->
 				</ipa-dropdown-select>
 		</div>
-		<!-- <br><br><br>
-		Data:<br>
-	<pre>{{data | json}}</pre> -->
-		<div class="col-md-4 pull-right">
+
+		<div class="col-sm-4 pull-right">
 			
 
 			<div class="input-group search-input">
