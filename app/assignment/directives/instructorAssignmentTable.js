@@ -620,7 +620,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										var interestedCourseIds = [];
 										var firstInterestedCourseAdded = false;
 										var firstCourseInGroup = [];
-										var nonCoursePreferences = {buyout: false, sabbatical: false, inResidence: false, workLifeBalance: false, leaveOfAbsence: false, courseRelease: false, sabbaticalInResidence: false};
 
 										// If the instructor has teachingAssignments in this term, show them first
 										if (instructor.teachingAssignmentTermCodeIds[termCode] && instructor.teachingAssignmentTermCodeIds[termCode].length > 0) {
@@ -638,25 +637,18 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 													if (teachingAssignment.buyout) {
 														preferenceDisplayText = "Buyout";
-														nonCoursePreferences.buyout = true;
 													} else if (teachingAssignment.courseRelease) {
 														preferenceDisplayText = "Course Release";
-														nonCoursePreferences.courseRelease = true;
 													} else if (teachingAssignment.inResidence) {
 														preferenceDisplayText = "In Residence";
-														nonCoursePreferences.inResidence = true;
 													} else if (teachingAssignment.workLifeBalance) {
 														preferenceDisplayText = "Work Life Balance";
-														nonCoursePreferences.workLifeBalance = true;
 													} else if (teachingAssignment.leaveOfAbsence) {
 														preferenceDisplayText = "Leave of Absence";
-														nonCoursePreferences.leaveOfAbsence = true;
 													} else if (teachingAssignment.sabbaticalInResidence) {
 														preferenceDisplayText = "Sabbatical In Residence";
-														nonCoursePreferences.sabbaticalInResidence = true;
 													} else if (teachingAssignment.sabbatical) {
 														preferenceDisplayText = "Sabbatical";
-														nonCoursePreferences.sabbatical = true;
 													}
 
 													if (firstInterestedCourseAdded === false) {
@@ -751,56 +743,47 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										}
 
 										// Add Buyout, Sabbatical, Course Release options
-										if (nonCoursePreferences.buyout == false) {
-											courseHtml += "<li><a";
-											courseHtml += " data-is-buyout=\"true\"";
-											courseHtml += " data-term-code=\"" + termCode + "\"";
-											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-											courseHtml += " href=\"#\">Buyout</a></li>";
-										}
+										courseHtml += "<li><a";
+										courseHtml += " data-is-buyout=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Buyout</a></li>";
 
-										if (nonCoursePreferences.sabbatical == false) {
-											courseHtml += "<li><a";
-											courseHtml += " data-is-sabbatical=\"true\"";
-											courseHtml += " data-term-code=\"" + termCode + "\"";
-											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-											courseHtml += " href=\"#\">Sabbatical</a></li>";
-										}
-										if (nonCoursePreferences.inResidence == false) {
-											courseHtml += "<li><a";
-											courseHtml += " data-is-in-residence=\"true\"";
-											courseHtml += " data-term-code=\"" + termCode + "\"";
-											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-											courseHtml += " href=\"#\">In Residence</a></li>";
-										}
-										if (nonCoursePreferences.workLifeBalance == false) {
-											courseHtml += "<li><a";
-											courseHtml += " data-is-work-life-balance=\"true\"";
-											courseHtml += " data-term-code=\"" + termCode + "\"";
-											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-											courseHtml += " href=\"#\">Work Life Balance</a></li>";
-										}
-										if (nonCoursePreferences.leaveOfAbsence == false) {
-											courseHtml += "<li><a";
-											courseHtml += " data-is-leave-of-absence=\"true\"";
-											courseHtml += " data-term-code=\"" + termCode + "\"";
-											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-											courseHtml += " href=\"#\">Leave of Absence</a></li>";
-										}
-										if (nonCoursePreferences.sabbaticalInResidence == false) {
-											courseHtml += "<li><a";
-											courseHtml += " data-is-sabbatical-in-residence=\"true\"";
-											courseHtml += " data-term-code=\"" + termCode + "\"";
-											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-											courseHtml += " href=\"#\">Sabbatical In Residence</a></li>";
-										}
-										if (nonCoursePreferences.courseRelease == false) {
-											courseHtml += "<li><a";
-											courseHtml += " data-is-course-release=\"true\"";
-											courseHtml += " data-term-code=\"" + termCode + "\"";
-											courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
-											courseHtml += " href=\"#\">Course Release</a></li>";
-										}
+										courseHtml += "<li><a";
+										courseHtml += " data-is-sabbatical=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Sabbatical</a></li>";
+
+										courseHtml += "<li><a";
+										courseHtml += " data-is-in-residence=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">In Residence</a></li>";
+
+										courseHtml += "<li><a";
+										courseHtml += " data-is-work-life-balance=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Work Life Balance</a></li>";
+
+										courseHtml += "<li><a";
+										courseHtml += " data-is-leave-of-absence=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Leave of Absence</a></li>";
+
+										courseHtml += "<li><a";
+										courseHtml += " data-is-sabbatical-in-residence=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Sabbatical In Residence</a></li>";
+
+										courseHtml += "<li><a";
+										courseHtml += " data-is-course-release=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Course Release</a></li>";
 
 										courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
