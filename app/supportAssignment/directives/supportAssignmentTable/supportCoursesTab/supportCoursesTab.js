@@ -12,7 +12,6 @@ let supportCoursesTab = function ($rootScope, SupportActions) {
 		},
 		link: function (scope) {
 			scope.radioNames = ["Teaching Assistants", "Readers"];
-
 			scope.setViewType = function(type) {
 				SupportActions.setViewType(type);
 			};

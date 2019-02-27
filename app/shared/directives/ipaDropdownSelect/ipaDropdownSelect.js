@@ -12,6 +12,7 @@ let ipaDropdownSelect = function() {
 			buttonText: '<',
 			selectItem: '&',
 			showAs: '@', // Use 'button' or 'input' to show the component as such. Input is default.
+			liveQuery: '&?',
 		},
 		link: function(scope, el, attrs, ctrl, transclude) {
 		/* Example Usage:
@@ -22,8 +23,7 @@ let ipaDropdownSelect = function() {
 				item-description="displayName"
 				select-item="addItem(item)">
 			</ipa-dropdown-select>
-		*/
-
+		*/	
 			scope.hasCustomItemTemplate = transclude.isSlotFilled('custom-item-template');
 			scope.searchInput = "";
 

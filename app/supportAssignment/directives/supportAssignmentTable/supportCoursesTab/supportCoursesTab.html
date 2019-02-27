@@ -75,7 +75,33 @@
 						assignment-options="section.teachingAssistantAssignmentOptions">
 					</assign-support-staff>
 				</div>
+
+			    <ipa-dropdown-select ng-show="state.ui.viewType == 'Readers'"
+                        button-text="state.ui.viewType"
+                        show-as="button"
+                        items="section.teachingAssistantAssignmentOptions.reader.instructorPreferences"
+                        item-description="description"
+                        select-item="assignToSupportStaff(item)">
+				</ipa-dropdown-select>
+				<ipa-dropdown-select ng-show="state.ui.viewType == 'Teaching Assistants'"
+						button-text="state.ui.viewType"
+						show-as="button"
+						items="section.teachingAssistantAssignmentOptions.instructorPreferences"
+						item-description="description"
+						select-item="assignToSupportStaff(item)">
+						<div class="assign-course__priority-icon">
+							<!-- <custom-item-template>
+								<div class="badge badge-pill badge-dark">
+								{{ $parent.item.description }} HERE
+								</div>
+								</div>
+								<div class="assign-course__description">
+								{{ $parent.item.fullName }}HERE
+								</div>
+							</custom-item-template> -->
+				</ipa-dropdown-select>
 			</div>
+			
 		</div>
 	</div>
 	<div class="support-courses-tab__spacer"></div>
