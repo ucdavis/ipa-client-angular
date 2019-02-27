@@ -28,23 +28,22 @@
       assignment-options="supportStaff.assignmentOptions.ta"
       view-type="state.ui.viewType">
     </assign-course>
-
-    <ipa-dropdown-select ng-show="state.ui.viewType == 'Readers'"
-                         button-text="state.ui.viewType"
-                         show-as="button"
-                         items="result"
-                         item-description="displayName"
-                         select-item="addUserToWorkgroup()">
-    </ipa-dropdown-select>
-    <ipa-dropdown-select ng-show="state.ui.viewType == 'Teaching Assistants'"
-                         button-text="state.ui.viewType"
-                         show-as="button"
-                         items="result"
-                         item-description="displayName"
-                         select-item="addUserToWorkgroup()">
-    </ipa-dropdown-select>
-
   </div>
+
+  <ipa-dropdown-select ng-show="state.ui.viewType == 'Readers'"
+  button-text="state.ui.viewType"
+  show-as="button"
+  items="result"
+  item-description="displayName"
+  select-item="addUserToWorkgroup()">
+</ipa-dropdown-select>
+<ipa-dropdown-select ng-show="state.ui.viewType == 'Teaching Assistants'"
+  button-text="state.ui.viewType"
+  show-as="button"
+  items="result"
+  item-description="displayName"
+  select-item="addUserToWorkgroup()">
+</ipa-dropdown-select>
 
   <div ng-show="state.ui.readOnlyMode">
     <div class="staff-preferences__review-header" ng-show="state.ui.viewType == 'Readers' && supportStaff.readerPreferenceCount > 0">
