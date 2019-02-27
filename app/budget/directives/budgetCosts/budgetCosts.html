@@ -61,12 +61,13 @@
 								</colgroup>
 							</thead>
 							<tbody>
-								<tr course-costs-row section-group-cost="sectionGroupCost"></tr>
+								<tr course-costs-row section-group-cost="sectionGroupCost" is-live-data-scenario="isLiveDataScenario"></tr>
 								<tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
 								    instructor-costs-row
 								    section-group-cost="sectionGroupCost"
 								    instructor-assignment-options="instructorAssignmentOptions"
-								    regular-instructor-assignment-options="regularInstructorAssignmentOptions">
+								    regular-instructor-assignment-options="regularInstructorAssignmentOptions"
+								    is-live-data-scenario="isLiveDataScenario">
 								</tr>
 							</tbody>
 						</table>

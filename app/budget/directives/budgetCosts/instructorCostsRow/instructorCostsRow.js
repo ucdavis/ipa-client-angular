@@ -10,7 +10,8 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
 			sectionGroupCost: '<',
-			divider: '<'
+			divider: '<',
+			isLiveDataScenario: '<'
 		},
 		replace: true,
 		link: function (scope) {

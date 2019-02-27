@@ -8,7 +8,8 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 		template: require('./courseCostsRow.html'),
 		replace: true,
 		scope: {
-			sectionGroupCost: '<'
+			sectionGroupCost: '<',
+			isLiveDataScenario: '<'
 		},
 		link: function (scope) {
 			scope.updateSectionGroupCost = function (sectionGroupCost) {

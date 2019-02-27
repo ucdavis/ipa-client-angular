@@ -13,6 +13,8 @@ class ScheduleCostCalculations {
         var sectionGroups = BudgetReducers._state.scheduleSectionGroups;
         var activeTerms = selectedBudgetScenario.terms;
 
+        selectedBudgetScenario.budgetedCourseHiddenByTermFilter = false;
+
         var scheduleCosts = {
           terms: selectedBudgetScenario.terms,
           byTerm: {},
@@ -35,7 +37,11 @@ class ScheduleCostCalculations {
 
           // Ensure sectionGroupCost belongs to an active term in this scenario
           var shortTerm = sectionGroupCost.termCode.slice(-2);
-          if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) { return; }
+
+          if (selectedBudgetScenario.terms.indexOf(shortTerm) == -1) {
+            selectedBudgetScenario.budgetedCourseHiddenByTermFilter = true;
+            return;
+          }
 
           var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];

@@ -9,7 +9,6 @@ let budgetScenarioDropdown = function($window, $location, $routeParams, $rootSco
 			state: '<'
 		},
 		link: function (scope) {
-
 			scope.deleteBudgetScenario = function (budgetScenario) {
 				BudgetActions.deleteBudgetScenario(budgetScenario.id);
 				// Ensure bootstrap dropdown closes properly when confirming deleting budget scenario
@@ -23,6 +22,12 @@ let budgetScenarioDropdown = function($window, $location, $routeParams, $rootSco
 			scope.openBudgetScenarioModal = function() {
 				scope.state.openAddBudgetScenario = true;
 			};
+
+			scope.state.budgetScenarios.forEach(function(budgetScenario) {
+				if (budgetScenario.fromLiveData) {
+					scope.scenarioFromLiveData = budgetScenario;
+				}
+			});
 		}
 	};
 };

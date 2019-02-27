@@ -3,13 +3,13 @@ class BudgetActions {
 		return {
 			getInitialState: function () {
 				var self = this;
-				var selectedBudgetScenarioId = parseInt(localStorage.getItem('selectedBudgetScenarioId')) || null;
+				var selectedBudgets = JSON.parse(localStorage.getItem('selectedBudgets')) || {};
 				var selectedTerm = localStorage.getItem('selectedTerm');
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
+				var selectedBudgetScenarioId = selectedBudgets[year];
 
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
-
 					// BudgetScenario was set in localStorage, need to sanity check
 					if (selectedBudgetScenarioId) {
 						var scenarioFound = false;
@@ -27,8 +27,15 @@ class BudgetActions {
 					// BudgetScenario was not set in localStorage, or it didn't correspond to an existing scenario
 					if (!selectedBudgetScenarioId) {
 						if (results.budgetScenarios && results.budgetScenarios.length > 0) {
+							results.budgetScenarios.forEach(function(budgetScenario) {
+								if (budgetScenario.fromLiveData) {
+									selectedBudgetScenarioId = budgetScenario.id;
+								}
+							});
+
 							selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
-							localStorage.setItem('selectedBudgetScenarioId', selectedBudgetScenarioId);
+							selectedBudgets[year] = selectedBudgetScenarioId;
+							localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 						}
 					}
 
@@ -43,7 +50,7 @@ class BudgetActions {
 
 					// Ensure budgetScenario is properly set
 					self.attachInstructorTypesToInstructors();
-					self.selectBudgetScenario();
+					self.selectBudgetScenario(selectedBudgetScenarioId);
 
 					// Perform follow up calculations
 					BudgetCalculations.calculateInstructors();
@@ -161,6 +168,8 @@ class BudgetActions {
 						}
 					};
 					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateInstructorTypeCosts();
+					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateSectionGroups();
 					BudgetCalculations.calculateTotalCost();
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
@@ -649,22 +658,34 @@ class BudgetActions {
 				BudgetReducers.reduce(action);
 			},
 			selectBudgetScenario: function(selectedScenarioId) {
+				var fromLiveData = false;
+
 				// If scenarioId was not provided, attempt to use currently selected scenario
 				if (selectedScenarioId == null) {
-					selectedScenarioId = angular.copy(BudgetReducers._state.ui.selectedBudgetScenarioId); // eslint-disable-line no-undef
-	
-					// If a scenario was not already selected, default to first scenario
-					if (selectedScenarioId == null) {
-						selectedScenarioId = BudgetReducers._state.budgetScenarios.ids[0];
-					}
+
+					BudgetReducers._state.budgetScenarios.ids.forEach(function(budgetScenarioId) {
+						var budgetScenario = BudgetReducers._state.budgetScenarios.list[budgetScenarioId];
+
+						if (budgetScenario.fromLiveData) {
+							selectedScenarioId = budgetScenario.id;
+							fromLiveData = true;
+						}
+					});
+				} else {
+					var budgetScenario = BudgetReducers._state.budgetScenarios.list[selectedScenarioId];
+					fromLiveData = budgetScenario.fromLiveData;
 				}
-	
-				localStorage.setItem('selectedBudgetScenarioId', selectedScenarioId);
-	
+
+				var year = BudgetReducers._state.ui.year;
+				var selectedBudgets = JSON.parse(localStorage.getItem('selectedBudgets')) || {};
+				selectedBudgets[year] = selectedScenarioId;
+				localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
+
 				var action = {
 					type: ActionTypes.SELECT_BUDGET_SCENARIO,
 					payload: {
-						budgetScenarioId: selectedScenarioId
+						budgetScenarioId: selectedScenarioId,
+						fromLiveData: fromLiveData
 					}
 				};
 	

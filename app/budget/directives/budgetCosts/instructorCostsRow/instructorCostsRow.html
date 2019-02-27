@@ -5,13 +5,14 @@
 			Instructor <span ng-if="sectionGroupCost.instructor.instructorTypeDescription">({{ sectionGroupCost.instructor.instructorTypeDescription }})</span>
 		</div>
 		<div class="instructor-costs__instructor-container">
-			<div class="instructor-costs__instructor-dropdown-container">
+			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-dropdown-container">
 				<instructor-assignment-dropdown mode="'instructor'"
 				                                section-group-cost="sectionGroupCost"
 				                                instructors="instructorAssignmentOptions">
 				</instructor-assignment-dropdown>
 			</div>
-			<div class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
+
+			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
 				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
 				     uib-tooltip="Update to {{ sectionGroupCost.reversionDisplayName }}"
 				     tooltip-append-to-body="true"
@@ -22,14 +23,21 @@
 				</div>
 			</div>
 			<div class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.instructorId ||  sectionGroupCost.instructorTypeId) }">
-				<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
-				      tooltip-append-to-body="true"
-				      uib-tooltip="Remove instructor"
-				      confirm-button="removeInstructor(sectionGroupCost)"
-				      message="Are you sure you want to remove this instructor?"
-				      yes="Remove"
-				      no="Cancel">
+				<div ng-if="!isLiveDataScenario"
+				     class="glyphicon glyphicon-remove instructor-costs__revert-ui"
+				     tooltip-append-to-body="true"
+				     uib-tooltip="Remove instructor"
+				     confirm-button="removeInstructor(sectionGroupCost)"
+				     message="Are you sure you want to remove this instructor?"
+				     yes="Remove"
+				     no="Cancel">
 				</div>
+			</div>
+			<div ng-show="isLiveDataScenario">
+				{{ sectionGroupCost.instructorDescription }}
+        <span class="instructor-costs-row__no-instructor" ng-if="!sectionGroupCost.instructorDescription">
+          None assigned
+        </span>
 			</div>
 		</div>
 	</td>
@@ -37,7 +45,7 @@
 	<!-- Regular instructor -->
 	<td colspan="2" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
 		<div class="budget-costs__label">
-			Reg. Instructor
+			Regular Instructor
 		</div>
 		<div class="instructor-costs__instructor-container">
 			<div class="instructor-costs__instructor-dropdown-container">

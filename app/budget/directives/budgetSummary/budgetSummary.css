@@ -66,3 +66,9 @@
 .budget-summary__total-sch {
 	border-top: 1px solid black;
 }
+
+.budget-summary__hidden-budgeted-warning {
+  padding: 5px;
+  color: #b1b1b1;
+	text-align: center;
+}
