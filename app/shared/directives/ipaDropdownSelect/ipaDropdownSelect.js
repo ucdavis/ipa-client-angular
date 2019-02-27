@@ -27,6 +27,7 @@ let ipaDropdownSelect = function() {
 			scope.hasCustomItemTemplate = transclude.isSlotFilled('custom-item-template');
 			scope.searchInput = "";
 
+
 			scope.toggleDropdown = function() {
 				scope.expanded = !scope.expanded;
 			};
@@ -42,6 +43,11 @@ let ipaDropdownSelect = function() {
 			scope.selectDropdownItem = function(item) {
 				scope.selectItem({item: item});
 				scope.closeDropdown();
+				scope.searchInput = "";
+				if (typeof scope.liveQuery === 'function'){
+					scope.items = [];
+				}
+
 			};
 
 			scope.onSearch = function(query){
