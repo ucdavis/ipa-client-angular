@@ -27,7 +27,7 @@
     <div class="dropdown-mask" ng-click="closeDropdown()"></div>
     <div class="dropdown">
       <div ng-show="showAs =='button'">
-        <input class="ipa-dropdown-select__search-input" placeholder="Filter.." ng-model="searchInput">
+        <input class="ipa-dropdown-select__search-input-button" placeholder="Filter.." ng-model="searchInput">
       </div>
       <div ng-repeat="item in items | filter: searchInput">
         <div ng-show="item.rowType == 'subheader'" class="ipa-dropdown-select__subheader-row">
