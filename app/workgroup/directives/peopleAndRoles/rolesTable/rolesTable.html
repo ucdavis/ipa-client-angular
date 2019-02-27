@@ -2,6 +2,16 @@
 		<div class="row roles-table__search-container">
 			<!-- this is search bar -->
 			<div class="col-md-4 pull-right">
+
+			</div>
+				<ipa-dropdown-select show-as="input"
+									 button-text="'Search by name or login id'"
+									 item-description="name"
+									 live-query="searchUsers(query)"
+									 select-item="addUserToWorkgroup(item)">
+				</ipa-dropdown-select>
+			<div class="col-md-4">
+
 				<div class="input-group search-input">
 					<input type="text" ng-model="users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
 						ng-change="searchOnChange()" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"

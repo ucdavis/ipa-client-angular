@@ -40,14 +40,13 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 				});
 			};
 
-			scope.searchUsersResultSelected = function ($item) {
-				scope.users.newUser = $item;
-			};
+			// scope.searchUsersResultSelected = function ($item) {
+			// 	scope.users.newUser = $item;
+			// };
 
-			scope.addUserToWorkgroup = function() {
-				scope.users.newUser;
-				WorkgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
-				scope.clearUserSearch();
+			scope.addUserToWorkgroup = function(user) {
+				WorkgroupActionCreators.createUser(scope.ui.workgroupId, user, scope.activeRoleId);
+				// scope.clearUserSearch();
 			};
 		}
 	};
