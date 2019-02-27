@@ -7,7 +7,7 @@ let ipaDropdownSelect = function() {
 			'custom-item-template': '?customItemTemplate'
 		},
 		scope: {
-			items: '<', // Each item is expected to have an id, description (display value), and selected (bool flag). A rowType value = 'subheader' will display as header for another list group
+			items: '<?', // Each item is expected to have an id, description (display value), and selected (bool flag). A rowType value = 'subheader' will display as header for another list group
 			itemDescription: '@',
 			buttonText: '<',
 			selectItem: '&',
@@ -43,6 +43,10 @@ let ipaDropdownSelect = function() {
 				scope.selectItem({item: item});
 				scope.closeDropdown();
 			};
+
+			scope.onSearch = function(query){
+				scope.liveQuery({query: query});
+			}
 
 
 			// Default values

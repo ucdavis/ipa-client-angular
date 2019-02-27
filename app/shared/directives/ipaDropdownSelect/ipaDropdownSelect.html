@@ -18,7 +18,7 @@
     <div class="ipa-dropdown-select__expand-input"
          ng-click="openDropdown()"
          ng-class="{ 'selected': expanded == true }">
-      <input class="ipa-dropdown-select__search-input" placeholder="{{ buttonText }}" ng-model="searchInput"><span class="ipa-dropdown-select__caret caret"></span>
+      <input ng-change="onSearch(searchInput)" class="ipa-dropdown-select__search-input" placeholder="{{ buttonText }}" ng-model="searchInput"><span class="ipa-dropdown-select__caret caret"></span>
     </div>
   </div>
 
@@ -44,6 +44,9 @@
         <div ng-show="item.rowType == 'divider'">
           <div role="presentation" class="divider courses-separator"></div>
         </div>
+      </div>
+      <div>
+          QUERY RESULTS
       </div>
     </div>
   </div>
