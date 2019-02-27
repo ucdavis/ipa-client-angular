@@ -47,7 +47,7 @@
 		</div>
 	</ipa-tabs>
 
-	<div ng-if="state.ui.allTerms.length == 0" class="support-calls__empty-message">
+	<div ng-if="!state.ui.allTerms || state.ui.allTerms.length == 0" class="support-calls__empty-message">
 		No Active Support Calls
 	</div>
 </div>

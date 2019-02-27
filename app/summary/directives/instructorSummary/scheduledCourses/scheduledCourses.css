@@ -75,7 +75,6 @@
 	flex: 1;
 	font-weight: 500;
 	padding: 15px 10px 15px 10px;
-	text-align: center;
 	overflow: hidden;
 	background-color: white;
 }
@@ -93,7 +92,6 @@
 .scheduled-courses-table__cell {
 	flex: 1;
 	padding: 10px;
-	text-align: center;
 	background-color: #F8F8F8;
 	border-bottom: none !important;
 	overflow: hidden;

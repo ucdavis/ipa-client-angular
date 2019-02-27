@@ -3,9 +3,7 @@
 		<h5>Scheduled Courses {{ year.yearToAcademicYear() }}</h5>
 	</div>
 
-	<div
-	class="scheduled-courses-table"
-	ng-if="state.scheduledCourses.terms.length > 0">
+	<div class="scheduled-courses-table" ng-if="termCodes.length > 0">
 		<div class="scheduled-courses-table__row scheduled-courses-table__row--border">
 			<div class="scheduled-courses-table__header-cell">Course</div>
 			<div class="scheduled-courses-table__header-cell">Activity</div>
@@ -14,20 +12,47 @@
 			<div class="scheduled-courses-table__header-cell">Teaching Assistant(s)</div>
 		</div>
 
-		<div class="scheduled-courses-table__content" ng-repeat="term in state.scheduledCourses.terms">
+		<div class="scheduled-courses-table__content" ng-repeat="termCode in termCodes">
 			<div class="scheduled-courses-table_row">
-				<div class="scheduled-courses-table__term">{{ term.getTermCodeDisplayName() }}
-					<div ng-if="isCurrentTerm(term)" class="scheduled-courses-table__green-label">Current Quarter</div>
+				<div class="scheduled-courses-table__term">{{ termCode.getTermCodeDisplayName() }}
+					<div ng-if="isCurrentTerm(termCode)" class="scheduled-courses-table__green-label">Current Quarter</div>
 				</div>
 			</div>
 
-			<div ng-repeat="course in state.scheduledCourses.list[term]">
-				<div ng-repeat="meeting in course.meetings">
-					<div
-					class="scheduled-courses-table__row"
-					ng-class="{'scheduled-courses-table__row--emphasis': meeting.activityType == 'Lecture'}">
+			<div ng-repeat="instructorAssignment in instructorAssignments" ng-if="instructorAssignment.termCode == termCode">
+				<div>
+					<div class="scheduled-courses-table__row scheduled-courses-table__row--emphasis">
 						<div class="scheduled-courses-table__cell">
-							{{ course.subjectCode }} {{ course.courseNumber }} {{ course.title }} - {{ course.sequencePattern }}
+							{{ instructorAssignment.description }}
+						</div>
+						<div class="scheduled-courses-table__cell">
+							{{ instructorAssignment.meetings[0].activityType }}
+						</div>
+						<div class="scheduled-courses-table__cell">
+							<span class="meeting-days">
+								{{ dayIndicatorToDayCodes(instructorAssignment.meetings[0].dayIndicator) }}&nbsp;
+							</span>
+							<span class="meeting-time" ng-show="instructorAssignment.meetings[0].startTime">
+								{{ instructorAssignment.meetings[0].startTime.toStandardTime() }} - {{ instructorAssignment.meetings[0].endTime.toStandardTime() }}
+							</span>
+						</div>
+						<div class="scheduled-courses-table__cell">
+							{{ instructorAssignment.meetings[0].location }}
+						</div>
+						<div class="scheduled-courses-table__cell scheduled-courses-table__cell--gray">
+							<div ng-if="course.teachingAssistants.length > 0" ng-repeat="teachingAssistant in course.teachingAssistants">
+								{{ teachingAssistant.lastName }}, {{ teachingAssistant.firstName }}
+							</div>
+							<div ng-if="course.teachingAssistants.length == 0" ng-repeat="teachingAssistant in course.teachingAssistants">
+								No TA information
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div ng-repeat="meeting in instructorAssignment.meetings" ng-if="!$first">
+					<div class="scheduled-courses-table__row">
+						<div class="scheduled-courses-table__cell">
 						</div>
 						<div class="scheduled-courses-table__cell">
 							{{ meeting.activityType }}
@@ -44,22 +69,13 @@
 							{{ meeting.location }}
 						</div>
 						<div class="scheduled-courses-table__cell scheduled-courses-table__cell--gray">
-							<div ng-if="meeting.activityType == 'Lecture'">
-								<div ng-if="course.teachingAssistants.length > 0" ng-repeat="teachingAssistant in course.teachingAssistants">
-									{{ teachingAssistant.lastName }}, {{ teachingAssistant.firstName }}
-								</div>
-								<div ng-if="course.teachingAssistants.length == 0" ng-repeat="teachingAssistant in course.teachingAssistants">
-									No TA information
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<div ng-if="state.scheduledCourses && state.scheduledCourses.terms.length === 0" class="scheduled-courses__empty-message">
+	<div ng-if="!instructorAssignments || instructorAssignments.length == 0" class="scheduled-courses__empty-message">
 		No Scheduled Courses
 	</div>
 </div>

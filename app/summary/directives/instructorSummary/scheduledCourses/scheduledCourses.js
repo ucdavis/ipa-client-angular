@@ -2,14 +2,14 @@ import { isCurrentTerm } from 'shared/helpers/dates';
 
 import './scheduledCourses.css';
 
-let scheduledCourses = function ($rootScope) {
+let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 	return {
 		restrict: 'E',
 		template: require('./scheduledCourses.html'),
 		replace: true,
 		link: function (scope) {
 			$rootScope.$on('summaryStateChanged', function (event, data) {
-				scope.mapDataToState(data);
+				scope.calculateAssignments(data);
 			});
 
 			scope.isCurrentTerm = function (termCode) {
@@ -23,7 +23,7 @@ let scheduledCourses = function ($rootScope) {
 			scope.dayIndicatorToDayCodes = function (dayIndicator) {
 				let dayCodes = "";
 				// Handle incorrect data
-				if (dayIndicator.length === 0) {
+				if (!dayIndicator || dayIndicator.length === 0) {
 					return dayCodes;
 				}
 
@@ -39,22 +39,30 @@ let scheduledCourses = function ($rootScope) {
 				return dayCodes;
 			};
 
-			scope.mapDataToState = function(data) {
-				var scheduledCourses = {
-					terms: [],
-					list: {}
-				};
+			scope.calculateAssignments = function(data) {
+				scope.instructorAssignments = [];
+				scope.termCodes = [];
 
-				data.sectionGroups.ids.forEach(function(sectionGroupId) {
-					var sectionGroup = data.sectionGroups.list[sectionGroupId];
+				data.teachingAssignments.ids.forEach(function(teachingAssignmentId) {
+					var teachingAssignment = data.teachingAssignments.list[teachingAssignmentId];
+					var sectionGroup = teachingAssignment.sectionGroupId ? data.sectionGroups.list[teachingAssignment.sectionGroupId] : null;
+					var course = sectionGroup ? data.courses.list[sectionGroup.courseId] : null;
+					var description = TeachingAssignmentService.getDescription (teachingAssignment, course);
+					description = course ? description += " - " + course.title + " - " + course.sequencePattern : description;
+					var meetings = sectionGroup ? scope.generateMeetingsInSectionGroup(sectionGroup, data.sections, data.activities) : null;
 
-					if (!scheduledCourses.list[sectionGroup.termCode]) {
-						scheduledCourses.list[sectionGroup.termCode] = [];
-						scheduledCourses.terms.push(sectionGroup.termCode);
+					var instructorAssignment = {
+						description: description,
+						termCode: teachingAssignment.termCode,
+						meetings: meetings,
+						sectionGroupId: sectionGroup ? sectionGroup.id : null
+					};
+
+					scope.instructorAssignments.push(instructorAssignment);
+
+					if (scope.termCodes.indexOf(teachingAssignment.termCode) == -1) {
+						scope.termCodes.push(teachingAssignment.termCode);
 					}
-
-					var scheduledCourse = scope.generateScheduledCourse(sectionGroup, data);
-					scheduledCourses.list[sectionGroup.termCode].push(scheduledCourse);
 				});
 
 				scope.state.scheduledCourses = scheduledCourses;
@@ -213,7 +221,7 @@ let scheduledCourses = function ($rootScope) {
 			};
 
 			if (scope.state) {
-				scope.mapDataToState(scope.state);
+				scope.calculateAssignments(scope.state);
 			}
 		}
 	};
