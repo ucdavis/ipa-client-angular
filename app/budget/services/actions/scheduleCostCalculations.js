@@ -90,7 +90,7 @@ class ScheduleCostCalculations {
 
           // Calculate reversion
           // Identify a difference
-          if (sectionGroupCost.instructorId != assignedInstructorId || (assignedInstructorTypeId && sectionGroupCost.instructorTypeId != assignedInstructorTypeId)) {
+          if (sectionGroupCost.sectionGroup && sectionGroupCost.instructorId != assignedInstructorId || (assignedInstructorTypeId && sectionGroupCost.instructorTypeId != assignedInstructorTypeId)) {
             // Schedule has no assignment
             if (!assignedInstructorId && !assignedInstructorTypeId) {
               sectionGroupCost.reversionDisplayName = "no instructor";
