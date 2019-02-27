@@ -34,6 +34,7 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 
 			scope.searchUsers = function (query) {
 				return WorkgroupService.searchUsers(scope.ui.workgroupId, query).then(function (userSearchResults) {
+					scope.view.searchResults = userSearchResults;
 					return userSearchResults;
 				}, function () {
 					$rootScope.$emit('toast', {message: "Could not search users.", type: "ERROR"});
