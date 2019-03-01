@@ -3,9 +3,9 @@
 		<h5>Support Calls for Review</h5>
 	</div>
 	<ipa-tabs
-		ng-if="state.ui.allTerms.length > 0"
-		tab-names="state.ui.allTermNames"
-		active-tab="state.ui.selectedSupportCallTermDisplay"
+		ng-if="allTerms.length > 0"
+		tab-names="allTermNames"
+		active-tab="selectedSupportCallTermDisplay"
 		select-tab="selectTab">
 
 		<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--border-buttom">
@@ -14,14 +14,14 @@
 			<div class="support-calls-table__header-cell">Submitted Preferences</div>
 		</div>
 
-		<div ng-repeat="term in state.ui.allTerms">
-			<div ng-if="term == state.ui.selectedSupportCallTerm">
+		<div ng-repeat="term in allTerms">
+			<div ng-if="term == selectedSupportCallTerm">
 				<div
-					ng-if="state.instructorSupportCallResponses.byTerm[term]"
-					ng-init="supportCallResponse=state.instructorSupportCallResponses.byTerm[term]">
+					ng-if="instructorSupportCallResponses.byTerm[term]"
+					ng-init="supportCallResponse=instructorSupportCallResponses.byTerm[term]">
 					<div class="support-calls-table__row support-calls-table__row--border support-calls-table__row--radius">
 						<div class="support-calls-table__cell support-calls-table__cell--left">
-							<a ng-href="/instructionalSupport/{{ state.teachingCallReceipt.workgroupId }}/{{ state.teachingCallReceipt.academicYear }}/{{ supportCallResponse.termCode.slice(-2) }}/instructorSupportCallForm">
+							<a ng-href="/instructionalSupport/{{ workgroupId }}/{{ year }}/{{ supportCallResponse.termCode.slice(-2) }}/instructorSupportCallForm">
 								<button class="btn btn-default support-calls-table__button">
 									<i ng-if="!(supportCallResponse.submitted)" class="entypo-attention instructor-summary__corner-alert"></i>
 									View Support Call Form
