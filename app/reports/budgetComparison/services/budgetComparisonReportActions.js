@@ -402,10 +402,10 @@ class BudgetComparisonReportActions {
 						if (teachingAssignment.sectionGroupId) {
 							teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId] = teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId] || [];
 							teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId].push(teachingAssignment.id);
-						}
 
-						teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId] = (teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId] || 0) + 1;
-						teachingAssignments.byInstructorTypeId.total += 1;
+							teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId] = (teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId] || 0) + 1;
+							teachingAssignments.byInstructorTypeId.total += 1;
+						}
 					});
 
 					BudgetComparisonReportReducers.reduce({
