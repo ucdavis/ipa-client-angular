@@ -1,13 +1,14 @@
 <table class="dean-report__table">
   <colgroup>
-    <col style="width: 35%;">
-    <col style="width: 22.5%;">
-    <col style="width: 22.5%;">
+    <col style="width: 25%;">
+    <col style="width: 25%;">
+    <col style="width: 25%;">
     <col style="width: 20%;">
+    <col style="width: 5%;">
   </colgroup>
   <thead>
     <tr>
-      <th colspan="4">
+      <th colspan="5">
         <div class="dean-report__header-cell dean-report__header-cell--collapse-centered dean-report__header-cell--large-header">
           {{ toAcademicYear(year) }} <span class="show-when-printing">{{ budgetScenarioName }}</span>
         </div>
@@ -23,6 +24,9 @@
       </th>
       <th>
         <div class="dean-report__header-cell">Total Cost</div>
+      </th>
+      <th>
+        <div class="dean-report__header-cell"># Courses Costed</div>
       </th>
       <th>
         <div class="dean-report__header-cell"># Courses</div>
@@ -50,6 +54,11 @@
         </div>
       </td>
       <td>
+        <div class="dean-report__cell-container">
+          {{ instructorTypeCoursesCount[instructorTypeId] }}
+        </div>
+      </td>
+      <td>
         <div class="dean-report__cell-container dean-report__cell-container--last"></div>
       </td>
     </tr>
@@ -68,7 +77,12 @@
         </div>
       </td>
       <td>
-      <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last"></div>
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+          #
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last"></div>
       </td>
     </tr>
   </tbody>
