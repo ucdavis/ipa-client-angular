@@ -346,6 +346,10 @@ class WorkloadSummaryActions {
 					}
 				};
 
+				instructorTypes.ids.forEach(function(instructorTypeId) {
+					calculatedView.byInstructorType[instructorTypeId] = [];
+				});
+
 				instructors.ids.forEach(function(instructorId) {
 					var instructor = instructors.list[instructorId];
 					var instructorTypeId = _self._getInstructorTypeId(instructor);
@@ -354,7 +358,6 @@ class WorkloadSummaryActions {
 
 					if (calculatedView.instructorTypeIds.indexOf(instructorTypeId) == -1) {
 						calculatedView.instructorTypeIds.push(instructorTypeId);
-						calculatedView.byInstructorType[instructorTypeId] = [];
 					}
 
 					instructor.assignments = [];
@@ -595,6 +598,10 @@ class WorkloadSummaryActions {
 					});
 
 					genericInstructor.assignments = _array_sortByProperty(genericInstructor.assignments, ["termCode", "description"]);
+
+					if (calculatedView.instructorTypeIds.indexOf(genericInstructorTypeId) == -1) {
+						calculatedView.instructorTypeIds.push(genericInstructorTypeId);
+					}
 
 					calculatedView.byInstructorType[genericInstructorTypeId].push(genericInstructor);
 					calculatedView.totals.instructorCount += 1;
