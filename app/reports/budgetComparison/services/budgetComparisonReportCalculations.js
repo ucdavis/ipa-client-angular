@@ -36,6 +36,8 @@ class BudgetComparisonReportCalculations {
 					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats)
 				};
 
+				sectionGroups = this._generateUnassignedSectionGroups(sectionGroups, teachingAssignments);
+
 				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
 					payload: {
@@ -330,6 +332,24 @@ class BudgetComparisonReportCalculations {
 				fundingChange.percentageTotal = this._percentageChange(previousFunding.total, currentFunding.total);
 
 				return fundingChange;
+			},
+			_generateUnassignedSectionGroups(sectionGroups, teachingAssignments) {
+				var newSectionGroups = sectionGroups;
+
+				for (var year in sectionGroups) {
+					var unassignedSectionGroups = [];
+					var assignedSectionGroups = Object.keys(teachingAssignments[year].bySectionGroupId);
+
+					sectionGroups[year].ids.forEach(function (sectionGroupId) {
+						if (assignedSectionGroups.indexOf(sectionGroupId.toString()) < 0) {
+							unassignedSectionGroups.push(sectionGroupId);
+						}
+					});
+
+					newSectionGroups[year].unassigned = unassignedSectionGroups;
+				}
+
+				return newSectionGroups;
 			},
 			// Generates previous -> current change values for misc calculations
 			_generateMiscStatsChange(currentMiscStats, previousMiscStats) {
