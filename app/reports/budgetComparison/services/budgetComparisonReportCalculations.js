@@ -1,5 +1,5 @@
 class BudgetComparisonReportCalculations {
-	constructor(BudgetComparisonReportReducers, ActionTypes, Roles) {
+	constructor(BudgetComparisonReportReducers, ActionTypes, Roles, UserService) {
 		return {
 			calculateView: function () {
 				var budget = BudgetComparisonReportReducers._state.budget;
@@ -416,12 +416,12 @@ class BudgetComparisonReportCalculations {
 				var users = BudgetComparisonReportReducers._state.users;
 				var userRoles = BudgetComparisonReportReducers._state.userRoles;
 				var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes.current;
-
 				var instructorType = null;
 				var instructor = instructors.list[instructorId];
+
 				if (!instructor) { return null; }
 
-				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+				var user = UserService.getUserByInstructor(instructor, users);
 
 				if (!user) { return; }
 
@@ -450,6 +450,6 @@ class BudgetComparisonReportCalculations {
 	}
 }
 
-BudgetComparisonReportCalculations.$inject = ['BudgetComparisonReportReducers', 'ActionTypes', 'Roles'];
+BudgetComparisonReportCalculations.$inject = ['BudgetComparisonReportReducers', 'ActionTypes', 'Roles', 'UserService'];
 
 export default BudgetComparisonReportCalculations;

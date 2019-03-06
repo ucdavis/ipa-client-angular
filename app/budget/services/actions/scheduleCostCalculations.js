@@ -1,7 +1,7 @@
 import { _array_sortByProperty, _array_find_by_properties } from 'shared/helpers/array';
 
 class ScheduleCostCalculations {
-  constructor (BudgetReducers, TermService, Roles, ActionTypes) {
+  constructor (BudgetReducers, TermService, Roles, ActionTypes, UserService) {
     return {
       /*
       Generates the schedule costs view
@@ -145,7 +145,8 @@ class ScheduleCostCalculations {
         var userRoles = BudgetReducers._state.userRoles;
         var instructorTypes = BudgetReducers._state.instructorTypes;
 
-        var user = users.byLoginId[instructor.loginId.toLowerCase()];
+        var user = UserService.getUserByInstructor(instructor, users);
+
         if (!user) { return null; }
         var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
 
@@ -264,6 +265,6 @@ class ScheduleCostCalculations {
   }
 }
 
-ScheduleCostCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes'];
+ScheduleCostCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes', 'UserService'];
 
 export default ScheduleCostCalculations;

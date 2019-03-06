@@ -25,6 +25,7 @@ import ApiService from './services/ApiService.js';
 import TeachingAssignmentService from './services/TeachingAssignmentService.js';
 import SectionService from './services/SectionService.js';
 import ActivityService from './services/ActivityService.js';
+import UserService from './services/UserService.js';
 
 // Entities
 import Activity from './entities/Activity.js'; // eslint-disable-line no-unused-vars
@@ -258,6 +259,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .service('TeachingAssignmentService', TeachingAssignmentService)
 .service('SectionService', SectionService)
 .service('ActivityService', ActivityService)
+.service('UserService', UserService)
 .directive('availabilityGrid', availabilityGrid)
 .directive('ipaButton', ipaButton)
 .directive('ipaCheckbox', ipaCheckbox)

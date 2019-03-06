@@ -1,5 +1,5 @@
 class TeachingCallStatusStateService {
-	constructor ($rootScope, $log, ActionTypes) {
+	constructor ($rootScope, $log, ActionTypes, UserService) {
 		return {
 			_state: {},
 			_teachingCallReceiptReducers: function (action, teachingCallReceipts) {
@@ -167,7 +167,8 @@ class TeachingCallStatusStateService {
 							userRoles.byUserId[userRole.userId] = userRole;
 						});
 						action.payload.instructors.forEach(function(instructor) {
-							var user = users.byLoginId[instructor.loginId.toLowerCase()];
+							var user = UserService.getUserByInstructor(instructor, users);
+
 							// Instructor may not have an associated user
 							if (!user) { return; }
 	
