@@ -5,10 +5,26 @@
   <div ng-show="state && hasAccess">
     <instructor-header state="state"></instructor-header>
     <teaching-calls ng-if="state.ui.alert.teachingCall"></teaching-calls>
-    <support-calls ng-if="state.ui.alert.supportCalls"></support-calls>
+    <support-calls ng-if="state.ui.alert.supportCalls"
+                   selected-support-call-term-display="state.ui.selectedSupportCallTermDisplay"
+                   selected-support-call-term="state.ui.selectedSupportCallTerm"
+                   all-terms="state.ui.allTerms"
+                   all-term-names="state.ui.allTermNames"
+                   instructor-support-call-responses="state.instructorSupportCallResponses"
+                   workgroup-id="state.ui.workgroupId"
+                   year="state.ui.year">
+    </support-calls>
     <scheduled-courses></scheduled-courses>
     <teaching-calls ng-if="state.ui.alert.teachingCall == false"></teaching-calls>
-    <support-calls ng-if="state.ui.alert.supportCalls == false"></support-calls>
+    <support-calls ng-if="state.ui.alert.supportCalls == false"
+                   selected-support-call-term-display="state.ui.selectedSupportCallTermDisplay"
+                   selected-support-call-term="state.ui.selectedSupportCallTerm"
+                   all-terms="state.ui.allTerms"
+                   all-term-names="state.ui.allTermNames"
+                   instructor-support-call-responses="state.instructorSupportCallResponses"
+                   workgroup-id="state.ui.workgroupId"
+                   year="state.ui.year">
+    </support-calls>
 
   </div>
 </div>
