@@ -595,6 +595,14 @@ class WorkloadSummaryActions {
 						genericInstructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
 						genericInstructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
 						genericInstructor.totals.assignmentCount += 1;
+
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].assignmentCount += 1;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].seats += assignment.seats || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].enrollment += assignment.actualEnrollment || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].previousEnrollment += assignment.previousEnrollment || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].units += assignment.units || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentCreditHours += assignment.studentCreditHours || 0;
 					});
 
 					genericInstructor.assignments = _array_sortByProperty(genericInstructor.assignments, ["termCode", "description"]);
