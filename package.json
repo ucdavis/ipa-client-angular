@@ -64,6 +64,7 @@
     "typescript": "2.8.3",
     "ui-select": "0.19.1",
     "underscore": "1.8.3",
-    "webpack-shell-plugin": "0.5.0"
+    "webpack-shell-plugin": "0.5.0",
+    "xlsx": "0.14.1"
   }
 }
