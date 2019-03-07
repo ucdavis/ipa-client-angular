@@ -1,14 +1,15 @@
 
 <table class="dean-report__table">
   <colgroup>
-    <col style="width: 30%;">
-    <col style="width: 20%;">
-    <col style="width: 20%;">
     <col style="width: 25%;">
+    <col style="width: 15%;">
+    <col style="width: 15%;">
+    <col style="width: 22.5%;">
+    <col style="width: 22.5%;">
   </colgroup>
   <thead>
     <tr>
-      <th colspan="4">
+      <th colspan="5">
         <div class="dean-report__header-cell dean-report__header-cell--collapse-centered dean-report__header-cell--large-header">
           Changes
         </div>
@@ -52,12 +53,20 @@
         </div>
       </td>
       <td>
-        <div class="dean-report__cell-container dean-report__cell-container--last">
+        <div class="dean-report__cell-container">
           {{ costs.instructorCosts.byType[instructorTypeId].percentageCourses || 'N/A' }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last">
+          CourseCount
         </div>
       </td>
     </tr>
     <tr>
+      <td>
+        <div class="dean-report__cell-container"></div>
+      </td>
       <td>
         <div class="dean-report__cell-container"></div>
       </td>
@@ -74,23 +83,28 @@
     <tr>
       <td>
         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-            {{ toCurrency(costs.instructorCosts.total.rawCost) }}
+          {{ toCurrency(costs.instructorCosts.total.rawCost) }}
         </div>
       </td>
       <td>
         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-            {{ costs.instructorCosts.total.rawCourses }}
-          </div>
+          {{ costs.instructorCosts.total.rawCourses }}
+        </div>
       </td>
       <td>
         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-            {{ costs.instructorCosts.total.percentageCost || 'N/A' }}
-          </div>
+          {{ costs.instructorCosts.total.percentageCost || 'N/A' }}
+        </div>
       </td>
       <td>
-      <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last">
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
           {{ costs.instructorCosts.total.percentageCourses || 'N/A' }}
-      </div>
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last">
+          {{ costs.instructorCosts.total.percentageCourses || 'N/A' }}
+        </div>
       </td>
     </tr>
   </tbody>
