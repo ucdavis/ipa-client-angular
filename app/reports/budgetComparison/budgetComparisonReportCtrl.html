@@ -15,6 +15,18 @@
 </div>
 
 <div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="do-not-print budget-comparison-report__scenario-selector-tray">
+  <!-- Toolbar -->
+  <div class="row hidden-print" style="clear: both; display: block; width: 100%;">
+    <div class="table-toolbar">
+      <div class="btn-group">
+        <span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="downloadAsExcel()" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false"></span>
+      </div>
+      <span data-toggle="tooltip" data-placement="top" data-original-title="Print" ng-click="print()" class="tool-icon glyphicon glyphicon-print"></span>
+    </div>
+  </div>
+</div>
+
+<div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="do-not-print budget-comparison-report__scenario-selector-tray">
   <div class="budget-comparison-report__scenario-selector-container">
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
                               selected-budget-scenario="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario"

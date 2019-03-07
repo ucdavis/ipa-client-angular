@@ -519,6 +519,10 @@ class BudgetComparisonReportActions {
 	
 				this._performCalculations();
 			},
+			downloadAsExcel: function(year) {
+				var viewState = BudgetComparisonReportReducers._state;
+				BudgetComparisonReportService.downloadAsExcel(viewState, year);
+			}
 		};
 	}
 }
