@@ -18,7 +18,7 @@ class BudgetComparisonReportCtrl {
     });
 
     $scope.downloadAsExcel = function() {
-      BudgetComparisonReportActions.downloadAsExcel($scope.year);
+      BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
     };
   }
 }

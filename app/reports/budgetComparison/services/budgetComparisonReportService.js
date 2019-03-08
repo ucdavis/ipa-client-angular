@@ -49,8 +49,8 @@ class BudgetComparisonReportService {
 			getInstructors: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/instructors");
 			},
-			downloadAsExcel: function (viewState, year) {
-				_self.BudgetComparisonReportExcelService.downloadAsExcel(viewState, year);
+			downloadAsExcel: function (viewState, year, workgroupName) {
+				_self.BudgetComparisonReportExcelService.downloadAsExcel(viewState, year, workgroupName);
 			}
 		};
 	}

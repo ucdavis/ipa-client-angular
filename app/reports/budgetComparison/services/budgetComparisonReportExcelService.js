@@ -1,10 +1,8 @@
 import StringService from './../../../shared/services/StringService.js';
 
 class BudgetComparisonReportExcelService {
-  downloadAsExcel(viewState, year) {
-    console.log(viewState, year); // eslint-disable-line no-console
-
-    var filename = "Budget-Comparison-Report-" + year + ".xlsx";
+  downloadAsExcel(viewState, year, workgroupName) {
+    var filename = "Budget-Comparison-Report-" + workgroupName + "-" + (year - 1) + "-" + year + ".xlsx";
     var data = [];
 
     var stringService = new StringService();
@@ -233,16 +231,14 @@ class BudgetComparisonReportExcelService {
 
     data.push(row);
 
-    if (typeof console !== 'undefined') { console.log(new Date()); } // eslint-disable-line no-console
-    var wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
+    var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
+    var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
     
     /* add worksheet to workbook */
-    XLSX.utils.book_append_sheet(wb, ws, "Budget Comparison Report"); // eslint-disable-line no-undef
+    XLSX.utils.book_append_sheet(wb, ws, workgroupName); // eslint-disable-line no-undef
 
     /* write workbook */
-    if (typeof console !== 'undefined') { console.log(new Date()); } // eslint-disable-line no-console
     XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
-    if (typeof console !== 'undefined') { console.log(new Date()); } // eslint-disable-line no-console
   }
 }
 
