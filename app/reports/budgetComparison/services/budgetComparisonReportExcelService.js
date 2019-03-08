@@ -23,9 +23,68 @@ class BudgetComparisonReportExcelService {
 
     data.push(['']);
 
-    // ------------
-    // Course Costs
-    // ------------
+    data = data.concat(this.generateCourseCostRows(viewState));
+
+    data.push(['']);
+
+    data = data.concat(this.generateSupportCostRows(viewState));
+
+    data.push(['']);
+
+    // Add instruction plus TAs and readers for total supplemental instruction costs
+    // (Requested by Sandra C. on 3-7-19)
+    var row = ['Total Supplemental Instruction'];
+    var costs = viewState.calculations.calculatedView.previous.costs;
+    row.push(costs.supportCosts.totalCost + costs.instructorCosts.total.cost);
+    row.push('');
+    row.push('');
+    row.push('Total');
+    var costs = viewState.calculations.calculatedView.current.costs;
+    row.push(costs.supportCosts.totalCost + costs.instructorCosts.total.cost);
+    row.push('');
+    row.push('');
+    // Changes
+    var costs = viewState.calculations.calculatedView.change.costs;
+    row.push(costs.supportCosts.rawTotalCost + costs.instructorCosts.total.rawCost);
+    row.push('');
+    row.push('');
+    row.push('');
+    data.push(row);
+
+    data.push(['']);
+
+    data = data.concat(this.generateFundingRows(viewState));
+
+    data.push(['']);
+
+    data = data.concat(this.generateMiscStats(viewState));
+
+    var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
+    var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
+
+    // Set column widths
+    var wscols = [
+      {wch: 35},
+      {wch: 10},
+      {wch: 10},
+      {wch: 10},
+      {wch: 35},
+      {wch: 10},
+      {wch: 10},
+      {wch: 10},
+      {wch: 35}
+    ];
+    ws['!cols'] = wscols;
+
+    /* add worksheet to workbook */
+    XLSX.utils.book_append_sheet(wb, ws, workgroupName); // eslint-disable-line no-undef
+
+    /* write workbook */
+    XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
+  }
+
+  generateCourseCostRows(viewState) {
+    var data = [];
     data.push(['Categories', 'Total Cost', '# Courses', '', 'Categories', 'Total Cost', '# Courses', '', 'Cost', '# Courses', '% Cost', '% Courses', '']);
 
     var instructorTypes = viewState.instructorTypes;
@@ -67,11 +126,12 @@ class BudgetComparisonReportExcelService {
 
     data.push(row);
 
-    data.push(['']);
+    return data;
+  }
 
-    // -------------
-    // Support Costs
-    // -------------
+  generateSupportCostRows(viewState) {
+    var data = [];
+
     data.push(['', 'Total Cost', '# Courses', '', '', 'Total Cost', '# Courses', '', 'Cost', 'Count', '% Cost', '% Count']);
     var row = ['TAs'];
     var costs = viewState.calculations.calculatedView.previous.costs;
@@ -128,31 +188,12 @@ class BudgetComparisonReportExcelService {
     row.push('');
     data.push(row);
 
-    data.push(['']);
+    return data;
+  }
 
-    // Add instruction plus TAs and readers for total supplemental instruction costs
-    // (Requested by Sandra C. on 3-7-19)
-    var row = ['Total Supplemental Instruction'];
-    var costs = viewState.calculations.calculatedView.previous.costs;
-    row.push(costs.supportCosts.totalCost + costs.instructorCosts.total.cost);
-    row.push('');
-    row.push('');
-    row.push('Total');
-    var costs = viewState.calculations.calculatedView.current.costs;
-    row.push(costs.supportCosts.totalCost + costs.instructorCosts.total.cost);
-    row.push('');
-    row.push('');
-    // Changes
-    var costs = viewState.calculations.calculatedView.change.costs;
-    row.push(costs.supportCosts.rawTotalCost + costs.instructorCosts.total.rawCost);
-    row.push('');
-    row.push('');
-    row.push('');
-    data.push(row);
+  generateFundingRows(viewState) {
+    var data = [];
 
-    data.push(['']);
-
-    // Funding and Amount
     data.push(['Funding', 'Amount', '', '', 'Funding', 'Amount', '', '', 'Funding', 'Amount', '% Change']);
     for (var i = 0; i < viewState.lineItemCategories.current.ids.length; i++) {
       var lineItemCategoryId = viewState.lineItemCategories.current.ids[i];
@@ -180,11 +221,12 @@ class BudgetComparisonReportExcelService {
 
     data.push(['', viewState.calculations.calculatedView.previous.funding.total, '', '', '', viewState.calculations.calculatedView.current.funding.total, '', '', '', viewState.calculations.calculatedView.change.funding.rawTotal]);
 
-    data.push(['']);
+    return data;
+  }
 
-    // -----------
-    // Misc. Stats
-    // -----------
+  generateMiscStats(viewState) {
+    var data = [];
+
     data.push(['Courses Offered', '', '', '', 'Courses Offered', '', '', '', 'Courses Offered', '', '', '']);
     data.push(['# Lower div.', '# Upper div.', '# Grad.', 'Total', '# Lower div.', '# Upper div.', '# Grad.', 'Total', '# Lower div.', '# Upper div.', '# Grad.', 'Total']);
 
@@ -231,14 +273,7 @@ class BudgetComparisonReportExcelService {
 
     data.push(row);
 
-    var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
-    var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
-    
-    /* add worksheet to workbook */
-    XLSX.utils.book_append_sheet(wb, ws, workgroupName); // eslint-disable-line no-undef
-
-    /* write workbook */
-    XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
+    return data;
   }
 }
 
