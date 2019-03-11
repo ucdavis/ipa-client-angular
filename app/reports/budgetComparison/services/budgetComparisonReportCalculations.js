@@ -381,9 +381,9 @@ class BudgetComparisonReportCalculations {
 
 				var courseChange = {};
 
-				allInstructorTypeIds.forEach(function(instructorTypeId) {
-						courseChange[instructorTypeId] = (currentTeachingAssignments[instructorTypeId] || []).length - (previousTeachingAssignments[instructorTypeId] || []).length;
-				});
+				for (var instructorTypeId of allInstructorTypeIds) {
+					courseChange[instructorTypeId] = this._percentageChange((currentTeachingAssignments[instructorTypeId] || []).length, (previousTeachingAssignments[instructorTypeId] || []).length);
+				}
 
 				return courseChange;
 			},
