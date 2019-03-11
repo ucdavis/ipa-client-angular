@@ -33,7 +33,8 @@ class BudgetComparisonReportCalculations {
 				calculatedView.change = {
 					costs: this._generateCostChange(calculatedView.current.costs, calculatedView.previous.costs),
 					funding: this._generatefundingChange(calculatedView.current.funding, calculatedView.previous.funding),
-					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats)
+					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats),
+					courseCount: this._generateCourseCountChange(teachingAssignments.current.byInstructorTypeId, teachingAssignments.previous.byInstructorTypeId)
 				};
 
 				sectionGroups = this._generateUnassignedSectionGroups(sectionGroups, teachingAssignments);
@@ -371,6 +372,20 @@ class BudgetComparisonReportCalculations {
 						seats: currentMiscStats.total.seats - previousMiscStats.total.seats
 					}
 				};
+			},
+			// Generates previous -> current change values for misc calculations
+			_generateCourseCountChange(currentTeachingAssignments, previousTeachingAssignments) {
+				var currentInstructorTypeIds = Object.keys(currentTeachingAssignments);
+				var previousInstructorTypeIds = Object.keys(previousTeachingAssignments);
+				var allInstructorTypeIds = [...new Set(currentInstructorTypeIds.concat(previousInstructorTypeIds))];
+
+				var courseChange = {};
+
+				allInstructorTypeIds.forEach(function(instructorTypeId) {
+						courseChange[instructorTypeId] = (currentTeachingAssignments[instructorTypeId] || []).length - (previousTeachingAssignments[instructorTypeId] || []).length;
+				});
+
+				return courseChange;
 			},
 			// Will return null if oldValue is zero, otherwise returns percentage change
 			_percentageChange(oldValue, newValue, degreesOfPrecision) {
