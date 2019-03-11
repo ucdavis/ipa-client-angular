@@ -1,5 +1,5 @@
 class BudgetActions {
-	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles, ScheduleCostCalculations, UserService) {
+	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles, ScheduleCostCalculations, UserService, BudgetExcelService) {
 		return {
 			getInitialState: function () {
 				var self = this;
@@ -808,6 +808,9 @@ class BudgetActions {
 					instructor.instructorType = instructorType;
 				});
 			},
+			downloadBudgetExcel: function(viewState) {
+				BudgetExcelService.generateDownload(viewState);
+			},
 			_getInstructorType: function(instructor) {
 				var users = BudgetReducers._state.users;
 				var userRoles = BudgetReducers._state.userRoles;
@@ -830,6 +833,6 @@ class BudgetActions {
 	}
 }
 
-BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles', 'ScheduleCostCalculations', 'UserService'];
+BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles', 'ScheduleCostCalculations', 'UserService', 'BudgetExcelService'];
 
 export default BudgetActions;
