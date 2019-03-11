@@ -1,7 +1,7 @@
 class BudgetExcelService {
 	constructor (ApiService) { // eslint-disable-line no-unused-vars
 		
-	};
+	}
 
 	generateDownload(viewState) {
 		console.dir(viewState); // eslint-disable-line no-console
@@ -12,16 +12,18 @@ class BudgetExcelService {
 
 		// Generate Schedule Costs
 		// Header
-		data.push(['', 'Enrollment / Instructor', 'TAs / Original Instructor', 'Readers / Reason', 'Support Cost / Instructor Cost']);
+		data.push(['Course', 'Enrollment', 'Instructor',  'TAs / Original Instructor', 'Readers / Reason', 'Support Cost / Instructor Cost']);
 
 		console.dir(viewState.calculatedScheduleCosts); // eslint-disable-line no-console
 
 		viewState.calculatedScheduleCosts.terms.forEach(function(term) {
 			var scheduleCosts = viewState.calculatedScheduleCosts.byTerm[term];
+			console.log("scheduleCosts");// eslint-disable-line no-console
 			console.dir(scheduleCosts); // eslint-disable-line
 			for (var i = 0; i < scheduleCosts.length; i++) {
 				var row = [];
 
+				row.push(scheduleCosts[i].subjectCode + ' ' + scheduleCosts[i].courseNumber + ' ' + scheduleCosts[i].title);
 				row.push(scheduleCosts[i].courseNumber);
 				row.push(scheduleCosts[i].sectionGroupCosts);
 				row.push(scheduleCosts[i].subjectCode);
@@ -45,8 +47,6 @@ class BudgetExcelService {
 		// 	              summary="view.state.summary"
 		// 	              is-live-data-scenario="!view.state.ui.shouldShowCourseList">
 		// 	</budget-costs>
-
-		data.push([1, 2, 3, 4]);
 		
 		var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
     var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
@@ -70,7 +70,7 @@ class BudgetExcelService {
 
     /* write workbook */
     XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
-	};
+	}
 }
 
 BudgetExcelService.$inject = ['ApiService'];
