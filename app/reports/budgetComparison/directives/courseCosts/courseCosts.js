@@ -15,7 +15,7 @@ let courseCosts = function (StringService) {
       funding: '<',
       miscStats: '<',
       budgetScenarioName: '<',
-      instructorTypeCoursesCount: '<',
+      instructorTypeCourses: '<',
       unassigned: '<'
     },
     link: function (scope) {
