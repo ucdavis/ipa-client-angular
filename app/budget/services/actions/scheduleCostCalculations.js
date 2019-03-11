@@ -46,12 +46,14 @@ class ScheduleCostCalculations {
           var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
 
+
           // Set sectionGroupCost instructor descriptions
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
           var instructorType = BudgetReducers._state.instructorTypes.list[sectionGroupCost.instructorTypeId];
           sectionGroupCost.instructor = instructor;
           sectionGroupCost.instructorType = instructorType;
           sectionGroupCost.instructorDescription = null;
+          sectionGroupCost.instructorTypeDescription = instructorType ? instructorType.description : '';
 
           if (instructor) {
             sectionGroupCost.instructorDescription = instructor.lastName + ", " + instructor.firstName;
@@ -182,7 +184,7 @@ class ScheduleCostCalculations {
             return;
           }
 
-          var instructorTypeId = sectionGroupCost.instructor && sectionGroupCost.instructor.instructorType ? sectionGroupCost.instructor.instructorType.id : sectionGroupCost.instructorTypeId;
+          var instructorTypeId = sectionGroupCost.instructorTypeId;
           var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
           if (instructorTypeCost && instructorTypeCost.cost > 0) {
