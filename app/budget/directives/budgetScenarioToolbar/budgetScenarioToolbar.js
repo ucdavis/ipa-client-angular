@@ -67,6 +67,14 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.state.selectedBudgetScenario.activeTermsBlob = setCharAt(scope.state.selectedBudgetScenario.activeTermsBlob, index, newValue);
 				BudgetActions.updateBudgetScenario(scope.state.selectedBudgetScenario);
 			};
+
+			scope.downloadBudgetExcel = function() {
+				BudgetActions.downloadBudgetExcel(scope.state);
+			};
+
+			scope.print = function() {
+				window.print();
+			};
 		} // End Link
 	};
 };
