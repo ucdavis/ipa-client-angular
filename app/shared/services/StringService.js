@@ -193,6 +193,11 @@ class StringService {
         return false;
     }
   }
+
+  // Credit: https://stackoverflow.com/questions/1199352/smart-way-to-shorten-long-strings-with-javascript
+  truncate(str, n) {
+    return (str.length > n) ? str.substr(0, n - 3) + '...' : str;
+  }
 }
 
 export default StringService;
