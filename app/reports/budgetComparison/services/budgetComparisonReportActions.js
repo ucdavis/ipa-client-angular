@@ -391,9 +391,8 @@ class BudgetComparisonReportActions {
 						ids: [],
 						list: {},
 						bySectionGroupId: [],
-						byInstructorTypeId: {
-							total: 0
-						}
+						byInstructorTypeId: {},
+						courseCountTotal: 0
 					};
 
 					rawTeachingAssignments.forEach(function(teachingAssignment) {
@@ -405,7 +404,7 @@ class BudgetComparisonReportActions {
 
 							teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId] = teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId] || [];
 							teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId].push(teachingAssignment.id);
-							teachingAssignments.byInstructorTypeId.total += 1;
+							teachingAssignments.courseCountTotal += 1;
 						}
 					});
 
