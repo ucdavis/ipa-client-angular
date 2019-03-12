@@ -11,6 +11,8 @@ class BudgetComparisonReportCalculations {
 				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts;
 				var sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
 
+				sectionGroups = this._generateUnassignedSectionGroups(sectionGroups, teachingAssignments);
+
 				var calculatedView = {
 					ui: {
 						currentSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.currentSelectedScenarioId, BudgetComparisonReportReducers._state.budgetScenarios.current),
@@ -34,10 +36,8 @@ class BudgetComparisonReportCalculations {
 					costs: this._generateCostChange(calculatedView.current.costs, calculatedView.previous.costs),
 					funding: this._generatefundingChange(calculatedView.current.funding, calculatedView.previous.funding),
 					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats),
-					courseCount: this._generateCourseCountChange(teachingAssignments.current.byInstructorTypeId, teachingAssignments.previous.byInstructorTypeId)
+					courseCount: this._generateCourseCountChange(teachingAssignments.current.byInstructorTypeId, teachingAssignments.previous.byInstructorTypeId, sectionGroups.current.unassigned, sectionGroups.previous.unassigned)
 				};
-
-				sectionGroups = this._generateUnassignedSectionGroups(sectionGroups, teachingAssignments);
 
 				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.CALCULATE_VIEW,
@@ -374,16 +374,24 @@ class BudgetComparisonReportCalculations {
 				};
 			},
 			// Generates previous -> current change values for misc calculations
-			_generateCourseCountChange(currentTeachingAssignments, previousTeachingAssignments) {
+			_generateCourseCountChange(currentTeachingAssignments, previousTeachingAssignments, currentUnassignedSectionGroups, previousUnassignedSectionGroups) {
 				var currentInstructorTypeIds = Object.keys(currentTeachingAssignments);
 				var previousInstructorTypeIds = Object.keys(previousTeachingAssignments);
 				var allInstructorTypeIds = [...new Set(currentInstructorTypeIds.concat(previousInstructorTypeIds))];
 
 				var courseChange = {};
+				var previousTotal = previousUnassignedSectionGroups.length || 0;
+				var currentTotal = currentUnassignedSectionGroups.length || 0;
 
 				for (var instructorTypeId of allInstructorTypeIds) {
-					courseChange[instructorTypeId] = this._percentageChange((currentTeachingAssignments[instructorTypeId] || []).length, (previousTeachingAssignments[instructorTypeId] || []).length);
+					var previousCount = (previousTeachingAssignments[instructorTypeId] || []).length;
+					var currentCount = (currentTeachingAssignments[instructorTypeId] || []).length;
+					courseChange[instructorTypeId] = this._percentageChange(previousCount, currentCount);
+					previousTotal += previousCount;
+					currentTotal += currentCount;
 				}
+
+				courseChange.total = this._percentageChange(currentTotal, previousTotal);
 
 				return courseChange;
 			},
