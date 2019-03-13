@@ -481,7 +481,9 @@ class BudgetCalculations {
 						overall: 0,
 						instructorTypeIds: [],
 						byInstructorTypeId: {},
-						instructorTypeCount: {}
+						instructorTypeCount: {},
+						unassignedCost: 0,
+						unassignedCount: 0
 					},
 					totalCosts: 0,
 					funds: 0,
@@ -568,6 +570,9 @@ class BudgetCalculations {
 					summary.combinedTerms.supportCosts += summary.byTerm[term].supportCosts;
 					summary.combinedTerms.replacementCosts.overall += summary.byTerm[term].replacementCosts.overall;
 					summary.combinedTerms.replacementCosts = _self._combineReplacementCost(summary.combinedTerms.replacementCosts, summary.byTerm[term].replacementCosts);
+					summary.combinedTerms.replacementCosts.unassignedCost += summary.byTerm[term].replacementCosts.unassignedCost || 0;
+					summary.combinedTerms.replacementCosts.unassignedCount += summary.byTerm[term].replacementCosts.unassignedCount || 0;
+
 					summary.combinedTerms.totalCosts += summary.byTerm[term].totalCosts;
 					summary.combinedTerms.totalUnits += summary.byTerm[term].totalUnits;
 					summary.combinedTerms.totalSCH += summary.byTerm[term].totalSCH;
