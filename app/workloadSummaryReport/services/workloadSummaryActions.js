@@ -348,7 +348,7 @@ class WorkloadSummaryActions {
 
 				instructorTypes.ids.forEach(function(instructorTypeId) {
 					calculatedView.byInstructorType[instructorTypeId] = [];
-          calculatedView.totals.byInstructorTypeId[instructorTypeId] = {
+					calculatedView.totals.byInstructorTypeId[instructorTypeId] = {
 						units: 0,
 						studentCreditHours: 0,
 						seats: 0,
