@@ -146,7 +146,23 @@
 						</div>
 					</td>
 				</tr>
-
+				<tr>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--left">
+							Unassigned
+						</div>
+					</td>
+					<td ng-repeat="term in summary.terms">
+						<div class="budget-summary__cell-container">
+							{{ toCurrency(summary.byTerm[term].replacementCosts.unassignedCost) }} ({{ summary.byTerm[term].replacementCosts.unassignedCount || 0 }})
+						</div>
+					</td>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--last">
+							{{ toCurrency(summary.combinedTerms.replacementCosts.unassignedCost) }} ({{ summary.combinedTerms.replacementCosts.unassignedCount || 0 }})
+						</div>
+					</td>
+				</tr>
 					<!-- Replacement Costs -->
 					<tr>
 						<td>

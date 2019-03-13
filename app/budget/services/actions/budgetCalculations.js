@@ -592,18 +592,27 @@ class BudgetCalculations {
 
         var instructorTypeId = null;
 
-        if (sectionGroup.overrideInstructorTypeId) {
-          instructorTypeId = sectionGroup.overrideInstructorTypeId;
-        } else if (sectionGroup.instructor && sectionGroup.instructor.instructorType && sectionGroup.instructor.instructorType.id) {
-          instructorTypeId = sectionGroup.instructor.instructorType.id;
-        } else {
-          instructorTypeId = sectionGroup.instructorTypeId;
-        }
+				if (sectionGroup.overrideInstructorTypeId) {
+					instructorTypeId = sectionGroup.overrideInstructorTypeId;
+				} else if (sectionGroup.instructor && sectionGroup.instructor.instructorType && sectionGroup.instructor.instructorType.id) {
+					instructorTypeId = sectionGroup.instructor.instructorType.id;
+				} else {
+					instructorTypeId = sectionGroup.instructorTypeId;
+				}
 
 				var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroup.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroup.instructorId];
 
-				// Course has a cost but no instructor
-				if (!instructorTypeId && !instructor) { return replacementCosts; }
+				// Course has no instructor
+				if (!instructorTypeId && !instructor) {
+					if (!replacementCost) { return replacementCosts; }
+
+					replacementCosts.unassignedCost = replacementCosts.unassignedCost || 0;
+					replacementCosts.unassignedCost += replacementCost;
+					replacementCosts.unassignedCount = replacementCosts.unassignedCount || 0;
+					replacementCosts.unassignedCount += 1;
+
+					return replacementCosts;
+				}
 
 				if (!instructorTypeId) {
 					instructorTypeId = this._calculateInstructorType(instructor.id).id;
