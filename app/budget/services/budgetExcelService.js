@@ -9,10 +9,34 @@ class BudgetExcelService {
 
 		var filename = "Budget-Comparison-Report.xlsx";
 		var data = [];
+		// var termDescriptions = {
+		// 	'05': 'Summer Session 1',
+		// 	'06': 'Summer Special Session',
+		// 	'07': 'Summer Session 2',
+		// 	'08': 'Summer Quarter',
+		// 	'09': 'Fall Semester',
+		// 	'10': 'Fall Quarter',
+		// 	'01': 'Winter Quarter',
+		// 	'02': 'Spring Semester',
+		// 	'03': 'Spring Quarter'
+		// };
+
 
 		// Generate Schedule Costs
 		// Header
-		data.push(['Course', 'Enrollment', 'Instructor',  'TAs / Original Instructor', 'Readers / Reason', 'Support Cost / Instructor Cost']);
+		data.push(['Subject Code',
+								'Course Number',
+								'Unique Key',
+								'Title',
+								'Units High',
+								'Units Low',
+								'Enrollment',
+								'Sequence Pattern',
+								'Instructor',
+								'Original Instructor',
+								'TAs / Original Instructor',
+								'Readers / Reason',
+								'Support Cost / Instructor Cost']);
 
 		console.dir(viewState.calculatedScheduleCosts); // eslint-disable-line no-console
 
@@ -22,15 +46,28 @@ class BudgetExcelService {
 			console.dir(scheduleCosts); // eslint-disable-line
 			for (var i = 0; i < scheduleCosts.length; i++) {
 				var row = [];
+				// var mainInfo = [];
 
-				row.push(scheduleCosts[i].subjectCode + ' ' + scheduleCosts[i].courseNumber + ' ' + scheduleCosts[i].title);
-				row.push(scheduleCosts[i].courseNumber);
-				row.push(scheduleCosts[i].sectionGroupCosts);
 				row.push(scheduleCosts[i].subjectCode);
-				row.push(scheduleCosts[i].title);
+				row.push(scheduleCosts[i].courseNumber);
 				row.push(scheduleCosts[i].uniqueKey);
+				row.push(scheduleCosts[i].title);
 				row.push(scheduleCosts[i].unitsHigh);
 				row.push(scheduleCosts[i].unitsLow);
+				
+				// if (scheduleCosts[i].sectionGroupCosts[i].originalInstructorDescription == null || scheduleCosts[i].sectionGroupCosts[i].originalInstructorDescription == undefined){
+				// row.push(originalInstructorDescription);
+				// } else {
+				// row.push(scheduleCosts[i].sectionGroupCosts[i].id);
+				// }
+
+
+				// let sectionGroupCosts = scheduleCosts[i].sectionGroupCosts;
+				// for (let i = 0; i < sectionGroupCosts.length; i++) {
+				// 	row.push(sectionGroupCosts[i].id);
+				// }
+
+
 				data.push(row);
 			}
 		});
@@ -53,11 +90,11 @@ class BudgetExcelService {
 
     // Set column widths
     var wscols = [
-      {wch: 35},
+      {wch: 15},
+      {wch: 15},
+      {wch: 15},
+      {wch: 30},
       {wch: 10},
-      {wch: 10},
-      {wch: 10},
-      {wch: 35},
       {wch: 10},
       {wch: 10},
       {wch: 10},
