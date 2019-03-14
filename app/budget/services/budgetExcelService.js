@@ -9,17 +9,17 @@ class BudgetExcelService {
 
 		var filename = "Budget-Comparison-Report.xlsx";
 		var data = [];
-		// var termDescriptions = {
-		// 	'05': 'Summer Session 1',
-		// 	'06': 'Summer Special Session',
-		// 	'07': 'Summer Session 2',
-		// 	'08': 'Summer Quarter',
-		// 	'09': 'Fall Semester',
-		// 	'10': 'Fall Quarter',
-		// 	'01': 'Winter Quarter',
-		// 	'02': 'Spring Semester',
-		// 	'03': 'Spring Quarter'
-		// };
+		var termDescriptions = {
+			'05': 'Summer Session 1',
+			'06': 'Summer Special Session',
+			'07': 'Summer Session 2',
+			'08': 'Summer Quarter',
+			'09': 'Fall Semester',
+			'10': 'Fall Quarter',
+			'01': 'Winter Quarter',
+			'02': 'Spring Semester',
+			'03': 'Spring Quarter'
+		};
 
 
 		// Generate Schedule Costs
@@ -30,15 +30,18 @@ class BudgetExcelService {
 								'Title',
 								'Units High',
 								'Units Low',
-								'Enrollment',
-								'Sequence Pattern',
+								'ID',
 								'Instructor',
 								'Original Instructor',
+								'Term',
+								'Enrollment',
+								'Sequence Pattern',
 								'TAs / Original Instructor',
 								'Readers / Reason',
 								'Support Cost / Instructor Cost']);
 
 		console.dir(viewState.calculatedScheduleCosts); // eslint-disable-line no-console
+
 
 		viewState.calculatedScheduleCosts.terms.forEach(function(term) {
 			var scheduleCosts = viewState.calculatedScheduleCosts.byTerm[term];
@@ -46,8 +49,6 @@ class BudgetExcelService {
 			console.dir(scheduleCosts); // eslint-disable-line
 			for (var i = 0; i < scheduleCosts.length; i++) {
 				var row = [];
-				// var mainInfo = [];
-
 				row.push(scheduleCosts[i].subjectCode);
 				row.push(scheduleCosts[i].courseNumber);
 				row.push(scheduleCosts[i].uniqueKey);
@@ -55,35 +56,23 @@ class BudgetExcelService {
 				row.push(scheduleCosts[i].unitsHigh);
 				row.push(scheduleCosts[i].unitsLow);
 				
-				// if (scheduleCosts[i].sectionGroupCosts[i].originalInstructorDescription == null || scheduleCosts[i].sectionGroupCosts[i].originalInstructorDescription == undefined){
-				// row.push(originalInstructorDescription);
-				// } else {
-				// row.push(scheduleCosts[i].sectionGroupCosts[i].id);
-				// }
-
-
-				// let sectionGroupCosts = scheduleCosts[i].sectionGroupCosts;
-				// for (let i = 0; i < sectionGroupCosts.length; i++) {
-				// 	row.push(sectionGroupCosts[i].id);
-				// }
-
-
-				data.push(row);
+				let sectionGroupCosts = scheduleCosts[i].sectionGroupCosts;
+				for (var _i = 0; _i < sectionGroupCosts.length; _i++) {
+					let childRow = [];
+					childRow.push(sectionGroupCosts[_i].id);
+					childRow.push(sectionGroupCosts[_i].instructorDescription);
+					childRow.push(sectionGroupCosts[_i].originalInstructorDescription);
+					let termDescription = termDescriptions[sectionGroupCosts[_i].shortTermCode];
+					// debugger;
+					childRow.push(termDescription);
+					var parentRow = row.concat(childRow);
+					data.push(parentRow);
+					// childRow.length = 0;
+					// parentRow.length = 0;
+				}
+					
 			}
 		});
-		// <div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
-		// 			<div class="budget-costs__course-title">
-		// 				{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
-		// 			</div>
-
-		// <budget-costs ng-if="view.state.ui.sectionNav.activeTab == 'Schedule Costs'"
-		// 	              instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
-		// 	              regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
-		// 	              schedule-costs="view.state.calculatedScheduleCosts"
-		// 	              term-nav="view.state.ui.termNav"
-		// 	              summary="view.state.summary"
-		// 	              is-live-data-scenario="!view.state.ui.shouldShowCourseList">
-		// 	</budget-costs>
 		
 		var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
     var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
