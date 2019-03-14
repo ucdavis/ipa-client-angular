@@ -348,6 +348,15 @@ class WorkloadSummaryActions {
 
 				instructorTypes.ids.forEach(function(instructorTypeId) {
 					calculatedView.byInstructorType[instructorTypeId] = [];
+					calculatedView.totals.byInstructorTypeId[instructorTypeId] = {
+						units: 0,
+						studentCreditHours: 0,
+						seats: 0,
+						enrollment: 0,
+						previousEnrollment: 0,
+						lastOfferedEnrollment: 0,
+						assignmentCount: 0
+          };
 				});
 
 				instructors.ids.forEach(function(instructorId) {
@@ -367,16 +376,6 @@ class WorkloadSummaryActions {
 						enrollment: 0,
 						seats: 0,
 						actualEnrollment: 0,
-						previousEnrollment: 0,
-						lastOfferedEnrollment: 0,
-						assignmentCount: 0
-					};
-
-					calculatedView.totals.byInstructorTypeId[instructorTypeId] = calculatedView.totals.byInstructorTypeId[instructorTypeId] || {
-						units: 0,
-						studentCreditHours: 0,
-						seats: 0,
-						enrollment: 0,
 						previousEnrollment: 0,
 						lastOfferedEnrollment: 0,
 						assignmentCount: 0
