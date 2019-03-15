@@ -77,3 +77,13 @@
 	color: #21A9E1;
 	padding-right: 5px;
 }
+
+@media print {
+  @page {
+    margin: 1cm;
+  }
+
+  .do-not-print {
+		display: none;
+  }
+}
