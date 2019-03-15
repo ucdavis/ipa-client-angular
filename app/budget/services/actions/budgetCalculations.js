@@ -481,7 +481,9 @@ class BudgetCalculations {
 						overall: 0,
 						instructorTypeIds: [],
 						byInstructorTypeId: {},
-						instructorTypeCount: {}
+						instructorTypeCount: {},
+						unassignedCost: 0,
+						unassignedCount: 0
 					},
 					totalCosts: 0,
 					funds: 0,
@@ -568,6 +570,9 @@ class BudgetCalculations {
 					summary.combinedTerms.supportCosts += summary.byTerm[term].supportCosts;
 					summary.combinedTerms.replacementCosts.overall += summary.byTerm[term].replacementCosts.overall;
 					summary.combinedTerms.replacementCosts = _self._combineReplacementCost(summary.combinedTerms.replacementCosts, summary.byTerm[term].replacementCosts);
+					summary.combinedTerms.replacementCosts.unassignedCost += summary.byTerm[term].replacementCosts.unassignedCost || 0;
+					summary.combinedTerms.replacementCosts.unassignedCount += summary.byTerm[term].replacementCosts.unassignedCount || 0;
+
 					summary.combinedTerms.totalCosts += summary.byTerm[term].totalCosts;
 					summary.combinedTerms.totalUnits += summary.byTerm[term].totalUnits;
 					summary.combinedTerms.totalSCH += summary.byTerm[term].totalSCH;
@@ -592,18 +597,27 @@ class BudgetCalculations {
 
         var instructorTypeId = null;
 
-        if (sectionGroup.overrideInstructorTypeId) {
-          instructorTypeId = sectionGroup.overrideInstructorTypeId;
-        } else if (sectionGroup.instructor && sectionGroup.instructor.instructorType && sectionGroup.instructor.instructorType.id) {
-          instructorTypeId = sectionGroup.instructor.instructorType.id;
-        } else {
-          instructorTypeId = sectionGroup.instructorTypeId;
-        }
+				if (sectionGroup.overrideInstructorTypeId) {
+					instructorTypeId = sectionGroup.overrideInstructorTypeId;
+				} else if (sectionGroup.instructor && sectionGroup.instructor.instructorType && sectionGroup.instructor.instructorType.id) {
+					instructorTypeId = sectionGroup.instructor.instructorType.id;
+				} else {
+					instructorTypeId = sectionGroup.instructorTypeId;
+				}
 
 				var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroup.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroup.instructorId];
 
-				// Course has a cost but no instructor
-				if (!instructorTypeId && !instructor) { return replacementCosts; }
+				// Course has no instructor
+				if (!instructorTypeId && !instructor) {
+					if (!replacementCost) { return replacementCosts; }
+
+					replacementCosts.unassignedCost = replacementCosts.unassignedCost || 0;
+					replacementCosts.unassignedCost += replacementCost;
+					replacementCosts.unassignedCount = replacementCosts.unassignedCount || 0;
+					replacementCosts.unassignedCount += 1;
+
+					return replacementCosts;
+				}
 
 				if (!instructorTypeId) {
 					instructorTypeId = this._calculateInstructorType(instructor.id).id;
