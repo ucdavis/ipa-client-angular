@@ -146,25 +146,41 @@
 						</div>
 					</td>
 				</tr>
-
-					<!-- Replacement Costs -->
-					<tr>
-						<td>
-							<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
-								Replacement Costs
-							</div>
-						</td>
-						<td ng-repeat="term in summary.terms">
-							<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total">
-								{{ toCurrency(summary.byTerm[term].replacementCosts.overall) }}
-							</div>
-						</td>
-						<td>
-							<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell--bold budget-summary__cell--total">
-								{{ toCurrency(summary.combinedTerms.replacementCosts.overall) }}
-							</div>
-						</td>
-					</tr>
+				<tr>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--left">
+							Unassigned
+						</div>
+					</td>
+					<td ng-repeat="term in summary.terms">
+						<div class="budget-summary__cell-container">
+							{{ toCurrency(summary.byTerm[term].replacementCosts.unassignedCost) }} ({{ summary.byTerm[term].replacementCosts.unassignedCount || 0 }})
+						</div>
+					</td>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--last">
+							{{ toCurrency(summary.combinedTerms.replacementCosts.unassignedCost) }} ({{ summary.combinedTerms.replacementCosts.unassignedCount || 0 }})
+						</div>
+					</td>
+				</tr>
+				<!-- Replacement Costs -->
+				<tr>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--left budget-summary__cell--bold">
+							Replacement Costs
+						</div>
+					</td>
+					<td ng-repeat="term in summary.terms">
+						<div class="budget-summary__cell-container budget-summary__cell--bold budget-summary__cell--total">
+							{{ toCurrency(summary.byTerm[term].replacementCosts.overall) }}
+						</div>
+					</td>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell--bold budget-summary__cell--total">
+							{{ toCurrency(summary.combinedTerms.replacementCosts.overall) }}
+						</div>
+					</td>
+				</tr>
 				<!-- Total Costs -->
 				<tr>
 					<td>

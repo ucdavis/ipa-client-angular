@@ -1,5 +1,5 @@
 class BudgetActions {
-	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles, ScheduleCostCalculations) {
+	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles, ScheduleCostCalculations, UserService) {
 		return {
 			getInitialState: function () {
 				var self = this;
@@ -813,7 +813,8 @@ class BudgetActions {
 				var userRoles = BudgetReducers._state.userRoles;
 				var instructorTypes = BudgetReducers._state.instructorTypes;
 
-				var user = users.byLoginId[instructor.loginId.toLowerCase()];
+				var user = UserService.getUserByInstructor(instructor, users);
+
         if (!user) { return null; }
 
 				var userRoleId = userRoles.ids.find(id => (userRoles.list[id].roleId == Roles.instructor && userRoles.list[id].userId == user.id));
@@ -829,6 +830,6 @@ class BudgetActions {
 	}
 }
 
-BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles', 'ScheduleCostCalculations'];
+BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles', 'ScheduleCostCalculations', 'UserService'];
 
 export default BudgetActions;

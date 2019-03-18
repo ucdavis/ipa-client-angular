@@ -7,19 +7,19 @@
  */
 
  class SummaryCtrl {
-		constructor ($scope, $route, $routeParams, $rootScope, $location, AuthService, SummaryActionCreators) {
-		var self = this;
-		this.$scope = $scope;
-		this.$route = $route;
-		this.$routeParams = $routeParams;
-		this.$rootScope = $rootScope;
-		this.$location = $location;
-		this.AuthService = AuthService;
-		this.SummaryActionCreators = SummaryActionCreators;
+  constructor ($scope, $route, $routeParams, $rootScope, $location, AuthService, SummaryActionCreators) {
+    var self = this;
+    this.$scope = $scope;
+    this.$route = $route;
+    this.$routeParams = $routeParams;
+    this.$rootScope = $rootScope;
+    this.$location = $location;
+    this.AuthService = AuthService;
+    this.SummaryActionCreators = SummaryActionCreators;
 
-		$scope.workgroupId = this.$routeParams.workgroupId;
-		$scope.year = this.$routeParams.year;
-		$scope.view = {};
+    $scope.workgroupId = this.$routeParams.workgroupId;
+    $scope.year = this.$routeParams.year;
+    $scope.view = {};
 
     var currentUser = AuthService.getCurrentUser();
     var isAdmin = currentUser.isAdmin();
@@ -32,71 +32,61 @@
     $scope.hasInstructorSummaryAccess = isInstructor || isAdmin;
     $scope.hasInstructionalSupportSummaryAccess = isInstructionalSupport || isAdmin;
 
-		var self = this;
-		// Update the view mode when the url param changes
-		$scope.$on('$routeUpdate', function () {
-			self.$scope.view.mode = self.$location.search().mode;
-		});
+    var self = this;
+    // Update the view mode when the url param changes
+    $scope.$on('$routeUpdate', function () {
+      self.$scope.view.mode = self.$location.search().mode;
+    });
 
-		$scope.setActiveMode = function (mode) {
-			self.$location.search({ mode: mode });
-		};
+    $scope.setActiveMode = function (mode) {
+      self.$location.search({ mode: mode });
+    };
 
-		$scope.getTermDisplayName = function (term) {
-			return term.getTermDisplayName(term);
-		};
+    $scope.getTermDisplayName = function (term) {
+      return term.getTermDisplayName(term);
+    };
 
-		$scope.selectTab = function(tab) {
-			self.$scope.view.state.ui.allTerms.forEach(function(term) {
-				if (term.getTermDisplayName() == tab) {
-					self.$scope.selectTerm(term);
-				}
-			});
-		};
+    $rootScope.$on('summaryStateChanged', function (event, data) {
+      data.ui.workgroupId = $scope.workgroupId;
+      data.ui.year = $scope.year;
+      self.$scope.view.state = data;
+      self.setMode($scope, $routeParams, AuthService);
+    });
 
-		$scope.selectTerm = function (term) {
-			self.SummaryActionCreators.selectTerm(term);
-		};
+    $rootScope.$on('sharedStateSet', function (event, data) {
+      self.$scope.sharedState = data;
+    });
+  }
 
-		$rootScope.$on('summaryStateChanged', function (event, data) {
-			self.$scope.view.state = data;
-			self.setMode($scope, $routeParams, AuthService);
-		});
+  /**
+   * Adds a 'mode' url param (if one is not found) for the summary screen based on the user's roles (instructor, academic planner, or student)
+   */
+  setMode ($scope, $routeParams, AuthService) {
+    if ($routeParams.mode && $routeParams.mode != "unknown") {
+      // Set the active tab according to the URL
+      $scope.view.mode = $routeParams.mode;
+    } else {
+      // Otherwise redirect to the default view
+      var currentUser = AuthService.getCurrentUser();
+      var isAdmin = currentUser.isAdmin();
+      var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
+      var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
+      var isInstructor = currentUser.isInstructor($scope.workgroupId);
+      var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], $scope.workgroupId);
 
-		$rootScope.$on('sharedStateSet', function (event, data) {
-			self.$scope.sharedState = data;
-		});
-	}
-
-	/**
-	 * Adds a 'mode' url param (if one is not found) for the summary screen based on the user's roles (instructor, academic planner, or student)
-	 */
-	setMode ($scope, $routeParams, AuthService) {
-		if ($routeParams.mode && $routeParams.mode != "unknown") {
-			// Set the active tab according to the URL
-			$scope.view.mode = $routeParams.mode;
-		} else {
-			// Otherwise redirect to the default view
-			var currentUser = AuthService.getCurrentUser();
-			var isAdmin = currentUser.isAdmin();
-			var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
-			var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
-			var isInstructor = currentUser.isInstructor($scope.workgroupId);
-			var isInstructionalSupport = currentUser.hasRoles(['studentMasters', 'studentPhd', 'instructionalSupport'], $scope.workgroupId);
-
-			if (isAcademicPlanner || isReviewer || isAdmin) {
-				$scope.setActiveMode("workgroup");
-			}
-			else if (isInstructor) {
-				$scope.setActiveMode("instructor");
-			}
-			else if (isInstructionalSupport) {
-				$scope.setActiveMode("instructionalSupport");
-			} else {
-				$scope.setActiveMode("unknown");
-			}
-		}
-	}
+      if (isAcademicPlanner || isReviewer || isAdmin) {
+        $scope.setActiveMode("workgroup");
+      }
+      else if (isInstructor) {
+        $scope.setActiveMode("instructor");
+      }
+      else if (isInstructionalSupport) {
+        $scope.setActiveMode("instructionalSupport");
+      } else {
+        $scope.setActiveMode("unknown");
+      }
+    }
+  }
 }
 
 SummaryCtrl.$inject = ['$scope', '$route', '$routeParams', '$rootScope', '$location', 'AuthService', 'SummaryActionCreators'];

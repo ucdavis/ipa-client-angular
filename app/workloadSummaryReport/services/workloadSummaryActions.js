@@ -346,6 +346,19 @@ class WorkloadSummaryActions {
 					}
 				};
 
+				instructorTypes.ids.forEach(function(instructorTypeId) {
+					calculatedView.byInstructorType[instructorTypeId] = [];
+					calculatedView.totals.byInstructorTypeId[instructorTypeId] = {
+						units: 0,
+						studentCreditHours: 0,
+						seats: 0,
+						enrollment: 0,
+						previousEnrollment: 0,
+						lastOfferedEnrollment: 0,
+						assignmentCount: 0
+          };
+				});
+
 				instructors.ids.forEach(function(instructorId) {
 					var instructor = instructors.list[instructorId];
 					var instructorTypeId = _self._getInstructorTypeId(instructor);
@@ -354,7 +367,6 @@ class WorkloadSummaryActions {
 
 					if (calculatedView.instructorTypeIds.indexOf(instructorTypeId) == -1) {
 						calculatedView.instructorTypeIds.push(instructorTypeId);
-						calculatedView.byInstructorType[instructorTypeId] = [];
 					}
 
 					instructor.assignments = [];
@@ -364,16 +376,6 @@ class WorkloadSummaryActions {
 						enrollment: 0,
 						seats: 0,
 						actualEnrollment: 0,
-						previousEnrollment: 0,
-						lastOfferedEnrollment: 0,
-						assignmentCount: 0
-					};
-
-					calculatedView.totals.byInstructorTypeId[instructorTypeId] = calculatedView.totals.byInstructorTypeId[instructorTypeId] || {
-						units: 0,
-						studentCreditHours: 0,
-						seats: 0,
-						enrollment: 0,
 						previousEnrollment: 0,
 						lastOfferedEnrollment: 0,
 						assignmentCount: 0
@@ -592,9 +594,21 @@ class WorkloadSummaryActions {
 						genericInstructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
 						genericInstructor.totals.previousEnrollment += assignment.previousEnrollment || 0;
 						genericInstructor.totals.assignmentCount += 1;
+
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].assignmentCount += 1;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].seats += assignment.seats || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].enrollment += assignment.actualEnrollment || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].previousEnrollment += assignment.previousEnrollment || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].units += assignment.units || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentCreditHours += assignment.studentCreditHours || 0;
 					});
 
 					genericInstructor.assignments = _array_sortByProperty(genericInstructor.assignments, ["termCode", "description"]);
+
+					if (calculatedView.instructorTypeIds.indexOf(genericInstructorTypeId) == -1) {
+						calculatedView.instructorTypeIds.push(genericInstructorTypeId);
+					}
 
 					calculatedView.byInstructorType[genericInstructorTypeId].push(genericInstructor);
 					calculatedView.totals.instructorCount += 1;
