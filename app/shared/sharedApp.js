@@ -71,6 +71,7 @@ import ipaSectionHeader from './directives/ipaSectionHeader/ipaSectionHeader.js'
 import ipaTabs from './directives/ipaTabs/ipaTabs.js';
 import ipaTabsVertical from './directives/ipaTabsVertical/ipaTabsVertical.js';
 import ipaTermSelector from './directives/ipaTermSelector/ipaTermSelector.js';
+import ipaFilter from './directives/ipaFilter/ipaFilter.js';
 import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTermSelectorDropdown.js';
 import ipaToggle from './directives/ipaToggle/ipaToggle.js';
 import nav from './directives/nav/nav.js';
@@ -297,6 +298,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .directive('stopEvent', stopEvent)
 .directive('termFilter', termFilter)
 .directive('noAccess', noAccess)
+.directive('ipaFilter', ipaFilter)
 .filter('lastCommaFirst', lastCommaFirst)
 .filter('lastSpaceInitial', lastSpaceInitial)
 .filter('ordinal', ordinal)
