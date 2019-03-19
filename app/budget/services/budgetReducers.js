@@ -708,7 +708,8 @@ class BudgetReducers {
 										description: "Show Hidden line items",
 										selected: false
 									}
-								}
+								},
+								tags: {}
 							},
 							sectionNav: {
 								activeTab: "Summary",
@@ -763,6 +764,22 @@ class BudgetReducers {
 								};
 						});
 	
+						ui.filters.tags = [];
+
+						action.payload.tags.forEach(function(tag) {
+							tag.description = tag.name;
+							tag.selected = true;
+							ui.filters.tags.push(tag);
+						});
+
+						return ui;
+					case ActionTypes.TOGGLE_TAG_FILTER:
+						var tag = action.payload.tag;
+						ui.filters.tags.forEach(function(slotTag) {
+							if (tag.id == slotTag.id) {
+								slotTag.selected = !slotTag.selected;
+							}
+						});
 						return ui;
 					case ActionTypes.CALCULATE_INSTRUCTORS:
 						ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;

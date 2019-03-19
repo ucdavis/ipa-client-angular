@@ -62,9 +62,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.toggleCourseTag = function (tag) {
-				return tag;
-				//console.log(tag);
-				//debugger;
+				BudgetActions.toggleCourseTag(tag);
 			};
 
 			scope.selectBudgetScenarioTerm = function(term) {

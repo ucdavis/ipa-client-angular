@@ -4,11 +4,12 @@ let ipaFilter = function () {
 	return {
 		restrict: 'E',
 		template: require('./ipaFilter.html'),
-		replace: true,
+		replace: false,
 		scope: {
 			items: '<',
 			selectItem: '&',
 			tooltip: '<',
+			title: '<',
 			buttonIcon: '<'
 		},
 		link: function(scope) {
@@ -23,7 +24,7 @@ let ipaFilter = function () {
 			};
 
 			scope.clickItem = function (item) {
-				scope.selectItem()(item);
+				scope.selectItem({item: item});
 			};
 		}
 	};

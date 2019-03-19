@@ -825,6 +825,14 @@ class BudgetActions {
 				var instructorType = instructorTypes.list[userRole.instructorTypeId];
 
 				return instructorType;
+			},
+			toggleCourseTag: function (tag) {
+				BudgetReducers.reduce({
+					type: ActionTypes.TOGGLE_TAG_FILTER,
+					payload: {
+						tag: tag
+					}
+				});
 			}
 		};
 	}

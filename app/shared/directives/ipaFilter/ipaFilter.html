@@ -4,7 +4,9 @@
 	      ng-click="toggleDropdown()"
 	      uib-tooltip="{{tooltip}}"
 	      tooltip-append-to-body="true">
-		<span class="ipa-filter__icon glyphicon glyphicon-list-alt"></span>
+		<span class="ipa-filter__icon glyphicon {{buttonIcon}}"
+		      ng-class="{'glyphicon-filter': !buttonIcon }">
+		</span>
 	</span>
 
 	<div ng-if="isVisible" class="ipa-filter__dropdown">
