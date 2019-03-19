@@ -61,6 +61,12 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.isNewScenarioNameValid = isNamePresent && (isNameInUse == false);
 			};
 
+			scope.toggleCourseTag = function (tag) {
+				return tag;
+				//console.log(tag);
+				//debugger;
+			};
+
 			scope.selectBudgetScenarioTerm = function(term) {
 				var index = parseInt(term) - 1;
 				var newValue = scope.state.selectedBudgetScenario.activeTermsBlob[index] == "1" ? "0" : "1";
