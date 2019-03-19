@@ -192,7 +192,36 @@ class BudgetReducers {
 							uniqueKeys: []
 						};
 
+						var sectionGroupsCache = {
+							ids: [],
+							list: [],
+							bySectionGroupKey: {}
+						};
+
+						var coursesCache = {
+							ids: [],
+							list: [],
+						};
+
+						action.payload.courses.forEach(function(course) {
+							coursesCache.ids.push(course.id);
+							coursesCache.list[course.id] = course;
+						});
+
+						action.payload.sectionGroups.forEach(function(sectionGroup) {
+							var course = coursesCache.list[sectionGroup.courseId];
+							var sectionGroupKey = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern;
+							sectionGroup.tagIds = course.tagIds;
+							sectionGroupsCache.ids.push(sectionGroup.id);
+							sectionGroupsCache.list[sectionGroup.id] = sectionGroup;
+							sectionGroupsCache.bySectionGroupKey[sectionGroupKey] = sectionGroup;
+
+						});
+
 						action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern;
+							sectionGroupCost.tagIds = sectionGroupsCache.bySectionGroupKey[sectionGroupKey] ? sectionGroupsCache.bySectionGroupKey[sectionGroupKey].tagIds : [];
+							sectionGroupCost.hidden = false;
 							sectionGroupCosts.ids.push(sectionGroupCost.id);
 							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
@@ -203,6 +232,33 @@ class BudgetReducers {
 							if (sectionGroupCosts.uniqueKeys.indexOf(uniqueKey) == -1) {
 								sectionGroupCosts.uniqueKeys.push(uniqueKey);
 							}
+						});
+						return sectionGroupCosts;
+					case ActionTypes.UPDATE_COURSE_TAGS:
+						var shownTagIds = [];
+
+						action.payload.tags.forEach(function(tag) {
+							if (tag.selected) {
+								shownTagIds.push(tag.id);
+							}
+						});
+
+						sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+							var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+							sectionGroupCost.hidden = false;
+
+							// Tag filtering isn't active, show all sectionGroupCosts
+							if (shownTagIds.length == 0) { return; }
+
+							var matchingTagIds = sectionGroupCost.tagIds.filter(function (tag) {
+								return shownTagIds.includes(tag);
+							});
+
+							// Course passes the filter
+							if (matchingTagIds.length > 0) { return; }
+
+							// Otherwise hide
+							sectionGroupCost.hidden = true;
 						});
 						return sectionGroupCosts;
 					case ActionTypes.CREATE_BUDGET_SCENARIO:
@@ -364,6 +420,7 @@ class BudgetReducers {
 							sectionGroup.courseNumber = course.courseNumber;
 							sectionGroup.title = course.title;
 							sectionGroup.sequencePattern;
+							sectionGroup.tagIds = course.tagIds;
 							var uniqueKey = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern + "-" + sectionGroup.termCode;
 							sectionGroups.ids.push(sectionGroup.id);
 							sectionGroups.list[sectionGroup.id] = sectionGroup;
@@ -752,18 +809,13 @@ class BudgetReducers {
 
 						action.payload.tags.forEach(function(tag) {
 							tag.description = tag.name;
-							tag.selected = true;
+							tag.selected = false;
 							ui.filters.tags.push(tag);
 						});
 
 						return ui;
-					case ActionTypes.TOGGLE_TAG_FILTER:
-						var tag = action.payload.tag;
-						ui.filters.tags.forEach(function(slotTag) {
-							if (tag.id == slotTag.id) {
-								slotTag.selected = !slotTag.selected;
-							}
-						});
+					case ActionTypes.UPDATE_COURSE_TAGS:
+						ui.filters.tags = action.payload.tags;
 						return ui;
 					case ActionTypes.CALCULATE_INSTRUCTORS:
 						ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;

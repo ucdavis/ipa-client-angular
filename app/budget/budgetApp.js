@@ -155,7 +155,7 @@ const budgetApp = angular.module("budgetApp", dependencies) // eslint-disable-li
 	CALCULATE_COURSE_LIST: "CALCULATE_COURSE_LIST",
 	SELECT_FUNDS_NAV: "SELECT_FUNDS_NAV",
   OPEN_ADD_COURSE_MODAL: "OPEN_ADD_COURSE_MODAL",
-	UPDATE_TAG_FILTERS: "UPDATE_TAG_FILTERS"
+	UPDATE_COURSE_TAG: "UPDATE_COURSE_TAG"
 });
 
 export default budgetApp;

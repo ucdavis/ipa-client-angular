@@ -29,6 +29,8 @@ class ScheduleCostCalculations {
           var sectionGroupCostId = sectionGroupCosts.idsByUniqueKey[uniqueKey];
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
+					if (sectionGroupCost.hidden) { return; }
+
           // Ensure sectionGroupCost belongs to this scenario
           if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 

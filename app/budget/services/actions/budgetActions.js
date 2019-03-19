@@ -826,13 +826,22 @@ class BudgetActions {
 
 				return instructorType;
 			},
-			toggleCourseTag: function (tag) {
-				BudgetReducers.reduce({
-					type: ActionTypes.TOGGLE_TAG_FILTER,
-					payload: {
-						tag: tag
+			updateCourseTag: function (tag) {
+				var tags = BudgetReducers._state.ui.filters.tags;
+
+				tags.forEach(function(slotTag) {
+					if (slotTag.id == tag.id) {
+						slotTag.selected = tag.selected;
 					}
 				});
+
+				BudgetReducers.reduce({
+					type: ActionTypes.UPDATE_COURSE_TAGS,
+					payload: {
+						tags: tags
+					}
+				});
+				BudgetCalculations.calculateSectionGroups();
 			}
 		};
 	}

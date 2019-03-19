@@ -61,6 +61,8 @@ class BudgetCalculations {
 				scheduleCosts.terms.forEach(function(term) {
 					scheduleCosts.byTerm[term].forEach(function(container) {
 						container.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							if (sectionGroupCost.hidden) { return; }
+
 							courseCosts += sectionGroupCost.totalCost;
 						});
 					});
@@ -529,6 +531,8 @@ class BudgetCalculations {
 				summary.terms.forEach(function(term) {
 					scheduleCosts.byTerm[term].forEach(function(container) {
 						container.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							if (sectionGroupCost.hidden) { return; }
+
 							summary.byTerm[term].taCount += sectionGroupCost.taCount || 0;
 							summary.byTerm[term].taCost += sectionGroupCost.taCost || 0;
 							summary.byTerm[term].readerCount += sectionGroupCost.readerCount || 0;

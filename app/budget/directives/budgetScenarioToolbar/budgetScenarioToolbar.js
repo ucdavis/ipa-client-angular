@@ -61,8 +61,9 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.isNewScenarioNameValid = isNamePresent && (isNameInUse == false);
 			};
 
-			scope.toggleCourseTag = function (tag) {
-				BudgetActions.toggleCourseTag(tag);
+			scope.updateCourseTag = function (tag) {
+				tag.selected = !tag.selected;
+				BudgetActions.updateCourseTag(tag);
 			};
 
 			scope.selectBudgetScenarioTerm = function(term) {
