@@ -43,7 +43,7 @@
 	color: #444d56;
 }
 
-.ipa-filter__term {
+.ipa-filter__item {
 	display: flex;
 	align-items: center;
 	cursor: pointer;
@@ -54,11 +54,11 @@
 	padding-right: 10px;
 }
 
-.ipa-filter__term:hover {
+.ipa-filter__item:hover {
 	background-color: #f5f5f5;
 }
 
-.ipa-filter__term-text {
+.ipa-filter__item-text {
 	padding-left: 10px
 }
 

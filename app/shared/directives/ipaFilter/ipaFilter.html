@@ -22,12 +22,12 @@
 				</div>
 			</div>
 
-			<div class="ipa-filter__term-list">
+			<div class="ipa-filter__item-list">
 				<div ng-click="clickItem(item)"
 				     ng-repeat="item in items"
-				     class="ipa-filter__term">
+				     class="ipa-filter__item">
 					<ipa-checkbox is-checked="item.selected"></ipa-checkbox>
-					<div class="ipa-filter__term-text">
+					<div class="ipa-filter__item-text">
 						{{ item.description }}
 					</div>
 				</div>
