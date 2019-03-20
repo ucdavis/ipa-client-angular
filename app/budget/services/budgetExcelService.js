@@ -24,24 +24,28 @@ class BudgetExcelService {
 
 		// Generate Schedule Costs
 		// Header
-		data.push(['Subject Code',
+		data.push(['Term',
+								'Subject Code',
 								'Course Number',
 								'Unique Key',
 								'Title',
 								'Units High',
 								'Units Low',
-								'ID',
-								'Instructor',
-								'Original Instructor',
-								'Term',
+								'Sequence',
 								'Enrollment',
-								'Sequence Pattern',
-								'TAs / Original Instructor',
-								'Readers / Reason',
-								'Support Cost / Instructor Cost']);
+								'Sections',
+								'Instructor',
+								'Regular Instructor',
+								'Reason',								
+								'TAs',
+								'Readers',
+								'TA Cost',
+								'Reader Cost',
+								'Support Cost',
+								'Instructor Cost',
+								'Total Cost']);
 
 		console.dir(viewState.calculatedScheduleCosts); // eslint-disable-line no-console
-
 
 		viewState.calculatedScheduleCosts.terms.forEach(function(term) {
 			var scheduleCosts = viewState.calculatedScheduleCosts.byTerm[term];
@@ -49,6 +53,8 @@ class BudgetExcelService {
 			console.dir(scheduleCosts); // eslint-disable-line
 			for (var i = 0; i < scheduleCosts.length; i++) {
 				var row = [];
+				let termDescription = termDescriptions[term];
+				row.push(termDescription);
 				row.push(scheduleCosts[i].subjectCode);
 				row.push(scheduleCosts[i].courseNumber);
 				row.push(scheduleCosts[i].uniqueKey);
@@ -59,16 +65,21 @@ class BudgetExcelService {
 				let sectionGroupCosts = scheduleCosts[i].sectionGroupCosts;
 				for (var _i = 0; _i < sectionGroupCosts.length; _i++) {
 					let childRow = [];
-					childRow.push(sectionGroupCosts[_i].id);
+					childRow.push(sectionGroupCosts[_i].sequencePattern);
+					childRow.push(sectionGroupCosts[_i].enrollment);
+					childRow.push(sectionGroupCosts[_i].sectionCount);
 					childRow.push(sectionGroupCosts[_i].instructorDescription);
 					childRow.push(sectionGroupCosts[_i].originalInstructorDescription);
-					let termDescription = termDescriptions[sectionGroupCosts[_i].shortTermCode];
-					// debugger;
-					childRow.push(termDescription);
+					childRow.push(sectionGroupCosts[_i].reason);
+					childRow.push(sectionGroupCosts[_i].taCount);
+					childRow.push(sectionGroupCosts[_i].readerCount);
+					childRow.push(sectionGroupCosts[_i].taCost);
+					childRow.push(sectionGroupCosts[_i].readerCost);
+					childRow.push(sectionGroupCosts[_i].courseCostSubTotal);
+					childRow.push(sectionGroupCosts[_i].instructorCostSubTotal);
+					childRow.push(sectionGroupCosts[_i].totalCost);
 					var parentRow = row.concat(childRow);
 					data.push(parentRow);
-					// childRow.length = 0;
-					// parentRow.length = 0;
 				}
 					
 			}
@@ -82,12 +93,23 @@ class BudgetExcelService {
       {wch: 15},
       {wch: 15},
       {wch: 15},
+      {wch: 15},
       {wch: 30},
       {wch: 10},
       {wch: 10},
       {wch: 10},
       {wch: 10},
-      {wch: 35}
+      {wch: 10},
+      {wch: 25},
+      {wch: 25},
+      {wch: 20},
+      {wch: 10},
+      {wch: 10},
+      {wch: 13},
+      {wch: 13},
+      {wch: 13},
+      {wch: 13},
+      {wch: 13},
     ];
     ws['!cols'] = wscols;
 
