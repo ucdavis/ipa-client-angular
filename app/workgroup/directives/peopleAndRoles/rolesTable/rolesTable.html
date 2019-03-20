@@ -72,7 +72,7 @@
 				<td class="roles-table__table-cell">
 					{{ userRole.userDisplayName }}
 					<div class="roles-table__placeholder" ng-show="userRole.userIsPlaceholder">
-						<i class="glyphicon glyphicon-warning-sign" />
+						<i class="glyphicon glyphicon-warning-sign" uib-tooltip="User does not have a valid kerberos, and cannot login to IPA" />
 					</div>
 				</td>
 
