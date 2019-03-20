@@ -321,6 +321,7 @@ class WorkgroupActionCreators {
 					workgroupId: userRole.workgroupId,
 					userDisplayName: user.name,
 					userId: user.id,
+					userIsPlaceholder: user.placeholder,
 					userLoginId: user.loginId,
 					userEmail: user.email,
 					displayPresence: shouldDisplayPresence,

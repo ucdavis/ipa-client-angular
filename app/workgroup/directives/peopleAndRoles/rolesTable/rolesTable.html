@@ -71,6 +71,9 @@
 				<!-- Name -->
 				<td class="roles-table__table-cell">
 					{{ userRole.userDisplayName }}
+					<div class="roles-table__placeholder" ng-show="userRole.userIsPlaceholder">
+						<i class="glyphicon glyphicon-warning-sign" />
+					</div>
 				</td>
 
 				<!-- Email -->
