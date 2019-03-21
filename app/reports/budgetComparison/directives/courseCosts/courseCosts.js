@@ -15,7 +15,6 @@ let courseCosts = function (StringService) {
       funding: '<',
       miscStats: '<',
       budgetScenarioName: '<',
-      instructorTypeCourses: '<',
       courseCountTotal: '<',
       unassigned: '<'
     },

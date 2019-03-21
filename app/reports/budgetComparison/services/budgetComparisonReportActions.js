@@ -391,7 +391,6 @@ class BudgetComparisonReportActions {
 						ids: [],
 						list: {},
 						bySectionGroupId: [],
-						byInstructorTypeId: {},
 						courseCountTotal: 0
 					};
 
@@ -402,8 +401,6 @@ class BudgetComparisonReportActions {
 							teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId] = teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId] || [];
 							teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId].push(teachingAssignment.id);
 
-							teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId] = teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId] || [];
-							teachingAssignments.byInstructorTypeId[teachingAssignment.instructorTypeId].push(teachingAssignment.id);
 							teachingAssignments.courseCountTotal += 1;
 						}
 					});
