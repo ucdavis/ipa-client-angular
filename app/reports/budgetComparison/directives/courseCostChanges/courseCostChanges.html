@@ -28,10 +28,10 @@
         <div class="dean-report__header-cell">% Cost</div>
       </th>
       <th>
-        <div class="dean-report__header-cell">% Courses Costed</div>
+        <div class="dean-report__header-cell">% Courses w/ Costs</div>
       </th>
       <th>
-        <div class="dean-report__header-cell dean-report__header-cell--right">% Course Count</div>
+        <div class="dean-report__header-cell dean-report__header-cell--right">% Course in Budget</div>
       </th>
     </tr>
   </thead>
@@ -59,7 +59,7 @@
       </td>
       <td>
         <div class="dean-report__cell-container dean-report__cell-container--last">
-          {{ courseCount[instructorTypeId] || 0 }}
+          {{ courseCount[instructorTypeId] || 'N/A' }}
         </div>
       </td>
     </tr>
