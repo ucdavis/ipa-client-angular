@@ -7,7 +7,6 @@ class BudgetExcelService {
 		console.dir(viewState); // eslint-disable-line no-console
 		console.log('its alive!'); // eslint-disable-line no-console
 
-
 		var data = [];
 		var termDescriptions = {
 			'05': 'Summer Session 1',
@@ -46,12 +45,8 @@ class BudgetExcelService {
 									'Instructor Cost',
 									'Total Cost']);
 
-			console.dir(viewState.calculatedScheduleCosts); // eslint-disable-line no-console
-
 			viewState.calculatedScheduleCosts.terms.forEach(function(term) {
 				var scheduleCosts = viewState.calculatedScheduleCosts.byTerm[term];
-				console.log("scheduleCosts");// eslint-disable-line no-console
-				console.dir(scheduleCosts); // eslint-disable-line
 				for (var i = 0; i < scheduleCosts.length; i++) {
 					var row = [];
 					let termDescription = termDescriptions[term];
@@ -82,7 +77,6 @@ class BudgetExcelService {
 						var parentRow = row.concat(childRow);
 						data.push(parentRow);
 					}
-						
 				}
 			});
 			
@@ -119,60 +113,43 @@ class BudgetExcelService {
 
 			/* write workbook */
 			XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
-			
 		}
+
 // SUMMARY EXCEL REPORT
 		if (viewState.ui.sectionNav.activeTab == 'Summary') {
 			var filename = "Budget-Summary-Report.xlsx";
-			// Header
-			data.push(['']);
-			var terms = [viewState.summary.byTerm];
-			console.log("TERM:",terms); // eslint-disable-line no-console
-			for (var i = 0; i < terms.length; i++) {
-				let termDescription = termDescriptions[terms[i]];
-				// debugger;
-				console.log("LootermDescription: ",termDescription); // eslint-disable-line no-console
-				data.push([termDescription]);
-			}
 
-			console.dir(viewState.calculatedScheduleCosts); // eslint-disable-line no-console
-
-			viewState.calculatedScheduleCosts.terms.forEach(function(term) {
-				var scheduleCosts = viewState.calculatedScheduleCosts.byTerm[term];
-				console.log("scheduleCosts");// eslint-disable-line no-console
-				console.dir(scheduleCosts); // eslint-disable-line
-				for (var i = 0; i < scheduleCosts.length; i++) {
+			console.dir(viewState.summary); // eslint-disable-line no-console
+			// debugger;// eslint-disable-line no-debugger
+			viewState.summary.terms.forEach(function(term) {
+				var summary = viewState.summary.byTerm[term];
+				console.log("Summary:");// eslint-disable-line no-console
+				console.dir(summary); // eslint-disable-line
+				// debugger;// eslint-disable-line no-debugger
 					var row = [];
 					let termDescription = termDescriptions[term];
 					row.push(termDescription);
-					row.push(scheduleCosts[i].subjectCode);
-					row.push(scheduleCosts[i].courseNumber);
-					row.push(scheduleCosts[i].uniqueKey);
-					row.push(scheduleCosts[i].title);
-					row.push(scheduleCosts[i].unitsHigh);
-					row.push(scheduleCosts[i].unitsLow);
+					row.push(summary.taCount);
+					row.push(summary.taCost);
+					row.push(summary.readerCount);
+					row.push(summary.readerCost);
+
+					// row.push(scheduleCosts[i].subjectCode);
+					// row.push(scheduleCosts[i].courseNumber);
+
+					// row.push(scheduleCosts[i].unitsLow);
+					// data.push(row);
 					
-					let sectionGroupCosts = scheduleCosts[i].sectionGroupCosts;
-					for (var _i = 0; _i < sectionGroupCosts.length; _i++) {
-						let childRow = [];
-						childRow.push(sectionGroupCosts[_i].sequencePattern);
-						childRow.push(sectionGroupCosts[_i].enrollment);
-						childRow.push(sectionGroupCosts[_i].sectionCount);
-						childRow.push(sectionGroupCosts[_i].instructorDescription);
-						childRow.push(sectionGroupCosts[_i].originalInstructorDescription);
-						childRow.push(sectionGroupCosts[_i].reason);
-						childRow.push(sectionGroupCosts[_i].taCount);
-						childRow.push(sectionGroupCosts[_i].readerCount);
-						childRow.push(sectionGroupCosts[_i].taCost);
-						childRow.push(sectionGroupCosts[_i].readerCost);
-						childRow.push(sectionGroupCosts[_i].courseCostSubTotal);
-						childRow.push(sectionGroupCosts[_i].instructorCostSubTotal);
-						childRow.push(sectionGroupCosts[_i].totalCost);
-						var parentRow = row.concat(childRow);
-						data.push(parentRow);
-					}
-						
-				}
+					// let sectionGroupCosts = scheduleCosts[i].sectionGroupCosts;
+					// for (var _i = 0; _i < sectionGroupCosts.length; _i++) {
+					// 	let childRow = [];
+					// 	childRow.push(sectionGroupCosts[_i].sequencePattern);
+					// 	childRow.push(sectionGroupCosts[_i].enrollment);
+					// 	var parentRow = row.concat(childRow);
+					debugger;// eslint-disable-line no-debugger
+						data.push(row);
+					// }
+				
 			});
 			
 			var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
@@ -210,8 +187,6 @@ class BudgetExcelService {
 			XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
 			
 		}
-
-
 	}
 }
 
