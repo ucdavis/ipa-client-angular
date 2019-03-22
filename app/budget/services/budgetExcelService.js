@@ -4,8 +4,8 @@ class BudgetExcelService {
 	}
 
 	generateDownload(viewState) {
-		console.dir(viewState); // eslint-disable-line no-console
-		console.log('its alive!'); // eslint-disable-line no-console
+		// console.dir(viewState); // eslint-disable-line no-console
+		// console.log('its alive!'); // eslint-disable-line no-console
 
 		var data = [];
 		var termDescriptions = {
@@ -115,73 +115,229 @@ class BudgetExcelService {
 			XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
 		}
 
-// SUMMARY EXCEL REPORT
+		// SUMMARY EXCEL REPORT
 		if (viewState.ui.sectionNav.activeTab == 'Summary') {
 			var filename = "Budget-Summary-Report.xlsx";
-
-			console.dir(viewState.summary); // eslint-disable-line no-console
+			var summary = viewState.summary;
+			console.dir(summary); // eslint-disable-line no-console
 			// debugger;// eslint-disable-line no-debugger
-			viewState.summary.terms.forEach(function(term) {
-				var summary = viewState.summary.byTerm[term];
-				console.log("Summary:");// eslint-disable-line no-console
-				console.dir(summary); // eslint-disable-line
-				// debugger;// eslint-disable-line no-debugger
-					var row = [];
-					let termDescription = termDescriptions[term];
-					row.push(termDescription);
-					row.push(summary.taCount);
-					row.push(summary.taCost);
-					row.push(summary.readerCount);
-					row.push(summary.readerCost);
+			// console.log("Summary:",term);// eslint-disable-line no-console
 
-					// row.push(scheduleCosts[i].subjectCode);
-					// row.push(scheduleCosts[i].courseNumber);
 
-					// row.push(scheduleCosts[i].unitsLow);
-					// data.push(row);
-					
-					// let sectionGroupCosts = scheduleCosts[i].sectionGroupCosts;
-					// for (var _i = 0; _i < sectionGroupCosts.length; _i++) {
-					// 	let childRow = [];
-					// 	childRow.push(sectionGroupCosts[_i].sequencePattern);
-					// 	childRow.push(sectionGroupCosts[_i].enrollment);
-					// 	var parentRow = row.concat(childRow);
-					debugger;// eslint-disable-line no-debugger
-						data.push(row);
-					// }
-				
+			// Header
+			var header = [" "];
+			viewState.calculatedScheduleCosts.terms.forEach(function(term) {
+				let termDescription = termDescriptions[term];
+				header.push(termDescription);
+			});
+			header.push("Total");
+			data.push(header);
+
+			// TA Count
+			var row = [];
+			row.push("TA Count");
+			summary.terms.forEach(function(term) {
+					row.push(summary.byTerm[term].taCount);
+			});
+			row.push(summary.combinedTerms.taCount);	
+			data.push(row);
+			row = [];
+		
+			// TA Cost
+			row.push("TA Cost");
+			summary.terms.forEach(function(term) {
+					row.push(summary.byTerm[term].taCost);
+			});
+			row.push(summary.combinedTerms.taCost);	
+			data.push(row);
+			row = [];
+		
+			// Reader Count
+			row.push("Reader Count");
+			summary.terms.forEach(function(term) {
+					row.push(summary.byTerm[term].readerCount);
+			});
+			row.push(summary.combinedTerms.readerCount);	
+			data.push(row);
+			row = [];
+		
+			// Reader Cost 
+			row.push("Reader Cost ");
+			summary.terms.forEach(function(term) {
+					row.push(summary.byTerm[term].readerCost);
+			});
+			row.push(summary.combinedTerms.readerCost);	
+			data.push(row);
+			row = [];
+		
+			// Support Cost
+			row.push("Support Cost");
+			summary.terms.forEach(function(term) {
+					row.push(summary.byTerm[term].supportCosts);
+			});
+			row.push(summary.combinedTerms.supportCosts);	
+			data.push(row);
+			row = [];
+		
+			// Empty row
+			data.push([" "]);
+			
+			// Replacement Cost sub-types
+			// Support Cost
+			var instructorTypes = viewState.instructorTypes;
+			summary.combinedTerms.replacementCosts.instructorTypeIds.forEach(function(instructorTypeId) {
+					row.push(instructorTypes.list[instructorTypeId].description);
+					summary.terms.forEach(function(term) {
+						row.push(summary.byTerm[term].replacementCosts.byInstructorTypeId[instructorTypeId] || 0);
+					});
+				row.push(summary.combinedTerms.replacementCosts.byInstructorTypeId[instructorTypeId] || 0);	
+				data.push(row);
+				row = [];
 			});
 			
+			// Replacement Costs
+			row.push("Replacement Costs");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].replacementCosts.overall || 0);
+			});
+			row.push(summary.combinedTerms.replacementCosts.overall);
+			data.push(row);
+			row = [];
+
+			// Empty row
+			data.push([" "]);
+
+			// Total Teaching Costs	
+			row.push("Total Teaching Costs");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].totalCosts);
+			});
+			row.push(summary.combinedTerms.totalCosts);
+			data.push(row);
+			row = [];
+
+			// Funds Costs
+			var selectedBudgetScenario = viewState.selectedBudgetScenario;
+			row.push("Funds Costs");
+			summary.terms.forEach(function() {
+				row.push(" ");
+			});
+			row.push(selectedBudgetScenario.funds);
+			data.push(row);
+			row = [];
+
+			// Balance
+			row.push("Balance");
+			summary.terms.forEach(function() {
+				row.push(" ");
+			});
+			row.push(selectedBudgetScenario.totalCost);
+			data.push(row);
+			row = [];
+
+			// Empty row
+			data.push([" "]);
+
+			// Total Student Credit Hours
+			// Units Offered
+			row.push("Units Offered");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].totalUnits);
+			});
+			row.push(summary.combinedTerms.totalUnits);
+			data.push(row);
+			row = [];
+
+			// Enrollment
+			row.push("Enrollment");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].enrollment);
+			});
+			row.push(summary.combinedTerms.enrollment);
+			data.push(row);
+			row = [];
+
+			// Undergrad SCH
+			row.push("Student Credit Hours (Undergrad)");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].undergradSCH);
+			});
+			row.push(summary.combinedTerms.undergradSCH);
+			data.push(row);
+			row = [];
+
+			// Grad SCH
+			row.push("Student Credit Hours (Graduate)");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].gradSCH);
+			});
+			row.push(summary.combinedTerms.gradSCH);
+			data.push(row);
+			row = [];
+
+			// Total Student Credit Hours 
+			row.push("Student Credit Hours");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].totalSCH);
+			});
+			row.push(summary.combinedTerms.totalSCH);
+			data.push(row);
+			row = [];
+
+			// Empty row
+			data.push([" "]);
+
+			// Lower Div Count
+			row.push("Lower Div Offerings");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].lowerDivCount);
+			});
+			row.push(summary.combinedTerms.lowerDivCount);
+			data.push(row);
+			row = [];
+
+			// Upper Div Count 
+			row.push("Upper Div Offerings");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].upperDivCount);
+			});
+			row.push(summary.combinedTerms.upperDivCount);
+			data.push(row);
+			row = [];
+
+			// Graduate Count
+			row.push("Graduate Offerings");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].graduateCount);
+			});
+			row.push(summary.combinedTerms.graduateCount);
+			data.push(row);
+			row = [];
+
+			// Total Offerings
+			row.push("Total Offerings");
+			summary.terms.forEach(function(term) {
+				row.push(summary.byTerm[term].totalOfferingsCount);
+			});
+			row.push(summary.combinedTerms.totalOfferingsCount);
+			data.push(row);
+			row = [];
+
 			var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
 			var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
 
 			// Set column widths
 			var wscols = [
-				{wch: 15},
-				{wch: 15},
-				{wch: 15},
-				{wch: 15},
-				{wch: 30},
-				{wch: 10},
-				{wch: 10},
-				{wch: 10},
-				{wch: 10},
-				{wch: 10},
-				{wch: 25},
-				{wch: 25},
 				{wch: 20},
-				{wch: 10},
-				{wch: 10},
-				{wch: 13},
-				{wch: 13},
-				{wch: 13},
-				{wch: 13},
-				{wch: 13},
+				{wch: 15},
+				{wch: 15},
+				{wch: 15},
+				{wch: 15}
 			];
 			ws['!cols'] = wscols;
 
 			/* add worksheet to workbook */
-			XLSX.utils.book_append_sheet(wb, ws, 'Schedule Costs'); // eslint-disable-line no-undef
+			XLSX.utils.book_append_sheet(wb, ws, 'Budget Summary'); // eslint-disable-line no-undef
 
 			/* write workbook */
 			XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
