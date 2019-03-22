@@ -71,3 +71,10 @@
 	padding-bottom: 4px;
 	color: #b1b1b1;
 }
+
+.budget-costs__tag {
+	padding: 5px;
+	margin-left: 3px;
+	background-color: #f7aaf4;
+	color: #000000;
+}

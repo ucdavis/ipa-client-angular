@@ -251,7 +251,8 @@ class ScheduleCostCalculations {
           unitsHigh: sectionGroupCost.unitsHigh,
           unitsLow: sectionGroupCost.unitsLow,
           uniqueKey: sectionGroupCost.subjectCode + sectionGroupCost.courseNumber,
-          sectionGroupCosts: []
+          sectionGroupCosts: [],
+          tagIds: sectionGroupCost.tagIds
         };
 
         var container = _array_find_by_properties(containers, ["uniqueKey"], newContainer);

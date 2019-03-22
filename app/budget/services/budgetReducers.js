@@ -467,6 +467,22 @@ class BudgetReducers {
 						return teachingAssignments;
 				}
 			},
+			tagReducers: function (action, tags) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						tags = {
+							ids: [],
+							list: []
+						};
+						action.payload.tags.forEach(function(tag) {
+							tags.ids.push(tag.id);
+							tags.list[tag.id] = tag;
+						});
+						return tags;
+					default:
+						return tags;
+				}
+			},
 			calculatedCourseListReducers: function (action, calculatedCourseList) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -982,6 +998,7 @@ class BudgetReducers {
 				newState.instructorTypes = scope.instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.instructorTypeCosts = scope.instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.teachingAssignments = scope.teachingAssignmentReducers(action, scope._state.teachingAssignments);
+				newState.tags = scope.tagReducers(action, scope._state.tags);
 
 				newState.calculatedScheduleCosts = scope.calculatedScheduleCostReducers(action, scope._state.calculatedScheduleCosts);
 				newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
@@ -1003,6 +1020,7 @@ class BudgetReducers {
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
+				newPageState.tags = newState.tags;
 
 				newPageState.calculatedCourseList = newState.calculatedCourseList;
 				newPageState.calculatedScheduleCosts = newState.calculatedScheduleCosts;
