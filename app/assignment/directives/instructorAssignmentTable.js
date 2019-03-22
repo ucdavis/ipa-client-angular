@@ -292,6 +292,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
 								var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 								var sorted = scope.sortCourses(unassignedInstructorTypes[instructorTypeId][termCode]);
+
 								coursesHtml += "<div class=\"term-cell\">";
 
 								sorted.forEach(function(sectionGroupId) {
