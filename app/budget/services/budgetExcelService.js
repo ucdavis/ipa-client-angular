@@ -4,8 +4,6 @@ class BudgetExcelService {
 	}
 
 	generateDownload(viewState) {
-		// console.dir(viewState); // eslint-disable-line no-console
-		// console.log('its alive!'); // eslint-disable-line no-console
 
 		var data = [];
 		var termDescriptions = {
@@ -20,6 +18,7 @@ class BudgetExcelService {
 			'03': 'Spring Quarter'
 		};
 
+		// SHEDULE COST EXCEL DOWNLOAD
 		if (viewState.ui.sectionNav.activeTab == 'Schedule Costs') {
 			var filename = "Budget-Comparison-Report.xlsx";
 			// Generate Schedule Costs
@@ -115,14 +114,10 @@ class BudgetExcelService {
 			XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
 		}
 
-		// SUMMARY EXCEL REPORT
+		// SUMMARY EXCEL DOWNLOAD
 		if (viewState.ui.sectionNav.activeTab == 'Summary') {
 			var filename = "Budget-Summary-Report.xlsx";
 			var summary = viewState.summary;
-			console.dir(summary); // eslint-disable-line no-console
-			// debugger;// eslint-disable-line no-debugger
-			// console.log("Summary:",term);// eslint-disable-line no-console
-
 
 			// Header
 			var header = [" "];
@@ -343,6 +338,74 @@ class BudgetExcelService {
 			XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
 			
 		}
+
+		// FUNDS EXCEL DOWNLOAD
+		if (viewState.ui.sectionNav.activeTab == 'Funds') {
+			var filename = "Budget-Fund-Report.xlsx";
+			var lineItems = viewState.calculatedLineItems;
+
+		// FOUNDS SHEET
+			// Header
+			data.push(['Type', 'Description', 'Amount']);
+									
+			var row = [];	
+			lineItems.forEach(function(lineItem) {
+				if (lineItem.id > 0 && lineItem.hidden == false){
+					row.push(lineItem.categoryDescription);
+					row.push(lineItem.description);
+					row.push(lineItem.amount);
+					data.push(row);
+					row = [];
+				}
+			});
+			
+			var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
+			var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
+
+			// Set column widths
+			var wscols = [
+				{wch: 30},
+				{wch: 50},
+				{wch: 10}
+			];
+			ws['!cols'] = wscols;
+
+			/* add worksheet to workbook */
+			XLSX.utils.book_append_sheet(wb, ws, 'Funds'); // eslint-disable-line no-undef
+
+		// SUGGESTED SHEET
+			// Header
+			data = [];
+			data.push(['Type', 'Description']);
+									
+			var row = [];	
+			lineItems.forEach(function(lineItem) {
+				if (!lineItem.id || lineItem.hidden){
+					row.push(lineItem.categoryDescription);
+					row.push(lineItem.description);
+					row.push(lineItem.amount);
+					data.push(row);
+					row = [];
+				}
+			});
+			
+			var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
+
+			// Set column widths
+			var wscols = [
+				{wch: 30},
+				{wch: 50},
+				{wch: 10}
+			];
+			ws['!cols'] = wscols;
+
+			/* add worksheet to workbook */
+			XLSX.utils.book_append_sheet(wb, ws, 'Suggested'); // eslint-disable-line no-undef
+
+			/* write workbook */
+			XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
+		}	
+			
 	}
 }
 
