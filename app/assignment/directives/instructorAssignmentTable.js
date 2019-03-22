@@ -171,7 +171,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						} else {
 							sectionGroup.teachingAssignmentIds.forEach(function(teachingAssignmentId) {
 								var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-								if (!teachingAssignment.instructorId && teachingAssignment.instructorTypeId) {
+								if (!teachingAssignment.instructorId && teachingAssignment.instructorTypeId && teachingAssignment.approved) {
 									unassignedInstructorTypes[teachingAssignment.instructorTypeId] = unassignedInstructorTypes[teachingAssignment.instructorTypeId] || {};
 									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] = unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] || [];
 									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode].push(teachingAssignment.sectionGroupId);
@@ -292,7 +292,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
 								var termCode = scope.view.state.userInterface.enabledTerms.list[termCodeId];
 								var sorted = scope.sortCourses(unassignedInstructorTypes[instructorTypeId][termCode]);
-
 								coursesHtml += "<div class=\"term-cell\">";
 
 								sorted.forEach(function(sectionGroupId) {
