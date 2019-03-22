@@ -165,6 +165,7 @@ class BudgetComparisonReportCalculations {
 				var instructionCosts = {
 					byType: {},
 					byTypeNoCost: {},
+					unassigned: 0,
 					total: {
 						cost: 0,
 						courses: 0
@@ -176,6 +177,7 @@ class BudgetComparisonReportCalculations {
 
 					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
 					if (sectionGroupCost.disabled) { return; }
+					if (!sectionGroupCost.instructorTypeId) { instructionCosts.unassigned++; }
 
 					var teachingAssignment = _self._getTeachingAssignment(sectionGroupCost.sectionGroupId);
 					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments);
@@ -200,7 +202,7 @@ class BudgetComparisonReportCalculations {
 					instructionCosts.total.cost += assignmentCost;
 					instructionCosts.total.courses += 1;
 				});
-
+debugger;
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
