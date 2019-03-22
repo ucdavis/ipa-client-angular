@@ -1060,6 +1060,8 @@ class AssignmentStateService {
 	}
 
 	getUserByLoginId (loginId, users) {
+    if (!loginId) { return null; }
+
 		for (var i = 0; i < users.ids.length; i++) {
 			var user = users.list[users.ids[i]];
 

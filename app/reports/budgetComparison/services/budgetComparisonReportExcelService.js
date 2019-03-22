@@ -78,7 +78,9 @@ class BudgetComparisonReportExcelService {
 
     /* add worksheet to workbook */
     // Note: XLSX does not allow sheet names exceeding 31 characters
-    XLSX.utils.book_append_sheet(wb, ws, stringService.truncate(workgroupName, 31)); // eslint-disable-line no-undef
+    // Note: XLSX does not allow sheet names containing: \ / ? * [ ]
+    var sheetName = workgroupName.replace(/\\/g, '').replace(/\//g, '').replace(/\?/g, '').replace(/\*/g, '').replace(/\[/g, '').replace(/\]/g, '');
+    XLSX.utils.book_append_sheet(wb, ws, stringService.truncate(sheetName, 31)); // eslint-disable-line no-undef
 
     /* write workbook */
     XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
