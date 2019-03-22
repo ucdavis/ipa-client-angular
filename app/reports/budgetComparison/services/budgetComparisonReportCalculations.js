@@ -11,7 +11,7 @@ class BudgetComparisonReportCalculations {
 				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts;
 				var sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
 
-				// sectionGroups = this._generateUnassignedSectionGroups(sectionGroups, teachingAssignments);
+				sectionGroups = this._generateUnassignedSectionGroups(sectionGroups, teachingAssignments);
 
 				var calculatedView = {
 					ui: {
@@ -36,7 +36,7 @@ class BudgetComparisonReportCalculations {
 					costs: this._generateCostChange(calculatedView.current.costs, calculatedView.previous.costs),
 					funding: this._generatefundingChange(calculatedView.current.funding, calculatedView.previous.funding),
 					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats),
-					// courseCount: this._generateCourseCountChange(teachingAssignments.current.byInstructorTypeId, teachingAssignments.previous.byInstructorTypeId, sectionGroups.current.unassigned, sectionGroups.previous.unassigned)
+					courseCount: this._generateCourseCountChange(sectionGroups.current.unassigned, sectionGroups.previous.unassigned)
 				};
 
 				BudgetComparisonReportReducers.reduce({
@@ -380,27 +380,15 @@ class BudgetComparisonReportCalculations {
 				};
 			},
 			// Generates previous -> current change values for misc calculations
-			// _generateCourseCountChange(currentTeachingAssignments, previousTeachingAssignments, currentUnassignedSectionGroups, previousUnassignedSectionGroups) {
-			// 	var currentInstructorTypeIds = Object.keys(currentTeachingAssignments);
-			// 	var previousInstructorTypeIds = Object.keys(previousTeachingAssignments);
-			// 	var allInstructorTypeIds = [...new Set(currentInstructorTypeIds.concat(previousInstructorTypeIds))];
+			_generateCourseCountChange(currentUnassignedSectionGroups, previousUnassignedSectionGroups) {
+				var courseChange = {};
+				var previousTotal = previousUnassignedSectionGroups.length || 0;
+				var currentTotal = currentUnassignedSectionGroups.length || 0;
 
-			// 	var courseChange = {};
-			// 	var previousTotal = previousUnassignedSectionGroups.length || 0;
-			// 	var currentTotal = currentUnassignedSectionGroups.length || 0;
+				courseChange.total = this._percentageChange(currentTotal, previousTotal);
 
-			// 	for (var instructorTypeId of allInstructorTypeIds) {
-			// 		var previousCount = (previousTeachingAssignments[instructorTypeId] || []).length;
-			// 		var currentCount = (currentTeachingAssignments[instructorTypeId] || []).length;
-			// 		courseChange[instructorTypeId] = this._percentageChange(previousCount, currentCount);
-			// 		previousTotal += previousCount;
-			// 		currentTotal += currentCount;
-			// 	}
-
-			// 	courseChange.total = this._percentageChange(currentTotal, previousTotal);
-
-			// 	return courseChange;
-			// },
+				return courseChange;
+			},
 			// Will return null if oldValue is zero, otherwise returns percentage change
 			_percentageChange(oldValue, newValue, degreesOfPrecision) {
 				if (!oldValue && !newValue) { return "0%"; }
