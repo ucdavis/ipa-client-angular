@@ -98,7 +98,7 @@ class BudgetComparisonReportCalculations {
 			// Generates calculations for instructor and support (reader, TA) costs
 			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenario) {
 				var selectedScenarioId = selectedScenario.id;
-        var activeTerms = selectedScenario.terms;
+				var activeTerms = selectedScenario.terms;
 
 				var costs = {
 					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId, activeTerms),
