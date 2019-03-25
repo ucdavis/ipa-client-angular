@@ -165,6 +165,7 @@ class BudgetComparisonReportCalculations {
 				var instructionCosts = {
 					byType: {},
 					byTypeNoCost: {},
+					scenarioCourses: {},
 					unassigned: 0,
 					total: {
 						cost: 0,
@@ -202,7 +203,13 @@ class BudgetComparisonReportCalculations {
 					instructionCosts.total.cost += assignmentCost;
 					instructionCosts.total.courses += 1;
 				});
-debugger;
+
+				var instructorTypes = [...new Set([...Object.keys(instructionCosts.byType), ...Object.keys(instructionCosts.byTypeNoCost)])];
+
+				instructorTypes.forEach(function(instructorType) {
+					instructionCosts.scenarioCourses[instructorType] = instructionCosts.byType[instructorType].courses - (instructionCosts.byTypeNoCost[instructorType] || 0);
+				});
+
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
@@ -293,16 +300,19 @@ debugger;
 					var currentInstructorCost = currentCosts.instructorCosts.byType[instructorTypeId];
 					var currentCost = currentInstructorCost ? currentInstructorCost.cost : 0;
 					var currentCourses = currentInstructorCost ? currentInstructorCost.courses : 0;
+					var currentCoursesCount = currentInstructorCost ? currentCosts.instructorCosts.scenarioCourses[instructorTypeId] : 0;
 
 					var previousInstructorCost = previousCosts.instructorCosts.byType[instructorTypeId];
 					var previousCost = previousInstructorCost ? previousInstructorCost.cost : 0;
 					var previousCourses = previousInstructorCost ? previousInstructorCost.courses : 0;
+					var previousCoursesCount = previousInstructorCost ? previousCosts.instructorCosts.scenarioCourses[instructorTypeId] : 0;
 
 					costs.instructorCosts.byType[instructorTypeId] = {
 						rawCourses: currentCourses - previousCourses,
 						percentageCourses: _self._percentageChange(previousCourses, currentCourses),
 						rawCost: currentCost - previousCost,
-						percentageCost: _self._percentageChange(previousCost, currentCost)
+						percentageCost: _self._percentageChange(previousCost, currentCost),
+						percentageCoursesCount: _self._percentageChange(previousCoursesCount, currentCoursesCount)
 					};
 				});
 
