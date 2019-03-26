@@ -166,7 +166,8 @@ class BudgetComparisonReportCalculations {
 					unassigned: 0,
 					total: {
 						cost: 0,
-						courses: 0
+						courses: 0,
+						scenarioCourses: 0
 					}
 				};
 
@@ -204,7 +205,8 @@ class BudgetComparisonReportCalculations {
 				var instructorTypes = [...new Set([...Object.keys(instructionCosts.byType), ...Object.keys(instructionCosts.byTypeNoCost)])];
 
 				instructorTypes.forEach(function(instructorType) {
-					instructionCosts.scenarioCourses[instructorType] = instructionCosts.byType[instructorType].courses - (instructionCosts.byTypeNoCost[instructorType] || 0);
+					instructionCosts.scenarioCourses[instructorType] = (instructionCosts.byType[instructorType].courses || 0) - (instructionCosts.byTypeNoCost[instructorType] || 0);
+					instructionCosts.total.scenarioCourses += instructionCosts.scenarioCourses[instructorType];
 				});
 
 				return instructionCosts;
@@ -317,7 +319,8 @@ class BudgetComparisonReportCalculations {
 					rawCost: currentCosts.instructorCosts.total.cost - previousCosts.instructorCosts.total.cost,
 					rawCourses: currentCosts.instructorCosts.total.courses - previousCosts.instructorCosts.total.courses,
 					percentageCost: _self._percentageChange(previousCosts.instructorCosts.total.cost, currentCosts.instructorCosts.total.cost),
-					percentageCourses: _self._percentageChange(previousCosts.instructorCosts.total.courses, currentCosts.instructorCosts.total.courses)
+					percentageCourses: _self._percentageChange(previousCosts.instructorCosts.total.courses, currentCosts.instructorCosts.total.courses),
+					percentageCoursesCount: _self._percentageChange(previousCosts.instructorCosts.total.scenarioCourses, currentCosts.instructorCosts.total.scenarioCourses)
 				};
 
 				return costs;
