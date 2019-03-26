@@ -50,12 +50,12 @@
       </td>
       <td>
         <div class="dean-report__cell-container">
-          {{ costs.instructorCosts.scenarioCourses[instructorTypeId] || 0 }}
+          {{ costs.instructorCosts.byType[instructorTypeId].courses || 0 }}
         </div>
       </td>
       <td>
         <div class="dean-report__cell-container">
-          {{ costs.instructorCosts.byType[instructorTypeId].courses || 0 }}
+          {{ costs.instructorCosts.scenarioCourses[instructorTypeId] || 0 }}
         </div>
       </td>
       <td>
