@@ -390,8 +390,7 @@ class BudgetComparisonReportActions {
 					let teachingAssignments = {
 						ids: [],
 						list: {},
-						bySectionGroupId: [],
-						courseCountTotal: 0
+						bySectionGroupId: []
 					};
 
 					rawTeachingAssignments.forEach(function(teachingAssignment) {
@@ -400,8 +399,6 @@ class BudgetComparisonReportActions {
 						if (teachingAssignment.sectionGroupId) {
 							teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId] = teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId] || [];
 							teachingAssignments.bySectionGroupId[teachingAssignment.sectionGroupId].push(teachingAssignment.id);
-
-							teachingAssignments.courseCountTotal += 1;
 						}
 					});
 
