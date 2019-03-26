@@ -11,8 +11,6 @@ class BudgetComparisonReportCalculations {
 				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts;
 				var sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
 
-				sectionGroups = this._generateUnassignedSectionGroups(sectionGroups, teachingAssignments);
-
 				var calculatedView = {
 					ui: {
 						currentSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.currentSelectedScenarioId, BudgetComparisonReportReducers._state.budgetScenarios.current),
@@ -35,8 +33,7 @@ class BudgetComparisonReportCalculations {
 				calculatedView.change = {
 					costs: this._generateCostChange(calculatedView.current.costs, calculatedView.previous.costs),
 					funding: this._generatefundingChange(calculatedView.current.funding, calculatedView.previous.funding),
-					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats),
-					courseCount: this._generateCourseCountChange(sectionGroups.current.unassigned, sectionGroups.previous.unassigned)
+					miscStats: this._generateMiscStatsChange(calculatedView.current.miscStats, calculatedView.previous.miscStats)
 				};
 
 				BudgetComparisonReportReducers.reduce({
@@ -351,24 +348,6 @@ class BudgetComparisonReportCalculations {
 				fundingChange.percentageTotal = this._percentageChange(previousFunding.total, currentFunding.total);
 
 				return fundingChange;
-			},
-			_generateUnassignedSectionGroups(sectionGroups, teachingAssignments) {
-				var newSectionGroups = sectionGroups;
-
-				for (var year in sectionGroups) {
-					var unassignedSectionGroups = [];
-					var assignedSectionGroups = Object.keys(teachingAssignments[year].bySectionGroupId);
-
-					sectionGroups[year].ids.forEach(function (sectionGroupId) {
-						if (assignedSectionGroups.indexOf(sectionGroupId.toString()) < 0) {
-							unassignedSectionGroups.push(sectionGroupId);
-						}
-					});
-
-					newSectionGroups[year].unassigned = unassignedSectionGroups;
-				}
-
-				return newSectionGroups;
 			},
 			// Generates previous -> current change values for misc calculations
 			_generateMiscStatsChange(currentMiscStats, previousMiscStats) {

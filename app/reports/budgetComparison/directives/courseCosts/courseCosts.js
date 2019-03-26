@@ -14,9 +14,7 @@ let courseCosts = function (StringService) {
       costs: '<',
       funding: '<',
       miscStats: '<',
-      budgetScenarioName: '<',
-      courseCountTotal: '<',
-      unassigned: '<'
+      budgetScenarioName: '<'
     },
     link: function (scope) {
       scope.toCurrency = function (value) {
