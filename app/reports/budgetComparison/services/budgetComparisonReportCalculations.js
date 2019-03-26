@@ -370,16 +370,6 @@ class BudgetComparisonReportCalculations {
 					}
 				};
 			},
-			// Generates previous -> current change values for misc calculations
-			_generateCourseCountChange(currentUnassignedSectionGroups, previousUnassignedSectionGroups) {
-				var courseChange = {};
-				var previousTotal = previousUnassignedSectionGroups.length || 0;
-				var currentTotal = currentUnassignedSectionGroups.length || 0;
-
-				courseChange.total = this._percentageChange(currentTotal, previousTotal);
-
-				return courseChange;
-			},
 			// Will return null if oldValue is zero, otherwise returns percentage change
 			_percentageChange(oldValue, newValue, degreesOfPrecision) {
 				if (!oldValue && !newValue) { return "0%"; }
