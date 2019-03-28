@@ -36,11 +36,51 @@
 			<!-- /input-group -->
 		</div>
 
-		<div class="col-md-2 pull-right">
-			<span class="input-group-btn">
+		<div class="col-md-8">
+			<div ng-show="view.placeholder.show" style="display: flex; flex: 1 0 0px; padding-bottom: 5px;">
+				<div style="flex: 1 0 0px;">
+					<ipa-input value="view.placeholder.first"
+					          place-holder="'First Name'"
+					          style="padding-right: 5px;">
+					</ipa-input>
+				</div>
+				<div style="flex: 1 0 0px;">
+					<ipa-input value="view.placeholder.last"
+					          place-holder="'Last Name'"
+					          style="padding-right: 5px;">
+					</ipa-input>
+				</div>
+				<div style="flex: 1 0 0px;">
+					<ipa-input value="view.placeholder.email"
+					          place-holder="'Email'"
+					          style="padding-right: 5px;">
+					</ipa-input>
+				</div>
+			</div>
+
+			<span style="display: flex;" class="input-group-btn">
 				<button class="btn-add-person btn btn-primary"
-								ng-click="openPlaceholderUserUI()">
+				        ng-click="openPlaceholderUI()"
+				        ng-show="!view.placeholder.show"
+				        tooltip-append-to-body="true"
+				        uib-tooltip="Add a user that does not yet have a kerberos account">
 					Add Placeholder user
+				</button>
+				<button class="btn-add-person btn btn-primary"
+				        ng-click="openPlaceholderUI()"
+				        ng-show="view.placeholder.show && isPlaceholderUserValid()">
+					Save
+				</button>
+				<button class="btn-add-person btn btn-primary disabled"
+				        uib-tooltip="{{view.placeholder.validationMessage}}"
+				        tooltip-append-to-body="true"
+				        ng-show="view.placeholder.show && !isPlaceholderUserValid()">
+					Save
+				</button>
+				<button class="btn-add-person btn btn-default"
+				        ng-show="view.placeholder.show"
+				        ng-click="closePlaceholderUI()">
+					Cancel
 				</button>
 			</span>
 		</div>
