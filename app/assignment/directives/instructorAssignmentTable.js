@@ -171,7 +171,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 						} else {
 							sectionGroup.teachingAssignmentIds.forEach(function(teachingAssignmentId) {
 								var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
-								if (!teachingAssignment.instructorId && teachingAssignment.instructorTypeId) {
+								if (!teachingAssignment.instructorId && teachingAssignment.instructorTypeId && teachingAssignment.approved) {
 									unassignedInstructorTypes[teachingAssignment.instructorTypeId] = unassignedInstructorTypes[teachingAssignment.instructorTypeId] || {};
 									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] = unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] || [];
 									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode].push(teachingAssignment.sectionGroupId);
