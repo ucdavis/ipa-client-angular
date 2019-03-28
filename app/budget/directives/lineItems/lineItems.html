@@ -8,7 +8,7 @@
 		<table class="line-items__table" ng-show="ui.fundsNav.activeTab == 'Funds'">
 			<thead>
 				<tr>
-					<th class="line-items__table-header line-items__table--checkbox">
+					<th class="line-items__table-header line-items__table--checkbox do-not-print">
 						<div class="line-items__table-header-container line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
 							              is-checked="ui.areAllLineItemsSelected"
@@ -26,7 +26,7 @@
 							Description
 						</div>
 					</th>
-					<th class="line-items__table-header line-items__table--comments">
+					<th class="line-items__table-header line-items__table--comments do-not-print">
 						<div class="line-items__table-header-container">
 							Comments
 						</div>
@@ -42,7 +42,7 @@
 			<tbody>
 				<tr ng-repeat="lineItem in lineItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
 					<!-- Checkbox -->
-					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					<td class="line-items__table-cell do-not-print" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
 							              is-disabled="!(lineItem.id)"
@@ -80,7 +80,7 @@
 					</td>
 
 					<!-- Comments -->
-					<td class="line-items__table-cell line-items__table-cell--comments" ng-class-odd="'line-items__table-cell--dark'">
+					<td class="line-items__table-cell line-items__table-cell--comments do-not-print" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__comment-container">
 							<ipa-button superscript="lineItem.commentCountDisplay"
 							            icon-color="lineItem.commentCountDisplay ? '' : 'gray'"
@@ -97,7 +97,7 @@
 							<div>
 								{{ toCurrency(lineItem.amount) }}
 							</div>
-							<div>
+							<div class="do-not-print">
 								<line-item-dropdown line-item="lineItem"></line-item-dropdown>
 							</div>
 						</div>
