@@ -18,7 +18,8 @@
     <span class="section-group-details" style="padding: 1em; display: block;">
       <census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
                     term="view.state.terms.list[view.selectedEntity.termCode]"
-                    course-id="view.selectedEntity.courseId"></census-chart>
+                    course-id="view.selectedEntity.courseId"
+                    sequence-pattern="view.state.courses.list[view.selectedEntity.courseId].sequencePattern"></census-chart>
       <hr />
       <table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
         <colgroup>

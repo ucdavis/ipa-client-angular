@@ -10,7 +10,8 @@ let censusChart = function ($rootScope, $timeout) {
     scope: {
       census: '=',
       term: '=',
-      courseId: '='
+      courseId: '=',
+      sequencePattern: '='
     },
     link: function (scope, element) {
       var ctx = element[0].getContext("2d");
