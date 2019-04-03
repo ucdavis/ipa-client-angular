@@ -67,6 +67,19 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.state.selectedBudgetScenario.activeTermsBlob = setCharAt(scope.state.selectedBudgetScenario.activeTermsBlob, index, newValue);
 				BudgetActions.updateBudgetScenario(scope.state.selectedBudgetScenario);
 			};
+
+			scope.print = function() {
+				// window.print();
+				alert("Print");
+			};
+
+			scope.printBudget = function() {
+				var innerContents = document.getElementById("budgetCostsPrint").innerHTML;
+				var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+				popupWinindow.document.open();
+				popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
+				popupWinindow.document.close();
+			};
 		} // End Link
 	};
 };
