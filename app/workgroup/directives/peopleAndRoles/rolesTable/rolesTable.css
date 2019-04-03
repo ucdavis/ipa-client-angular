@@ -110,6 +110,6 @@
 }
 
 .roles-table__placeholder-person-ui {
-  display: flex;
-  justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
