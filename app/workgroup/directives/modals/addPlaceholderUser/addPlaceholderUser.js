@@ -1,3 +1,5 @@
+import './addPlaceholderUser.css';
+
 let addPlaceholderUser = function (WorkgroupActionCreators) {
 	return {
 		restrict: 'E',

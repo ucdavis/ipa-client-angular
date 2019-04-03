@@ -1,39 +1,35 @@
-<div style="display: flex; flex: 1 0 0px; padding-bottom: 5px;">
-	<div style="flex: 1 0 0px;">
-		<ipa-input value="view.placeholder.firstName"
-							place-holder="'First Name'"
-							style="padding-right: 5px;">
-		</ipa-input>
-	</div>
-	<div style="flex: 1 0 0px;">
-		<ipa-input value="view.placeholder.lastName"
-							place-holder="'Last Name'"
-							style="padding-right: 5px;">
-		</ipa-input>
-	</div>
-	<div style="flex: 1 0 0px;">
-		<ipa-input value="view.placeholder.email"
-							place-holder="'Email'"
-							style="padding-right: 5px;">
-		</ipa-input>
-	</div>
+<div class="add-line-item add-course">
+  <ipa-input class="add-placeholder-user__input" value="view.firstName"
+             place-holder="'First Name'"
+             on-update="updateSectionGroupCost(sectionGroupCost)"
+             ng-show="!isLiveDataScenario">
+  </ipa-input>
 
-	<div>
-<button class="btn-add-person btn btn-primary"
-				ng-click="addPlaceholderUser()"
-				ng-show="view.placeholder.show && isPlaceholderUserValid()">
-	Save
-</button>
-<button class="btn-add-person btn btn-primary disabled"
-				uib-tooltip="{{view.placeholder.validationMessage}}"
-				tooltip-append-to-body="true"
-				ng-show="view.placeholder.show && !isPlaceholderUserValid()">
-	Save
-</button>
-<button class="btn-add-person btn btn-default"
-				ng-show="view.placeholder.show"
-				ng-click="closePlaceholderUI()">
-	Cancel
-</button>
-	</div>
+  <ipa-input class="add-placeholder-user__input" value="view.lastName"
+             place-holder="'Last Name'"
+             on-update="isPlaceholderUserValid()">
+  </ipa-input>
+
+  <ipa-input class="add-placeholder-user__input" value="view.email"
+             place-holder="'Email'"
+             on-update="isPlaceholderUserValid()">
+  </ipa-input>
+
+
+  <div class="add-placeholder-user__footer">
+    <button ng-click="close()"
+            type="button"
+            class="btn btn-default modal-button">
+      Cancel
+    </button>
+    <div tooltip-append-to-body="true"
+         tooltip-placement="left"
+         uib-tooltip="{{ view.validationMessage }}">
+      <ipa-button text="'Add'"
+                  is-disabled="!isPlaceholderUserValid()"
+                  skin="'dark'"
+                  on-click="addPlaceholderUser()">
+      </ipa-button>
+    </div>
+  </div>
 </div>
