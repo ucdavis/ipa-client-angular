@@ -40,17 +40,16 @@ let censusChart = function ($rootScope, $timeout) {
           });
 
           for (var termCode in censusByTermCode) {
-            censusByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, courseCensus) {
-              accumulator.maxEnrollmentCount += courseCensus.maxEnrollmentCount;
-              accumulator.currentEnrolledCount += courseCensus.currentEnrolledCount;
-
+            censusByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, currentValue) {
+              accumulator[property] += currentValue[property];
               return accumulator;
             }, censusByTermCode[termCode][0]);
-          }
+          };
 
           var censusArray = Object.values(censusByTermCode);
 
           var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
+
           return lastFiveYears.map(function (year) {
             return _.find(censusArray, function (c) { // eslint-disable-line no-undef
               var matchesTermCode = c.termCode.toString() == year + (scope.term.termCode + '').slice(-2);
@@ -87,7 +86,7 @@ let censusChart = function ($rootScope, $timeout) {
             data: getCurrentCensusForProperty("currentEnrolledCount")
           }
         ];
-
+debugger;
         Chart.defaults.global.defaultFontColor = "#888"; // eslint-disable-line no-undef
         Chart.defaults.global.tooltips.mode = 'x-axis'; // eslint-disable-line no-undef
         Chart.defaults.global.tooltips.titleFontSize = 10; // eslint-disable-line no-undef
