@@ -1,0 +1,39 @@
+<div style="display: flex; flex: 1 0 0px; padding-bottom: 5px;">
+	<div style="flex: 1 0 0px;">
+		<ipa-input value="view.placeholder.firstName"
+							place-holder="'First Name'"
+							style="padding-right: 5px;">
+		</ipa-input>
+	</div>
+	<div style="flex: 1 0 0px;">
+		<ipa-input value="view.placeholder.lastName"
+							place-holder="'Last Name'"
+							style="padding-right: 5px;">
+		</ipa-input>
+	</div>
+	<div style="flex: 1 0 0px;">
+		<ipa-input value="view.placeholder.email"
+							place-holder="'Email'"
+							style="padding-right: 5px;">
+		</ipa-input>
+	</div>
+
+	<div>
+<button class="btn-add-person btn btn-primary"
+				ng-click="addPlaceholderUser()"
+				ng-show="view.placeholder.show && isPlaceholderUserValid()">
+	Save
+</button>
+<button class="btn-add-person btn btn-primary disabled"
+				uib-tooltip="{{view.placeholder.validationMessage}}"
+				tooltip-append-to-body="true"
+				ng-show="view.placeholder.show && !isPlaceholderUserValid()">
+	Save
+</button>
+<button class="btn-add-person btn btn-default"
+				ng-show="view.placeholder.show"
+				ng-click="closePlaceholderUI()">
+	Cancel
+</button>
+	</div>
+</div>

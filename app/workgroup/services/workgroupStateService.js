@@ -230,6 +230,7 @@ class WorkgroupStateService {
 				switch (action.type) {
 					case ActionTypes.INIT_WORKGROUP:
 						ui = {
+							isAddPlaceholderModalOpen: false,
 							addUserPending: false,
 							workgroupId: action.workgroupId,
 							roles: {
@@ -257,6 +258,9 @@ class WorkgroupStateService {
 						action.payload.instructorTypes.forEach(function(instructorType) {
 							ui.instructorTypes.push(instructorType);
 						});
+						return ui;
+					case ActionTypes.OPEN_PLACEHOLDER_MODAL:
+						ui.isAddPlaceholderModalOpen = true;
 						return ui;
 					case ActionTypes.SET_ROLE_TAB:
 						ui.roles.activeRoleTab = action.payload.activeRoleTab;

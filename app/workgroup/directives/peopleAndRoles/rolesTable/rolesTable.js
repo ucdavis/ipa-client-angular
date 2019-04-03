@@ -19,18 +19,15 @@ let rolesTable = function(
       scope.view = {
         loadingPeople: false,
         noResults: false,
-        placeholder: {
-          show: false,
-          firstName: "",
-          lastName: "",
-          email: "",
-          validationMessage: ""
-        },
         placeholderUpdate: {
           show: false,
           loginId: "",
           validationMessage: ""
         }
+      };
+
+      scope.openPlaceholderModal = function () {
+        WorkgroupActionCreators.openPlaceholderModal();
       };
 
       scope.removeUserRole = function(userRole) {
@@ -39,17 +36,6 @@ let rolesTable = function(
           userRole.roleId,
           userRole
         );
-      };
-
-      scope.openPlaceholderUI = function() {
-        scope.view.placeholder.show = true;
-      };
-
-      scope.closePlaceholderUI = function() {
-        scope.view.placeholder.show = false;
-        scope.view.placeholder.firstName = "";
-        scope.view.placeholder.lastName = "";
-        scope.view.placeholder.email = "";
       };
 
       scope.openPlaceholderUpdateUI = function () {
@@ -79,51 +65,6 @@ let rolesTable = function(
 
       scope.updatePlaceholderUser = function (userRole) {
         WorkgroupActionCreators.updatePlaceholderUser(scope.view.placeholderUpdate.dwUser, userRole.userLoginId);
-      };
-
-      scope.isPlaceholderUserValid = function() {
-        if (!scope.view.placeholder.show) {
-          scope.view.placeholder.validationMessage = "";
-          return false;
-        }
-
-        if (
-          !scope.view.placeholder.firstName &&
-          !scope.view.placeholder.lastName &&
-          !scope.view.placeholder.email
-        ) {
-          scope.view.placeholder.validationMessage = "";
-          return false;
-        }
-
-        if (!scope.view.placeholder.firstName) {
-          scope.view.placeholder.validationMessage = "First name is required";
-          return false;
-        }
-
-        if (!scope.view.placeholder.lastName) {
-          scope.view.placeholder.validationMessage = "Last name is required";
-          return false;
-        }
-
-        if (!scope.view.placeholder.email) {
-          scope.view.placeholder.validationMessage = "Email is required";
-          return false;
-        }
-
-        scope.view.placeholder.validationMessage = "";
-        return true;
-      };
-
-      scope.addPlaceholderUser = function() {
-        var user = {
-          firstName: scope.view.placeholder.firstName,
-          lastName: scope.view.placeholder.lastName,
-          email: scope.view.placeholder.email
-        };
-
-        WorkgroupActionCreators.addPlaceholderUser(user);
-        scope.closePlaceholderUI();
       };
 
       scope.clearUserSearch = function() {

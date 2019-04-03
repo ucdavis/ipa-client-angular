@@ -92,3 +92,19 @@
 	padding-right: 4px;
 	padding-bottom: 3px;
 }
+
+.roles-table__update-placeholder-ui {
+	padding-top: 5px;
+}
+
+.roles-table__update-placeholder-container {
+	display: flex;
+}
+
+.roles-table__update-placeholder-input {
+	margin-left: -5px;
+}
+
+.roles-table__update-placeholder-buttons {
+	padding-right: 2px;
+}

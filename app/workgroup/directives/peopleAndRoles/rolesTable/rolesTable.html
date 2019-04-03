@@ -37,50 +37,12 @@
 		</div>
 
 		<div class="col-md-8">
-			<div ng-show="view.placeholder.show" style="display: flex; flex: 1 0 0px; padding-bottom: 5px;">
-				<div style="flex: 1 0 0px;">
-					<ipa-input value="view.placeholder.firstName"
-					          place-holder="'First Name'"
-					          style="padding-right: 5px;">
-					</ipa-input>
-				</div>
-				<div style="flex: 1 0 0px;">
-					<ipa-input value="view.placeholder.lastName"
-					          place-holder="'Last Name'"
-					          style="padding-right: 5px;">
-					</ipa-input>
-				</div>
-				<div style="flex: 1 0 0px;">
-					<ipa-input value="view.placeholder.email"
-					          place-holder="'Email'"
-					          style="padding-right: 5px;">
-					</ipa-input>
-				</div>
-			</div>
-
 			<span style="display: flex;">
 				<button class="btn-add-person btn btn-primary"
-				        ng-click="openPlaceholderUI()"
-				        ng-show="!view.placeholder.show"
+				        ng-click="openPlaceholderModal()"
 				        tooltip-append-to-body="true"
 				        uib-tooltip="Add a user that does not yet have a kerberos account">
 					Add Placeholder user
-				</button>
-				<button class="btn-add-person btn btn-primary"
-				        ng-click="addPlaceholderUser()"
-				        ng-show="view.placeholder.show && isPlaceholderUserValid()">
-					Save
-				</button>
-				<button class="btn-add-person btn btn-primary disabled"
-				        uib-tooltip="{{view.placeholder.validationMessage}}"
-				        tooltip-append-to-body="true"
-				        ng-show="view.placeholder.show && !isPlaceholderUserValid()">
-					Save
-				</button>
-				<button class="btn-add-person btn btn-default"
-				        ng-show="view.placeholder.show"
-				        ng-click="closePlaceholderUI()">
-					Cancel
 				</button>
 			</span>
 		</div>
@@ -125,36 +87,48 @@
 			    ng-if="(activeRoleId == -1 && (userRole.roleId == 11 || userRole.roleId == 12 || userRole.roleId == 13)) || (userRole.roleId == activeRoleId && (activeRoleId != 9 || userRole.displayPresence))">
 				<!-- Name -->
 				<td class="roles-table__table-cell">
-					{{ userRole.userDisplayName }}
-					<span class="roles-table__placeholder" ng-show="userRole.userIsPlaceholder">
-						<i class="glyphicon glyphicon-warning-sign clickable" ng-click="openPlaceholderUpdateUI()" uib-tooltip="User cannot login to IPA until a valid kerberos loginId is provided" />
-						<div ng-show="view.placeholderUpdate.show">
-							<ipa-input value="view.placeholderUpdate.loginId"
-							           place-holder="'Enter valid loginId'"
-							           style="padding-right: 5px;"
-							           on-update="isPlaceholderUpdateValid()">
-							</ipa-input>
-							<div class="roles-table__placeholder-update-validation">
-								{{ view.placeholderUpdate.validationMessage }}
+					<div>
+						{{ userRole.userDisplayName }}
+						<span class="roles-table__placeholder" ng-show="userRole.userIsPlaceholder">
+							<i class="glyphicon glyphicon-warning-sign clickable" ng-click="openPlaceholderUpdateUI()" uib-tooltip="User cannot login to IPA until a valid kerberos loginId is provided"></i>
+						</span>
+					</div>
+					<div class="roles-table__update-placeholder-ui" ng-show="userRole.userIsPlaceholder && view.placeholderUpdate.show">
+						<div class="roles-table__update-placeholder-container">
+							<div class="roles-table__update-placeholder-input">
+								<ipa-input value="view.placeholderUpdate.loginId"
+								           place-holder="'Enter valid loginId'"
+								           style="padding-right: 5px;"
+								           on-update="isPlaceholderUpdateValid()">
+								</ipa-input>
 							</div>
-							<button class="btn-add-person btn btn-primary"
-							        confirm-button="updatePlaceholderUser(userRole)"
-							        message="Are you sure you want to update {{ userRole.userDisplayName }}'s name, email and loginId?"
-							        yes="Update" no="Cancel" placement="right"
-							        ng-show="view.placeholderUpdate.loginId.length > 0 && view.placeholderUpdate.isValid">
-								Update
-							</button>
-							<button class="btn-add-person btn btn-primary disabled"
-							        tooltip-append-to-body="true"
-							        uib-tooltip="Please enter a valid kerberos loginid"
-							        ng-show="view.placeholderUpdate.loginId.length == 0 || !view.placeholderUpdate.isValid">
-								Update
-							</button>
-							<button class="btn-add-person btn btn-default" ng-click="closePlaceholderUpdateUI()">
-								Cancel
-							</button>
+
+							<div class="roles-table__update-placeholder-buttons">
+								<button class="btn btn-primary"
+								        confirm-button="updatePlaceholderUser(userRole)"
+								        message="Are you sure you want to update {{ userRole.userDisplayName }}'s name, email and loginId?"
+								        yes="Update" no="Cancel" placement="right"
+								        ng-show="view.placeholderUpdate.loginId.length > 0 && view.placeholderUpdate.isValid">
+									Update
+								</button>
+								<button class="btn btn-primary disabled"
+								        tooltip-append-to-body="true"
+								        uib-tooltip="Please enter a valid kerberos loginid"
+								        ng-show="view.placeholderUpdate.loginId.length == 0 || !view.placeholderUpdate.isValid">
+									Update
+								</button>
+							</div>
+
+							<div>
+								<button class="btn btn-default" ng-click="closePlaceholderUpdateUI()">
+									Cancel
+								</button>
+							</div>
 						</div>
-					</span>
+						<div class="roles-table__placeholder-update-validation">
+							{{ view.placeholderUpdate.validationMessage }}
+						</div>
+					</div>
 				</td>
 
 				<!-- Email -->

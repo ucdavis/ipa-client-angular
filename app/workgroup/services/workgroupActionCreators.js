@@ -54,6 +54,12 @@ class WorkgroupActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update instructor type", type: "ERROR" });
 				});
 			},
+			openPlaceholderModal: function () {
+				WorkgroupStateService.reduce({
+					type: ActionTypes.OPEN_PLACEHOLDER_MODAL,
+					payload: {}
+				});
+			},
 			addPlaceholderUser: function (placeholderUser) {
 				var _this = this;
 
