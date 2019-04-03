@@ -108,3 +108,8 @@
 .roles-table__update-placeholder-buttons {
 	padding-right: 2px;
 }
+
+.roles-table__placeholder-person-ui {
+  display: flex;
+  justify-content: flex-end;
+}

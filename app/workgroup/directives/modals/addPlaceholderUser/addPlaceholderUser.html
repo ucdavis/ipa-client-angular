@@ -1,4 +1,9 @@
-<div class="add-line-item add-course">
+<div>
+  <div class="add-placeholder-user__warning">
+    Please note: This should only be used to add a user who does NOT yet have a valid kerberos account.
+    This user will not be able to login to IPA (until you provide the kerberos login id),
+    but you will be able to refer to them in IPA and include them in your scheduling plans.
+  </div>
   <ipa-input class="add-placeholder-user__input" value="view.firstName"
              place-holder="'First Name'"
              on-update="updateSectionGroupCost(sectionGroupCost)"
