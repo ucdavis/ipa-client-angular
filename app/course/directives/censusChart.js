@@ -29,9 +29,30 @@ let censusChart = function ($rootScope, $timeout) {
 
         // Gets the "CURRENT" snapshot of the given property (e.g. currentEnrolledCount, maxEnrollmentCount)
         var getCurrentCensusForProperty = function (property) {
+          var sequenceFilteredCensus = scope.census.filter(function(courseCensus) {
+            return courseCensus.sequenceNumber.includes(scope.sequencePattern) && courseCensus.snapshotCode === "CURRENT";
+          });
+
+          var censusByTermCode = {};
+
+          sequenceFilteredCensus.forEach(function(courseCensus) {
+            censusByTermCode[courseCensus.termCode] ? censusByTermCode[courseCensus.termCode].push(courseCensus) : censusByTermCode[courseCensus.termCode] = [];
+          });
+
+          for (var termCode in censusByTermCode) {
+            censusByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, courseCensus) {
+              accumulator.maxEnrollmentCount += courseCensus.maxEnrollmentCount;
+              accumulator.currentEnrolledCount += courseCensus.currentEnrolledCount;
+
+              return accumulator;
+            }, censusByTermCode[termCode][0]);
+          }
+
+          var censusArray = Object.values(censusByTermCode);
+
           var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
           return lastFiveYears.map(function (year) {
-            return _.find(scope.census, function (c) { // eslint-disable-line no-undef
+            return _.find(censusArray, function (c) { // eslint-disable-line no-undef
               var matchesTermCode = c.termCode.toString() == year + (scope.term.termCode + '').slice(-2);
               var matchesCurrentCode = c.snapshotCode == "CURRENT";
               return matchesTermCode && matchesCurrentCode;
