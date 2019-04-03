@@ -81,3 +81,14 @@
 	line-height: 1;
 	color: gray;
 }
+
+.roles-table__placeholder {
+	color: #f5a0a0;
+	border: 1px solid;
+	border-radius: 4px;
+	font-size: 15px;
+	padding-top: 3px;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-bottom: 3px;
+}
