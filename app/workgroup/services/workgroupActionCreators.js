@@ -76,6 +76,7 @@ class WorkgroupActionCreators {
 				});
 			},
 			updatePlaceholderUser: function (user, previousLoginId) {
+				var _this = this;
 				var workgroupId = parseInt(WorkgroupStateService._state.ui.workgroupId);
 
 				WorkgroupService.updatePlaceholderUser(user, previousLoginId, workgroupId).then(function (newUser) {
@@ -85,8 +86,10 @@ class WorkgroupActionCreators {
 							user: newUser
 						}
 					});
-        });
-      },
+
+					_this._calculateUserRoles();
+				});
+			},
 			addTag: function (workgroupId, tag) {
 				WorkgroupService.addTag(workgroupId, tag).then(function (newTag) {
 					$rootScope.$emit('toast', { message: "Created tag " + newTag.name, type: "SUCCESS" });
