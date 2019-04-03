@@ -67,6 +67,7 @@ class WorkgroupActionCreators {
 							user: newUser
 						}
 					});
+					$rootScope.$emit('toast', { message: "Added user", type: "SUCCESS" });
 
 					var role = new Role({ name: WorkgroupStateService._state.roles.list[roleId].name });
 					_this.addRoleToUser(workgroupId, newUser, new Role({ name: "presence"}));
@@ -86,7 +87,7 @@ class WorkgroupActionCreators {
 							user: newUser
 						}
 					});
-
+					$rootScope.$emit('toast', { message: "Updated user", type: "SUCCESS" });
 					_this._calculateUserRoles();
 				});
 			},

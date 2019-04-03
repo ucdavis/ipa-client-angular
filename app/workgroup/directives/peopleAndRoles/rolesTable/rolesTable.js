@@ -116,7 +116,14 @@ let rolesTable = function(
       };
 
       scope.addPlaceholderUser = function() {
-        WorkgroupActionCreators.addPlaceholderUser(scope.view.placeholder);
+        var user = {
+          firstName: scope.view.placeholder.firstName,
+          lastName: scope.view.placeholder.lastName,
+          email: scope.view.placeholder.email
+        };
+
+        WorkgroupActionCreators.addPlaceholderUser(user);
+        scope.closePlaceholderUI();
       };
 
       scope.clearUserSearch = function() {
