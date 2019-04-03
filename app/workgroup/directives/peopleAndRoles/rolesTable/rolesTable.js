@@ -21,9 +21,14 @@ let rolesTable = function(
         noResults: false,
         placeholder: {
           show: false,
-          first: "",
-          last: "",
+          firstName: "",
+          lastName: "",
           email: "",
+          validationMessage: ""
+        },
+        placeholderUpdate: {
+          show: false,
+          loginId: "",
           validationMessage: ""
         }
       };
@@ -42,9 +47,38 @@ let rolesTable = function(
 
       scope.closePlaceholderUI = function() {
         scope.view.placeholder.show = false;
-        scope.view.placeholder.first = "";
-        scope.view.placeholder.last = "";
+        scope.view.placeholder.firstName = "";
+        scope.view.placeholder.lastName = "";
         scope.view.placeholder.email = "";
+      };
+
+      scope.openPlaceholderUpdateUI = function () {
+        scope.view.placeholderUpdate.show = true;
+      };
+
+      scope.closePlaceholderUpdateUI = function () {
+        scope.view.placeholderUpdate.show = false;
+        scope.view.placeholderUpdate.loginId = "";
+        scope.view.placeholderUpdate.validationMessage = "";
+        scope.view.placeholderUpdate.isValid = false;
+        scope.view.placeholderUpdate.dwUser = null;
+      };
+
+      scope.isPlaceholderUpdateValid = function () {
+        scope.searchUsers(scope.view.placeholderUpdate.loginId).then(function(results) {
+          if (results.length == 1) {
+            scope.view.placeholderUpdate.validationMessage = results[0].name + '(' + results[0].email + ')';
+            scope.view.placeholderUpdate.isValid = true;
+            scope.view.placeholderUpdate.dwUser = results[0];
+          } else {
+            scope.view.placeholderUpdate.validationMessage = "No users with that loginid found";
+            scope.view.placeholderUpdate.isValid = false;
+          }
+        });
+      };
+
+      scope.updatePlaceholderUser = function (userRole) {
+        WorkgroupActionCreators.updatePlaceholderUser(scope.view.placeholderUpdate.dwUser, userRole.userLoginId);
       };
 
       scope.isPlaceholderUserValid = function() {
@@ -54,20 +88,20 @@ let rolesTable = function(
         }
 
         if (
-          !scope.view.placeholder.first &&
-          !scope.view.placeholder.last &&
+          !scope.view.placeholder.firstName &&
+          !scope.view.placeholder.lastName &&
           !scope.view.placeholder.email
         ) {
           scope.view.placeholder.validationMessage = "";
           return false;
         }
 
-        if (!scope.view.placeholder.first) {
+        if (!scope.view.placeholder.firstName) {
           scope.view.placeholder.validationMessage = "First name is required";
           return false;
         }
 
-        if (!scope.view.placeholder.last) {
+        if (!scope.view.placeholder.lastName) {
           scope.view.placeholder.validationMessage = "Last name is required";
           return false;
         }
@@ -79,6 +113,10 @@ let rolesTable = function(
 
         scope.view.placeholder.validationMessage = "";
         return true;
+      };
+
+      scope.addPlaceholderUser = function() {
+        WorkgroupActionCreators.addPlaceholderUser(scope.view.placeholder);
       };
 
       scope.clearUserSearch = function() {

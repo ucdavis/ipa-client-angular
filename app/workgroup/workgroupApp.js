@@ -101,7 +101,8 @@ const workgroupApp = angular.module("workgroupApp", dependencies) // eslint-disa
 	UPDATE_USER_ROLE: "UPDATE_USER_ROLE",
 	SET_ROLE_TAB: "SET_ROLE_TAB",
 	CALCULATE_USER_ROLES: "CALCULATE_USER_ROLES",
-	CALCULATE_ROLE_TOTALS: "CALCULATE_ROLE_TOTALS"
+	CALCULATE_ROLE_TOTALS: "CALCULATE_ROLE_TOTALS",
+	UPDATE_USER: "UPDATE_USER"
 });
 
 export default workgroupApp;

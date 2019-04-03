@@ -155,6 +155,9 @@ class WorkgroupStateService {
 						users.userSearchResults = [];
 						users.searchQuery = "";
 						return users;
+					case ActionTypes.UPDATE_USER:
+						users.list[action.payload.user.id] = new User(action.payload.user);
+						return users;
 					case ActionTypes.REMOVE_USER:
 						userIndex = users.ids.indexOf(action.payload.user.id);
 						users.ids.splice(userIndex, 1);
