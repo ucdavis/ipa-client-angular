@@ -1,20 +1,20 @@
 import './addPlaceholderUser.css';
 
 let addPlaceholderUser = function (WorkgroupActionCreators) {
-	return {
-		restrict: 'E',
-		template: require('./addPlaceholderUser.html'),
-		replace: true,
-		scope: {
-			isVisible: '='
-		},
-		link: function (scope) {
-			scope.view = {
-				firstName: "",
-				lastName: "",
-				email: "",
-				validationMessage: ""
-			};
+  return {
+    restrict: 'E',
+    template: require('./addPlaceholderUser.html'),
+    replace: true,
+    scope: {
+      isVisible: '='
+    },
+    link: function (scope) {
+      scope.view = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        validationMessage: ""
+      };
 
       scope.addPlaceholderUser = function() {
         var user = {
