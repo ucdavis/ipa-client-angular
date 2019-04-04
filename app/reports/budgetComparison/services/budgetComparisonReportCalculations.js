@@ -169,9 +169,13 @@ class BudgetComparisonReportCalculations {
 				var _self = this;
 				var instructionCosts = {
 					byType: {},
+					byTypeNoCost: {},
+					scenarioCourses: {},
+					unassigned: 0,
 					total: {
 						cost: 0,
-						courses: 0
+						courses: 0,
+						scenarioCourses: 0
 					}
 				};
 
@@ -180,7 +184,10 @@ class BudgetComparisonReportCalculations {
 
 					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
 					if (sectionGroupCost.disabled) { return; }
+
 					if (activeTerms.indexOf(sectionGroupCost.termCode.slice(-2)) == -1) { return; }
+
+					if (!sectionGroupCost.instructorTypeId) { instructionCosts.unassigned++; }
 
 					var teachingAssignment = _self._getTeachingAssignment(sectionGroupCost.sectionGroupId);
 					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments);
@@ -195,10 +202,22 @@ class BudgetComparisonReportCalculations {
 						courses: 0
 					};
 
+					if (!assignmentCost) {
+						instructionCosts.byTypeNoCost[instructorTypeId] = instructionCosts.byTypeNoCost[instructorTypeId] || 0;
+						instructionCosts.byTypeNoCost[instructorTypeId] += 1;
+					}
+
 					instructionCosts.byType[instructorTypeId].courses += 1;
 					instructionCosts.byType[instructorTypeId].cost += assignmentCost;
 					instructionCosts.total.cost += assignmentCost;
 					instructionCosts.total.courses += 1;
+				});
+
+				var instructorTypes = [...new Set([...Object.keys(instructionCosts.byType), ...Object.keys(instructionCosts.byTypeNoCost)])];
+
+				instructorTypes.forEach(function(instructorType) {
+					instructionCosts.scenarioCourses[instructorType] = (instructionCosts.byType[instructorType].courses || 0) - (instructionCosts.byTypeNoCost[instructorType] || 0);
+					instructionCosts.total.scenarioCourses += instructionCosts.scenarioCourses[instructorType];
 				});
 
 				return instructionCosts;
@@ -293,16 +312,19 @@ class BudgetComparisonReportCalculations {
 					var currentInstructorCost = currentCosts.instructorCosts.byType[instructorTypeId];
 					var currentCost = currentInstructorCost ? currentInstructorCost.cost : 0;
 					var currentCourses = currentInstructorCost ? currentInstructorCost.courses : 0;
+					var currentCoursesCount = currentInstructorCost ? currentCosts.instructorCosts.scenarioCourses[instructorTypeId] : 0;
 
 					var previousInstructorCost = previousCosts.instructorCosts.byType[instructorTypeId];
 					var previousCost = previousInstructorCost ? previousInstructorCost.cost : 0;
 					var previousCourses = previousInstructorCost ? previousInstructorCost.courses : 0;
+					var previousCoursesCount = previousInstructorCost ? previousCosts.instructorCosts.scenarioCourses[instructorTypeId] : 0;
 
 					costs.instructorCosts.byType[instructorTypeId] = {
 						rawCourses: currentCourses - previousCourses,
 						percentageCourses: _self._percentageChange(previousCourses, currentCourses),
 						rawCost: currentCost - previousCost,
-						percentageCost: _self._percentageChange(previousCost, currentCost)
+						percentageCost: _self._percentageChange(previousCost, currentCost),
+						percentageCoursesCount: _self._percentageChange(previousCoursesCount, currentCoursesCount)
 					};
 				});
 
@@ -310,7 +332,8 @@ class BudgetComparisonReportCalculations {
 					rawCost: currentCosts.instructorCosts.total.cost - previousCosts.instructorCosts.total.cost,
 					rawCourses: currentCosts.instructorCosts.total.courses - previousCosts.instructorCosts.total.courses,
 					percentageCost: _self._percentageChange(previousCosts.instructorCosts.total.cost, currentCosts.instructorCosts.total.cost),
-					percentageCourses: _self._percentageChange(previousCosts.instructorCosts.total.courses, currentCosts.instructorCosts.total.courses)
+					percentageCourses: _self._percentageChange(previousCosts.instructorCosts.total.courses, currentCosts.instructorCosts.total.courses),
+					percentageCoursesCount: _self._percentageChange(previousCosts.instructorCosts.total.scenarioCourses, currentCosts.instructorCosts.total.scenarioCourses)
 				};
 
 				return costs;
