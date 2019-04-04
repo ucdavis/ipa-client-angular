@@ -40,24 +40,21 @@ let censusChart = function ($rootScope, $timeout) {
           });
 
           for (var termCode in censusByTermCode) {
+            var baseCensusObj = JSON.parse(JSON.stringify(censusByTermCode[termCode][0]));
+
             censusByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, currentValue) {
               accumulator[property] += currentValue[property];
               return accumulator;
-            }, censusByTermCode[termCode][0]);
-          };
-
-          var censusArray = Object.values(censusByTermCode);
+            }, baseCensusObj);
+          }
 
           var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
 
-          return lastFiveYears.map(function (year) {
-            return _.find(censusArray, function (c) { // eslint-disable-line no-undef
-              var matchesTermCode = c.termCode.toString() == year + (scope.term.termCode + '').slice(-2);
-              var matchesCurrentCode = c.snapshotCode == "CURRENT";
-              return matchesTermCode && matchesCurrentCode;
-            });
-          }).map(function (c) {
-            return c ? c[property] : 0;
+          return lastFiveYears.map(function(year) {
+            var termCode = year + (scope.term.termCode + '').slice(-2);
+            var courseCensus = censusByTermCode[termCode];
+
+            return courseCensus ? courseCensus[property] : 0;
           });
         };
 
@@ -86,7 +83,7 @@ let censusChart = function ($rootScope, $timeout) {
             data: getCurrentCensusForProperty("currentEnrolledCount")
           }
         ];
-debugger;
+
         Chart.defaults.global.defaultFontColor = "#888"; // eslint-disable-line no-undef
         Chart.defaults.global.tooltips.mode = 'x-axis'; // eslint-disable-line no-undef
         Chart.defaults.global.tooltips.titleFontSize = 10; // eslint-disable-line no-undef
