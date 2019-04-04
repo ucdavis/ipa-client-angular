@@ -1,4 +1,5 @@
 <div class="budget-costs">
+	<div ng-hide="printingBudget">
 	<ipa-tabs tab-names="termNav.allTabs"
 	          active-tab="termNav.activeTab"
 	          select-tab="setActiveTerm"
@@ -134,56 +135,58 @@
 			</div>
 		</div>
 	</ipa-tabs>
+	</div>
 
 	<!-- PRINT VERSION -->
-PRINT VERSION
-<div id="budgetCostsPrint" class="budgetCostsPrint">
+<div id="budgetCostsPrint" ng-if="printingBudget" >
 	<ipa-tabs tab-names="termNav.allTabs"
 	          active-tab="termNav.activeTab"
 	          select-tab="setActiveTerm"
 	          slim="true">
 		<div class="budget-costs__main-container">
 			<div class="budget-costs__rows-container">
-				<table class="budget-costs-print__table budget-costs-print__table--header">
-					<colgroup>
-						<col style="width: 5%;">
-						<col style="width: 5%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 5%;">
-						<col style="width: 5%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 5%;">
-						<col style="width: 5%;">
-					</colgroup>
-					<thead>
-						<tr>
-							<th class="budget-costs__table-header"><div>Seq.</div></th>
-							<th class="budget-costs__table-header"><div>Enrollment</div></th>
-							<th class="budget-costs__table-header"><div>Instructor</div></th>
-							<th class="budget-costs__table-header"><div>Original Instructor</div></th>
-							<th class="budget-costs__table-header"><div>Sections</div></th>
-							<th class="budget-costs__table-header"><div>TAs</div></th>
-							<th class="budget-costs__table-header">TA Cost</th>
-							<th class="budget-costs__table-header">Readers</th>
-							<th class="budget-costs__table-header"><div>Reason</div></th>
-							<th class="budget-costs__table-header"><div></div>Reader Cost</th>
-							<th class="budget-costs__table-header"><div>Support Cost</div></th>
-							<th class="budget-costs__table-header"><div>Instructor Cost</div></th>
-							<th class="budget-costs__table-header"><div>Total</div></th>
-						</tr>
-					</thead>
-				</table>
+
 
 				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
 					<div class="budget-costs__course-title">
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
 					</div>
+					<table class="budget-costs-print__table budget-costs-print__table--header">
+							<colgroup>
+								<col style="width: 5%;">
+								<col style="width: 5%;">
+								<col style="width: 10%;">
+								<col style="width: 10%;">
+								<col style="width: 5%;">
+								<col style="width: 5%;">
+								<col style="width: 10%;">
+								<col style="width: 10%;">
+								<col style="width: 10%;">
+								<col style="width: 10%;">
+								<col style="width: 10%;">
+								<col style="width: 5%;">
+								<col style="width: 5%;">
+							</colgroup>
+							<thead>
+								<tr>
+									<th class="budget-costs__table-header"><div>Seq.</div></th>
+									<th class="budget-costs__table-header"><div>Enrollment</div></th>
+									<th class="budget-costs__table-header"><div>Instructor</div></th>
+									<th class="budget-costs__table-header"><div>Original Instructor</div></th>
+									<th class="budget-costs__table-header"><div>Sections</div></th>
+									<th class="budget-costs__table-header"><div>TAs</div></th>
+									<th class="budget-costs__table-header">TA Cost</th>
+									<th class="budget-costs__table-header">Readers</th>
+									<th class="budget-costs__table-header"><div>Reason</div></th>
+									<th class="budget-costs__table-header"><div></div>Reader Cost</th>
+									<th class="budget-costs__table-header"><div>Support Cost</div></th>
+									<th class="budget-costs__table-header"><div>Instructor Cost</div></th>
+									<th class="budget-costs__table-header"><div>Total</div></th>
+								</tr>
+							</thead>
+						</table>
 					<div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+						
 						<table class="budget-costs-print__table">
 							<thead>
 								<colgroup>

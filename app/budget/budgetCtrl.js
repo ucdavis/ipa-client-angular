@@ -19,11 +19,14 @@ class BudgetCtrl {
 
 		$scope.budgetConfigStyles = { "width" : "40%" };
 
+		$scope.printingBudget = false;
+
 		_self.initialize();
 	}
 
 	initialize () {
 		var _self = this;
+
 
 		this.$scope.currentUser = _self.AuthService.getCurrentUser();
 

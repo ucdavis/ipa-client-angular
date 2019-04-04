@@ -7,14 +7,17 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
 		template: require('./budgetScenarioToolbar.html'), // directive html found here:
 		replace: true, // Replace with the template
+		
 		scope: {
-			state: '<'
+			state: '<',
+			printBudget: '&',
 		},
 		link: function (scope) {
 			scope.displayScenarioRenameUI = false;
 			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			scope.isNewScenarioNameValid = true;
 			scope.validationError = "";
+			scope.printingMode = false;
 
 			scope.openSupportCostModal = function() {
 				BudgetActions.toggleSupportCostModal();
@@ -74,17 +77,11 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.print = function() {
+				scope.$parent.printingBudget = !scope.$parent.printingBudget ;
 				// window.print();
-				alert("Print");
+				
 			};
 
-			scope.printBudget = function() {
-				var innerContents = document.getElementById("budgetCostsPrint").innerHTML;
-				var popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-				popupWinindow.document.open();
-				popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
-				popupWinindow.document.close();
-			};
 		} // End Link
 	};
 };
