@@ -825,6 +825,23 @@ class BudgetActions {
 				var instructorType = instructorTypes.list[userRole.instructorTypeId];
 
 				return instructorType;
+			},
+			updateCourseTag: function (tag) {
+				var tags = BudgetReducers._state.ui.filters.tags;
+
+				tags.forEach(function(slotTag) {
+					if (slotTag.id == tag.id) {
+						slotTag.selected = tag.selected;
+					}
+				});
+
+				BudgetReducers.reduce({
+					type: ActionTypes.UPDATE_COURSE_TAGS,
+					payload: {
+						tags: tags
+					}
+				});
+				BudgetCalculations.calculateSectionGroups();
 			}
 		};
 	}

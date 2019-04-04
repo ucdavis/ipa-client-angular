@@ -29,6 +29,8 @@ class ScheduleCostCalculations {
           var sectionGroupCostId = sectionGroupCosts.idsByUniqueKey[uniqueKey];
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
+          if (sectionGroupCost.hidden) { return; }
+
           // Ensure sectionGroupCost belongs to this scenario
           if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 
@@ -250,7 +252,8 @@ class ScheduleCostCalculations {
           unitsHigh: sectionGroupCost.unitsHigh,
           unitsLow: sectionGroupCost.unitsLow,
           uniqueKey: sectionGroupCost.subjectCode + sectionGroupCost.courseNumber,
-          sectionGroupCosts: []
+          sectionGroupCosts: [],
+          tagIds: sectionGroupCost.tagIds
         };
 
         var container = _array_find_by_properties(containers, ["uniqueKey"], newContainer);

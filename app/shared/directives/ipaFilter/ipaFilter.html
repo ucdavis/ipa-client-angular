@@ -1,0 +1,37 @@
+<div class="ipa-filter">
+	<span class="ipa-filter__dropdown-toggle"
+	      ng-class="{'ipa-filter__dropdown-toggle--open': isVisible }"
+	      ng-click="toggleDropdown()"
+	      uib-tooltip="{{tooltip}}"
+	      tooltip-append-to-body="true">
+		<span class="ipa-filter__icon glyphicon {{buttonIcon}}"
+		      ng-class="{'glyphicon-filter': !buttonIcon }">
+		</span>
+	</span>
+
+	<div ng-if="isVisible" class="ipa-filter__dropdown">
+		<div class="ipa-filter__dropdown-container">
+			<div class="ipa-filter__header">
+				<div>
+					{{ title }}
+				</div>
+				<div class="ipa-filter__close-ui" ng-click="close()">
+					<svg height="16" role="img" version="1.1" viewBox="0 0 12 16" width="12">
+						<path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path>
+					</svg>
+				</div>
+			</div>
+
+			<div class="ipa-filter__item-list">
+				<div ng-click="clickItem(item)"
+				     ng-repeat="item in items"
+				     class="ipa-filter__item">
+					<ipa-checkbox is-checked="item.selected"></ipa-checkbox>
+					<div class="ipa-filter__item-text">
+						{{ item.description }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
