@@ -4,7 +4,6 @@ class BudgetExcelService {
 	}
 
 	generateDownload(viewState) {
-		console.dir(viewState); // eslint-disable-line no-console
 
 		var data = [];
 		var termDescriptions = {
@@ -396,9 +395,9 @@ class BudgetExcelService {
 		/* write workbook */
 		var year = viewState.ui.year;
 		var budgetScenario = viewState.selectedBudgetScenario.name;
-		var workgroupId = viewState.ui.workgroupId;
-		var filename = "Budget-Report-" + workgroupId + "-" + year + "-" + budgetScenario + ".xlsx";
-
+		var json = JSON.parse(localStorage.workgroup);
+		var workgroupName = json.name;
+		var filename = "Budget-Report-" + workgroupName + "-" + year + "-" + budgetScenario + ".xlsx";
 		XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
 	}
 }
