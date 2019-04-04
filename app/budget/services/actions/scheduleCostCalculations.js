@@ -52,6 +52,7 @@ class ScheduleCostCalculations {
           sectionGroupCost.instructor = instructor;
           sectionGroupCost.instructorType = instructorType;
           sectionGroupCost.instructorDescription = null;
+          sectionGroupCost.instructorTypeDescription = instructorType ? instructorType.description : '';
 
           if (instructor) {
             sectionGroupCost.instructorDescription = instructor.lastName + ", " + instructor.firstName;
@@ -182,7 +183,7 @@ class ScheduleCostCalculations {
             return;
           }
 
-          var instructorTypeId = sectionGroupCost.instructor && sectionGroupCost.instructor.instructorType ? sectionGroupCost.instructor.instructorType.id : sectionGroupCost.instructorTypeId;
+          var instructorTypeId = sectionGroupCost.instructorTypeId;
           var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
           if (instructorTypeCost && instructorTypeCost.cost > 0) {
