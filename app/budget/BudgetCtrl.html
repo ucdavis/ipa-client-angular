@@ -66,7 +66,7 @@
 			</add-line-item-comments>
 		</ipa-modal>
 
-		<budget-scenario-toolbar state="view.state"></budget-scenario-toolbar>
+		<budget-scenario-toolbar state="view.state" print-budget="printBudget()"></budget-scenario-toolbar>
 
 		<budget-nav class="budget-view__nav-container"
 		            total-balance="view.state.selectedBudgetScenario.summary.totalBalance"
@@ -95,7 +95,9 @@
 			              schedule-costs="view.state.calculatedScheduleCosts"
 			              term-nav="view.state.ui.termNav"
 			              summary="view.state.summary"
-			              is-live-data-scenario="!view.state.ui.shouldShowCourseList">
+										is-live-data-scenario="!view.state.ui.shouldShowCourseList"
+										printing-budget="printingBudget"
+										>
 			</budget-costs>
 			<instructor-list ng-if="view.state.ui.sectionNav.activeTab == 'Instructor List'"
 			                 state="view.state"

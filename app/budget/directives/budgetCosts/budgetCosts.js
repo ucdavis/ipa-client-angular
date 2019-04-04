@@ -13,7 +13,8 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 			summary: '<',
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
-			isLiveDataScenario: '<'
+			isLiveDataScenario: '<',
+			printingBudget: '=',
 		},
 		link: function (scope) {
 			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
