@@ -46,12 +46,19 @@
 		</div>
 	</div>
 
-	<div class="budget-scenario-toolbar__tool-container">
+	<div class="budget-scenario-toolbar__tool-container do-not-print">
 		<term-filter active-terms="state.selectedBudgetScenario.terms"
 		             select-term="selectBudgetScenarioTerm">
 		</term-filter>
 
+		<ipa-filter items="state.ui.filters.tags"
+		            title="'Tags'"
+		            tooltip="'Tags'"
+		            button-icon="'glyphicon-filter'"
+		            select-item="updateCourseTag(item)">
+		</ipa-filter>
+
 		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-download-alt" data-toggle="dropdown"></span>
-		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-print"></span>
+		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-print" onClick="window.print()"></span>
 	</div>
 </div>

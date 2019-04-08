@@ -5,28 +5,30 @@ class BudgetComparisonReportCalculations {
 				var budget = BudgetComparisonReportReducers._state.budget;
 				var budgetScenarios = BudgetComparisonReportReducers._state.budgetScenarios;
 				var lineItems = BudgetComparisonReportReducers._state.lineItems;
-				var sectionGroups = BudgetComparisonReportReducers._state.sectionGroups;
 				var teachingAssignments = BudgetComparisonReportReducers._state.teachingAssignments;
 				var instructorTypeCosts = BudgetComparisonReportReducers._state.instructorTypeCosts;
 				var instructorCosts = BudgetComparisonReportReducers._state.instructorCosts;
 				var sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
 
+				var currentSelectedBudgetScenario = this._getBudgetScenario(budgetScenarios.currentSelectedScenarioId, budgetScenarios.current);
+				var previousSelectedBudgetScenario = this._getBudgetScenario(budgetScenarios.previousSelectedScenarioId, budgetScenarios.previous);
+
 				var calculatedView = {
 					ui: {
-						currentSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.currentSelectedScenarioId, BudgetComparisonReportReducers._state.budgetScenarios.current),
-						previousSelectedBudgetScenario: this._getBudgetScenario(budgetScenarios.previousSelectedScenarioId, BudgetComparisonReportReducers._state.budgetScenarios.previous),
+						currentSelectedBudgetScenario: currentSelectedBudgetScenario,
+						previousSelectedBudgetScenario: previousSelectedBudgetScenario,
 						currentBudgetScenarios: this._getBudgetScenarios(BudgetComparisonReportReducers._state.budgetScenarios.current),
 						previousBudgetScenarios: this._getBudgetScenarios(BudgetComparisonReportReducers._state.budgetScenarios.previous)
 					},
 					current: {
-						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, budgetScenarios.currentSelectedScenarioId),
+						costs: this._generateCosts(teachingAssignments.current, instructorTypeCosts.current, instructorCosts.current, sectionGroupCosts.current, budget.current, currentSelectedBudgetScenario),
 						funding: this._generateFunding(lineItems.current, budgetScenarios.currentSelectedScenarioId),
-						miscStats: this._generateMiscStats(sectionGroupCosts.current, budgetScenarios.currentSelectedScenarioId)
+						miscStats: this._generateMiscStats(sectionGroupCosts.current, currentSelectedBudgetScenario)
 					},
 					previous: {
-						costs: this._generateCosts(teachingAssignments.previous, instructorTypeCosts.previous, instructorCosts.previous, sectionGroupCosts.previous, budget.previous, budgetScenarios.previousSelectedScenarioId, sectionGroups.previous),
+						costs: this._generateCosts(teachingAssignments.previous, instructorTypeCosts.previous, instructorCosts.previous, sectionGroupCosts.previous, budget.previous, previousSelectedBudgetScenario),
 						funding: this._generateFunding(lineItems.previous, budgetScenarios.previousSelectedScenarioId),
-						miscStats: this._generateMiscStats(sectionGroupCosts.previous, budgetScenarios.previousSelectedScenarioId)
+						miscStats: this._generateMiscStats(sectionGroupCosts.previous, previousSelectedBudgetScenario)
 					}
 				};
 
@@ -44,7 +46,9 @@ class BudgetComparisonReportCalculations {
 				});
 			},
 			// Generates stats on seats and # of courses per area
-			_generateMiscStats(sectionGroupCosts, currentSelectedScenarioId) {
+			_generateMiscStats(sectionGroupCosts, selectedScenario) {
+				var selectedScenarioId = selectedScenario.id;
+
 				var miscStats = {
 					lower: {
 						courses: 0,
@@ -68,7 +72,8 @@ class BudgetComparisonReportCalculations {
 					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
 					if (sectionGroupCost.disabled) { return; }
-					if (sectionGroupCost.budgetScenarioId != currentSelectedScenarioId) { return; }
+					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
+					if (selectedScenario.terms.indexOf(sectionGroupCost.termCode.slice(-2)) == -1) { return; }
 
 					var courseNumber = parseInt(sectionGroupCost.courseNumber);
 					var seats = sectionGroupCost.enrollment;
@@ -91,10 +96,13 @@ class BudgetComparisonReportCalculations {
 				return miscStats;
 			},
 			// Generates calculations for instructor and support (reader, TA) costs
-			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenarioId) {
+			_generateCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, budget, selectedScenario) {
+				var selectedScenarioId = selectedScenario.id;
+				var activeTerms = selectedScenario.terms;
+
 				var costs = {
-					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId),
-					supportCosts:this. _generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts),
+					instructorCosts: this._generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId, activeTerms),
+					supportCosts:this. _generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts, activeTerms),
 					total: null
 				};
 
@@ -157,13 +165,17 @@ class BudgetComparisonReportCalculations {
 				};
 			},
 			// Generates instructor costs (based on sectionGroupCosts, and the selected budget scenario)
-			_generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId) {
+			_generateInstructionCosts(teachingAssignments, instructorTypeCosts, instructorCosts, sectionGroupCosts, selectedScenarioId, activeTerms) {
 				var _self = this;
 				var instructionCosts = {
 					byType: {},
+					byTypeNoCost: {},
+					scenarioCourses: {},
+					unassigned: 0,
 					total: {
 						cost: 0,
-						courses: 0
+						courses: 0,
+						scenarioCourses: 0
 					}
 				};
 
@@ -172,6 +184,10 @@ class BudgetComparisonReportCalculations {
 
 					if (sectionGroupCost.budgetScenarioId != selectedScenarioId) { return; }
 					if (sectionGroupCost.disabled) { return; }
+
+					if (activeTerms.indexOf(sectionGroupCost.termCode.slice(-2)) == -1) { return; }
+
+					if (!sectionGroupCost.instructorTypeId) { instructionCosts.unassigned++; }
 
 					var teachingAssignment = _self._getTeachingAssignment(sectionGroupCost.sectionGroupId);
 					var assignmentCosts = _self._calculateAssignmentCost(sectionGroupCost, teachingAssignment, selectedScenarioId, instructorTypeCosts, instructorCosts, sectionGroupCosts, teachingAssignments);
@@ -186,16 +202,28 @@ class BudgetComparisonReportCalculations {
 						courses: 0
 					};
 
+					if (!assignmentCost) {
+						instructionCosts.byTypeNoCost[instructorTypeId] = instructionCosts.byTypeNoCost[instructorTypeId] || 0;
+						instructionCosts.byTypeNoCost[instructorTypeId] += 1;
+					}
+
 					instructionCosts.byType[instructorTypeId].courses += 1;
 					instructionCosts.byType[instructorTypeId].cost += assignmentCost;
 					instructionCosts.total.cost += assignmentCost;
 					instructionCosts.total.courses += 1;
 				});
 
+				var instructorTypes = [...new Set([...Object.keys(instructionCosts.byType), ...Object.keys(instructionCosts.byTypeNoCost)])];
+
+				instructorTypes.forEach(function(instructorType) {
+					instructionCosts.scenarioCourses[instructorType] = (instructionCosts.byType[instructorType].courses || 0) - (instructionCosts.byTypeNoCost[instructorType] || 0);
+					instructionCosts.total.scenarioCourses += instructionCosts.scenarioCourses[instructorType];
+				});
+
 				return instructionCosts;
 			},
 			// Generates support (reader and TA) based costs and course count
-			_generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts) {
+			_generateSupportCosts(budget, selectedScenarioId, sectionGroupCosts, activeTerms) {
 				var supportCosts = {
 					taCount: 0,
 					readerCount: 0,
@@ -207,7 +235,9 @@ class BudgetComparisonReportCalculations {
 
 				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
 					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+
 					if (sectionGroupCost.budgetScenarioId != selectedScenarioId || sectionGroupCost.disabled) { return; }
+					if (activeTerms.indexOf(sectionGroupCost.termCode.slice(-2)) == -1) { return; }
 
 					supportCosts.taCount += sectionGroupCost.taCount || 0;
 					supportCosts.readerCount += sectionGroupCost.readerCount || 0;	
@@ -282,16 +312,19 @@ class BudgetComparisonReportCalculations {
 					var currentInstructorCost = currentCosts.instructorCosts.byType[instructorTypeId];
 					var currentCost = currentInstructorCost ? currentInstructorCost.cost : 0;
 					var currentCourses = currentInstructorCost ? currentInstructorCost.courses : 0;
+					var currentCoursesCount = currentInstructorCost ? currentCosts.instructorCosts.scenarioCourses[instructorTypeId] : 0;
 
 					var previousInstructorCost = previousCosts.instructorCosts.byType[instructorTypeId];
 					var previousCost = previousInstructorCost ? previousInstructorCost.cost : 0;
 					var previousCourses = previousInstructorCost ? previousInstructorCost.courses : 0;
+					var previousCoursesCount = previousInstructorCost ? previousCosts.instructorCosts.scenarioCourses[instructorTypeId] : 0;
 
 					costs.instructorCosts.byType[instructorTypeId] = {
 						rawCourses: currentCourses - previousCourses,
 						percentageCourses: _self._percentageChange(previousCourses, currentCourses),
 						rawCost: currentCost - previousCost,
-						percentageCost: _self._percentageChange(previousCost, currentCost)
+						percentageCost: _self._percentageChange(previousCost, currentCost),
+						percentageCoursesCount: _self._percentageChange(previousCoursesCount, currentCoursesCount)
 					};
 				});
 
@@ -299,7 +332,8 @@ class BudgetComparisonReportCalculations {
 					rawCost: currentCosts.instructorCosts.total.cost - previousCosts.instructorCosts.total.cost,
 					rawCourses: currentCosts.instructorCosts.total.courses - previousCosts.instructorCosts.total.courses,
 					percentageCost: _self._percentageChange(previousCosts.instructorCosts.total.cost, currentCosts.instructorCosts.total.cost),
-					percentageCourses: _self._percentageChange(previousCosts.instructorCosts.total.courses, currentCosts.instructorCosts.total.courses)
+					percentageCourses: _self._percentageChange(previousCosts.instructorCosts.total.courses, currentCosts.instructorCosts.total.courses),
+					percentageCoursesCount: _self._percentageChange(previousCosts.instructorCosts.total.scenarioCourses, currentCosts.instructorCosts.total.scenarioCourses)
 				};
 
 				return costs;

@@ -72,3 +72,13 @@
 .course-list__plus-padding {
 	top: 0px;
 }
+
+@media print {
+  @page {
+    margin: 1cm;
+  }
+
+  .do-not-print {
+		display: none;
+  }
+}

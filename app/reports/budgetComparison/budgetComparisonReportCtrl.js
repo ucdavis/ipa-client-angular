@@ -1,7 +1,7 @@
 import './budgetComparisonReport.css';
 
 class BudgetComparisonReportCtrl {
-  constructor ($scope, $rootScope, $routeParams, validate, AuthService) {
+  constructor ($scope, $rootScope, $routeParams, validate, AuthService, BudgetComparisonReportActions) {
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.$routeParams = $routeParams;
@@ -16,9 +16,13 @@ class BudgetComparisonReportCtrl {
     $rootScope.$on('budgetComparisonReportStateChanged', function (event, data) {
       $scope.view.state = data.state;
     });
+
+    $scope.downloadAsExcel = function() {
+      BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
+    };
   }
 }
 
-BudgetComparisonReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'validate', 'AuthService'];
+BudgetComparisonReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'validate', 'AuthService', 'BudgetComparisonReportActions'];
 
 export default BudgetComparisonReportCtrl;

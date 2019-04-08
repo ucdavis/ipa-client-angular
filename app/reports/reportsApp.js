@@ -10,6 +10,7 @@ import BudgetComparisonReportActions from './budgetComparison/services/budgetCom
 import BudgetComparisonReportReducers from './budgetComparison/services/budgetComparisonReportReducers.js';
 import BudgetComparisonReportService from './budgetComparison/services/budgetComparisonReportService.js';
 import BudgetComparisonReportCalculations from './budgetComparison/services/budgetComparisonReportCalculations.js';
+import BudgetComparisonReportExcelService from './budgetComparison/services/budgetComparisonReportExcelService.js';
 
 // Directives
 import budgetScenarioSelector from './budgetComparison/directives/budgetScenarioSelector/budgetScenarioSelector.js';
@@ -59,6 +60,7 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                           .service('BudgetComparisonReportReducers', BudgetComparisonReportReducers)
                           .service('BudgetComparisonReportService', BudgetComparisonReportService)
                           .service('BudgetComparisonReportCalculations', BudgetComparisonReportCalculations)
+                          .service('BudgetComparisonReportExcelService', BudgetComparisonReportExcelService)
                           .service('StringService', StringService)
                           .service('SchService', SchService)
                           .directive('courseCosts', courseCosts)
