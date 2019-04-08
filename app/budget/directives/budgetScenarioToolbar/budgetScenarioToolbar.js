@@ -77,8 +77,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.print = function() {
-				scope.$parent.printingBudget = !scope.$parent.printingBudget ;
-				// window.print();
+				window.print();
 				
 			};
 

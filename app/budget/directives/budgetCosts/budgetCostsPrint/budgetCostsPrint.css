@@ -1,0 +1,15 @@
+
+.do-print{
+	display: none;
+}
+
+@media print {
+  @page {
+    margin: 1cm;
+  }
+  
+	.do-print{
+		display: block !important;
+	}
+	
+}

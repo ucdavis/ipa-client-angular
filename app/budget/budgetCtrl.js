@@ -19,8 +19,6 @@ class BudgetCtrl {
 
 		$scope.budgetConfigStyles = { "width" : "40%" };
 
-		$scope.printingBudget = false;
-
 		_self.initialize();
 	}
 
