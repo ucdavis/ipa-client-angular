@@ -71,3 +71,18 @@
 	padding-bottom: 4px;
 	color: #b1b1b1;
 }
+
+.do-print{
+	display: none;
+}
+
+@media print {
+  @page {
+    margin: 1cm;
+	}
+
+  .do-not-print {
+		display: none;
+	}
+	
+}

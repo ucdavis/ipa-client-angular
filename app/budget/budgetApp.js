@@ -31,6 +31,7 @@ import instructorList from './directives/instructorList/instructorList.js';
 import courseList from './directives/courseList/courseList.js';
 
 import budgetCosts from './directives/budgetCosts/budgetCosts.js';
+import budgetCostsPrint from './directives/budgetCosts/budgetCostsPrint/budgetCostsPrint.js';
 import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
 import instructorCostsRow from './directives/budgetCosts/instructorCostsRow/instructorCostsRow.js';
 import instructorAssignmentDropdown from './directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
@@ -98,6 +99,7 @@ const budgetApp = angular.module("budgetApp", dependencies) // eslint-disable-li
 .directive('budgetScenarioToolbar', budgetScenarioToolbar)
 .directive('budgetScenarioDropdown', budgetScenarioDropdown)
 .directive('budgetCosts', budgetCosts)
+.directive('budgetCostsPrint', budgetCostsPrint)
 .directive('courseCostsRow', courseCostsRow)
 .directive('instructorCostsRow', instructorCostsRow)
 .directive('instructorAssignmentDropdown', instructorAssignmentDropdown)

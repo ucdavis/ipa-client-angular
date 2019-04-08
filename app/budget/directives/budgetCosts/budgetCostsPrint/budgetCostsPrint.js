@@ -1,19 +1,22 @@
 import { toCurrency } from 'shared/helpers/string';
 
-import './budgetCosts.css';
+import './budgetCostsPrint.css';
 
-let budgetCosts = function ($rootScope, BudgetActions) {
+let budgetCostsPrint = function ($rootScope, BudgetActions, TermService) {
 	return {
 		restrict: 'E',
-		template: require('./budgetCosts.html'),
+		template: require('./budgetCostsPrint.html'),
 		replace: true,
 		scope: {
+			summary: '<',
+			instructorTypes: '<',
+			selectedBudgetScenario: '<',
 			termNav: '<',
 			scheduleCosts: '<',
-			summary: '<',
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
 			isLiveDataScenario: '<',
+			lineItems: '<'
 		},
 		link: function (scope) {
 			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
@@ -24,6 +27,10 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 				BudgetActions.selectTerm(activeTermTab);
 			};
 
+			scope.getTermName = function(term) {
+				return TermService.getShortTermName(term);
+			};
+
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};
@@ -31,4 +38,4 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 	};
 };
 
-export default budgetCosts;
+export default budgetCostsPrint;
