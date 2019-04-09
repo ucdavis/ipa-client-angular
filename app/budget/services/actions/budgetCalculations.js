@@ -1,7 +1,7 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
 
 class BudgetCalculations {
-	constructor (BudgetReducers, TermService, Roles, ActionTypes, ScheduleCostCalculations, UserService) {
+	constructor (BudgetReducers, TermService, Roles, ActionTypes, ScheduleCostCalculations, UserService, SchService) {
 		return {
 			calculateScenarioTerms: function() {
 				var allTermTabs = [];
@@ -544,12 +544,13 @@ class BudgetCalculations {
 
 							var units = 0;
 
-							if (sectionGroupCost.unitsLow) {
-								units = sectionGroupCost.unitsLow;
-							} else if (sectionGroupCost.unitsHigh) {
-								units = sectionGroupCost.unitsHigh;
-							}
+							// if (sectionGroupCost.unitsLow) {
+							// 	units = sectionGroupCost.unitsLow;
+							// } else if (sectionGroupCost.unitsHigh) {
+							// 	units = sectionGroupCost.unitsHigh;
+							// }
 
+							units = SchService.getUnits(sectionGroupCost);
 							if (sectionGroupCost.courseNumber >= 200) {
 								summary.byTerm[term].gradSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
 							} else {
@@ -746,6 +747,6 @@ class BudgetCalculations {
 	}
 }
 
-BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes', 'ScheduleCostCalculations', 'UserService'];
+BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes', 'ScheduleCostCalculations', 'UserService', 'SchService'];
 
 export default BudgetCalculations;
