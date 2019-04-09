@@ -6,10 +6,46 @@
 @media print {
   @page {
     margin: 1cm;
-  }
+	}
+	
+	body {
+		font: 9pt "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
+		line-height: 1.3;
+		}
   
 	.do-print{
 		display: block !important;
+	}
+
+	.budget-costs-print, .budget-costs-print__table{
+		width: 670px !important;
+		font: 8pt "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
+	}
+
+	.budget-costs-print__table {
+		border-collapse: collapse;
+	}
+
+	.budget-costs-print__table > thead > tr > th,
+	.budget-costs-print__table > tbody > tr > td {
+		vertical-align: center;
+		border: 1px solid #e3e3e3;
+		text-align: center;
+	}
+
+	.budget-costs-print__table > tbody > tr > td {
+		border-top:0;
+	}
+
+
+	.budget-costs-print__table > tbody > tr > td {
+		padding: 0px !important;
+	}
+
+	caption {
+		font-size: 9pt;
+		font-weight: bold;
+		padding-bottom: 2px;
 	}
 	
 }
