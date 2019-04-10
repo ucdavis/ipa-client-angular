@@ -77,8 +77,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.print = function() {
-				window.print();
-				
+				window.print();		
 			};
 
 		} // End Link

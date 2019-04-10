@@ -8,6 +8,7 @@ let budgetCostsPrint = function ($rootScope, BudgetActions, TermService) {
 		template: require('./budgetCostsPrint.html'),
 		replace: true,
 		scope: {
+			state: '<',
 			summary: '<',
 			instructorTypes: '<',
 			selectedBudgetScenario: '<',
@@ -18,7 +19,22 @@ let budgetCostsPrint = function ($rootScope, BudgetActions, TermService) {
 			isLiveDataScenario: '<',
 			lineItems: '<'
 		},
-		link: function (scope) {
+		link: function (scope){
+			var json = JSON.parse(localStorage.workgroup);
+			scope.workgroupName = json.name;
+
+			scope.allTerms = {
+				'05': 'Summer Session 1',
+				'06': 'Summer Special Session',
+				'07': 'Summer Session 2',
+				'08': 'Summer Quarter',
+				'09': 'Fall Semester',
+				'10': 'Fall Quarter',
+				'01': 'Winter Quarter',
+				'02': 'Spring Semester',
+				'03': 'Spring Quarter'
+			};
+			
 			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
 				BudgetActions.openAddCourseCommentsModal(sectionGroupCost);
 			};

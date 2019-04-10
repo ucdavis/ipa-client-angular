@@ -91,17 +91,3 @@
   padding: 30px;
 	color: gray;
 }
-
-@media print {
-	@page {
-	  margin: 1cm;
-	}
-  
-	.do-not-print {
-		  display: none;
-	}
-
-	.line-items__table, .ipa-tabs__content{
-		border: none;
-	}
-  }
