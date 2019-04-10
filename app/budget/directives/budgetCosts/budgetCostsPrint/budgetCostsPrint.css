@@ -133,10 +133,20 @@
 		padding: 0px !important;
 	}
 
+	.budget-costs-term-title{
+		font-size: 14px;
+		margin-top: 20px;
+		margin-bottom: 10px;
+		font-family: inherit;
+		font-weight: 500;
+		border-bottom: 1px solid #4C4C4C;
+	}
+
 	caption {
 		font-size: 9pt;
 		font-weight: bold;
 		padding-bottom: 2px;
+		color: #333333 !important;
 	}
 
 
