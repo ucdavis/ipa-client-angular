@@ -419,8 +419,8 @@
 
       <div class="budget-costs__main-container">
         <div class="budget-costs-print">
-          <div ng-repeat="courses in scheduleCosts.byTerm">
-            <h5>Term {{ $index }}</h5>
+          <div ng-repeat="(key, courses) in scheduleCosts.byTerm">
+            <div class="budget-costs-term-title">{{ getTermName(key) }}</div>
             <div ng-repeat="course in courses track by course.uniqueKey">
               <table class="budget-costs-print__table">
               <caption>
@@ -509,21 +509,9 @@
     <table class="line-items-print__table">
       <thead>
         <tr>
-          <th>
-            <div>
-              Type
-            </div>
-          </th>
-          <th>
-            <div>
-              Description
-            </div>
-          </th>
-          <th>
-            <div>
-              Amount
-            </div>
-          </th>
+          <th><div>Type</div></th>
+          <th><div>Description</div></th>
+          <th><div>Amount</div></th>
         </tr>
       </thead>
 
@@ -551,7 +539,6 @@
             {{ lineItem.description }}
           </td>
 
-
           <!-- Amount -->
           <td ng-class-odd="'line-items-print__table-cell--dark'">
             <div class="line-items-print__amount-container">
@@ -573,8 +560,7 @@
   </div>
 
   <!-- INSTRUCTOR LIST REPORT -->
-  <h4 class="page-break-before">Budget - Instructor List</h4>
-  <!-- <h4 class="page-break-before">Instructor List</h4> -->
+  <h4 class="page-break-before">Budget Instructor List</h4>
   <p><strong>Academic Year: </strong>{{ state.ui.year }}</p>
   <p><strong>Workgroup: </strong>{{ workgroupName }}</p>
   <p><strong>Scenario: </strong>{{ state.selectedBudgetScenario.name }}</p>
@@ -644,35 +630,15 @@
             <tbody>
               <tr>
                 <td><div>TA</div></td>
-                <td>
-                  <div>
-                    <ipa-input value="state.budget.taCost"
-                              mode="'currency'">
-                    </ipa-input>
-                  </div>
-                </td>
+                <td><div><ipa-input value="state.budget.taCost" mode="'currency'"></ipa-input></div></td>
               </tr>
-    
               <tr>
                 <td><div>Reader</div></td>
-                <td>
-                  <div>
-                    <ipa-input value="state.budget.readerCost"
-                              mode="'currency'">
-                    </ipa-input>
-                  </div>
-                </td>
+                <td><div><ipa-input value="state.budget.readerCost" mode="'currency'"></ipa-input></div></td>
               </tr>
-    
               <tr ng-repeat="instructorTypeCost in state.calculatedInstructorTypeCosts">
                 <td><div>{{ instructorTypeCost.description }}</div></td>
-                <td>
-                  <div>
-                    <ipa-input value="instructorTypeCost.cost"
-                              mode="'currency'">
-                    </ipa-input>
-                  </div>
-                </td>
+                <td><div><ipa-input value="instructorTypeCost.cost" mode="'currency'"></ipa-input></div></td>
               </tr>
             </tbody>
           </table>
