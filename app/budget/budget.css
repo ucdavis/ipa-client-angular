@@ -130,18 +130,16 @@
 }
 
 @media print {
-  @page {
-    margin: 1cm;
-  }
+	@page {
+	margin: 1cm;
+	}
 
-  .do-not-print {
+	.do-not-print {
 		display: none;
 	}
 	
 	.do-print{
 		display: block !important;
 	}
-
-	.page-break {page-break-before: always;}
 	
 }

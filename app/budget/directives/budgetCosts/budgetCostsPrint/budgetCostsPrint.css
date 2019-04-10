@@ -7,15 +7,107 @@
   @page {
     margin: 1cm;
 	}
+
+	#toast-container {
+		display: none;
+	}
 	
 	body {
 		font: 9pt "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
 		line-height: 1.3;
 		}
   
-	.do-print{
+	.do-print {
 		display: block !important;
 	}
+
+	p {
+		margin-top: 1px;
+		margin-bottom: 1px; 
+	}
+
+	.page-break-before {
+		page-break-before: always;
+	}
+
+
+	/* SUMMARY REPORT STYLE */
+
+	.budget-summary-print__header-row{
+		border-bottom: 1px solid #ddd;
+	}
+	.budget-summary-print__header-cell {
+		padding-top: 10px;
+		padding-bottom: 10px;
+		text-align: right;
+		font-weight: bold;
+	}
+	
+	.budget-summary-print__header-cell--right {
+		padding-right: 15px;
+	}
+	
+	.budget-summary-print__cell-container {
+		height: 18px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+	
+	.budget-summary-print__cell-container--left {
+		padding-left: 5px;
+		justify-content: flex-start;
+	}
+	
+	.budget-summary-print__cell-container--last {
+		padding-right: 5px;
+	}
+	
+	.budget-summary-print-print__table {
+		width: 670px;
+		font: 8.5pt "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
+		margin-bottom: 20px;
+		table-layout: fixed;
+	}
+	
+	.budget-summary-print__cell--bold {
+		font-weight: bold;
+		margin-bottom: 30px;
+	}
+	
+	.budget-summary-print__cell--total {
+		border-top: 1px solid black;
+	}
+	
+	.budget-summary-print__cell--total-strong {
+		border-top: 3px double black;
+	}
+	
+	.budget-summary-print__cell--funds {
+		font-weight: bold;
+	}
+	
+	.budget-summary-print--total {
+		border-top: 1px solid black;
+		padding-right: 0px;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+	
+	.budget-summary-print__total-sch {
+		border-top: 1px solid black;
+	}
+	
+	.budget-summary-print__hidden-budgeted-warning {
+		padding: 5px;
+		color: #b1b1b1;
+		text-align: center;
+	}
+	
+
+/* SCHEDULE COST STYLE */
 
 	.budget-costs-print, .budget-costs-print__table{
 		width: 670px !important;
@@ -37,7 +129,6 @@
 		border-top:0;
 	}
 
-
 	.budget-costs-print__table > tbody > tr > td {
 		padding: 0px !important;
 	}
@@ -47,5 +138,70 @@
 		font-weight: bold;
 		padding-bottom: 2px;
 	}
-	
+
+
+	/* FUNDS STYLE */
+
+	.line-items-print__table {
+		width: 670px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+
+	.line-items-print__table > thead > tr > th,
+	.line-items-print__table > tbody > tr > td {
+		border: 1px solid #e3e3e3;
+		padding: 3px 5px;
+	}
+
+	.line-items-print__table > thead > tr > th {
+		padding: 4px 5px;
+		font-weight: bold;
+	}
+
+	.line-items-print__orphan-warn {
+		color: grey;
+		margin-right: 5px;
+	}
+
+	.line-items-print__no-funds {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		padding: 30px;
+		color: gray;
+	}
+
+
+	/* INSTRUCTOR LIST STYLE */
+
+	.instructor-costs__table {
+		width: 670px;
+		margin-top: 10px;
+		margin-bottom: 20px;
+	}
+
+	.instructor-costs__table > thead > tr > th,
+	.instructor-costs__table> tbody > tr > td {
+		border: 1px solid #e3e3e3;
+		padding: 3px 5px;
+	}
+
+	.instructor-costs__table > thead > tr > th {
+		text-align: left;
+	}
+
+	.instructor-costs__table > thead > tr > th {
+		padding: 4px 5px;
+		font-weight: bold;
+	}
+
+	.ipa-input {
+		border: none;
+		padding: 0px;
+		margin: 0px;
+		height: 12px;
+		text-align: left;
+	}
+
 }
