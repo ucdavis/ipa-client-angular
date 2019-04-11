@@ -5,6 +5,9 @@ class BudgetExcelService {
 
 	generateDownload(viewState) {
 
+		// eslint-disable-next-line no-console
+		console.dir(viewState);
+
 		var data = [];
 		var termDescriptions = {
 			'05': 'Summer Session 1',
@@ -18,7 +21,7 @@ class BudgetExcelService {
 			'03': 'Spring Quarter'
 		};
 
-// SUMMARY EXCEL DOWNLOAD
+// SUMMARY EXCEL REPORT
 		var summary = viewState.summary;
 
 		// Header
@@ -240,12 +243,12 @@ class BudgetExcelService {
 		// Cleans data for the next sheet
 		data.length = 0;
 
-	// SHEDULE COST EXCEL DOWNLOAD
+
+// SHEDULE COST REPORT
 		// Header
 		data.push(['Term',
 								'Subject Code',
 								'Course Number',
-								'Unique Key',
 								'Title',
 								'Units High',
 								'Units Low',
@@ -271,7 +274,6 @@ class BudgetExcelService {
 				row.push(termDescription);
 				row.push(scheduleCosts[i].subjectCode);
 				row.push(scheduleCosts[i].courseNumber);
-				row.push(scheduleCosts[i].uniqueKey);
 				row.push(scheduleCosts[i].title);
 				row.push(scheduleCosts[i].unitsHigh);
 				row.push(scheduleCosts[i].unitsLow);
@@ -306,7 +308,6 @@ class BudgetExcelService {
 			{wch: 15},
 			{wch: 15},
 			{wch: 15},
-			{wch: 15},
 			{wch: 30},
 			{wch: 10},
 			{wch: 10},
@@ -331,9 +332,9 @@ class BudgetExcelService {
 		// Cleans data for the next sheet
 		data.length = 0;
 	
-	// FUNDS EXCEL DOWNLOAD
+
+// FUNDS REPORT
 		var lineItems = viewState.calculatedLineItems;
-		// Funds worksheet
 		// Header
 		data.push(['Type', 'Description', 'Amount']);
 								
@@ -353,9 +354,9 @@ class BudgetExcelService {
 
 		// Set column widths
 		var wscols = [
-			{wch: 30},
 			{wch: 50},
-			{wch: 10}
+			{wch: 50},
+			{wch: 15}
 		];
 		ws_funds['!cols'] = wscols;
 
@@ -364,33 +365,81 @@ class BudgetExcelService {
 		// Cleans data for the next sheet
 		data.length = 0;
 
-	// SUGGESTED SHEET
-		// Header
-		data.push(['Type', 'Description']);
-								
-		var row = [];	
-		lineItems.forEach(function(lineItem) {
-			if (!lineItem.id || lineItem.hidden){
-				row.push(lineItem.categoryDescription);
-				row.push(lineItem.description);
-				row.push(lineItem.amount);
+
+// INSTRUCTOR SALARIES REPORT
+		var instructors = viewState.calculatedInstructors;
+		data.push(['Instructor', 'Type', 'Cost']);
+
+		var row = [];
+		instructors.forEach(function(instructor){
+			row.push(instructor.lastName + " " + instructor.firstName);
+			if (instructor.instructorType && instructor.instructorType.description){
+				row.push(instructor.instructorType.description);
+			}
+			
+			if (instructor.instructorCost.overrideCostSource == 'instructor' && instructor.instructorCost.overrideCostSource.length > 0){
+				row.push(instructor.instructorCost.cost);
+			}
+			if (!instructor.instructorCost.overrideCostSource){
+				row.push(instructor.instructorCost.cost);
+			}
+			if (instructor.instructorCost.overrideCostSource != 'instructor' && instructor.instructorCost.overrideCostSource){
+				row.push(instructor.instructorCost.overrideCost);
+			}
+			
+			data.push(row);
+			row = [];
+		});
+
+		var wscols = [
+			{wch: 50},
+			{wch: 50},
+			{wch: 15}
+		];
+		// Creates Funds worksheet
+		var ws_salaries = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
+		/* add worksheet to workbook */
+		ws_salaries['!cols'] = wscols;
+		XLSX.utils.book_append_sheet(wb, ws_salaries, 'Instructor Salaries'); // eslint-disable-line no-undef
+		// Cleans data for the next sheet
+		data.length = 0;
+
+
+// INSTRUCTOR CATEGORY COST REPORT
+		var instructorTypeCosts = viewState.calculatedInstructorTypeCosts;
+		data.push(['Type', 'Cost']);
+
+		var row = [];
+
+			row.push("TA");
+			row.push(viewState.budget.taCost);
+			data.push(row);
+			row = [];
+
+			row.push("Reader");
+			row.push(viewState.budget.readerCost);
+			data.push(row);
+			row = [];
+
+			instructorTypeCosts.forEach(function(instructorTypeCost){
+				row.push(instructorTypeCost.description);
+				row.push(instructorTypeCost.cost);
 				data.push(row);
 				row = [];
-			}
-		});
-		
-		var ws_suggested = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
+			});
 
-		// Set column widths
 		var wscols = [
-			{wch: 30},
 			{wch: 50},
-			{wch: 10}
+			{wch: 15}
 		];
-		ws_suggested['!cols'] = wscols;
-
+		// Creates Funds worksheet
+		var ws_category_costs = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
 		/* add worksheet to workbook */
-		XLSX.utils.book_append_sheet(wb, ws_suggested, 'Suggested Funds'); // eslint-disable-line no-undef
+		ws_category_costs['!cols'] = wscols;
+		XLSX.utils.book_append_sheet(wb, ws_category_costs, 'Instructor Category Costs'); // eslint-disable-line no-undef
+		// Cleans data for the next sheet
+		data.length = 0;
+
 
 		/* write workbook */
 		var year = viewState.ui.year;
