@@ -45,6 +45,12 @@
 				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
 					<div class="budget-costs__course-title">
 						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
+						<span ng-if="course.tagIds.length > 0" ng-repeat="tagId in course.tagIds">
+							<div class="label budget-costs__tag"
+							     ng-style="{ 'background-color': tags.list[tagId].color || '#333', 'color': getTagTextColor(tags.list[tagId].color) }">
+								{{ tags.list[tagId].name }}
+							</div>
+						</span>
 					</div>
 					<div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
 						<table class="budget-costs__table">

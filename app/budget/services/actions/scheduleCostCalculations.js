@@ -29,6 +29,8 @@ class ScheduleCostCalculations {
           var sectionGroupCostId = sectionGroupCosts.idsByUniqueKey[uniqueKey];
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
+          if (sectionGroupCost.hidden) { return; }
+
           // Ensure sectionGroupCost belongs to this scenario
           if (sectionGroupCost.budgetScenarioId != selectedBudgetScenario.id) { return; }
 
@@ -52,6 +54,7 @@ class ScheduleCostCalculations {
           sectionGroupCost.instructor = instructor;
           sectionGroupCost.instructorType = instructorType;
           sectionGroupCost.instructorDescription = null;
+          sectionGroupCost.instructorTypeDescription = instructorType ? instructorType.description : '';
 
           if (instructor) {
             sectionGroupCost.instructorDescription = instructor.lastName + ", " + instructor.firstName;
@@ -182,7 +185,7 @@ class ScheduleCostCalculations {
             return;
           }
 
-          var instructorTypeId = sectionGroupCost.instructor && sectionGroupCost.instructor.instructorType ? sectionGroupCost.instructor.instructorType.id : sectionGroupCost.instructorTypeId;
+          var instructorTypeId = sectionGroupCost.instructorTypeId;
           var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
           if (instructorTypeCost && instructorTypeCost.cost > 0) {
@@ -249,7 +252,8 @@ class ScheduleCostCalculations {
           unitsHigh: sectionGroupCost.unitsHigh,
           unitsLow: sectionGroupCost.unitsLow,
           uniqueKey: sectionGroupCost.subjectCode + sectionGroupCost.courseNumber,
-          sectionGroupCosts: []
+          sectionGroupCosts: [],
+          tagIds: sectionGroupCost.tagIds
         };
 
         var container = _array_find_by_properties(containers, ["uniqueKey"], newContainer);

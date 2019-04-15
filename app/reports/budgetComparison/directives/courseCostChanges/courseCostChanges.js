@@ -12,7 +12,7 @@ let courseCostChanges = function () {
       instructorTypes: '<',
       costs: '<',
       funding: '<',
-      miscStats: '<',
+      miscStats: '<'
     },
     link: function (scope) {
       scope.toCurrency = function (value) {

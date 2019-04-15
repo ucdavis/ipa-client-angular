@@ -192,7 +192,36 @@ class BudgetReducers {
 							uniqueKeys: []
 						};
 
+						var sectionGroupsCache = {
+							ids: [],
+							list: [],
+							bySectionGroupKey: {}
+						};
+
+						var coursesCache = {
+							ids: [],
+							list: [],
+						};
+
+						action.payload.courses.forEach(function(course) {
+							coursesCache.ids.push(course.id);
+							coursesCache.list[course.id] = course;
+						});
+
+						action.payload.sectionGroups.forEach(function(sectionGroup) {
+							var course = coursesCache.list[sectionGroup.courseId];
+							var sectionGroupKey = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern;
+							sectionGroup.tagIds = course.tagIds;
+							sectionGroupsCache.ids.push(sectionGroup.id);
+							sectionGroupsCache.list[sectionGroup.id] = sectionGroup;
+							sectionGroupsCache.bySectionGroupKey[sectionGroupKey] = sectionGroup;
+
+						});
+
 						action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern;
+							sectionGroupCost.tagIds = sectionGroupsCache.bySectionGroupKey[sectionGroupKey] ? sectionGroupsCache.bySectionGroupKey[sectionGroupKey].tagIds : [];
+							sectionGroupCost.hidden = false;
 							sectionGroupCosts.ids.push(sectionGroupCost.id);
 							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
@@ -203,6 +232,33 @@ class BudgetReducers {
 							if (sectionGroupCosts.uniqueKeys.indexOf(uniqueKey) == -1) {
 								sectionGroupCosts.uniqueKeys.push(uniqueKey);
 							}
+						});
+						return sectionGroupCosts;
+					case ActionTypes.UPDATE_COURSE_TAGS:
+						var shownTagIds = [];
+
+						action.payload.tags.forEach(function(tag) {
+							if (tag.selected) {
+								shownTagIds.push(tag.id);
+							}
+						});
+
+						sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
+							var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+							sectionGroupCost.hidden = false;
+
+							// Tag filtering isn't active, show all sectionGroupCosts
+							if (shownTagIds.length == 0) { return; }
+
+							var matchingTagIds = sectionGroupCost.tagIds.filter(function (tag) {
+								return shownTagIds.includes(tag);
+							});
+
+							// Course passes the filter
+							if (matchingTagIds.length > 0) { return; }
+
+							// Otherwise hide
+							sectionGroupCost.hidden = true;
 						});
 						return sectionGroupCosts;
 					case ActionTypes.CREATE_BUDGET_SCENARIO:
@@ -364,6 +420,7 @@ class BudgetReducers {
 							sectionGroup.courseNumber = course.courseNumber;
 							sectionGroup.title = course.title;
 							sectionGroup.sequencePattern;
+							sectionGroup.tagIds = course.tagIds;
 							var uniqueKey = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern + "-" + sectionGroup.termCode;
 							sectionGroups.ids.push(sectionGroup.id);
 							sectionGroups.list[sectionGroup.id] = sectionGroup;
@@ -410,6 +467,22 @@ class BudgetReducers {
 						return teachingAssignments;
 				}
 			},
+			tagReducers: function (action, tags) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						tags = {
+							ids: [],
+							list: []
+						};
+						action.payload.tags.forEach(function(tag) {
+							tags.ids.push(tag.id);
+							tags.list[tag.id] = tag;
+						});
+						return tags;
+					default:
+						return tags;
+				}
+			},
 			calculatedCourseListReducers: function (action, calculatedCourseList) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -437,22 +510,6 @@ class BudgetReducers {
 						return calculatedScheduleCosts;
 					default:
 						return calculatedScheduleCosts;
-				}
-			},
-			calculatedSectionGroupReducers: function (action, calculatedSectionGroups) {
-				switch (action.type) {
-					case ActionTypes.INIT_STATE:
-						calculatedSectionGroups = {
-							terms: [],
-							byTerm: {},
-							byUniqueKey: {}
-						};
-						return calculatedSectionGroups;
-					case ActionTypes.CALCULATE_SECTION_GROUPS:
-						calculatedSectionGroups = action.payload.calculatedSectionGroups;
-						return calculatedSectionGroups;
-					default:
-						return calculatedSectionGroups;
 				}
 			},
 			userReducers: function (action, users) {
@@ -708,7 +765,8 @@ class BudgetReducers {
 										description: "Show Hidden line items",
 										selected: false
 									}
-								}
+								},
+								tags: {}
 							},
 							sectionNav: {
 								activeTab: "Summary",
@@ -763,6 +821,17 @@ class BudgetReducers {
 								};
 						});
 	
+						ui.filters.tags = [];
+
+						action.payload.tags.forEach(function(tag) {
+							tag.description = tag.name;
+							tag.selected = false;
+							ui.filters.tags.push(tag);
+						});
+
+						return ui;
+					case ActionTypes.UPDATE_COURSE_TAGS:
+						ui.filters.tags = action.payload.tags;
 						return ui;
 					case ActionTypes.CALCULATE_INSTRUCTORS:
 						ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;
@@ -929,9 +998,9 @@ class BudgetReducers {
 				newState.instructorTypes = scope.instructorTypeReducers(action, scope._state.instructorTypes);
 				newState.instructorTypeCosts = scope.instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.teachingAssignments = scope.teachingAssignmentReducers(action, scope._state.teachingAssignments);
+				newState.tags = scope.tagReducers(action, scope._state.tags);
 
 				newState.calculatedScheduleCosts = scope.calculatedScheduleCostReducers(action, scope._state.calculatedScheduleCosts);
-				newState.calculatedSectionGroups = scope.calculatedSectionGroupReducers(action, scope._state.calculatedSectionGroups);
 				newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
 				newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
 				newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
@@ -951,10 +1020,10 @@ class BudgetReducers {
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
+				newPageState.tags = newState.tags;
 
 				newPageState.calculatedCourseList = newState.calculatedCourseList;
 				newPageState.calculatedScheduleCosts = newState.calculatedScheduleCosts;
-				newPageState.calculatedSectionGroups = newState.calculatedSectionGroups;
 				newPageState.calculatedInstructorTypeCosts = newState.calculatedInstructorTypeCosts;
 				newPageState.calculatedInstructors = newState.calculatedInstructors;
 				newPageState.calculatedLineItems = newState.calculatedLineItems;

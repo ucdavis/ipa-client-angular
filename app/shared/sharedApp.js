@@ -26,6 +26,7 @@ import TeachingAssignmentService from './services/TeachingAssignmentService.js';
 import SectionService from './services/SectionService.js';
 import ActivityService from './services/ActivityService.js';
 import UserService from './services/UserService.js';
+import TagService from './services/TagService.js';
 
 // Entities
 import Activity from './entities/Activity.js'; // eslint-disable-line no-unused-vars
@@ -71,6 +72,7 @@ import ipaSectionHeader from './directives/ipaSectionHeader/ipaSectionHeader.js'
 import ipaTabs from './directives/ipaTabs/ipaTabs.js';
 import ipaTabsVertical from './directives/ipaTabsVertical/ipaTabsVertical.js';
 import ipaTermSelector from './directives/ipaTermSelector/ipaTermSelector.js';
+import ipaFilter from './directives/ipaFilter/ipaFilter.js';
 import ipaTermSelectorDropdown from './directives/ipaTermSelectorDropdown/ipaTermSelectorDropdown.js';
 import ipaToggle from './directives/ipaToggle/ipaToggle.js';
 import nav from './directives/nav/nav.js';
@@ -260,6 +262,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .service('SectionService', SectionService)
 .service('ActivityService', ActivityService)
 .service('UserService', UserService)
+.service('TagService', TagService)
 .directive('availabilityGrid', availabilityGrid)
 .directive('ipaButton', ipaButton)
 .directive('ipaCheckbox', ipaCheckbox)
@@ -297,6 +300,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .directive('stopEvent', stopEvent)
 .directive('termFilter', termFilter)
 .directive('noAccess', noAccess)
+.directive('ipaFilter', ipaFilter)
 .filter('lastCommaFirst', lastCommaFirst)
 .filter('lastSpaceInitial', lastSpaceInitial)
 .filter('ordinal', ordinal)
