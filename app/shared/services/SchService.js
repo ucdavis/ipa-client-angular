@@ -9,17 +9,18 @@ class SchService {
   constructor() {
     return {
       getUnits: function (course) {
-        if (course.unitsHigh) {
-          return course.unitsHigh;
-        } else {
+        if (course.unitsLow > 0) {
           return course.unitsLow;
+        } else if (course.unitsHigh > 0) {
+          return course.unitsHigh;
         }
       },
       getSCH: function (enrollment, course) {
-        if (course.unitsHigh) {
-          return 0;
+        debugger;
+        if (course.unitsLow > 0) {
+          return (enrollment * course.unitsLow)  || 0;
         } else {
-          return enrollment * course.unitsLow;
+          return 0;
         }
       }
     };
