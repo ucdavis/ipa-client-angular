@@ -1,12 +1,12 @@
 .budget-summary__header-cell {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	border-bottom: 1px solid #ddd;
-	text-align: right;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: right;
 }
 
 .budget-summary__header-cell--right {
-	padding-right: 25px;
+  padding-right: 25px;
 }
 
 .budget-summary__cell-container {
@@ -18,64 +18,64 @@
 }
 
 .budget-summary__cell-container--left {
-	padding-left: 20px;
-	justify-content: flex-start;
+  padding-left: 20px;
+  justify-content: flex-start;
 }
 
 .budget-summary__cell-container--last {
-	padding-right: 25px;
+  padding-right: 25px;
 }
 
 .budget-summary__table {
-	width: 100%;
-	margin-bottom: 20px;
-	table-layout: fixed;
+  width: 100%;
+  margin-bottom: 20px;
+  table-layout: fixed;
 }
 
 .budget-summary__cell--combined-value {
 }
 
 .budget-summary__cell--bold {
-	font-weight: bold;
-	margin-bottom: 30px;
+  font-weight: bold;
+  margin-bottom: 30px;
 }
 
 .budget-summary__cell--total {
-	border-top: 1px solid black;
+  border-top: 1px solid black;
 }
 
 .budget-summary__cell--total-strong {
-	border-top: 3px double black;
+  border-top: 3px double black;
 }
 
 .budget-summary__cell--funds {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .budget-summary--total {
-	border-top: 1px solid black;
-	margin-left: 50%;
-	padding-right: 25px;
-	height: 100%;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
+  border-top: 1px solid black;
+  margin-left: 50%;
+  padding-right: 25px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .budget-summary__total-sch {
-	border-top: 1px solid black;
+  border-top: 1px solid black;
 }
 
 .budget-summary__hidden-budgeted-warning {
   padding: 5px;
   color: #b1b1b1;
-	text-align: center;
+  text-align: center;
 }
 
 .budget-summary__warning {
-	font-size: 10px;
-	padding-bottom: 20px;
-	padding-left: 20px;
-	color: gray;
+  font-size: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  color: gray;
 }
