@@ -18,19 +18,18 @@
     <span class="section-group-details" style="padding: 1em; display: block;">
       <census-chart census="view.state.courses.list[view.selectedEntity.courseId].census"
                     term="view.state.terms.list[view.selectedEntity.termCode]"
-                    course-id="view.selectedEntity.courseId"></census-chart>
+                    course-id="view.selectedEntity.courseId"
+                    sequence-pattern="view.state.courses.list[view.selectedEntity.courseId].sequencePattern"></census-chart>
       <hr />
       <table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
         <colgroup>
-          <col span="1" style="width: 30%;">
-          <!--<col span="1" style="width: 30%;">-->
-          <col span="1" style="width: 30%;">
-          <col span="1" style="width: 10%;">
+          <col style="width: 50%;">
+          <col style="width: 40%;">
+          <col style="width: 10%;">
         </colgroup>
         <thead>
           <tr>
             <th>Section</th>
-            <!--<th>Enrollment</th>-->
             <th>Seats</th>
             <th></th>
           </tr>
@@ -38,17 +37,11 @@
         <tbody>
           <tr ng-repeat="sectionId in view.selectedEntity.sectionIds track by $index">
             <td>{{ view.state.sections.list[sectionId].sequenceNumber }}</td>
-            <!-- TODO: Get enrollment live from DW? -->
-            <!--<td>{{ section.enrollment }}</td>-->
             <td>
-              <input auto-input
-                     type="number"
-                     min="0" class="form-control section-seats-edit text-center"
-                     on-enter="updateSection(view.state.sections.list[sectionId])"
-                     on-blur="updateSection(view.state.sections.list[sectionId])"
-                     help-text-placement="left"
-                     ng-model="view.state.sections.list[sectionId].seats"
-                     abs-value="true"/>
+              <ipa-input mode="'number'"
+                         value="view.state.sections.list[sectionId].seats"
+                         on-update="updateSection(view.state.sections.list[sectionId])">
+              </ipa-input>
 
               <span ng-if="isLocked()" ng-bind="view.state.sections.list[sectionId].seats"></span>
             </td>
@@ -61,8 +54,6 @@
           </tr>
           <tr ng-if="view.selectedEntity.sectionIds.length > 1">
             <td><strong>Total</strong></td>
-            <!-- TODO: Get enrollment live from DW? -->
-            <!--<td>{{ section.enrollment }}</td>-->
             <td class="text-center"
                 ng-class="{'section-group-details__total--overflow': view.selectedEntity.plannedSeats > 0 && sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats }">
               {{ sectionSeatTotal(view.selectedEntity) }} <span ng-if="view.selectedEntity.plannedSeats > 0">/ {{ view.selectedEntity.plannedSeats }}</span>

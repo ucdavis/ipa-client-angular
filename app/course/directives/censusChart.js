@@ -10,7 +10,8 @@ let censusChart = function ($rootScope, $timeout) {
     scope: {
       census: '=',
       term: '=',
-      courseId: '='
+      courseId: '=',
+      sequencePattern: '='
     },
     link: function (scope, element) {
       var ctx = element[0].getContext("2d");
@@ -28,15 +29,32 @@ let censusChart = function ($rootScope, $timeout) {
 
         // Gets the "CURRENT" snapshot of the given property (e.g. currentEnrolledCount, maxEnrollmentCount)
         var getCurrentCensusForProperty = function (property) {
+          var sequenceFilteredCensus = scope.census.filter(function(courseCensus) {
+            return courseCensus.sequenceNumber.includes(scope.sequencePattern) && courseCensus.snapshotCode === "CURRENT";
+          });
+
+          var censusByTermCode = {};
+
+          sequenceFilteredCensus.forEach(function(courseCensus) {
+            censusByTermCode[courseCensus.termCode] ? censusByTermCode[courseCensus.termCode].push(courseCensus) : censusByTermCode[courseCensus.termCode] = [];
+          });
+
+          for (var termCode in censusByTermCode) {
+            var baseCensusObj = JSON.parse(JSON.stringify(censusByTermCode[termCode][0]));
+
+            censusByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, currentValue) {
+              accumulator[property] += currentValue[property];
+              return accumulator;
+            }, baseCensusObj);
+          }
+
           var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
-          return lastFiveYears.map(function (year) {
-            return _.find(scope.census, function (c) { // eslint-disable-line no-undef
-              var matchesTermCode = c.termCode.toString() == year + (scope.term.termCode + '').slice(-2);
-              var matchesCurrentCode = c.snapshotCode == "CURRENT";
-              return matchesTermCode && matchesCurrentCode;
-            });
-          }).map(function (c) {
-            return c ? c[property] : 0;
+
+          return lastFiveYears.map(function(year) {
+            var termCode = year + (scope.term.termCode + '').slice(-2);
+            var courseCensus = censusByTermCode[termCode];
+
+            return courseCensus ? courseCensus[property] : 0;
           });
         };
 
