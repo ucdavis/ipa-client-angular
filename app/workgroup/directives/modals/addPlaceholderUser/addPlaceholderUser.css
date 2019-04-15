@@ -23,3 +23,38 @@
   padding: 10px;
   color: gray;
 }
+
+.add-placeholder-users__input-container {
+  display: flex;
+}
+
+
+.add-placeholder-user .neon-dark-confirm-btn,
+.add-placeholder-user .neon-dark-confirm-btn:focus,
+.add-placeholder-user .neon-dark-confirm-btn:active,
+.add-placeholder-user .neon-dark-confirm-btn {
+  background-color: rgb(48, 54, 65);
+  border-color: rgb(48, 54, 65);
+  color: white;
+}
+
+.add-placeholder-user .neon-dark-confirm-btn:hover {
+  background-color: rgb(18, 24, 35); /* Darker Version for hover */
+  color: white;
+}
+
+.add-placeholder-user .neon-dark-confirm-btn.disabled,
+.add-placeholder-user .neon-dark-confirm-btn.disabled:hover,
+.add-placeholder-user .neon-dark-confirm-btn.disabled:focus,
+.add-placeholder-user .neon-dark-confirm-btn.disabled:active {
+  background-color: rgb(48, 54, 65);
+  color: white;
+}
+
+.add-placeholder-user__cancel-button {
+  margin-right: 5px;
+  margin-left: 5px;
+  color: #303641;
+  background-color: white;
+  border: 1px solid #D6D6D6;
+}
