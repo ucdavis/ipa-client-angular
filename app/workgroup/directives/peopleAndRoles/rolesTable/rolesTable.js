@@ -81,6 +81,9 @@ let rolesTable = function(
       scope.searchUsers = function(query) {
         return WorkgroupService.searchUsers(scope.ui.workgroupId, query).then(
           function(userSearchResults) {
+            userSearchResults.push({
+              name: "newPlaceholder"
+            });
             return userSearchResults;
           },
           function() {
@@ -93,7 +96,12 @@ let rolesTable = function(
       };
 
       scope.searchUsersResultSelected = function($item) {
-        scope.users.newUser = $item;
+        if ($item.name == "newPlaceholder") {
+          scope.openPlaceholderModal();
+          scope.users.searchQuery = "";
+        } else {
+          scope.users.newUser = $item;
+        }
       };
 
       scope.addUserToWorkgroup = function() {

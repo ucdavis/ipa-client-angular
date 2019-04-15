@@ -7,23 +7,58 @@
 					ng-change="searchOnChange()" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
 					typeahead-wait-ms="400" typeahead-min-length="2" typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
 					class="form-control typeahead"
-					typeahead-template-url="popupTemplate.html">
-				
-				<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
-					<li><a>No results</a></li>
-				</ul>
+					typeahead-popup-template-url="popupTemplate.html">
+
 				<i ng-show="view.loadingPeople || ui.addUserPending"><spinner size="20"></spinner></i>
 				<i ng-hide="users.searchQuery || view.loadingPeople" class="entypo-search"></i>
 				<i ng-show="users.searchQuery && !view.loadingPeople && !ui.addUserPending" class="entypo-cancel" ng-click="clearUserSearch()"></i>
 				<script type="text/ng-template" id="popupTemplate.html">
-					<a href="#" style='border-bottom:1px solid #f3f3f3;'>
-						<strong>{{ match.model.name }}</strong>
-						<div class="row">
-							<div class="col-sm-4">
-								{{ match.model.email }}
-							</div>
-						</div>
-					</a>
+					<div>
+						<ul class="typeahead-status dropdown-menu" ng-show="matches.length > 1">
+							<li ng-repeat="match in matches" ng-click="selectMatch($index)">
+								<a ng-if="match.model.name != 'newPlaceholder'" href="#" class="roles-table__match">
+									<strong>{{ match.model.name }}</strong>
+									<div class="row">
+										<div class="col-sm-4">
+											{{ match.model.email }}
+										</div>
+									</div>
+								</a>
+
+								<a ng-if="match.model.name == 'newPlaceholder'" href="#"
+								   class="roles-table__match"
+								   tooltip-append-to-body="true"
+								   uib-tooltip="Add a user that does not yet have a kerberos account"
+								   ng-click="selectMatch($index)">
+									<div class="row">
+										<div class="col-sm-4">
+											<strong>Add Placeholder Person</strong>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+						<ul class="typeahead-status dropdown-menu" ng-show="matches.length == 1">
+							<li>
+								<a class="roles-table__match">
+									No results
+								</a>
+							</li>
+							<li ng-repeat="match in matches" ng-click="selectMatch($index)">
+								<a ng-if="match.model.name == 'newPlaceholder'" href="#"
+								   class="roles-table__match"
+								   tooltip-append-to-body="true"
+								   uib-tooltip="Add a user that does not yet have a kerberos account"
+								   ng-click="selectMatch($index)">
+									<div class="row">
+										<div class="col-sm-4">
+											<strong>Add Placeholder Person</strong>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
 				</script>	
 				<span class="input-group-btn">
 					<button ng-disabled="!users.newUser.name || ui.addUserPending"
@@ -34,17 +69,6 @@
 				</span>
 			</div>
 			<!-- /input-group -->
-		</div>
-
-		<div class="col-md-8">
-			<span class="roles-table__placeholder-person-ui">
-				<button class="btn-add-person btn btn-primary"
-				        ng-click="openPlaceholderModal()"
-				        tooltip-append-to-body="true"
-				        uib-tooltip="Add a user that does not yet have a kerberos account">
-					Add Placeholder Person
-				</button>
-			</span>
 		</div>
 	</div>
 

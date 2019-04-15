@@ -83,7 +83,7 @@
 }
 
 .roles-table__placeholder {
-	color: #f5a0a0;
+	color: #ffeb3c;
 	border: 1px solid;
 	border-radius: 4px;
 	font-size: 15px;
@@ -112,4 +112,8 @@
 .roles-table__placeholder-person-ui {
 	display: flex;
 	justify-content: flex-end;
+}
+
+.roles-table__match {
+	border-bottom:1px solid #f3f3f3;
 }
