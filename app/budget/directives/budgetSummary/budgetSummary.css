@@ -72,3 +72,10 @@
   color: #b1b1b1;
 	text-align: center;
 }
+
+.budget-summary__warning {
+	font-size: 10px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	color: gray;
+}
