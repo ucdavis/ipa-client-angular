@@ -542,23 +542,16 @@ class BudgetCalculations {
 							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost);
 							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + (sectionGroupCost.overrideInstructorCost || 0);
 
-							var units = 0;
+							var units = SchService.getUnits(sectionGroupCost) || 0;
 
-							// if (sectionGroupCost.unitsLow) {
-							// 	units = sectionGroupCost.unitsLow;
-							// } else if (sectionGroupCost.unitsHigh) {
-							// 	units = sectionGroupCost.unitsHigh;
-							// }
-
-							units = SchService.getUnits(sectionGroupCost);
 							if (sectionGroupCost.courseNumber >= 200) {
-								summary.byTerm[term].gradSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+								summary.byTerm[term].gradSCH += SchService.getSCH(sectionGroupCost.enrollment, sectionGroupCost);
 							} else {
-								summary.byTerm[term].undergradSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+								summary.byTerm[term].undergradSCH += SchService.getSCH(sectionGroupCost.enrollment, sectionGroupCost);
 							}
 
 							summary.byTerm[term].totalUnits += units;
-							summary.byTerm[term].totalSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+							summary.byTerm[term].totalSCH += SchService.getSCH(sectionGroupCost.enrollment, sectionGroupCost);
 							summary.byTerm[term].lowerDivCount += (parseInt(sectionGroupCost.courseNumber) < 100 ? 1 : 0);
 							summary.byTerm[term].upperDivCount += (parseInt(sectionGroupCost.courseNumber) >= 100 && parseInt(sectionGroupCost.courseNumber) < 200 ? 1 : 0);
 							summary.byTerm[term].graduateCount += (parseInt(sectionGroupCost.courseNumber) > 199 ? 1 : 0);
