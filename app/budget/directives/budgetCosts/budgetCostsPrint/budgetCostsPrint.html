@@ -422,77 +422,77 @@
           <div ng-repeat="(key, courses) in scheduleCosts.byTerm">
             <div class="budget-costs-term-title">{{ getTermName(key) }}</div>
             <div ng-repeat="course in courses track by course.uniqueKey">
-              <table class="budget-costs-print__table">
-              <caption>
-                {{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
-              </caption>
-                <colgroup>
-                  <col style="width: 30px;">
-                  <col style="width: 30px;">
-                  <col style="width: 125px;">
-                  <col style="width: 125px;">
-                  <col style="width: 30px;">
-                  <col style="width: 30px;">
-                  <col style="width: 55px;">
-                  <col style="width: 30px;">
-                  <col style="width: 50px;">
-                  <col style="width: 55px;">
-                  <col style="width: 55px;">
-                  <col style="width: 55px;">
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Enr.</th>
-                    <th>Instructor</th>
-                    <th>Orig. Instructor</th>
-                    <th>Sec.</th>
-                    <th>TAs</th>
-                    <th>TA $</th>
-                    <th>Rea.</th>
-                    <th>Rea.$</th>
-                    <th>Sup. $</th>
-                    <th>Instr. $</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-              </table>
-              <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-                
+              <div class="budget-costs-print__table-page-brake">
                 <table class="budget-costs-print__table">
+                <caption>
+                  {{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
+                </caption>
+                  <colgroup>
+                    <col style="width: 30px;">
+                    <col style="width: 30px;">
+                    <col style="width: 125px;">
+                    <col style="width: 125px;">
+                    <col style="width: 30px;">
+                    <col style="width: 30px;">
+                    <col style="width: 55px;">
+                    <col style="width: 30px;">
+                    <col style="width: 50px;">
+                    <col style="width: 55px;">
+                    <col style="width: 55px;">
+                    <col style="width: 55px;">
+                  </colgroup>
                   <thead>
-                    <colgroup>
-                      <col style="width: 30px;">
-                      <col style="width: 30px;">
-                      <col style="width: 125px;">
-                      <col style="width: 125px;">
-                      <col style="width: 30px;">
-                      <col style="width: 30px;">
-                      <col style="width: 55px;">
-                      <col style="width: 30px;">
-                      <col style="width: 50px;">
-                      <col style="width: 55px;">
-                      <col style="width: 55px;">
-                      <col style="width: 55px;">
-                    </colgroup>
-                  </thead>
-                  <tbody>
                     <tr>
-                      <td>{{ sectionGroupCost.sequencePattern }}</td>
-                      <td>{{ sectionGroupCost.enrollment || 0 }}</td>
-                      <td>{{ sectionGroupCost.instructorDescription }}</td>
-                      <td>{{ sectionGroupCost.originalInstructorDescription }}</td>
-                      <td>{{ sectionGroupCost.sectionCount }}</td>
-                      <td>{{ sectionGroupCost.taCount }}</td>
-                      <td>{{ sectionGroupCost.taCost }}</td>
-                      <td>{{ sectionGroupCost.readerCount }}</td>
-                      <td>{{ sectionGroupCost.readerCost }}</td>
-                      <td>{{ sectionGroupCost.courseCostSubTotal }}</td>
-                      <td>{{ sectionGroupCost.instructorCostSubTotal }}</td>
-                      <td>{{ toCurrency(sectionGroupCost.totalCost) }}</td>
+                      <th>#</th>
+                      <th>Enr.</th>
+                      <th>Instructor</th>
+                      <th>Orig. Instructor</th>
+                      <th>Sec.</th>
+                      <th>TAs</th>
+                      <th>TA $</th>
+                      <th>Rea.</th>
+                      <th>Rea.$</th>
+                      <th>Sup. $</th>
+                      <th>Instr. $</th>
+                      <th>Total</th>
                     </tr>
-                  </tbody>
+                  </thead>
                 </table>
+                <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+                  
+                  <table class="budget-costs-print__table">
+                      <colgroup>
+                        <col style="width: 30px;">
+                        <col style="width: 30px;">
+                        <col style="width: 125px;">
+                        <col style="width: 125px;">
+                        <col style="width: 30px;">
+                        <col style="width: 30px;">
+                        <col style="width: 55px;">
+                        <col style="width: 30px;">
+                        <col style="width: 50px;">
+                        <col style="width: 55px;">
+                        <col style="width: 55px;">
+                        <col style="width: 55px;">
+                      </colgroup>
+                    <tbody>
+                      <tr>
+                        <td>{{ sectionGroupCost.sequencePattern }}</td>
+                        <td>{{ sectionGroupCost.enrollment || 0 }}</td>
+                        <td>{{ sectionGroupCost.instructorDescription }}</td>
+                        <td>{{ sectionGroupCost.originalInstructorDescription }}</td>
+                        <td>{{ sectionGroupCost.sectionCount }}</td>
+                        <td>{{ sectionGroupCost.taCount }}</td>
+                        <td>{{ sectionGroupCost.taCost }}</td>
+                        <td>{{ sectionGroupCost.readerCount }}</td>
+                        <td>{{ sectionGroupCost.readerCost }}</td>
+                        <td>{{ sectionGroupCost.courseCostSubTotal }}</td>
+                        <td>{{ sectionGroupCost.instructorCostSubTotal }}</td>
+                        <td>{{ toCurrency(sectionGroupCost.totalCost) }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

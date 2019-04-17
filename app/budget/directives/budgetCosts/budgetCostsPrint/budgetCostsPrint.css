@@ -116,7 +116,13 @@
 
 	.budget-costs-print__table {
 		border-collapse: collapse;
+		font: 7.5pt "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
 	}
+	
+	.budget-costs-print__table-page-brake {
+		page-break-before: auto;
+		page-break-inside: avoid !important;
+	} 
 
 	.budget-costs-print__table > thead > tr > th,
 	.budget-costs-print__table > tbody > tr > td {
