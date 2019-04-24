@@ -83,7 +83,7 @@ class BudgetComparisonReportCalculations {
 						miscStats.lower.seats += seats;
 					} else if (courseNumber >= 200) {
 						miscStats.grad.courses += 1;
-						miscStats.grad.seats +=  0; // Intentionally always zero, as this total is not relevant
+						miscStats.grad.seats +=  seats;
 					} else {
 						miscStats.upper.courses += 1;
 						miscStats.upper.seats += seats;
