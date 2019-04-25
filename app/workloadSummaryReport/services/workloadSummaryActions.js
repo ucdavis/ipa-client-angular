@@ -2,7 +2,7 @@ import { _array_sortByProperty } from 'shared/helpers/array';
 import { sequenceNumberToPattern } from 'shared/helpers/sections';
 
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, SchService, $route) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, CourseService, $route) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
@@ -433,8 +433,8 @@ class WorkloadSummaryActions {
 							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
-							assignment.units = SchService.getUnits(course);
-							assignment.studentCreditHours = SchService.getSCH(assignment.seats, course);
+							assignment.units = CourseService.getUnits(course);
+							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course);
 
 							calculatedView.totals.assignmentCount += 1;
 							calculatedView.totals.seats += assignment.seats;
@@ -493,8 +493,8 @@ class WorkloadSummaryActions {
 					unassignedCourse.seats = seats;
 					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
 					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
-					unassignedCourse.units = SchService.getUnits(course);
-					unassignedCourse.studentCreditHours = SchService.getSCH(unassignedCourse.seats, course);
+					unassignedCourse.units = CourseService.getUnits(course);
+					unassignedCourse.studentCreditHours = CourseService.getSCH(unassignedCourse.seats, course);
 
 					calculatedView.unassignedTotals.assignmentCount += 1;
 					calculatedView.unassignedTotals.seats += unassignedCourse.seats;
@@ -573,8 +573,8 @@ class WorkloadSummaryActions {
 							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
-							assignment.units = SchService.getUnits(course);
-							assignment.studentCreditHours = SchService.getSCH(assignment.seats, course);
+							assignment.units = CourseService.getUnits(course);
+							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course);
 
 							calculatedView.genericInstructorTotals.assignmentCount += 1;
 							calculatedView.genericInstructorTotals.seats += assignment.seats;
@@ -818,6 +818,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', 'SchService', '$route'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', 'CourseService', '$route'];
 
 export default WorkloadSummaryActions;

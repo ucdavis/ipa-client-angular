@@ -17,7 +17,7 @@ import ApiService from './../shared/services/ApiService.js';
 import TermService from './../shared/services/TermService.js';
 import AuthService from './../shared/services/AuthService.js';
 import SectionService from './../shared/services/SectionService.js';
-import SchService from './../shared/services/SchService.js';
+import CourseService from './../shared/services/CourseService.js';
 
 // Directives
 import budgetNav from './directives/budgetNav/budgetNav.js';
@@ -94,7 +94,7 @@ const budgetApp = angular.module("budgetApp", dependencies) // eslint-disable-li
 .service('AuthService', AuthService)
 .service('ScheduleCostCalculations', ScheduleCostCalculations)
 .service('SectionService', SectionService)
-.service('SchService', SchService)
+.service('CourseService', CourseService)
 .directive('budgetNav', budgetNav)
 .directive('lineItemFilters', lineItemFilters)
 .directive('budgetScenarioToolbar', budgetScenarioToolbar)

@@ -1,11 +1,11 @@
 /**
  * @ngdoc service
- * @name ipaClientAngularApp.SchService
+ * @name ipaClientAngularApp.CourseService
  * @description
- * # SchService
+ * # CourseService
  * Service in the ipaClientAngularApp.
  */
-class SchService {
+class CourseService {
   constructor() {
     return {
       getUnits: function (course) {
@@ -30,4 +30,4 @@ class SchService {
   }
 }
 
-export default SchService;
+export default CourseService;
