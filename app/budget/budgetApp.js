@@ -9,6 +9,7 @@ import BudgetActions from './services/actions/budgetActions.js';
 import BudgetCalculations from './services/actions/budgetCalculations.js';
 import BudgetReducers from './services/budgetReducers.js';
 import BudgetSelectors from './services/budgetSelectors.js';
+import BudgetExcelService from './services/budgetExcelService.js';
 import BudgetService from './services/budgetService.js';
 import ScheduleCostCalculations from './services/actions/scheduleCostCalculations';
 
@@ -87,6 +88,7 @@ const budgetApp = angular.module("budgetApp", dependencies) // eslint-disable-li
 .service('BudgetCalculations', BudgetCalculations)
 .service('BudgetReducers', BudgetReducers)
 .service('BudgetSelectors', BudgetSelectors)
+.service('BudgetExcelService', BudgetExcelService)
 .service('BudgetService', BudgetService)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
