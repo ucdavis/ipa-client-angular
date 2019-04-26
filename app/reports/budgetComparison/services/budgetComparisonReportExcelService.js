@@ -78,7 +78,9 @@ class BudgetComparisonReportExcelService {
 
     /* add worksheet to workbook */
     // Note: XLSX does not allow sheet names exceeding 31 characters
-    XLSX.utils.book_append_sheet(wb, ws, stringService.truncate(workgroupName, 31)); // eslint-disable-line no-undef
+    // Note: XLSX does not allow sheet names containing: \ / ? * [ ]
+    var sheetName = workgroupName.replace(/\\/g, '').replace(/\//g, '').replace(/\?/g, '').replace(/\*/g, '').replace(/\[/g, '').replace(/\]/g, '');
+    XLSX.utils.book_append_sheet(wb, ws, stringService.truncate(sheetName, 31)); // eslint-disable-line no-undef
 
     /* write workbook */
     XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
@@ -252,24 +254,24 @@ class BudgetComparisonReportExcelService {
 
     data.push(['']);
 
-    data.push(['Total Seats Offered (excluding Grad)', '', '', '', 'Total Seats Offered (excluding Grad)', '', '', '', 'Total Seats Offered (excluding Grad)', '', '', '']);
+    data.push(['Total Seats Offered', '', '', '', 'Total Seats Offered', '', '', '', 'Total Seats Offered', '', '', '']);
     data.push(['# Lower div.', '# Upper div.', '# Grad.', 'Total', '# Lower div.', '# Upper div.', '# Grad.', 'Total', '# Lower div.', '# Upper div.', '# Grad.', 'Total']);
 
     var row = [];
     var miscStats = viewState.calculations.calculatedView.previous.miscStats;
     row.push(miscStats.lower.seats);
     row.push(miscStats.upper.seats);
-    row.push('N/A');
+    row.push(miscStats.grad.seats);
     row.push(miscStats.total.seats);
     var miscStats = viewState.calculations.calculatedView.current.miscStats;
     row.push(miscStats.lower.seats);
     row.push(miscStats.upper.seats);
-    row.push('N/A');
+    row.push(miscStats.grad.seats);
     row.push(miscStats.total.seats);
     var miscStats = viewState.calculations.calculatedView.change.miscStats;
     row.push(miscStats.lower.seats);
     row.push(miscStats.upper.seats);
-    row.push('N/A');
+    row.push(miscStats.grad.seats);
     row.push(miscStats.total.seats);
 
     data.push(row);

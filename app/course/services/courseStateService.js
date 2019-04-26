@@ -329,7 +329,7 @@ class CourseStateService {
             delete sections.list[action.payload.section.id];
             return sections;
           case ActionTypes.UPDATE_SECTION:
-            sections.list[action.payload.section.id] = new Section(action.payload.section);
+            sections.list[action.payload.section.id].seats = action.payload.section.seats;
             return sections;
           default:
             return sections;

@@ -2,7 +2,7 @@ import { toCurrency } from 'shared/helpers/string';
 
 import './budgetCosts.css';
 
-let budgetCosts = function ($rootScope, BudgetActions) {
+let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 	return {
 		restrict: 'E',
 		template: require('./budgetCosts.html'),
@@ -13,7 +13,8 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 			summary: '<',
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
-			isLiveDataScenario: '<'
+			isLiveDataScenario: '<',
+			tags: '<'
 		},
 		link: function (scope) {
 			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
@@ -26,6 +27,10 @@ let budgetCosts = function ($rootScope, BudgetActions) {
 
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
+			};
+
+			scope.getTagTextColor = function (color) {
+				return TagService.getTagTextColor(color);
 			};
 		}
 	};

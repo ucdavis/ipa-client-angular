@@ -369,6 +369,8 @@ class CourseActionCreators {
         });
       },
       updateSection: function (section) {
+        section.seats = parseInt(section.seats);
+
         CourseService.updateSection(section).then(function (section) {
           window.ipa_analyze_event('courses', 'section updated');
 

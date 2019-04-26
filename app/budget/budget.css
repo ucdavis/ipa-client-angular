@@ -128,3 +128,13 @@
 .add-course__modal .ipa-modal-content {
   overflow-y: visible;
 }
+
+@media print {
+  @page {
+    margin: 1cm;
+  }
+
+  .do-not-print {
+		display: none;
+  }
+}
