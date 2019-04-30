@@ -263,7 +263,7 @@ class BudgetComparisonReportCalculations {
 					var lineItem = lineItems.list[lineItemId];
 					var lineItemCategoryId = lineItem.lineItemCategoryId;
 
-					if (lineItem.budgetScenarioId != selectedScenarioId || lineItem.amount == 0) { return; }
+					if (lineItem.budgetScenarioId != selectedScenarioId || lineItem.amount == 0 || lineItem.hidden) { return; }
 
 					if (funding.typeIds.indexOf(lineItemCategoryId) == -1) {
 						funding.typeIds.push(lineItemCategoryId);
