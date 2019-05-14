@@ -3,7 +3,7 @@
 		<div class="support-courses-tab__header-small">
 			Course
 		</div>
-		<div class="ipa-table__header-cell ipa-table__body-cell--extra-large support-courses-tab__right-header">
+		<!-- <div class="ipa-table__header-cell ipa-table__body-cell--extra-large support-courses-tab__right-header">
 			<div class="support-courses-tab__assigned-header">
 				Assign {{ state.ui.viewType }}
 			</div>
@@ -14,7 +14,7 @@
 					active-radio="state.ui.viewType">
 				</ipa-radio>
 			</div>
-		</div>
+		</div> -->
 	</div>
 
 	<div
@@ -42,6 +42,25 @@
 					<assign-support-staff
 						ng-hide="state.ui.readOnlyMode"
 						view-type="state.ui.viewType"
+						section-group="sectionGroup"
+						assignment-options="sectionGroup.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
+				</div>
+			</div>
+			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
+				<div class="support-courses-tab__assignment"
+					ng-repeat="supportAssignment in sectionGroup.supportAssignments"
+					ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
+					<support-assignment-row
+						read-only="state.ui.readOnlyMode"
+						name="supportAssignment.fullName"
+						support-assignment="supportAssignment">
+					</support-assignment-row>
+				</div>
+				<div class="support-courses-tab__assignment">
+					<assign-support-staff
+						ng-hide="state.ui.readOnlyMode"
+						view-type="'Readers'"
 						section-group="sectionGroup"
 						assignment-options="sectionGroup.teachingAssistantAssignmentOptions">
 					</assign-support-staff>
