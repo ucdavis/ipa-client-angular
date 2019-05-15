@@ -79,7 +79,7 @@
 			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
 				<div class="support-courses-tab__assignment"
 					ng-repeat="supportAssignment in section.supportAssignments"
-					ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
+					ng-show="supportAssignment.viewType == 'Teaching Assistants' && supportAssignment.supportStaffId > 0">
 					<support-assignment-row
 						read-only="state.ui.readOnlyMode"
 						name="supportAssignment.fullName"
@@ -89,7 +89,27 @@
 				<div class="support-courses-tab__assignment">
 					<assign-support-staff
 						ng-hide="state.ui.readOnlyMode"
-						view-type="state.ui.viewType"
+						view-type="'Teaching Assistants'"
+						section="section"
+						assignment-options="section.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
+				</div>
+			</div>
+
+			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
+				<div class="support-courses-tab__assignment"
+					ng-repeat="supportAssignment in section.supportAssignments"
+					ng-show="supportAssignment.viewType == 'Readers' && supportAssignment.supportStaffId > 0">
+					<support-assignment-row
+						read-only="state.ui.readOnlyMode"
+						name="supportAssignment.fullName"
+						support-assignment="supportAssignment">
+					</support-assignment-row>
+				</div>
+				<div class="support-courses-tab__assignment">
+					<assign-support-staff
+						ng-hide="state.ui.readOnlyMode"
+						view-type="'Readers'"
 						section="section"
 						assignment-options="section.teachingAssistantAssignmentOptions">
 					</assign-support-staff>
