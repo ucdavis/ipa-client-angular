@@ -18,15 +18,15 @@
 	</div>
 
 	<div ng-hide="state.ui.readOnlyMode" class="staff-preferences__assignment">
-		<assign-course ng-show="state.ui.viewType == 'Readers'"
+		<assign-course
 			support-staff="supportStaff"
 			assignment-options="supportStaff.assignmentOptions.reader"
-			view-type="state.ui.viewType">
+			view-type="'Readers'">
 		</assign-course>
-		<assign-course ng-show="state.ui.viewType == 'Teaching Assistants'"
+		<assign-course
 			support-staff="supportStaff"
 			assignment-options="supportStaff.assignmentOptions.ta"
-			view-type="state.ui.viewType">
+			view-type="'Teaching Assistants'">
 		</assign-course>
 	</div>
 
