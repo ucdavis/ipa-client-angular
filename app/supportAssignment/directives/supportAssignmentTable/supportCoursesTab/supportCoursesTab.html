@@ -29,6 +29,11 @@
 				</course-header>
 			</div>
 			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
+				<div class="support-courses-tab__assignment">
+					<assign-support-staff ng-hide="state.ui.readOnlyMode" view-type="'Teaching Assistants'" section-group="sectionGroup"
+						assignment-options="sectionGroup.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
+				</div>
 				<div class="support-courses-tab__assignment"
 					ng-repeat="supportAssignment in sectionGroup.supportAssignments"
 					ng-show="supportAssignment.viewType == 'Teaching Assistants' && supportAssignment.supportStaffId > 0">
@@ -38,16 +43,13 @@
 						support-assignment="supportAssignment">
 					</support-assignment-row>
 				</div>
+			</div>
+			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
 				<div class="support-courses-tab__assignment">
-					<assign-support-staff
-						ng-hide="state.ui.readOnlyMode"
-						view-type="'Teaching Assistants'"
-						section-group="sectionGroup"
+					<assign-support-staff ng-hide="state.ui.readOnlyMode" view-type="'Readers'" section-group="sectionGroup"
 						assignment-options="sectionGroup.teachingAssistantAssignmentOptions">
 					</assign-support-staff>
 				</div>
-			</div>
-			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
 				<div class="support-courses-tab__assignment"
 					ng-repeat="supportAssignment in sectionGroup.supportAssignments"
 					ng-show="supportAssignment.viewType == 'Readers' && supportAssignment.supportStaffId > 0">
@@ -56,14 +58,6 @@
 						name="supportAssignment.fullName"
 						support-assignment="supportAssignment">
 					</support-assignment-row>
-				</div>
-				<div class="support-courses-tab__assignment">
-					<assign-support-staff
-						ng-hide="state.ui.readOnlyMode"
-						view-type="'Readers'"
-						section-group="sectionGroup"
-						assignment-options="sectionGroup.teachingAssistantAssignmentOptions">
-					</assign-support-staff>
 				</div>
 			</div>
 		</div>
@@ -77,6 +71,11 @@
 			</div>
 
 			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
+				<div class="support-courses-tab__assignment">
+					<assign-support-staff ng-hide="state.ui.readOnlyMode" view-type="'Teaching Assistants'" section="section"
+						assignment-options="section.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
+				</div>
 				<div class="support-courses-tab__assignment"
 					ng-repeat="supportAssignment in section.supportAssignments"
 					ng-show="supportAssignment.viewType == 'Teaching Assistants' && supportAssignment.supportStaffId > 0">
@@ -86,17 +85,14 @@
 						support-assignment="supportAssignment">
 					</support-assignment-row>
 				</div>
-				<div class="support-courses-tab__assignment">
-					<assign-support-staff
-						ng-hide="state.ui.readOnlyMode"
-						view-type="'Teaching Assistants'"
-						section="section"
-						assignment-options="section.teachingAssistantAssignmentOptions">
-					</assign-support-staff>
-				</div>
 			</div>
 
 			<div class="ipa-table__body-cell ipa-table__body-cell--extra-large support-courses-tab__assignment-container">
+				<div class="support-courses-tab__assignment">
+					<assign-support-staff ng-hide="state.ui.readOnlyMode" view-type="'Readers'" section="section"
+						assignment-options="section.teachingAssistantAssignmentOptions">
+					</assign-support-staff>
+				</div>
 				<div class="support-courses-tab__assignment"
 					ng-repeat="supportAssignment in section.supportAssignments"
 					ng-show="supportAssignment.viewType == 'Readers' && supportAssignment.supportStaffId > 0">
@@ -105,14 +101,6 @@
 						name="supportAssignment.fullName"
 						support-assignment="supportAssignment">
 					</support-assignment-row>
-				</div>
-				<div class="support-courses-tab__assignment">
-					<assign-support-staff
-						ng-hide="state.ui.readOnlyMode"
-						view-type="'Readers'"
-						section="section"
-						assignment-options="section.teachingAssistantAssignmentOptions">
-					</assign-support-staff>
 				</div>
 			</div>
 		</div>
