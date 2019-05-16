@@ -6,28 +6,34 @@
 		Assignments
 	</div>
 
-	<div class="staff-preferences__assignment"
-		ng-repeat="supportAssignment in supportStaff.supportAssignments"
-		ng-show="supportAssignment.viewType == state.ui.viewType && supportAssignment.supportStaffId > 0">
-		<support-assignment-row
-			read-only="state.ui.readOnlyMode"
-			name="supportAssignment.description"
-			on-delete="deleteAssignment"
-			support-assignment="supportAssignment">
-		</support-assignment-row>
+	<div class="staff-preferences__assignment-container">
+		<div ng-hide="state.ui.readOnlyMode" class="support-courses-tab__assignment">
+			<assign-course support-staff="supportStaff" assignment-options="supportStaff.assignmentOptions.ta"
+				view-type="'Teaching Assistants'">
+			</assign-course>
+		</div>
+
+		<div class="staff-preferences__assignment" ng-repeat="supportAssignment in supportStaff.supportAssignments"
+			ng-show="supportAssignment.viewType == 'Teaching Assistants' && supportAssignment.supportStaffId > 0">
+			<support-assignment-row read-only="state.ui.readOnlyMode" name="supportAssignment.description"
+				on-delete="deleteAssignment" support-assignment="supportAssignment">
+			</support-assignment-row>
+		</div>
 	</div>
 
-	<div ng-hide="state.ui.readOnlyMode" class="staff-preferences__assignment">
-		<assign-course
-			support-staff="supportStaff"
-			assignment-options="supportStaff.assignmentOptions.reader"
-			view-type="'Readers'">
-		</assign-course>
-		<assign-course
-			support-staff="supportStaff"
-			assignment-options="supportStaff.assignmentOptions.ta"
-			view-type="'Teaching Assistants'">
-		</assign-course>
+	<div class="staff-preferences__assignment-container">
+		<div ng-hide="state.ui.readOnlyMode" class="support-courses-tab__assignment">
+			<assign-course support-staff="supportStaff" assignment-options="supportStaff.assignmentOptions.reader"
+				view-type="'Readers'">
+			</assign-course>
+		</div>
+
+		<div class="staff-preferences__assignment" ng-repeat="supportAssignment in supportStaff.supportAssignments"
+			ng-show="supportAssignment.viewType == 'Readers' && supportAssignment.supportStaffId > 0">
+			<support-assignment-row read-only="state.ui.readOnlyMode" name="supportAssignment.description"
+				on-delete="deleteAssignment" support-assignment="supportAssignment">
+			</support-assignment-row>
+		</div>
 	</div>
 
 	<div ng-show="state.ui.readOnlyMode">

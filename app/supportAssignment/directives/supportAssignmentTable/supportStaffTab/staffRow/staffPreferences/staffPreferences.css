@@ -1,10 +1,17 @@
 .staff-preferences {
 	padding: 20px;
+	display: flex;
 }
 
 .staff-preferences__assignment {
 	display: flex;
 	justify-content: center;
+}
+
+.staff-preferences__assignment-container {
+	flex-flow: column;
+	width: 50%;
+	padding: 20px;
 }
 
 .staff-preferences__title {
