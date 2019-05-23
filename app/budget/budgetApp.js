@@ -1,16 +1,17 @@
 // CSS
-import './budget.css';
+import "./budget.css";
 
 // Controllers
-import BudgetCtrl from './budgetCtrl.js';
+import BudgetCtrl from "./budgetCtrl.js";
 
 // Services
-import BudgetActions from './services/actions/budgetActions.js';
-import BudgetCalculations from './services/actions/budgetCalculations.js';
-import BudgetReducers from './services/budgetReducers.js';
-import BudgetSelectors from './services/budgetSelectors.js';
-import BudgetService from './services/budgetService.js';
-import ScheduleCostCalculations from './services/actions/scheduleCostCalculations';
+import BudgetActions from "./services/actions/budgetActions.js";
+import BudgetCalculations from "./services/actions/budgetCalculations.js";
+import BudgetReducers from "./services/budgetReducers.js";
+import BudgetSelectors from "./services/budgetSelectors.js";
+import BudgetExcelService from "./services/budgetExcelService.js";
+import BudgetService from "./services/budgetService.js";
+import ScheduleCostCalculations from "./services/actions/scheduleCostCalculations";
 
 // Shared services
 import ApiService from './../shared/services/ApiService.js';
@@ -20,65 +21,65 @@ import SectionService from './../shared/services/SectionService.js';
 import CourseService from './../shared/services/CourseService.js';
 
 // Directives
-import budgetNav from './directives/budgetNav/budgetNav.js';
-import lineItemFilters from './directives/budgetNav/lineItemFilters/lineItemFilters.js';
+import budgetNav from "./directives/budgetNav/budgetNav.js";
+import lineItemFilters from "./directives/budgetNav/lineItemFilters/lineItemFilters.js";
 
-import budgetScenarioToolbar from './directives/budgetScenarioToolbar/budgetScenarioToolbar.js';
-import budgetScenarioDropdown from './directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js';
-import lineItems from './directives/lineItems/lineItems.js';
-import lineItemDropdown from './directives/lineItems/lineItemDropdown/lineItemDropdown.js';
-import budgetSummary from './directives/budgetSummary/budgetSummary.js';
-import instructorList from './directives/instructorList/instructorList.js';
-import courseList from './directives/courseList/courseList.js';
+import budgetScenarioToolbar from "./directives/budgetScenarioToolbar/budgetScenarioToolbar.js";
+import budgetScenarioDropdown from "./directives/budgetScenarioToolbar/budgetScenarioDropdown/budgetScenarioDropdown.js";
+import lineItems from "./directives/lineItems/lineItems.js";
+import lineItemDropdown from "./directives/lineItems/lineItemDropdown/lineItemDropdown.js";
+import budgetSummary from "./directives/budgetSummary/budgetSummary.js";
+import instructorList from "./directives/instructorList/instructorList.js";
+import courseList from "./directives/courseList/courseList.js";
 
-import budgetCosts from './directives/budgetCosts/budgetCosts.js';
-import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
-import instructorCostsRow from './directives/budgetCosts/instructorCostsRow/instructorCostsRow.js';
-import instructorAssignmentDropdown from './directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
+import budgetCosts from "./directives/budgetCosts/budgetCosts.js";
+import courseCostsRow from "./directives/budgetCosts/courseCostsRow/courseCostsRow.js";
+import instructorCostsRow from "./directives/budgetCosts/instructorCostsRow/instructorCostsRow.js";
+import instructorAssignmentDropdown from "./directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js";
 
-import addBudgetScenario from './directives/modals/addBudgetScenario/addBudgetScenario.js';
-import addCourseComments from './directives/modals/addCourseComments/addCourseComments.js';
-import addLineItem from './directives/modals/addLineItem/addLineItem.js';
-import addLineItemComments from './directives/modals/addLineItemComments/addLineItemComments.js';
+import addBudgetScenario from "./directives/modals/addBudgetScenario/addBudgetScenario.js";
+import addCourseComments from "./directives/modals/addCourseComments/addCourseComments.js";
+import addLineItem from "./directives/modals/addLineItem/addLineItem.js";
+import addLineItemComments from "./directives/modals/addLineItemComments/addLineItemComments.js";
 
-import addCourse from './directives/modals/addCourse/addCourse.js';
+import addCourse from "./directives/modals/addCourse/addCourse.js";
 
 // Dependencies
-var dependencies = [
-	"sharedApp",
-	"ngRoute"
-];
+var dependencies = ["sharedApp", "ngRoute"];
 
 // Config
-function config ($routeProvider) {
-	return $routeProvider
-	.when("/:workgroupId/:year", {
-		template: require('./BudgetCtrl.html'),
-		controller: "BudgetCtrl",
-		resolve: {
-			validate: function (AuthService, $route, BudgetActions) {
-				return AuthService.validate().then(function () {
-					if ($route.current.params.workgroupId) {
-						if ($route.current.params.workgroupId) {
-							var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+function config($routeProvider) {
+  return $routeProvider
+    .when("/:workgroupId/:year", {
+      template: require("./BudgetCtrl.html"),
+      controller: "BudgetCtrl",
+      resolve: {
+        validate: function(AuthService, $route, BudgetActions) {
+          return AuthService.validate().then(function() {
+            if ($route.current.params.workgroupId) {
+              if ($route.current.params.workgroupId) {
+                var hasAccess = AuthService.getCurrentUser().hasAccess(
+                  "academicPlanner",
+                  $route.current.params.workgroupId
+                );
 
-							if (hasAccess) {
-								return BudgetActions.getInitialState();
-							} else {
-								return { noAccess: true };
-							}
-						}
-					}
-				});
-			}
-		}
-	})
-	.otherwise({
-		redirectTo: "/"
-	});
+                if (hasAccess) {
+                  return BudgetActions.getInitialState();
+                } else {
+                  return { noAccess: true };
+                }
+              }
+            }
+          });
+        }
+      }
+    })
+    .otherwise({
+      redirectTo: "/"
+    });
 }
 
-config.$inject = ['$routeProvider'];
+config.$inject = ["$routeProvider"];
 
 // App declaration
 const budgetApp = angular.module("budgetApp", dependencies) // eslint-disable-line no-undef
