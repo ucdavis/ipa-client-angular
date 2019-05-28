@@ -18,6 +18,7 @@ import ApiService from "./../shared/services/ApiService.js";
 import TermService from "./../shared/services/TermService.js";
 import AuthService from "./../shared/services/AuthService.js";
 import SectionService from "./../shared/services/SectionService.js";
+import DwService from "./../shared/services/DwService.js";
 
 // Directives
 import budgetNav from "./directives/budgetNav/budgetNav.js";
@@ -53,8 +54,8 @@ function config($routeProvider) {
       template: require("./BudgetCtrl.html"),
       controller: "BudgetCtrl",
       resolve: {
-        validate: function(AuthService, $route, BudgetActions) {
-          return AuthService.validate().then(function() {
+        validate: function (AuthService, $route, BudgetActions) {
+          return AuthService.validate().then(function () {
             if ($route.current.params.workgroupId) {
               if ($route.current.params.workgroupId) {
                 var hasAccess = AuthService.getCurrentUser().hasAccess(
@@ -94,6 +95,7 @@ const budgetApp = angular // eslint-disable-line no-undef
   .service("ApiService", ApiService)
   .service("TermService", TermService)
   .service("AuthService", AuthService)
+  .service("DwService", DwService)
   .service("ScheduleCostCalculations", ScheduleCostCalculations)
   .service("SectionService", SectionService)
   .directive("budgetNav", budgetNav)
