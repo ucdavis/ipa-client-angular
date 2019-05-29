@@ -78,17 +78,18 @@
 }
 
 .assign-support-staff__priority-icon {
-	width: 5%;
+	flex: 0;
 }
 
 
 .assign-support-staff__scheduling-conflict-icon {
 	color: #21A9E1;
-	width: 5%;
+	flex: 0;
 }
 
 .assign-support-staff__description {
-	width: 90%;
+	margin-left: 5px;
+	flex: 1;
 }
 
 .assign-support-staff__dropdown-item--schedule-conflict {
