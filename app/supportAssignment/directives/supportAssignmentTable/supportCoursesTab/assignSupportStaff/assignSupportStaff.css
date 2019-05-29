@@ -1,97 +1,96 @@
 .assign-support-staff {
-	width: 80%;
-	border: 1px solid #ddd;
-	font-weight: bold;
-	color: #555;
-	margin-bottom: 20px;
-	background-color: #F8F8F8;
-	cursor: pointer;
-	position: relative;
+  width: 80%;
+  border: 1px solid #ddd;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 20px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  position: relative;
 }
 
 .assign-support-staff__container {
-	width: 100%;
-	padding: 10px 15px;
-	display: flex;
+  width: 100%;
+  padding: 10px 15px;
+  display: flex;
 }
 
 .assign-support-staff__text {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .assign-support-staff__dropdown-container {
-	position: absolute;
-	width: 100%;
+  position: absolute;
+  width: 100%;
 }
 
 .assign-support-staff__dropdown {
-	position: relative;
-	width: 100%;
-	z-index: 30;
-	background-color: white;
-	margin-top: 4px;
-	border: 1px solid rgba(27,31,35,0.15);
-	border-radius: 3px;
-	box-shadow: 0 3px 12px rgba(27,31,35,0.15);
-	max-height: 300px;
-	overflow-y: scroll;
+  position: relative;
+  width: 100%;
+  z-index: 30;
+  background-color: white;
+  margin-top: 4px;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 3px;
+  box-shadow: 0 3px 12px rgba(27, 31, 35, 0.15);
+  max-height: 300px;
+  overflow-y: scroll;
 }
 
 .assign-support-staff:hover {
-	border-color: #bab9b9
+  border-color: #bab9b9;
 }
 
 .assign-support-staff__dropdown-item {
-	background-color: #fff;
-	padding-left: 30px;
-	padding-top: 8px;
-	padding-bottom: 8px;
-	padding-right: 8px;
-	border-bottom: 1px solid #eaecef;
-	cursor: pointer;
-	font-weight: normal;
-	display: flex;
+  background-color: #fff;
+  padding-left: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+  border-bottom: 1px solid #eaecef;
+  cursor: pointer;
+  font-weight: normal;
+  display: flex;
 }
 
 .assign-support-staff__dropdown-item:hover {
-	background-color: #f4f4f4;
+  background-color: #f4f4f4;
 }
 
 .assign-support-staff__dropdown-mask {
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 20;
-	display: block;
-	width: 100vw;
-	height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  display: block;
+  width: 100vw;
+  height: 100vh;
 }
 
 .assign-support-staff__dropdown-group-name {
-	color: #8d8b8b;
-	padding-left: 15px;
-	padding-top: 15px;
-	border-bottom: 1px solid #eaecef;
-	padding-bottom: 5px;
-	cursor: default;
+  color: #8d8b8b;
+  padding-left: 15px;
+  padding-top: 15px;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 5px;
+  cursor: default;
 }
 
 .assign-support-staff__priority-icon {
-	flex: 0;
+  flex: 0;
 }
 
-
 .assign-support-staff__scheduling-conflict-icon {
-	color: #21A9E1;
-	flex: 0;
+  color: #21a9e1;
+  flex: 0;
 }
 
 .assign-support-staff__description {
-	margin-left: 5px;
-	flex: 1;
+  margin-left: 5px;
+  flex: 1;
 }
 
 .assign-support-staff__dropdown-item--schedule-conflict {
-	color: #a5a5a5;
+  color: #a5a5a5;
 }
