@@ -1,5 +1,5 @@
 class BudgetActions {
-	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles, ScheduleCostCalculations, UserService, BudgetExcelService) {
+	constructor ($rootScope, $window, $route, BudgetService, BudgetReducers, TermService, BudgetCalculations, ActionTypes, Roles, ScheduleCostCalculations, UserService, BudgetExcelService, DwService) {
 		return {
 			getInitialState: function () {
 				var self = this;
@@ -38,6 +38,36 @@ class BudgetActions {
 							localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 						}
 					}
+
+					var sectionGroupCosts = results.sectionGroupCosts;
+					var terms = ["05", "07", "10", "01", "03"]; // TODO: get terms from selectedBudgetScenario?
+
+					var subjectCode = results.courses[0].subjectCode;
+					var termCodes = terms.map(function(term) {
+						return year + term; // FIXME: have to increase year by 1 for winter, spring
+					});
+
+					termCodes.forEach(function(termCode) {
+						DwService.getDwCensusData(subjectCode, null, termCode).then(function(census) {
+							// match courseNumber and TermCode and inject currentEnrollment number
+							census.forEach(function(courseCensus) {
+								sectionGroupCosts.forEach(function(sectionGroupCost) {
+									if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && sectionGroupCost.sequencePattern == courseCensus.sequenceNumber) {
+										sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
+
+										console.log(sectionGroupCost);
+									}
+								});
+							});
+
+							console.table(sectionGroupCosts);
+						}).catch(function(e) {
+							// handle error
+						});
+					});
+
+
+							// debugger;
 
 					BudgetReducers.reduce({
 						type: ActionTypes.INIT_STATE,
@@ -850,6 +880,6 @@ class BudgetActions {
 	}
 }
 
-BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles', 'ScheduleCostCalculations', 'UserService', 'BudgetExcelService'];
+BudgetActions.$inject = ['$rootScope', '$window', '$route', 'BudgetService', 'BudgetReducers', 'TermService', 'BudgetCalculations', 'ActionTypes', 'Roles', 'ScheduleCostCalculations', 'UserService', 'BudgetExcelService', 'DwService'];
 
 export default BudgetActions;
