@@ -36,7 +36,7 @@ let censusChart = function ($rootScope, $timeout) {
           var censusByTermCode = {};
 
           sequenceFilteredCensus.forEach(function(courseCensus) {
-            censusByTermCode[courseCensus.termCode] ? censusByTermCode[courseCensus.termCode].push(courseCensus) : censusByTermCode[courseCensus.termCode] = [];
+            censusByTermCode[courseCensus.termCode] ? censusByTermCode[courseCensus.termCode].push(courseCensus) : censusByTermCode[courseCensus.termCode] = [courseCensus];
           });
 
           for (var termCode in censusByTermCode) {
