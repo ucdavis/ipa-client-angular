@@ -44,7 +44,10 @@ class BudgetActions {
 
 					var subjectCode = results.courses[0].subjectCode;
 					var termCodes = terms.map(function(term) {
-						return year + term; // FIXME: have to increase year by 1 for winter, spring
+						if (term == "01" || term == "03") {
+							return (parseInt(year) + 1) + term;
+						}
+						return year + term;
 					});
 
 					termCodes.forEach(function(termCode) {
