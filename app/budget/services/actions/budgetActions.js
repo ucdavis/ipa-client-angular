@@ -40,7 +40,7 @@ class BudgetActions {
 					}
 
 					var sectionGroupCosts = results.sectionGroupCosts;
-					var terms = ["05", "07", "10", "01", "03"]; // TODO: get terms from selectedBudgetScenario?
+					var terms = ["05", "07", "10", "01", "03"];
 
 					var subjectCode = results.courses[0].subjectCode;
 					var termCodes = terms.map(function(term) {
@@ -53,24 +53,24 @@ class BudgetActions {
 					termCodes.forEach(function(termCode) {
 						DwService.getDwCensusData(subjectCode, null, termCode).then(function(census) {
 							// match courseNumber and TermCode and inject currentEnrollment number
-							census.forEach(function(courseCensus) {
-								sectionGroupCosts.forEach(function(sectionGroupCost) {
-									if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && sectionGroupCost.sequencePattern == courseCensus.sequenceNumber) {
-										sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
+							const currentCensusSnapshot = census.filter(function(c) {
+								return c.snapshotCode == "CURRENT";
+							});
 
-										console.log(sectionGroupCost);
+							currentCensusSnapshot.forEach(function(courseCensus) {
+								sectionGroupCosts.forEach(function(sectionGroupCost) {
+									if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode) {
+										sectionGroupCost.currentEnrollment
+                      ? (sectionGroupCost.currentEnrollment +=
+                          courseCensus.currentEnrolledCount)
+                      : sectionGroupCost
+                          .currentEnrollment = courseCensus
+                          .currentEnrolledCount;
 									}
 								});
 							});
-
-							console.table(sectionGroupCosts);
-						}).catch(function(e) {
-							// handle error
-						});
+						})
 					});
-
-
-							// debugger;
 
 					BudgetReducers.reduce({
 						type: ActionTypes.INIT_STATE,
