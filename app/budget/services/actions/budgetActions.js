@@ -69,7 +69,7 @@ class BudgetActions {
 									}
 								});
 							});
-						})
+						});
 					});
 
 					BudgetReducers.reduce({
