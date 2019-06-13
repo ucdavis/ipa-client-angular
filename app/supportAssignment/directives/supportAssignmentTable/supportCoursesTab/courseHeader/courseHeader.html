@@ -7,17 +7,28 @@
 		<tbody>
 			<tr>
 				<td class="course-header__cell">
-					<div ng-show="viewType == 'Teaching Assistants'">
+					<div>
 						TAs
 					</div>
-					<div ng-show="viewType == 'Readers'">
+				</td>
+				<td class="course-header__cell">
+					<course-appointment-input
+						section-group="sectionGroup"
+						view-type="'Teaching Assistants'"
+						read-only="readOnly">
+					</course-appointment-input>
+				</td>
+			</tr>
+			<tr>
+				<td class="course-header__cell">
+					<div>
 						Readers
 					</div>
 				</td>
 				<td class="course-header__cell">
 					<course-appointment-input
 						section-group="sectionGroup"
-						view-type="viewType"
+						view-type="'Readers'"
 						read-only="readOnly">
 					</course-appointment-input>
 				</td>
