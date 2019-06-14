@@ -137,9 +137,8 @@
 	.do-not-print {
 		display: none;
 	}
-	
+
 	.do-print{
-		display: block !important;
+		display: block;
 	}
-	
 }

@@ -422,9 +422,9 @@
           <div ng-repeat="(key, courses) in scheduleCosts.byTerm">
             <div class="budget-costs-term-title">{{ getTermName(key) }}</div>
             <div ng-repeat="course in courses track by course.uniqueKey">
-              <div class="budget-costs-print__table-page-brake">
+              <div class="budget-costs-print__page-brake">
                 <table class="budget-costs-print__table">
-                <caption>
+                <caption> Caption
                   {{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
                 </caption>
                   <colgroup>
@@ -443,18 +443,18 @@
                   </colgroup>
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>Enr.</th>
-                      <th>Instructor</th>
-                      <th>Orig. Instructor</th>
-                      <th>Sec.</th>
-                      <th>TAs</th>
-                      <th>TA $</th>
-                      <th>Rea.</th>
-                      <th>Rea.$</th>
-                      <th>Sup. $</th>
-                      <th>Instr. $</th>
-                      <th>Total</th>
+                      <th class="budget-costs-print__table_th">#</th>
+                      <th class="budget-costs-print__table_th">Enr.</th>
+                      <th class="budget-costs-print__table_th">Instructor</th>
+                      <th class="budget-costs-print__table_th">Orig. Instructor</th>
+                      <th class="budget-costs-print__table_th">Sec.</th>
+                      <th class="budget-costs-print__table_th">TAs</th>
+                      <th class="budget-costs-print__table_th">TA $</th>
+                      <th class="budget-costs-print__table_th">Rea.</th>
+                      <th class="budget-costs-print__table_th">Rea.$</th>
+                      <th class="budget-costs-print__table_th">Sup. $</th>
+                      <th class="budget-costs-print__table_th">Instr. $</th>
+                      <th class="budget-costs-print__table_th">Total</th>
                     </tr>
                   </thead>
                 </table>
@@ -477,18 +477,18 @@
                       </colgroup>
                     <tbody>
                       <tr>
-                        <td>{{ sectionGroupCost.sequencePattern }}</td>
-                        <td>{{ sectionGroupCost.enrollment || 0 }}</td>
-                        <td>{{ sectionGroupCost.instructorDescription }}</td>
-                        <td>{{ sectionGroupCost.originalInstructorDescription }}</td>
-                        <td>{{ sectionGroupCost.sectionCount }}</td>
-                        <td>{{ sectionGroupCost.taCount }}</td>
-                        <td>{{ sectionGroupCost.taCost }}</td>
-                        <td>{{ sectionGroupCost.readerCount }}</td>
-                        <td>{{ sectionGroupCost.readerCost }}</td>
-                        <td>{{ sectionGroupCost.courseCostSubTotal }}</td>
-                        <td>{{ sectionGroupCost.instructorCostSubTotal }}</td>
-                        <td>{{ toCurrency(sectionGroupCost.totalCost) }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.sequencePattern }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.enrollment || 0 }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.instructorDescription }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.originalInstructorDescription }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.sectionCount }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.taCount }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.taCost }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.readerCount }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.readerCost }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.courseCostSubTotal }}</td>
+                        <td class="budget-costs-print__table_td">{{ sectionGroupCost.instructorCostSubTotal }}</td>
+                        <td class="budget-costs-print__table_td">{{ toCurrency(sectionGroupCost.totalCost) }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -509,16 +509,16 @@
     <table class="line-items-print__table">
       <thead>
         <tr>
-          <th><div>Type</div></th>
-          <th><div>Description</div></th>
-          <th><div>Amount</div></th>
+          <th class="line-items-print__table_th"><div>Type</div></th>
+          <th class="line-items-print__table_th"><div>Description</div></th>
+          <th class="line-items-print__table_th"><div>Amount</div></th>
         </tr>
       </thead>
 
       <tbody>
         <tr ng-repeat="lineItem in lineItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
           <!-- Category -->
-          <td>
+          <td class="line-items-print__table_td">
             {{ lineItem.categoryDescription }}
             <span ng-if="lineItem.isOrphaned">
               <i class="entypo-attention line-items-print__orphan-warn"
@@ -535,12 +535,12 @@
           </td>
 
           <!-- Description -->
-          <td ng-class-odd="'line-items-print__table-cell--dark'">
+          <td  class="line-items-print__table_td" ng-class-odd="'line-items-print__table-cell--dark'">
             {{ lineItem.description }}
           </td>
 
           <!-- Amount -->
-          <td ng-class-odd="'line-items-print__table-cell--dark'">
+          <td  class="line-items-print__table_td" ng-class-odd="'line-items-print__table-cell--dark'">
             <div class="line-items-print__amount-container">
               <div>
                 {{ toCurrency(lineItem.amount) }}
@@ -549,7 +549,7 @@
           </td>
         </tr>
         <tr ng-if="lineItems.length == 0">
-          <td colspan="5">
+          <td  class="line-items-print__table_td" colspan="5">
             <div class="line-items-print__no-funds">
               No Funds Added
             </div>
@@ -576,18 +576,17 @@
             </colgroup>
             <thead>
               <tr>
-                <th ><div>Instructor</div></th>
-                <th><div>Type</div></th>
-                <th><div>Cost</div></th>
+                <th class="instructor-costs__table__th"><div>Instructor</div></th>
+                <th class="instructor-costs__table__th"><div>Type</div></th>
+                <th class="instructor-costs__table__th"><div>Cost</div></th>
               </tr>
             </thead>
     
             <tbody>
-            <tbody>
               <tr ng-repeat="instructor in state.calculatedInstructors">
-                <td><div>{{ instructor.lastName }}, {{ instructor.firstName }}</div></td>
-                <td><div>{{ instructor.instructorType.description }}</div></td>
-                <td>
+                <td class="instructor-costs__table__td"><div>{{ instructor.lastName }}, {{ instructor.firstName }}</div></td>
+                <td class="instructor-costs__table__td"><div>{{ instructor.instructorType.description }}</div></td>
+                <td class="instructor-costs__table__td">
                   <div>
                     <div ng-if="instructor.instructorCost.overrideCostSource == 'instructor' && instructor.instructorCost.overrideCostSource.length > 0">
                       <ipa-input mode="'currency'"
@@ -622,23 +621,23 @@
             </colgroup>
             <thead>
               <tr>
-                <th><div>Type</div></th>
-                <th><div>Cost</div></th>
+                <th class="instructor-costs__table__th"><div>Type</div></th>
+                <th class="instructor-costs__table__th"><div>Cost</div></th>
               </tr>
             </thead>
     
             <tbody>
               <tr>
-                <td><div>TA</div></td>
-                <td><div><ipa-input value="state.budget.taCost" mode="'currency'"></ipa-input></div></td>
+                <td class="instructor-costs__table__td"><div>TA</div></td>
+                <td class="instructor-costs__table__td"><div><ipa-input value="state.budget.taCost" mode="'currency'"></ipa-input></div></td>
               </tr>
               <tr>
-                <td><div>Reader</div></td>
-                <td><div><ipa-input value="state.budget.readerCost" mode="'currency'"></ipa-input></div></td>
+                <td class="instructor-costs__table__td"><div>Reader</div></td>
+                <td class="instructor-costs__table__td"><div><ipa-input value="state.budget.readerCost" mode="'currency'"></ipa-input></div></td>
               </tr>
               <tr ng-repeat="instructorTypeCost in state.calculatedInstructorTypeCosts">
-                <td><div>{{ instructorTypeCost.description }}</div></td>
-                <td><div><ipa-input value="instructorTypeCost.cost" mode="'currency'"></ipa-input></div></td>
+                <td class="instructor-costs__table__td"><div>{{ instructorTypeCost.description }}</div></td>
+                <td class="instructor-costs__table__td"><div><ipa-input value="instructorTypeCost.cost" mode="'currency'"></ipa-input></div></td>
               </tr>
             </tbody>
           </table>

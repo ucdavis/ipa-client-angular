@@ -4,8 +4,8 @@
 }
 
 @media print {
-  @page {
-    margin: 1cm;
+	@page {
+		margin: 1cm;
 	}
 
 	#toast-container {
@@ -16,9 +16,9 @@
 		font: 9pt "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
 		line-height: 1.3;
 		}
-  
+
 	.do-print {
-		display: block !important;
+		display: block;
 	}
 
 	p {
@@ -29,7 +29,6 @@
 	.page-break-before {
 		page-break-before: always;
 	}
-
 
 	/* SUMMARY REPORT STYLE */
 
@@ -106,39 +105,37 @@
 		text-align: center;
 	}
 	
-
 /* SCHEDULE COST STYLE */
 
 	.budget-costs-print, .budget-costs-print__table{
-		width: 670px !important;
+		width: 670px;
 		font: 8pt "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
 	}
+	
+	.budget-costs-print__page-brake {
+		page-break-before: auto;
+		page-break-inside: avoid;
+	} 
 
 	.budget-costs-print__table {
 		border-collapse: collapse;
 		font: 7.5pt "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
 	}
 	
-	.budget-costs-print__table-page-brake {
-		page-break-before: auto;
-		page-break-inside: avoid !important;
-	} 
-
-	.budget-costs-print__table > thead > tr > th,
-	.budget-costs-print__table > tbody > tr > td {
+	.budget-costs-print__table_th {
 		vertical-align: center;
 		border: 1px solid #e3e3e3;
 		text-align: center;
 	}
-
-	.budget-costs-print__table > tbody > tr > td {
+	
+	.budget-costs-print__table_td {
+		vertical-align: center;
+		border: 1px solid #e3e3e3;
+		text-align: center;
 		border-top:0;
+		padding: 0px;
 	}
-
-	.budget-costs-print__table > tbody > tr > td {
-		padding: 0px !important;
-	}
-
+	
 	.budget-costs-term-title{
 		font-size: 14px;
 		margin-top: 20px;
@@ -150,11 +147,8 @@
 
 	caption {
 		font-size: 9pt;
-		font-weight: bold;
 		padding-bottom: 2px;
-		color: #333333 !important;
 	}
-
 
 	/* FUNDS STYLE */
 
@@ -164,15 +158,15 @@
 		margin-bottom: 20px;
 	}
 
-	.line-items-print__table > thead > tr > th,
-	.line-items-print__table > tbody > tr > td {
+	.line-items-print__table_th {
 		border: 1px solid #e3e3e3;
-		padding: 3px 5px;
-	}
-
-	.line-items-print__table > thead > tr > th {
 		padding: 4px 5px;
 		font-weight: bold;
+	}
+	
+	.line-items-print__table_td {
+		border: 1px solid #e3e3e3;
+		padding: 3px 5px;
 	}
 
 	.line-items-print__orphan-warn {
@@ -188,7 +182,6 @@
 		color: gray;
 	}
 
-
 	/* INSTRUCTOR LIST STYLE */
 
 	.instructor-costs__table {
@@ -197,21 +190,18 @@
 		margin-bottom: 20px;
 	}
 
-	.instructor-costs__table > thead > tr > th,
-	.instructor-costs__table> tbody > tr > td {
+	.instructor-costs__table__th {
+		border: 1px solid #e3e3e3;
+		text-align: left;
+		padding: 4px 5px;
+		font-weight: bold;
+  }
+  
+	.instructor-costs__table__td {
 		border: 1px solid #e3e3e3;
 		padding: 3px 5px;
 	}
-
-	.instructor-costs__table > thead > tr > th {
-		text-align: left;
-	}
-
-	.instructor-costs__table > thead > tr > th {
-		padding: 4px 5px;
-		font-weight: bold;
-	}
-
+	
 	.ipa-input {
 		border: none;
 		padding: 0px;

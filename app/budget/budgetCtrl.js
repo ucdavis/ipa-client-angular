@@ -25,7 +25,6 @@ class BudgetCtrl {
 	initialize () {
 		var _self = this;
 
-
 		this.$scope.currentUser = _self.AuthService.getCurrentUser();
 
 		this.$rootScope.$on('budgetStateChanged', function (event, data) {
