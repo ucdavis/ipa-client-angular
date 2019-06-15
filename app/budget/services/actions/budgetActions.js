@@ -47,10 +47,10 @@ class BudgetActions {
 					});
 
 					termCodes.forEach(function(termCode) {
-						DwService.getDwCensusData(subjectCode, null, termCode).then(function(census) {
+						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censuses) {
 							// match courseNumber and TermCode and inject currentEnrollment number
-							const currentCensusSnapshot = census.filter(function(c) {
-								return c.snapshotCode == "CURRENT";
+							const currentCensusSnapshot = censuses.filter(function(census) {
+								return census.snapshotCode == "CURRENT";
 							});
 
 							currentCensusSnapshot.forEach(function(courseCensus) {
