@@ -43,10 +43,7 @@ class BudgetActions {
 					var terms = Object.keys(TermService.termCodeDescriptions);
 					var subjectCode = results.courses[0].subjectCode;
 					var termCodes = terms.map(function(term) {
-						if (term == "01" || term == "03") {
-							return (parseInt(year) + 1) + term;
-						}
-						return year + term;
+						return TermService.termToTermCode(term, year);
 					});
 
 					termCodes.forEach(function(termCode) {
