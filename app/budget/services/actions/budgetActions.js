@@ -40,8 +40,7 @@ class BudgetActions {
 					}
 
 					var sectionGroupCosts = results.sectionGroupCosts;
-					var terms = ["05", "07", "10", "01", "03"];
-
+					var terms = Object.keys(TermService.termCodeDescriptions);
 					var subjectCode = results.courses[0].subjectCode;
 					var termCodes = terms.map(function(term) {
 						if (term == "01" || term == "03") {
