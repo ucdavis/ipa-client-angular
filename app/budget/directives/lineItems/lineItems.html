@@ -31,6 +31,11 @@
 							Comments
 						</div>
 					</th>
+					<th class="line-items__table-header line-items__table--account">
+						<div class="line-items__table-header-container">
+							Account
+						</div>
+					</th>
 					<th class="line-items__table-header line-items__table--amount">
 						<div class="line-items__table-header-amount-container">
 							Amount
@@ -91,6 +96,11 @@
 						</div>
 					</td>
 
+					<!-- Account Number -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						{{ lineItem.accountNumber }}
+					</td>
+
 					<!-- Amount -->
 					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__amount-container">
@@ -115,10 +125,11 @@
 
 		<table class="line-items__table" ng-show="ui.fundsNav.activeTab == 'Suggested'">
 			<colgroup>
-				<col style="width: 8%;">
+				<col style="width: 5%;">
 				<col style="width: 20%;">
 				<col style="width: 35%;">
-				<col style="width: 27%;">
+				<col style="width: 25%;">
+				<col style="width: 10%;">
 				<col style="width: 10%;">
 			</colgroup>
 			<thead>

@@ -29,6 +29,10 @@
 	width: 3%;
 }
 
+.line-items__table--account {
+	width: 1%;
+}
+
 .line-items__table--amount {
 	width: 1%;
 }
@@ -46,6 +50,11 @@
 }
 
 .line-items__comment-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.line-items__account-container {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
