@@ -56,12 +56,9 @@ class BudgetActions {
 							currentCensusSnapshot.forEach(function(courseCensus) {
 								sectionGroupCosts.forEach(function(sectionGroupCost) {
 									if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode) {
-										sectionGroupCost.currentEnrollment
-                      ? (sectionGroupCost.currentEnrollment +=
-                          courseCensus.currentEnrolledCount)
-                      : sectionGroupCost
-                          .currentEnrollment = courseCensus
-                          .currentEnrolledCount;
+										sectionGroupCost.currentEnrollment ?
+											(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
+											sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
 									}
 								});
 							});
