@@ -1,13 +1,13 @@
 .budget-view {
-	padding: 20px;
+  padding: 20px;
 }
 
 .budget-view__nav-container {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .budget-view__course-costs-container {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 /*
@@ -15,114 +15,114 @@
 */
 
 .btn-default {
-	color: #303641;
-	background-color: white;
-	border: 1px solid #D6D6D6;
+  color: #303641;
+  background-color: white;
+  border: 1px solid #d6d6d6;
 }
 
 .description {
-	padding: 0px !important;
+  padding: 0px !important;
 }
 
 [contenteditable]:focus {
-	outline: 1px solid #E5E5E5 !important;
-	background-color: #F9F9F9;
+  outline: 1px solid #e5e5e5 !important;
+  background-color: #f9f9f9;
 }
 
 [contenteditable] {
-	border: 1px solid white;
-	text-decoration: underline;
+  border: 1px solid white;
+  text-decoration: underline;
 }
 
 [contenteditable]:hover {
-	outline: 1px solid #E5E5E5 !important;
-	background-color: #F9F9F9;
+  outline: 1px solid #e5e5e5 !important;
+  background-color: #f9f9f9;
 }
 
 /* modal */
 
 .budget-view .modal-header {
-	background: #303641 !important;
-	padding: 15px !important;
+  background: #303641 !important;
+  padding: 15px !important;
 }
 
 .budget-view .modal-header .close {
-	background: 0 0;
-	display: inline-block;
-	padding: 0 5px;
-	line-height: 1;
-	color: #fff;
-	zoom: 1;
-	opacity: 1 !important;
+  background: 0 0;
+  display: inline-block;
+  padding: 0 5px;
+  line-height: 1;
+  color: #fff;
+  zoom: 1;
+  opacity: 1 !important;
 }
 
 /* overwrite */
 
 .text-left {
-	text-align: left !important;
+  text-align: left !important;
 }
 
 .panel-heading {
-	padding:0px !important;
-	background-color: white !important;
+  padding: 0px !important;
+  background-color: white !important;
 }
 
 .panel-heading .panel-title {
-	font-size: 14px !important;
-	font-weight: bold !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
 }
 
 .panel-group .panel > .panel-heading > .panel-title > a {
-	font-size: 14px !important;
+  font-size: 14px !important;
 }
 
 .cb-wrapper {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 .caret {
-	display: inline-block !important;
+  display: inline-block !important;
 }
 
 .table > thead > tr > th {
-	border-bottom:unset;
+  border-bottom: unset;
 }
 
 .neon-dark-confirm-btn,
 .neon-dark-confirm-btn:focus,
 .neon-dark-confirm-btn:active,
 .neon-dark-confirm-btn {
-	background-color: rgb(48, 54, 65);
-	border-color: rgb(48, 54, 65);
-	color: white;
+  background-color: rgb(48, 54, 65);
+  border-color: rgb(48, 54, 65);
+  color: white;
 }
 
 .neon-dark-confirm-btn:hover {
-	background-color: rgb(18, 24, 35); /* Darker Version for hover */
-	color: white;
+  background-color: rgb(18, 24, 35); /* Darker Version for hover */
+  color: white;
 }
 
 .neon-dark-confirm-btn.disabled,
 .neon-dark-confirm-btn.disabled:hover,
 .neon-dark-confirm-btn.disabled:focus,
 .neon-dark-confirm-btn.disabled:active {
-	background-color: rgb(48, 54, 65);
-	color: white;
+  background-color: rgb(48, 54, 65);
+  color: white;
 }
 
 .budget-scenario-dropdown .budget-scenario-row {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .budget-scenario-dropdown .create-budget-scenario-ui:hover {
-	background-color: #f5f5f5;
-	cursor: pointer;
+  background-color: #f5f5f5;
+  cursor: pointer;
 }
 
 /* Bootstrap overrides */
 .form-horizontal .form-group {
-	margin-left: 0px;
-	margin-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .add-course__modal .ipa-modal-content {

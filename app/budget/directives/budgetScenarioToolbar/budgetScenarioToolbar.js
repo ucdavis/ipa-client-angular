@@ -76,10 +76,13 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				BudgetActions.updateBudgetScenario(scope.state.selectedBudgetScenario);
 			};
 
-			scope.print = function() {
-				window.print();		
+			scope.downloadBudgetExcel = function() {
+				BudgetActions.downloadBudgetExcel(scope.state);
 			};
 
+			scope.print = function() {
+				window.print();
+			};
 		} // End Link
 	};
 };

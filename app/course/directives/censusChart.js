@@ -36,11 +36,11 @@ let censusChart = function ($rootScope, $timeout) {
           var censusByTermCode = {};
 
           sequenceFilteredCensus.forEach(function(courseCensus) {
-            censusByTermCode[courseCensus.termCode] ? censusByTermCode[courseCensus.termCode].push(courseCensus) : censusByTermCode[courseCensus.termCode] = [];
+            censusByTermCode[courseCensus.termCode] ? censusByTermCode[courseCensus.termCode].push(courseCensus) : censusByTermCode[courseCensus.termCode] = [courseCensus];
           });
 
           for (var termCode in censusByTermCode) {
-            var baseCensusObj = JSON.parse(JSON.stringify(censusByTermCode[termCode][0]));
+            var baseCensusObj = censusByTermCode[termCode].length > 0 ? JSON.parse(JSON.stringify(censusByTermCode[termCode][0])) : null;
 
             censusByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, currentValue) {
               accumulator[property] += currentValue[property];

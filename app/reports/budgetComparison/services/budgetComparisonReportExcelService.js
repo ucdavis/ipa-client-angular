@@ -254,24 +254,24 @@ class BudgetComparisonReportExcelService {
 
     data.push(['']);
 
-    data.push(['Total Seats Offered (excluding Grad)', '', '', '', 'Total Seats Offered (excluding Grad)', '', '', '', 'Total Seats Offered (excluding Grad)', '', '', '']);
+    data.push(['Total Seats Offered', '', '', '', 'Total Seats Offered', '', '', '', 'Total Seats Offered', '', '', '']);
     data.push(['# Lower div.', '# Upper div.', '# Grad.', 'Total', '# Lower div.', '# Upper div.', '# Grad.', 'Total', '# Lower div.', '# Upper div.', '# Grad.', 'Total']);
 
     var row = [];
     var miscStats = viewState.calculations.calculatedView.previous.miscStats;
     row.push(miscStats.lower.seats);
     row.push(miscStats.upper.seats);
-    row.push('N/A');
+    row.push(miscStats.grad.seats);
     row.push(miscStats.total.seats);
     var miscStats = viewState.calculations.calculatedView.current.miscStats;
     row.push(miscStats.lower.seats);
     row.push(miscStats.upper.seats);
-    row.push('N/A');
+    row.push(miscStats.grad.seats);
     row.push(miscStats.total.seats);
     var miscStats = viewState.calculations.calculatedView.change.miscStats;
     row.push(miscStats.lower.seats);
     row.push(miscStats.upper.seats);
-    row.push('N/A');
+    row.push(miscStats.grad.seats);
     row.push(miscStats.total.seats);
 
     data.push(row);

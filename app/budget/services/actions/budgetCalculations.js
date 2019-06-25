@@ -1,7 +1,7 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
 
 class BudgetCalculations {
-	constructor (BudgetReducers, TermService, Roles, ActionTypes, ScheduleCostCalculations, UserService) {
+	constructor (BudgetReducers, TermService, Roles, ActionTypes, ScheduleCostCalculations, UserService, CourseService) {
 		return {
 			calculateScenarioTerms: function() {
 				var allTermTabs = [];
@@ -542,22 +542,16 @@ class BudgetCalculations {
 							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost);
 							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + (sectionGroupCost.overrideInstructorCost || 0);
 
-							var units = 0;
-
-							if (sectionGroupCost.unitsLow) {
-								units = sectionGroupCost.unitsLow;
-							} else if (sectionGroupCost.unitsHigh) {
-								units = sectionGroupCost.unitsHigh;
-							}
+							var units = CourseService.getUnits(sectionGroupCost) || 0;
 
 							if (sectionGroupCost.courseNumber >= 200) {
-								summary.byTerm[term].gradSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+								summary.byTerm[term].gradSCH += CourseService.getSCH(sectionGroupCost.enrollment, sectionGroupCost);
 							} else {
-								summary.byTerm[term].undergradSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+								summary.byTerm[term].undergradSCH += CourseService.getSCH(sectionGroupCost.enrollment, sectionGroupCost);
 							}
 
 							summary.byTerm[term].totalUnits += units;
-							summary.byTerm[term].totalSCH += (sectionGroupCost.enrollment || 0) * (sectionGroupCost.unitsLow || 0);
+							summary.byTerm[term].totalSCH += CourseService.getSCH(sectionGroupCost.enrollment, sectionGroupCost);
 							summary.byTerm[term].lowerDivCount += (parseInt(sectionGroupCost.courseNumber) < 100 ? 1 : 0);
 							summary.byTerm[term].upperDivCount += (parseInt(sectionGroupCost.courseNumber) >= 100 && parseInt(sectionGroupCost.courseNumber) < 200 ? 1 : 0);
 							summary.byTerm[term].graduateCount += (parseInt(sectionGroupCost.courseNumber) > 199 ? 1 : 0);
@@ -746,6 +740,6 @@ class BudgetCalculations {
 	}
 }
 
-BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes', 'ScheduleCostCalculations', 'UserService'];
+BudgetCalculations.$inject = ['BudgetReducers', 'TermService', 'Roles', 'ActionTypes', 'ScheduleCostCalculations', 'UserService', 'CourseService'];
 
 export default BudgetCalculations;

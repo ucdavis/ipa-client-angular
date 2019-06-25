@@ -83,7 +83,7 @@ class BudgetComparisonReportCalculations {
 						miscStats.lower.seats += seats;
 					} else if (courseNumber >= 200) {
 						miscStats.grad.courses += 1;
-						miscStats.grad.seats +=  0; // Intentionally always zero, as this total is not relevant
+						miscStats.grad.seats +=  seats;
 					} else {
 						miscStats.upper.courses += 1;
 						miscStats.upper.seats += seats;
@@ -263,7 +263,7 @@ class BudgetComparisonReportCalculations {
 					var lineItem = lineItems.list[lineItemId];
 					var lineItemCategoryId = lineItem.lineItemCategoryId;
 
-					if (lineItem.budgetScenarioId != selectedScenarioId || lineItem.amount == 0) { return; }
+					if (lineItem.budgetScenarioId != selectedScenarioId || lineItem.amount == 0 || lineItem.hidden) { return; }
 
 					if (funding.typeIds.indexOf(lineItemCategoryId) == -1) {
 						funding.typeIds.push(lineItemCategoryId);
