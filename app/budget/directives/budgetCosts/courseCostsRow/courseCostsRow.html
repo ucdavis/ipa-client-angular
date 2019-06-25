@@ -7,7 +7,7 @@
 	<!-- Enrollment -->
 	<td class="course-costs__table-cell">
 		<div class="budget-costs__label">
-			Enroll (Current Enrolled: {{ sectionGroupCost.currentEnrollment || 'N/A' }})
+			Enroll (Actual)
 		</div>
 		<div class="course-costs__edit-container">
 			<div class="course-costs__number-input">
@@ -20,6 +20,7 @@
 					{{ sectionGroupCost.enrollment }}
 				</div>
 			</div>
+			<div class="course-costs__actual-enrollment">({{ sectionGroupCost.currentEnrollment || 'N/A' }})</div>
 			<div class="glyphicon glyphicon-repeat course-costs__revert-ui"
 			     uib-tooltip="Update to schedule total seats of {{ !!(sectionGroupCost.sectionGroup.totalSeats) ? sectionGroupCost.sectionGroup.totalSeats : 'none' }}"
 			     tooltip-append-to-body="true"

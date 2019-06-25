@@ -38,3 +38,10 @@
 .course-costs__revert-ui:hover {
 	background-color: #eee;
 }
+
+.course-costs__actual-enrollment {
+	font-size: 10px;
+	padding-left: 5px;
+	padding-bottom: 4px;
+	color: #b1b1b1;
+}
