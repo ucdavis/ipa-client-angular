@@ -78,3 +78,8 @@
 	background-color: #f7aaf4;
 	color: #000000;
 }
+
+.budget-costs__scrollable-area {
+  overflow-y: scroll;
+  max-height: 100vh;
+}
