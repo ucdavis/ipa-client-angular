@@ -271,14 +271,25 @@ class TeachingCallFormCtrl {
 				}
 			}, delay);
 		};
-		$scope.updateComment = function() {
+		// $scope.updateComment = function() {
+		// 	var payload = {
+		// 		comment: $scope.view.state.comment,
+		// 		id: $scope.view.state.teachingCallReceiptId
+		// 	};
+
+		// 	TeachingCallFormActionCreators.updateTeachingCallReceipt(payload);
+		// };
+
+		$scope.addTeachingCallComment = function() {
+			debugger;
 			var payload = {
-				comment: $scope.view.state.comment,
-				id: $scope.view.state.teachingCallReceiptId
+				comment: $scope.view.state.newComment,
+				teachingCallReceiptId: $scope.view.state.teachingCallReceiptId
 			};
 
-			TeachingCallFormActionCreators.updateTeachingCallReceipt(payload);
+			TeachingCallFormActionCreators.addTeachingCallComment(payload);
 		};
+
 		$scope.submitTeachingCallForm = function() {
 			var payload = {
 				comment: $scope.view.state.comment,

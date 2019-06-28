@@ -70,6 +70,11 @@ class TeachingCallFormActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
 			},
+			addTeachingCallComment: function(teachingCallComment) {
+				TeachingCallFormService.addTeachingCallComment(teachingCallComment).then(function() {
+					// update state with newly saved comment
+				});
+			},
 			submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
 				TeachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function () {
 					var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor&submittedTC=true";

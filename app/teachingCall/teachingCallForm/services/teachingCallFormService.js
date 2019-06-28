@@ -7,6 +7,9 @@ class TeachingCallFormService {
 			addPreference: function (teachingAssignment) {
 				return ApiService.post("/api/assignmentView/preferences/" + teachingAssignment.scheduleId, teachingAssignment);
 			},
+			addTeachingCallComment: function (teachingCallComment) {
+				return ApiService.post("/api/assignmentView/teachingCallReceipts/" + teachingCallComment.teachingCallReceiptId + "/teachingCallComments", teachingCallComment);
+			},
 			updateTeachingAssignment: function (teachingAssignment) {
 				return ApiService.put("/api/teachingAssignments/" + teachingAssignment.id, teachingAssignment);
 			},

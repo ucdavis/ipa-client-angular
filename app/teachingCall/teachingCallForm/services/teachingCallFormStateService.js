@@ -10,7 +10,8 @@ class TeachingCallFormStateService {
 							showUnavailabilities: null, // False
 							hideNonCourseOptions: null, // Defaults to False
 							dueDate: null, // "dec 15th 2016"
-							comments: null, // "Only Fridays please"
+							comments: null, // Array of teachingCallComments
+							newComment: null, // "Only Fridays please"
 							isDone: null, // True
 							scheduleId: action.payload.scheduleId,
 							terms: [],

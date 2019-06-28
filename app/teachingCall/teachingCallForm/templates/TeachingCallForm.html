@@ -184,9 +184,17 @@
 			<div class="col-md-12">
 				<h5>Comments</h5>
 				<textarea class="form-control teaching-call-form-comment-textarea" 
-				ng-model="view.state.comment" auto-input on-blur="updateComment()"
+				ng-model="view.state.newComment" auto-input
 				placeholder="(Optional) Add any additional comments or requests here."
 				rows="5" id="comment"></textarea>
+				<button type="button"
+								class="btn btn-white"
+								confirm-button="addTeachingCallComment()"
+								btn-class="btn-primary"
+								message="Are you sure you want to submit your comment?"
+								yes="Confirm" no="Cancel" placement="top">
+									Add Comment
+				</button>
 				<ul class="teaching-call-form-comment-container">
 					<li ng-repeat="comment in view.state.comments"
 							class="teaching-call-form-comment">
