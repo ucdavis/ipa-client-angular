@@ -10,7 +10,7 @@ class TeachingCallFormStateService {
 							showUnavailabilities: null, // False
 							hideNonCourseOptions: null, // Defaults to False
 							dueDate: null, // "dec 15th 2016"
-							comment: null, // "Only Fridays please"
+							comments: null, // "Only Fridays please"
 							isDone: null, // True
 							scheduleId: action.payload.scheduleId,
 							terms: [],
@@ -37,7 +37,7 @@ class TeachingCallFormStateService {
 							pageState.termsBlob = teachingCallReceipt.termsBlob;
 							pageState.isDone = teachingCallReceipt.isDone;
 							pageState.dueDate = teachingCallReceipt.dueDate;
-							pageState.comment = teachingCallReceipt.comment;
+							pageState.comments = teachingCallReceipt.comments;
 							pageState.teachingCallReceiptId = teachingCallReceipt.id;
 							pageState.teachingCallReceipt = teachingCallReceipt;
 	
@@ -256,7 +256,7 @@ class TeachingCallFormStateService {
 				pageState.checklist = null;
 				pageState.checklist = {
 					preferencesChecked: false,
-					commentsChecked: (pageState.comment && pageState.comment.length > 0) || false,
+					commentsChecked: (pageState.comments && pageState.comments.length > 0) || false,
 					terms: [],
 					submitted: pageState.isDone || false,
 					canSubmit: false

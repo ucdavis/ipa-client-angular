@@ -1162,8 +1162,21 @@ table.availability-grid tr td {
 	width: 15%;
 }
 
-.teaching-call-form-comments {
+.teaching-call-form-comment-container {
+	padding: 0px;
+}
+
+.teaching-call-form-comment {
+	border: 1px solid #c1c1c1;
+	border-radius: 4px;
+	margin-bottom: 15px;
+	padding: 1%;
+	list-style: none;
+}
+
+.teaching-call-form-comment-textarea {
 	height: 150px;
+	margin-bottom: 15px;
 }
 
 .teaching-call-form .checklist-item {
