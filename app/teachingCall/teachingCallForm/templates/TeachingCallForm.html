@@ -189,10 +189,9 @@
 				rows="5" id="comment"></textarea>
 				<button type="button"
 								class="btn btn-white"
-								confirm-button="addTeachingCallComment()"
-								btn-class="btn-primary"
-								message="Are you sure you want to submit your comment?"
-								yes="Confirm" no="Cancel" placement="top">
+								ng-click="addTeachingCallComment()"
+								ng-disabled="!view.state.newComment"
+								btn-class="btn-primary">
 									Add Comment
 				</button>
 				<ul class="teaching-call-form-comment-container">
