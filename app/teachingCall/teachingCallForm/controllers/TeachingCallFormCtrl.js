@@ -281,7 +281,6 @@ class TeachingCallFormCtrl {
 		// };
 
 		$scope.addTeachingCallComment = function() {
-			debugger;
 			var payload = {
 				comment: $scope.view.state.newComment,
 				teachingCallReceiptId: $scope.view.state.teachingCallReceiptId
