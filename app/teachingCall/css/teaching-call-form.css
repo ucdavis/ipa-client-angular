@@ -1162,21 +1162,33 @@ table.availability-grid tr td {
 	width: 15%;
 }
 
-.teaching-call-form-comment-container {
-	padding: 0px;
-}
-
 .teaching-call-form-comment {
+	display: flex;
+	justify-content: space-between;
 	border: 1px solid #c1c1c1;
 	border-radius: 4px;
 	margin-bottom: 15px;
 	padding: 1%;
-	list-style: none;
 }
 
-.teaching-call-form-comment-textarea {
-	height: 150px;
-	margin-bottom: 15px;
+.teaching-call-form-comment-date {
+	margin-left: 5%;
+	white-space: nowrap;
+	align-self: flex-end;
+	color: #b7b7b7;
+}
+
+.teaching-call-form-comment-input-container {
+	margin-bottom: 25px;
+}
+
+.teaching-call-form-comment-input-textarea {
+	margin-bottom: 5px;
+}
+
+.teaching-call-form-comment-input-footer {
+	display: flex;
+	justify-content: flex-end;
 }
 
 .teaching-call-form .checklist-item {

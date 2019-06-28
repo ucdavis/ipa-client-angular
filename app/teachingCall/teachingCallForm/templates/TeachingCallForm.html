@@ -183,23 +183,31 @@
 		<div id="teaching-call--additional-information" class="row">
 			<div class="col-md-12">
 				<h5>Comments</h5>
-				<textarea class="form-control teaching-call-form-comment-textarea" 
-				ng-model="view.state.newComment" auto-input
-				placeholder="(Optional) Add any additional comments or requests here."
-				rows="5" id="comment"></textarea>
-				<button type="button"
-								class="btn btn-white"
-								ng-click="addTeachingCallComment()"
-								ng-disabled="!view.state.newComment"
-								btn-class="btn-primary">
-									Add Comment
-				</button>
-				<ul class="teaching-call-form-comment-container">
-					<li ng-repeat="comment in view.state.comments"
+				<div class="teaching-call-form-comment-input-container">
+					<div class=" teaching-call-form-comment-input-textarea">
+						<textarea class="form-control" 
+											ng-model="view.state.newComment" auto-input
+											placeholder="(Optional) Add any additional comments or requests here."
+											rows="5" id="comment">
+						</textarea>
+					</div>
+					<div class="teaching-call-form-comment-input-footer">
+						<button type="button"
+									class="btn btn-white"
+									ng-click="addTeachingCallComment()"
+									ng-disabled="!view.state.newComment">
+						Add Comment
+						</button>
+					</div>
+				</div>
+
+				<div class="teaching-call-form-comment-container">
+					<h5>Previous Comments</h5>
+					<div ng-repeat="comment in view.state.comments | orderBy: '-id'""
 							class="teaching-call-form-comment">
-							{{ comment.comment }}
-					</li>
-				</ul>
+							{{ comment.comment }} <div class="teaching-call-form-comment-date">{{ dateToRelative(comment.lastModifiedOn) }}</di>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- right sidebars -->
