@@ -1,5 +1,6 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
 import { isNumber } from 'shared/helpers/types';
+import { dateToRelative } from "shared/helpers/dates";
 
 import 'TeachingCall/css/teaching-call-form.css';
 
@@ -340,6 +341,10 @@ class TeachingCallFormCtrl {
 			} else {
 				window.onbeforeunload = null;
 			}
+		};
+
+		$scope.dateToRelative = function(date) {
+			return dateToRelative(date);
 		};
 
 		$scope.timeout = {};
