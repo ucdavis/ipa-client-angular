@@ -71,8 +71,15 @@ class TeachingCallFormActionCreators {
 				});
 			},
 			addTeachingCallComment: function(teachingCallComment) {
-				TeachingCallFormService.addTeachingCallComment(teachingCallComment).then(function() {
-					// update state with newly saved comment
+				TeachingCallFormService.addTeachingCallComment(teachingCallComment).then(function(teachingCallComment) {
+					var action = {
+						type: ActionTypes.ADD_TEACHING_CALL_COMMENT,
+						payload: {
+							teachingCallComment: teachingCallComment
+						}
+					};
+
+					TeachingCallFormStateService.reduce(action);
 				});
 			},
 			submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {

@@ -196,6 +196,14 @@ class TeachingCallFormStateService {
 
 						return pageState;
 					}
+					case ActionTypes.ADD_TEACHING_CALL_COMMENT:
+						var newTeachingCallComment = action.payload.teachingCallComment;
+
+						pageState.comments = [...pageState.comments, newTeachingCallComment];
+						pageState.newComment = null;
+	
+						pageState.formHasChanges = true;
+						return pageState;
 					case ActionTypes.ADD_TEACHING_CALL_RESPONSE:
 						pageState.formHasChanges = true;
 						return pageState;
