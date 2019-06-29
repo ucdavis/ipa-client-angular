@@ -38,7 +38,7 @@ class TeachingCallResponseReportStateService {
 							instructors.forEach(function(instructor) {
 								if (instructor.id == teachingCallReceipt.instructorId) {
 									instructor.submitted = teachingCallReceipt.isDone;
-									instructor.comment = teachingCallReceipt.comment;
+									instructor.comments = teachingCallReceipt.comments;
 								}
 							});
 						});
