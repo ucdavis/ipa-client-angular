@@ -203,7 +203,7 @@
 
 				<div class="teaching-call-form-comment-container">
 					<h5>Previous Comments</h5>
-					<div ng-repeat="comment in view.state.comments | orderBy: '-id'""
+					<div ng-repeat="comment in view.state.comments | orderBy: '-lastModifiedOn'""
 							class="teaching-call-form-comment">
 							{{ comment.comment }} <div class="teaching-call-form-comment-date">{{ dateToRelative(comment.lastModifiedOn) }}</di>
 					</div>
