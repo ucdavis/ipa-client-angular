@@ -72,8 +72,8 @@
 					<!-- comment row -->
 					<td rowspan="2">
 						<div ng-if="instructor.comments.length > 0"  style="padding: 20px 15px 20px 15px;">
-							<div class="comment-cell" ng-repeat="comment in instructor.comments">
-								{{ $index + 1 }} -- {{ comment.comment }}
+							<div class="comment-cell" ng-repeat="comment in instructor.comments | orderBy: '-lastModifiedOn'">
+								{{ $index + 1 }}. {{ comment.comment }}
 							</div>
 						</div>
 					</td>
