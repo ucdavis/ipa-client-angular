@@ -131,8 +131,8 @@ class AssignmentCtrl {
 			$scope.view.privateComment = scheduleInstructorNote.instructorComment;
 			$scope.view.scheduleInstructorNote = scheduleInstructorNote;
 
-			if (teachingCallReceipt && teachingCallReceipt.comment) {
-				$scope.view.instructorComment = teachingCallReceipt.comment;
+			if (teachingCallReceipt && teachingCallReceipt.comments.length > 0) {
+				$scope.view.instructorComment = teachingCallReceipt.comments;
 			} else {
 				$scope.view.instructorComment = "";
 			}
