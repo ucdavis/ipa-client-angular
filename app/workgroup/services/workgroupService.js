@@ -51,6 +51,12 @@ class WorkgroupService {
 			updateUserRole: function (userRole) {
 				return ApiService.put("/api/workgroupView/userRoles/" + userRole.id + "/roles/" + userRole.roleId);
 			},
+			addPlaceholderUser: function (placeholderUser, workgroupId) {
+				return ApiService.post("/api/workgroups/" + workgroupId + "/users/placeholder/", placeholderUser);
+			},
+			updatePlaceholderUser: function (user, previousLoginId, workgroupId) {
+				return ApiService.put("/api/workgroups/" + workgroupId + "/users/placeholder/" + previousLoginId, user);
+			}
 		};
 	}
 }

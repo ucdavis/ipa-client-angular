@@ -54,6 +54,49 @@ class WorkgroupActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update instructor type", type: "ERROR" });
 				});
 			},
+			openPlaceholderModal: function () {
+				WorkgroupStateService.reduce({
+					type: ActionTypes.OPEN_PLACEHOLDER_MODAL,
+					payload: {}
+				});
+			},
+			addPlaceholderUser: function (placeholderUser) {
+				var _this = this;
+
+				var roleId = WorkgroupStateService._state.ui.roles.activeRoleId;
+				var workgroupId = parseInt(WorkgroupStateService._state.ui.workgroupId);
+
+				WorkgroupService.addPlaceholderUser(placeholderUser, workgroupId).then(function (newUser) {
+					WorkgroupStateService.reduce({
+						type: ActionTypes.ADD_USER_COMPLETED,
+						payload: {
+							user: newUser
+						}
+					});
+					$rootScope.$emit('toast', { message: "Added user", type: "SUCCESS" });
+
+					var role = new Role({ name: WorkgroupStateService._state.roles.list[roleId].name });
+					_this.addRoleToUser(workgroupId, newUser, new Role({ name: "presence"}));
+					_this.addRoleToUser(workgroupId, newUser, role);
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not add user.", type: "ERROR" });
+				});
+			},
+			updatePlaceholderUser: function (user, previousLoginId) {
+				var _this = this;
+				var workgroupId = parseInt(WorkgroupStateService._state.ui.workgroupId);
+
+				WorkgroupService.updatePlaceholderUser(user, previousLoginId, workgroupId).then(function (newUser) {
+					WorkgroupStateService.reduce({
+						type: ActionTypes.UPDATE_USER,
+						payload: {
+							user: newUser
+						}
+					});
+					$rootScope.$emit('toast', { message: "Updated user", type: "SUCCESS" });
+					_this._calculateUserRoles();
+				});
+			},
 			addTag: function (workgroupId, tag) {
 				WorkgroupService.addTag(workgroupId, tag).then(function (newTag) {
 					$rootScope.$emit('toast', { message: "Created tag " + newTag.name, type: "SUCCESS" });
@@ -321,6 +364,7 @@ class WorkgroupActionCreators {
 					workgroupId: userRole.workgroupId,
 					userDisplayName: user.name,
 					userId: user.id,
+					userIsPlaceholder: user.placeholder,
 					userLoginId: user.loginId,
 					userEmail: user.email,
 					displayPresence: shouldDisplayPresence,

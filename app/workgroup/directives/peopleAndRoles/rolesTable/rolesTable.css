@@ -73,3 +73,47 @@
 	padding: 10px;
 	color: #aaabae;
 }
+
+.roles-table__placeholder-update-validation {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	min-height: 1.3em;
+	line-height: 1;
+	color: gray;
+}
+
+.roles-table__placeholder {
+	color: #ffeb3c;
+	border: 1px solid;
+	border-radius: 4px;
+	font-size: 15px;
+	padding-top: 3px;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-bottom: 3px;
+}
+
+.roles-table__update-placeholder-ui {
+	padding-top: 5px;
+}
+
+.roles-table__update-placeholder-container {
+	display: flex;
+}
+
+.roles-table__update-placeholder-input {
+	margin-left: -5px;
+}
+
+.roles-table__update-placeholder-buttons {
+	padding-right: 2px;
+}
+
+.roles-table__placeholder-person-ui {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.roles-table__match {
+	border-bottom:1px solid #f3f3f3;
+}

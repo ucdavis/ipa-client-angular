@@ -12,6 +12,13 @@
 				</impersonation-modal>
 		</ipa-modal>
 
+		<ipa-modal is-visible="view.state.ui.isAddPlaceholderModalOpen"
+		           header-text="Add Placeholder User">
+			<add-placeholder-user ng-if="view.state.ui.isAddPlaceholderModalOpen"
+			                      is-visible="view.state.ui.isAddPlaceholderModalOpen">
+			</add-placeholder-user>
+		</ipa-modal>
+
 <ipa-header page-title="Workgroup">
 	<div ng-if="activeWorkgroupTab == 'people'">
 		<button class="btn btn-default impersonate-button" ng-click="openImpersonateModal()">

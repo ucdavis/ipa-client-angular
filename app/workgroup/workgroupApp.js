@@ -21,6 +21,7 @@ import rolesTable from './directives/peopleAndRoles/rolesTable/rolesTable.js';
 import instructorTypeSelector from './directives/peopleAndRoles/rolesTable/instructorTypeSelector/instructorTypeSelector.js';
 import studentRoleSelector from './directives/peopleAndRoles/rolesTable/studentRoleSelector/studentRoleSelector.js';
 import impersonationModal from './directives/modals/impersonationModal/impersonationModal.js';
+import addPlaceholderUser from './directives/modals/addPlaceholderUser/addPlaceholderUser.js';
 
 // Dependencies
 var dependencies = [
@@ -84,6 +85,7 @@ const workgroupApp = angular.module("workgroupApp", dependencies) // eslint-disa
 .directive('instructorTypeSelector', instructorTypeSelector)
 .directive('studentRoleSelector', studentRoleSelector)
 .directive('impersonationModal', impersonationModal)
+.directive('addPlaceholderUser', addPlaceholderUser)
 .constant('ActionTypes', {
 	ADD_TAG: "ADD_TAG",
 	REMOVE_TAG: "REMOVE_TAG",
@@ -101,7 +103,9 @@ const workgroupApp = angular.module("workgroupApp", dependencies) // eslint-disa
 	UPDATE_USER_ROLE: "UPDATE_USER_ROLE",
 	SET_ROLE_TAB: "SET_ROLE_TAB",
 	CALCULATE_USER_ROLES: "CALCULATE_USER_ROLES",
-	CALCULATE_ROLE_TOTALS: "CALCULATE_ROLE_TOTALS"
+	CALCULATE_ROLE_TOTALS: "CALCULATE_ROLE_TOTALS",
+	UPDATE_USER: "UPDATE_USER",
+	OPEN_PLACEHOLDER_MODAL: "OPEN_PLACEHOLDER_MODAL"
 });
 
 export default workgroupApp;

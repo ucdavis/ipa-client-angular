@@ -7,23 +7,58 @@
 					ng-change="searchOnChange()" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
 					typeahead-wait-ms="400" typeahead-min-length="2" typeahead-on-select="searchUsersResultSelected($item, $model, $label, $event)"
 					class="form-control typeahead"
-					typeahead-template-url="popupTemplate.html">
-				
-				<ul class="typeahead-status dropdown-menu" ng-show="view.noResults">
-					<li><a>No results</a></li>
-				</ul>
+					typeahead-popup-template-url="popupTemplate.html">
+
 				<i ng-show="view.loadingPeople || ui.addUserPending"><spinner size="20"></spinner></i>
 				<i ng-hide="users.searchQuery || view.loadingPeople" class="entypo-search"></i>
 				<i ng-show="users.searchQuery && !view.loadingPeople && !ui.addUserPending" class="entypo-cancel" ng-click="clearUserSearch()"></i>
 				<script type="text/ng-template" id="popupTemplate.html">
-					<a href="#" style='border-bottom:1px solid #f3f3f3;'>
-						<strong>{{ match.model.name }}</strong>
-						<div class="row">
-							<div class="col-sm-4">
-								{{ match.model.email }}
-							</div>
-						</div>
-					</a>
+					<div>
+						<ul class="typeahead-status dropdown-menu" ng-show="matches.length > 1">
+							<li ng-repeat="match in matches" ng-click="selectMatch($index)">
+								<a ng-if="match.model.name != 'newPlaceholder'" href="#" class="roles-table__match">
+									<strong>{{ match.model.name }}</strong>
+									<div class="row">
+										<div class="col-sm-4">
+											{{ match.model.email }}
+										</div>
+									</div>
+								</a>
+
+								<a ng-if="match.model.name == 'newPlaceholder'" href="#"
+								   class="roles-table__match"
+								   tooltip-append-to-body="true"
+								   uib-tooltip="Add a user that does not yet have a kerberos account"
+								   ng-click="selectMatch($index)">
+									<div class="row">
+										<div class="col-sm-4">
+											<strong>Add Placeholder Person</strong>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+						<ul class="typeahead-status dropdown-menu" ng-show="matches.length == 1">
+							<li>
+								<a class="roles-table__match">
+									No results
+								</a>
+							</li>
+							<li ng-repeat="match in matches" ng-click="selectMatch($index)">
+								<a ng-if="match.model.name == 'newPlaceholder'" href="#"
+								   class="roles-table__match"
+								   tooltip-append-to-body="true"
+								   uib-tooltip="Add a user that does not yet have a kerberos account"
+								   ng-click="selectMatch($index)">
+									<div class="row">
+										<div class="col-sm-4">
+											<strong>Add Placeholder Person</strong>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
 				</script>	
 				<span class="input-group-btn">
 					<button ng-disabled="!users.newUser.name || ui.addUserPending"
@@ -35,10 +70,16 @@
 			</div>
 			<!-- /input-group -->
 		</div>
-		<!-- /.col-lg-6 -->
 	</div>
 
 	<table class="roles-table__table">
+		<colgroup>
+			<col style="width: 25%;">
+			<col style="width: 25%;">
+			<col style="width: 25%;">
+			<col style="width: 25%;">
+		</colgroup>
+
 		<thead>
 			<tr>
 				<th class="roles-table__table-header">
@@ -70,7 +111,48 @@
 			    ng-if="(activeRoleId == -1 && (userRole.roleId == 11 || userRole.roleId == 12 || userRole.roleId == 13)) || (userRole.roleId == activeRoleId && (activeRoleId != 9 || userRole.displayPresence))">
 				<!-- Name -->
 				<td class="roles-table__table-cell">
-					{{ userRole.userDisplayName }}
+					<div>
+						{{ userRole.userDisplayName }}
+						<span class="roles-table__placeholder" ng-show="userRole.userIsPlaceholder">
+							<i class="glyphicon glyphicon-warning-sign clickable" ng-click="openPlaceholderUpdateUI()" uib-tooltip="User cannot login to IPA until a valid kerberos loginId is provided"></i>
+						</span>
+					</div>
+					<div class="roles-table__update-placeholder-ui" ng-show="userRole.userIsPlaceholder && view.placeholderUpdate.show">
+						<div class="roles-table__update-placeholder-container">
+							<div class="roles-table__update-placeholder-input">
+								<ipa-input value="view.placeholderUpdate.loginId"
+								           place-holder="'Enter valid loginId'"
+								           style="padding-right: 5px;"
+								           on-update="isPlaceholderUpdateValid()">
+								</ipa-input>
+							</div>
+
+							<div class="roles-table__update-placeholder-buttons">
+								<button class="btn btn-primary"
+								        confirm-button="updatePlaceholderUser(userRole)"
+								        message="Are you sure you want to update {{ userRole.userDisplayName }}'s name, email and loginId?"
+								        yes="Update" no="Cancel" placement="right"
+								        ng-show="view.placeholderUpdate.loginId.length > 0 && view.placeholderUpdate.isValid">
+									Update
+								</button>
+								<button class="btn btn-primary disabled"
+								        tooltip-append-to-body="true"
+								        uib-tooltip="Please enter a valid kerberos loginid"
+								        ng-show="view.placeholderUpdate.loginId.length == 0 || !view.placeholderUpdate.isValid">
+									Update
+								</button>
+							</div>
+
+							<div>
+								<button class="btn btn-default" ng-click="closePlaceholderUpdateUI()">
+									Cancel
+								</button>
+							</div>
+						</div>
+						<div class="roles-table__placeholder-update-validation">
+							{{ view.placeholderUpdate.validationMessage }}
+						</div>
+					</div>
 				</td>
 
 				<!-- Email -->

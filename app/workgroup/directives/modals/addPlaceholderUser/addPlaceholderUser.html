@@ -1,0 +1,44 @@
+<div class="add-placeholder-user">
+  <div class="add-placeholder-user__warning">
+    Please note: This form should only be used to add a user if they do NOT have a kerberos account yet.
+    <br />
+    This user will not be able to login to IPA (until you provide the kerberos login id),
+    but you will be able to refer to them in IPA and include them in your scheduling plans.
+  </div>
+  <div class="add-placeholder-users__input-container">
+    <ipa-input class="add-placeholder-user__input" value="view.firstName"
+              place-holder="'First Name'"
+              on-update="updateSectionGroupCost(sectionGroupCost)"
+              ng-show="!isLiveDataScenario">
+    </ipa-input>
+
+    <ipa-input class="add-placeholder-user__input" value="view.lastName"
+              place-holder="'Last Name'"
+              on-update="isPlaceholderUserValid()">
+    </ipa-input>
+
+    <ipa-input class="add-placeholder-user__input" value="view.email"
+              place-holder="'Email'"
+              on-update="isPlaceholderUserValid()">
+    </ipa-input>
+  </div>
+
+  <div class="add-placeholder-user__footer">
+    <button ng-click="close()"
+            type="button"
+            class="btn btn-default add-placeholder-user__cancel-button">
+      Cancel
+    </button>
+    <button ng-if="isPlaceholderUserValid()"
+            type="button" class="btn neon-dark-confirm-btn"
+            ng-click="addPlaceholderUser()">
+            Add
+    </button>
+    <button ng-if="!isPlaceholderUserValid()"
+            type="button" class="disabled btn btn-info neon-dark-confirm-btn"
+            tooltip-placement="left"
+            uib-tooltip="{{view.validationMessage}}">
+            Add
+    </button>
+  </div>
+</div>

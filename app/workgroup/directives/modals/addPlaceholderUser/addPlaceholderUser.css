@@ -1,0 +1,60 @@
+.add-placeholder-user__input {
+  width: 30%;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.add-placeholder-user__label {
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+.add-placeholder-user__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding: 10px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  background-color: rgb(248, 248, 248);
+}
+
+.add-placeholder-user__warning {
+  padding: 10px;
+  color: gray;
+}
+
+.add-placeholder-users__input-container {
+  display: flex;
+}
+
+
+.add-placeholder-user .neon-dark-confirm-btn,
+.add-placeholder-user .neon-dark-confirm-btn:focus,
+.add-placeholder-user .neon-dark-confirm-btn:active,
+.add-placeholder-user .neon-dark-confirm-btn {
+  background-color: rgb(48, 54, 65);
+  border-color: rgb(48, 54, 65);
+  color: white;
+}
+
+.add-placeholder-user .neon-dark-confirm-btn:hover {
+  background-color: rgb(18, 24, 35); /* Darker Version for hover */
+  color: white;
+}
+
+.add-placeholder-user .neon-dark-confirm-btn.disabled,
+.add-placeholder-user .neon-dark-confirm-btn.disabled:hover,
+.add-placeholder-user .neon-dark-confirm-btn.disabled:focus,
+.add-placeholder-user .neon-dark-confirm-btn.disabled:active {
+  background-color: rgb(48, 54, 65);
+  color: white;
+}
+
+.add-placeholder-user__cancel-button {
+  margin-right: 5px;
+  margin-left: 5px;
+  color: #303641;
+  background-color: white;
+  border: 1px solid #D6D6D6;
+}
