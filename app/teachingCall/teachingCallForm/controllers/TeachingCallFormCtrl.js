@@ -272,14 +272,6 @@ class TeachingCallFormCtrl {
 				}
 			}, delay);
 		};
-		// $scope.updateComment = function() {
-		// 	var payload = {
-		// 		comment: $scope.view.state.comment,
-		// 		id: $scope.view.state.teachingCallReceiptId
-		// 	};
-
-		// 	TeachingCallFormActionCreators.updateTeachingCallReceipt(payload);
-		// };
 
 		$scope.addTeachingCallComment = function() {
 			var payload = {
