@@ -81,5 +81,5 @@
 
 .budget-costs__scrollable-area {
   overflow-y: scroll;
-  max-height: 100vh;
+  max-height: calc( 100vh - 350px);
 }

@@ -2,46 +2,53 @@
 	<ipa-tabs tab-names="termNav.allTabs"
 	          active-tab="termNav.activeTab"
 	          select-tab="setActiveTerm"
-	          slim="true">
+            slim="true">
+
+            <table class="budget-costs__table budget-costs__table--header">
+              <colgroup>
+                <col style="width: 5%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="budget-costs__table-header"></th> <!-- Spacing for sequence number -->
+                  <th class="budget-costs__table-header">
+                    <div>Enrollment /</div>
+                    <div>Instructor</div>
+                  </th>
+                  <th class="budget-costs__table-header">Sections</th>
+                  <th class="budget-costs__table-header">
+                    <div>TAs /</div>
+                    <div>Original Instructor</div>
+                  </th>
+                  <th class="budget-costs__table-header">TA Cost</th>
+                  <th class="budget-costs__table-header">
+                    <div>Readers /</div>
+                    <div>Reason</div>
+                  </th>
+                  <th class="budget-costs__table-header">Reader Cost</th>
+                  <th class="budget-costs__table-header">
+                    <div>Support Cost /</div>
+                    <div>Instructor Cost</div>
+                  </th>
+                  <th class="budget-costs__table-header">Comments</th>
+                  <th class="budget-costs__table-header">Total</th>
+                </tr>
+              </thead>
+            </table>
+<div class="budget-costs__scrollable-area"> 
 		<div class="budget-costs__main-container">
-    <div class="budget-costs__scrollable-area"> 
+
 			<div class="budget-costs__rows-container">
-				<table class="budget-costs__table budget-costs__table--header">
-					<colgroup>
-						<col style="width: 5%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-					</colgroup>
-					<thead>
-						<tr>
-							<th class="budget-costs__table-header"></th> <!-- Spacing for sequence number -->
-							<th class="budget-costs__table-header">
-								<div>Enrollment /</div>
-								<div>Instructor</div>
-							</th>
-							<th class="budget-costs__table-header">Sections</th>
-							<th class="budget-costs__table-header">
-								<div>TAs /</div>
-								<div>Original Instructor</div>
-							</th>
-							<th class="budget-costs__table-header">TA Cost</th>
-							<th class="budget-costs__table-header">
-								<div>Readers /</div>
-								<div>Reason</div>
-							</th>
-							<th class="budget-costs__table-header">Reader Cost</th>
-							<th class="budget-costs__table-header">
-								<div>Support Cost /</div>
-								<div>Instructor Cost</div>
-							</th>
-						</tr>
-					</thead>
-				</table>
+
 
 				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
 					<div class="budget-costs__course-title">
@@ -82,18 +89,6 @@
 				</div>
 			</div>
 			<div class="budget-costs__shared-container">
-				<table class="budget-costs__table budget-costs__table--header">
-					<colgroup>
-						<col style="width: 70%;">
-						<col style="width: 30%;">
-					</colgroup>
-					<thead>
-						<tr>
-							<th class="budget-costs__table-header">Comments</th>
-							<th class="budget-costs__table-header">Total</th>
-						</tr>
-					</thead>
-				</table>
 
 				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
 					<div class="budget-costs__course-title-space"></div>
