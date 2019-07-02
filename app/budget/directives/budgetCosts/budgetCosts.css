@@ -34,7 +34,7 @@
 	height: 128px;
 	background-color: #f8f8f8;
 	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 10px; 
 }
 
 .budget-costs__table-header {
@@ -80,6 +80,17 @@
 }
 
 .budget-costs__scrollable-area {
-  overflow-y: scroll;
-  max-height: calc( 100vh - 350px);
+	overflow-y: scroll;
+	max-height: calc( 100vh - 350px);
+}
+
+.budget-costs__scrollable-area::-webkit-scrollbar {
+	-webkit-appearance: none;
+	width: 7px;
+}
+
+.budget-costs__scrollable-area::-webkit-scrollbar-thumb {
+	border-radius: 4px;
+	background-color: rgba(48,54,65,.5);
+	box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
