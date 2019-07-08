@@ -9,15 +9,13 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 		replace: true, // Replace with the template
 		
 		scope: {
-			state: '<',
-			printBudget: '&',
+			state: '<'
 		},
 		link: function (scope) {
 			scope.displayScenarioRenameUI = false;
 			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			scope.isNewScenarioNameValid = true;
 			scope.validationError = "";
-			scope.printingMode = false;
 
 			scope.openSupportCostModal = function() {
 				BudgetActions.toggleSupportCostModal();
