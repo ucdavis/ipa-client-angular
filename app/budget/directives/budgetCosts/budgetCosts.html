@@ -1,137 +1,134 @@
 <div class="budget-costs">
-	<ipa-tabs tab-names="termNav.allTabs"
-	          active-tab="termNav.activeTab"
-	          select-tab="setActiveTerm"
-	          slim="true">
-		<div class="budget-costs__main-container">
-			<div class="budget-costs__rows-container">
-				<table class="budget-costs__table budget-costs__table--header">
-					<colgroup>
-						<col style="width: 5%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-						<col style="width: 10%;">
-					</colgroup>
-					<thead>
-						<tr>
-							<th class="budget-costs__table-header"></th> <!-- Spacing for sequence number -->
-							<th class="budget-costs__table-header">
-								<div>Enrollment /</div>
-								<div>Instructor</div>
-							</th>
-							<th class="budget-costs__table-header">Sections</th>
-							<th class="budget-costs__table-header">
-								<div>TAs /</div>
-								<div>Original Instructor</div>
-							</th>
-							<th class="budget-costs__table-header">TA Cost</th>
-							<th class="budget-costs__table-header">
-								<div>Readers /</div>
-								<div>Reason</div>
-							</th>
-							<th class="budget-costs__table-header">Reader Cost</th>
-							<th class="budget-costs__table-header">
-								<div>Support Cost /</div>
-								<div>Instructor Cost</div>
-							</th>
-						</tr>
-					</thead>
-				</table>
+  <ipa-tabs tab-names="termNav.allTabs"
+            active-tab="termNav.activeTab"
+            select-tab="setActiveTerm"
+            slim="true">
 
-				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
-					<div class="budget-costs__course-title">
-						{{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
-						<span ng-if="course.tagIds.length > 0" ng-repeat="tagId in course.tagIds">
-							<div class="label budget-costs__tag"
-							     ng-style="{ 'background-color': tags.list[tagId].color || '#333', 'color': getTagTextColor(tags.list[tagId].color) }">
-								{{ tags.list[tagId].name }}
-							</div>
-						</span>
-					</div>
-					<div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-						<table class="budget-costs__table">
-							<thead>
-								<colgroup>
-									<col style="width: 5%;">
-									<col style="width: 10%;">
-									<col style="width: 10%;">
-									<col style="width: 10%;">
-									<col style="width: 10%;">
-									<col style="width: 10%;">
-									<col style="width: 10%;">
-									<col style="width: 10%;">
-								</colgroup>
-							</thead>
-							<tbody>
-								<tr course-costs-row section-group-cost="sectionGroupCost" is-live-data-scenario="isLiveDataScenario"></tr>
-								<tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
-								    instructor-costs-row
-								    section-group-cost="sectionGroupCost"
-								    instructor-assignment-options="instructorAssignmentOptions"
-								    regular-instructor-assignment-options="regularInstructorAssignmentOptions"
-								    is-live-data-scenario="isLiveDataScenario">
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-			<div class="budget-costs__shared-container">
-				<table class="budget-costs__table budget-costs__table--header">
-					<colgroup>
-						<col style="width: 70%;">
-						<col style="width: 30%;">
-					</colgroup>
-					<thead>
-						<tr>
-							<th class="budget-costs__table-header">Comments</th>
-							<th class="budget-costs__table-header">Total</th>
-						</tr>
-					</thead>
-				</table>
+    <!-- Fixed Table Header-->
+    <table class="budget-costs__table budget-costs__table--header">
+      <colgroup>
+        <col style="width: 5%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 12%;">
+        <col style="width: 6%;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="budget-costs__table-header"></th> <!-- Spacing for sequence number -->
+          <th class="budget-costs__table-header">
+            <div>Enrollment /</div>
+            <div>Instructor</div>
+          </th>
+          <th class="budget-costs__table-header">Sections</th>
+          <th class="budget-costs__table-header">
+            <div>TAs /</div>
+            <div>Original Instructor</div>
+          </th>
+          <th class="budget-costs__table-header">TA Cost</th>
+          <th class="budget-costs__table-header">
+            <div>Readers /</div>
+            <div>Reason</div>
+          </th>
+          <th class="budget-costs__table-header">Reader Cost</th>
+          <th class="budget-costs__table-header">
+            <div>Support Cost /</div>
+            <div>Instructor Cost</div>
+          </th>
+          <th class="budget-costs__table-header">Comments</th>
+          <th class="budget-costs__table-header">Total</th>
+        </tr>
+      </thead>
+    </table>
 
-				<div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
-					<div class="budget-costs__course-title-space"></div>
+    <!-- Scrollable Area -->
+    <div class="budget-costs__scrollable-area"> 
+      <div class="budget-costs__main-container">
 
-					<div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-						<table class="budget-costs__table">
-							<colgroup>
-								<col style="width: 70%;">
-								<col style="width: 30%;">
-							</colgroup>
-							<tbody>
-								<tr>
-									<!-- Comments -->
-									<td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
-										<ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
-										            icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
-										            tooltip-message="'View Comments'"
-										            icon-class="'entypo entypo-chat'"
-										            text="'Comments'"
-										            on-click="openAddCourseCommentsModal(sectionGroupCost)">
-										</ipa-button>
-									</td>
-									<!-- Total -->
-									<td class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
-										<div class="budget-costs__total-container">
-											<div class="budget-costs__label">
-												Total
-											</div>
-											<div>
-												{{ toCurrency(sectionGroupCost.totalCost) }}
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</ipa-tabs>
+        <div class="budget-costs__rows-container">
+          <div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
+            <div class="budget-costs__course-title">
+              {{ course.subjectCode }} {{ course.courseNumber }} {{ course.description }} {{ course.title }}
+              <span ng-if="course.tagIds.length > 0" ng-repeat="tagId in course.tagIds">
+                <div class="label budget-costs__tag"
+                    ng-style="{ 'background-color': tags.list[tagId].color || '#333', 'color': getTagTextColor(tags.list[tagId].color) }">
+                  {{ tags.list[tagId].name }}
+                </div>
+              </span>
+            </div>
+            <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+              <table class="budget-costs__table">
+                <thead>
+                  <colgroup>
+                    <col style="width: 5%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                  </colgroup>
+                </thead>
+                <tbody>
+                  <tr course-costs-row section-group-cost="sectionGroupCost" is-live-data-scenario="isLiveDataScenario"></tr>
+                  <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
+                      instructor-costs-row
+                      section-group-cost="sectionGroupCost"
+                      instructor-assignment-options="instructorAssignmentOptions"
+                      regular-instructor-assignment-options="regularInstructorAssignmentOptions"
+                      is-live-data-scenario="isLiveDataScenario">
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="budget-costs__shared-container">
+          <div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
+            <div class="budget-costs__course-title-space"></div>
+            <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+              <table class="budget-costs__table">
+                <colgroup>
+                  <col style="width: 70%;">
+                  <col style="width: 30%;">
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <!-- Comments -->
+                    <td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+                      <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
+                                  icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
+                                  tooltip-message="'View Comments'"
+                                  icon-class="'entypo entypo-chat'"
+                                  text="'Comments'"
+                                  on-click="openAddCourseCommentsModal(sectionGroupCost)">
+                      </ipa-button>
+                    </td>
+                    <!-- Total -->
+                    <td class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+                      <div class="budget-costs__total-container">
+                        <div class="budget-costs__label">
+                          Total
+                        </div>
+                        <div>
+                          {{ toCurrency(sectionGroupCost.totalCost) }}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ipa-tabs>
 </div>
