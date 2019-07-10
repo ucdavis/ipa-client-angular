@@ -1,3 +1,5 @@
+import { dateToRelative } from "shared/helpers/dates";
+
 import './commentModal.css';
 
 let commentModal = function () {
@@ -18,6 +20,10 @@ let commentModal = function () {
     link: function (scope) {
       scope.close = function () {
         scope.isVisible = false;
+      };
+
+      scope.dateToRelative = function (date) {
+        return dateToRelative(date);
       };
     } // end link
   };

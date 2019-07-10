@@ -476,7 +476,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 								// Instructor Comment UI
 								var teachingCallReceipt = scope.view.state.teachingCallReceipts.list[instructor.teachingCallReceiptId];
-								var comment = teachingCallReceipt ? teachingCallReceipt.comment : null;
+								var comment = teachingCallReceipt ? teachingCallReceipt.comments.length > 0 : null;
 
 								courseHtml += "<div class=\"description-cell__comment-btn-container hidden-print\">";
 								if (comment) {

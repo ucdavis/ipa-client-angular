@@ -8,5 +8,17 @@
 }
 
 .comment-modal__comment {
-  white-space: pre;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  padding: 1%;
+}
+
+.comment-modal__comment-date {
+  margin-left: 5%;
+  white-space: nowrap;
+  align-self: flex-end;
+  color: #b7b7b7;
 }

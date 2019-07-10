@@ -70,6 +70,18 @@ class TeachingCallFormActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
 			},
+			addTeachingCallComment: function(teachingCallComment) {
+				TeachingCallFormService.addTeachingCallComment(teachingCallComment).then(function(teachingCallComment) {
+					var action = {
+						type: ActionTypes.ADD_TEACHING_CALL_COMMENT,
+						payload: {
+							teachingCallComment: teachingCallComment
+						}
+					};
+
+					TeachingCallFormStateService.reduce(action);
+				});
+			},
 			submitTeachingCall: function (teachingCallReceipt, workgroupId, year) {
 				TeachingCallFormService.updateTeachingCallReceipt(teachingCallReceipt).then(function () {
 					var instructorSummaryUrl = "/summary/" + workgroupId + "/" + year + "?mode=instructor&submittedTC=true";

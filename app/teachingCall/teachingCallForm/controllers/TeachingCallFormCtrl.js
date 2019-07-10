@@ -1,5 +1,6 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
 import { isNumber } from 'shared/helpers/types';
+import { dateToRelative } from "shared/helpers/dates";
 
 import 'TeachingCall/css/teaching-call-form.css';
 
@@ -271,14 +272,16 @@ class TeachingCallFormCtrl {
 				}
 			}, delay);
 		};
-		$scope.updateComment = function() {
+
+		$scope.addTeachingCallComment = function() {
 			var payload = {
-				comment: $scope.view.state.comment,
-				id: $scope.view.state.teachingCallReceiptId
+				comment: $scope.view.state.newComment,
+				teachingCallReceiptId: $scope.view.state.teachingCallReceiptId
 			};
 
-			TeachingCallFormActionCreators.updateTeachingCallReceipt(payload);
+			TeachingCallFormActionCreators.addTeachingCallComment(payload);
 		};
+
 		$scope.submitTeachingCallForm = function() {
 			var payload = {
 				comment: $scope.view.state.comment,
@@ -330,6 +333,10 @@ class TeachingCallFormCtrl {
 			} else {
 				window.onbeforeunload = null;
 			}
+		};
+
+		$scope.dateToRelative = function(date) {
+			return dateToRelative(date);
 		};
 
 		$scope.timeout = {};

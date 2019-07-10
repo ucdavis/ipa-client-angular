@@ -4,7 +4,10 @@
       No Instructor comments.
     </div>
 
-    <div class="comment-modal__comment" ng-show="instructorComment.length > 0">{{ instructorComment }}</div>
+    <div class="comment-modal__comment" ng-repeat="comment in instructorComment | orderBy: '-lastModifiedOn'">
+      {{ comment.comment }}
+      
+      <div class="comment-modal__comment-date">{{ dateToRelative(comment.lastModifiedOn) }}</div>
   </div>
   <div class="comment-modal__footer">
     <button ng-click="close()"
