@@ -102,6 +102,8 @@ class SupportActions {
 					plannedSeats: sectionGroupDTO.plannedSeats,
 					teachingAssistantAppointments: sectionGroupDTO.teachingAssistantAppointments,
 					readerAppointments: sectionGroupDTO.readerAppointments,
+					taAppointmentPercentage: parseInt(sectionGroupDTO.taAppointmentPercentage) || 50,
+					readerAppointmentPercentage: parseInt(sectionGroupDTO.readerAppointmentPercentage) || 25,
 					showTheStaff: sectionGroupDTO.showTheStaff,
 					showPlaceholderAI: sectionGroupDTO.showPlaceholderAI
 				};
@@ -128,13 +130,12 @@ class SupportActions {
 					plannedSeats: sectionGroupDTO.plannedSeats,
 					teachingAssistantAppointments: sectionGroupDTO.teachingAssistantAppointments,
 					readerAppointments: sectionGroupDTO.readerAppointments,
+					taAppointmentPercentage: parseInt(sectionGroupDTO.taAppointmentPercentage) || 50,
+					readerAppointmentPercentage: parseInt(sectionGroupDTO.readerAppointmentPercentage) || 25,
 					showTheStaff: sectionGroupDTO.showTheStaff,
 					showPlaceholderAI: sectionGroupDTO.showPlaceholderAI
 				};
-	
-				sectionGroup.teachingAssistantAppointments = sectionGroupDTO.teachingAssistantAppointments;
-	
-				
+	debugger;
 				SupportService.updateSectionGroup(sectionGroup).then(function() {
 					$rootScope.$emit('toast', { message: "Updated Teaching Assistants", type: "SUCCESS" });
 					SupportReducer.reduce({
