@@ -232,9 +232,12 @@ class ScheduleCostCalculations {
       _calculateSectionGroupFinancialCosts: function(sectionGroupCost) {
         var budget = BudgetReducers._state.budget;
 
+        var readerApptAdjustment = sectionGroupCost.sectionGroup.readerAppointmentPercentage ? sectionGroupCost.sectionGroup.readerAppointmentPercentage / 25 : 1;
+        var taApptAdjustment = sectionGroupCost.sectionGroup.taAppointmentPercentage ? sectionGroupCost.sectionGroup.taAppointmentPercentage / 50 : 1;
+
         // Support Costs
-        sectionGroupCost.readerCost = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount * budget.readerCost : 0;
-        sectionGroupCost.taCost = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount * budget.taCost : 0;
+        sectionGroupCost.readerCost = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount * budget.readerCost * readerApptAdjustment : 0;
+        sectionGroupCost.taCost = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount * budget.taCost * taApptAdjustment : 0;
 
         sectionGroupCost.courseCostSubTotal = sectionGroupCost.taCost + sectionGroupCost.readerCost;
 
