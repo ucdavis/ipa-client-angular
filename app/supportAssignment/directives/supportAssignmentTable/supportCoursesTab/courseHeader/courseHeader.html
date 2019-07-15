@@ -25,7 +25,13 @@
         </td>
         <td>
           <div class="course-appointment-input">
-            <ipa-input on-update="updateTeachingAssistantAppointments(sectionGroup)" value="sectionGroup.taAppointmentPercentage" mode="'number'">
+            <ipa-input
+              on-update="updateTeachingAssistantAppointments(sectionGroup)"
+              value="sectionGroup.taAppointmentPercentage"
+              mode="'number'"
+              place-holder="'50'"
+              uib-tooltip="Default value is 50%"
+            >
             </ipa-input>
           </div>
         </td>
@@ -49,7 +55,13 @@
         </td>
         <td>
           <div class="course-appointment-input">
-            <ipa-input on-update="updateReaderAppointments(sectionGroup)" value="sectionGroup.readerAppointmentPercentage" mode="'number'">
+            <ipa-input
+              on-update="updateReaderAppointments(sectionGroup)"
+              value="sectionGroup.readerAppointmentPercentage"
+              mode="'number'"
+              place-holder="'25'"
+              uib-tooltip="Default value is 25%"
+            >
             </ipa-input>
           </div>
         </td>
