@@ -135,7 +135,7 @@ class SupportActions {
 					showTheStaff: sectionGroupDTO.showTheStaff,
 					showPlaceholderAI: sectionGroupDTO.showPlaceholderAI
 				};
-	debugger;
+
 				SupportService.updateSectionGroup(sectionGroup).then(function() {
 					$rootScope.$emit('toast', { message: "Updated Teaching Assistants", type: "SUCCESS" });
 					SupportReducer.reduce({
