@@ -102,8 +102,8 @@ class SupportActions {
 					plannedSeats: sectionGroupDTO.plannedSeats,
 					teachingAssistantAppointments: sectionGroupDTO.teachingAssistantAppointments,
 					readerAppointments: sectionGroupDTO.readerAppointments,
-					taAppointmentPercentage: parseInt(sectionGroupDTO.taAppointmentPercentage) || 50,
-					readerAppointmentPercentage: parseInt(sectionGroupDTO.readerAppointmentPercentage) || 25,
+					taAppointmentPercentage: parseInt(sectionGroupDTO.taAppointmentPercentage),
+					readerAppointmentPercentage: parseInt(sectionGroupDTO.readerAppointmentPercentage),
 					showTheStaff: sectionGroupDTO.showTheStaff,
 					showPlaceholderAI: sectionGroupDTO.showPlaceholderAI
 				};
@@ -130,8 +130,8 @@ class SupportActions {
 					plannedSeats: sectionGroupDTO.plannedSeats,
 					teachingAssistantAppointments: sectionGroupDTO.teachingAssistantAppointments,
 					readerAppointments: sectionGroupDTO.readerAppointments,
-					taAppointmentPercentage: parseInt(sectionGroupDTO.taAppointmentPercentage) || 50,
-					readerAppointmentPercentage: parseInt(sectionGroupDTO.readerAppointmentPercentage) || 25,
+					taAppointmentPercentage: parseInt(sectionGroupDTO.taAppointmentPercentage),
+					readerAppointmentPercentage: parseInt(sectionGroupDTO.readerAppointmentPercentage),
 					showTheStaff: sectionGroupDTO.showTheStaff,
 					showPlaceholderAI: sectionGroupDTO.showPlaceholderAI
 				};
