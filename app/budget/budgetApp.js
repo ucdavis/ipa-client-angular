@@ -33,10 +33,11 @@ import budgetSummary from "./directives/budgetSummary/budgetSummary.js";
 import instructorList from "./directives/instructorList/instructorList.js";
 import courseList from "./directives/courseList/courseList.js";
 
-import budgetCosts from "./directives/budgetCosts/budgetCosts.js";
-import courseCostsRow from "./directives/budgetCosts/courseCostsRow/courseCostsRow.js";
-import instructorCostsRow from "./directives/budgetCosts/instructorCostsRow/instructorCostsRow.js";
-import instructorAssignmentDropdown from "./directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js";
+import budgetCosts from './directives/budgetCosts/budgetCosts.js';
+import budgetCostsPrint from './directives/budgetCosts/budgetCostsPrint/budgetCostsPrint.js';
+import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
+import instructorCostsRow from './directives/budgetCosts/instructorCostsRow/instructorCostsRow.js';
+import instructorAssignmentDropdown from './directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
 
 import addBudgetScenario from "./directives/modals/addBudgetScenario/addBudgetScenario.js";
 import addCourseComments from "./directives/modals/addCourseComments/addCourseComments.js";
@@ -118,6 +119,7 @@ const budgetApp = angular // eslint-disable-line no-undef
   .directive("addLineItem", addLineItem)
   .directive("addLineItemComments", addLineItemComments)
   .directive("courseList", courseList)
+  .directive("budgetCostsPrint", budgetCostsPrint)
   .constant("ActionTypes", {
     INIT_STATE: "INIT_STATE",
     CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",

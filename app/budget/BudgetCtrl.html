@@ -66,7 +66,7 @@
 			</add-line-item-comments>
 		</ipa-modal>
 
-		<budget-scenario-toolbar state="view.state"></budget-scenario-toolbar>
+		<budget-scenario-toolbar state="view.state" class="do-not-print"></budget-scenario-toolbar>
 
 		<budget-nav class="budget-view__nav-container"
 		            total-balance="view.state.selectedBudgetScenario.summary.totalBalance"
@@ -79,17 +79,20 @@
 		</budget-nav>
 
 		<div class="page-content">
-			<budget-summary ng-if="view.state.ui.sectionNav.activeTab == 'Summary'"
+			<budget-summary class="do-not-print"
+			                ng-if="view.state.ui.sectionNav.activeTab == 'Summary'"
 			                summary="view.state.summary"
 			                instructor-types="view.state.instructorTypes"
 			                selected-budget-scenario="view.state.selectedBudgetScenario">
 			</budget-summary>
-			<line-items ng-if="view.state.ui.sectionNav.activeTab == 'Funds'"
+			<line-items class="do-not-print"
+			            ng-if="view.state.ui.sectionNav.activeTab == 'Funds'"
 			            selected-budget-scenario="view.state.selectedBudgetScenario"
 			            line-items="view.state.calculatedLineItems"
 			            ui="view.state.ui">
 			</line-items>
-			<budget-costs ng-if="view.state.ui.sectionNav.activeTab == 'Schedule Costs'"
+			<budget-costs class="do-not-print"
+			              ng-if="view.state.ui.sectionNav.activeTab == 'Schedule Costs'"
 			              instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
 			              regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
 			              schedule-costs="view.state.calculatedScheduleCosts"
@@ -98,11 +101,24 @@
 			              is-live-data-scenario="!view.state.ui.shouldShowCourseList"
 			              tags="view.state.tags">
 			</budget-costs>
-			<instructor-list ng-if="view.state.ui.sectionNav.activeTab == 'Instructor List'"
+			<budget-costs-print class="do-print"
+			                    state="view.state"
+			                    instructor-assignment-options="view.state.ui.instructorAssignmentOptions"
+			                    regular-instructor-assignment-options="view.state.ui.regularInstructorAssignmentOptions"
+			                    schedule-costs="view.state.calculatedScheduleCosts"
+			                    term-nav="view.state.ui.termNav"
+			                    summary="view.state.summary"
+			                    is-live-data-scenario="!view.state.ui.shouldShowCourseList"
+			                    selected-budget-scenario="view.state.selectedBudgetScenario"
+			                    line-items="view.state.calculatedLineItems">
+			</budget-costs-print>
+			<instructor-list class="do-not-print"
+			                 ng-if="view.state.ui.sectionNav.activeTab == 'Instructor List'"
 			                 state="view.state"
 			                 selected-budget-scenario="view.state.selectedBudgetScenario">
 			</instructor-list>
-			<course-list ng-if="view.state.ui.sectionNav.activeTab == 'Course List'"
+			<course-list class="do-not-print"
+			             ng-if="view.state.ui.sectionNav.activeTab == 'Course List'"
 			             course-list="view.state.calculatedCourseList"
 			             term-nav="view.state.ui.termNav"
 			             selected-budget-scenario="view.state.selectedBudgetScenario">

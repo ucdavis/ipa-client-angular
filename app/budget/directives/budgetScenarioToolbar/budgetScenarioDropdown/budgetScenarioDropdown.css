@@ -32,3 +32,21 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+@media print {
+	@page {
+		margin: 1cm;
+	}
+
+	.do-not-print {
+		display: none;
+	}
+
+	.btn-default {
+		border: none;
+	}
+
+	.panel-primary {
+		border: none;
+	}
+}
