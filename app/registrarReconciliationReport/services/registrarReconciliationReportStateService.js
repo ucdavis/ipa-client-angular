@@ -31,7 +31,17 @@ class RegistrarReconciliationReportStateService {
 						for (var i = 0; i < length; i++) {
 							var ipaSectionData = action.payload.sectionDiffs[i].ipaSection;
 							var dwSectionData = action.payload.sectionDiffs[i].dwSection;
-							var sectionChanges = action.payload.sectionDiffs[i].changes;
+							var sectionChanges = [];
+							var diffsChanges = action.payload.sectionDiffs[i].changes;
+							var acceptedChanges = ["instructors", "activities", "bannerLocation", "startTime", "endTime", "dayIndicator","crn", "seats"];
+							if (diffsChanges){
+								diffsChanges.forEach(function(diffChange){
+									var isAccepted = acceptedChanges.includes(diffChange.propertyName);
+										if (isAccepted){
+											sectionChanges.push(diffChange);
+										}
+								});
+							}
 							var syncActions = action.payload.sectionDiffs[i].syncActions;
 	
 							var sectionKey = null;
@@ -53,11 +63,11 @@ class RegistrarReconciliationReportStateService {
 							var slotSection = sectionList[sectionKey];
 	
 							// translate DiffView changes list into stateService language
-							if (ipaSectionData != null && dwSectionData == null && sectionChanges == null) {
+							if (ipaSectionData != null && dwSectionData == null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// DW version does not exist
 								slotSection.dwHasChanges = true;
 								slotSection.noRemote = true;
-							} else if (ipaSectionData == null && dwSectionData != null && sectionChanges == null) {
+							} else if (ipaSectionData == null && dwSectionData != null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// IPA version does not exist
 								slotSection.dwHasChanges = true;
 								slotSection.noLocal = true;
