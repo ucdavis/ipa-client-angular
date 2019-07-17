@@ -24,7 +24,8 @@ class RegistrarReconciliationReportStateService {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
-							ids: []
+ 							ids: [],
+ 							sectionsKeyById: {}
 						};
 						var sectionList = {};
 						var length = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
@@ -55,9 +56,15 @@ class RegistrarReconciliationReportStateService {
 							} else {
 								continue;
 							}
-	
+
 							if (sections.ids.indexOf(sectionKey) == -1) {
 								sections.ids.push(sectionKey);
+
+								var section = sectionList[sectionKey];
+
+								if (section.id > 0) {
+									sections.sectionsKeyById[section.id] = sectionKey;
+								}
 							}
 	
 							var slotSection = sectionList[sectionKey];
@@ -156,14 +163,14 @@ class RegistrarReconciliationReportStateService {
 									});
 								}
 							}
-	
+
 							// Apply syncActions to section properties
-	
+
 							for (var s = 0; s < syncActions.length; s++) {
 								slotSection = this._togglePropertyToDo(slotSection, syncActions[s]);
 							}
 						}
-	
+
 						sections.ids.sort();
 	
 						// Flag the first section in a sectionGroup as a groupHead
@@ -175,8 +182,11 @@ class RegistrarReconciliationReportStateService {
 								sectionList[id].groupHead = true;
 							}
 						});
-	
+
 						sections.list = sectionList;
+						return sections;
+					case ActionTypes.UPDATE_SECTION_RECONCILIATION:
+						sections.list[action.payload.sectionKey].dwHasChanges = action.payload.dwHasChanges;
 						return sections;
 					case ActionTypes.UPDATE_SECTION:
 						section = sections.list[action.payload.uniqueKey];
@@ -354,6 +364,7 @@ class RegistrarReconciliationReportStateService {
 	
 				$log.debug("Report state updated:");
 				$log.debug(scope._state, action.type);
+
 			},
 	
 			// ------------------------------- //
