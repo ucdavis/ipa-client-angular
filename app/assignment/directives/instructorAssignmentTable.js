@@ -230,7 +230,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										var sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 										var displayTitle = "";
 										var plannedSeatsHtml = "";
-										var unitsLow = "";
+										var units = "";
 
 										var course = scope.view.state.courses.list[sectionGroup.courseId];
 										var subTitle = course.title;
@@ -238,7 +238,14 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 										var plannedSeats = sectionGroup.plannedSeats || "0";
 										plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
-										unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+
+										if (sectionGroup.unitsVariable) {
+											units = "Units (Variable): " + sectionGroup.unitsVariable;
+										} else if (course.unitsHigh) {
+											units = "<small>Units: " + course.unitsLow + " - " + course.unitsHigh + "</small>";
+										} else {
+											units = "<small>Units: " + course.unitsLow + "</small>";
+										}
 
 										coursesHtml += '<div class="alert alert-info tile-assignment">';
 
@@ -259,7 +266,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										coursesHtml += "<div class=\"tile-assignment-details\">";
 										coursesHtml += plannedSeatsHtml;
 										coursesHtml += "<br />";
-										coursesHtml += unitsLow;
+										coursesHtml += units;
 										coursesHtml += "</div>";
 
 										coursesHtml += "</div>";
@@ -271,6 +278,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					}
 
 					if (unassignedInstructorTypeLength) {
+						debugger;
 						unassignedInstructorTypeIds.forEach(function(instructorTypeId) {
 							coursesHtml += "<div class=\"course-list-row\">";
 							coursesHtml += "<div class=\"description-cell\">";
@@ -302,13 +310,20 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 									var displayTitle = "";
 									var plannedSeatsHtml = "";
-									var unitsLow = "";
+									var units = "";
 
 									var course = scope.view.state.courses.list[sectionGroup.courseId];
 									displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
 									var plannedSeats = sectionGroup.plannedSeats || "0";
 									plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
-									unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+
+									if (sectionGroup.unitsVariable) {
+										units = "Units (Variable): " + sectionGroup.unitsVariable;
+									} else if (course.unitsHigh) {
+										units = "<small>Units: " + course.unitsLow + " - " + course.unitsHigh + "</small>";
+									} else {
+										units = "<small>Units: " + course.unitsLow + "</small>";
+									}
 
 									coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
 									coursesHtml += '<p class="instructors-table__preference-title">';
@@ -331,7 +346,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 									coursesHtml += "<div class=\"tile-assignment-details\">";
 									coursesHtml += plannedSeatsHtml;
 									coursesHtml += "<br />";
-									coursesHtml += unitsLow;
+									coursesHtml += units;
 									coursesHtml += "</div>";
 									coursesHtml += "</div>";
 								});
@@ -375,21 +390,28 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 								var displayTitle = "";
 								var plannedSeatsHtml = "";
-								var unitsLow = "";
+								var units = "";
 
 								var course = scope.view.state.courses.list[sectionGroup.courseId];
 
 								displayTitle += course.subjectCode + " " + course.courseNumber + "-" + course.sequencePattern;
 								var plannedSeats = sectionGroup.plannedSeats || "0";
 								plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
-								unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+
+								if (sectionGroup.unitsVariable) {
+									units = "Units (Variable): " + sectionGroup.unitsVariable;
+								} else if (course.unitsHigh) {
+									units = "<small>Units: " + course.unitsLow + " - " + course.unitsHigh + "</small>";
+								} else {
+									units = "<small>Units: " + course.unitsLow + "</small>";
+								}
 
 								coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
 								coursesHtml += "<p>" + displayTitle + "</p>";
 								coursesHtml += "<div class=\"tile-assignment-details\">";
 								coursesHtml += plannedSeatsHtml;
 								coursesHtml += "<br />";
-								coursesHtml += unitsLow;
+								coursesHtml += units;
 								coursesHtml += "</div>";
 								coursesHtml += "</div>";
 							});
@@ -540,7 +562,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 											var displayTitle = "";
 											var plannedSeatsHtml = "";
-											var unitsLow = "";
+											var units = "";
 											var subTitle = "";
 
 											if (sectionGroup) {
@@ -550,7 +572,14 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													subTitle = course.title;
 													var plannedSeats = sectionGroup.plannedSeats || "0";
 													plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
-													unitsLow = "<small>Units: " + course.unitsLow + "</small>";
+
+													if (sectionGroup.unitsVariable) {
+														units = "Units (Variable): " + sectionGroup.unitsVariable;
+													} else if (course.unitsHigh) {
+														units = "<small>Units: " + course.unitsLow + " - " + course.unitsHigh + "</small>";
+													} else {
+														units = "<small>Units: " + course.unitsLow + "</small>";
+													}
 												}
 											} else {
 												if (teachingAssignment.buyout) {
@@ -577,7 +606,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											if (displayTitle.replace(/ /g, '').length == 0) {
 												displayTitle += teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber + " - 001 - " + teachingAssignment.suggestedTitle;
 												plannedSeatsHtml = "<small>Seats: 0</small>";
-												unitsLow = "<small>Units: 4</small>";
+												units = "<small>Units: 4</small>";
 											}
 											courseHtml += "<div class=\"alert alert-info tile-assignment";
 
@@ -602,7 +631,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 											courseHtml += "<div class=\"tile-assignment-details\">";
 											courseHtml += plannedSeatsHtml;
 											courseHtml += "<br />";
-											courseHtml += unitsLow;
+											courseHtml += units;
 											courseHtml += "</div>";
 
 											courseHtml += "</div>";
