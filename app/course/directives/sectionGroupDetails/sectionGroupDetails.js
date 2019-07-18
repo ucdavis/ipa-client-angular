@@ -20,6 +20,12 @@ let sectionGroupDetails = function (CourseActionCreators) {
         CourseActionCreators.createSection(section);
       };
 
+      scope.updateSectionGroup = function (sectionGroup) {
+        sectionGroup.unitsVariable ? sectionGroup.unitsVariable = parseFloat(sectionGroup.unitsVariable) : sectionGroup.unitsVariable = null;
+
+        CourseActionCreators.updateSectionGroup(sectionGroup);
+      };
+
       scope.removeSectionGroup = function (sectionGroup) {
         CourseActionCreators.removeSectionGroup(sectionGroup);
       };
