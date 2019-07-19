@@ -77,8 +77,8 @@
 								<!-- Instructors -->
 								<div ng-show="$index==0">
 									<div class="units-details">
-										<span ng-if="sectionGroup.units > 0">
-											Units: {{ sectionGroup.units }}
+										<span ng-if="sectionGroup.unitsLow > 0">
+											Units: {{ sectionGroup.unitsHigh ? sectionGroup.unitsVariable || (sectionGroup.unitsLow + " - " + sectionGroup.unitsHigh) : sectionGroup.unitsLow }}
 										</span>
 									</div>
 
