@@ -72,7 +72,10 @@
 							<small class="text-muted">{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].title }}</small>
 							<br />
 							<small class="text-muted">
-								Units: {{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].unitsLow }}
+								Units: {{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].unitsHigh
+													? view.state.sectionGroups.list[sectionGroupId].unitsVariable || (view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].unitsLow + " - " + view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].unitsHigh)
+													: view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].unitsLow
+												}}
 
 								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
 
