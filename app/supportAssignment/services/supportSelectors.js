@@ -374,7 +374,8 @@ class SupportSelectors {
 						entity.sequencePattern = course.sequencePattern;
 						entity.courseNumber = course.courseNumber;
 						entity.title = course.title;
-						entity.units = course.unitsLow;
+						entity.unitsLow = course.unitsLow;
+						entity.unitsHigh = course.unitsHigh;
 					}
 				});
 	
