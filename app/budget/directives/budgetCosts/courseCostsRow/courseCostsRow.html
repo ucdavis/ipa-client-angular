@@ -61,7 +61,7 @@
 	<!-- TA Count -->
 	<td class="course-costs__table-cell">
 		<div class="budget-costs__label">
-			TAs
+			TAs (Appointment)
 		</div>
 		<div class="course-costs__edit-container">
 			<div ng-show="!isLiveDataScenario" class="course-costs__number-input">
@@ -82,6 +82,9 @@
 			<div ng-show="isLiveDataScenario">
 				{{ sectionGroupCost.taCount || 0 }}
 			</div>
+			<div class="budget-costs__label">
+				&nbsp;({{ sectionGroupCost.sectionGroup.taAppointmentPercentage || '50'}}%)
+			</div>
 		</div>
 	</td>
 	<!-- TA Cost -->
@@ -96,7 +99,7 @@
 	<!-- Reader Count -->
 	<td class="course-costs__table-cell">
 		<div class="budget-costs__label">
-			Readers
+			Readers (Appointment)
 		</div>
 		<div class="course-costs__edit-container">
 			<div ng-show="!isLiveDataScenario" class="course-costs__number-input">
@@ -116,6 +119,9 @@
 			</div>
 			<div ng-show="isLiveDataScenario">
 				{{ sectionGroupCost.readerCount || 0 }}
+			</div>
+			<div class="budget-costs__label">
+				&nbsp;({{ sectionGroupCost.sectionGroup.readerAppointmentPercentage || '25'}}%)
 			</div>
 		</div>
 	</td>

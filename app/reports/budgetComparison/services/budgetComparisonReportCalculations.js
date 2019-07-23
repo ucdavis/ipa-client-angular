@@ -234,17 +234,21 @@ class BudgetComparisonReportCalculations {
 				};
 
 				sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
-					var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+          var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
+
+          // TA default is 50, reader default is 25
+          var taApptAdjustment = sectionGroupCost.taAppointmentPercentage ? (sectionGroupCost.taAppointmentPercentage / 50) : 1;
+          var readerApptAdjustment = sectionGroupCost.readerAppointmentPercentage ? (sectionGroupCost.readerAppointmentPercentage / 25) : 1;
 
 					if (sectionGroupCost.budgetScenarioId != selectedScenarioId || sectionGroupCost.disabled) { return; }
 					if (activeTerms.indexOf(sectionGroupCost.termCode.slice(-2)) == -1) { return; }
 
 					supportCosts.taCount += sectionGroupCost.taCount || 0;
-					supportCosts.readerCount += sectionGroupCost.readerCount || 0;	
-				});
+					supportCosts.readerCount += sectionGroupCost.readerCount || 0;
 
-				supportCosts.taCost = supportCosts.taCount * budget.taCost;
-				supportCosts.readerCost = supportCosts.readerCount * budget.readerCost;
+					supportCosts.taCost += sectionGroupCost.taCount * budget.taCost * taApptAdjustment;
+					supportCosts.readerCost += sectionGroupCost.readerCount * budget.readerCost * readerApptAdjustment;
+				});
 
 				supportCosts.totalCount += supportCosts.taCount + supportCosts.readerCount;
 				supportCosts.totalCost += supportCosts.taCost + supportCosts.readerCost;

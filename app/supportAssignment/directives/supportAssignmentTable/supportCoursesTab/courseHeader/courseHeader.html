@@ -1,54 +1,87 @@
 <div class="course-header">
-	<div class="course-header__name">
-		{{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }} {{ sectionGroup.sequencePattern }} {{ sectionGroup.title }}
-	</div>
+  <div class="course-header__name">
+    {{ sectionGroup.subjectCode }} {{ sectionGroup.courseNumber }}
+    {{ sectionGroup.sequencePattern }} {{ sectionGroup.title }}
+  </div>
 
-	<table>
-		<tbody>
-			<tr>
-				<td class="course-header__cell">
-					<div>
-						TAs
-					</div>
-				</td>
-				<td class="course-header__cell">
-					<course-appointment-input
-						section-group="sectionGroup"
-						view-type="'Teaching Assistants'"
-						read-only="readOnly">
-					</course-appointment-input>
-				</td>
-			</tr>
-			<tr>
-				<td class="course-header__cell">
-					<div>
-						Readers
-					</div>
-				</td>
-				<td class="course-header__cell">
-					<course-appointment-input
-						section-group="sectionGroup"
-						view-type="'Readers'"
-						read-only="readOnly">
-					</course-appointment-input>
-				</td>
-			</tr>
-			<tr>
-				<td class="course-header__cell">
-					Seats
-				</td>
-				<td class="course-header__cell course-header__cell--push-right">
-					{{ sectionGroup.plannedSeats }}
-				</td>
-			</tr>
-			<tr>
-				<td class="course-header__cell">
-					Units
-				</td>
-				<td class="course-header__cell course-header__cell--push-right">
-					{{ sectionGroup.units }}
-				</td>
-			</tr>
-		</tbody>
-	</table>
+  <table>
+    <tbody>
+      <tr>
+        <td class="course-header__cell">
+          <div>
+            TAs
+          </div>
+        </td>
+        <td class="course-header__cell">
+          <course-appointment-input
+            section-group="sectionGroup"
+            view-type="'Teaching Assistants'"
+            read-only="readOnly"
+          >
+          </course-appointment-input>
+        </td>
+        <td>
+          <div>Appt %</div>
+        </td>
+        <td>
+          <div class="course-appointment-input">
+            <ipa-input
+              on-update="updateTeachingAssistantAppointments(sectionGroup)"
+              value="sectionGroup.taAppointmentPercentage"
+              mode="'number'"
+              place-holder="'50'"
+              uib-tooltip="Default value is 50%"
+            >
+            </ipa-input>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="course-header__cell">
+          <div>
+            Readers
+          </div>
+        </td>
+        <td class="course-header__cell">
+          <course-appointment-input
+            section-group="sectionGroup"
+            view-type="'Readers'"
+            read-only="readOnly"
+          >
+          </course-appointment-input>
+        </td>
+        <td>
+          <div>Appt %</div>
+        </td>
+        <td>
+          <div class="course-appointment-input">
+            <ipa-input
+              on-update="updateReaderAppointments(sectionGroup)"
+              value="sectionGroup.readerAppointmentPercentage"
+              mode="'number'"
+              place-holder="'25'"
+              uib-tooltip="Default value is 25%"
+            >
+            </ipa-input>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="course-header__cell">
+          Seats
+        </td>
+        <td class="course-header__cell course-header__cell--push-right">
+          {{ sectionGroup.plannedSeats }}
+        </td>
+      </tr>
+      <tr>
+        <td class="course-header__cell">
+          Units
+        </td>
+        <td class="course-header__cell course-header__cell--push-right">
+          {{ sectionGroup.units }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
