@@ -8,13 +8,11 @@
 class CourseService {
   constructor() {
     return {
-      getUnits: function (course) {
-        if (course.unitsVariable > 0) {
-          return course.unitsVariable;
+      getUnits: function (course, sectionGroup) {
+        if (course.unitsHigh > 0) {
+          return sectionGroup.unitsVariable || course.unitsLow;
         } else if (course.unitsLow > 0) {
           return course.unitsLow;
-        } else if (course.unitsHigh > 0) {
-          return course.unitsHigh;
         } else {
           return 0;
         }
