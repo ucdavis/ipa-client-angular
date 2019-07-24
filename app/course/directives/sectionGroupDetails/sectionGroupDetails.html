@@ -21,9 +21,16 @@
                     course-id="view.selectedEntity.courseId"
                     sequence-pattern="view.state.courses.list[view.selectedEntity.courseId].sequencePattern"></census-chart>
       <hr />
-      <div ng-show="view.state.courses.list[view.selectedEntity.courseId].unitsHigh > 0">
-        Variable Units: <ipa-input mode="'number'" value="view.selectedEntity.unitsVariable" on-update="updateSectionGroup(view.selectedEntity)"></ipa-input>
+      <div 
+        class="section-group-details__variable-units--container"
+        ng-show="view.state.courses.list[view.selectedEntity.courseId].unitsHigh > 0"
+      >
+        <div class="section-group-details__variable-units--label">
+          Variable Units: 
+        </div>
+        <ipa-input mode="'number'" value="view.selectedEntity.unitsVariable" on-update="updateSectionGroup(view.selectedEntity)"></ipa-input>
       </div>
+      <hr ng-show="view.state.courses.list[view.selectedEntity.courseId].unitsHigh > 0" />
       <table class="table sections-table" style="margin-bottom: 5px;" ng-if="view.selectedEntity.sectionIds.length">
         <colgroup>
           <col style="width: 50%;">
