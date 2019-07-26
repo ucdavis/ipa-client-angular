@@ -217,6 +217,12 @@ class CourseStateService {
               sectionGroups.ids.push(sectionGroupData.id);
             }
             sectionGroups.list = sectionGroupsList;
+
+            sectionGroups.ids.forEach(function(sectionGroupId) {
+              sectionGroups.list[sectionGroupId].sections = action.payload.sections
+                .filter(function(section) { return section.sectionGroupId === sectionGroupId; });
+            });
+
             return sectionGroups;
           case ActionTypes.SEARCH_IMPORT_COURSES:
             sectionGroups.importList = [];
@@ -312,6 +318,12 @@ class CourseStateService {
               list: {},
               ids: []
             };
+
+            action.payload.sections.forEach(function (section) {
+              sections.list[section.id] = new Section(section);
+              sections.ids.push(section.id);
+            });
+
             return sections;
           case ActionTypes.FETCH_SECTIONS:
             action.payload.sections.forEach(function (sectionData) {
