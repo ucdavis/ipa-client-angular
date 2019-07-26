@@ -456,6 +456,8 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             // TODO: Calculate this boolean by comparing the sum of all section seats to the plannedSeats
             var requiresAttention = false;
 
+            requiresAttention = plannedSeats && sectionGroup.sections.length === 0;
+
             // Determine if the term is readonly
             var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
 
@@ -464,7 +466,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
               row += plannedSeats;
             } else {
               if (requiresAttention) {
-                row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
+                row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\" uib-tooltip=\"This course is budgeted for in this scenario, but has not been scheduled\"></i></div>";
               }
               row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
             }
