@@ -278,7 +278,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					}
 
 					if (unassignedInstructorTypeLength) {
-						debugger;
 						unassignedInstructorTypeIds.forEach(function(instructorTypeId) {
 							coursesHtml += "<div class=\"course-list-row\">";
 							coursesHtml += "<div class=\"description-cell\">";
