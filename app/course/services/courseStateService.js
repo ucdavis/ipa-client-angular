@@ -537,6 +537,12 @@ class CourseStateService {
           case ActionTypes.CLOSE_COURSE_DELETION_MODAL:
             uiState.isCourseDeleteModalOpen = false;
             return uiState;
+          case ActionTypes.SHOW_PLANNED_SEATS_WARNING:
+            uiState.requiresAttention = true;
+            return uiState;
+          case ActionTypes.HIDE_PLANNED_SEATS_WARNING:
+            uiState.requiresAttention = false;
+            return uiState;
           default:
             return uiState;
         }

@@ -493,6 +493,18 @@ class CourseActionCreators {
           type: ActionTypes.CLOSE_COURSE_DELETION_MODAL,
           payload: {}
         });
+      },
+      showPlannedSeatsWarning: function() {
+        CourseStateService.reduce({
+          type: ActionTypes.SHOW_PLANNED_SEATS_WARNING,
+          payload: {}
+        });
+      },
+      hidePlannedSeatsWarning: function() {
+        CourseStateService.reduce({
+          type: ActionTypes.HIDE_PLANNED_SEATS_WARNING,
+          payload: {}
+        });
       }
     };
   }

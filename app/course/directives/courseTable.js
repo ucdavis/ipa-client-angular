@@ -151,14 +151,14 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             if (course.id === undefined) {
               body += scope.getImportCourseRow(course, termsToRender, data.state);
             } else {
-              body += scope.getCourseRow(rowIdx, course.id, termsToRender, data.state);
+              body += scope.getCourseRow(rowIdx, course.id, termsToRender, data.state, CourseActionCreators);
             }
           });
         } else if (data.state.courses.ids.length) {
           var allContentFilteredOut = true;
 
           $.each(data.state.courses.ids, function (rowIdx, courseId) { // eslint-disable-line no-undef
-            var row = scope.getCourseRow(rowIdx, courseId, termsToRender, data.state);
+            var row = scope.getCourseRow(rowIdx, courseId, termsToRender, data.state, CourseActionCreators);
 
             if (row) {
               allContentFilteredOut = false;
@@ -412,7 +412,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
       // Renders a course row for all courses except when in mass import mode,
       // when the "proposed rows" will be rendered by getImportCourseRow.
-      scope.getCourseRow = function (rowIdx, courseId, termsToRender, state) {
+      scope.getCourseRow = function (rowIdx, courseId, termsToRender, state, CourseActionCreators) {
         var rowClass = "odd gradeX";
 
         if (state.uiState.selectedCourseId == courseId) {
@@ -467,6 +467,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             } else {
               if (requiresAttention) {
                 row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\" uib-tooltip=\"This course is budgeted for in this scenario, but has not been scheduled\"></i></div>";
+                CourseActionCreators.showPlannedSeatsWarning();
               }
               row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
             }
