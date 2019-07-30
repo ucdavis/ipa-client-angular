@@ -36,10 +36,20 @@ class RegistrarReconciliationReportStateService {
 							var diffsChanges = action.payload.sectionDiffs[i].changes;
 							var acceptedChanges = ["instructors", "activities", "bannerLocation", "startTime", "endTime", "dayIndicator","crn", "seats"];
 							if (diffsChanges){
+								
 								diffsChanges.forEach(function(diffChange){
 									var isAccepted = acceptedChanges.includes(diffChange.propertyName);
 										if (isAccepted){
+											let propertyName = diffChange.propertyName;
+											if (propertyName == "activities"){
+												let addedValue = diffChange.changes[0].addedValue;
+												let removedValue = diffChange.changes[0].removedValue;
+												if (addedValue || removedValue){
+													sectionChanges.push(diffChange);
+												} 
+											} else {
 											sectionChanges.push(diffChange);
+											}
 										}
 								});
 							}
@@ -66,8 +76,10 @@ class RegistrarReconciliationReportStateService {
 									sections.sectionsKeyById[section.id] = sectionKey;
 								}
 							}
-	
+
 							var slotSection = sectionList[sectionKey];
+console.log("slotSection:",slotSection); // eslint-disable-line no-console
+console.log("sectionChanges:",sectionChanges); // eslint-disable-line no-console
 							// translate DiffView changes list into stateService language
 							if (ipaSectionData != null && dwSectionData == null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// DW version does not exist
@@ -196,6 +208,7 @@ class RegistrarReconciliationReportStateService {
 						// Delete dwChanges if this was the last change
 						if (Object.keys(section.dwChanges).length === 0) {
 							delete section.dwChanges;
+							section.dwHasChanges = false;
 						}
 						return sections;
 					case ActionTypes.ASSIGN_INSTRUCTOR:
@@ -363,7 +376,7 @@ class RegistrarReconciliationReportStateService {
 	
 				$log.debug("Report state updated:");
 				$log.debug(scope._state, action.type);
-
+console.log(scope._state.sections.list); // eslint-disable-line no-console
 			},
 	
 			// ------------------------------- //

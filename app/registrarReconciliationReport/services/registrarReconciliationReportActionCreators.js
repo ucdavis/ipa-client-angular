@@ -109,7 +109,6 @@ class RegistrarReconciliationReportActionCreators {
 				});
 			},
 			updateSectionReconciliation: function (updatedSection) {
-				
 				// Todo: Check incoming type of change
 				var dwHasChanges;
 				// console.log("Updated Section: ",updatedSection); // eslint-disable-line no-console
@@ -126,10 +125,13 @@ class RegistrarReconciliationReportActionCreators {
 								return sections.list[slotSectionKey].instructors
 									.some(function (i) { return i.noRemote || i.noLocal; });
 								}
-              });
-					if (instructorsHasChanges){
-            dwHasChanges = true;
-          }
+							});
+
+					if (instructorsHasChanges || section.dwChanges.length){
+						dwHasChanges = true;
+					} else {
+						dwHasChanges = false;
+					}
 					
 				}
 				var action = {
