@@ -66,7 +66,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param property
 			 */
 			updateSection: function (section, property, uniqueKey) {
-				var _this=this;
+				var _this = this;
 				RegistrarReconciliationReportService.updateSection(section).then(function (updatedSection) {
 					$rootScope.$emit('toast', { message: "Updated section " + updatedSection.sequenceNumber + " " + property, type: "SUCCESS" });
 					var action = {
@@ -95,14 +95,6 @@ class RegistrarReconciliationReportActionCreators {
 				var _this = this;
 				RegistrarReconciliationReportService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.typeCode.getActivityCodeDescription() + " " + property, type: "SUCCESS" });
-					// console.log("activity:",activity); // eslint-disable-line no-console
-					// console.log("updatedActivity: ",updatedActivity); // eslint-disable-line no-console
-					//	// Find other sections that might have this activity (shared activity)
-					//	var otherSectionIds = sections.ids
-					//	.filter(function (sid) {
-					//		return sections.list[sid].activities
-					//		.some(function (a) { return a.id == action.payload.activity.id; });
-					//	});
 					var action = {
 						type: ActionTypes.UPDATE_ACTIVITY,
 						payload: {
@@ -116,17 +108,35 @@ class RegistrarReconciliationReportActionCreators {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
 			},
-			
-			updateSectionReconciliation: function (section) {
-				// var sectionKey;
-				console.log(section); // eslint-disable-line no-console
-				var sections = RegistrarReconciliationReportStateService._state.sections;
-
+			updateSectionReconciliation: function (updatedSection) {
+				
+				// Todo: Check incoming type of change
+				var dwHasChanges;
+				// console.log("Updated Section: ",updatedSection); // eslint-disable-line no-console
+				if (updatedSection){
+					var sections = RegistrarReconciliationReportStateService._state.sections;
+					var sectionKey = sections.sectionsKeyById[updatedSection.id];
+					var section = sections.list[sectionKey];
+					console.log("Section: ",section); // eslint-disable-line no-console
+					// Todo: Check if incoming change is the last one in the whole section
+					// Check if section differs from instructors
+					var instructorsHasChanges = sections.ids
+							.some(function (slotSectionKey) {
+								if (sectionKey == slotSectionKey) {
+								return sections.list[slotSectionKey].instructors
+									.some(function (i) { return i.noRemote || i.noLocal; });
+								}
+              });
+					if (instructorsHasChanges){
+            dwHasChanges = true;
+          }
+					
+				}
 				var action = {
 					type: ActionTypes.UPDATE_SECTION_RECONCILIATION,
 					payload: {
-						sectionKey: sections.sectionsKeyById[section.id],
-						dwHasChanges: false
+						sectionKey: sectionKey,
+						dwHasChanges: dwHasChanges
 					}
 				};
 				RegistrarReconciliationReportStateService.reduce(action);

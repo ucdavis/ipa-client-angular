@@ -24,8 +24,8 @@ class RegistrarReconciliationReportStateService {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
- 							ids: [],
- 							sectionsKeyById: {}
+							ids : [],
+							sectionsKeyById : {}
 						};
 						var sectionList = {};
 						var length = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
@@ -68,7 +68,6 @@ class RegistrarReconciliationReportStateService {
 							}
 	
 							var slotSection = sectionList[sectionKey];
-	
 							// translate DiffView changes list into stateService language
 							if (ipaSectionData != null && dwSectionData == null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// DW version does not exist
