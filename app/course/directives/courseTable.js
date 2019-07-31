@@ -417,7 +417,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       scope.getCourseRow = function (rowIdx, courseId, termsToRender, state) {
         var rowClass = "odd gradeX";
 
-        if (state.uiState.selectedCourseId == courseId) {
+        if (state.uiState.selectedCourseId == courseId && !state.uiState.selectedTermCode) {
           rowClass += " selected-tr";
         }
         var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
@@ -464,6 +464,10 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
             // Determine if the term is readonly
             var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
+
+            if (state.uiState.selectedCourseId == courseId && state.uiState.selectedTermCode == termCode) {
+              cellClass += " selected-td";
+            }
 
             row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass + "\"><div>";
             if (state.uiState.tableLocked) {
