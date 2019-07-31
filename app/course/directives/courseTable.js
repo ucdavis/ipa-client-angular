@@ -38,7 +38,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         ActionTypes.REMOVE_SECTION_GROUP,
         ActionTypes.ADD_SECTION_GROUP,
         ActionTypes.DELETE_MULTIPLE_COURSES,
-        ActionTypes.MASS_ASSIGN_TAGS
+        ActionTypes.MASS_ASSIGN_TAGS,
+        ActionTypes.CREATE_SECTION,
+        ActionTypes.REMOVE_SECTION
       ];
 
       $rootScope.$on('courseStateChanged', function (event, data) {
@@ -412,7 +414,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
       // Renders a course row for all courses except when in mass import mode,
       // when the "proposed rows" will be rendered by getImportCourseRow.
-      scope.getCourseRow = function (rowIdx, courseId, termsToRender, state, CourseActionCreators) {
+      scope.getCourseRow = function (rowIdx, courseId, termsToRender, state) {
         var rowClass = "odd gradeX";
 
         if (state.uiState.selectedCourseId == courseId) {
@@ -456,7 +458,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             // TODO: Calculate this boolean by comparing the sum of all section seats to the plannedSeats
             var requiresAttention = false;
 
-            requiresAttention = plannedSeats && sectionGroup.sections.length === 0;
+            if (sectionGroup) {
+              requiresAttention = sectionGroup.requiresAttention;
+            }
 
             // Determine if the term is readonly
             var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
@@ -467,7 +471,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             } else {
               if (requiresAttention) {
                 row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\" uib-tooltip=\"This course is budgeted for in this scenario, but has not been scheduled\"></i></div>";
-                CourseActionCreators.showPlannedSeatsWarning();
+                // CourseActionCreators.showPlannedSeatsWarning();
               }
               row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
             }
