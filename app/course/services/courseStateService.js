@@ -451,11 +451,11 @@ class CourseStateService {
             var sectionGroups = action.payload.sectionGroups;
 
             for (var sectionGroup of sectionGroups) {
-              sectionGroups.sections = action.payload.sections.filter(
+              sectionGroup.sections = action.payload.sections.filter(
                 function(section) { return (section.sectionGroupId === sectionGroup.id);}
               );
 
-              if (sectionGroups.sections.length === 0) {
+              if (sectionGroup.sections.length === 0) {
                 uiState.requiresAttention = true;
                 break;
               }
@@ -468,6 +468,23 @@ class CourseStateService {
             return uiState;
           case ActionTypes.FETCH_SECTIONS:
             uiState.sectionsFetchInProgress = false;
+            return uiState;
+          case ActionTypes.CREATE_SECTION:
+          case ActionTypes.REMOVE_SECTION:
+            var sectionGroups = Object.values(this._state.sectionGroups.list);
+            var sections = Object.values(this._state.sections.list);
+            
+            for (var sectionGroup of sectionGroups) {
+              sectionGroup.sections = sections.filter(function(section) {
+                return (section.sectionGroupId === sectionGroup.id);
+              });
+
+              if (sectionGroup.sections.length === 0) {
+                uiState.requiresAttention = true;
+                return uiState;
+              }
+            }
+            uiState.requiresAttention = false;
             return uiState;
           case ActionTypes.BEGIN_FETCH_CENSUS:
             uiState.censusFetchInProgress = true;
