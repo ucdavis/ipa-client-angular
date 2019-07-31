@@ -219,11 +219,13 @@ class CourseStateService {
             sectionGroups.list = sectionGroupsList;
 
             sectionGroups.ids.forEach(function(sectionGroupId) {
-              sectionGroups.list[sectionGroupId].sections = action.payload.sections
+              var sectionGroup = sectionGroups.list[sectionGroupId];
+
+              sectionGroup.sections = action.payload.sections
                 .filter(function(section) { return section.sectionGroupId === sectionGroupId; });
 
-              if (sectionGroups.list[sectionGroupId].sections.length === 0 && sectionGroups.list[sectionGroupId].plannedSeats) {
-                sectionGroups.list[sectionGroupId].requiresAttention = true;
+              if (sectionGroup.sections.length === 0 && sectionGroup.plannedSeats) {
+                sectionGroup.requiresAttention = true;
               }
             });
 
@@ -287,14 +289,13 @@ class CourseStateService {
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.section.sectionGroupId];
             if (!sectionGroups.selectedSectionGroup.sectionIds) { sectionGroups.selectedSectionGroup.sectionIds = []; }
             sectionGroups.selectedSectionGroup.sectionIds.push(action.payload.section.id);
-
             sectionGroups.selectedSectionGroup.requiresAttention = false;
             return sectionGroups;
           case ActionTypes.REMOVE_SECTION:
             var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
             sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.splice(sectionIdIndex, 1);
 
-            if (sectionGroups.list[action.payload.section.sectionGroupId].plannedSeats && sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.length === 0) {
+            if (sectionGroups.selectedSectionGroup.plannedSeats && sectionGroups.selectedSectionGroup.sectionIds.length === 0) {
               sectionGroups.selectedSectionGroup.requiresAttention = true;
             }
             return sectionGroups;

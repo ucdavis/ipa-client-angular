@@ -153,14 +153,14 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             if (course.id === undefined) {
               body += scope.getImportCourseRow(course, termsToRender, data.state);
             } else {
-              body += scope.getCourseRow(rowIdx, course.id, termsToRender, data.state, CourseActionCreators);
+              body += scope.getCourseRow(rowIdx, course.id, termsToRender, data.state);
             }
           });
         } else if (data.state.courses.ids.length) {
           var allContentFilteredOut = true;
 
           $.each(data.state.courses.ids, function (rowIdx, courseId) { // eslint-disable-line no-undef
-            var row = scope.getCourseRow(rowIdx, courseId, termsToRender, data.state, CourseActionCreators);
+            var row = scope.getCourseRow(rowIdx, courseId, termsToRender, data.state);
 
             if (row) {
               allContentFilteredOut = false;
@@ -474,8 +474,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
               row += plannedSeats;
             } else {
               if (requiresAttention) {
-                row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\" uib-tooltip=\"This course is budgeted for in this scenario, but has not been scheduled\"></i></div>";
-                // CourseActionCreators.showPlannedSeatsWarning();
+                row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
               }
               row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
             }
