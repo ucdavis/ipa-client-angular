@@ -126,6 +126,7 @@ class RegistrarReconciliationReportActionCreators {
 				}
 
 					var slotSection = sections.list[sectionKey];
+
 					// Check if slot instructors has changes
 					var instructorsHasChanges = sections.ids
 							.some(function (slotSectionKey) {
@@ -144,7 +145,7 @@ class RegistrarReconciliationReportActionCreators {
 								}
 							});
 
-					// Check if slot activities has changes
+					// Check if slot section has changes
 					var sectionHasChanges = slotSection.dwChanges;
 
 					var dwHasChanges;
