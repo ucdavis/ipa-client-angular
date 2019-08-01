@@ -208,7 +208,6 @@ console.log("sectionChanges:",sectionChanges); // eslint-disable-line no-console
 						// Delete dwChanges if this was the last change
 						if (Object.keys(section.dwChanges).length === 0) {
 							delete section.dwChanges;
-							section.dwHasChanges = false;
 						}
 						return sections;
 					case ActionTypes.ASSIGN_INSTRUCTOR:

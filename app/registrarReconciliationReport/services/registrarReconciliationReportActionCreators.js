@@ -92,6 +92,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param property
 			 */
 			updateActivity: function (activity, property) {
+// debugger; // eslint-disable-line no-debugger
 				var _this = this;
 				RegistrarReconciliationReportService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.typeCode.getActivityCodeDescription() + " " + property, type: "SUCCESS" });
@@ -103,22 +104,36 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
-					_this.updateSectionReconciliation();
+					_this.updateSectionReconciliation(updatedActivity);
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
 			},
 			updateSectionReconciliation: function (updatedSection) {
-				// Todo: Check incoming type of change
-				var dwHasChanges;
+				var sectionKey;
+				var sections = RegistrarReconciliationReportStateService._state.sections;
+				
+				// When updatedSection is received after updateActivity()
+				// Look for sectionKey by the id of the change
+				if (updatedSection.activityState){
+// debugger; // eslint-disable-line no-debugger
+					sectionKey = sections.ids
+					.filter(function (slotId) {
+						return sections.list[slotId].activities
+							.some(function (a) { return a.id == updatedSection.id; });
+					});
+				// When updatedSection is received after updateSection() or unAssignInstructor()
+				// sectionKey is provided by updatedSection
+				} else {
+// debugger; // eslint-disable-line no-debugger
+					sectionKey = sections.sectionsKeyById[updatedSection.id];
+				}
 				// console.log("Updated Section: ",updatedSection); // eslint-disable-line no-console
-				if (updatedSection){
-					var sections = RegistrarReconciliationReportStateService._state.sections;
-					var sectionKey = sections.sectionsKeyById[updatedSection.id];
-					var section = sections.list[sectionKey];
-					console.log("Section: ",section); // eslint-disable-line no-console
-					// Todo: Check if incoming change is the last one in the whole section
-					// Check if section differs from instructors
+					
+					var slotSection = sections.list[sectionKey];
+// console.log("slotSection: ",slotSection); // eslint-disable-line no-console
+
+					// Check if slot instructors has changes
 					var instructorsHasChanges = sections.ids
 							.some(function (slotSectionKey) {
 								if (sectionKey == slotSectionKey) {
@@ -127,13 +142,25 @@ class RegistrarReconciliationReportActionCreators {
 								}
 							});
 
-					if (instructorsHasChanges || section.dwChanges.length){
+					// Check if slot activities has changes
+					var activitiesHasChanges = sections.ids
+							.some(function (slotSectionKey) {
+								if (sectionKey == slotSectionKey) {
+								return sections.list[slotSectionKey].activities
+									.some(function (i) { return i.dwChanges; });
+								}
+							});
+
+					// Check if slot activities has changes
+					var sectionHasChanges = slotSection.dwChanges;
+
+					var dwHasChanges;
+					if (instructorsHasChanges || activitiesHasChanges || sectionHasChanges){
 						dwHasChanges = true;
 					} else {
 						dwHasChanges = false;
 					}
-					
-				}
+
 				var action = {
 					type: ActionTypes.UPDATE_SECTION_RECONCILIATION,
 					payload: {
@@ -243,6 +270,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param instructor
 			 */
 			unAssignInstructor: function (section, instructor) {
+				var _this = this;
 				RegistrarReconciliationReportService.unAssignInstructor(section.sectionGroupId, instructor).then(function () {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
@@ -253,6 +281,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
+					_this.updateSectionReconciliation(section);
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not unassign instructor.", type: "ERROR" });
 				});
