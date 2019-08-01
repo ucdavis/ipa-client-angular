@@ -1,0 +1,31 @@
+<nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
+
+<!-- <div ng-if="!noAccess && !view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="overlay">
+  <spinner class="vertical-center"></spinner>
+</div> -->
+
+<ipa-header page-title="Support Staff Utilization Report" class="do-not-print"></ipa-header>
+
+<div ng-if="noAccess">
+  <no-access workgroup-name="sharedState.workgroup.name"></no-access>
+</div>
+
+<div class="budget-comparison-report__workgroup-title">
+  {{ sharedState.workgroup.name }} Support Staff Utilization Report
+</div>
+
+<!-- <div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="do-not-print budget-comparison-report__scenario-selector-tray">
+  <!-- Toolbar -->
+  <div class="row hidden-print" style="clear: both; display: block; width: 100%;">
+    <div class="table-toolbar">
+      <div class="btn-group">
+        <span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="downloadAsExcel()" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false"></span>
+      </div>
+      <span data-toggle="tooltip" data-placement="top" data-original-title="Print" ng-click="print()" class="tool-icon glyphicon glyphicon-print"></span>
+    </div>
+  </div>
+</div> -->
+
+TA Utilization Report
+
+Reader Utilization Report

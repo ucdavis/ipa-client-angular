@@ -3,6 +3,7 @@ import StringService from './../shared/services/StringService.js';
 
 // Controllers
 import BudgetComparisonReportCtrl from './budgetComparison/budgetComparisonReportCtrl.js';
+import SupportUtilizationReportCtrl from './supportUtilization/supportUtilizationReportCtrl.js';
 
 // Services
 import BudgetComparisonReportActions from './budgetComparison/services/budgetComparisonReportActions.js';
@@ -10,6 +11,10 @@ import BudgetComparisonReportReducers from './budgetComparison/services/budgetCo
 import BudgetComparisonReportService from './budgetComparison/services/budgetComparisonReportService.js';
 import BudgetComparisonReportCalculations from './budgetComparison/services/budgetComparisonReportCalculations.js';
 import BudgetComparisonReportExcelService from './budgetComparison/services/budgetComparisonReportExcelService.js';
+
+import SupportUtilizationReportActions from './supportUtilization/services/supportUtilizationReportActions.js';
+import SupportUtilizationReportReducers from './supportUtilization/services/supportUtilizationReportReducers.js';
+import SupportUtilizationReportService from './supportUtilization/services/supportUtilizationReportService.js';
 
 // Directives
 import budgetScenarioSelector from './budgetComparison/directives/budgetScenarioSelector/budgetScenarioSelector.js';
@@ -47,7 +52,26 @@ function config ($routeProvider) {
 				});
 			}
 		}
-	});
+  })
+  .when("/:workgroupId/:year/supportUtilizationReport", {
+    template: require('./supportUtilization/supportUtilizationReportCtrl.html'),
+    controller: 'SupportUtilizationReportCtrl',
+    resolve: {
+      validate: function (AuthService, $route, SupportUtilizationReportActions) {
+				return AuthService.validate().then(function () {
+					if ($route.current.params.workgroupId) {
+						var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+            
+            if (hasAccess) {
+							return SupportUtilizationReportActions.getInitialState();
+						} else {
+							return { noAccess: true };
+						}
+          }
+        });
+      }
+    }
+  });
 }
 
 config.$inject = ['$routeProvider'];
@@ -55,11 +79,15 @@ config.$inject = ['$routeProvider'];
 // App declaration
 const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-line no-undef
                           .controller('BudgetComparisonReportCtrl', BudgetComparisonReportCtrl)
+                          .controller('SupportUtilizationReportCtrl', SupportUtilizationReportCtrl)
                           .service('BudgetComparisonReportActions', BudgetComparisonReportActions)
                           .service('BudgetComparisonReportReducers', BudgetComparisonReportReducers)
                           .service('BudgetComparisonReportService', BudgetComparisonReportService)
                           .service('BudgetComparisonReportCalculations', BudgetComparisonReportCalculations)
                           .service('BudgetComparisonReportExcelService', BudgetComparisonReportExcelService)
+                          .service('SupportUtilizationReportActions', SupportUtilizationReportActions)
+                          .service('SupportUtilizationReportReducers', SupportUtilizationReportReducers)
+                          .service('SupportUtilizationReportService', SupportUtilizationReportService)
                           .service('StringService', StringService)
                           .directive('courseCosts', courseCosts)
                           .directive('courseCostChanges', courseCostChanges)
