@@ -185,9 +185,14 @@
 							Workload Summary
 						</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'reports' }">
+					<li ng-class="{ 'active': currentEndHref == 'budgetComparisonReport'}">
 						<a ng-href="/reports/{{ workgroupId }}/{{ year }}/budgetComparisonReport">
 							Budget Comparison
+						</a>
+					</li>
+					<li ng-class="{ 'active': currentEndHref == 'supportUtilizationReport'}">
+						<a ng-href="/reports/{{ workgroupId }}/{{ year }}/supportUtilizationReport">
+							Support Utilization
 						</a>
 					</li>
 				</ul>
