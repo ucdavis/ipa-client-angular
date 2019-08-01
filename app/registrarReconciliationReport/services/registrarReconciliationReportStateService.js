@@ -78,8 +78,6 @@ class RegistrarReconciliationReportStateService {
 							}
 
 							var slotSection = sectionList[sectionKey];
-console.log("slotSection:",slotSection); // eslint-disable-line no-console
-console.log("sectionChanges:",sectionChanges); // eslint-disable-line no-console
 							// translate DiffView changes list into stateService language
 							if (ipaSectionData != null && dwSectionData == null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// DW version does not exist
@@ -375,7 +373,6 @@ console.log("sectionChanges:",sectionChanges); // eslint-disable-line no-console
 	
 				$log.debug("Report state updated:");
 				$log.debug(scope._state, action.type);
-console.log(scope._state.sections.list); // eslint-disable-line no-console
 			},
 	
 			// ------------------------------- //
