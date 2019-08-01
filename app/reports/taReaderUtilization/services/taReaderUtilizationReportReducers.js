@@ -1,4 +1,4 @@
-class SupportUtilizationReportReducers {
+class TaReaderUtilizationReportReducers {
   constructor($rootScope, ActionTypes) {
     return {
       _state: {
@@ -12,7 +12,7 @@ class SupportUtilizationReportReducers {
         let newState = {};
 
         scope._state = newState;
-        $rootScope.$emit("supportUtilizationReportStateChanged", {
+        $rootScope.$emit("taReaderUtilizationReportStateChanged", {
           state: scope._state,
           action: action
         });
@@ -21,6 +21,6 @@ class SupportUtilizationReportReducers {
   }
 }
 
-SupportUtilizationReportReducers.$inject = ["$rootScope", "ActionTypes"];
+TaReaderUtilizationReportReducers.$inject = ["$rootScope", "ActionTypes"];
 
-export default SupportUtilizationReportReducers;
+export default TaReaderUtilizationReportReducers;

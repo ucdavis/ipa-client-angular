@@ -1,13 +1,13 @@
-import "./supportUtilizationReport.css";
+import "./taReaderUtilizationReport.css";
 
-class SupportUtilizationReportCtrl {
+class TaReaderUtilizationReportCtrl {
   constructor(
     $scope,
     $rootScope,
     $routeParams,
     validate,
     AuthService,
-    SupportUtilizationReportActions
+    TaReaderUtilizationReportActions
   ) {
     this.$scope = $scope;
     this.$rootScope = $rootScope;
@@ -20,12 +20,12 @@ class SupportUtilizationReportCtrl {
 
     $scope.view = {};
 
-    $rootScope.$on("SupportUtilizationReportStateChanged", function(event, data) {
+    $rootScope.$on("TaReaderUtilizationReportStateChanged", function(event, data) {
       $scope.view.state = data.state;
     });
 
     $scope.downloadAsExcel = function() {
-      SupportUtilizationReportActions.downloadAsExcel(
+      TaReaderUtilizationReportActions.downloadAsExcel(
         $scope.year,
         $scope.sharedState.workgroup.name
       );
@@ -33,13 +33,13 @@ class SupportUtilizationReportCtrl {
   }
 }
 
-SupportUtilizationReportCtrl.$inject = [
+TaReaderUtilizationReportCtrl.$inject = [
   "$scope",
   "$rootScope",
   "$routeParams",
   "validate",
   "AuthService",
-  "SupportUtilizationReportActions"
+  "TaReaderUtilizationReportActions"
 ];
 
-export default SupportUtilizationReportCtrl;
+export default TaReaderUtilizationReportCtrl;

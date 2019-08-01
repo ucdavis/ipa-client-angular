@@ -1,4 +1,4 @@
-class SupportUtilizationReportService {
+class TaReaderUtilizationReportService {
   constructor(ApiService) {
     var _self = this;
     this.ApiService = ApiService;
@@ -105,8 +105,8 @@ class SupportUtilizationReportService {
   }
 }
 
-SupportUtilizationReportService.$inject = [
+TaReaderUtilizationReportService.$inject = [
   "ApiService",
 ];
 
-export default SupportUtilizationReportService;
+export default TaReaderUtilizationReportService;
