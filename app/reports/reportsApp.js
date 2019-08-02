@@ -3,7 +3,7 @@ import StringService from './../shared/services/StringService.js';
 
 // Controllers
 import BudgetComparisonReportCtrl from './budgetComparison/budgetComparisonReportCtrl.js';
-import TaReaderUtilizationReportCtrl from './supportUtilization/taReaderUtilizationReportCtrl.js';
+import TaReaderUtilizationReportCtrl from './taReaderUtilization/taReaderUtilizationReportCtrl.js';
 
 // Services
 import BudgetComparisonReportActions from './budgetComparison/services/budgetComparisonReportActions.js';
@@ -12,9 +12,9 @@ import BudgetComparisonReportService from './budgetComparison/services/budgetCom
 import BudgetComparisonReportCalculations from './budgetComparison/services/budgetComparisonReportCalculations.js';
 import BudgetComparisonReportExcelService from './budgetComparison/services/budgetComparisonReportExcelService.js';
 
-import TaReaderUtilizationReportActions from './supportUtilization/services/taReaderUtilizationReportActions.js';
-import TaReaderUtilizationReportReducers from './supportUtilization/services/taReaderUtilizationReportReducers.js';
-import TaReaderUtilizationReportService from './supportUtilization/services/taReaderUtilizationReportService.js';
+import TaReaderUtilizationReportActions from './taReaderUtilization/services/taReaderUtilizationReportActions.js';
+import TaReaderUtilizationReportReducers from './taReaderUtilization/services/taReaderUtilizationReportReducers.js';
+import TaReaderUtilizationReportService from './taReaderUtilization/services/taReaderUtilizationReportService.js';
 
 // Directives
 import budgetScenarioSelector from './budgetComparison/directives/budgetScenarioSelector/budgetScenarioSelector.js';
