@@ -449,19 +449,7 @@ class CourseStateService {
               requiresAttention: false,
             };
 
-            var sectionGroups = action.payload.sectionGroups;
-
-            for (var sectionGroup of sectionGroups) {
-              sectionGroup.sections = action.payload.sections.filter(
-                function(section) { return (section.sectionGroupId === sectionGroup.id);}
-              );
-
-              if (sectionGroup.sections.length === 0) {
-                uiState.requiresAttention = true;
-                break;
-              }
-            }
-
+            uiState.requiresAttention = !self.allSectionGroupsHaveSections(action.payload.sectionGroups, action.payload.sections);
             uiState.tableLocked = false;
             return uiState;
           case ActionTypes.BEGIN_FETCH_SECTIONS:
@@ -475,17 +463,7 @@ class CourseStateService {
             var sectionGroups = Object.values(this._state.sectionGroups.list);
             var sections = Object.values(this._state.sections.list);
             
-            for (var sectionGroup of sectionGroups) {
-              sectionGroup.sections = sections.filter(function(section) {
-                return (section.sectionGroupId === sectionGroup.id);
-              });
-
-              if (sectionGroup.sections.length === 0) {
-                uiState.requiresAttention = true;
-                return uiState;
-              }
-            }
-            uiState.requiresAttention = false;
+            uiState.requiresAttention = !self.allSectionGroupsHaveSections(sectionGroups, sections);
             return uiState;
           case ActionTypes.BEGIN_FETCH_CENSUS:
             uiState.censusFetchInProgress = true;
@@ -641,6 +619,21 @@ class CourseStateService {
     }
 
     return termFiltersArray;
+  }
+
+  allSectionGroupsHaveSections (sectionGroups, sections) {
+    for (var i = 0; i < sectionGroups.length; i++) {
+      var sectionGroup = sectionGroups[i];
+
+      sectionGroup.sections = sections.filter(function(section) {
+        return (section.sectionGroupId === sectionGroup.id);
+      });
+
+      if (sectionGroup.sections.length === 0) {
+        return false;
+      }
+    }
+    return true;
   }
 }
 
