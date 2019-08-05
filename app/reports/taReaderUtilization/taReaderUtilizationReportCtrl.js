@@ -20,7 +20,7 @@ class TaReaderUtilizationReportCtrl {
 
     $scope.view = {};
 
-    $rootScope.$on("TaReaderUtilizationReportStateChanged", function(event, data) {
+    $rootScope.$on("taReaderUtilizationReportStateChanged", function(event, data) {
       $scope.view.state = data.state;
     });
 
