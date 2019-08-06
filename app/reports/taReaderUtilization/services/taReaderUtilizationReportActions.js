@@ -67,6 +67,39 @@ class TaReaderUtilizationReportActions {
               type: 'ERROR'
             });
           };
+
+        TaReaderUtilizationReportService.getSectionGroups(
+          workgroupId,
+          year
+        ).then(function(payload) {
+          var action = {
+            type: ActionTypes.GET_CURRENT_SECTION_GROUPS,
+            payload: payload
+          };
+          TaReaderUtilizationReportReducers.reduce(action);
+        }),
+          function() {
+            $rootScope.$emit('toast', {
+              message: 'Could not load initial state.',
+              type: 'ERROR'
+            });
+          };
+        TaReaderUtilizationReportService.getSections(
+          workgroupId,
+          year
+        ).then(function(payload) {
+          var action = {
+            type: ActionTypes.GET_CURRENT_SECTIONS,
+            payload: payload
+          };
+          TaReaderUtilizationReportReducers.reduce(action);
+        }),
+          function() {
+            $rootScope.$emit('toast', {
+              message: 'Could not load initial state.',
+              type: 'ERROR'
+            });
+          };
       }
     };
   }
