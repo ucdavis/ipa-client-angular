@@ -5,16 +5,12 @@
 </div> -->
 
 <ipa-header
-  page-title="Support Staff Utilization Report"
+  page-title="TA/Reader Utilization Report"
   class="do-not-print"
 ></ipa-header>
 
 <div ng-if="noAccess">
   <no-access workgroup-name="sharedState.workgroup.name"></no-access>
-</div>
-
-<div class="budget-comparison-report__workgroup-title">
-  {{ sharedState.workgroup.name }} TA/Reader Utilization Report
 </div>
 
 <div
@@ -50,15 +46,13 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-12">
-    <table class="table section-diff-table schedule-summary-report__table">
+<div class="ta-reader-utilization-report__table">
+    <table class="table section-diff-table">
       <colgroup>
-        <col span="1" style="width: 18%;" />
-        <col span="1" style="width: 11%;" />
-        <col span="1" style="width: 7%;" />
-        <col span="1" style="width: 7%;" />
-        <col span="1" style="width: 7%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 10%;" />
+        <col span="1" style="width: 15%;" />
+        <col span="1" style="width: 10%;" />
         <col span="1" style="width: 10%;" />
         <col span="1" style="width: 10%;" />
         <col span="1" style="width: 10%;" />
@@ -99,7 +93,7 @@
           class="section-diff-row"
         >
           <!-- Course -->
-          <td>
+          <td class="data-cell">
             <div
               ng-show="$index==0"
               class="section-diff-element section-unique-key"
@@ -119,7 +113,7 @@
           </td>
 
           <!-- Title -->
-          <td class="data-cell">
+          <td class="data-cell test">
             <div>
               {{ sectionGroup.title }}
             </div>
@@ -140,26 +134,25 @@
           </td>
 
           <!-- TA Count (Appointments) -->
-          <td colspan="5" style="padding: 8px;" class="data-cell">
+          <td class="data-cell">
             {{ sectionGroup.teachingAssistantAppointments }}
           </td>
 
           <!-- Section Per TA -->
-          <td colspan="5" style="padding: 8px;" class="data-cell">
+          <td class="data-cell">
             {{}}
           </td>
 
           <!-- TA Funds -->
-          <td colspan="5" style="padding: 8px;" class="data-cell">
+          <td class="data-cell">
             {{}}
           </td>
 
           <!-- FTE Per Section -->
-          <td colspan="5" style="padding: 8px;" class="data-cell">
+          <td class="data-cell">
             {{}}
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
 </div>
