@@ -137,7 +137,6 @@ class BudgetComparisonReportCalculations {
 
           var courseNumber = parseInt(sectionGroupCost.courseNumber);
           var seats = sectionGroupCost.enrollment;
-
           if (courseNumber < 100) {
             miscStats.lower.courses += 1;
             miscStats.lower.seats += seats;
@@ -373,12 +372,11 @@ class BudgetComparisonReportCalculations {
 
         instructorTypes.forEach(function(instructorType) {
           instructionCosts.scenarioCourses[instructorType] =
-            (instructionCosts.byType[instructorType].courses || 0) -
-            (instructionCosts.byTypeNoCost[instructorType] || 0);
+            (instructionCosts.byType[instructorType].courses || 0);
           instructionCosts.total.scenarioCourses +=
             instructionCosts.scenarioCourses[instructorType];
         });
-
+        instructionCosts.total.scenarioCourses += instructionCosts.unassigned;
         return instructionCosts;
       },
       // Generates support (reader and TA) based costs and course count
@@ -527,7 +525,6 @@ class BudgetComparisonReportCalculations {
           var currentCoursesCount = currentInstructorCost
             ? currentCosts.instructorCosts.scenarioCourses[instructorTypeId]
             : 0;
-
           var previousInstructorCost =
             previousCosts.instructorCosts.byType[instructorTypeId];
           var previousCost = previousInstructorCost
@@ -554,7 +551,6 @@ class BudgetComparisonReportCalculations {
             )
           };
         });
-
         costs.instructorCosts.total = {
           rawCost:
             currentCosts.instructorCosts.total.cost -
