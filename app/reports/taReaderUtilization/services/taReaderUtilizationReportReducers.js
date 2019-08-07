@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 class TaReaderUtilizationReportReducers {
   constructor($rootScope, ActionTypes) {
     return {
@@ -139,9 +141,10 @@ class TaReaderUtilizationReportReducers {
             sectionGroup.title = course.title;
             sectionGroup.sequencePattern = course.sequencePattern;
             
-          })
-          debugger;
+          });
 
+          debugger;
+          sectionGroups.ids = _array_sortByProperty(sectionGroups.list, "courseNumber").map(function(sectionGroup) { return sectionGroup.id });
         }
       }
     };
