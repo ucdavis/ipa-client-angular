@@ -89,13 +89,11 @@
         ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]"
       >
         <tr
-          ng-repeat="section in sectionGroup.sections"
           class="section-diff-row"
         >
           <!-- Course -->
           <td class="data-cell">
             <div
-              ng-show="$index==0"
               class="section-diff-element section-unique-key"
             >
               <strong>
