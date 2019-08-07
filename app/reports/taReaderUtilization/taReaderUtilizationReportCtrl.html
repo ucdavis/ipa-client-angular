@@ -47,110 +47,98 @@
 </div>
 
 <div class="ta-reader-utilization-report__table">
-    <table class="table section-diff-table">
-      <colgroup>
-        <col span="1" style="width: 15%;" />
-        <col span="1" style="width: 10%;" />
-        <col span="1" style="width: 15%;" />
-        <col span="1" style="width: 10%;" />
-        <col span="1" style="width: 10%;" />
-        <col span="1" style="width: 10%;" />
-        <col span="1" style="width: 10%;" />
-        <col span="1" style="width: 10%;" />
-        <col span="1" style="width: 10%;" />
-      </colgroup>
-      <thead>
-        <th>Course</th>
-        <th>Section</th>
-        <th>Title</th>
-        <th>Enrollment</th>
-        <th>Previous Enrollment</th>
-        <th>TA Count</th>
-        <th>Section Per TA</th>
-        <th>TA Funds</th>
-        <th>FTE Per Section</th>
-      </thead>
-      <tr ng-hide="view.state">
-        <td>
-          <spinner></spinner>
-        </td>
-      </tr>
-      <tr>
-        <td
-          colspan="9"
-          style="text-align: center;"
-          ng-if="view.state.sectionGroups.ids.length == 0"
-        >
-          No schedule data available.
-        </td>
-      </tr>
-      <tbody
-        ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
-        ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]"
+  <table class="table">
+    <colgroup>
+      <col span="1" style="width: 15%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 15%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+      <col span="1" style="width: 10%;" />
+    </colgroup>
+    <thead>
+      <th>Course</th>
+      <th>Section</th>
+      <th>Title</th>
+      <th>Enrollment</th>
+      <th>Previous Enrollment</th>
+      <th>TA Count</th>
+      <th>Section Per TA</th>
+      <th>TA Funds</th>
+      <th>FTE Per Section</th>
+    </thead>
+    <tr ng-hide="view.state">
+      <td>
+        <spinner></spinner>
+      </td>
+    </tr>
+    <tr>
+      <td
+        colspan="9"
+        style="text-align: center;"
+        ng-if="view.state.sectionGroups.ids.length == 0"
       >
-        <tr
-          class="section-diff-row"
-        >
-          <!-- Course -->
-          <td class="data-cell">
-            <div
-              class="section-diff-element section-unique-key"
-            >
-              <strong>
-                {{ sectionGroup.subjectCode }}
-                {{ sectionGroup.courseNumber }}
-              </strong>
-            </div>
-          </td>
+        No schedule data available.
+      </td>
+    </tr>
+    <tbody
+      ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
+      ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]"
+    >
+      <tr class="ta-reader-utilization-report__row">
+        <!-- Course -->
+        <td class="data-cell">
+          {{ sectionGroup.subjectCode }}
+          {{ sectionGroup.courseNumber }}
+        </td>
 
-          <!-- Sequence Number -->
-          <td class="data-cell">
-            <div class="section-diff-element section-unique-key">
-              <span>{{ sectionGroup.sequencePattern }}</span>
-            </div>
-          </td>
+        <!-- Sequence Number -->
+        <td class="data-cell">
+          {{ sectionGroup.sequencePattern }}
+        </td>
 
-          <!-- Title -->
-          <td class="data-cell test">
-            <div>
-              {{ sectionGroup.title }}
-            </div>
-          </td>
+        <!-- Title -->
+        <td class="data-cell">
+          {{ sectionGroup.title }}
+        </td>
 
-          <!-- Enrollment -->
-          <td class="data-cell">
-            <div class="data-cell__value">
-              {{}}
-            </div>
-          </td>
-
-          <!-- Previous Enrollment -->
-          <td class="data-cell">
-            <div class="data-cell__value">
-              {{}}
-            </div>
-          </td>
-
-          <!-- TA Count (Appointments) -->
-          <td class="data-cell">
-            {{ sectionGroup.teachingAssistantAppointments }}
-          </td>
-
-          <!-- Section Per TA -->
-          <td class="data-cell">
+        <!-- Enrollment -->
+        <td class="data-cell">
+          <div class="data-cell__value">
             {{}}
-          </td>
+          </div>
+        </td>
 
-          <!-- TA Funds -->
-          <td class="data-cell">
+        <!-- Previous Enrollment -->
+        <td class="data-cell">
+          <div class="data-cell__value">
             {{}}
-          </td>
+          </div>
+        </td>
 
-          <!-- FTE Per Section -->
-          <td class="data-cell">
-            {{}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <!-- TA Count (Appointments) -->
+        <td class="data-cell">
+          {{ sectionGroup.teachingAssistantAppointments }}
+        </td>
+
+        <!-- Section Per TA -->
+        <td class="data-cell">
+          {{}}
+        </td>
+
+        <!-- TA Funds -->
+        <td class="data-cell">
+          {{}}
+        </td>
+
+        <!-- FTE Per Section -->
+        <td class="data-cell">
+          {{}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
