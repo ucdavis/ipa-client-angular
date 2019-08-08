@@ -5,6 +5,7 @@ class TaReaderUtilizationReportActions {
     $rootScope,
     ActionTypes,
     Roles,
+    DwService,
     $route
   ) {
     return {
@@ -36,10 +37,50 @@ class TaReaderUtilizationReportActions {
           };
 
         TaReaderUtilizationReportService.getCourses(workgroupId, year).then(
-          function(payload) {
+          function(rawCourses) {
+            var courses = { ids: [], list: {} };
+
+            for (var i = 0; i < rawCourses.length; i++) {
+              var course = rawCourses[i];
+              courses.ids.push(course.id);
+              courses.list[course.id] = course;
+            }
+
+            var openCalls = 0;
+            var completedCalls = 0;
+            // Adding census data to find last offering
+            courses.ids.forEach(function(courseId) {
+              openCalls += 1;
+
+              var course = courses.list[courseId];
+              course.census = [];
+              var SNAPSHOT_CODE = 'CURRENT';
+
+              DwService.getDwCensusData(
+                course.subjectCode,
+                course.courseNumber
+              ).then(function(courseCensus) {
+                courseCensus.forEach(function(census) {
+                  if (census.snapshotCode === SNAPSHOT_CODE) {
+                    course.census.push(census);
+                  }
+                });
+
+                completedCalls += 1;
+
+                if (openCalls == completedCalls) {
+                  var action = {
+                    type: ActionTypes.CENSUS_FETCH_COMPLETE,
+                    payload: { isInitialFetchComplete: true }
+                  };
+                  TaReaderUtilizationReportReducers.reduce(action);
+                }
+              });
+            });
+
             var action = {
               type: ActionTypes.GET_CURRENT_COURSES,
-              payload: payload
+              payload: courses
             };
             TaReaderUtilizationReportReducers.reduce(action);
           }
@@ -84,22 +125,45 @@ class TaReaderUtilizationReportActions {
               type: 'ERROR'
             });
           };
-        TaReaderUtilizationReportService.getSections(
-          workgroupId,
-          year
-        ).then(function(payload) {
-          var action = {
-            type: ActionTypes.GET_CURRENT_SECTIONS,
-            payload: payload
-          };
-          TaReaderUtilizationReportReducers.reduce(action);
-        }),
+        TaReaderUtilizationReportService.getSections(workgroupId, year).then(
+          function(payload) {
+            var action = {
+              type: ActionTypes.GET_CURRENT_SECTIONS,
+              payload: payload
+            };
+            TaReaderUtilizationReportReducers.reduce(action);
+          }
+        ),
           function() {
             $rootScope.$emit('toast', {
               message: 'Could not load initial state.',
               type: 'ERROR'
             });
           };
+      },
+      _isInitialFetchComplete: function() {
+        var budgets = TaReaderUtilizationReportReducers._state.budgets;
+        var courses = TaReaderUtilizationReportReducers._state.courses;
+        var sectionGroupCosts =
+          TaReaderUtilizationReportReducers._state.sectionGroupCosts;
+        var sectionGroups =
+          TaReaderUtilizationReportReducers._state.sectionGroups;
+        var sections = TaReaderUtilizationReportReducers._state.sections;
+
+        if (
+          Object.keys(budgets).length > 0 &&
+          Object.keys(courses).length > 0 &&
+          Object.keys(sectionGroupCosts).length > 0 &&
+          Object.keys(sectionGroups).length > 0 &&
+          Object.keys(sections).length > 0
+        ) {
+          TaReaderUtilizationReportReducers.reduce({
+            type: ActionTypes.INITIAL_FETCH_COMPLETE,
+            payload: {
+              isInitialFetchComplete: true
+            }
+          });
+        }
       }
     };
   }
@@ -111,6 +175,7 @@ TaReaderUtilizationReportActions.$inject = [
   '$rootScope',
   'ActionTypes',
   'Roles',
+  'DwService',
   '$route'
 ];
 

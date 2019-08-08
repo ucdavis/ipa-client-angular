@@ -1,5 +1,7 @@
 // Shared
 import StringService from './../shared/services/StringService.js';
+import DwService from './../shared/services/DwService.js';
+import TermService from './../shared/services/TermService.js';
 
 // Controllers
 import BudgetComparisonReportCtrl from './budgetComparison/budgetComparisonReportCtrl.js';
@@ -89,6 +91,8 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                           .service('TaReaderUtilizationReportReducers', TaReaderUtilizationReportReducers)
                           .service('TaReaderUtilizationReportService', TaReaderUtilizationReportService)
                           .service('StringService', StringService)
+                          .service('DwService', DwService)
+                          .service('TermService', TermService)
                           .directive('courseCosts', courseCosts)
                           .directive('courseCostChanges', courseCostChanges)
                           .directive('miscStats', miscStats)

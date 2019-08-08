@@ -70,7 +70,7 @@
       <th>TA Funds</th>
       <th>FTE Per Section</th>
     </thead>
-    <tr ng-hide="view.state">
+    <tr ng-hide="view.state.calculations.isInitialFetchComplete">
       <td>
         <spinner></spinner>
       </td>
@@ -85,6 +85,7 @@
       </td>
     </tr>
     <tbody
+      ng-show="view.state.calculations.isInitialFetchComplete"
       ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
       ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]"
     >
@@ -115,7 +116,9 @@
         <!-- Previous Enrollment -->
         <td class="data-cell">
           <div class="data-cell__value">
-            {{}}
+            {{ sectionGroup.lastOfferedEnrollment }} ({{
+              sectionGroup.lastOfferedTermDescription
+            }})
           </div>
         </td>
 
