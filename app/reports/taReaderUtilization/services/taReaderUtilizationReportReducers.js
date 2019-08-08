@@ -130,7 +130,10 @@ class TaReaderUtilizationReportReducers {
           action,
           scope._state.sections
         );
-        newState.calculations = scope._calculationReducers(action, scope._state.calculations);
+        newState.calculations = scope._calculationReducers(
+          action,
+          scope._state.calculations
+        );
 
         this._calculateView(newState);
         scope._state = newState;
@@ -181,7 +184,8 @@ class TaReaderUtilizationReportReducers {
                 if (
                   slotCensus.currentEnrolledCount !== 0 &&
                   slotCensus.termCode < parseInt(sectionGroup.termCode) &&
-                  TermService.termCodeToTerm(slotCensus.termCode) == TermService.termCodeToTerm(sectionGroup.termCode)
+                  TermService.termCodeToTerm(slotCensus.termCode) ==
+                    TermService.termCodeToTerm(sectionGroup.termCode)
                 ) {
                   lastOfferedEnrollment = slotCensus.currentEnrolledCount;
                   lastOfferedTermCode = slotCensus.termCode.toString();
@@ -196,12 +200,28 @@ class TaReaderUtilizationReportReducers {
             }
           });
 
-          sectionGroups.ids = _array_sortByProperty(
-            sectionGroups.list,
-            'courseNumber'
-          ).map(function(sectionGroup) {
-            return sectionGroup.id;
+          sectionGroups.sortedByTerm = {};
+          sectionGroups.termDescriptions = {};
+
+          sectionGroups.ids.forEach(function(sectionGroupId) {
+            var sectionGroup = sectionGroups.list[sectionGroupId];
+            sectionGroups.sortedByTerm[sectionGroup.termCode] = sectionGroups
+              .sortedByTerm[sectionGroup.termCode]
+              ? [
+                  ...sectionGroups.sortedByTerm[sectionGroup.termCode],
+                  sectionGroup
+                ]
+              : [sectionGroup];
           });
+         
+          for (var term in sectionGroups.sortedByTerm) {
+            sectionGroups.termDescriptions[term] = TermService.getTermName(term);
+
+            sectionGroups.sortedByTerm[term] = _array_sortByProperty(
+              sectionGroups.sortedByTerm[term],
+              'courseNumber'
+            );
+          }
         }
       }
     };

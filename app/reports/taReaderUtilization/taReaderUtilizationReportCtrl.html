@@ -46,7 +46,8 @@
   </div>
 </div>
 
-<div class="ta-reader-utilization-report__table">
+<div class="ta-reader-utilization-report__table" ng-repeat="(term, sectionGroups) in view.state.sectionGroups.sortedByTerm">
+  <h5>{{ view.state.sectionGroups.termDescriptions[term] }}</h5>
   <table class="table">
     <colgroup>
       <col span="1" style="width: 15%;" />
@@ -86,8 +87,7 @@
     </tr>
     <tbody
       ng-show="view.state.calculations.isInitialFetchComplete"
-      ng-repeat="sectionGroupId in view.state.sectionGroups.ids"
-      ng-init="sectionGroup=view.state.sectionGroups.list[sectionGroupId]"
+      ng-repeat="sectionGroup in sectionGroups"
     >
       <tr class="ta-reader-utilization-report__row">
         <!-- Course -->
@@ -115,7 +115,7 @@
 
         <!-- Previous Enrollment -->
         <td class="data-cell">
-          <div class="data-cell__value">
+          <div class="data-cell__value" ng-if="sectionGroup.lastOfferedEnrollment">
             {{ sectionGroup.lastOfferedEnrollment }} ({{
               sectionGroup.lastOfferedTermDescription
             }})
