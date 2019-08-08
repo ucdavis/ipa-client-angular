@@ -46,9 +46,9 @@
   </div>
 </div>
 
-<div class="ta-reader-utilization-report__table" ng-repeat="(term, sectionGroups) in view.state.sectionGroups.sortedByTerm">
-  <h5>{{ view.state.sectionGroups.termDescriptions[term] }}</h5>
-  <table class="table">
+<div class="" ng-repeat="(term, sectionGroups) in view.state.sectionGroups.sortedByTerm">
+  <div class="ta-reader-utilization-report__table-label">{{ view.state.sectionGroups.termDescriptions[term] }}</div>
+  <table class="ta-reader-utilization-report__table">
     <colgroup>
       <col span="1" style="width: 15%;" />
       <col span="1" style="width: 10%;" />
@@ -61,15 +61,15 @@
       <col span="1" style="width: 10%;" />
     </colgroup>
     <thead>
-      <th>Course</th>
-      <th>Section</th>
-      <th>Title</th>
-      <th>Anticipated Enrollment</th>
-      <th>Previous Enrollment</th>
-      <th>TA Count</th>
-      <th>Section Per TA</th>
-      <th>TA Funds</th>
-      <th>FTE Per Section</th>
+      <th class="ta-reader-utilization-report__table--header">Course</th>
+      <th class="ta-reader-utilization-report__table--header">Section</th>
+      <th class="ta-reader-utilization-report__table--header">Title</th>
+      <th class="ta-reader-utilization-report__table--header">Anticipated Enrollment</th>
+      <th class="ta-reader-utilization-report__table--header">Previous Enrollment</th>
+      <th class="ta-reader-utilization-report__table--header">TA Count</th>
+      <th class="ta-reader-utilization-report__table--header">Section Per TA</th>
+      <th class="ta-reader-utilization-report__table--header">TA Funds</th>
+      <th class="ta-reader-utilization-report__table--header">FTE Per Section</th>
     </thead>
     <tr ng-hide="view.state.calculations.isInitialFetchComplete">
       <td>
@@ -91,31 +91,29 @@
     >
       <tr class="ta-reader-utilization-report__row">
         <!-- Course -->
-        <td class="data-cell">
+        <td class="ta-reader-utilization-report__table--value">
           {{ sectionGroup.subjectCode }}
           {{ sectionGroup.courseNumber }}
         </td>
 
         <!-- Sequence Number -->
-        <td class="data-cell">
+        <td class="ta-reader-utilization-report__table--value">
           {{ sectionGroup.sequencePattern }}
         </td>
 
         <!-- Title -->
-        <td class="data-cell">
+        <td class="ta-reader-utilization-report__table--value">
           {{ sectionGroup.title }}
         </td>
 
         <!-- Anticipated Enrollment -->
-        <td class="data-cell">
-          <div class="data-cell__value">
+        <td class="ta-reader-utilization-report__table--value">
             {{ sectionGroup.plannedSeats }}
-          </div>
         </td>
 
         <!-- Previous Enrollment -->
-        <td class="data-cell">
-          <div class="data-cell__value" ng-if="sectionGroup.lastOfferedEnrollment">
+        <td class="ta-reader-utilization-report__table--value">
+          <div ng-if="sectionGroup.lastOfferedEnrollment">
             {{ sectionGroup.lastOfferedEnrollment }} ({{
               sectionGroup.lastOfferedTermDescription
             }})
@@ -123,22 +121,22 @@
         </td>
 
         <!-- TA Count (Appointments) -->
-        <td class="data-cell">
+        <td class="ta-reader-utilization-report__table--value">
           {{ sectionGroup.teachingAssistantAppointments }}
         </td>
 
         <!-- Section Per TA -->
-        <td class="data-cell">
+        <td class="ta-reader-utilization-report__table--value">
           {{}}
         </td>
 
         <!-- TA Funds -->
-        <td class="data-cell">
+        <td class="ta-reader-utilization-report__table--value">
           {{ sectionGroup.taCost }}
         </td>
 
         <!-- FTE Per Section -->
-        <td class="data-cell">
+        <td class="ta-reader-utilization-report__table--value">
           {{}}
         </td>
       </tr>
