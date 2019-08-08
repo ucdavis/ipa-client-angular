@@ -298,6 +298,7 @@ class BudgetComparisonReportCalculations {
           byType: {},
           byTypeNoCost: {},
           scenarioCourses: {},
+          coursesWithCosts: {},
           unassigned: 0,
           total: {
             cost: 0,
@@ -375,6 +376,9 @@ class BudgetComparisonReportCalculations {
             (instructionCosts.byType[instructorType].courses || 0);
           instructionCosts.total.scenarioCourses +=
             instructionCosts.scenarioCourses[instructorType];
+          if (instructionCosts.byType[instructorType].cost > 0){
+            instructionCosts.coursesWithCosts[instructorType] = instructionCosts.byType[instructorType].courses;
+          }
         });
         instructionCosts.total.scenarioCourses += instructionCosts.unassigned;
         return instructionCosts;
