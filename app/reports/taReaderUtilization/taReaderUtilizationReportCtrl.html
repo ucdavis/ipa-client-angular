@@ -63,7 +63,7 @@
       <th>Course</th>
       <th>Section</th>
       <th>Title</th>
-      <th>Enrollment</th>
+      <th>Anticipated Enrollment</th>
       <th>Previous Enrollment</th>
       <th>TA Count</th>
       <th>Section Per TA</th>
@@ -105,10 +105,10 @@
           {{ sectionGroup.title }}
         </td>
 
-        <!-- Enrollment -->
+        <!-- Anticipated Enrollment -->
         <td class="data-cell">
           <div class="data-cell__value">
-            {{}}
+            {{ sectionGroup.plannedSeats }}
           </div>
         </td>
 
@@ -131,7 +131,7 @@
 
         <!-- TA Funds -->
         <td class="data-cell">
-          {{}}
+          {{ sectionGroup.taCost }}
         </td>
 
         <!-- FTE Per Section -->
