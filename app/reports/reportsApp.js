@@ -134,7 +134,8 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                             CURRENT_YEAR_FETCH_COMPLETE: "CURRENT_YEAR_FETCH_COMPLETE",
                             PREVIOUS_YEAR_FETCH_COMPLETE: "PREVIOUS_YEAR_FETCH_COMPLETE",
                             SELECT_CURRENT_BUDGET_SCENARIO: "SELECT_CURRENT_BUDGET_SCENARIO",
-                            SELECT_PREVIOUS_BUDGET_SCENARIO: "SELECT_PREVIOUS_BUDGET_SCENARIO"
+                            SELECT_PREVIOUS_BUDGET_SCENARIO: "SELECT_PREVIOUS_BUDGET_SCENARIO",
+                            SELECT_REPORT_VIEW: "SELECT_REPORT_VIEW"
                           });
 
 export default reportsApp;

@@ -112,6 +112,30 @@ class TaReaderUtilizationReportReducers {
             return calculations;
         }
       },
+      _uiReducers: function(action, ui) {
+        switch (action.type) {
+          case ActionTypes.INIT_STATE:
+            ui = {
+              reportViews: [
+                {
+                  id: 0,
+                  description: 'Teaching Assistants',
+                },
+                {
+                  id: 1,
+                  description: 'Readers',
+                }
+              ],
+              selectedReport: 'Teaching Assistants'
+            };
+            return ui;
+          case ActionTypes.SELECT_REPORT_VIEW:
+            ui.selectedReport = action.payload.description;
+            return ui;
+          default:
+            return ui;
+        }
+      },
       reduce: function(action) {
         var scope = this;
 
@@ -134,6 +158,7 @@ class TaReaderUtilizationReportReducers {
           action,
           scope._state.calculations
         );
+        newState.ui = scope._uiReducers(action, scope._state.ui);
 
         this._calculateView(newState);
         scope._state = newState;
@@ -213,9 +238,11 @@ class TaReaderUtilizationReportReducers {
                 ]
               : [sectionGroup];
           });
-         
+
           for (var term in sectionGroups.sortedByTerm) {
-            sectionGroups.termDescriptions[term] = TermService.getTermName(term);
+            sectionGroups.termDescriptions[term] = TermService.getTermName(
+              term
+            );
 
             sectionGroups.sortedByTerm[term] = _array_sortByProperty(
               sectionGroups.sortedByTerm[term],

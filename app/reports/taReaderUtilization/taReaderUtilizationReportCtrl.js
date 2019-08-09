@@ -24,6 +24,12 @@ class TaReaderUtilizationReportCtrl {
       $scope.view.state = data.state;
     });
 
+    $scope.selectReportView = function(reportView) {
+      TaReaderUtilizationReportActions.selectReportView(
+        reportView
+      );
+    };
+
     $scope.downloadAsExcel = function() {
       TaReaderUtilizationReportActions.downloadAsExcel(
         $scope.year,

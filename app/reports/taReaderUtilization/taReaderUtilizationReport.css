@@ -1,3 +1,8 @@
+.ta-reader-utilization-report__selector {
+  width: 15%;
+  margin: 0 auto;
+}
+
 .ta-reader-utilization-report__table-label {
 	font-weight: bold;
 	padding-top: 30px;

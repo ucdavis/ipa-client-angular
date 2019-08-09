@@ -164,6 +164,12 @@ class TaReaderUtilizationReportActions {
             }
           });
         }
+      },
+      selectReportView: function(reportView) {
+        TaReaderUtilizationReportReducers.reduce({
+          type: ActionTypes.SELECT_REPORT_VIEW,
+          payload: reportView
+        });
       }
     };
   }
