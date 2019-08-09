@@ -111,7 +111,10 @@
       ng-show="view.state.calculations.isInitialFetchComplete"
       ng-repeat="sectionGroup in sectionGroups"
     >
-      <tr class="ta-reader-utilization-report__row">
+      <tr
+        ng-if="sectionGroup.teachingAssistantAppointments > 0"
+        class="ta-reader-utilization-report__row"
+      >
         <!-- Course -->
         <td class="ta-reader-utilization-report__table--value">
           {{ sectionGroup.subjectCode }}
