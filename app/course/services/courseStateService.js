@@ -217,7 +217,7 @@ class CourseStateService {
               sectionGroups.ids.push(sectionGroupData.id);
             }
             sectionGroups.list = sectionGroupsList;
-
+// TODO: MOVE TO ACTION CREATORS
             sectionGroups.ids.forEach(function(sectionGroupId) {
               var sectionGroup = sectionGroups.list[sectionGroupId];
 
@@ -330,10 +330,10 @@ class CourseStateService {
               ids: []
             };
 
-            action.payload.sections.forEach(function (section) {
-              sections.list[section.id] = new Section(section);
-              sections.ids.push(section.id);
-            });
+            // action.payload.sections.forEach(function (section) {
+            //   sections.list[section.id] = new Section(section);
+            //   sections.ids.push(section.id);
+            // });
 
             return sections;
           case ActionTypes.FETCH_SECTIONS:
@@ -449,7 +449,7 @@ class CourseStateService {
               requiresAttention: false,
             };
 
-            uiState.requiresAttention = !self.allSectionGroupsHaveSections(action.payload.sectionGroups, action.payload.sections);
+            uiState.requiresAttention = action.payload.requiresAttention;
             uiState.tableLocked = false;
             return uiState;
           case ActionTypes.BEGIN_FETCH_SECTIONS:
@@ -460,10 +460,7 @@ class CourseStateService {
             return uiState;
           case ActionTypes.CREATE_SECTION:
           case ActionTypes.REMOVE_SECTION:
-            var sectionGroups = Object.values(this._state.sectionGroups.list);
-            var sections = Object.values(this._state.sections.list);
-            
-            uiState.requiresAttention = !self.allSectionGroupsHaveSections(sectionGroups, sections);
+            uiState.requiresAttention = action.payload.requiresAttention;
             return uiState;
           case ActionTypes.BEGIN_FETCH_CENSUS:
             uiState.censusFetchInProgress = true;
@@ -619,21 +616,6 @@ class CourseStateService {
     }
 
     return termFiltersArray;
-  }
-
-  allSectionGroupsHaveSections (sectionGroups, sections) {
-    for (var i = 0; i < sectionGroups.length; i++) {
-      var sectionGroup = sectionGroups[i];
-
-      sectionGroup.sections = sections.filter(function(section) {
-        return (section.sectionGroupId === sectionGroup.id);
-      });
-
-      if (sectionGroup.sections.length === 0) {
-        return false;
-      }
-    }
-    return true;
   }
 }
 

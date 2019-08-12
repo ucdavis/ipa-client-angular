@@ -387,6 +387,8 @@ class CourseActionCreators {
         });
       },
       createSection: function (section) {
+        var requiresAttention = this._allSectionGroupsHaveSections();
+
         CourseService.createSection(section).then(function (section) {
           window.ipa_analyze_event('courses', 'section created');
 
@@ -394,7 +396,8 @@ class CourseActionCreators {
           var action = {
             type: ActionTypes.CREATE_SECTION,
             payload: {
-              section: section
+              section: section,
+              requiresAttention: requiresAttention
             }
           };
           CourseStateService.reduce(action);
@@ -403,6 +406,8 @@ class CourseActionCreators {
         });
       },
       deleteSection: function (section) {
+        var requiresAttention = this._allSectionGroupsHaveSections();
+
         CourseService.deleteSection(section).then(function () {
           window.ipa_analyze_event('courses', 'section deleted');
 
@@ -410,7 +415,8 @@ class CourseActionCreators {
           var action = {
             type: ActionTypes.REMOVE_SECTION,
             payload: {
-              section: section
+              section: section,
+              requiresAttention: requiresAttention
             }
           };
           CourseStateService.reduce(action);
@@ -493,6 +499,23 @@ class CourseActionCreators {
           type: ActionTypes.CLOSE_COURSE_DELETION_MODAL,
           payload: {}
         });
+      },
+      _allSectionGroupsHaveSections: function() {
+        var sectionGroups = CourseStateService._state.sectionGroups;
+        var sections = CourseStateService._state.sections;
+
+        for (var i = 0; i < sectionGroups.length; i++) {
+          var sectionGroup = sectionGroups[i];
+
+          sectionGroup.sections = sections.filter(function(section) {
+            return (section.sectionGroupId === sectionGroup.id);
+          });
+
+          if (sectionGroup.sections.length === 0) {
+            return false;
+          }
+        }
+        return true;
       }
     };
   }
