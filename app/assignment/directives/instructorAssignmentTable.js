@@ -578,11 +578,6 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												courseHtml += "<li><div class=\"dropdown-assign-header\">Other</div></li>";
 											}
 
-											if (displayTitle.replace(/ /g, '').length == 0) {
-												displayTitle += teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber + " - 001 - " + teachingAssignment.suggestedTitle;
-												plannedSeatsHtml = "<small>Seats: 0</small>";
-												units = "<small>Units: 4</small>";
-											}
 											courseHtml += "<div class=\"alert alert-info tile-assignment";
 
 											if (scope.isNonCourseBasedAssignment(teachingAssignment)) {
