@@ -21,7 +21,7 @@ let sectionGroupDetails = function (CourseActionCreators) {
       };
 
       scope.updateSectionGroup = function (sectionGroup) {
-        sectionGroup.unitsVariable ? sectionGroup.unitsVariable = parseFloat(sectionGroup.unitsVariable) : sectionGroup.unitsVariable = null;
+        sectionGroup.unitsVariable ? parseFloat(sectionGroup.unitsVariable) : null;
 
         CourseActionCreators.updateSectionGroup(sectionGroup);
       };
