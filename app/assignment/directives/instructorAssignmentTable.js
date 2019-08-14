@@ -239,13 +239,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										var plannedSeats = sectionGroup.plannedSeats || "0";
 										plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 
-										if (sectionGroup.unitsVariable) {
-											units = "Units (Variable): " + sectionGroup.unitsVariable;
-										} else if (course.unitsHigh) {
-											units = "<small>Units: " + course.unitsLow + " - " + course.unitsHigh + "</small>";
-										} else {
-											units = "<small>Units: " + course.unitsLow + "</small>";
-										}
+										units = "<small>Units: " + sectionGroup.displayUnits + "</small>";
 
 										coursesHtml += '<div class="alert alert-info tile-assignment">';
 
@@ -316,13 +310,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 									var plannedSeats = sectionGroup.plannedSeats || "0";
 									plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 
-									if (sectionGroup.unitsVariable) {
-										units = "Units (Variable): " + sectionGroup.unitsVariable;
-									} else if (course.unitsHigh) {
-										units = "<small>Units: " + course.unitsLow + " - " + course.unitsHigh + "</small>";
-									} else {
-										units = "<small>Units: " + course.unitsLow + "</small>";
-									}
+									units = "<small>Units: " + sectionGroup.displayUnits + "</small>";
 
 									coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
 									coursesHtml += '<p class="instructors-table__preference-title">';
@@ -397,13 +385,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 								var plannedSeats = sectionGroup.plannedSeats || "0";
 								plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 
-								if (sectionGroup.unitsVariable) {
-									units = "Units (Variable): " + sectionGroup.unitsVariable;
-								} else if (course.unitsHigh) {
-									units = "<small>Units: " + course.unitsLow + " - " + course.unitsHigh + "</small>";
-								} else {
-									units = "<small>Units: " + course.unitsLow + "</small>";
-								}
+								units = "<small>Units: " + sectionGroup.displayUnits + "</small>";
 
 								coursesHtml += "<div class=\"alert alert-info tile-assignment\">";
 								coursesHtml += "<p>" + displayTitle + "</p>";
@@ -572,13 +554,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													var plannedSeats = sectionGroup.plannedSeats || "0";
 													plannedSeatsHtml = "<small>Seats: " + plannedSeats + "</small>";
 
-													if (sectionGroup.unitsVariable) {
-														units = "Units (Variable): " + sectionGroup.unitsVariable;
-													} else if (course.unitsHigh) {
-														units = "<small>Units: " + course.unitsLow + " - " + course.unitsHigh + "</small>";
-													} else {
-														units = "<small>Units: " + course.unitsLow + "</small>";
-													}
+													units = "<small>Units: " + sectionGroup.displayUnits + "</small>";
 												}
 											} else {
 												if (teachingAssignment.buyout) {

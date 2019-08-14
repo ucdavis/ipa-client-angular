@@ -190,7 +190,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								courseHtml += "</div>";
 
 								courseHtml += "<div class=\"course-units\">";
-								course.unitsHigh > 0 ? courseHtml += "Units: " + course.unitsLow + " - " + course.unitsHigh : courseHtml += "Units: " + course.unitsLow;
+								courseHtml += "Units: " + course.displayUnits;
 								courseHtml += "</div>";
 
 								courseHtml += "<div class=\"course-tags hidden-print\">";
