@@ -10,10 +10,13 @@ class CourseActionCreators {
   constructor (CourseStateService, $route, CourseService, $rootScope, Role, ActionTypes) {
     return {
       getInitialState: function () {
+        var self = this;
         var workgroupId = $route.current.params.workgroupId;
         var year = $route.current.params.year;
 
         CourseService.getScheduleByWorkgroupIdAndYear(workgroupId, year).then(function (payload) {
+          payload.flaggedSectionGroups = self._generateAttentionFlags(payload);
+          payload.requiresAttention = payload.flaggedSectionGroups > 0;
           var action = {
             type: ActionTypes.INIT_STATE,
             payload: payload
@@ -387,17 +390,23 @@ class CourseActionCreators {
         });
       },
       createSection: function (section) {
-        var requiresAttention = this._allSectionGroupsHaveSections();
-
         CourseService.createSection(section).then(function (section) {
           window.ipa_analyze_event('courses', 'section created');
 
           $rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
+
+          var sectionGroup = CourseStateService._state.sectionGroups.list[section.sectionGroupId];
+          var flaggedSectionGroups = CourseStateService._state.uiState.flaggedSectionGroups;
+          if (sectionGroup.sectionIds.length === 0) {
+            flaggedSectionGroups -= 1;
+          }
+
           var action = {
             type: ActionTypes.CREATE_SECTION,
             payload: {
               section: section,
-              requiresAttention: requiresAttention
+              flaggedSectionGroups: flaggedSectionGroups,
+              requiresAttention: flaggedSectionGroups > 0
             }
           };
           CourseStateService.reduce(action);
@@ -406,17 +415,26 @@ class CourseActionCreators {
         });
       },
       deleteSection: function (section) {
-        var requiresAttention = this._allSectionGroupsHaveSections();
-
         CourseService.deleteSection(section).then(function () {
           window.ipa_analyze_event('courses', 'section deleted');
 
           $rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
+
+          var sectionGroup = CourseStateService._state.sectionGroups.list[section.sectionGroupId];
+          var flaggedSectionGroups = CourseStateService._state.uiState.flaggedSectionGroups;
+
+          if (sectionGroup.sectionIds.length === 1) {
+            flaggedSectionGroups += 1;
+          }
+
+          var requiresAttention = flaggedSectionGroups > 0;
+
           var action = {
             type: ActionTypes.REMOVE_SECTION,
             payload: {
               section: section,
-              requiresAttention: requiresAttention
+              flaggedSectionGroups,
+              requiresAttention
             }
           };
           CourseStateService.reduce(action);
@@ -500,9 +518,18 @@ class CourseActionCreators {
           payload: {}
         });
       },
-      _allSectionGroupsHaveSections: function() {
-        var sectionGroups = CourseStateService._state.sectionGroups;
-        var sections = CourseStateService._state.sections;
+      _generateAttentionFlags: function(payload) {
+        var sectionGroups = [];
+        var sections = [];
+        var flagsGenerated = 0;
+
+        if (payload == undefined) {
+          sectionGroups = Object.values(CourseStateService._state.sectionGroups.list);
+          sections = Object.values(CourseStateService._state.sections.list);
+        } else {
+          sectionGroups = payload.sectionGroups;
+          sections = payload.sections;
+        } 
 
         for (var i = 0; i < sectionGroups.length; i++) {
           var sectionGroup = sectionGroups[i];
@@ -511,11 +538,13 @@ class CourseActionCreators {
             return (section.sectionGroupId === sectionGroup.id);
           });
 
-          if (sectionGroup.sections.length === 0) {
-            return false;
+          if (sectionGroup.sections.length === 0 && sectionGroup.plannedSeats) {
+            sectionGroup.requiresAttention = true;
+            flagsGenerated += 1;
           }
         }
-        return true;
+
+        return flagsGenerated;
       }
     };
   }

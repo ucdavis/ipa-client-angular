@@ -217,18 +217,6 @@ class CourseStateService {
               sectionGroups.ids.push(sectionGroupData.id);
             }
             sectionGroups.list = sectionGroupsList;
-// TODO: MOVE TO ACTION CREATORS
-            sectionGroups.ids.forEach(function(sectionGroupId) {
-              var sectionGroup = sectionGroups.list[sectionGroupId];
-
-              sectionGroup.sections = action.payload.sections
-                .filter(function(section) { return section.sectionGroupId === sectionGroupId; });
-
-              if (sectionGroup.sections.length === 0 && sectionGroup.plannedSeats) {
-                sectionGroup.requiresAttention = true;
-              }
-            });
-
             return sectionGroups;
           case ActionTypes.SEARCH_IMPORT_COURSES:
             sectionGroups.importList = [];
@@ -330,10 +318,10 @@ class CourseStateService {
               ids: []
             };
 
-            // action.payload.sections.forEach(function (section) {
-            //   sections.list[section.id] = new Section(section);
-            //   sections.ids.push(section.id);
-            // });
+            action.payload.sections.forEach(function (section) {
+              sections.list[section.id] = new Section(section);
+              sections.ids.push(section.id);
+            });
 
             return sections;
           case ActionTypes.FETCH_SECTIONS:
@@ -447,9 +435,11 @@ class CourseStateService {
               selectedCourseRowIds: [],
               isCourseDeleteModalOpen: false,
               requiresAttention: false,
+              flaggedSectionGroups: 0,
             };
 
             uiState.requiresAttention = action.payload.requiresAttention;
+            uiState.flaggedSectionGroups = action.payload.flaggedSectionGroups;
             uiState.tableLocked = false;
             return uiState;
           case ActionTypes.BEGIN_FETCH_SECTIONS:
@@ -461,6 +451,7 @@ class CourseStateService {
           case ActionTypes.CREATE_SECTION:
           case ActionTypes.REMOVE_SECTION:
             uiState.requiresAttention = action.payload.requiresAttention;
+            uiState.flaggedSectionGroups = action.payload.flaggedSectionGroups;
             return uiState;
           case ActionTypes.BEGIN_FETCH_CENSUS:
             uiState.censusFetchInProgress = true;
