@@ -463,13 +463,13 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             }
 
             // Determine if the term is readonly
-            var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
+            var cellClass = sectionGroupId ? ["sg-cell is-offered"] : ["sg-cell"];
 
             if (state.uiState.selectedCourseId == courseId && state.uiState.selectedTermCode == termCode) {
-              cellClass += " selected-td";
+              cellClass.push("selected-td");
             }
 
-            row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass + "\"><div>";
+            row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass.join(" ") + "\"><div>";
             if (state.uiState.tableLocked) {
               row += plannedSeats;
             } else {
