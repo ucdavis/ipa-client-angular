@@ -1,7 +1,5 @@
-import { _array_sortByProperty } from 'shared/helpers/array';
-
 class TaReaderUtilizationReportReducers {
-  constructor($rootScope, ActionTypes, DwService, TermService) {
+  constructor($rootScope, ActionTypes) {
     return {
       _state: {
         budgets: {},
@@ -13,7 +11,7 @@ class TaReaderUtilizationReportReducers {
           case ActionTypes.INIT_STATE:
             return {};
           case ActionTypes.GET_CURRENT_BUDGET:
-            return action.payload;
+            return action.payload.budgets;
           default:
             return budget;
         }
@@ -23,7 +21,7 @@ class TaReaderUtilizationReportReducers {
           case ActionTypes.INIT_STATE:
             return {};
           case ActionTypes.GET_CURRENT_COURSES:
-            return action.payload;
+            return action.payload.courses;
           default:
             return courses;
         }
@@ -33,17 +31,7 @@ class TaReaderUtilizationReportReducers {
           case ActionTypes.INIT_STATE:
             return {};
           case ActionTypes.GET_CURRENT_SECTION_GROUP_COSTS:
-            var newState = {
-              ids: [],
-              list: {}
-            };
-
-            for (var i = 0; i < action.payload.length; i++) {
-              var sectionGroupCost = action.payload[i];
-              newState.ids.push(sectionGroupCost.id);
-              newState.list[sectionGroupCost.id] = sectionGroupCost;
-            }
-            return newState;
+            return action.payload.sectionGroupCosts;
           default:
             return sectionGroupCosts;
         }
@@ -53,17 +41,7 @@ class TaReaderUtilizationReportReducers {
           case ActionTypes.INIT_STATE:
             return {};
           case ActionTypes.GET_CURRENT_SECTION_GROUPS:
-            var newState = {
-              ids: [],
-              list: {}
-            };
-
-            for (var i = 0; i < action.payload.length; i++) {
-              var sectionGroup = action.payload[i];
-              newState.ids.push(sectionGroup.id);
-              newState.list[sectionGroup.id] = sectionGroup;
-            }
-            return newState;
+            return action.payload.sectionGroups;
           default:
             return sectionGroups;
         }
@@ -73,17 +51,7 @@ class TaReaderUtilizationReportReducers {
           case ActionTypes.INIT_STATE:
             return {};
           case ActionTypes.GET_CURRENT_SECTIONS:
-            var newState = {
-              ids: [],
-              list: {}
-            };
-
-            for (var i = 0; i < action.payload.length; i++) {
-              var section = action.payload[i];
-              newState.ids.push(section.id);
-              newState.list[section.id] = section;
-            }
-            return newState;
+            return action.payload.sections;
           default:
             return sections;
         }
@@ -119,11 +87,11 @@ class TaReaderUtilizationReportReducers {
               reportViews: [
                 {
                   id: 0,
-                  description: 'Teaching Assistants',
+                  description: 'Teaching Assistants'
                 },
                 {
                   id: 1,
-                  description: 'Readers',
+                  description: 'Readers'
                 }
               ],
               selectedReport: 'Teaching Assistants'
@@ -160,96 +128,12 @@ class TaReaderUtilizationReportReducers {
         );
         newState.ui = scope._uiReducers(action, scope._state.ui);
 
-        this._calculateView(newState);
         scope._state = newState;
 
         $rootScope.$emit('taReaderUtilizationReportStateChanged', {
           state: scope._state,
           action: action
         });
-      },
-      _calculateView: function(state) {
-        var budgets = state.budgets;
-        var courses = state.courses;
-        var sectionGroups = state.sectionGroups;
-        var sections = state.sections;
-
-        if (state.calculations.isInitialFetchComplete) {
-          sections.ids.forEach(function(sectionId) {
-            var section = sections.list[sectionId];
-            var sectionGroupId = section.sectionGroupId;
-            var sectionGroup = sectionGroups.list[sectionGroupId];
-            sectionGroup.sections
-              ? sectionGroup.sections.push(section)
-              : (sectionGroup.sections = [section]);
-          });
-
-          sectionGroups.ids.forEach(function(sectionGroupId) {
-            var sectionGroup = sectionGroups.list[sectionGroupId];
-            var courseId = sectionGroup.courseId;
-            var course = courses.list[courseId];
-
-            sectionGroup.subjectCode = course.subjectCode;
-            sectionGroup.courseNumber = course.courseNumber;
-            sectionGroup.title = course.title;
-            sectionGroup.sequencePattern = course.sequencePattern;
-
-            sectionGroup.taCost =
-              sectionGroup.teachingAssistantAppointments * budgets.taCost || 0;
-            sectionGroup.readerCost =
-              sectionGroup.readerAppointments * budgets.readerCost || 0;
-
-            if (course && course.census.length > 0) {
-              var lastOfferedEnrollment = 0;
-              var lastOfferedTermCode = '';
-
-              for (var i = course.census.length - 1; i > 0; i--) {
-                var slotCensus = course.census[i];
-
-                if (
-                  slotCensus.currentEnrolledCount !== 0 &&
-                  slotCensus.termCode < parseInt(sectionGroup.termCode) &&
-                  TermService.termCodeToTerm(slotCensus.termCode) ==
-                    TermService.termCodeToTerm(sectionGroup.termCode)
-                ) {
-                  lastOfferedEnrollment = slotCensus.currentEnrolledCount;
-                  lastOfferedTermCode = slotCensus.termCode.toString();
-                  break;
-                }
-              }
-              sectionGroup.lastOfferedEnrollment = lastOfferedEnrollment || 0;
-              sectionGroup.lastOfferedTermDescription = TermService.getTermName(
-                lastOfferedTermCode,
-                true
-              );
-            }
-          });
-
-          sectionGroups.sortedByTerm = {};
-          sectionGroups.termDescriptions = {};
-
-          sectionGroups.ids.forEach(function(sectionGroupId) {
-            var sectionGroup = sectionGroups.list[sectionGroupId];
-            sectionGroups.sortedByTerm[sectionGroup.termCode] = sectionGroups
-              .sortedByTerm[sectionGroup.termCode]
-              ? [
-                  ...sectionGroups.sortedByTerm[sectionGroup.termCode],
-                  sectionGroup
-                ]
-              : [sectionGroup];
-          });
-
-          for (var term in sectionGroups.sortedByTerm) {
-            sectionGroups.termDescriptions[term] = TermService.getTermName(
-              term
-            );
-
-            sectionGroups.sortedByTerm[term] = _array_sortByProperty(
-              sectionGroups.sortedByTerm[term],
-              'courseNumber'
-            );
-          }
-        }
       }
     };
   }
@@ -257,9 +141,7 @@ class TaReaderUtilizationReportReducers {
 
 TaReaderUtilizationReportReducers.$inject = [
   '$rootScope',
-  'ActionTypes',
-  'DwService',
-  'TermService'
+  'ActionTypes'
 ];
 
 export default TaReaderUtilizationReportReducers;
