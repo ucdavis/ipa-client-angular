@@ -62,7 +62,7 @@
   <div class="ta-reader-utilization-report__table-label">
     {{ view.state.sectionGroups.termDescriptions[term] }}
   </div>
-  <table class="ta-reader-utilization-report__table">
+  <table ng-show="view.state.sectionGroups.appointmentsByTerm[term] > 0" class="ta-reader-utilization-report__table">
     <colgroup>
       <col span="1" style="width: 15%;" />
       <col span="1" style="width: 10%;" />

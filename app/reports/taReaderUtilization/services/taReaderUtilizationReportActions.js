@@ -299,9 +299,11 @@ class TaReaderUtilizationReportActions {
 
           sectionGroups.sortedByTerm = {};
           sectionGroups.termDescriptions = {};
+          sectionGroups.appointmentsByTerm = {};
 
           sectionGroups.ids.forEach(function(sectionGroupId) {
             var sectionGroup = sectionGroups.list[sectionGroupId];
+
             sectionGroups.sortedByTerm[sectionGroup.termCode] = sectionGroups
               .sortedByTerm[sectionGroup.termCode]
               ? [
@@ -309,6 +311,15 @@ class TaReaderUtilizationReportActions {
                   sectionGroup
                 ]
               : [sectionGroup];
+
+            sectionGroups.appointmentsByTerm[
+              sectionGroup.termCode
+            ] = sectionGroups.appointmentsByTerm[sectionGroup.termCode]
+              ? [
+                  ...sectionGroups.appointmentsByTerm[sectionGroup.termCode],
+                  sectionGroup.teachingAssistantAppointments
+                ]
+              : [sectionGroup.teachingAssistantAppointments];
           });
 
           for (var term in sectionGroups.sortedByTerm) {
@@ -320,6 +331,18 @@ class TaReaderUtilizationReportActions {
               sectionGroups.sortedByTerm[term],
               'courseNumber'
             );
+          }
+
+          for (var term in sectionGroups.appointmentsByTerm) {
+            sectionGroups.appointmentsByTerm[
+              term
+            ] = sectionGroups.appointmentsByTerm[term].reduce(function(
+              total,
+              current
+            ) {
+              return total + current;
+            },
+            0);
           }
         }
       },
