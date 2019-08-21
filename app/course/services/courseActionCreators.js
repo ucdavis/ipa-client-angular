@@ -119,14 +119,17 @@ class CourseActionCreators {
       },
       addSectionGroup: function (sectionGroup) {
         CourseService.addSectionGroup(sectionGroup).then(function (sectionGroup) {
-          $rootScope.$emit('toast', { message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
-          var action = {
+          CourseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
+            $rootScope.$emit('toast', { message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
+            var action = {
             type: ActionTypes.ADD_SECTION_GROUP,
             payload: {
-              sectionGroup: sectionGroup
+              sectionGroup: sectionGroup,
+              sections: sections
             }
           };
           CourseStateService.reduce(action);
+          });
         }, function () {
           $rootScope.$emit('toast', { message: "Could not create course offering.", type: "ERROR" });
         });

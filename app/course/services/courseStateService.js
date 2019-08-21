@@ -246,7 +246,7 @@ class CourseStateService {
             return sectionGroups;
           case ActionTypes.ADD_SECTION_GROUP:
             sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
-            sectionGroups.list[action.payload.sectionGroup.id].sectionIds = []; // Skips fetching sections for new SGs
+            sectionGroups.list[action.payload.sectionGroup.id].sectionIds = [action.payload.sections[0].id];
             sectionGroups.ids.push(action.payload.sectionGroup.id);
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
             sectionGroups.newSectionGroup = null;
@@ -329,6 +329,10 @@ class CourseStateService {
               sections.list[sectionData.id] = new Section(sectionData);
               sections.ids.push(sectionData.id);
             });
+            return sections;
+          case ActionTypes.ADD_SECTION_GROUP:
+            sections.list[action.payload.sections[0].id] = new Section(action.payload.sections[0]);
+            sections.ids.push(action.payload.sections[0].id);
             return sections;
           case ActionTypes.CREATE_SECTION:
             sections.list[action.payload.section.id] = new Section(action.payload.section);
