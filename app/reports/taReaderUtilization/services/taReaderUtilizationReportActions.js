@@ -75,21 +75,24 @@ class TaReaderUtilizationReportActions {
                 course.subjectCode,
                 course.courseNumber
               ).then(function(courseCensus) {
+                completedCalls += 1;
+
                 courseCensus.forEach(function(census) {
                   if (census.snapshotCode === SNAPSHOT_CODE) {
                     course.census.push(census);
                   }
                 });
-
-                completedCalls += 1;
-
                 if (openCalls == completedCalls) {
                   var action = {
                     type: ActionTypes.CENSUS_FETCH_COMPLETE,
                     payload: { isInitialFetchComplete: true }
                   };
                   TaReaderUtilizationReportReducers.reduce(action);
+
+                  _self._calculateView();
                 }
+
+
               });
             });
 
