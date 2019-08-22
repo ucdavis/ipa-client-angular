@@ -57,12 +57,12 @@
 
 <div
   class=""
-  ng-repeat="(term, sectionGroups) in view.state.sectionGroups.sortedByTerm"
+  ng-repeat="(term, sectionGroups) in view.state.calculations.calculatedView.sortedByTerm"
 >
   <div class="ta-reader-utilization-report__table-label">
-    {{ view.state.sectionGroups.termDescriptions[term] }}
+    {{ view.state.calculations.calculatedView.termDescriptions[term] }}
   </div>
-  <table ng-show="view.state.sectionGroups.appointmentsByTerm[term] > 0" class="ta-reader-utilization-report__table">
+  <table ng-show="view.state.calculations.calculatedView.appointmentsByTerm[term] > 0" class="ta-reader-utilization-report__table">
     <colgroup>
       <col span="1" style="width: 15%;" />
       <col span="1" style="width: 10%;" />

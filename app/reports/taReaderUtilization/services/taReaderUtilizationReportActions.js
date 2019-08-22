@@ -244,18 +244,24 @@ class TaReaderUtilizationReportActions {
             TaReaderUtilizationReportReducers._state.sectionGroups;
           var sections = TaReaderUtilizationReportReducers._state.sections;
 
-          var calculatedView = {};
-          var displayTerm = {};
+          var calculatedView = {
+            sortedByTerm: {},
+            termDescriptions: {},
+            appointmentsByTerm: {}
+          };
 
+          // Fill sectionGroups with sections
           sections.ids.forEach(function(sectionId) {
             var section = sections.list[sectionId];
             var sectionGroupId = section.sectionGroupId;
             var sectionGroup = sectionGroups.list[sectionGroupId];
+
             sectionGroup.sections
               ? sectionGroup.sections.push(section)
               : (sectionGroup.sections = [section]);
           });
 
+          // Fill with course info
           sectionGroups.ids.forEach(function(sectionGroupId) {
             var sectionGroup = sectionGroups.list[sectionGroupId];
             var courseId = sectionGroup.courseId;
@@ -295,48 +301,40 @@ class TaReaderUtilizationReportActions {
                 true
               );
             }
-          });
 
-          sectionGroups.sortedByTerm = {};
-          sectionGroups.termDescriptions = {};
-          sectionGroups.appointmentsByTerm = {};
-
-          sectionGroups.ids.forEach(function(sectionGroupId) {
-            var sectionGroup = sectionGroups.list[sectionGroupId];
-
-            sectionGroups.sortedByTerm[sectionGroup.termCode] = sectionGroups
+            calculatedView.sortedByTerm[sectionGroup.termCode] = calculatedView
               .sortedByTerm[sectionGroup.termCode]
               ? [
-                  ...sectionGroups.sortedByTerm[sectionGroup.termCode],
+                  ...calculatedView.sortedByTerm[sectionGroup.termCode],
                   sectionGroup
                 ]
               : [sectionGroup];
 
-            sectionGroups.appointmentsByTerm[
+            calculatedView.appointmentsByTerm[
               sectionGroup.termCode
-            ] = sectionGroups.appointmentsByTerm[sectionGroup.termCode]
+            ] = calculatedView.appointmentsByTerm[sectionGroup.termCode]
               ? [
-                  ...sectionGroups.appointmentsByTerm[sectionGroup.termCode],
+                  ...calculatedView.appointmentsByTerm[sectionGroup.termCode],
                   sectionGroup.teachingAssistantAppointments
                 ]
               : [sectionGroup.teachingAssistantAppointments];
           });
 
-          for (var term in sectionGroups.sortedByTerm) {
-            sectionGroups.termDescriptions[term] = TermService.getTermName(
+          for (var term in calculatedView.sortedByTerm) {
+            calculatedView.termDescriptions[term] = TermService.getTermName(
               term
             );
 
-            sectionGroups.sortedByTerm[term] = _array_sortByProperty(
-              sectionGroups.sortedByTerm[term],
+            calculatedView.sortedByTerm[term] = _array_sortByProperty(
+              calculatedView.sortedByTerm[term],
               'courseNumber'
             );
           }
 
-          for (var term in sectionGroups.appointmentsByTerm) {
-            sectionGroups.appointmentsByTerm[
+          for (var term in calculatedView.appointmentsByTerm) {
+            calculatedView.appointmentsByTerm[
               term
-            ] = sectionGroups.appointmentsByTerm[term].reduce(function(
+            ] = calculatedView.appointmentsByTerm[term].reduce(function(
               total,
               current
             ) {
@@ -344,6 +342,13 @@ class TaReaderUtilizationReportActions {
             },
             0);
           }
+
+          TaReaderUtilizationReportReducers.reduce({
+            type: ActionTypes.CALCULATE_VIEW,
+            payload: {
+              calculatedView: calculatedView
+            }
+          })
         }
       },
       selectReportView: function(reportView) {

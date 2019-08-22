@@ -63,7 +63,8 @@ class TaReaderUtilizationReportReducers {
               isInitialFetchComplete: false,
               censusDataFetchBegun: false,
               dwCallsOpened: 0,
-              dwCallsCompleted: 0
+              dwCallsCompleted: 0,
+              calculatedView: {}
             };
             return calculations;
           case ActionTypes.INITIAL_FETCH_COMPLETE:
