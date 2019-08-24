@@ -113,6 +113,40 @@
       </support-and-fund-changes>
     </div>
   </div>
+  <!-- Total Teaching Cost & Balance -->
+  <div class="budget-comparison-report__section-container">
+    <div class="budget-comparison-report__section">
+      <teaching-balance costs="view.state.calculations.calculatedView.previous.costs"
+                  funding="view.state.calculations.calculatedView.previous.funding"
+                  misc-stats="view.state.calculations.calculatedView.previous.miscStats"
+                  is-current="false"
+                  instructor-types="view.state.instructorTypes"
+                  line-item-categories="view.state.lineItemCategories"
+                  year="(year-1)"
+                  budget-scenario-name="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario.name">
+      </teaching-balance >
+    </div>
+    <div class="budget-comparison-report__section">
+      <teaching-balance  costs="view.state.calculations.calculatedView.current.costs"
+                  funding="view.state.calculations.calculatedView.current.funding"
+                  misc-stats="view.state.calculations.calculatedView.current.miscStats"
+                  is-current="true"
+                  instructor-types="view.state.instructorTypes"
+                  line-item-categories="view.state.lineItemCategories"
+                  year="year"
+                  budget-scenario-name="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario.name">
+      </teaching-balance >
+    </div>
+    <div class="budget-comparison-report__section">
+      <teaching-balance-changes costs="view.state.calculations.calculatedView.change.costs"
+                         funding="view.state.calculations.calculatedView.change.funding"
+                         misc-stats="view.state.calculations.calculatedView.change.miscStats"
+                         is-current="true"
+                         instructor-types="view.state.instructorTypes"
+                         line-item-categories="view.state.lineItemCategories">
+      </teaching-balance-changes>
+    </div>
+  </div>
   <!-- misc -->
   <div class="budget-comparison-report__section-container">
     <div class="budget-comparison-report__section">
