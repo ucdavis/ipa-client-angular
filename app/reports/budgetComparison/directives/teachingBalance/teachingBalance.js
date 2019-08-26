@@ -1,7 +1,5 @@
 import { toCurrency } from 'shared/helpers/string';
 
-import './teachingBalance.css';
-
 let teachingBalance = function (StringService) {
   return {
     restrict: 'E',
