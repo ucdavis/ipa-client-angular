@@ -6,13 +6,7 @@ let teachingBalance = function (StringService) {
     template: require('./teachingBalance.html'),
     replace: true,
     scope: {
-      year: '<',
-      lineItemCategories: '<',
-      instructorTypes: '<',
-      costs: '<',
-      funding: '<',
-      miscStats: '<',
-      budgetScenarioName: '<'
+      teachingBalance: '<',
     },
     link: function (scope) {
       scope.toCurrency = function (value) {
