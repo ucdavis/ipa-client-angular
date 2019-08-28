@@ -48,9 +48,6 @@ class BudgetComparisonReportCalculations {
               lineItems.current,
               budgetScenarios.currentSelectedScenarioId
             ),
-            teachingBalance: this._generateTeachingBalance(
-              BudgetComparisonReportReducers._state.instructorCosts.current
-            ),
             miscStats: this._generateMiscStats(
               sectionGroupCosts.current,
               currentSelectedBudgetScenario
@@ -69,9 +66,6 @@ class BudgetComparisonReportCalculations {
               lineItems.previous,
               budgetScenarios.previousSelectedScenarioId
             ),
-            teachingBalance: this._generateTeachingBalance(
-              BudgetComparisonReportReducers._state.instructorCosts.previous
-            ),
             miscStats: this._generateMiscStats(
               sectionGroupCosts.previous,
               previousSelectedBudgetScenario
@@ -88,9 +82,6 @@ class BudgetComparisonReportCalculations {
             calculatedView.current.funding,
             calculatedView.previous.funding
           ),
-          teachingBalance: this._generateTeachingBalanceChange(
-            BudgetComparisonReportReducers._state.instructorCosts.change
-          ),
           miscStats: this._generateMiscStatsChange(
             calculatedView.current.miscStats,
             calculatedView.previous.miscStats
@@ -103,7 +94,6 @@ class BudgetComparisonReportCalculations {
             calculatedView: calculatedView
           }
         });
-        console.log("calculatedView :", calculatedView); // eslint-disable-line no-console
       },
       // Generates stats on seats and # of courses per area
       _generateMiscStats(sectionGroupCosts, selectedScenario) {
@@ -432,28 +422,6 @@ class BudgetComparisonReportCalculations {
         supportCosts.totalCost += supportCosts.taCost + supportCosts.readerCost;
 
         return supportCosts;
-      },
-      // Generates Teaching Costs & Balance
-      _generateTeachingBalance() {
-        // debugger; // eslint-disable-line no-debugger
-        var teachingBalance = {
-          teachingCosts: 0,
-          funds: 0,
-          balance: 0
-        };
- 
-        return teachingBalance;
-      },
-      // Generates previous -> current change values for Teaching Costs & Balance
-      _generateTeachingBalanceChange() {
-        // debugger; // eslint-disable-line no-debugger
-        var teachingBalance = {
-          teachingCosts: 0,
-          funds: 0,
-          balance: 0
-        };
- 
-        return teachingBalance;
       },
       // Generates funding values based on the selected budget scenario
       _generateFunding(lineItems, selectedScenarioId) {
