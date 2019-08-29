@@ -1,0 +1,99 @@
+<!-- ng-show=  -->
+<table ng-show="showTable" class="ta-reader-utilization-report__table">
+  <colgroup>
+    <col span="1" style="width: 15%;" />
+    <col span="1" style="width: 10%;" />
+    <col span="1" style="width: 15%;" />
+    <col span="1" style="width: 10%;" />
+    <col span="1" style="width: 10%;" />
+    <col span="1" style="width: 10%;" />
+    <col span="1" style="width: 10%;" />
+    <col span="1" style="width: 10%;" />
+    <col span="1" style="width: 10%;" />
+  </colgroup>
+  <thead>
+    <th class="ta-reader-utilization-report__table--header">Course</th>
+    <th class="ta-reader-utilization-report__table--header">Section</th>
+    <th class="ta-reader-utilization-report__table--header">Title</th>
+    <th class="ta-reader-utilization-report__table--header">
+      Anticipated Enrollment
+    </th>
+    <th class="ta-reader-utilization-report__table--header">
+      Previous Enrollment
+    </th>
+    <th class="ta-reader-utilization-report__table--header">Reader Hours</th>
+    <th class="ta-reader-utilization-report__table--header">
+      Reader Funds
+    </th>
+  </thead>
+  <tr ng-hide="fetchComplete">
+    <td>
+      <spinner></spinner>
+    </td>
+  </tr>
+  <tr>
+    <td
+      colspan="9"
+      style="text-align: center;"
+      ng-if="sectionGroups.ids.length == 0"
+    >
+      No schedule data available.
+    </td>
+  </tr>
+  <tbody ng-show="fetchComplete" ng-repeat="sectionGroup in sectionGroups">
+    <tr
+      ng-if="sectionGroup.teachingAssistantAppointments > 0"
+      class="ta-reader-utilization-report__row"
+    >
+      <!-- Course -->
+      <td class="ta-reader-utilization-report__table--value">
+        {{ sectionGroup.subjectCode }}
+        {{ sectionGroup.courseNumber }}
+      </td>
+
+      <!-- Sequence Number -->
+      <td class="ta-reader-utilization-report__table--value">
+        {{ sectionGroup.sequencePattern }}
+      </td>
+
+      <!-- Title -->
+      <td class="ta-reader-utilization-report__table--value">
+        {{ sectionGroup.title }}
+      </td>
+
+      <!-- Anticipated Enrollment -->
+      <td class="ta-reader-utilization-report__table--value">
+        {{ sectionGroup.plannedSeats }}
+      </td>
+
+      <!-- Previous Enrollment -->
+      <td class="ta-reader-utilization-report__table--value">
+        <div ng-if="sectionGroup.lastOfferedEnrollment">
+          {{ sectionGroup.lastOfferedEnrollment }} ({{
+            sectionGroup.lastOfferedTermDescription
+          }})
+        </div>
+      </td>
+
+      <!-- TA Count (Appointments) -->
+      <td class="ta-reader-utilization-report__table--value">
+        {{ sectionGroup.teachingAssistantAppointments }}
+      </td>
+
+      <!-- Section Per TA -->
+      <td class="ta-reader-utilization-report__table--value">
+        {{}}
+      </td>
+
+      <!-- TA Funds -->
+      <td class="ta-reader-utilization-report__table--value">
+        {{ sectionGroup.taCost }}
+      </td>
+
+      <!-- FTE Per Section -->
+      <td class="ta-reader-utilization-report__table--value">
+        {{}}
+      </td>
+    </tr>
+  </tbody>
+</table>
