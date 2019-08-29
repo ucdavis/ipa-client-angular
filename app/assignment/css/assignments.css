@@ -133,20 +133,22 @@
 	color: #949494;
 }
 
-.course-appointment {
-	text-align: left;
-	padding: 13px 0px;
-}
-
 .course-appointment-row {
-	text-align: left;
 	padding: 0px;
 	margin: 0px
 }
 
-.course-appointment-input {
+.course-appointment-row__cell-container {
 	text-align: left;
-	padding: 4px 4px 0px 0px;
+	padding: 0px;
+}
+
+.course-appointment-input {
+  width: 100%;
+  padding: 6px 6px;
+  color: #555;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
 }
 
 .assign-dropdown .dropdown-toggle {
