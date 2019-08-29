@@ -46,26 +46,42 @@
   </div>
 </div>
 
-<div class="ta-reader-utilization-report__selector">
-  <ipa-dropdown
-    items="view.state.ui.reportViews"
-    select-item="selectReportView(item)"
-    button-text="view.state.ui.selectedReport"
-    is-wide="'true'"
-  ></ipa-dropdown>
+<div class="ta-reader-utilization-report__tabs">
+  <ipa-tabs
+    tab-names="view.state.ui.reportViews"
+    active-tab="view.state.ui.selectedReport"
+    select-tab="selectReportView"
+  ></ipa-tabs>
 </div>
 
-<div
-  class=""
-  ng-repeat="(term, sectionGroups) in view.state.calculations.calculatedView.sortedByTerm"
->
-  <div class="ta-reader-utilization-report__table-label">
-    {{ view.state.calculations.calculatedView.termDescriptions[term] }}
-  </div>
+<div class="ta-reader-utilization-report__container" ng-if="view.state.ui.selectedReport === 'Teaching Assistants'">
+  <div
+    ng-repeat="(term, sectionGroups) in view.state.calculations.calculatedView.sortedByTerm"
+  >
+    <div class="ta-reader-utilization-report__table-label">
+      {{ view.state.calculations.calculatedView.termDescriptions[term] }}
+    </div>
 
-  <ta-utilization-table
-    fetch-complete="view.state.calculations.isInitialFetchComplete"
-    show-table="view.state.calculations.calculatedView.appointmentsByTerm[term] > 0"
-    section-groups="sectionGroups"
-  ></ta-utilization-table>
+    <ta-utilization-table
+      fetch-complete="view.state.calculations.isInitialFetchComplete"
+      show-table="view.state.calculations.calculatedView.appointmentsByTerm[term] > 0"
+      section-groups="sectionGroups"
+    ></ta-utilization-table>
+  </div>
+</div>
+
+<div class="ta-reader-utilization-report__container" ng-if="view.state.ui.selectedReport === 'Readers'">
+  <div
+    ng-repeat="(term, sectionGroups) in view.state.calculations.calculatedView.sortedByTerm"
+  >
+    <div class="ta-reader-utilization-report__table-label">
+      {{ view.state.calculations.calculatedView.termDescriptions[term] }}
+    </div>
+
+    <reader-utilization-table
+      fetch-complete="view.state.calculations.isInitialFetchComplete"
+      show-table="view.state.calculations.calculatedView.appointmentsByTerm[term] > 0"
+      section-groups="sectionGroups"
+    ></reader-utilization-table>
+  </div>
 </div>

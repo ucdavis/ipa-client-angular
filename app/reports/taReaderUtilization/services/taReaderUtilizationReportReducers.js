@@ -85,21 +85,12 @@ class TaReaderUtilizationReportReducers {
         switch (action.type) {
           case ActionTypes.INIT_STATE:
             ui = {
-              reportViews: [
-                {
-                  id: 0,
-                  description: 'Teaching Assistants'
-                },
-                {
-                  id: 1,
-                  description: 'Readers'
-                }
-              ],
+              reportViews: ['Teaching Assistants', 'Readers'],
               selectedReport: 'Teaching Assistants'
             };
             return ui;
           case ActionTypes.SELECT_REPORT_VIEW:
-            ui.selectedReport = action.payload.description;
+            ui.selectedReport = action.payload.tabName;
             return ui;
           default:
             return ui;

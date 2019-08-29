@@ -354,10 +354,12 @@ class TaReaderUtilizationReportActions {
           })
         }
       },
-      selectReportView: function(reportView) {
+      selectReportView: function(tabName) {
         TaReaderUtilizationReportReducers.reduce({
           type: ActionTypes.SELECT_REPORT_VIEW,
-          payload: reportView
+          payload: {
+            tabName: tabName
+          }
         });
       }
     };

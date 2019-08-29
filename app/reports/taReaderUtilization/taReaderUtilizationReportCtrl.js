@@ -24,9 +24,9 @@ class TaReaderUtilizationReportCtrl {
       $scope.view.state = data.state;
     });
 
-    $scope.selectReportView = function(reportView) {
+    $scope.selectReportView = function(tabName) {
       TaReaderUtilizationReportActions.selectReportView(
-        reportView
+        tabName
       );
     };
 
