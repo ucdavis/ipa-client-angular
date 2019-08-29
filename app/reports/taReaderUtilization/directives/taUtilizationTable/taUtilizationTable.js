@@ -8,9 +8,8 @@ let taUtilizationTable = function() {
       fetchComplete: '<',
       showTable: '<'
     },
-    link: function(scope) {
-      debugger;
-      // Blank
+    link: function() {
+      // Intentionally blank
     }
   };
 };
