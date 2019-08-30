@@ -91,8 +91,6 @@ class TaReaderUtilizationReportActions {
 
                   _self._calculateView();
                 }
-
-
               });
             });
 
@@ -250,7 +248,8 @@ class TaReaderUtilizationReportActions {
           var calculatedView = {
             sortedByTerm: {},
             termDescriptions: {},
-            appointmentsByTerm: {}
+            taAppointmentsByTerm: {},
+            readerAppointmentsByTerm: {}
           };
 
           // Fill sectionGroups with sections
@@ -313,14 +312,25 @@ class TaReaderUtilizationReportActions {
                 ]
               : [sectionGroup];
 
-            calculatedView.appointmentsByTerm[
+            calculatedView.taAppointmentsByTerm[
               sectionGroup.termCode
-            ] = calculatedView.appointmentsByTerm[sectionGroup.termCode]
+            ] = calculatedView.taAppointmentsByTerm[sectionGroup.termCode]
               ? [
-                  ...calculatedView.appointmentsByTerm[sectionGroup.termCode],
+                  ...calculatedView.taAppointmentsByTerm[sectionGroup.termCode],
                   sectionGroup.teachingAssistantAppointments
                 ]
               : [sectionGroup.teachingAssistantAppointments];
+
+            calculatedView.readerAppointmentsByTerm[
+              sectionGroup.termCode
+            ] = calculatedView.readerAppointmentsByTerm[sectionGroup.termCode]
+              ? [
+                  ...calculatedView.readerAppointmentsByTerm[
+                    sectionGroup.termCode
+                  ],
+                  sectionGroup.readerAppointments
+                ]
+              : [sectionGroup.readerAppointments];
           });
 
           for (var term in calculatedView.sortedByTerm) {
@@ -334,10 +344,21 @@ class TaReaderUtilizationReportActions {
             );
           }
 
-          for (var term in calculatedView.appointmentsByTerm) {
-            calculatedView.appointmentsByTerm[
+          for (var term in calculatedView.taAppointmentsByTerm) {
+            calculatedView.taAppointmentsByTerm[
               term
-            ] = calculatedView.appointmentsByTerm[term].reduce(function(
+            ] = calculatedView.taAppointmentsByTerm[term].reduce(function(
+              total,
+              current
+            ) {
+              return total + current;
+            },
+            0);
+          }
+          for (var term in calculatedView.readerAppointmentsByTerm) {
+            calculatedView.readerAppointmentsByTerm[
+              term
+            ] = calculatedView.readerAppointmentsByTerm[term].reduce(function(
               total,
               current
             ) {
@@ -351,7 +372,7 @@ class TaReaderUtilizationReportActions {
             payload: {
               calculatedView: calculatedView
             }
-          })
+          });
         }
       },
       selectReportView: function(tabName) {
