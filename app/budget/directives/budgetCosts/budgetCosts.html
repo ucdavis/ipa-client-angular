@@ -35,7 +35,10 @@
             <div>Readers /</div>
             <div>Reason</div>
           </th>
-          <th class="budget-costs__table-header">Reader Cost</th>
+          <th class="budget-costs__table-header">
+            <div>Reader Cost /</div>
+            <div>Support Percentage</div>
+          </th>
           <th class="budget-costs__table-header">
             <div>Support Cost /</div>
             <div>Instructor Cost</div>
@@ -101,6 +104,7 @@
                 </colgroup>
                 <tbody>
                   <tr>
+                      appointmentPercentage {{ course.appointmentPercentage }} 
                     <!-- Comments -->
                     <td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
                       <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
