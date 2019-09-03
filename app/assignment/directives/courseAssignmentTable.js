@@ -210,7 +210,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								courseHtml += 'Appointment Percentage:';
 								courseHtml += "</div>";
 								courseHtml += "<div class='col-lg-6 course-appointment-row__cell-container'>";
-								courseHtml += '<input type="text" name="percentage-' + course.id + '" class="course-appointment-input" maxlength="3" value="100"/>';
+								courseHtml += '<input type="text" name="percentage-' + course.id + '" class="course-appointment-input" maxlength="4" value="' + course.appointmentPercentage + '"/>';
 								courseHtml += "</div>";
 								courseHtml += "</div>";
 
