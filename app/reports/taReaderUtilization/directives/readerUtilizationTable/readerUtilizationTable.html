@@ -40,7 +40,7 @@
   </tr>
   <tbody ng-show="fetchComplete" ng-repeat="sectionGroup in sectionGroups">
     <tr
-      ng-if="sectionGroup.teachingAssistantAppointments > 0"
+      ng-if="sectionGroup.readerAppointments > 0"
       class="ta-reader-utilization-report__row"
     >
       <!-- Course -->
@@ -75,7 +75,7 @@
 
       <!-- Reader Hours -->
       <td class="ta-reader-utilization-report__table--value">
-        {{ sectionGroup.teachingAssistantAppointments }}
+        {{ sectionGroup.readerAppointments }}
       </td>
 
       <!-- Reader Funds -->
