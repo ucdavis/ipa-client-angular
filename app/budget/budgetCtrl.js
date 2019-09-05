@@ -59,7 +59,6 @@ class BudgetCtrl {
       } else {
         localStorage.removeItem("selectedTerm");
       }
-      console.log("State :",_self.$scope.view.state); // eslint-disable-line no-console
     });
   }
 }
