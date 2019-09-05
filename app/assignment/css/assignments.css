@@ -134,18 +134,19 @@
 }
 
 .course-appointment-row {
-	padding: 0px;
+	padding: 4px 0px 0px 0px;
 	margin: 0px
 }
 
 .course-appointment-row__cell-container {
 	text-align: left;
-	padding: 0px;
+	padding: 5px 0px 0px 0px;
 }
 
 .course-appointment-input {
 	width: 100%;
-	padding: 6px 6px;
+  padding: 6px 6px;
+  text-align: center;
 	color: #555;
 	border: 1px solid #e2e2e2;
 	border-radius: 4px;

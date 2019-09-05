@@ -206,11 +206,12 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								// Add input for appointment percentage course
 								courseHtml += "<div class='form-group row course-appointment-row'>";
-								courseHtml += "<div class='col-lg-6 course-appointment-row__cell-container'>";
-								courseHtml += 'Appointment Percentage:';
+								courseHtml += "<div class='col-lg-4 course-appointment-row__cell-container'>";
+								courseHtml += 'Appointment:';
 								courseHtml += "</div>";
-								courseHtml += "<div class='col-lg-6 course-appointment-row__cell-container'>";
-								courseHtml += '<input type="text" name="percentage-' + course.id + '" class="course-appointment-input" maxlength="4" value="' + course.appointmentPercentage + '"/>';
+								courseHtml += "<div class='col-lg-4 input-group'>";
+								courseHtml += '<input type="text" class="course-appointment-input" maxlength="4" size="5" value="' + course.appointmentPercentage + '"/>';
+								courseHtml += '<span class="input-group-addon">%</span>';
 								courseHtml += "</div>";
 								courseHtml += "</div>";
 
