@@ -12,6 +12,7 @@ class ScheduleCostCalculations {
         var sectionGroupCosts = BudgetReducers._state.sectionGroupCosts;
         var sectionGroups = BudgetReducers._state.scheduleSectionGroups;
         var activeTerms = selectedBudgetScenario.terms;
+        var courses = BudgetReducers._state.courses;
 
         selectedBudgetScenario.budgetedCourseHiddenByTermFilter = false;
 
@@ -108,6 +109,12 @@ class ScheduleCostCalculations {
             else if (assignedInstructorTypeId) {
               sectionGroupCost.reversionDisplayName = assignedInstructorType.description;
             }
+          }
+
+          // Get Course's appointment percentage value
+          if (sectionGroupCost.sectionGroup){
+            var courseId = sectionGroupCost.sectionGroup.courseId;
+            sectionGroupCost.appointmentPercentage = courses.list[courseId].appointmentPercentage;
           }
 
           // Calculate instructor cost
