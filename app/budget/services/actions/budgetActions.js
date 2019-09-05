@@ -8,6 +8,7 @@ class BudgetActions {
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
 				var selectedBudgetScenarioId = selectedBudgets[year];
+				var activeTab = localStorage.getItem('activeTab');
 
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
 					// BudgetScenario was set in localStorage, need to sanity check
@@ -71,7 +72,8 @@ class BudgetActions {
 						year: year,
 						workgroupId: workgroupId,
 						selectedBudgetScenarioId: selectedBudgetScenarioId,
-						selectedTerm: selectedTerm
+						selectedTerm: selectedTerm,
+						activeTab: activeTab
 					});
 
 					// Ensure budgetScenario is properly set
