@@ -170,10 +170,10 @@ class ScheduleCostCalculations {
       _calculateInstructorCost: function(sectionGroupCost) {
         sectionGroupCost.overrideInstructorCost = null;
         sectionGroupCost.overrideInstructorCostSource = "course";
-
+        var appointmentPercentage = sectionGroupCost.appointmentPercentage;
         // If course cost => Use course cost
         if (sectionGroupCost.cost === 0 || sectionGroupCost.cost > 0) {
-          sectionGroupCost.overrideInstructorCost = angular.copy(sectionGroupCost.cost); // eslint-disable-line no-undef
+          sectionGroupCost.overrideInstructorCost = angular.copy((sectionGroupCost.cost * appointmentPercentage) / 100); // eslint-disable-line no-undef
           sectionGroupCost.overrideInstructorCostSource = "course";
           sectionGroupCost.newInstructorCost = null;
           return;
@@ -185,7 +185,7 @@ class ScheduleCostCalculations {
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
 
           if (instructorCost && instructorCost.cost > 0) {
-            sectionGroupCost.overrideInstructorCost = angular.copy(instructorCost.cost); // eslint-disable-line no-undef
+            sectionGroupCost.overrideInstructorCost = angular.copy((instructorCost.cost * appointmentPercentage) / 100); // eslint-disable-line no-undef
             sectionGroupCost.overrideInstructorCostSource = "instructor";
             sectionGroupCost.overrideInstructorCostSourceDescription = instructor.firstName + " " + instructor.lastName;
             sectionGroupCost.newInstructorCost = null;
