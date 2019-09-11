@@ -138,6 +138,8 @@ class CourseStateService {
             delete courses.list[action.payload.course.id];
             return courses;
           case ActionTypes.UPDATE_COURSE:
+          case ActionTypes.UPDATE_COURSE_NOTE:
+          case ActionTypes.UPDATE_APPOINTMENT_PERCENTAGE:
             courses.list[action.payload.course.id] = new Course(action.payload.course);
             return courses;
           case ActionTypes.MASS_ASSIGN_TAGS:
