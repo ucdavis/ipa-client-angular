@@ -74,6 +74,24 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
 				});
 			},
+			updateAppointmentPercentage: function (courseId, appointmentPercentage) {
+				var course = AssignmentStateService._state.courses.list[courseId];
+				course.appointmentPercentage = appointmentPercentage;
+				_self.AssignmentService.updateCourse(course).then(function (newCourse) {
+					window.ipa_analyze_event('instructor assignments', 'appointment percentage updated');
+
+					_self.$rootScope.$emit('toast', { message: "Updated course appointment percentage", type: "SUCCESS" });
+					var action = {
+						type: ActionTypes.UPDATE_APPOINTMENT_PERCENTAGE,
+						payload: {
+							course: newCourse
+						}
+					};
+					_self.AssignmentStateService.reduce(action);
+				}, function () {
+					_self.$rootScope.$emit('toast', { message: "Could not update appointment percentage.", type: "ERROR" });
+				});
+			},
 			updateTagFilters: function (tagIds) {
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,

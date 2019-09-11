@@ -204,13 +204,13 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								courseHtml += "</div>"; // End tags
 
-								// Add input for appointment percentage course
+								// Add input for appointment percentage
 								courseHtml += "<div class='form-group row course-appointment-row'>";
 								courseHtml += "<div class='col-lg-4 course-appointment-row__cell-container'>";
 								courseHtml += 'Appointment:';
 								courseHtml += "</div>";
 								courseHtml += "<div class='col-lg-4 input-group'>";
-								courseHtml += '<input type="text" class="course-appointment-input" maxlength="4" size="5" value="' + course.appointmentPercentage + '"/>';
+								courseHtml += '<input type="text" class="course-appointment-input" maxlength="6" size="5" data-course-id="' + course.id + '" data-event-type="updateAppointmentPercentage" value="' + course.appointmentPercentage + '"/>';
 								courseHtml += '<span class="input-group-addon">%</span>';
 								courseHtml += "</div>";
 								courseHtml += "</div>";
@@ -474,6 +474,16 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				var note = e.target.value;
 
 				AssignmentActionCreators.updateCourseNote(courseId, note);
+			});
+
+			// Handle appointment percentage
+			element.on("change", function(e) {
+				let $el = $(e.target); // eslint-disable-line no-undef
+				if ($el.data('event-type') == 'updateAppointmentPercentage'){
+					var courseId = $el.data('course-id');
+					var appointmentPercentage = e.target.value;
+					AssignmentActionCreators.updateAppointmentPercentage(courseId, appointmentPercentage);
+				}
 			});
 
 			// Handle Instructor UI events
