@@ -240,6 +240,14 @@ span.sis-tool-icon {
 
 /* Print view */
 @media print {
+  @page {
+    margin: 1cm;
+  }
+
+	.page-container {
+		display: block;
+	}
+
 	.right-details {
 		position: static;
 		display: inline;
