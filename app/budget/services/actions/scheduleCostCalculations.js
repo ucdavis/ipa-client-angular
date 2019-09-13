@@ -115,6 +115,8 @@ class ScheduleCostCalculations {
           if (sectionGroupCost.sectionGroup){
             var courseId = sectionGroupCost.sectionGroup.courseId;
             sectionGroupCost.appointmentPercentage = courses.list[courseId].appointmentPercentage;
+          } else {
+            sectionGroupCost.appointmentPercentage = 100;
           }
 
           // Calculate instructor cost
@@ -196,7 +198,7 @@ class ScheduleCostCalculations {
           var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
           if (instructorTypeCost && instructorTypeCost.cost > 0) {
-            sectionGroupCost.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
+            sectionGroupCost.overrideInstructorCost = angular.copy((instructorTypeCost.cost * appointmentPercentage) / 100); // eslint-disable-line no-undef
             sectionGroupCost.overrideInstructorCostSource = "instructor type";
             sectionGroupCost.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
             sectionGroupCost.newInstructorCost = null;
@@ -209,7 +211,7 @@ class ScheduleCostCalculations {
           var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
 
           if (instructorTypeCost) {
-            sectionGroupCost.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
+            sectionGroupCost.overrideInstructorCost = angular.copy((instructorTypeCost.cost * appointmentPercentage) / 100); // eslint-disable-line no-undef
             sectionGroupCost.overrideInstructorCostSource = "instructor type";
             sectionGroupCost.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
             sectionGroupCost.newInstructorCost = null;
