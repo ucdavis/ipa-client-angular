@@ -61,6 +61,10 @@ tr.section-activity-diff-row.no-changes * {
 	margin-left: 8px;
 }
 
+.print-only {
+	display: none;
+}
+
 /* Print view */
 @media print {
   @page {
@@ -68,6 +72,10 @@ tr.section-activity-diff-row.no-changes * {
   }
 
 	.page-container {
+		display: block;
+	}
+
+	.print-only {
 		display: block;
 	}
 }
