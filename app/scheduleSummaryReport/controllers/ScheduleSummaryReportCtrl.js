@@ -38,7 +38,6 @@ class ScheduleSummaryReportCtrl {
 			return TermService.getShortTermName(termCode);
 		};
 
-
 		// Identifying
 		$rootScope.$on('reportStateChanged', function (event, data) {
 			$scope.view.state = data.state;
