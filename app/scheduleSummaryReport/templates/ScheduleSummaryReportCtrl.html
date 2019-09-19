@@ -35,6 +35,11 @@
     </div>
     <!-- .row -->
 
+    <!-- Title For Print -->
+    <div class="print-only">
+      <h4>Schedule Summary Report - {{ sharedState.workgroup.name }} - {{ getTermName(termShortCode) }} - {{ year.yearToAcademicYear() }}</h4>
+    </div>
+
     <div class="row">
       <div class="col-sm-12">
         <table class="table section-diff-table schedule-summary-report__table">

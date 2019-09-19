@@ -1,5 +1,5 @@
 class ScheduleSummaryReportCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, Term, ScheduleSummaryReportActionCreators, AuthService, ScheduleSummaryReportService, validate) {
+	constructor ($scope, $rootScope, $route, $routeParams, Term, ScheduleSummaryReportActionCreators, AuthService, ScheduleSummaryReportService, TermService, validate) {
 		var _self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
@@ -32,6 +32,10 @@ class ScheduleSummaryReportCtrl {
 
 		$scope.download = function () {
 			ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, $scope.termShortCode);
+		};
+
+		$scope.getTermName = function(termCode) {
+			return TermService.getShortTermName(termCode);
 		};
 
 		// Identifying
@@ -94,6 +98,6 @@ class ScheduleSummaryReportCtrl {
 	}
 }
 
-ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Term', 'ScheduleSummaryReportActionCreators', 'AuthService', 'ScheduleSummaryReportService', 'validate'];
+ScheduleSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Term', 'ScheduleSummaryReportActionCreators', 'AuthService', 'ScheduleSummaryReportService', 'TermService', 'validate'];
 
 export default ScheduleSummaryReportCtrl;
