@@ -133,6 +133,13 @@ class RegistrarReconciliationReportStateService {
 														activity.dwChanges[change.propertyName] = { isToDo: false };
 														activity.dwChanges[change.propertyName].value = rightValue[change.propertyName];
 													}
+
+													if (leftValue.dayIndicator != rightValue.dayIndicator) {
+														change.propertyName = "dayIndicator";
+														activity.dwChanges = activity.dwChanges || {};
+														activity.dwChanges[change.propertyName] = { isToDo: false };
+														activity.dwChanges[change.propertyName].value = rightValue[change.propertyName];
+													}
 												});
 												break;
 											case "bannerLocation":
