@@ -8,20 +8,31 @@
 class CourseService {
   constructor() {
     return {
-      getUnits: function (course) {
+      getUnits: function(course, sectionGroup) {
+        if (sectionGroup) {
+          course.unitsVariable = sectionGroup.unitsVariable;
+        }
+
         if (course.unitsHigh > 0) {
-          return course.unitsHigh;
+          return course.unitsVariable || 0;
         } else if (course.unitsLow > 0) {
           return course.unitsLow;
         } else {
           return 0;
         }
       },
-      getSCH: function (enrollment, course) {
-        if (course.unitsHigh > 0) {
+      getSCH: function(enrollment, course, sectionGroup) {
+        if (sectionGroup) {
+          course.unitsVariable = sectionGroup.unitsVariable;
+        }
+
+        if (course.unitsVariable > 0) {
+          return enrollment * course.unitsVariable || 0;
+        } else if (course.unitsHigh > 0) {
+          // variable unit course without defined units, do not use in SCH calculation
           return 0;
         } else if (course.unitsLow > 0) {
-          return (enrollment * course.unitsLow) || 0;
+          return enrollment * course.unitsLow || 0;
         } else {
           return 0;
         }

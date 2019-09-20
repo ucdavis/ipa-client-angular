@@ -433,8 +433,8 @@ class WorkloadSummaryActions {
 							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
-							assignment.units = CourseService.getUnits(course);
-							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course);
+							assignment.units = CourseService.getUnits(course, sectionGroup);
+							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course, sectionGroup);
 
 							calculatedView.totals.assignmentCount += 1;
 							calculatedView.totals.seats += assignment.seats;
@@ -493,8 +493,8 @@ class WorkloadSummaryActions {
 					unassignedCourse.seats = seats;
 					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
 					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
-					unassignedCourse.units = CourseService.getUnits(course);
-					unassignedCourse.studentCreditHours = CourseService.getSCH(unassignedCourse.seats, course);
+					unassignedCourse.units = CourseService.getUnits(course, sectionGroup);
+					unassignedCourse.studentCreditHours = CourseService.getSCH(unassignedCourse.seats, course, sectionGroup);
 
 					calculatedView.unassignedTotals.assignmentCount += 1;
 					calculatedView.unassignedTotals.seats += unassignedCourse.seats;
@@ -573,8 +573,8 @@ class WorkloadSummaryActions {
 							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
-							assignment.units = CourseService.getUnits(course);
-							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course);
+							assignment.units = CourseService.getUnits(course, sectionGroup);
+							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course, sectionGroup);
 
 							calculatedView.genericInstructorTotals.assignmentCount += 1;
 							calculatedView.genericInstructorTotals.seats += assignment.seats;
