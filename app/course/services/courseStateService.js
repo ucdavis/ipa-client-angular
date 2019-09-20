@@ -246,7 +246,7 @@ class CourseStateService {
             return sectionGroups;
           case ActionTypes.ADD_SECTION_GROUP:
             sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
-            sectionGroups.list[action.payload.sectionGroup.id].sectionIds = []; // Skips fetching sections for new SGs
+            sectionGroups.list[action.payload.sectionGroup.id].sectionIds = [action.payload.sections[0].id];
             sectionGroups.ids.push(action.payload.sectionGroup.id);
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
             sectionGroups.newSectionGroup = null;
@@ -277,10 +277,15 @@ class CourseStateService {
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.section.sectionGroupId];
             if (!sectionGroups.selectedSectionGroup.sectionIds) { sectionGroups.selectedSectionGroup.sectionIds = []; }
             sectionGroups.selectedSectionGroup.sectionIds.push(action.payload.section.id);
+            sectionGroups.selectedSectionGroup.requiresAttention = false;
             return sectionGroups;
           case ActionTypes.REMOVE_SECTION:
             var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
             sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.splice(sectionIdIndex, 1);
+
+            if (sectionGroups.selectedSectionGroup.plannedSeats && sectionGroups.selectedSectionGroup.sectionIds.length === 0) {
+              sectionGroups.selectedSectionGroup.requiresAttention = true;
+            }
             return sectionGroups;
           case ActionTypes.CELL_SELECTED:
             sectionGroups.selectedSectionGroup = _.find(sectionGroups.list, function (sg) { // eslint-disable-line no-undef
@@ -312,12 +317,22 @@ class CourseStateService {
               list: {},
               ids: []
             };
+
+            action.payload.sections.forEach(function (section) {
+              sections.list[section.id] = new Section(section);
+              sections.ids.push(section.id);
+            });
+
             return sections;
           case ActionTypes.FETCH_SECTIONS:
             action.payload.sections.forEach(function (sectionData) {
               sections.list[sectionData.id] = new Section(sectionData);
               sections.ids.push(sectionData.id);
             });
+            return sections;
+          case ActionTypes.ADD_SECTION_GROUP:
+            sections.list[action.payload.sections[0].id] = new Section(action.payload.sections[0]);
+            sections.ids.push(action.payload.sections[0].id);
             return sections;
           case ActionTypes.CREATE_SECTION:
             sections.list[action.payload.section.id] = new Section(action.payload.section);
@@ -422,9 +437,13 @@ class CourseStateService {
               sectionsFetchInProgress: false,
               searchingCourseToImport: false,
               selectedCourseRowIds: [],
-              isCourseDeleteModalOpen: false
+              isCourseDeleteModalOpen: false,
+              requiresAttention: false,
+              flaggedSectionGroups: 0,
             };
 
+            uiState.requiresAttention = action.payload.requiresAttention;
+            uiState.flaggedSectionGroups = action.payload.flaggedSectionGroups;
             uiState.tableLocked = false;
             return uiState;
           case ActionTypes.BEGIN_FETCH_SECTIONS:
@@ -432,6 +451,11 @@ class CourseStateService {
             return uiState;
           case ActionTypes.FETCH_SECTIONS:
             uiState.sectionsFetchInProgress = false;
+            return uiState;
+          case ActionTypes.CREATE_SECTION:
+          case ActionTypes.REMOVE_SECTION:
+            uiState.requiresAttention = action.payload.requiresAttention;
+            uiState.flaggedSectionGroups = action.payload.flaggedSectionGroups;
             return uiState;
           case ActionTypes.BEGIN_FETCH_CENSUS:
             uiState.censusFetchInProgress = true;

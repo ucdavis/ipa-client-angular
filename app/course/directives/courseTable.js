@@ -38,7 +38,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         ActionTypes.REMOVE_SECTION_GROUP,
         ActionTypes.ADD_SECTION_GROUP,
         ActionTypes.DELETE_MULTIPLE_COURSES,
-        ActionTypes.MASS_ASSIGN_TAGS
+        ActionTypes.MASS_ASSIGN_TAGS,
+        ActionTypes.CREATE_SECTION,
+        ActionTypes.REMOVE_SECTION
       ];
 
       $rootScope.$on('courseStateChanged', function (event, data) {
@@ -415,7 +417,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       scope.getCourseRow = function (rowIdx, courseId, termsToRender, state) {
         var rowClass = "odd gradeX";
 
-        if (state.uiState.selectedCourseId == courseId) {
+        if (state.uiState.selectedCourseId == courseId && !state.uiState.selectedTermCode) {
           rowClass += " selected-tr";
         }
         var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
@@ -456,10 +458,18 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             // TODO: Calculate this boolean by comparing the sum of all section seats to the plannedSeats
             var requiresAttention = false;
 
-            // Determine if the term is readonly
-            var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
+            if (sectionGroup) {
+              requiresAttention = sectionGroup.requiresAttention;
+            }
 
-            row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass + "\"><div>";
+            // Determine if the term is readonly
+            var cellClass = sectionGroupId ? ["sg-cell is-offered"] : ["sg-cell"];
+
+            if (state.uiState.selectedCourseId == courseId && state.uiState.selectedTermCode == termCode) {
+              cellClass.push("selected-td");
+            }
+
+            row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass.join(" ") + "\"><div>";
             if (state.uiState.tableLocked) {
               row += plannedSeats;
             } else {
