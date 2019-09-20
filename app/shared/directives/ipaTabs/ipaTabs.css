@@ -37,6 +37,8 @@
 	border: 1px solid #ebebeb;
 	border-bottom-color: white;
 	color: #555;
+	background-color: #F8F8F8;
+	font-weight: bold;
 }
 
 .ipa-tabs--border-less {

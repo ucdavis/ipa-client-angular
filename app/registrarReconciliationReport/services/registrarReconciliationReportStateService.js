@@ -33,7 +33,7 @@ class RegistrarReconciliationReportStateService {
 							var dwSectionData = action.payload.sectionDiffs[i].dwSection;
 							var sectionChanges = action.payload.sectionDiffs[i].changes;
 							var syncActions = action.payload.sectionDiffs[i].syncActions;
-	
+
 							var sectionKey = null;
 							// Calculate unique key of subj-course-seq, example : 'art-001-A01'
 							if (ipaSectionData) {
@@ -67,6 +67,7 @@ class RegistrarReconciliationReportStateService {
 							} else {
 								// DW version does have some changes
 								slotSection.dwHasChanges = true;
+
 								if (sectionChanges) {
 									sectionChanges.forEach(function (change) {
 	
@@ -94,6 +95,7 @@ class RegistrarReconciliationReportStateService {
 														var instructors = slotSection.instructors;
 														instructors.push(instructor);
 													});
+
 												break;
 											case "activities":
 												// Code to handle activities
@@ -117,6 +119,28 @@ class RegistrarReconciliationReportStateService {
 														var activities = slotSection.activities;
 														activities.push(activity);
 													});
+												// DW has different activity properties
+  											change.changes.forEach(function(activityChange) {
+													if (!activityChange.leftValue) { return; }
+
+														var leftValue = activityChange.leftValue;
+														var rightValue = activityChange.rightValue;
+														let activity = _.find(slotSection.activities, { uniqueKey: leftValue.uniqueKey }); // eslint-disable-line no-undef
+
+													if (leftValue.bannerLocation != rightValue.bannerLocation) {
+														change.propertyName = "bannerLocation";
+														activity.dwChanges = activity.dwChanges || {};
+														activity.dwChanges[change.propertyName] = { isToDo: false };
+														activity.dwChanges[change.propertyName].value = rightValue[change.propertyName];
+													}
+
+													if (leftValue.dayIndicator != rightValue.dayIndicator) {
+														change.propertyName = "dayIndicator";
+														activity.dwChanges = activity.dwChanges || {};
+														activity.dwChanges[change.propertyName] = { isToDo: false };
+														activity.dwChanges[change.propertyName].value = rightValue[change.propertyName];
+													}
+												});
 												break;
 											case "bannerLocation":
 											case "startTime":

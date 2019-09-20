@@ -41,6 +41,13 @@ class BudgetCtrl {
     this.$rootScope.$on("budgetStateChanged", function(event, data) {
       _self.$scope.view.state = data;
 
+      // Set the active tab
+      if (_self.$scope.view.state.ui.sectionNav) {
+        localStorage.setItem('activeTab', _self.$scope.view.state.ui.sectionNav.activeTab);
+      } else {
+        localStorage.removeItem("activeTab");
+      }
+
       // Set the current active budget scenario id
       if (_self.$scope.view.state.selectedBudgetScenario) {
         localStorage.setItem(
