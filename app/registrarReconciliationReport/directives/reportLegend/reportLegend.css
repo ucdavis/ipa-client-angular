@@ -14,21 +14,23 @@
 
 .legend__span--no-remote
  {
-  color: #fff;
   background-color: rgba(46, 139, 87, 0.5);
   border-color: seagreen;
 }
 
 .legend__span--no-local {
-  color: #fff;
   background-color: rgba(139, 0, 0, 0.5);
   border-color: darkred;
 }
 
 .legend__span--has-changes {
-  color: #fff;
   background-color: rgba(139, 0, 139, 0.5);
   border-color: rgba(139, 0, 139, 0.8);
+}
+
+.legend__span--reconciled {
+  background-color: lightgray;
+  border-color: darkgray;
 }
 
 .legend-container {
