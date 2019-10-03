@@ -14,6 +14,7 @@ class BudgetComparisonReportCalculations {
           BudgetComparisonReportReducers._state.instructorCosts;
         var sectionGroupCosts =
           BudgetComparisonReportReducers._state.sectionGroupCosts;
+        var courses = BudgetComparisonReportReducers._state.courses;
 
         var currentSelectedBudgetScenario = this._getBudgetScenario(
           budgetScenarios.currentSelectedScenarioId,
@@ -42,6 +43,7 @@ class BudgetComparisonReportCalculations {
               instructorCosts.current,
               sectionGroupCosts.current,
               budget.current,
+              courses.current,
               currentSelectedBudgetScenario
             ),
             funding: this._generateFunding(
@@ -60,6 +62,7 @@ class BudgetComparisonReportCalculations {
               instructorCosts.previous,
               sectionGroupCosts.previous,
               budget.previous,
+              courses.previous,
               previousSelectedBudgetScenario
             ),
             funding: this._generateFunding(
@@ -87,7 +90,7 @@ class BudgetComparisonReportCalculations {
             calculatedView.previous.miscStats
           )
         };
-
+console.log("calculatedView :", calculatedView); // eslint-disable-line no-console
         BudgetComparisonReportReducers.reduce({
           type: ActionTypes.CALCULATE_VIEW,
           payload: {
@@ -166,6 +169,7 @@ class BudgetComparisonReportCalculations {
         instructorCosts,
         sectionGroupCosts,
         budget,
+        courses,
         selectedScenario
       ) {
         var selectedScenarioId = selectedScenario.id;
@@ -178,6 +182,7 @@ class BudgetComparisonReportCalculations {
             instructorCosts,
             sectionGroupCosts,
             selectedScenarioId,
+            courses,
             activeTerms
           ),
           supportCosts: this._generateSupportCosts(
@@ -292,6 +297,7 @@ class BudgetComparisonReportCalculations {
         instructorCosts,
         sectionGroupCosts,
         selectedScenarioId,
+        courses,
         activeTerms
       ) {
         var _self = this;
@@ -344,7 +350,23 @@ class BudgetComparisonReportCalculations {
 
           var instructorTypeId = assignmentCosts.instructorTypeId;
           var assignmentCost = assignmentCosts.cost;
-
+          console.log("sectionGroupCost :", sectionGroupCost); // eslint-disable-line no-console
+          console.log("Courses :", courses); // eslint-disable-line no-console
+          courses.ids.forEach(function(courseId){
+            // debugger; // eslint-disable-line no-debugger
+            // var appointmentPercentage = 100;
+            if (sectionGroupCost.title == courses.list[courseId].title
+              && sectionGroupCost.subjectCode == courses.list[courseId].subjectCode
+              && sectionGroupCost.sequencePattern == courses.list[courseId].sequencePattern
+              // && sectionGroupCost.effectiveTermCode == courses.list[courseId].effectiveTermCode
+              ){
+                var appointmentPercentage = courses.list[courseId].appointmentPercentage;
+                assignmentCost = (assignmentCost * appointmentPercentage) / 100;
+                console.log("assignmentCost 1:", assignmentCost); // eslint-disable-line no-console
+            }
+          });
+          console.log("assignmentCost 2:", assignmentCost); // eslint-disable-line no-console
+          
           instructionCosts.byType[instructorTypeId] = instructionCosts.byType[
             instructorTypeId
           ] || {
@@ -358,6 +380,7 @@ class BudgetComparisonReportCalculations {
             instructionCosts.byTypeNoCost[instructorTypeId] += 1;
           }
 
+          
           instructionCosts.byType[instructorTypeId].courses += 1;
           instructionCosts.byType[instructorTypeId].cost += assignmentCost;
           instructionCosts.total.cost += assignmentCost;
