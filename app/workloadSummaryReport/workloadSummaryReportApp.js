@@ -10,6 +10,7 @@ import workloadUnassignedTable from './directives/workloadUnassignedTable/worklo
 import WorkloadSummaryActions from './services/workloadSummaryActions.js';
 import WorkloadSummaryReducers from './services/workloadSummaryReducers.js';
 import WorkloadSummaryService from './services/workloadSummaryService.js';
+import WorkloadSummaryExcelService from './services/workloadSummaryExcelService.js';
 
 // Shared services
 import TermService from './../shared/services/TermService.js';
@@ -66,6 +67,7 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 .directive('workloadUnassignedTable', workloadUnassignedTable)
 .controller('WorkloadSummaryReportCtrl', WorkloadSummaryReportCtrl)
 .service('WorkloadSummaryActions', WorkloadSummaryActions)
+.service('WorkloadSummaryExcelService', WorkloadSummaryExcelService)
 .service('WorkloadSummaryReducers', WorkloadSummaryReducers)
 .service('WorkloadSummaryService', WorkloadSummaryService)
 .service('TermService', TermService)
