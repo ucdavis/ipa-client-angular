@@ -8,6 +8,7 @@ class TeachingCallFormStateService {
 					case ActionTypes.INIT_STATE: {
 						pageState = {
 							showUnavailabilities: null, // False
+							showSeats: null, // Default is True
 							hideNonCourseOptions: null, // Defaults to False
 							dueDate: null, // "dec 15th 2016"
 							comments: null, // Array of teachingCallComments
@@ -34,6 +35,7 @@ class TeachingCallFormStateService {
 	
 							pageState.isInstructorInTeachingCall = true;
 							pageState.showUnavailabilities = teachingCallReceipt.showUnavailabilities;
+							pageState.showSeats = teachingCallReceipt.showSeats;
 							pageState.hideNonCourseOptions = teachingCallReceipt.hideNonCourseOptions;
 							pageState.termsBlob = teachingCallReceipt.termsBlob;
 							pageState.isDone = teachingCallReceipt.isDone;
