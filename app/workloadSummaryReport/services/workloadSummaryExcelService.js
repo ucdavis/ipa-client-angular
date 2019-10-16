@@ -56,11 +56,11 @@ class WorkloadSummaryExcelService {
                 }
                 row.push(assignment.units);
                 row.push(assignment.studentCreditHours);
-                
-                
                 data.push(row);
                 row = [];
               });
+
+              // Totals for instructor
               row.push(" ","Totals");
               row.push(instructor.totals.assignmentCount);
               row.push(" ");
@@ -88,6 +88,7 @@ class WorkloadSummaryExcelService {
         row.push("UNASSIGNED COURSES");
           data.push(row);
           row = [];
+
         // Table header
         var header = [
           'Term',
@@ -111,11 +112,70 @@ class WorkloadSummaryExcelService {
           row.push(unassignedCourse.studentCreditHours);
           data.push(row);
           row = [];
-        })
+        });
+
+        // Totals for unassiged courses
+        var totals = state.calculations.calculatedView.unassignedTotals;
+        row.push("Totals");
+        row.push(courses.length);
+        row.push("");
+        row.push(totals.enrollment + " / " + totals.seats);
+        row.push(totals.previousEnrollment);
+        row.push(totals.units);
+        row.push(totals.studentCreditHours);
+        data.push(row);
+        row = [];
+
+        // Empty row
         row.push(" ");
         data.push(row);
         row = [];
 
+        // TOTALS TABLE REPORT
+        row.push("ASSIGNMENT TOTALS");
+          data.push(row);
+          row = [];
+
+        // Table header
+        var header = [
+          'Totals',
+          'Instructor',
+          'Assignments',
+          'Enrollment / Seats',
+          'Previous Enrollment',
+          'Units',
+          'SCH'
+        ];
+        data.push(header);
+
+        var workloadTotals = state.calculations.calculatedView.workloadTotals;
+        workloadTotals.forEach(function(total){
+          row.push(total.displayName);
+          row.push(total.instructorCount);
+          row.push(total.assignmentCount);
+          row.push(total.enrollment + " / " + total.seats);
+          row.push(total.previousEnrollment);
+          row.push(total.units);
+          row.push(total.studentCreditHours);
+          data.push(row);
+          row = [];
+        });
+        // Totals assignments
+        var combinedTotals = state.calculations.calculatedView.combinedTotals;
+        row.push("Totals");
+        row.push(combinedTotals.instructorCount);
+        row.push(combinedTotals.assignmentCount);
+        row.push(combinedTotals.enrollment + " / " + combinedTotals.seats);
+        row.push(combinedTotals.previousEnrollment);
+        row.push(combinedTotals.units);
+        row.push(combinedTotals.studentCreditHours);
+        data.push(row);
+        row = [];
+
+        // Empty row
+        row.push(" ");
+        data.push(row);
+        row = [];
 
         //Creates book
         var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
@@ -127,7 +187,7 @@ class WorkloadSummaryExcelService {
           {wch: 30},
           {wch: 25},
           {wch: 20},
-          {wch: 10},
+          {wch: 20},
           {wch: 20},
           {wch: 25},
           {wch: 30},
