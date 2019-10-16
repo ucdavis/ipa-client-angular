@@ -28,7 +28,21 @@ class WorkloadSummaryExcelService {
           data.push(row);
           row = [];
           data.push(header);
+          
           var instructors = state.calculations.calculatedView.byInstructorType[instructorTypeId];
+          // Sort instructors by last name
+          instructors.sort(function(a,b){
+            var nameA = a.lastName;
+            var nameB = b.lastName;
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0;
+          });
+
           instructors.forEach(function(instructor){
             var assignments = instructor.assignments;
 
