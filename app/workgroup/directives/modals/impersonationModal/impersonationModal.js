@@ -19,16 +19,23 @@ let impersonationModal = function (AuthService) {
     
       scope.canBeImpersonated = function(user) {
         var canBeImpersonated = false;
-    
-        user.userRoles.forEach(function(userRole) {
-          if (userRole.role == "studentMasters"
-          || userRole.role == "studentPhd"
-          || userRole.role == "instructor"
-          || userRole.role == "instructionalSupport") {
-              canBeImpersonated = true;
-            }
-        });
-    
+
+        for (let userRole of user.userRoles) {
+          if (userRole.role == "admin") {
+            canBeImpersonated = false;
+            return;
+          }
+
+          if (
+            userRole.role == 'studentMasters' ||
+            userRole.role == 'studentPhd' ||
+            userRole.role == 'instructor' ||
+            userRole.role == 'instructionalSupport'
+          ) {
+            canBeImpersonated = true;
+          }
+        }
+
         return canBeImpersonated;
       };
 
