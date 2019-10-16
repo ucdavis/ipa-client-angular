@@ -1,5 +1,5 @@
 class WorkloadSummaryExcelService {
-  constructor (WorkloadSummaryReducers) { 
+  constructor (WorkloadSummaryReducers) {
     return {
       generateDownload() {
         var state = WorkloadSummaryReducers._state;
@@ -28,7 +28,7 @@ class WorkloadSummaryExcelService {
           data.push(row);
           row = [];
           data.push(header);
-          
+
           var instructors = state.calculations.calculatedView.byInstructorType[instructorTypeId];
           // Sort instructors by last name
           instructors.sort(function(a,b){
@@ -118,7 +118,7 @@ class WorkloadSummaryExcelService {
           'SCH'
         ];
         data.push(header);
-        
+
         // Courses Table
         var courses = state.calculations.calculatedView.unassignedCourses;
         courses.forEach(function(unassignedCourse){
@@ -201,7 +201,7 @@ class WorkloadSummaryExcelService {
         var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
         // Creates worksheet
         var ws = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
-    
+
         // Set column widths
         var wscols = [
           {wch: 30},
@@ -215,7 +215,7 @@ class WorkloadSummaryExcelService {
           {wch: 10}
         ];
         ws['!cols'] = wscols;
-    
+
         /* Add worksheet to workbook */
         XLSX.utils.book_append_sheet(wb, ws, 'Workload Summary Report'); // eslint-disable-line no-undef
         // Cleans data for the next sheet
@@ -230,7 +230,7 @@ class WorkloadSummaryExcelService {
       }
     };
   }
-  
+
 }
 
 export default WorkloadSummaryExcelService;

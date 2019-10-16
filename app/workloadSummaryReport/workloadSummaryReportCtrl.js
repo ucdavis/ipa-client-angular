@@ -21,7 +21,7 @@ class WorkloadSummaryReportCtrl {
 		$rootScope.$on('sharedStateSet', function (event, data) {
 			$scope.sharedState = data;
 		});
-		
+
 		$scope.download = function() {
 			WorkloadSummaryActions.download();
 		};
