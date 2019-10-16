@@ -5,9 +5,10 @@ class WorkloadSummaryExcelService {
         var state = WorkloadSummaryReducers._state;
         console.log("state :", state); // eslint-disable-line no-console
         var data = [];
+        var row = [];
     
-        // REPORT
-        // Header
+        // INSTRUCTORS TABLE REPORT
+        // Table header
         var header = [
           'Instructor',
           'Term',
@@ -20,7 +21,6 @@ class WorkloadSummaryExcelService {
           'SCH'
         ];
 
-        var row = [];
         state.calculations.calculatedView.instructorTypeIds.forEach(function(instructorTypeId){
           var description = state.instructorTypes.list[instructorTypeId].description;
           var instructorType =  description.toUpperCase();
@@ -83,6 +83,38 @@ class WorkloadSummaryExcelService {
           data.push(row);
           row = [];
         });
+
+        // UNASSIGNED COURSES TABLE REPORT
+        row.push("UNASSIGNED COURSES");
+          data.push(row);
+          row = [];
+        // Table header
+        var header = [
+          'Term',
+          'Description',
+          'Offering',
+          'Enrollment / Seats',
+          'Previous Enrollment',
+          'Units',
+          'SCH'
+        ];
+        data.push(header);
+
+        var courses = state.calculations.calculatedView.unassignedCourses;
+        courses.forEach(function(unassignedCourse){
+          row.push(unassignedCourse.term);
+          row.push(unassignedCourse.description);
+          row.push(unassignedCourse.sequencePattern);
+          row.push(unassignedCourse.enrollment || 0 + " / " + unassignedCourse.seats);
+          row.push(unassignedCourse.previousEnrollment);
+          row.push(unassignedCourse.units);
+          row.push(unassignedCourse.studentCreditHours);
+          data.push(row);
+          row = [];
+        })
+        row.push(" ");
+        data.push(row);
+        row = [];
 
 
         //Creates book
