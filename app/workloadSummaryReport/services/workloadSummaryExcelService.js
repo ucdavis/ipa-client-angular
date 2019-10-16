@@ -3,10 +3,9 @@ class WorkloadSummaryExcelService {
     return {
       generateDownload() {
         var state = WorkloadSummaryReducers._state;
-        console.log("state :", state); // eslint-disable-line no-console
         var data = [];
         var row = [];
-    
+
         // INSTRUCTORS TABLE REPORT
         // Table header
         var header = [
@@ -21,39 +20,44 @@ class WorkloadSummaryExcelService {
           'SCH'
         ];
 
+        // Instructors Table
         state.calculations.calculatedView.instructorTypeIds.forEach(function(instructorTypeId){
           var description = state.instructorTypes.list[instructorTypeId].description;
-          var instructorType =  description.toUpperCase();
+          var instructorType = description.toUpperCase();
           row.push(instructorType);
           data.push(row);
           row = [];
           data.push(header);
           var instructors = state.calculations.calculatedView.byInstructorType[instructorTypeId];
           instructors.forEach(function(instructor){
-
             var assignments = instructor.assignments;
-            // console.log("instructor :", instructor); // eslint-disable-line no-console
+
             if (assignments.length > 0){
               row.push(instructor.lastName + ", " + instructor.firstName);
               assignments.forEach(function(assignment){
                 var firstElement = assignments[0];
+
                 if (assignment != firstElement){
                   row.push(" ");
                 }
+
                 row.push(assignment.term);
                 row.push(assignment.description);
                 row.push(assignment.sequencePattern);
                 var actualEnrollment = assignment.actualEnrollment || 0;
                 var seats = assignment.seats || 0;
                 var enrollmentPercentage = assignment.enrollmentPercentage || 0;
-                row.push(actualEnrollment + " / " + seats + "  (" + enrollmentPercentage + " %)");
+                row.push(actualEnrollment + " / " + seats + " (" + enrollmentPercentage + " %)");
                 row.push(assignment.previousEnrollment);
-                var lastOfferedTermDescription  = assignment.lastOfferedTermDescription;
+                var lastOfferedTermDescription = assignment.lastOfferedTermDescription;
+
                 if (lastOfferedTermDescription) {
                   row.push(assignment.lastOfferedEnrollment + " (" + assignment.lastOfferedTermDescription + ")");
+
                 } else {
                   row.push(assignment.lastOfferedEnrollment);
                 }
+
                 row.push(assignment.units);
                 row.push(assignment.studentCreditHours);
                 data.push(row);
@@ -71,13 +75,13 @@ class WorkloadSummaryExcelService {
               row.push (instructor.totals.studentCreditHours);
               data.push(row);
               row = [];
-              
+
             } else {
               row.push(instructor.lastName + ", " + instructor.firstName);
               data.push(row);
               row = [];
             }
-            
+
           });
           row.push(" ");
           data.push(row);
@@ -100,7 +104,8 @@ class WorkloadSummaryExcelService {
           'SCH'
         ];
         data.push(header);
-
+        
+        // Courses Table
         var courses = state.calculations.calculatedView.unassignedCourses;
         courses.forEach(function(unassignedCourse){
           row.push(unassignedCourse.term);
@@ -148,6 +153,7 @@ class WorkloadSummaryExcelService {
         ];
         data.push(header);
 
+        // Totals Table
         var workloadTotals = state.calculations.calculatedView.workloadTotals;
         workloadTotals.forEach(function(total){
           row.push(total.displayName);
@@ -196,19 +202,16 @@ class WorkloadSummaryExcelService {
         ];
         ws['!cols'] = wscols;
     
-        /* add worksheet to workbook */
-        XLSX.utils.book_append_sheet(wb, ws, 'Test'); // eslint-disable-line no-undef
+        /* Add worksheet to workbook */
+        XLSX.utils.book_append_sheet(wb, ws, 'Workload Summary Report'); // eslint-disable-line no-undef
         // Cleans data for the next sheet
         data.length = 0;
-    
-    
-        /* write workbook */
-        // var year = viewState.ui.year;
-        // var WorkloadSummaryScenario = viewState.selectedWorkloadSummaryScenario.name;
-        // var json = JSON.parse(localStorage.workgroup);
-        // var workgroupName = json.name;
-        // var filename = "WorkloadSummary-Report-" + workgroupName + "-" + year + "-" + WorkloadSummaryScenario + ".xlsx";
-        var filename = "Test-WorkloadSummary-Report.xlsx";
+
+        /* Write workbook */
+        var workgroup = JSON.parse(localStorage.workgroup);
+        var workgroupName = workgroup.name;
+        var year = JSON.parse(localStorage.year);
+        var filename = "WorkloadSummary-Report-" + workgroupName + "-" + year + ".xlsx";
         XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
       }
     };
