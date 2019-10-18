@@ -27,6 +27,7 @@ let impersonationModal = function (AuthService) {
           }
 
           if (
+            userRole.role == 'academicPlanner' ||
             userRole.role == 'studentMasters' ||
             userRole.role == 'studentPhd' ||
             userRole.role == 'instructor' ||
