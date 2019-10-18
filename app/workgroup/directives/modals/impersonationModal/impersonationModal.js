@@ -8,6 +8,8 @@ let impersonationModal = function (AuthService) {
 			isVisible: '='
 		},
 		link: function (scope) {
+      scope.filteredUsersList = Object.values(scope.state.users.list);
+
       scope.selectUser = function (user) {
         scope.selectedUser = user;
       };
@@ -15,6 +17,31 @@ let impersonationModal = function (AuthService) {
       scope.impersonate = function () {
         AuthService.impersonate(scope.selectedUser.loginId);
         scope.close();
+      };
+
+      scope.filterList = function (searchQuery) {
+        if (searchQuery.length == 0) {
+          scope.filteredUsersList = Object.values(scope.state.users.list);
+        }
+
+        if (searchQuery.length >= 1) {
+          var options = {
+            shouldSort: true,
+            threshold: 0.3,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            minMatchCharLength: 1,
+            includeScore: false,
+            keys: [
+              "displayName", "email"
+            ]
+          };
+        }
+        var fuse = new Fuse(Object.values(scope.state.users.list), options); // eslint-disable-line no-undef
+        var results = fuse.search(searchQuery);
+
+        scope.filteredUsersList = results;
       };
     
       scope.canBeImpersonated = function(user) {

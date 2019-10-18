@@ -1,12 +1,18 @@
 <div class="impersonate-modal">
   <div class="modal-body">
+    <input
+      type="search"
+      class="form-control"
+      placeholder="Search by name or email"
+      ng-model="view.searchQuery"
+      ng-change="filterList(view.searchQuery)"
+    />
     <div
-      ng-repeat="userId in state.users.ids | orderBy: 'lastName'"
+      ng-repeat="user in filteredUsersList"
       class="impersonate-tag"
-      ng-init="user=state.users.list[userId]"
       ng-click="selectUser(user)"
       ng-class="{ 'selected-user': user.id == selectedUser.id }"
-      ng-if="canBeImpersonated(state.users.list[userId])"
+      ng-if="canBeImpersonated(user)"
     >
       <i class="entypo-user"></i>
       {{ user.name }}
