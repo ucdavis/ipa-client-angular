@@ -434,7 +434,7 @@ class WorkloadSummaryActions {
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = CourseService.getUnits(course, sectionGroup);
-							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course, sectionGroup);
+							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);
 
 							calculatedView.totals.assignmentCount += 1;
 							calculatedView.totals.seats += assignment.seats;
@@ -494,7 +494,7 @@ class WorkloadSummaryActions {
 					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
 					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
 					unassignedCourse.units = CourseService.getUnits(course, sectionGroup);
-					unassignedCourse.studentCreditHours = CourseService.getSCH(unassignedCourse.seats, course, sectionGroup);
+					unassignedCourse.studentCreditHours = CourseService.getSCH(unassignedCourse.enrollment, course, sectionGroup);
 
 					calculatedView.unassignedTotals.assignmentCount += 1;
 					calculatedView.unassignedTotals.seats += unassignedCourse.seats;
@@ -574,7 +574,7 @@ class WorkloadSummaryActions {
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = CourseService.getUnits(course, sectionGroup);
-							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course, sectionGroup);
+							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);
 
 							calculatedView.genericInstructorTotals.assignmentCount += 1;
 							calculatedView.genericInstructorTotals.seats += assignment.seats;
