@@ -323,6 +323,7 @@ class WorkloadSummaryActions {
 						previousEnrollment: 0,
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						instructorCount: 0
 					},
 					genericInstructorTotals: {
@@ -502,6 +503,7 @@ class WorkloadSummaryActions {
 					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
 					unassignedCourse.units = CourseService.getUnits(course, sectionGroup);
 					unassignedCourse.studentCreditHours = CourseService.getSCH(unassignedCourse.enrollment, course, sectionGroup);
+					unassignedCourse.studentMaxCreditHours = unassignedCourse.units * unassignedCourse.seats;
 
 					calculatedView.unassignedTotals.assignmentCount += 1;
 					calculatedView.unassignedTotals.seats += unassignedCourse.seats;
@@ -509,6 +511,7 @@ class WorkloadSummaryActions {
 					calculatedView.unassignedTotals.previousEnrollment += unassignedCourse.previousEnrollment;
 					calculatedView.unassignedTotals.units += unassignedCourse.units;
 					calculatedView.unassignedTotals.studentCreditHours += unassignedCourse.studentCreditHours;
+					calculatedView.unassignedTotals.studentMaxCreditHours += unassignedCourse.studentMaxCreditHours;
 
 					return unassignedCourse;
 				});
