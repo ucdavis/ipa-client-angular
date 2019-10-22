@@ -351,6 +351,7 @@ class WorkloadSummaryActions {
 					calculatedView.totals.byInstructorTypeId[instructorTypeId] = {
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
@@ -373,6 +374,7 @@ class WorkloadSummaryActions {
 					instructor.totals = {
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						enrollment: 0,
 						seats: 0,
 						actualEnrollment: 0,
@@ -435,8 +437,8 @@ class WorkloadSummaryActions {
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = CourseService.getUnits(course, sectionGroup);
 							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);
-							assignment.studentCreditHoursTotal = assignment.units * assignment.seats;
-							assignment.studentCreditHoursPercentage = assignment.studentCreditHours && assignment.studentCreditHoursTotal ? parseInt((assignment.studentCreditHours / assignment.studentCreditHoursTotal) * 100) : "0";
+							assignment.studentMaxCreditHours = assignment.units * assignment.seats;
+							assignment.studentCreditHoursPercentage = assignment.studentCreditHours && assignment.studentMaxCreditHours ? parseInt((assignment.studentCreditHours / assignment.studentMaxCreditHours) * 100) : "0";
 
 							calculatedView.totals.assignmentCount += 1;
 							calculatedView.totals.seats += assignment.seats;
@@ -445,6 +447,7 @@ class WorkloadSummaryActions {
 							calculatedView.totals.lastOfferedEnrollment += assignment.lastOfferedEnrollment;
 							calculatedView.totals.units += assignment.units;
 							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
+							calculatedView.totals.studentMaxCreditHours += assignment.studentMaxCreditHours;
 
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].assignmentCount += 1;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].seats += assignment.seats;
@@ -453,12 +456,14 @@ class WorkloadSummaryActions {
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].lastOfferedEnrollment += assignment.lastOfferedEnrollment;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].units += assignment.units;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentCreditHours += assignment.studentCreditHours;
+							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentMaxCreditHours += assignment.studentMaxCreditHours;
 						}
 
 						instructor.assignments.push(assignment);
 
 						instructor.totals.units += assignment.units || 0;
 						instructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
+						instructor.totals.studentMaxCreditHours += assignment.studentMaxCreditHours || 0;
 						instructor.totals.enrollment += assignment.enrollment || 0;
 						instructor.totals.seats += assignment.seats || 0;
 						instructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
@@ -528,6 +533,7 @@ class WorkloadSummaryActions {
 								totals: {
 									units: 0,
 									studentCreditHours: 0,
+									studentMaxCreditHours: 0,
 									enrollment: 0,
 									seats: 0,
 									actualEnrollment: 0,
@@ -577,8 +583,8 @@ class WorkloadSummaryActions {
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = CourseService.getUnits(course, sectionGroup);
 							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);
-							assignment.studentCreditHoursTotal = assignment.units * assignment.seats;
-							assignment.studentCreditHoursPercentage = assignment.studentCreditHours && assignment.studentCreditHoursTotal ? parseInt((assignment.studentCreditHours / assignment.studentCreditHoursTotal) * 100) : "0";
+							assignment.studentMaxCreditHours = assignment.units * assignment.seats;
+							assignment.studentCreditHoursPercentage = assignment.studentCreditHours && assignment.studentMaxCreditHours ? parseInt((assignment.studentCreditHours / assignment.studentMaxCreditHours) * 100) : "0";
 
 							calculatedView.genericInstructorTotals.assignmentCount += 1;
 							calculatedView.genericInstructorTotals.seats += assignment.seats;
@@ -593,6 +599,7 @@ class WorkloadSummaryActions {
 
 						genericInstructor.totals.units += assignment.units || 0;
 						genericInstructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
+						genericInstructor.totals.studentMaxCreditHours += assignment.studentMaxCreditHours || 0;
 						genericInstructor.totals.enrollment += assignment.enrollment || 0;
 						genericInstructor.totals.seats += assignment.seats || 0;
 						genericInstructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
@@ -606,6 +613,7 @@ class WorkloadSummaryActions {
 						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
 						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].units += assignment.units || 0;
 						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentCreditHours += assignment.studentCreditHours || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentMaxCreditHours += assignment.studentMaxCreditHours || 0;
 					});
 
 					genericInstructor.assignments = _array_sortByProperty(genericInstructor.assignments, ["termCode", "description"]);
