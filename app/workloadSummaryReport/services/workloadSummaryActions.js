@@ -308,6 +308,7 @@ class WorkloadSummaryActions {
 						byInstructorTypeId: {},
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
@@ -330,6 +331,7 @@ class WorkloadSummaryActions {
 						displayName: "TBD Instructors",
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
@@ -343,7 +345,8 @@ class WorkloadSummaryActions {
 						seats: 0,
 						previousEnrollment: 0,
 						units: 0,
-						studentCreditHours: 0
+						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 					}
 				};
 
@@ -641,6 +644,7 @@ class WorkloadSummaryActions {
 					acc.previousEnrollment += total.previousEnrollment || 0;
 					acc.units += total.units || 0;
 					acc.studentCreditHours += total.studentCreditHours || 0;
+					acc.studentMaxCreditHours += total.studentMaxCreditHours || 0;
 
 					return acc;
 				}, calculatedView.combinedTotals);
