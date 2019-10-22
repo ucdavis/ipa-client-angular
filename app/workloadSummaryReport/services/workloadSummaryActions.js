@@ -356,7 +356,7 @@ class WorkloadSummaryActions {
 						previousEnrollment: 0,
 						lastOfferedEnrollment: 0,
 						assignmentCount: 0
-          };
+					};
 				});
 
 				instructors.ids.forEach(function(instructorId) {
@@ -435,6 +435,8 @@ class WorkloadSummaryActions {
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = CourseService.getUnits(course, sectionGroup);
 							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);
+							assignment.studentCreditHoursTotal = assignment.units * assignment.seats;
+							assignment.studentCreditHoursPercentage = assignment.studentCreditHours && assignment.studentCreditHoursTotal ? parseInt((assignment.studentCreditHours / assignment.studentCreditHoursTotal) * 100) : "0";
 
 							calculatedView.totals.assignmentCount += 1;
 							calculatedView.totals.seats += assignment.seats;
@@ -575,6 +577,8 @@ class WorkloadSummaryActions {
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = CourseService.getUnits(course, sectionGroup);
 							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);
+							assignment.studentCreditHoursTotal = assignment.units * assignment.seats;
+							assignment.studentCreditHoursPercentage = assignment.studentCreditHours && assignment.studentCreditHoursTotal ? parseInt((assignment.studentCreditHours / assignment.studentCreditHoursTotal) * 100) : "0";
 
 							calculatedView.genericInstructorTotals.assignmentCount += 1;
 							calculatedView.genericInstructorTotals.seats += assignment.seats;

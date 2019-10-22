@@ -3,14 +3,14 @@
 		<table class="workload-table__table">
 			<colgroup>
 				<col style="width: 16%;">
-				<col style="width: 16%;">
-				<col style="width: 16%;">
+				<col style="width: 15%;">
+				<col style="width: 13%;">
 				<col style="width: 10%;">
 				<col style="width: 10%;">
 				<col style="width: 10%;">
 				<col style="width: 10%;">
-				<col style="width: 6%;">
-				<col style="width: 6%;">
+				<col style="width: 5%;">
+				<col style="width: 10%;">
 			</colgroup>
 			<tbody>
 				<tr>
@@ -104,7 +104,7 @@
 					</td>
 					<td>
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
-							{{ assignment.studentCreditHours }}
+							{{ assignment.studentCreditHours }} / {{ assignment.studentCreditHoursTotal }}&nbsp;<span ng-if="assignment.studentCreditHours" class="workload-table__enrollment-percent">({{ assignment.studentCreditHoursPercentage }}%)</span>
 						</div>
 						<div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals" ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
 							{{ instructor.totals.studentCreditHours }}
