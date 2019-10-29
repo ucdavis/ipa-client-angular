@@ -817,3 +817,36 @@ width: 180px;
 .section-group-details__variable-units--label {
   margin: 0px 5px;
 }
+
+.courses-filters {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.courses-filter-header {
+  flex: 1 1 0px;
+  width: 0px;
+  display: flex;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+  padding: 0px 0px 20px 0px;
+  margin: 0;
+}
+
+.courses-filter-tokens {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.label-selected-section-group {
+  background-color: #e6e6e6;
+  color: #333;
+  margin-right: 5px;
+  display: inline-block;
+  font-size: 85%;
+  line-height: normal;
+}
