@@ -23,15 +23,13 @@
         </div>
       </div>
 
-  <div class="row hidden-print courses-filters">
+  <div class="row hidden-print">
 
-    <div class="courses-filter-header col-sm-8">
-      <div class="courses-filter-tokens text-center" >
-        <div class="label label-selected-section-group">
-          Unpublished
-          <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-        </div>
-      </div>
+    <div class="col-sm-8">
+      <course-filter
+        filters="view.state.filters"
+        tags="view.state.tags">
+      </course-filter>
     </div>
 
     <div class="col-sm-4">
