@@ -404,6 +404,7 @@ class CourseCtrl {
         !_self.$scope.view.state.filters.enableUnpublishedCourses
       );
     };
+    console.log("State :", _self.$scope); // eslint-disable-line no-console
   }
 }
 
