@@ -1,15 +1,15 @@
+
 .courses-filters {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .courses-filter-header {
   flex: 1 1 0px;
-  width: 0px;
   display: flex;
-  -webkit-justify-content: flex-end;
-  justify-content: flex-end;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
   padding: 0px 0px 20px 0px;
   margin: 0;
 }
