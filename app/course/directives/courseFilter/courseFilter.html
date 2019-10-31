@@ -1,69 +1,14 @@
-
-  <div class="courses-filter">
+<div class="courses-filter">
   <div class="courses-filter-header">
     <div class="course-filter-tokens text-center">
       <div class="label label-selected-section-group" ng-repeat="tagId in filters.enabledTagIds track by $index">
         {{ tags.list[tagId].name }}
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleLocationFilter(locationId)"></i>
+        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
       </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
-        Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
-      </div>
-      <div class="label label-selected-section-group">
+      <div class="label label-selected-section-group"  ng-show="filters.enableUnpublishedCourses== true">
         Unpublished
         <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
       </div>
     </div>
   </div>
-  </div>
-
-
+</div>

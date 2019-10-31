@@ -1,6 +1,6 @@
 import './courseFilter.css';
 
-let courseFilter = function () {
+let courseFilter = function (CourseActionCreators) {
   return {
     restrict: "E",
     template: require('./courseFilter.html'),
@@ -12,7 +12,7 @@ let courseFilter = function () {
       // locations: '<',
       // schedulingMode: '<'
     },
-    link: function () {
+    link: function (scope) {
       // scope.dayDescriptions = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       // scope.filterDescriptionMax = 19;
 
@@ -20,17 +20,17 @@ let courseFilter = function () {
       //   SchedulingActionCreators.toggleDay(index);
       // };
 
-      // scope.toggleTagFilter = function (tagId) {
-      //   var tagIndex = scope.filters.enabledTagIds.indexOf(tagId);
+      scope.toggleTagFilter = function (tagId) {
+        var tagIndex = scope.filters.enabledTagIds.indexOf(tagId);
 
-      //   if (tagIndex < 0) {
-      //     scope.filters.enabledTagIds.push(tagId);
-      //   } else {
-      //     scope.filters.enabledTagIds.splice(tagIndex, 1);
-      //   }
+        if (tagIndex < 0) {
+          scope.filters.enabledTagIds.push(tagId);
+        } else {
+          scope.filters.enabledTagIds.splice(tagIndex, 1);
+        }
 
-      //   SchedulingActionCreators.updateTagFilters(scope.filters.enabledTagIds);
-      // };
+        // SchedulingActionCreators.updateTagFilters(scope.filters.enabledTagIds);
+      };
 
       // scope.toggleLocationFilter = function (locationId) {
       //   var locationIndex = scope.filters.enabledLocationIds.indexOf(locationId);
@@ -56,9 +56,9 @@ let courseFilter = function () {
       //   SchedulingActionCreators.updateInstructorFilters(scope.filters.enabledInstructorIds);
       // };
 
-      // scope.toggleShowOnlyPrimaryActivityFilter = function() {
-      //   SchedulingActionCreators.toggleShowOnlyPrimaryActivityFilter();
-      // };
+      scope.unpublishedCoursesToggled = function() {
+        CourseActionCreators.setUnpublishedCoursesFilter(scope.workgroupId, scope.year, !scope.filters.enableUnpublishedCourses)
+      };
 
       // scope.isDayTab = function (tab) {
       //   switch (tab) {
