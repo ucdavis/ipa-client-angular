@@ -403,6 +403,9 @@ class SupportReducer {
 									isOpen: (action.payload.schedule.supportStaffSupportCallReviewOpen[parseInt(action.shortTermCode) - 1] == "1"),
 									data: action.payload.schedule.supportStaffSupportCallReviewOpen
 								}
+							},
+							filters: {
+								hideCoursesWithoutTa: false
 							}
 						};
 	
@@ -446,6 +449,9 @@ class SupportReducer {
 								data: action.payload.schedule.supportStaffSupportCallReviewOpen
 							}
 						};
+						return ui;
+					case ActionTypes.TOGGLE_TA_FILTER:
+						ui.filters.hideCoursesWithoutTa = action.payload
 						return ui;
 					default:
 						return ui;

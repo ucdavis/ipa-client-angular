@@ -31,6 +31,12 @@
 
 	<div class="support-assignments__header">
 		<support-assignment-search></support-assignment-search>
+		<support-assignment-filter
+			filters="view.state.ui.filters"
+			button-icon="'glyphicon-filter'"
+			tooltip="'Tags'"
+			select-item="toggleCoursesWithoutTa()">
+		</support-assignment-filter>
 		<review-tools
 			support-review="view.state.ui.review"
 			read-only="view.state.ui.readOnlyMode">
