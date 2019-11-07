@@ -24,14 +24,35 @@ class RegistrarReconciliationReportStateService {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
-							ids: []
+							ids : [],
+							sectionsKeyById : {}
 						};
 						var sectionList = {};
 						var length = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
 						for (var i = 0; i < length; i++) {
 							var ipaSectionData = action.payload.sectionDiffs[i].ipaSection;
 							var dwSectionData = action.payload.sectionDiffs[i].dwSection;
-							var sectionChanges = action.payload.sectionDiffs[i].changes;
+							var sectionChanges = [];
+							var diffsChanges = action.payload.sectionDiffs[i].changes;
+							var acceptedChanges = ["instructors", "activities", "bannerLocation", "startTime", "endTime", "dayIndicator","crn", "seats"];
+							if (diffsChanges){
+								
+								diffsChanges.forEach(function(diffChange){
+									var isAccepted = acceptedChanges.includes(diffChange.propertyName);
+										if (isAccepted){
+											let propertyName = diffChange.propertyName;
+											if (propertyName == "activities"){
+												let addedValue = diffChange.changes[0].addedValue;
+												let removedValue = diffChange.changes[0].removedValue;
+												if (addedValue || removedValue){
+													sectionChanges.push(diffChange);
+												} 
+											} else {
+											sectionChanges.push(diffChange);
+											}
+										}
+								});
+							}
 							var syncActions = action.payload.sectionDiffs[i].syncActions;
 
 							var sectionKey = null;
@@ -45,19 +66,24 @@ class RegistrarReconciliationReportStateService {
 							} else {
 								continue;
 							}
-	
+
 							if (sections.ids.indexOf(sectionKey) == -1) {
 								sections.ids.push(sectionKey);
+
+								var section = sectionList[sectionKey];
+
+								if (section.id > 0) {
+									sections.sectionsKeyById[section.id] = sectionKey;
+								}
 							}
-	
+
 							var slotSection = sectionList[sectionKey];
-	
 							// translate DiffView changes list into stateService language
-							if (ipaSectionData != null && dwSectionData == null && sectionChanges == null) {
+							if (ipaSectionData != null && dwSectionData == null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// DW version does not exist
 								slotSection.dwHasChanges = true;
 								slotSection.noRemote = true;
-							} else if (ipaSectionData == null && dwSectionData != null && sectionChanges == null) {
+							} else if (ipaSectionData == null && dwSectionData != null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// IPA version does not exist
 								slotSection.dwHasChanges = true;
 								slotSection.noLocal = true;
@@ -170,14 +196,14 @@ class RegistrarReconciliationReportStateService {
 									});
 								}
 							}
-	
+
 							// Apply syncActions to section properties
-	
+
 							for (var s = 0; s < syncActions.length; s++) {
 								slotSection = this._togglePropertyToDo(slotSection, syncActions[s]);
 							}
 						}
-	
+
 						sections.ids.sort();
 	
 						// Flag the first section in a sectionGroup as a groupHead
@@ -189,8 +215,11 @@ class RegistrarReconciliationReportStateService {
 								sectionList[id].groupHead = true;
 							}
 						});
-	
+
 						sections.list = sectionList;
+						return sections;
+					case ActionTypes.UPDATE_SECTION_RECONCILIATION:
+						sections.list[action.payload.sectionKey].dwHasChanges = action.payload.dwHasChanges;
 						return sections;
 					case ActionTypes.UPDATE_SECTION:
 						section = sections.list[action.payload.uniqueKey];
