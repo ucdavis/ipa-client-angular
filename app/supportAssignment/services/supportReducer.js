@@ -451,7 +451,7 @@ class SupportReducer {
 						};
 						return ui;
 					case ActionTypes.TOGGLE_TA_FILTER:
-						ui.filters.hideCoursesWithoutTa = action.payload
+						ui.filters.hideCoursesWithoutTa = action.payload;
 						return ui;
 					default:
 						return ui;
