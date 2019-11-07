@@ -146,7 +146,7 @@ class RegistrarReconciliationReportStateService {
 														activities.push(activity);
 													});
 												// DW has different activity properties
-  											change.changes.forEach(function(activityChange) {
+											change.changes.forEach(function(activityChange) {
 													if (!activityChange.leftValue) { return; }
 
 														var leftValue = activityChange.leftValue;
