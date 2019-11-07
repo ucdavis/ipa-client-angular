@@ -1,6 +1,6 @@
-<div class="support-assignment-filter">
+<div class="support-assignment-filter" ng-show="state.ui.tabPivot == 'By Course'">
 
-  <div class="label label-selected-section-group" ng-show="filters.hideCoursesWithoutTa == true">
+  <div class="label label-selected-section-group" ng-show="state.ui.filters.hideCoursesWithoutTa == true">
     Hide courses without TAs'
     <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="clickItem()"></i>
   </div>
@@ -30,7 +30,7 @@
       <div class="support-assignment-filter__item-list">
         <div class="support-assignment-filter__item" ng-click="uncheckItem()" stop-event="click">
           <div class="checkbox checkbox-replace color-primary neon-cb-replacement"
-            ng-class="{ 'checked': filters.hideCoursesWithoutTa }">
+            ng-class="{ 'checked': state.ui.filters.hideCoursesWithoutTa }">
             <label class="cb-wrapper">
               <div class="checked"></div>
             </label>

@@ -6,7 +6,7 @@ let supportAssignmentFilter = function () {
     template: require('./supportAssignmentFilter.html'),
     replace: false,
     scope: {
-      filters: '<',
+      state: '<',
       selectItem: '&',
       tooltip: '<',
       buttonIcon: '<'
