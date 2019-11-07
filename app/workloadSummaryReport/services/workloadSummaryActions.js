@@ -2,7 +2,7 @@ import { _array_sortByProperty } from 'shared/helpers/array';
 import { sequenceNumberToPattern } from 'shared/helpers/sections';
 
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, CourseService, $route) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, CourseService, $route, WorkloadSummaryExcelService) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
@@ -31,6 +31,9 @@ class WorkloadSummaryActions {
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId, year);
 				this._getSections(workgroupId, year);
+			},
+			download: function() {
+				WorkloadSummaryExcelService.generateDownload();
 			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
@@ -837,6 +840,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', 'CourseService', '$route'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', 'CourseService', '$route', 'WorkloadSummaryExcelService'];
 
 export default WorkloadSummaryActions;
