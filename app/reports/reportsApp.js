@@ -19,6 +19,8 @@ import supportAndFunds from './budgetComparison/directives/supportAndFunds/suppo
 import supportAndFundChanges from './budgetComparison/directives/supportAndFundChanges/supportAndFundChanges.js';
 import miscStats from './budgetComparison/directives/miscStats/miscStats.js';
 import miscStatChanges from './budgetComparison/directives/miscStatChanges/miscStatChanges.js';
+import teachingBalance from './budgetComparison/directives/teachingBalance/teachingBalance';
+import teachingBalanceChanges from './budgetComparison/directives/teachingBalanceChanges/teachingBalanceChanges';
 
 // Dependencies
 var dependencies = [
@@ -68,6 +70,8 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                           .directive('supportAndFunds', supportAndFunds)
                           .directive('supportAndFundChanges', supportAndFundChanges)
                           .directive('budgetScenarioSelector', budgetScenarioSelector)
+                          .directive('teachingBalance', teachingBalance)
+                          .directive('teachingBalanceChanges', teachingBalanceChanges)
                           .config(config)
                           .constant('ActionTypes', {
                             INIT_STATE: "INIT_STATE",
