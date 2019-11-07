@@ -78,7 +78,7 @@
                 Preference
               </div>
             </div>
-            <div class="header-cell-skinny outline">
+            <div ng-if="view.state.teachingCallReceipt.showSeats" class="header-cell-skinny outline">
               <div>
                 Seats
               </div>
@@ -141,7 +141,7 @@
               </button>
             </div>
 
-            <div class="seats-cell outline">
+            <div ng-if="view.state.teachingCallReceipt.showSeats" class="seats-cell outline">
               <div>
                 {{ preference.plannedSeats }}
               </div>
@@ -217,7 +217,7 @@
               </div>
             </div>
 
-            <div class="seats-cell outline"></div>
+            <div ng-if="view.state.teachingCallReceipt.showSeats" class="seats-cell outline"></div>
           </div>
           <!-- add-preference -->
         </div>

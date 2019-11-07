@@ -53,6 +53,7 @@ teachingCallApp.service('teachingCallStatusSelectors', function () { // eslint-d
 				newInstructor.message = null;
 				newInstructor.termsBlob = null;
 				newInstructor.showUnavailabilities = null;
+				newInstructor.showSeats = null;
 				newInstructor.hideNonCourseOptions = null;
 				newInstructor.workgroupId = null;
 				newInstructor.scheduleId = null;
@@ -76,6 +77,7 @@ teachingCallApp.service('teachingCallStatusSelectors', function () { // eslint-d
 				newInstructor.message = teachingCallReceiptCopy.message;
 				newInstructor.termsBlob = teachingCallReceiptCopy.termsBlob;
 				newInstructor.showUnavailabilities = teachingCallReceiptCopy.showUnavailabilities;
+				newInstructor.showSeats = teachingCallReceiptCopy.showSeats;
 				newInstructor.hideNonCourseOptions = teachingCallReceiptCopy.hideNonCourseOptions;
 				newInstructor.workgroupId = teachingCallReceiptCopy.workgroupId;
 				newInstructor.scheduleId = teachingCallReceiptCopy.scheduleId;
