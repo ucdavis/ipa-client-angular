@@ -1,13 +1,13 @@
 <div class="courses-filter">
   <div class="courses-filter-header">
-    <div class="course-filter-tokens text-center">
-      <div class="label label-selected-section-group" ng-repeat="tagId in filters.enabledTagIds track by $index">
+    <div class="ourses-filter-token-list">
+      <div class="courses-filter-label courses-filter-token" ng-repeat="tagId in filters.enabledTagIds track by $index">
         {{ tags.list[tagId].name }}
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="toggleTagFilter(tagId)"></i>
+        <i class="glyphicon glyphicon-remove clickable" ng-click="toggleTagFilter(tagId)"></i>
       </div>
-      <div class="label label-selected-section-group"  ng-show="filters.enableUnpublishedCourses== true">
+      <div class="courses-filter-label courses-filter-token" ng-show="filters.enableUnpublishedCourses== true">
         Unpublished
-        <i class="glyphicon glyphicon-remove selected-section-group-remove clickable hoverable" ng-click="unpublishedCoursesToggled()"></i>
+        <i class="glyphicon glyphicon-remove clickable" ng-click="unpublishedCoursesToggled()"></i>
       </div>
     </div>
   </div>

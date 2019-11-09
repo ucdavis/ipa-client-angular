@@ -1,12 +1,11 @@
 
-.courses-filters {
+.courses-filter {
   width: 100%;
   display: flex;
   justify-content: flex-start;
 }
 
 .courses-filter-header {
-  flex: 1 1 0px;
   display: flex;
   -webkit-justify-content: flex-start;
   justify-content: flex-start;
@@ -14,19 +13,22 @@
   margin: 0;
 }
 
-.courses-filter-tokens {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
+.courses-filter-token-list {
   display: flex;
-  align-items: center;
+  align-items: left;
 }
 
-.label-selected-section-group {
+.courses-filter-token {
   background-color: #e6e6e6;
   color: #333;
-  margin-right: 5px;
   display: inline-block;
   font-size: 85%;
   line-height: normal;
 }
+
+.courses-filter-label {
+  margin: 2px 5px 0px 0px;
+  padding: 6px 12px;
+  border-radius: .25em;
+}
+
