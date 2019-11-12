@@ -59,6 +59,7 @@
   </div>
 
   <div class="budget-scenario-toolbar__tool-container do-not-print">
+    <span class="label budget-scenario-toolbar__token" ng-repeat="filter in activeFilters">{{ filter.description }}</span>
     <term-filter
       active-terms="state.selectedBudgetScenario.terms"
       select-term="selectBudgetScenarioTerm"

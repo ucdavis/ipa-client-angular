@@ -78,6 +78,15 @@
 	padding-right: 5px;
 }
 
+.budget-scenario-toolbar__token {
+	background-color: #e6e6e6;
+	color: #333;
+	margin-right: 5px;
+	display: inline-block;
+	font-size: 85%;
+	line-height: normal;
+}
+
 @media print {
   @page {
     margin: 1cm;

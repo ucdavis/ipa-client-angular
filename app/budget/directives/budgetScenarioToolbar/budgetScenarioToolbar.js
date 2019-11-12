@@ -16,6 +16,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			scope.isNewScenarioNameValid = true;
 			scope.validationError = "";
+			scope.activeFilters = [];
 
 			scope.openSupportCostModal = function() {
 				BudgetActions.toggleSupportCostModal();
@@ -64,6 +65,11 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 
 			scope.updateCourseTag = function (tag) {
 				tag.selected = !tag.selected;
+
+				scope.activeFilters = scope.state.ui.filters.tags.filter(function (tag) {
+					return tag.selected;
+				});
+
 				BudgetActions.updateCourseTag(tag);
 			};
 
