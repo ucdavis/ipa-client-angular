@@ -557,12 +557,20 @@ class SupportActions {
 				});
 			},
 			toggleCoursesWithoutTa: function (payload) {
+				this.updateCourseTableFilter(payload);
 				var action = {
 					type: ActionTypes.TOGGLE_TA_FILTER,
 					payload: payload
 				};
 				SupportReducer.reduce(action);
-			}
+			},
+			updateCourseTableFilter: function (payload) {
+				var action = {
+					type: ActionTypes.UPDATE_COURSE_TABLE_FILTER,
+					payload: payload
+				};
+				SupportReducer.reduce(action);
+			},
 		};
 	}
 }

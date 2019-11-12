@@ -52,6 +52,23 @@ class SupportReducer {
 							sectionGroup.supportStaffConflicts = action.payload.conflicts.bySectionGroupId[sectionGroupId] || [];
 						}); 
 						return sectionGroups;
+					case ActionTypes.UPDATE_COURSE_TABLE_FILTER:
+						var payload = action.payload;
+
+						if (payload == true) {
+							sectionGroups.ids.forEach(function(sectionGroupId) {
+								if (sectionGroups.list[sectionGroupId].supportAssignments.length > 0) {
+									sectionGroups.list[sectionGroupId].isFiltered = false;
+								} else {
+									sectionGroups.list[sectionGroupId].isFiltered = true;
+								}
+							});
+						} else if (payload == false) {
+							sectionGroups.ids.forEach(function(sectionGroupId) {
+									sectionGroups.list[sectionGroupId].isFiltered = false;
+							});
+						}
+						return sectionGroups;
 					default:
 						return sectionGroups;
 				}
