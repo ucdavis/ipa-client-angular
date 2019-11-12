@@ -766,9 +766,7 @@ class BudgetReducers {
 										selected: false
 									}
 								},
-								tags: {},
-								subjectCodes: action.filters.subjectCodes,
-								accountNumbers: action.filters.accountNumbers
+								tags: []
 							},
 							sectionNav: {
 								activeTab: action.activeTab || "Summary",
@@ -829,6 +827,24 @@ class BudgetReducers {
 							tag.description = tag.name;
 							tag.selected = false;
 							ui.filters.tags.push(tag);
+						});
+
+						action.filters.subjectCodes.forEach(function(subjectCode) {
+							let subjectCodeFilter = {
+								description: subjectCode,
+								selected: false
+							};
+
+							ui.filters.tags.push(subjectCodeFilter);
+						});
+
+						action.filters.accountNumbers.forEach(function(accountNumber) {
+							let accountNumberFilter = {
+								description: accountNumber,
+								selected: false
+							};
+
+							ui.filters.tags.push(accountNumberFilter);
 						});
 
 						return ui;
