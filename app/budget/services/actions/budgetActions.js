@@ -76,7 +76,7 @@ class BudgetActions {
 
 					var accountNumberFilters = [];
 					results.lineItems.forEach(function(lineItem) {
-						if (!accountNumberFilters.includes(lineItem.accountNumber)) {
+						if (lineItem.accountNumber && !accountNumberFilters.includes(lineItem.accountNumber)) {
 							accountNumberFilters.push(lineItem.accountNumber);
 						}
 					});
