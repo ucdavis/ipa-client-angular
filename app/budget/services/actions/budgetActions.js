@@ -66,6 +66,21 @@ class BudgetActions {
 						});
 					});
 
+					// Generate department subject codes and account numbers for use as filters
+					var subjectCodeFilters = [];
+					results.courses.forEach(function(course) {
+						if (!subjectCodeFilters.includes(course.subjectCode)) {
+							subjectCodeFilters.push(course.subjectCode);
+						}
+					});
+
+					var accountNumberFilters = [];
+					results.lineItems.forEach(function(lineItem) {
+						if (!accountNumberFilters.includes(lineItem.accountNumber)) {
+							accountNumberFilters.push(lineItem.accountNumber);
+						}
+					});
+
 					BudgetReducers.reduce({
 						type: ActionTypes.INIT_STATE,
 						payload: results,
@@ -73,7 +88,8 @@ class BudgetActions {
 						workgroupId: workgroupId,
 						selectedBudgetScenarioId: selectedBudgetScenarioId,
 						selectedTerm: selectedTerm,
-						activeTab: activeTab
+						activeTab: activeTab,
+						filters: {subjectCodes: subjectCodeFilters, accountNumbers: accountNumberFilters}
 					});
 
 					// Ensure budgetScenario is properly set

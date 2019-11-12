@@ -766,7 +766,9 @@ class BudgetReducers {
 										selected: false
 									}
 								},
-								tags: {}
+								tags: {},
+								subjectCodes: action.filters.subjectCodes,
+								accountNumbers: action.filters.accountNumbers
 							},
 							sectionNav: {
 								activeTab: action.activeTab || "Summary",
