@@ -876,11 +876,19 @@ class BudgetActions {
 			updateCourseTag: function (tag) {
 				var tags = BudgetReducers._state.ui.filters.tags;
 
-				tags.forEach(function(slotTag) {
-					if (slotTag.id == tag.id) {
-						slotTag.selected = tag.selected;
-					}
-				});
+				if (tag.id == null) {
+					var selectedTag = tags.filter(function(slotTag) {
+						return slotTag.description == tag.description;
+					});
+
+					selectedTag.selected = tag.selected;
+				} else {
+					tags.forEach(function(slotTag) {
+						if (slotTag.id == tag.id) {
+							slotTag.selected = tag.selected;
+						}
+					});
+				}
 
 				BudgetReducers.reduce({
 					type: ActionTypes.UPDATE_COURSE_TAGS,
