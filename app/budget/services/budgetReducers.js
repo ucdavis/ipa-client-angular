@@ -239,7 +239,7 @@ class BudgetReducers {
 
 						action.payload.tags.forEach(function(tag) {
 							if (tag.selected) {
-								shownTagIds.push(tag.id);
+								tag.id ? shownTagIds.push(tag.id) : shownTagIds.push(tag.description);
 							}
 						});
 
@@ -254,8 +254,10 @@ class BudgetReducers {
 								return shownTagIds.includes(tag);
 							});
 
+							var matchingFilterDescription = shownTagIds.includes(sectionGroupCost.subjectCode) || shownTagIds.includes(sectionGroupCost.accountNumber);
+
 							// Course passes the filter
-							if (matchingTagIds.length > 0) { return; }
+							if (matchingTagIds.length > 0 || matchingFilterDescription) { return; }
 
 							// Otherwise hide
 							sectionGroupCost.hidden = true;
