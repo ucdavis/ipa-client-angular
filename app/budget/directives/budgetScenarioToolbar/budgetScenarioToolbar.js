@@ -73,6 +73,22 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				BudgetActions.updateCourseTag(tag);
 			};
 
+			scope.toggleFilter = function(description) {
+				let filter = scope.state.ui.filters.tags.find(function(option) {
+					return option.description == description;
+				});
+
+				filter.selected = !filter.selected;
+
+				scope.activeFilters = scope.state.ui.filters.tags.filter(
+					function(tag) {
+						return tag.selected;
+					}
+				);
+
+				BudgetActions.updateCourseTag(filter);
+			}
+
 			scope.selectBudgetScenarioTerm = function(term) {
 				var index = parseInt(term) - 1;
 				var newValue = scope.state.selectedBudgetScenario.activeTermsBlob[index] == "1" ? "0" : "1";

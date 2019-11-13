@@ -877,7 +877,7 @@ class BudgetActions {
 				var tags = BudgetReducers._state.ui.filters.tags;
 
 				if (tag.id == null) {
-					var selectedTag = tags.filter(function(slotTag) {
+					var selectedTag = tags.find(function(slotTag) {
 						return slotTag.description == tag.description;
 					});
 

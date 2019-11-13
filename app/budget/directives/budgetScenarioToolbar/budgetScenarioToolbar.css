@@ -87,6 +87,10 @@
 	line-height: normal;
 }
 
+.budget-scenario-toolbar__token-remove {
+	margin-left: 0.7em;
+}
+
 @media print {
   @page {
     margin: 1cm;
