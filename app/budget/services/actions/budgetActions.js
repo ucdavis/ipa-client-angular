@@ -896,6 +896,7 @@ class BudgetActions {
 						tags: tags
 					}
 				});
+				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateSectionGroups();
 			}
 		};

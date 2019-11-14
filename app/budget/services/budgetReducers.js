@@ -149,6 +149,30 @@ class BudgetReducers {
 						lineItems.ids.splice(index, 1);
 						delete lineItems.list[lineItemId];
 						return lineItems;
+					case ActionTypes.UPDATE_COURSE_TAGS:
+						var selectedTagDescriptions = action.payload.tags
+							.filter(function(tag) {
+								return tag.selected === true;
+							}).map(function(tag) {
+								return tag.description;
+							});
+
+						if (selectedTagDescriptions.length > 0) {
+						lineItems.ids.forEach(function(lineItemId) {
+								var slotLineItem = lineItems.list[lineItemId];
+
+								if (selectedTagDescriptions.includes(slotLineItem.accountNumber)) {
+									slotLineItem.hidden = false;
+								} else {
+									slotLineItem.hidden = true;
+								}
+							});
+						} else {
+							lineItems.ids.forEach(function(lineItemId) {
+								lineItems.list[lineItemId].hidden = false;
+							});
+						}
+						return lineItems;
 					default:
 						return lineItems;
 				}
