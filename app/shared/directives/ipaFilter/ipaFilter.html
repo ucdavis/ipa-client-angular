@@ -22,13 +22,15 @@
 				</div>
 			</div>
 
-			<div class="ipa-filter__item-list">
-				<div ng-click="clickItem(item)"
-				     ng-repeat="item in items"
-				     class="ipa-filter__item">
-					<ipa-checkbox is-checked="item.selected"></ipa-checkbox>
-					<div class="ipa-filter__item-text">
-						{{ item.description }}
+			<div ng-repeat="item in items">
+				<div ng-if="item.subheader" class="ipa-filter__subheader">{{ item.description }}</div>
+
+				<div ng-if="!item.subheader">
+					<div ng-click="clickItem(item)" class="ipa-filter__item">
+							<ipa-checkbox is-checked="item.selected"></ipa-checkbox>
+							<div class="ipa-filter__item-text">
+								{{ item.description }}
+							</div>
 					</div>
 				</div>
 			</div>

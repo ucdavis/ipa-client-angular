@@ -849,29 +849,41 @@ class BudgetReducers {
 	
 						ui.filters.tags = [];
 
-						action.payload.tags.forEach(function(tag) {
-							tag.description = tag.name;
-							tag.selected = false;
-							ui.filters.tags.push(tag);
-						});
+						if (action.payload.tags.length > 0) {
+							ui.filters.tags.push({ subheader: true, description: 'Tags' });
 
-						action.filters.subjectCodes.forEach(function(subjectCode) {
-							let subjectCodeFilter = {
-								description: subjectCode,
-								selected: false
-							};
+							action.payload.tags.forEach(function(tag) {
+								tag.description = tag.name;
+								tag.selected = false;
+								ui.filters.tags.push(tag);
+							});
+						}
 
-							ui.filters.tags.push(subjectCodeFilter);
-						});
+						if (action.filters.subjectCodes.length > 0) {
+							ui.filters.tags.push({ subheader: true, description: 'Subject Codes' });
 
-						action.filters.accountNumbers.forEach(function(accountNumber) {
-							let accountNumberFilter = {
-								description: accountNumber,
-								selected: false
-							};
+							action.filters.subjectCodes.forEach(function(subjectCode) {
+								let subjectCodeFilter = {
+									description: subjectCode,
+									selected: false
+								};
+								
+								ui.filters.tags.push(subjectCodeFilter);
+							});
+						}
 
-							ui.filters.tags.push(accountNumberFilter);
-						});
+						if (action.filters.accountNumbers.length > 0) {
+							ui.filters.tags.push({ subheader: true, description: 'Account Numbers' });
+
+							action.filters.accountNumbers.forEach(function(accountNumber) {
+								let accountNumberFilter = {
+									description: accountNumber,
+									selected: false
+								};
+								
+								ui.filters.tags.push(accountNumberFilter);
+							});
+						}
 
 						return ui;
 					case ActionTypes.UPDATE_COURSE_TAGS:
