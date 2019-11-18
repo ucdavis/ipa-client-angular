@@ -152,7 +152,7 @@ class BudgetReducers {
 					case ActionTypes.UPDATE_COURSE_TAGS:
 						var selectedTagDescriptions = action.payload.tags
 							.filter(function(tag) {
-								return tag.selected === true;
+								return tag.selected === true && tag.type === 'accountNumber';
 							}).map(function(tag) {
 								return tag.description;
 							});
@@ -262,7 +262,7 @@ class BudgetReducers {
 						var shownTagIds = [];
 
 						action.payload.tags.forEach(function(tag) {
-							if (tag.selected) {
+							if (tag.selected && tag.type !== 'accountNumber') {
 								tag.id ? shownTagIds.push(tag.id) : shownTagIds.push(tag.description);
 							}
 						});
@@ -853,6 +853,7 @@ class BudgetReducers {
 							ui.filters.tags.push({ subheader: true, description: 'Tags' });
 
 							action.payload.tags.forEach(function(tag) {
+								tag.type = 'tag';
 								tag.description = tag.name;
 								tag.selected = false;
 								ui.filters.tags.push(tag);
@@ -864,6 +865,7 @@ class BudgetReducers {
 
 							action.filters.subjectCodes.forEach(function(subjectCode) {
 								let subjectCodeFilter = {
+									type: 'subjectCode',
 									description: subjectCode,
 									selected: false
 								};
@@ -877,6 +879,7 @@ class BudgetReducers {
 
 							action.filters.accountNumbers.forEach(function(accountNumber) {
 								let accountNumberFilter = {
+									type: 'accountNumber',
 									description: accountNumber,
 									selected: false
 								};
