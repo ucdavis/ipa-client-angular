@@ -87,7 +87,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				);
 
 				BudgetActions.updateCourseTag(filter);
-			}
+			};
 
 			scope.selectBudgetScenarioTerm = function(term) {
 				var index = parseInt(term) - 1;
