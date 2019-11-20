@@ -183,6 +183,8 @@
 /* Toolbar styles */
 
 .table-toolbar {
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
   text-align: right;
   padding-bottom: 5px;

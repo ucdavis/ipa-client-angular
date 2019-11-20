@@ -18,6 +18,13 @@
   <!-- Toolbar -->
   <div class="row hidden-print" style="clear: both; display: block; width: 100%;">
     <div class="table-toolbar">
+      <ipa-filter
+        items="view.state.ui.filters"
+        title="'Filters'"
+        tooltip="'Filters'"
+        button-icon="'glyphicon-filter'"
+        select-item="updateFilter(item)"
+      ></ipa-filter>
       <div class="btn-group">
         <span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="downloadAsExcel()" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false"></span>
       </div>
