@@ -245,10 +245,10 @@ angular-ui-calendar@1.0.2:
   resolved "https://registry.yarnpkg.com/angular-ui-calendar/-/angular-ui-calendar-1.0.2.tgz#fa271057425572efaadf6660243cc33cb99f33c1"
   integrity sha1-+icQV0JVcu+q32ZgJDzDPLmfM8E=
 
-angular@1.6.9, angular@^1.2.0:
-  version "1.6.9"
-  resolved "https://registry.yarnpkg.com/angular/-/angular-1.6.9.tgz#bc812932e18909038412d594a5990f4bb66c0619"
-  integrity sha512-6igWH2GIsxV+J38wNWCh8oyjaZsrIPIDO35twloIUyjlF2Yit6UyLAWujHP05ma/LFxTsx4NtYibRoMNBXPR1A==
+angular@1.7.9, angular@^1.2.0:
+  version "1.7.9"
+  resolved "https://registry.yarnpkg.com/angular/-/angular-1.7.9.tgz#e52616e8701c17724c3c238cfe4f9446fd570bc4"
+  integrity sha512-5se7ZpcOtu0MBFlzGv5dsM1quQDoDeUTwZrWjGtTNA7O88cD8TEk5IEKCTDa3uECV9XnvKREVUr7du1ACiWGFQ==
 
 ansi-escapes@^1.0.0:
   version "1.4.0"
@@ -2023,7 +2023,7 @@ compressible@~2.0.13:
 
 compression@^1.5.2:
   version "1.7.2"
-  resolved "http://registry.npmjs.org/compression/-/compression-1.7.2.tgz#aaffbcd6aaf854b44ebb280353d5ad1651f59a69"
+  resolved "https://registry.npmjs.org/compression/-/compression-1.7.2.tgz#aaffbcd6aaf854b44ebb280353d5ad1651f59a69"
   integrity sha1-qv+81qr4VLROuygDU9WtFlH1mmk=
   dependencies:
     accepts "~1.3.4"
@@ -5794,7 +5794,7 @@ once@^1.3.0, once@^1.3.1, once@^1.3.3, once@^1.4.0:
 
 onetime@^1.0.0:
   version "1.1.0"
-  resolved "http://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
+  resolved "https://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
   integrity sha1-ofeDj4MUxRbwXs78vEzP4EtO14k=
 
 onetime@^2.0.0:

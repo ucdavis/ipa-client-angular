@@ -37,7 +37,7 @@
   "dependencies": {
     "@types/angular": "1.6.43",
     "@types/node": "10.0.0",
-    "angular": "1.6.9",
+    "angular": "1.7.9",
     "angular-route": "1.6.9",
     "angular-sanitize": "1.5.8",
     "angular-selectize2": "github:machineboy2045/angular-selectize#v3.0.1",
