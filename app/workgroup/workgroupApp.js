@@ -5,6 +5,7 @@ import LocationCtrl from './controllers/LocationCtrl.js';
 import TagCtrl from './controllers/TagCtrl.js';
 import UserCtrl from './controllers/UserCtrl.js';
 import WorkgroupCtrl from './controllers/WorkgroupCtrl.js';
+import CourseCtrl from './controllers/CourseCtrl.js';
 
 // Services
 import WorkgroupActionCreators from './services/workgroupActionCreators.js';
@@ -74,6 +75,7 @@ const workgroupApp = angular.module("workgroupApp", dependencies) // eslint-disa
 .controller('TagCtrl', TagCtrl)
 .controller('UserCtrl', UserCtrl)
 .controller('WorkgroupCtrl', WorkgroupCtrl)
+.controller('CourseCtrl', CourseCtrl)
 .service('WorkgroupActionCreators', WorkgroupActionCreators)
 .service('WorkgroupService', WorkgroupService)
 .service('WorkgroupStateService', WorkgroupStateService)
