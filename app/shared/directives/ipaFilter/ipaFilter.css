@@ -46,6 +46,7 @@
 .ipa-filter__subheader {
 	border-bottom: 1px solid #ebebeb;
 	padding: 5px 10px;
+	text-align: left;
 }
 
 .ipa-filter__item {
@@ -77,7 +78,7 @@
 
 .ipa-filter__dropdown-toggle--borderless {
 	border: none;
-	padding: 6px;
+	padding: 
 }
 
 .ipa-filter__dropdown-toggle:hover,

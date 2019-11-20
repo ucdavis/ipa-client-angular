@@ -13,7 +13,8 @@ class BudgetComparisonReportReducers {
 				lineItemCategories: {},
 				instructorTypeCosts: {},
 				instructorCosts: {},
-				sectionGroupCosts: {}
+				sectionGroupCosts: {},
+				ui: {}
 			},
 			_budgetReducer: function (action, budget) {
 				switch (action.type) {
@@ -246,6 +247,18 @@ class BudgetComparisonReportReducers {
 						return calculations;
 				}
 			},
+			_uiReducers: function (action, ui) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						ui = { filters: [] };
+						return ui;
+					case ActionTypes.GENERATE_FILTERS:
+						ui.filters = action.payload.filters;
+						return ui;
+					default:
+						return ui;
+				}
+			},
 			reduce: function (action) {
 				var scope = this;
 
@@ -266,6 +279,7 @@ class BudgetComparisonReportReducers {
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 				newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
+				newState.ui = scope._uiReducers(action, scope._state.ui);
 
 				scope._state = newState;
 				$rootScope.$emit('budgetComparisonReportStateChanged', {

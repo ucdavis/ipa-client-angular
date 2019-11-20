@@ -446,6 +446,8 @@ class BudgetComparisonReportActions {
 
 				if (BudgetComparisonReportReducers._state.calculations.isCurrentYearFetchComplete && BudgetComparisonReportReducers._state.calculations.isPreviousYearFetchComplete
 				&& BudgetComparisonReportReducers._state.userRoles.ids && BudgetComparisonReportReducers._state.users.ids && BudgetComparisonReportReducers._state.instructors.ids) {
+					this._generateFilters();
+
 					BudgetComparisonReportCalculations.calculateView();
 				}
 			},
@@ -498,6 +500,85 @@ class BudgetComparisonReportActions {
 						}
 					});
 				}
+			},
+			_generateFilters: function() {
+				let courses = BudgetComparisonReportReducers._state.courses;
+				let lineItems = BudgetComparisonReportReducers._state.lineItems;
+				let subjectCodes = [];
+				let accountNumbers = [];
+				let filters = [];
+
+				filters.push({
+					subheader: true,
+					description: 'Subject Codes'
+				});
+				courses.current.ids.forEach(function(courseId) {
+					var subjectCode = courses.current.list[courseId].subjectCode;
+
+					if (!subjectCodes.includes(subjectCode)) {
+						subjectCodes.push(subjectCode);
+
+						filters.push({
+							type: 'subjectCode',
+							description: subjectCode,
+							selected: false
+						});
+					}
+				});
+
+				courses.previous.ids.forEach(function(courseId) {
+					var subjectCode = courses.previous.list[courseId].subjectCode;
+
+					if (!subjectCodes.includes(subjectCode)) {
+						subjectCodes.push(subjectCode);
+
+				filters.push({
+							type: 'subjectCode',
+							description: subjectCode,
+							selected: false
+						});
+					}
+				});
+
+				filters.push({
+					subheader: true,
+					description: 'Account Number'
+				});
+
+				lineItems.current.ids.forEach(function(lineItemId) {
+					var accountNumber = lineItems.current.list[lineItemId].accountNumber;
+
+					if (accountNumber && !accountNumbers.includes(accountNumber)) {
+						accountNumbers.push(accountNumber);
+
+						filters.push({
+							type: 'accountNumber',
+							description: accountNumber,
+							selected: false
+						});
+					}
+				});
+
+				lineItems.previous.ids.forEach(function(lineItemId) {
+					var accountNumber = lineItems.previous.list[lineItemId].accountNumber;
+
+					if (accountNumber && !accountNumbers.includes(accountNumber)) {
+						accountNumbers.push(accountNumber);
+
+						filters.push({
+							type: 'accountNumber',
+							description: accountNumber,
+							selected: false
+						});
+					}
+				});
+
+				BudgetComparisonReportReducers.reduce({
+					type: ActionTypes.GENERATE_FILTERS,
+					payload: {
+						filters: filters
+					}
+				});
 			},
 			selectCurrentBudgetScenario: function(selectedScenarioId) {
 				BudgetComparisonReportReducers.reduce({
