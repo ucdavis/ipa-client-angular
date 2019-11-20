@@ -78,19 +78,3 @@
 	background-color: #f7aaf4;
 	color: #000000;
 }
-
-.budget-costs__scrollable-area {
-	overflow-y: scroll;
-	max-height: calc( 100vh - 350px);
-}
-
-.budget-costs__scrollable-area::-webkit-scrollbar {
-	-webkit-appearance: none;
-	width: 7px;
-}
-
-.budget-costs__scrollable-area::-webkit-scrollbar-thumb {
-	border-radius: 4px;
-	background-color: rgba(48,54,65,.5);
-	box-shadow: 0 0 1px rgba(255,255,255,.5);
-}
