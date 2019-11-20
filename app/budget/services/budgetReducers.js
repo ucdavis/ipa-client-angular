@@ -149,19 +149,19 @@ class BudgetReducers {
 						lineItems.ids.splice(index, 1);
 						delete lineItems.list[lineItemId];
 						return lineItems;
-					case ActionTypes.UPDATE_COURSE_TAGS:
-						var selectedTagDescriptions = action.payload.tags
-							.filter(function(tag) {
-								return tag.selected === true && tag.type === 'accountNumber';
-							}).map(function(tag) {
-								return tag.description;
+					case ActionTypes.UPDATE_FILTERS:
+						var selectedFilterDescriptions = action.payload.filters
+							.filter(function(filter) {
+								return filter.selected === true && filter.type === 'accountNumber';
+							}).map(function(filter) {
+								return filter.description;
 							});
 
-						if (selectedTagDescriptions.length > 0) {
+						if (selectedFilterDescriptions.length > 0) {
 						lineItems.ids.forEach(function(lineItemId) {
 								var slotLineItem = lineItems.list[lineItemId];
 
-								if (selectedTagDescriptions.includes(slotLineItem.accountNumber)) {
+								if (selectedFilterDescriptions.includes(slotLineItem.accountNumber)) {
 									slotLineItem.hidden = false;
 								} else {
 									slotLineItem.hidden = true;
@@ -258,12 +258,12 @@ class BudgetReducers {
 							}
 						});
 						return sectionGroupCosts;
-					case ActionTypes.UPDATE_COURSE_TAGS:
+					case ActionTypes.UPDATE_FILTERS:
 						var shownTagIds = [];
 
-						action.payload.tags.forEach(function(tag) {
-							if (tag.selected && tag.type !== 'accountNumber') {
-								tag.id ? shownTagIds.push(tag.id) : shownTagIds.push(tag.description);
+						action.payload.filters.forEach(function(filter) {
+							if (filter.selected && filter.type !== 'accountNumber') {
+								filter.id ? shownTagIds.push(filter.id) : shownTagIds.push(filter.description);
 							}
 						});
 
@@ -792,7 +792,7 @@ class BudgetReducers {
 										selected: false
 									}
 								},
-								tags: []
+								list: []
 							},
 							sectionNav: {
 								activeTab: action.activeTab || "Summary",
@@ -846,22 +846,20 @@ class BudgetReducers {
 									displayReasonInput: false,
 								};
 						});
-	
-						ui.filters.tags = [];
 
 						if (action.payload.tags.length > 0) {
-							ui.filters.tags.push({ subheader: true, description: 'Tags' });
+							ui.filters.list.push({ subheader: true, description: 'Tags' });
 
 							action.payload.tags.forEach(function(tag) {
 								tag.type = 'tag';
 								tag.description = tag.name;
 								tag.selected = false;
-								ui.filters.tags.push(tag);
+								ui.filters.list.push(tag);
 							});
 						}
 
 						if (action.filters.subjectCodes.length > 0) {
-							ui.filters.tags.push({ subheader: true, description: 'Subject Codes' });
+							ui.filters.list.push({ subheader: true, description: 'Subject Codes' });
 
 							action.filters.subjectCodes.forEach(function(subjectCode) {
 								let subjectCodeFilter = {
@@ -870,12 +868,12 @@ class BudgetReducers {
 									selected: false
 								};
 								
-								ui.filters.tags.push(subjectCodeFilter);
+								ui.filters.list.push(subjectCodeFilter);
 							});
 						}
 
 						if (action.filters.accountNumbers.length > 0) {
-							ui.filters.tags.push({ subheader: true, description: 'Account Numbers' });
+							ui.filters.list.push({ subheader: true, description: 'Account Numbers' });
 
 							action.filters.accountNumbers.forEach(function(accountNumber) {
 								let accountNumberFilter = {
@@ -884,13 +882,13 @@ class BudgetReducers {
 									selected: false
 								};
 								
-								ui.filters.tags.push(accountNumberFilter);
+								ui.filters.list.push(accountNumberFilter);
 							});
 						}
 
 						return ui;
-					case ActionTypes.UPDATE_COURSE_TAGS:
-						ui.filters.tags = action.payload.tags;
+					case ActionTypes.UPDATE_FILTERS:
+						ui.filters.list = action.payload.filters;
 						return ui;
 					case ActionTypes.CALCULATE_INSTRUCTORS:
 						ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;

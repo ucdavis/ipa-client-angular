@@ -873,27 +873,28 @@ class BudgetActions {
 
 				return instructorType;
 			},
-			updateCourseTag: function (tag) {
-				var tags = BudgetReducers._state.ui.filters.tags;
+			updateFilter: function (filter) {
+				var filters = BudgetReducers._state.ui.filters.list;
 
-				if (tag.id == null) {
-					var selectedTag = tags.find(function(slotTag) {
-						return slotTag.description == tag.description;
+				if (filter.id == null) {
+					// not a tag
+					var selectedFilter = filters.find(function(slotFilter) {
+						return slotFilter.description == filter.description;
 					});
 
-					selectedTag.selected = tag.selected;
+					selectedFilter.selected = filter.selected;
 				} else {
-					tags.forEach(function(slotTag) {
-						if (slotTag.id == tag.id) {
-							slotTag.selected = tag.selected;
+					filters.forEach(function(slotFilter) {
+						if (slotFilter.id == filter.id) {
+							slotFilter.selected = filter.selected;
 						}
 					});
 				}
 
 				BudgetReducers.reduce({
-					type: ActionTypes.UPDATE_COURSE_TAGS,
+					type: ActionTypes.UPDATE_FILTERS,
 					payload: {
-						tags: tags
+						filters: filters
 					}
 				});
 				BudgetCalculations.calculateLineItems();
