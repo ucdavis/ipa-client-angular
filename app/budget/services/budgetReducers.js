@@ -259,11 +259,11 @@ class BudgetReducers {
 						});
 						return sectionGroupCosts;
 					case ActionTypes.UPDATE_FILTERS:
-						var shownTagIds = [];
+						var shownFilters = [];
 
 						action.payload.filters.forEach(function(filter) {
 							if (filter.selected && filter.type !== 'accountNumber') {
-								filter.id ? shownTagIds.push(filter.id) : shownTagIds.push(filter.description);
+								filter.id ? shownFilters.push(filter.id) : shownFilters.push(filter.description);
 							}
 						});
 
@@ -272,16 +272,16 @@ class BudgetReducers {
 							sectionGroupCost.hidden = false;
 
 							// Tag filtering isn't active, show all sectionGroupCosts
-							if (shownTagIds.length == 0) { return; }
+							if (shownFilters.length == 0) { return; }
 
 							var matchingTagIds = sectionGroupCost.tagIds.filter(function (tag) {
-								return shownTagIds.includes(tag);
+								return shownFilters.includes(tag);
 							});
 
-							var matchingFilterDescription = shownTagIds.includes(sectionGroupCost.subjectCode) || shownTagIds.includes(sectionGroupCost.accountNumber);
+							var matchingSubjectCode = shownFilters.includes(sectionGroupCost.subjectCode);
 
 							// Course passes the filter
-							if (matchingTagIds.length > 0 || matchingFilterDescription) { return; }
+							if (matchingTagIds.length > 0 || matchingSubjectCode) { return; }
 
 							// Otherwise hide
 							sectionGroupCost.hidden = true;
