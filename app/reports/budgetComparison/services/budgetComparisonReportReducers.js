@@ -255,6 +255,9 @@ class BudgetComparisonReportReducers {
 					case ActionTypes.GENERATE_FILTERS:
 						ui.filters = action.payload.filters;
 						return ui;
+					case ActionTypes.UPDATE_FILTER:
+						ui.filters = action.payload.filters;
+						return ui;
 					default:
 						return ui;
 				}

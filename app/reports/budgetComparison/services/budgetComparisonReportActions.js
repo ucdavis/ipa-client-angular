@@ -605,6 +605,21 @@ class BudgetComparisonReportActions {
 				BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
 			},
 			updateFilter: function(filter) {
+				let filters = BudgetComparisonReportReducers._state.ui.filters;
+
+				let selectedFilter = filters.find(function(slotFilter) {
+					return slotFilter.type == filter.type && slotFilter.description == filter.description;
+				}
+				);
+
+				selectedFilter.selected = filter.selected;
+
+				BudgetComparisonReportReducers.reduce({
+					type: ActionTypes.UPDATE_FILTER,
+					payload: {
+						filters: filters
+					}
+				});
 			}
 		};
 	}
