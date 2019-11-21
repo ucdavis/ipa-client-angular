@@ -603,6 +603,8 @@ class BudgetComparisonReportActions {
 			downloadAsExcel: function(year, workgroupName) {
 				var viewState = BudgetComparisonReportReducers._state;
 				BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
+			},
+			updateFilter: function(filter) {
 			}
 		};
 	}
