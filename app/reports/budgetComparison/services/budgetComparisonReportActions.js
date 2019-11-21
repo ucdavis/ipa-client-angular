@@ -606,7 +606,9 @@ class BudgetComparisonReportActions {
 			},
 			updateFilter: function(filter) {
 				let filters = BudgetComparisonReportReducers._state.ui.filters;
+				let lineItems = BudgetComparisonReportReducers._state.lineItems;
 
+				// Update filters state
 				let selectedFilter = filters.find(function(slotFilter) {
 					return slotFilter.type == filter.type && slotFilter.description == filter.description;
 				}
@@ -614,9 +616,28 @@ class BudgetComparisonReportActions {
 
 				selectedFilter.selected = filter.selected;
 
+				if (selectedFilter.type == "accountNumber") {
+					// update lineItems
+					let keys = Object.keys(lineItems);
+
+					keys.forEach(function(key) {
+						lineItems[key].ids.forEach(function(lineItemId) {
+							let slotLineItem = lineItems[key].list[lineItemId];
+
+							slotLineItem.hidden = false;
+
+							if (slotLineItem.accountNumber == selectedFilter.description) {
+								slotLineItem.hidden = true;
+							}
+
+						});
+					});
+				}
+
 				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.UPDATE_FILTER,
 					payload: {
+						lineItems: lineItems,
 						filters: filters
 					}
 				});

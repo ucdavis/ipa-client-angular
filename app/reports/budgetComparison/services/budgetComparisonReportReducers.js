@@ -40,6 +40,9 @@ class BudgetComparisonReportReducers {
 					case ActionTypes.GET_PREVIOUS_LINE_ITEMS:
 					lineItems.previous = action.payload.lineItems;
 						return lineItems;
+					case ActionTypes.UPDATE_FILTER:
+						lineItems = action.payload.lineItems;
+						return lineItems;
 					default:
 						return lineItems;
 				}
