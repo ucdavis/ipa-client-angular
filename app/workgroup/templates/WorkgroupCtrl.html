@@ -129,7 +129,8 @@
 
 				<uib-tab index="'courses'" heading="Course List" select="setActiveTab('courses')">
 					<div class="courses-section" ng-controller="CourseCtrl">
-
+						<workgroup-courses-table workgroup-courses-list="[{subjectCode:'ECS', courseNumber:'010',title:'Intro to Programming'},{subjectCode:'ECS', courseNumber:'030',title:'	Programming & Problem Solving'}]">
+						</workgroup-courses-table>
 					</div>
 				</uib-tab>
 

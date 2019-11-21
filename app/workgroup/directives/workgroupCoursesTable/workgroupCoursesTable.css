@@ -1,0 +1,35 @@
+.workgroup-courses__table {
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #e3e3e3;
+  border-collapse: separate;
+}
+
+.workgroup-courses__table-header {
+  width: 10%;
+  border-bottom: 1px solid #ddd;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.workgroup-courses__table-header-container {
+  border-right: 1px solid #ddd;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.workgroup-courses__table-header-container--last {
+  border-right: none;
+}
+
+.workgroup-courses__table-cell {
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 43px;
+}
+
+.workgroup-courses__table-cell--dark {
+  background-color: #fafafa;
+}

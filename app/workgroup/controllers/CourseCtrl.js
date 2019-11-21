@@ -6,9 +6,9 @@
  * Controller of the ipaClientAngularApp
  */
 class CourseCtrl {
-	constructor () {
-			// Intentionally Blank
-	}
+  constructor () {
+      // Intentionally Blank
+  }
 }
 
 CourseCtrl.$inject = [];

@@ -22,6 +22,7 @@ import rolesTable from './directives/peopleAndRoles/rolesTable/rolesTable.js';
 import instructorTypeSelector from './directives/peopleAndRoles/rolesTable/instructorTypeSelector/instructorTypeSelector.js';
 import studentRoleSelector from './directives/peopleAndRoles/rolesTable/studentRoleSelector/studentRoleSelector.js';
 import impersonationModal from './directives/modals/impersonationModal/impersonationModal.js';
+import workgroupCoursesTable from './directives/workgroupCoursesTable/workgroupCoursesTable.js';
 
 // Dependencies
 var dependencies = [
@@ -86,6 +87,7 @@ const workgroupApp = angular.module("workgroupApp", dependencies) // eslint-disa
 .directive('instructorTypeSelector', instructorTypeSelector)
 .directive('studentRoleSelector', studentRoleSelector)
 .directive('impersonationModal', impersonationModal)
+.directive('workgroupCoursesTable', workgroupCoursesTable)
 .constant('ActionTypes', {
 	ADD_TAG: "ADD_TAG",
 	REMOVE_TAG: "REMOVE_TAG",
