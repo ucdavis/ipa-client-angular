@@ -617,6 +617,16 @@ class BudgetComparisonReportActions {
 
 				selectedFilter.selected = filter.selected;
 
+				let activeSubjectCodeFilterDescriptions = filters.filter(function(filter) {
+					return filter.selected && filter.type == "subjectCode";
+				}).map(function(filter) { return filter.description });
+
+				let activeAccountNumberFilterDescriptions = filters.filter(function(filter) {
+						return filter.selected && filter.type == "accountNumber";
+					}).map(function(filter) {
+						return filter.description;
+					});
+
 				if (selectedFilter.type === "accountNumber") {
 					let keys = Object.keys(lineItems);
 
@@ -624,10 +634,10 @@ class BudgetComparisonReportActions {
 						lineItems[key].ids.forEach(function(lineItemId) {
 							let slotLineItem = lineItems[key].list[lineItemId];
 
-							slotLineItem.hidden = false;
+							slotLineItem.hidden = true;
 
-							if (slotLineItem.accountNumber == selectedFilter.description) {
-								slotLineItem.hidden = true;
+							if (activeAccountNumberFilterDescriptions.includes(slotLineItem.accountNumber)) {
+								slotLineItem.hidden = false;
 							}
 
 						});
@@ -643,7 +653,7 @@ class BudgetComparisonReportActions {
 
 							slotSectionGroupCost.hidden = true;
 
-							if (slotSectionGroupCost.subjectCode == selectedFilter.description) {
+							if (activeSubjectCodeFilterDescriptions.includes(slotSectionGroupCost.subjectCode)) {
 								slotSectionGroupCost.hidden = false;
 							}
 						});
