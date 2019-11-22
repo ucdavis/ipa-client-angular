@@ -607,6 +607,7 @@ class BudgetComparisonReportActions {
 			updateFilter: function(filter) {
 				let filters = BudgetComparisonReportReducers._state.ui.filters;
 				let lineItems = BudgetComparisonReportReducers._state.lineItems;
+				let sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
 
 				// Update filters state
 				let selectedFilter = filters.find(function(slotFilter) {
@@ -616,8 +617,7 @@ class BudgetComparisonReportActions {
 
 				selectedFilter.selected = filter.selected;
 
-				if (selectedFilter.type == "accountNumber") {
-					// update lineItems
+				if (selectedFilter.type === "accountNumber") {
 					let keys = Object.keys(lineItems);
 
 					keys.forEach(function(key) {
@@ -634,10 +634,27 @@ class BudgetComparisonReportActions {
 					});
 				}
 
+				if (selectedFilter.type === "subjectCode") {
+					let keys = Object.keys(sectionGroupCosts);
+
+					keys.forEach(function(key) {
+						sectionGroupCosts[key].ids.forEach(function(sectionGroupCostId) {
+							let slotSectionGroupCost = sectionGroupCosts[key].list[sectionGroupCostId];
+
+							slotSectionGroupCost.hidden = true;
+
+							if (slotSectionGroupCost.subjectCode == selectedFilter.description) {
+								slotSectionGroupCost.hidden = false;
+							}
+						});
+					});
+				}
+
 				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.UPDATE_FILTER,
 					payload: {
 						lineItems: lineItems,
+						sectionGroupCosts: sectionGroupCosts,
 						filters: filters
 					}
 				});

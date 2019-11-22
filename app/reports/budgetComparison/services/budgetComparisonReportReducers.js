@@ -133,6 +133,9 @@ class BudgetComparisonReportReducers {
 					case ActionTypes.GET_PREVIOUS_SECTION_GROUP_COSTS:
 						sectionGroupCosts.previous = action.payload.sectionGroupCosts;
 						return sectionGroupCosts;
+					case ActionTypes.UPDATE_FILTER:
+						sectionGroupCosts = action.payload.sectionGroupCosts;
+						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
 				}
