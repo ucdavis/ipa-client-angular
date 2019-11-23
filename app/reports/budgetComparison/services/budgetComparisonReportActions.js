@@ -619,7 +619,7 @@ class BudgetComparisonReportActions {
 
 				let activeSubjectCodeFilterDescriptions = filters.filter(function(filter) {
 					return filter.selected && filter.type == "subjectCode";
-				}).map(function(filter) { return filter.description });
+				}).map(function(filter) { return filter.description; });
 
 				let activeAccountNumberFilterDescriptions = filters.filter(function(filter) {
 						return filter.selected && filter.type == "accountNumber";
@@ -668,6 +668,8 @@ class BudgetComparisonReportActions {
 						filters: filters
 					}
 				});
+
+				BudgetComparisonReportCalculations.calculateView();
 			}
 		};
 	}
