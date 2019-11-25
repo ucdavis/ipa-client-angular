@@ -31,6 +31,20 @@ class BudgetComparisonReportCtrl {
 
       BudgetComparisonReportActions.updateFilter(filter);
     };
+
+    $scope.toggleFilter = function(filterDescription) {
+        let selectedFilter = $scope.view.state.ui.filters.find(function(filter) {
+          return filter.description == filterDescription;
+        });
+
+        selectedFilter.selected = !selectedFilter.selected;
+
+        $scope.activeFilters = $scope.view.state.ui.filters.filter(function(filter) {
+          return filter.selected;
+        });
+
+        BudgetComparisonReportActions.updateFilter(selectedFilter);
+    };
   }
 }
 
