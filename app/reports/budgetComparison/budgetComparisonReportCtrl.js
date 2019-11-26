@@ -22,28 +22,22 @@ class BudgetComparisonReportCtrl {
       BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
     };
 
-    $scope.updateFilter = function(filter) {
+    $scope.toggleFilter = function(filter) {
       filter.selected = !filter.selected;
 
       $scope.activeFilters = $scope.view.state.ui.filters.filter(function(filter) {
         return filter.selected;
       });
 
-      BudgetComparisonReportActions.updateFilter(filter);
+      BudgetComparisonReportActions.toggleFilter(filter);
     };
 
-    $scope.removeFilter = function(filter) {
-        let selectedFilter = $scope.view.state.ui.filters.find(function(slotFilter) {
-          return slotFilter.description == filter.description;
+    $scope.removeToken = function(filter) {
+        $scope.activeFilters = $scope.activeFilters.filter(function(slotFilter) {
+          return slotFilter.description !== filter.description;
         });
 
-        selectedFilter.selected = !selectedFilter.selected;
-
-        $scope.activeFilters = $scope.view.state.ui.filters.filter(function(filter) {
-          return filter.selected;
-        });
-
-        BudgetComparisonReportActions.updateFilter(selectedFilter);
+        $scope.toggleFilter(filter);
     };
   }
 }

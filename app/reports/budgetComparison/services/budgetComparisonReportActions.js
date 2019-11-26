@@ -604,30 +604,22 @@ class BudgetComparisonReportActions {
 				var viewState = BudgetComparisonReportReducers._state;
 				BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
 			},
-			updateFilter: function(filter) {
+			toggleFilter: function(filter) {
 				let filters = BudgetComparisonReportReducers._state.ui.filters;
 				let lineItems = BudgetComparisonReportReducers._state.lineItems;
 				let sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
 
-				// Update filters state
-				let selectedFilter = filters.find(function(slotFilter) {
-					return slotFilter.type == filter.type && slotFilter.description == filter.description;
-				}
-				);
+				let activeSubjectCodeFilterDescriptions = filters.filter(function(slotFilter) {
+					return slotFilter.selected && slotFilter.type == "subjectCode";
+				}).map(function(slotFilter) { return slotFilter.description; });
 
-				selectedFilter.selected = filter.selected;
-
-				let activeSubjectCodeFilterDescriptions = filters.filter(function(filter) {
-					return filter.selected && filter.type == "subjectCode";
-				}).map(function(filter) { return filter.description; });
-
-				let activeAccountNumberFilterDescriptions = filters.filter(function(filter) {
-						return filter.selected && filter.type == "accountNumber";
-					}).map(function(filter) {
-						return filter.description;
+				let activeAccountNumberFilterDescriptions = filters.filter(function(slotFilter) {
+						return slotFilter.selected && slotFilter.type == "accountNumber";
+					}).map(function(slotFilter) {
+						return slotFilter.description;
 					});
 
-				if (selectedFilter.type === "accountNumber") {
+				if (filter.type === "accountNumber") {
 					let keys = Object.keys(lineItems);
 
 					keys.forEach(function(key) {
@@ -649,7 +641,7 @@ class BudgetComparisonReportActions {
 					});
 				}
 
-				if (selectedFilter.type === "subjectCode") {
+				if (filter.type === "subjectCode") {
 					let keys = Object.keys(sectionGroupCosts);
 
 					keys.forEach(function(key) {
@@ -671,7 +663,7 @@ class BudgetComparisonReportActions {
 				}
 
 				BudgetComparisonReportReducers.reduce({
-					type: ActionTypes.UPDATE_FILTER,
+					type: ActionTypes.TOGGLE_FILTER,
 					payload: {
 						lineItems: lineItems,
 						sectionGroupCosts: sectionGroupCosts,

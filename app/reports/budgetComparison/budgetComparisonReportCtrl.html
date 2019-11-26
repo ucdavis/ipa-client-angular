@@ -20,14 +20,14 @@
     <div class="table-toolbar">
       <span ng-repeat="filter in activeFilters" class="budget-comparison-report__toolbar--token">
         {{ filter.description }}
-        <i class="glyphicon glyphicon-remove budget-comparison-report__toolbar--token-remove clickable hoverable" ng-click="removeFilter(filter)"></i>
+        <i class="glyphicon glyphicon-remove budget-comparison-report__toolbar--token-remove clickable hoverable" ng-click="removeToken(filter)"></i>
       </span>
       <ipa-filter
         items="view.state.ui.filters"
         title="'Filters'"
         tooltip="'Filters'"
         button-icon="'glyphicon-filter'"
-        select-item="updateFilter(item)"
+        select-item="toggleFilter(item)"
         border-less="true"
       ></ipa-filter>
       <div class="btn-group">

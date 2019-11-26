@@ -40,7 +40,7 @@ class BudgetComparisonReportReducers {
 					case ActionTypes.GET_PREVIOUS_LINE_ITEMS:
 					lineItems.previous = action.payload.lineItems;
 						return lineItems;
-					case ActionTypes.UPDATE_FILTER:
+					case ActionTypes.TOGGLE_FILTER:
 						lineItems = action.payload.lineItems;
 						return lineItems;
 					default:
@@ -133,7 +133,7 @@ class BudgetComparisonReportReducers {
 					case ActionTypes.GET_PREVIOUS_SECTION_GROUP_COSTS:
 						sectionGroupCosts.previous = action.payload.sectionGroupCosts;
 						return sectionGroupCosts;
-					case ActionTypes.UPDATE_FILTER:
+					case ActionTypes.TOGGLE_FILTER:
 						sectionGroupCosts = action.payload.sectionGroupCosts;
 						return sectionGroupCosts;
 					default:
@@ -261,7 +261,7 @@ class BudgetComparisonReportReducers {
 					case ActionTypes.GENERATE_FILTERS:
 						ui.filters = action.payload.filters;
 						return ui;
-					case ActionTypes.UPDATE_FILTER:
+					case ActionTypes.TOGGLE_FILTER:
 						ui.filters = action.payload.filters;
 						return ui;
 					default:
