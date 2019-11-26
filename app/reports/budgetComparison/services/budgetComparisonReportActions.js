@@ -634,7 +634,7 @@ class BudgetComparisonReportActions {
 						lineItems[key].ids.forEach(function(lineItemId) {
 							let slotLineItem = lineItems[key].list[lineItemId];
 
-							if (activeSubjectCodeFilterDescriptions.length < 1) {
+							if (activeAccountNumberFilterDescriptions.length < 1) {
 								slotLineItem.hidden = false;
 								return;
 							}
