@@ -1,88 +1,69 @@
 <div class="budget-scenario-toolbar">
-  <div class="budget-scenario-toolbar__edit-ui">
-    <div class="budget-scenario-toolbar__scenario-label">
-      Budget Scenario
-    </div>
+	<div class="budget-scenario-toolbar__edit-ui">
+		<div class="budget-scenario-toolbar__scenario-label">
+			Budget Scenario
+		</div>
 
-    <!-- Regular UI -->
-    <div
-      class="budget-scenario-toolbar__container"
-      ng-show="displayScenarioRenameUI == false"
-    >
-      <budget-scenario-dropdown state="state"></budget-scenario-dropdown>
+		<!-- Regular UI -->
+		<div class="budget-scenario-toolbar__container"
+			ng-show="displayScenarioRenameUI == false"
+		>
+			<budget-scenario-dropdown state="state"></budget-scenario-dropdown>
 
-      <ipa-button
-        class="budget-scenario-toolbar__edit-button do-not-print"
-        icon-class="'glyphicon glyphicon-pencil'"
-        size="'small'"
-        ng-show="!state.ui.fromLiveData"
-        on-click="showScenarioRenameUI()"
-        tooltip-message="'Rename Scenario'"
-      >
-      </ipa-button>
-    </div>
+			<ipa-button class="budget-scenario-toolbar__edit-button do-not-print"
+			            icon-class="'glyphicon glyphicon-pencil'"
+			            size="'small'"
+			            ng-show="!state.ui.fromLiveData"
+			            on-click="showScenarioRenameUI()"
+			            tooltip-message="'Rename Scenario'">
+			</ipa-button>
+		</div>
 
-    <!-- Rename scenario UI -->
-    <div
-      class="budget-scenario-toolbar__container"
-      ng-show="displayScenarioRenameUI"
-    >
-      <div>
-        <ipa-input
-          class="budget-scenario-toolbar__rename-input"
-          on-update="scenarioNameIsValid()"
-          update-delay="0"
-          value="newScenarioName"
-        >
-        </ipa-input>
-      </div>
+		<!-- Rename scenario UI -->
+		<div class="budget-scenario-toolbar__container"
+			ng-show="displayScenarioRenameUI">
+			<div>
+				<ipa-input class="budget-scenario-toolbar__rename-input"
+				           on-update="scenarioNameIsValid()"
+				           update-delay="0"
+				           value="newScenarioName">
+				</ipa-input>
+			</div>
 
-      <ipa-button
-        class="budget-scenario-toolbar__edit-button"
-        icon-class="'glyphicon glyphicon-remove'"
-        size="'small'"
-        on-click="cancelScenarioRename()"
-        tooltip-message="'Cancel'"
-      >
-      </ipa-button>
-      <ipa-button
-        class="budget-scenario-toolbar__edit-button"
-        icon-class="'glyphicon glyphicon-ok'"
-        size="'small'"
-        on-click="saveNewScenarioName()"
-        is-disabled="isNewScenarioNameValid == false"
-        disabled-tooltip-message="validationError"
-        tooltip-message="'Rename Scenario'"
-      >
-      </ipa-button>
-    </div>
-  </div>
+			<ipa-button class="budget-scenario-toolbar__edit-button"
+			            icon-class="'glyphicon glyphicon-remove'"
+			            size="'small'"
+			            on-click="cancelScenarioRename()"
+			            tooltip-message="'Cancel'">
+			</ipa-button>
+			<ipa-button class="budget-scenario-toolbar__edit-button"
+			            icon-class="'glyphicon glyphicon-ok'"
+			            size="'small'"
+			            on-click="saveNewScenarioName()"
+			            is-disabled="isNewScenarioNameValid == false"
+			            disabled-tooltip-message="validationError"
+			            tooltip-message="'Rename Scenario'">
+			</ipa-button>
+		</div>
+	</div>
 
-  <div class="budget-scenario-toolbar__tool-container do-not-print">
-    <span class="label budget-scenario-toolbar__token" ng-repeat="filter in activeFilters">
-      {{ filter.description }}
-      <i class="glyphicon glyphicon-remove budget-scenario-toolbar__token-remove clickable hoverable" ng-click="toggleFilter(filter.description)"></i>
-    </span>
-    <term-filter
-      active-terms="state.selectedBudgetScenario.terms"
-      select-term="selectBudgetScenarioTerm"
-    >
-    </term-filter>
-    <ipa-filter
-      items="state.ui.filters.tags"
-      title="'Filters'"
-      tooltip="'Filters'"
-      button-icon="'glyphicon-filter'"
-      select-item="updateCourseTag(item)"
-    >
-    </ipa-filter>
-    <span
-      class="budget-scenario-toolbar__tool glyphicon glyphicon-download-alt"
-      ng-click="downloadBudgetExcel()"
-    ></span>
-    <span
-      class="budget-scenario-toolbar__tool glyphicon glyphicon-print"
-      ng-click="print()"
-    ></span>
-  </div>
+	<div class="budget-scenario-toolbar__tool-container do-not-print">
+		<span class="label budget-scenario-toolbar__token" ng-repeat="filter in activeFilters">
+			{{ filter.description }}
+			<i class="glyphicon glyphicon-remove budget-scenario-toolbar__token-remove clickable hoverable" ng-click="toggleFilter(filter.description)"></i>
+		</span>
+		<term-filter active-terms="state.selectedBudgetScenario.terms"
+		             select-term="selectBudgetScenarioTerm">
+		</term-filter>
+
+		<ipa-filter items="state.ui.filters.list"
+		            title="'Filters'"
+		            tooltip="'Filters'"
+		            button-icon="'glyphicon-filter'"
+		            select-item="updateFilter(item)">
+		</ipa-filter>
+
+		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-download-alt" ng-click="downloadBudgetExcel()"></span>
+		<span	class="budget-scenario-toolbar__tool glyphicon glyphicon-print" ng-click="print()"></span>
+	</div>
 </div>
