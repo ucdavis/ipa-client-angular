@@ -149,19 +149,19 @@ class BudgetReducers {
 						lineItems.ids.splice(index, 1);
 						delete lineItems.list[lineItemId];
 						return lineItems;
-					case ActionTypes.UPDATE_FILTERS:
-						var selectedFilterDescriptions = action.payload.filters
-							.filter(function(filter) {
-								return filter.selected === true && filter.type === 'accountNumber';
-							}).map(function(filter) {
-								return filter.description;
+					case ActionTypes.UPDATE_COURSE_TAGS:
+						var selectedTagDescriptions = action.payload.tags
+							.filter(function(tag) {
+								return tag.selected === true && tag.type === 'accountNumber';
+							}).map(function(tag) {
+								return tag.description;
 							});
 
-						if (selectedFilterDescriptions.length > 0) {
+						if (selectedTagDescriptions.length > 0) {
 						lineItems.ids.forEach(function(lineItemId) {
 								var slotLineItem = lineItems.list[lineItemId];
 
-								if (selectedFilterDescriptions.includes(slotLineItem.accountNumber)) {
+								if (selectedTagDescriptions.includes(slotLineItem.accountNumber)) {
 									slotLineItem.hidden = false;
 								} else {
 									slotLineItem.hidden = true;
@@ -258,12 +258,12 @@ class BudgetReducers {
 							}
 						});
 						return sectionGroupCosts;
-					case ActionTypes.UPDATE_FILTERS:
-						var shownFilters = [];
+					case ActionTypes.UPDATE_COURSE_TAGS:
+						var shownTagIds = [];
 
-						action.payload.filters.forEach(function(filter) {
-							if (filter.selected && filter.type !== 'accountNumber') {
-								filter.id ? shownFilters.push(filter.id) : shownFilters.push(filter.description);
+						action.payload.tags.forEach(function(tag) {
+							if (tag.selected && tag.type !== 'accountNumber') {
+								tag.id ? shownTagIds.push(tag.id) : shownTagIds.push(tag.description);
 							}
 						});
 
@@ -272,16 +272,16 @@ class BudgetReducers {
 							sectionGroupCost.hidden = false;
 
 							// Tag filtering isn't active, show all sectionGroupCosts
-							if (shownFilters.length == 0) { return; }
+							if (shownTagIds.length == 0) { return; }
 
 							var matchingTagIds = sectionGroupCost.tagIds.filter(function (tag) {
-								return shownFilters.includes(tag);
+								return shownTagIds.includes(tag);
 							});
 
-							var matchingSubjectCode = shownFilters.includes(sectionGroupCost.subjectCode);
+							var matchingFilterDescription = shownTagIds.includes(sectionGroupCost.subjectCode) || shownTagIds.includes(sectionGroupCost.accountNumber);
 
 							// Course passes the filter
-							if (matchingTagIds.length > 0 || matchingSubjectCode) { return; }
+							if (matchingTagIds.length > 0 || matchingFilterDescription) { return; }
 
 							// Otherwise hide
 							sectionGroupCost.hidden = true;
@@ -792,7 +792,7 @@ class BudgetReducers {
 										selected: false
 									}
 								},
-								list: []
+								tags: []
 							},
 							sectionNav: {
 								activeTab: action.activeTab || "Summary",
@@ -846,20 +846,22 @@ class BudgetReducers {
 									displayReasonInput: false,
 								};
 						});
+	
+						ui.filters.tags = [];
 
 						if (action.payload.tags.length > 0) {
-							ui.filters.list.push({ subheader: true, description: 'Tags' });
+							ui.filters.tags.push({ subheader: true, description: 'Tags' });
 
 							action.payload.tags.forEach(function(tag) {
 								tag.type = 'tag';
 								tag.description = tag.name;
 								tag.selected = false;
-								ui.filters.list.push(tag);
+								ui.filters.tags.push(tag);
 							});
 						}
 
 						if (action.filters.subjectCodes.length > 0) {
-							ui.filters.list.push({ subheader: true, description: 'Subject Codes' });
+							ui.filters.tags.push({ subheader: true, description: 'Subject Codes' });
 
 							action.filters.subjectCodes.forEach(function(subjectCode) {
 								let subjectCodeFilter = {
@@ -868,12 +870,12 @@ class BudgetReducers {
 									selected: false
 								};
 								
-								ui.filters.list.push(subjectCodeFilter);
+								ui.filters.tags.push(subjectCodeFilter);
 							});
 						}
 
 						if (action.filters.accountNumbers.length > 0) {
-							ui.filters.list.push({ subheader: true, description: 'Account Numbers' });
+							ui.filters.tags.push({ subheader: true, description: 'Account Numbers' });
 
 							action.filters.accountNumbers.forEach(function(accountNumber) {
 								let accountNumberFilter = {
@@ -882,13 +884,13 @@ class BudgetReducers {
 									selected: false
 								};
 								
-								ui.filters.list.push(accountNumberFilter);
+								ui.filters.tags.push(accountNumberFilter);
 							});
 						}
 
 						return ui;
-					case ActionTypes.UPDATE_FILTERS:
-						ui.filters.list = action.payload.filters;
+					case ActionTypes.UPDATE_COURSE_TAGS:
+						ui.filters.tags = action.payload.tags;
 						return ui;
 					case ActionTypes.CALCULATE_INSTRUCTORS:
 						ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;

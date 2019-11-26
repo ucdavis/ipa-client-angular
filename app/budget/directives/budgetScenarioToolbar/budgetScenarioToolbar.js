@@ -63,30 +63,30 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.isNewScenarioNameValid = isNamePresent && (isNameInUse == false);
 			};
 
-			scope.updateFilter = function (filter) {
-				filter.selected = !filter.selected;
+			scope.updateCourseTag = function (tag) {
+				tag.selected = !tag.selected;
 
-				scope.activeFilters = scope.state.ui.filters.list.filter(function (filter) {
-					return filter.selected;
+				scope.activeFilters = scope.state.ui.filters.tags.filter(function (tag) {
+					return tag.selected;
 				});
 
-				BudgetActions.updateFilter(filter);
+				BudgetActions.updateCourseTag(tag);
 			};
 
 			scope.toggleFilter = function(description) {
-				let filter = scope.state.ui.filters.list.find(function(option) {
+				let filter = scope.state.ui.filters.tags.find(function(option) {
 					return option.description == description;
 				});
 
 				filter.selected = !filter.selected;
 
-				scope.activeFilters = scope.state.ui.filters.list.filter(
-					function(filter) {
-						return filter.selected;
+				scope.activeFilters = scope.state.ui.filters.tags.filter(
+					function(tag) {
+						return tag.selected;
 					}
 				);
 
-				BudgetActions.updateFilter(filter);
+				BudgetActions.updateCourseTag(filter);
 			};
 
 			scope.selectBudgetScenarioTerm = function(term) {
