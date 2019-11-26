@@ -78,7 +78,7 @@
 
 .ipa-filter__dropdown-toggle--borderless {
 	border: none;
-	padding: 
+	padding: 0.5em;
 }
 
 .ipa-filter__dropdown-toggle:hover,
