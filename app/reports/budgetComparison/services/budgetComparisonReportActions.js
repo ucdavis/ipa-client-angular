@@ -634,6 +634,11 @@ class BudgetComparisonReportActions {
 						lineItems[key].ids.forEach(function(lineItemId) {
 							let slotLineItem = lineItems[key].list[lineItemId];
 
+							if (activeSubjectCodeFilterDescriptions.length < 1) {
+								slotLineItem.hidden = false;
+								return;
+							}
+
 							slotLineItem.hidden = true;
 
 							if (activeAccountNumberFilterDescriptions.includes(slotLineItem.accountNumber)) {
@@ -650,6 +655,11 @@ class BudgetComparisonReportActions {
 					keys.forEach(function(key) {
 						sectionGroupCosts[key].ids.forEach(function(sectionGroupCostId) {
 							let slotSectionGroupCost = sectionGroupCosts[key].list[sectionGroupCostId];
+
+							if (activeSubjectCodeFilterDescriptions.length < 1) {
+								slotSectionGroupCost.hidden = false;
+								return;
+							}
 
 							slotSectionGroupCost.hidden = true;
 
