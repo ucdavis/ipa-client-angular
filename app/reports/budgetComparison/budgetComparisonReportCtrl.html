@@ -20,7 +20,7 @@
     <div class="table-toolbar">
       <span ng-repeat="filter in activeFilters" class="budget-comparison-report__toolbar--token">
         {{ filter.description }}
-        <i class="glyphicon glyphicon-remove budget-comparison-report__toolbar--token-remove clickable hoverable" ng-click="toggleFilter(filter.description)"></i>
+        <i class="glyphicon glyphicon-remove budget-comparison-report__toolbar--token-remove clickable hoverable" ng-click="removeFilter(filter)"></i>
       </span>
       <ipa-filter
         items="view.state.ui.filters"

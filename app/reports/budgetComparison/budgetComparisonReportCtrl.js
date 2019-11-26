@@ -32,9 +32,9 @@ class BudgetComparisonReportCtrl {
       BudgetComparisonReportActions.updateFilter(filter);
     };
 
-    $scope.toggleFilter = function(filterDescription) {
-        let selectedFilter = $scope.view.state.ui.filters.find(function(filter) {
-          return filter.description == filterDescription;
+    $scope.removeFilter = function(filter) {
+        let selectedFilter = $scope.view.state.ui.filters.find(function(slotFilter) {
+          return slotFilter.description == filter.description;
         });
 
         selectedFilter.selected = !selectedFilter.selected;
