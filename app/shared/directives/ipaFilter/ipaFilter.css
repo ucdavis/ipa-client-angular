@@ -43,6 +43,11 @@
 	color: #444d56;
 }
 
+.ipa-filter__subheader {
+	border-bottom: 1px solid #ebebeb;
+	padding: 5px 10px;
+}
+
 .ipa-filter__item {
 	display: flex;
 	align-items: center;

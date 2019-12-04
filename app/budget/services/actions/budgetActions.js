@@ -68,6 +68,21 @@ class BudgetActions {
 						});
 					}
 
+					// Generate department subject codes and account numbers for use as filters
+					var subjectCodeFilters = [];
+					results.courses.forEach(function(course) {
+						if (!subjectCodeFilters.includes(course.subjectCode)) {
+							subjectCodeFilters.push(course.subjectCode);
+						}
+					});
+
+					var accountNumberFilters = [];
+					results.lineItems.forEach(function(lineItem) {
+						if (lineItem.accountNumber && !accountNumberFilters.includes(lineItem.accountNumber)) {
+							accountNumberFilters.push(lineItem.accountNumber);
+						}
+					});
+
 					BudgetReducers.reduce({
 						type: ActionTypes.INIT_STATE,
 						payload: results,
@@ -75,7 +90,8 @@ class BudgetActions {
 						workgroupId: workgroupId,
 						selectedBudgetScenarioId: selectedBudgetScenarioId,
 						selectedTerm: selectedTerm,
-						activeTab: activeTab
+						activeTab: activeTab,
+						filters: {subjectCodes: subjectCodeFilters, accountNumbers: accountNumberFilters}
 					});
 
 					// Ensure budgetScenario is properly set
@@ -859,21 +875,31 @@ class BudgetActions {
 
 				return instructorType;
 			},
-			updateCourseTag: function (tag) {
-				var tags = BudgetReducers._state.ui.filters.tags;
+			updateFilter: function (filter) {
+				var filters = BudgetReducers._state.ui.filters.list;
 
-				tags.forEach(function(slotTag) {
-					if (slotTag.id == tag.id) {
-						slotTag.selected = tag.selected;
-					}
-				});
+				if (filter.id == null) {
+					// not a tag
+					var selectedFilter = filters.find(function(slotFilter) {
+						return slotFilter.description == filter.description;
+					});
+
+					selectedFilter.selected = filter.selected;
+				} else {
+					filters.forEach(function(slotFilter) {
+						if (slotFilter.id == filter.id) {
+							slotFilter.selected = filter.selected;
+						}
+					});
+				}
 
 				BudgetReducers.reduce({
-					type: ActionTypes.UPDATE_COURSE_TAGS,
+					type: ActionTypes.UPDATE_FILTERS,
 					payload: {
-						tags: tags
+						filters: filters
 					}
 				});
+				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateSectionGroups();
 			}
 		};
