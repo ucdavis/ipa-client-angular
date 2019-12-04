@@ -10,7 +10,7 @@
 		"ecmaVersion": 6,
 		"sourceType": "module"
 	},
-	"extends": "eslint:recommended",
+	"extends": ["eslint:recommended", "plugin:react/recommended"],
 	"rules": {
 		// Possible Errors
 		"no-debugger": 1, // warn about the use of debugger
@@ -46,11 +46,11 @@
 
 		// Stylistic Issues
 		"semi": 1, // require or disallow semicolons instead of ASI
-		"no-mixed-spaces-and-tabs": 1, // disallow mixed spaces and tabs for indentation
+		"no-mixed-spaces-and-tabs": 1 // disallow mixed spaces and tabs for indentation
 
 		// Angular
 		// TODO: Add more angular rules https://github.com/Gillespie59/eslint-plugin-angular
-		"angular/document-service": 2 // require and specify a prefix for all controller names
+		// "angular/document-service": 2 // require and specify a prefix for all controller names
 	},
 	"plugins": [
 		"angular"

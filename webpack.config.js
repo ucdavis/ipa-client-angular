@@ -54,14 +54,15 @@ module.exports = {
     teachingCallApp: './app/teachingCall/teachingCallApp.js',
     workgroupApp: './app/workgroup/workgroupApp.js',
     workloadSummaryReportApp: './app/workloadSummaryReport/workloadSummaryReportApp.js',
-    reportsApp: './app/reports/reportsApp.js'
+    reportsApp: './app/reports/reportsApp.js',
+    newReconciliationReport: './app/newReconciliationReport/newReconciliationReportApp.js'
   },
   output: {
     filename: 'js/[name].js',
     path: path.resolve(__dirname, 'dist')
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
+    extensions: [ '.tsx', '.ts', '.js', '.jsx' ],
     modules: [
       path.resolve(__dirname, "app"),
       "node_modules"
@@ -84,12 +85,12 @@ module.exports = {
         // Reference: https://github.com/babel/babel-loader
         // Transpile .js files using babel-loader
         // Compiles ES6 and ES7 into ES5 code
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         use: [
           {
             loader: 'babel-loader',
             options: {
-              presets: ['es2015'],
+              presets: ['es2015', 'react'],
             }
           },
           "eslint-loader"
@@ -216,7 +217,7 @@ module.exports = {
           if ((req.url.indexOf("/teachingCallResponseReport") > -1 ) && (req.url != "/teachingCallResponseReport.html")) { return "/teachingCallResponseReport.html"; }
           if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
           if ((req.url.indexOf("/workloadSummaryReport") > -1 ) && (req.url != "/workloadSummaryReport.html")) { return "/workloadSummaryReport.html"; }
-
+          if ((req.url.indexOf("/newReconciliationReport") > -1 ) && (req.url != "/newReconciliationReport.html")) { return "/newReconciliationReport.html"; }
           return req.url;
         }
       }
