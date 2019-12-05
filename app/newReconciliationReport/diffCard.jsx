@@ -15,19 +15,24 @@ import TableRow from '@material-ui/core/TableRow';
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: '50%'
+    maxWidth: '50%',
+    margin: '20px'
   },
   buttonGroup: {
     justifyContent: 'space-around'
   }
 });
 
-const DiffCard = (section) => {
+const DiffCard = props => {
   const classes = useStyles();
+  const { section } = props;
 
   return (
     <Card className={classes.card}>
-      <CardHeader title="Intro to Programming" subheader="ECS 032A - A01" />
+      <CardHeader
+        title={section.title}
+        subheader={`${section.subjectCode} ${section.courseNumber} - ${section.sequenceNumber}`}
+      />
       <CardContent>
         <Table size="small">
           <TableHead>
@@ -45,24 +50,24 @@ const DiffCard = (section) => {
           <TableBody>
             <TableRow>
               <TableCell>IPA</TableCell>
-              <TableCell align="right">12345</TableCell>
-              <TableCell align="right">45</TableCell>
-              <TableCell align="right">Lecture</TableCell>
-              <TableCell align="right">MWF</TableCell>
-              <TableCell align="right">9am</TableCell>
-              <TableCell align="right">10am</TableCell>
-              <TableCell align="right">Everson 119</TableCell>
+              <TableCell align="right">{section.crn}</TableCell>
+              <TableCell align="right">{section.seats}</TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
 
             <TableRow>
               <TableCell>Banner</TableCell>
-              <TableCell align="right">12345</TableCell>
-              <TableCell align="right">50</TableCell>
-              <TableCell align="right">Lecture</TableCell>
-              <TableCell align="right">MWF</TableCell>
-              <TableCell align="right">11am</TableCell>
-              <TableCell align="right">12pm</TableCell>
-              <TableCell align="right">Chem 123</TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableBody>
         </Table>
