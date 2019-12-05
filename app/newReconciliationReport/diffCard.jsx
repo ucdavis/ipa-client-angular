@@ -13,6 +13,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import BannerActivities from './bannerActivities';
 import IpaActivities from './ipaActivities';
 
 const useStyles = makeStyles({
@@ -55,6 +56,11 @@ const DiffCard = props => {
               seats={section.seats}
               activities={section.activities}
             ></IpaActivities>
+
+            <BannerActivities
+              sectionDiff={section.dwChanges}
+              activities={section.activities}
+            />
           </TableBody>
         </Table>
       </CardContent>
