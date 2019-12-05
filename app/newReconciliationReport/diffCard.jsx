@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   }
 });
 
-const App = () => {
+const DiffCard = (section) => {
   const classes = useStyles();
 
   return (
@@ -79,8 +79,8 @@ const App = () => {
   );
 };
 
-App.propTypes = {
-  title: PropTypes.string
+DiffCard.propTypes = {
+  section: PropTypes.object
 };
 
-export default App;
+export default DiffCard;
