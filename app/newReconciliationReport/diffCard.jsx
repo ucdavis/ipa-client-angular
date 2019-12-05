@@ -13,6 +13,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import IpaActivities from './ipaActivities';
+
 const useStyles = makeStyles({
   card: {
     maxWidth: '50%',
@@ -48,27 +50,11 @@ const DiffCard = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>IPA</TableCell>
-              <TableCell align="right">{section.crn}</TableCell>
-              <TableCell align="right">{section.seats}</TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>Banner</TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
+            <IpaActivities
+              crn={section.crn}
+              seats={section.seats}
+              activities={section.activities}
+            ></IpaActivities>
           </TableBody>
         </Table>
       </CardContent>
