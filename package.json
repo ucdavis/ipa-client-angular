@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.7.1",
+    "@material-ui/icons": "^4.5.1",
     "@types/angular": "1.6.43",
     "@types/node": "10.0.0",
     "angular": "1.6.9",

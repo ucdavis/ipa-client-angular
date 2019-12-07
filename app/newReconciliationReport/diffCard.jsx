@@ -7,11 +7,15 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
+import Chip from '@material-ui/core/Chip';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import BannerActivities from './bannerActivities';
 import IpaActivities from './ipaActivities';
@@ -23,6 +27,9 @@ const useStyles = makeStyles({
   },
   buttonGroup: {
     justifyContent: 'space-around'
+  },
+  instructor: {
+    margin: '0.5em'
   }
 });
 
@@ -37,6 +44,30 @@ const DiffCard = props => {
         subheader={`${section.subjectCode} ${section.courseNumber} - ${section.sequenceNumber}`}
       />
       <CardContent>
+        {section.instructors.map(instructor => {
+          let icon = null;
+          let tooltipText = null;
+
+          if (instructor.noLocal) {
+            icon = <AddCircleOutlineIcon />;
+            tooltipText = "Assign instructor to IPA section";
+          }
+
+          if (instructor.noRemote) {
+            icon = <RemoveCircleOutlineIcon />;
+            tooltipText = "Unassign instructor from IPA section";
+          }
+
+          return (
+            <Tooltip key={instructor.uniqueKey} title={tooltipText}>
+              <Chip
+                className={classes.instructor}
+                label={`${instructor.firstName} ${instructor.lastName}`}
+                icon={icon}
+              />
+            </Tooltip>
+          );
+        })}
         <Table size="small">
           <TableHead>
             <TableRow>
