@@ -185,10 +185,7 @@ module.exports = {
       uglify: false,
       sourceMap: false,
       fileName: 'js/snippets.js',
-      filesToConcat: [
-        './vendor/js/userEcho.js',
-        './vendor/js/googleAnalytics.js'
-      ],
+      filesToConcat: ['./vendor/js/googleAnalytics.js'],
     })
   ],
   devServer: {
