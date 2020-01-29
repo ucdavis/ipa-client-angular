@@ -3,6 +3,12 @@
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+  opacity: 0.8;
+}
+
+.backToTop__button .btn {
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .backToTop__button--hidden {
