@@ -9,9 +9,9 @@ let backToTop = function($window) {
     link: function(scope, element) {
       $window.onscroll = function() {
         if (this.pageYOffset > this.innerHeight) {
-          element.removeClass('backToTop__button--hidden');
+          element.addClass('backToTop__button--show');
         } else {
-          element.addClass('backToTop__button--hidden');
+          element.removeClass('backToTop__button--show');
         }
       };
     }
