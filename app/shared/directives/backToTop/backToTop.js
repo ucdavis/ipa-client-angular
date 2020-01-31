@@ -14,6 +14,10 @@ let backToTop = function($window) {
           element.removeClass('backToTop__button--show');
         }
       };
+
+      scope.backToTop = function() {
+        $window.scrollTo(0, 0);
+      };
     }
   };
 };
