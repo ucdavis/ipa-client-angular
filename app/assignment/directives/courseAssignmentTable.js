@@ -375,7 +375,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 														courseHtml += "<li><a";
 														courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 														courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
-														// courseHtml += " data-instructor-type-id=\"" + instructor.instructorTypeId + "\"";
 														courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
 														courseHtml += " href=\"#\">" + instructor.fullName + " (" + priority + ")" + "</a></li>";
