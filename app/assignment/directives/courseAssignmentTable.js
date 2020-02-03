@@ -375,6 +375,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 														courseHtml += "<li><a";
 														courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 														courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
+														// courseHtml += " data-instructor-type-id=\"" + instructor.instructorTypeId + "\"";
 														courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
 														courseHtml += " href=\"#\">" + instructor.fullName + " (" + priority + ")" + "</a></li>";
@@ -520,6 +521,14 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					} else if (teachingAssignmentId) {
 						// Approving an existing teachingAssignment
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+
+						// Check if instructor type changed since creation (from teaching call)
+						const currentInstructorTypeId = scope.view.state.instructors.list[instructorId].instructorTypeId;
+
+						if (currentInstructorTypeId && teachingAssignment.instructorTypeId != currentInstructorTypeId) {
+							teachingAssignment.instructorTypeId = currentInstructorTypeId;
+						}
+
 						AssignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 
 						// Remove The Staff if necessary
