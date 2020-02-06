@@ -8,7 +8,11 @@ h3, .h3 {
 	font-size: 12px;
 }
 .page-container .sidebar-menu {
-  width: 200px;
+	width: 200px;
+}
+.page-container .sidebar-menu .sidebar-menu-inner {
+	position: fixed;
+	width: 200px;
 }
 .pager.year-switcher {
   border-top: 1px solid rgba(69, 74, 84, 0.7);
