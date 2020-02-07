@@ -21,10 +21,19 @@ let ipaTabs = function () {
 			selectTab: '&',
 			slim: '<?',
 			containerClass: '<?', // Can provide classes to transclusion container
-			borderLess: '<?' // Removes borders from the container
+			borderLess: '<?', // Removes borders from the container
+			stickyTop: '<?' // Specify vertical offset in px
 		},
 		transclude: true,
 		link: function (scope) {
+			scope.stickyTopStyle = {
+				'position': 'sticky',
+				'top': scope.stickyTop + 'px',
+				'margin-bottom': '0px',
+				'z-index': 1,
+				'background-color': '#fff'
+			};
+
 			// Validate passed methods
 			if (angular.isUndefined(scope.selectTab)) { // eslint-disable-line no-undef
 				throw {
