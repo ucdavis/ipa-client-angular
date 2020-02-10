@@ -59,10 +59,6 @@
 
 .budget-costs__table--header {
 	height: 65px;
-	position: sticky;
-	top: 99px;
-	z-index: 1;
-	background-color: #fff;
 }
 
 .budget-costs__divider {

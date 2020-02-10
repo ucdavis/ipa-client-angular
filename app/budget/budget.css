@@ -4,9 +4,6 @@
 
 .budget-view__nav-container {
   margin-bottom: 10px;
-  position: sticky;
-	top: 25px;
-	z-index: 1;
 }
 
 .budget-view__course-costs-container {
