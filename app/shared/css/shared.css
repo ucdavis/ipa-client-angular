@@ -165,6 +165,9 @@ table.availability-grid tr td {
 
 /* ---------------------- IPA Header -----------------------*/
 .ipa-header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
 	margin-bottom: 10px;
 }
 
