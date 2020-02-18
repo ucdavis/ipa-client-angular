@@ -15,6 +15,12 @@ h3,
 .page-container .sidebar-menu .sidebar-menu-inner {
   position: fixed;
   width: 200px;
+  overflow-y: scroll;
+  top: 0;
+  bottom: 0;
+}
+.page-container.sidebar-collapsed .sidebar-menu .sidebar-menu-inner {
+  overflow-y: unset;
 }
 .pager.year-switcher {
   border-top: 1px solid rgba(69, 74, 84, 0.7);
