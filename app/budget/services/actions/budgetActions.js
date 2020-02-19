@@ -33,11 +33,12 @@ class BudgetActions {
 									selectedBudgetScenarioId = budgetScenario.id;
 								}
 							});
-
+						} else {
 							selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
-							selectedBudgets[year] = selectedBudgetScenarioId;
-							localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 						}
+
+						selectedBudgets[year] = selectedBudgetScenarioId;
+						localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 					}
 
 					if (results.sectionGroupCosts.length > 0) {
