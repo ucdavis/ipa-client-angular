@@ -9,10 +9,9 @@ class BudgetActions {
 				var year = $route.current.params.year;
 				var selectedBudgetScenarioId = selectedBudgets[year];
 				var activeTab = localStorage.getItem('activeTab');
-debugger;
+
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
 					// BudgetScenario was set in localStorage, need to sanity check
-					debugger;
 					if (selectedBudgetScenarioId) {
 						var scenarioFound = false;
 						results.budgetScenarios.forEach(function(budgetScenario) {
@@ -28,7 +27,6 @@ debugger;
 
 					// BudgetScenario was not set in localStorage, or it didn't correspond to an existing scenario
 					if (!selectedBudgetScenarioId) {
-						debugger;
 						if (results.budgetScenarios && results.budgetScenarios.length > 0) {
 							results.budgetScenarios.forEach(function(budgetScenario) {
 								if (budgetScenario.fromLiveData) {
@@ -38,10 +36,10 @@ debugger;
 						} else {
 							selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
 						}
-							selectedBudgets[year] = selectedBudgetScenarioId;
-							localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
-						}
-					
+
+						selectedBudgets[year] = selectedBudgetScenarioId;
+						localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
+					}
 
 					if (results.sectionGroupCosts.length > 0) {
 						var sectionGroupCosts = results.sectionGroupCosts;
