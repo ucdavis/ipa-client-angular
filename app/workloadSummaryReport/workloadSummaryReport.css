@@ -11,11 +11,9 @@
 }
 
 .table-toolbar {
-	width: 100%;
-	text-align: right;
 	padding: 20px 20px 5px 20px;
-	margin: 0px;
-	border-radius: 3px;
+	display: flex;
+	justify-content: space-between;
 }
 
 .tool-icon {
