@@ -375,22 +375,36 @@ class CourseActionCreators {
         });
       },
       updateSection: function (section) {
-        section.seats = parseInt(section.seats);
+        let proposedSectionSeats = parseInt(section.seats);
+        let proposedCourseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
+          if (relatedSection.id !== section.id){
+            return previousValue + relatedSection.seats;
+          }
+          else {
+            return previousValue;
+          }
+        }, proposedSectionSeats);
+        let maxCourseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.plannedSeats;
+        if (maxCourseSeats >= proposedCourseSeats){
+          section.seats = proposedSectionSeats;
+          CourseService.updateSection(section).then(function (section) {
+            window.ipa_analyze_event('courses', 'section updated');
 
-        CourseService.updateSection(section).then(function (section) {
-          window.ipa_analyze_event('courses', 'section updated');
+            $rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
+            var action = {
+              type: ActionTypes.UPDATE_SECTION,
+              payload: {
+                section: section
+              }
+            };
+            CourseStateService.reduce(action);
+          }, function () {
+            $rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
+          });
+        } else {
+          section.seats = proposedSectionSeats;
+        }
 
-          $rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
-          var action = {
-            type: ActionTypes.UPDATE_SECTION,
-            payload: {
-              section: section
-            }
-          };
-          CourseStateService.reduce(action);
-        }, function () {
-          $rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
-        });
       },
       createSection: function (section) {
         CourseService.createSection(section).then(function (section) {
