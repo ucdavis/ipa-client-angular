@@ -363,7 +363,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
       scope.getCheckbox = function(courseId, type, isChecked) {
         var checkedClass = (isChecked == true) ? " checked" : "";
-      
+
         return '' +
         '<div class="checkbox-container" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
             '<div class="checkbox checkbox-replace color-primary neon-cb-replacement' + checkedClass + '" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
@@ -476,7 +476,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
               if (requiresAttention) {
                 row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
               }
-              row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
+              const placeholder = sectionGroupId ? '0 planned seats' : 'No course offering';
+              row += `<input type="number" min="0" value="${ plannedSeats }" class="form-control planned-seats" placeholder="${ placeholder }"></input>`;
+              row += `<span class="warning">⚠</span>`;
             }
 
             row += "</div></td>";
