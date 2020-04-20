@@ -72,6 +72,9 @@
           </tr>
         </tbody>
       </table>
+      <span ng-if="sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats">
+        <strong style="color: red;">Section seats not updated.  Total course seats exceeded.</strong>
+      </span>
       <spinner ng-show="view.selectedEntity.id && !view.selectedEntity.sectionIds"></spinner>
       <div ng-show="view.selectedEntity.sectionIds">
         <div ng-if="view.selectedEntity.sectionIds.length == 0" class="text-center text-muted" style="padding: 1em;">No sections available</div>
