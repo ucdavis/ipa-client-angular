@@ -58,6 +58,8 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         if (data.action.type == ActionTypes.ADD_SECTION_GROUP) {
           // Indicate on the textbox that the sectionGroup is offered
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered"); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', '0 planned seats' ); // eslint-disable-line
+
 
           return;
         }
@@ -66,6 +68,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           // Empty the textbox
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input.planned-seats').val(""); // eslint-disable-line no-undef
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').removeClass("is-offered"); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', 'No course offering' ); // eslint-disable-line
 
           return;
         }
