@@ -654,6 +654,9 @@ td.sg-cell input[type=number] + .warning {
   color: #ff9800;
   z-index: 1;
 }
+td.sg-cell input[type=number]:placeholder-shown:focus::placeholder {
+  color: transparent;
+}
 td.sg-cell.is-offered input[type=number]::placeholder {
   font-weight: 400;
   color: #000;
