@@ -377,12 +377,9 @@ class CourseActionCreators {
       updateSection: function (section) {
         let proposedSectionSeats = parseInt(section.seats);
         let proposedCourseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
-          if (relatedSection.id !== section.id){
-            return previousValue + relatedSection.seats;
-          }
-          else {
-            return previousValue;
-          }
+          return relatedSection.id !== section.id
+            ? previousValue + relatedSection.seats
+            : previousValue;
         }, proposedSectionSeats);
         let maxCourseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.plannedSeats;
         if (maxCourseSeats >= proposedCourseSeats){
