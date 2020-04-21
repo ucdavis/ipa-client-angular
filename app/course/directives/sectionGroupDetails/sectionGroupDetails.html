@@ -78,7 +78,7 @@
         </strong>
         <br />
         <strong>
-          Reason: Section seating of {{ sectionSeatTotal(view.selectedEntity) }} exceeds total available course seats of {{ view.selectedEntity.plannedSeats }}.
+          Reason: Section seating of {{ sectionSeatTotal(view.selectedEntity) }} exceeds total available course seats of {{ view.selectedEntity.plannedSeats || 0}}.
         </strong>
         <br />
         <br />
