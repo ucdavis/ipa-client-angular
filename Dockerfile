@@ -1,18 +1,16 @@
-FROM node:8
-
-EXPOSE 9000
-
-LABEL maintainer="UC Davis DSS IT http://it.dss.ucdavis.edu"
-
-WORKDIR /usr/src/app
-
-COPY package.json ./
-COPY yarn.lock ./
-COPY .eslintrc.json ./
+FROM node:10-alpine AS builder
+WORKDIR /usr/src
+COPY . .
 RUN yarn install
+RUN yarn build
 
-COPY app/ ./app
+FROM nginx:alpine
 
-RUN yarn lint
+LABEL maintainer="UC Davis LS IT https://lsit.ucdavis.edu"
 
-#CMD java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx
+COPY --from=builder /usr/src/dist /usr/share/nginx/html
+
+# Using port 9000 to match local dev
+EXPOSE 9000
