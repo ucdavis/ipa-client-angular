@@ -1,8 +1,8 @@
 FROM node:10-alpine AS builder
 WORKDIR /usr/src
 COPY . .
-RUN yarn install
-RUN yarn build
+RUN npm install
+RUN npm run build
 
 FROM nginx:alpine
 

@@ -8,5 +8,3 @@ node_modules
 clientConfig.example.js
 cypress.json
 Dockerfile
-package-lock.json
-yarn-error.log
