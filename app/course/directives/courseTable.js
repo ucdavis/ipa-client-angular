@@ -58,6 +58,8 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         if (data.action.type == ActionTypes.ADD_SECTION_GROUP) {
           // Indicate on the textbox that the sectionGroup is offered
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered"); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', '0 planned seats' ); // eslint-disable-line
+
 
           return;
         }
@@ -66,6 +68,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           // Empty the textbox
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input.planned-seats').val(""); // eslint-disable-line no-undef
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').removeClass("is-offered"); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', 'No course offering' ); // eslint-disable-line
 
           return;
         }
@@ -363,7 +366,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
       scope.getCheckbox = function(courseId, type, isChecked) {
         var checkedClass = (isChecked == true) ? " checked" : "";
-      
+
         return '' +
         '<div class="checkbox-container" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
             '<div class="checkbox checkbox-replace color-primary neon-cb-replacement' + checkedClass + '" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
@@ -476,7 +479,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
               if (requiresAttention) {
                 row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
               }
-              row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
+              const placeholder = sectionGroupId ? '0 planned seats' : 'No course offering';
+              row += `<input type="number" min="0" value="${ plannedSeats }" class="form-control planned-seats" placeholder="${ placeholder }"></input>`;
+              row += `<span class="warning">⚠</span>`;
             }
 
             row += "</div></td>";
