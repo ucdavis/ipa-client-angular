@@ -72,7 +72,7 @@
           </tr>
         </tbody>
       </table>
-      <div ng-if="sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats" ng-class="{'section-group-details__total--overflow': true }">
+      <div ng-if="sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats" class="section-group-details__total--overflow">
         <strong>
           Changes have not been saved.
         </strong>
@@ -80,6 +80,8 @@
         <strong>
           Reason: Section seating of {{ sectionSeatTotal(view.selectedEntity) }} exceeds total available course seats of {{ view.selectedEntity.plannedSeats }}.
         </strong>
+        <br />
+        <br />
       </div>
       <spinner ng-show="view.selectedEntity.id && !view.selectedEntity.sectionIds"></spinner>
       <div ng-show="view.selectedEntity.sectionIds">
