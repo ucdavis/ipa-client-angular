@@ -101,6 +101,8 @@ const supportAssignmentApp = angular.module("supportAssignmentApp", dependencies
 .directive('courseAppointmentInput', courseAppointmentInput)
 .directive('supportAssignmentFilter', supportAssignmentFilter)
 .constant('ActionTypes', {
+	TOGGLE_TA_FILTER: "TOGGLE_TA_FILTER",
+	UPDATE_COURSE_TABLE_FILTER: "UPDATE_COURSE_TABLE_FILTER",
 	UPDATE_TABLE_FILTER: "UPDATE_TABLE_FILTER",
 	SET_VIEW_PIVOT: "SET_VIEW_PIVOT",
 	SET_VIEW_TYPE: "SET_VIEW_TYPE",
