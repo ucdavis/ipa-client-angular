@@ -98,15 +98,9 @@
   background: transparent;
 }
 
-.support-assignment-filter__icon {
-  padding-top: 3px;
-}
-
-.label-selected-section-group {
+.support-assignment-filter__chip {
   background-color: #e6e6e6;
   color: #333;
   margin-right: 5px;
-  display: inline-block;
   font-size: 85%;
-  line-height: normal;
 }
