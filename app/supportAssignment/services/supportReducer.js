@@ -53,19 +53,21 @@ class SupportReducer {
 						}); 
 						return sectionGroups;
 					case ActionTypes.UPDATE_COURSE_TABLE_FILTER:
-						var payload = action.payload;
+						var activeFilter = action.payload;
 
-						if (payload == true) {
+						if (activeFilter) {
 							sectionGroups.ids.forEach(function(sectionGroupId) {
-								if (sectionGroups.list[sectionGroupId].supportAssignments.length > 0) {
-									sectionGroups.list[sectionGroupId].isFiltered = false;
+								var sectionGroup = sectionGroups.list[sectionGroupId];
+
+								if (sectionGroup.supportAssignments.length > 0 || sectionGroup.teachingAssistantAppointments || sectionGroup.readerAppointments) {
+									sectionGroup.isFiltered = false;
 								} else {
-									sectionGroups.list[sectionGroupId].isFiltered = true;
+									sectionGroup.isFiltered = true;
 								}
 							});
-						} else if (payload == false) {
+						} else {
 							sectionGroups.ids.forEach(function(sectionGroupId) {
-									sectionGroups.list[sectionGroupId].isFiltered = false;
+								sectionGroups.list[sectionGroupId].isFiltered = false;
 							});
 						}
 						return sectionGroups;
