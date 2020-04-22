@@ -12,6 +12,7 @@ class BudgetComparisonReportCtrl {
     $scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
     $scope.view = {};
+    $scope.activeFilters = [];
 
     $rootScope.$on('budgetComparisonReportStateChanged', function (event, data) {
       $scope.view.state = data.state;
@@ -19,6 +20,24 @@ class BudgetComparisonReportCtrl {
 
     $scope.downloadAsExcel = function() {
       BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
+    };
+
+    $scope.toggleFilter = function(filter) {
+      filter.selected = !filter.selected;
+
+      $scope.activeFilters = $scope.view.state.ui.filters.filter(function(filter) {
+        return filter.selected;
+      });
+
+      BudgetComparisonReportActions.toggleFilter(filter);
+    };
+
+    $scope.removeToken = function(filter) {
+        $scope.activeFilters = $scope.activeFilters.filter(function(slotFilter) {
+          return slotFilter.description !== filter.description;
+        });
+
+        $scope.toggleFilter(filter);
     };
   }
 }

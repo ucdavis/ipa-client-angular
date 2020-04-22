@@ -121,7 +121,7 @@ class BudgetComparisonReportCalculations {
         sectionGroupCosts.ids.forEach(sectionGroupCostId => {
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
-          if (sectionGroupCost.disabled) {
+          if (sectionGroupCost.disabled || sectionGroupCost.hidden) {
             return;
           }
           if (sectionGroupCost.budgetScenarioId != selectedScenarioId) {
@@ -285,7 +285,7 @@ class BudgetComparisonReportCalculations {
           if (sectionGroupCost.budgetScenarioId != selectedScenarioId) {
             return;
           }
-          if (sectionGroupCost.disabled) {
+          if (sectionGroupCost.disabled || sectionGroupCost.hidden) {
             return;
           }
 
@@ -370,7 +370,7 @@ class BudgetComparisonReportCalculations {
 
           if (
             sectionGroupCost.budgetScenarioId != selectedScenarioId ||
-            sectionGroupCost.disabled
+            sectionGroupCost.disabled || sectionGroupCost.hidden
           ) {
             return;
           }

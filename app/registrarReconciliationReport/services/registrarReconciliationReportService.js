@@ -31,7 +31,7 @@ class RegistrarReconciliationReportService {
 				return self.apiService.delete("/api/reportView/activities/" + activity.id);
 			},
 			createActivity: function (sectionId, activity) {
-				return self.apiService.post("/api/reportView/sections/" + sectionId + "/activities/" + activity.typeCode, activity);
+				return self.apiService.post("/api/reportView/sections/" + sectionId + "/activities/" + encodeURIComponent(activity.typeCode), activity);
 			},
 			assignInstructor: function (sectionGroupId, instructor) {
 				return self.apiService.post("/api/reportView/sectionGroups/" + sectionGroupId + "/instructors", instructor);

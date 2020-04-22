@@ -26,6 +26,24 @@
 	border: 1px solid #777;
 }
 
+.ipa-header__help {
+	padding-left: 35px;
+	padding-right: 35px;
+	font-weight: 400;
+	align-self: center;
+	border: 1px solid #d0d0d3;
+	border-radius: 4px;
+	padding: 6px 12px 6px 12px;
+	font-size: 12px;
+	margin-left: 20px;
+	color: black;
+}
+
+.ipa-header__help a {
+	text-decoration: none;
+	color: black;
+}
+
 /* Violates BEM styles to override bootstrap and neon */
 .ipa-header .btn-default.ipa-header__workgroup-button:active,
 .ipa-header .btn-default.ipa-header__workgroup-button.active,

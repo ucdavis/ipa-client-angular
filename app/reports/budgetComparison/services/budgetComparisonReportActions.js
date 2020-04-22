@@ -446,6 +446,8 @@ class BudgetComparisonReportActions {
 
 				if (BudgetComparisonReportReducers._state.calculations.isCurrentYearFetchComplete && BudgetComparisonReportReducers._state.calculations.isPreviousYearFetchComplete
 				&& BudgetComparisonReportReducers._state.userRoles.ids && BudgetComparisonReportReducers._state.users.ids && BudgetComparisonReportReducers._state.instructors.ids) {
+					this._generateFilters();
+
 					BudgetComparisonReportCalculations.calculateView();
 				}
 			},
@@ -499,6 +501,85 @@ class BudgetComparisonReportActions {
 					});
 				}
 			},
+			_generateFilters: function() {
+				let courses = BudgetComparisonReportReducers._state.courses;
+				let lineItems = BudgetComparisonReportReducers._state.lineItems;
+				let subjectCodes = [];
+				let accountNumbers = [];
+				let filters = [];
+
+				filters.push({
+					subheader: true,
+					description: 'Subject Codes'
+				});
+				courses.current.ids.forEach(function(courseId) {
+					var subjectCode = courses.current.list[courseId].subjectCode;
+
+					if (!subjectCodes.includes(subjectCode)) {
+						subjectCodes.push(subjectCode);
+
+						filters.push({
+							type: 'subjectCode',
+							description: subjectCode,
+							selected: false
+						});
+					}
+				});
+
+				courses.previous.ids.forEach(function(courseId) {
+					var subjectCode = courses.previous.list[courseId].subjectCode;
+
+					if (!subjectCodes.includes(subjectCode)) {
+						subjectCodes.push(subjectCode);
+
+				filters.push({
+							type: 'subjectCode',
+							description: subjectCode,
+							selected: false
+						});
+					}
+				});
+
+				filters.push({
+					subheader: true,
+					description: 'Account Number'
+				});
+
+				lineItems.current.ids.forEach(function(lineItemId) {
+					var accountNumber = lineItems.current.list[lineItemId].accountNumber;
+
+					if (accountNumber && !accountNumbers.includes(accountNumber)) {
+						accountNumbers.push(accountNumber);
+
+						filters.push({
+							type: 'accountNumber',
+							description: accountNumber,
+							selected: false
+						});
+					}
+				});
+
+				lineItems.previous.ids.forEach(function(lineItemId) {
+					var accountNumber = lineItems.previous.list[lineItemId].accountNumber;
+
+					if (accountNumber && !accountNumbers.includes(accountNumber)) {
+						accountNumbers.push(accountNumber);
+
+						filters.push({
+							type: 'accountNumber',
+							description: accountNumber,
+							selected: false
+						});
+					}
+				});
+
+				BudgetComparisonReportReducers.reduce({
+					type: ActionTypes.GENERATE_FILTERS,
+					payload: {
+						filters: filters
+					}
+				});
+			},
 			selectCurrentBudgetScenario: function(selectedScenarioId) {
 				BudgetComparisonReportReducers.reduce({
 					type: ActionTypes.SELECT_CURRENT_BUDGET_SCENARIO,
@@ -522,6 +603,75 @@ class BudgetComparisonReportActions {
 			downloadAsExcel: function(year, workgroupName) {
 				var viewState = BudgetComparisonReportReducers._state;
 				BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
+			},
+			toggleFilter: function(filter) {
+				let filters = BudgetComparisonReportReducers._state.ui.filters;
+				let lineItems = BudgetComparisonReportReducers._state.lineItems;
+				let sectionGroupCosts = BudgetComparisonReportReducers._state.sectionGroupCosts;
+
+				let activeSubjectCodeFilterDescriptions = filters.filter(function(slotFilter) {
+					return slotFilter.selected && slotFilter.type == "subjectCode";
+				}).map(function(slotFilter) { return slotFilter.description; });
+
+				let activeAccountNumberFilterDescriptions = filters.filter(function(slotFilter) {
+						return slotFilter.selected && slotFilter.type == "accountNumber";
+					}).map(function(slotFilter) {
+						return slotFilter.description;
+					});
+
+				if (filter.type === "accountNumber") {
+					let keys = Object.keys(lineItems);
+
+					keys.forEach(function(key) {
+						lineItems[key].ids.forEach(function(lineItemId) {
+							let slotLineItem = lineItems[key].list[lineItemId];
+
+							if (activeAccountNumberFilterDescriptions.length < 1) {
+								slotLineItem.hidden = false;
+								return;
+							}
+
+							slotLineItem.hidden = true;
+
+							if (activeAccountNumberFilterDescriptions.includes(slotLineItem.accountNumber)) {
+								slotLineItem.hidden = false;
+							}
+
+						});
+					});
+				}
+
+				if (filter.type === "subjectCode") {
+					let keys = Object.keys(sectionGroupCosts);
+
+					keys.forEach(function(key) {
+						sectionGroupCosts[key].ids.forEach(function(sectionGroupCostId) {
+							let slotSectionGroupCost = sectionGroupCosts[key].list[sectionGroupCostId];
+
+							if (activeSubjectCodeFilterDescriptions.length < 1) {
+								slotSectionGroupCost.hidden = false;
+								return;
+							}
+
+							slotSectionGroupCost.hidden = true;
+
+							if (activeSubjectCodeFilterDescriptions.includes(slotSectionGroupCost.subjectCode)) {
+								slotSectionGroupCost.hidden = false;
+							}
+						});
+					});
+				}
+
+				BudgetComparisonReportReducers.reduce({
+					type: ActionTypes.TOGGLE_FILTER,
+					payload: {
+						lineItems: lineItems,
+						sectionGroupCosts: sectionGroupCosts,
+						filters: filters
+					}
+				});
+
+				BudgetComparisonReportCalculations.calculateView();
 			}
 		};
 	}
