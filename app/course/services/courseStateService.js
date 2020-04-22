@@ -277,6 +277,7 @@ class CourseStateService {
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.section.sectionGroupId];
             if (!sectionGroups.selectedSectionGroup.sectionIds) { sectionGroups.selectedSectionGroup.sectionIds = []; }
             sectionGroups.selectedSectionGroup.sectionIds.push(action.payload.section.id);
+            sectionGroups.selectedSectionGroup.sections.push(new Section(action.payload.section));
             sectionGroups.selectedSectionGroup.requiresAttention = false;
             return sectionGroups;
           case ActionTypes.REMOVE_SECTION:

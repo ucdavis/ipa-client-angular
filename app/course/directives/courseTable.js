@@ -524,6 +524,10 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
               CourseActionCreators.updateSection(section);
             }
           });
+          // Check if any overflowed sections can be updated.  If yes, update them.
+          if (sectionGroup.sections && sectionGroup.sections.length > 0){
+            CourseActionCreators.updateSection();
+          }
 
         } else if (plannedSeats) {
           // Create a new sectionGroup
