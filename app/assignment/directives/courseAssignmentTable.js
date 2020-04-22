@@ -520,6 +520,14 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					} else if (teachingAssignmentId) {
 						// Approving an existing teachingAssignment
 						teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
+
+						// Check if instructor type changed since creation (from teaching call)
+						const currentInstructorTypeId = scope.view.state.instructors.list[instructorId].instructorTypeId;
+
+						if (currentInstructorTypeId && teachingAssignment.instructorTypeId != currentInstructorTypeId) {
+							teachingAssignment.instructorTypeId = currentInstructorTypeId;
+						}
+
 						AssignmentActionCreators.approveInstructorAssignment(teachingAssignment);
 
 						// Remove The Staff if necessary

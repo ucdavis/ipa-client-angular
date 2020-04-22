@@ -6,7 +6,8 @@
 
 		<!-- Regular UI -->
 		<div class="budget-scenario-toolbar__container"
-			ng-show="displayScenarioRenameUI == false">
+			ng-show="displayScenarioRenameUI == false"
+		>
 			<budget-scenario-dropdown state="state"></budget-scenario-dropdown>
 
 			<ipa-button class="budget-scenario-toolbar__edit-button do-not-print"
@@ -47,16 +48,22 @@
 	</div>
 
 	<div class="budget-scenario-toolbar__tool-container do-not-print">
+		<span class="label budget-scenario-toolbar__token" ng-repeat="filter in activeFilters">
+			{{ filter.description }}
+			<i class="glyphicon glyphicon-remove budget-scenario-toolbar__token-remove clickable hoverable" ng-click="toggleFilter(filter.description)"></i>
+		</span>
 		<term-filter active-terms="state.selectedBudgetScenario.terms"
 		             select-term="selectBudgetScenarioTerm">
 		</term-filter>
-		<ipa-filter items="state.ui.filters.tags"
-		            title="'Tags'"
-		            tooltip="'Tags'"
+
+		<ipa-filter items="state.ui.filters.list"
+		            title="'Filters'"
+		            tooltip="'Filters'"
 		            button-icon="'glyphicon-filter'"
-		            select-item="updateCourseTag(item)">
+		            select-item="updateFilter(item)">
 		</ipa-filter>
+
 		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-download-alt" ng-click="downloadBudgetExcel()"></span>
-		<span class="budget-scenario-toolbar__tool glyphicon glyphicon-print" ng-click="print()"></span>
+		<span	class="budget-scenario-toolbar__tool glyphicon glyphicon-print" ng-click="print()"></span>
 	</div>
 </div>

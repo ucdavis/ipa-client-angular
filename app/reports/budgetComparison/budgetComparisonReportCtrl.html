@@ -18,6 +18,18 @@
   <!-- Toolbar -->
   <div class="row hidden-print" style="clear: both; display: block; width: 100%;">
     <div class="table-toolbar">
+      <span ng-repeat="filter in activeFilters" class="budget-comparison-report__toolbar--token">
+        {{ filter.description }}
+        <i class="glyphicon glyphicon-remove budget-comparison-report__toolbar--token-remove clickable hoverable" ng-click="removeToken(filter)"></i>
+      </span>
+      <ipa-filter
+        items="view.state.ui.filters"
+        title="'Filters'"
+        tooltip="'Filters'"
+        button-icon="'glyphicon-filter'"
+        select-item="toggleFilter(item)"
+        border-less="true"
+      ></ipa-filter>
       <div class="btn-group">
         <span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="downloadAsExcel()" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false"></span>
       </div>

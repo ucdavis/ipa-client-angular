@@ -23,8 +23,8 @@ Running the tests
 Docker Notes
 ------------
 1. Customize ipa-ucdavis-edu.env
-2. docker-compose build
-3. docker-compose up -d
+2. docker build -t ipa-client .
+3. docker run -p 9000:80 ipa-client
 
 For production mode, you'll want to expose port 80 as port 80, 443 as 443. Use:
 

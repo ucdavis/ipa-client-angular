@@ -1,7 +1,6 @@
 const path = require('path');
 var webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
 
@@ -75,11 +74,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      },
-      {
         // JS LOADER
         // Reference: https://github.com/babel/babel-loader
         // Transpile .js files using babel-loader
@@ -89,7 +83,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['es2015'],
+              presets: ['@babel/preset-env'],
             }
           },
           "eslint-loader"
@@ -107,7 +101,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     // Copy html to output path (dist)
     new CopyWebpackPlugin([
       {
@@ -185,10 +179,7 @@ module.exports = {
       uglify: false,
       sourceMap: false,
       fileName: 'js/snippets.js',
-      filesToConcat: [
-        './vendor/js/userEcho.js',
-        './vendor/js/googleAnalytics.js'
-      ],
+      filesToConcat: ['./vendor/js/googleAnalytics.js'],
     })
   ],
   devServer: {
