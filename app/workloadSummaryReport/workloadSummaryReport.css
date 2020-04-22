@@ -26,3 +26,8 @@
 	background: #ebebeb;
 	border-radius: 3px;
 }
+
+.anchor-links {
+	padding: 0.5em 0;
+	cursor: pointer;
+}
