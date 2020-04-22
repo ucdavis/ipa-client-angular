@@ -169,6 +169,12 @@ class SupportAssignmentCtrl {
 			return false;
 		};
 
+		_self.$scope.toggleCoursesWithoutTa = function () {
+			_self.SupportActions.toggleCoursesWithoutTa(
+				!_self.$scope.view.state.ui.filters.hideCoursesWithoutTa
+			);
+		};
+
 		_self.$scope.isUnassigned = function (instructionalSupportAssignment) {
 			if (instructionalSupportAssignment.instructionalSupportStaffId === 0) {
 				return true;
