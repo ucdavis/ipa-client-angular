@@ -135,14 +135,9 @@ class CourseActionCreators {
         });
       },
       updateSectionGroup: function (sectionGroup) {
-        let courseSeats;
-        if (CourseStateService._state.sectionGroups.selectedSectionGroup.sections){
-          courseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
-            return previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0);
-          }, 0);
-        } else {
-          courseSeats = 0;
-        }
+        let courseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
+          return previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0);
+        }, 0);
 
         if (courseSeats <= sectionGroup.plannedSeats){
           CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
