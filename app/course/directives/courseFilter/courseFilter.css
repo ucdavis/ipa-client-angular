@@ -2,33 +2,26 @@
 .courses-filter {
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
+  margin-right: 30px;
 }
 
-.courses-filter-header {
-  display: flex;
-  -webkit-justify-content: flex-start;
-  justify-content: flex-start;
-  padding: 0px 0px 20px 0px;
-  margin: 0;
+.courses-filter__label {
+  margin-right: 5px;
+  margin-bottom: 0;
 }
 
-.courses-filter-token-list {
-  display: flex;
-  align-items: left;
-}
-
-.courses-filter-token {
+.courses-filter__token {
   background-color: #e6e6e6;
   color: #333;
   display: inline-block;
   font-size: 85%;
   line-height: normal;
-}
-
-.courses-filter-label {
-  margin: 2px 5px 0px 0px;
+  margin-right: 5px;
   padding: 6px 12px;
   border-radius: .25em;
 }
 
+.courses-filter__token-remove {
+  margin-left: 0.3em;
+}
