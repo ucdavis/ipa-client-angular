@@ -62,6 +62,12 @@ let sectionGroupDetails = function (CourseActionCreators) {
         }
       };
 
+      scope.isSeries = function () {
+        let selectedEntity = scope.view.selectedEntity;
+        let course = scope.view.state.courses.list[selectedEntity.courseId];
+        return course.isSeries();
+      };
+
     }
   };
 };
