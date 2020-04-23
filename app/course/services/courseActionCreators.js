@@ -135,10 +135,16 @@ class CourseActionCreators {
         });
       },
       updateSectionGroup: function (sectionGroup) {
-        let courseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
-          return previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0);
-        }, 0);
-        if(courseSeats < sectionGroup.plannedSeats){
+        let courseSeats;
+        if (CourseStateService._state.sectionGroups.selectedSectionGroup.sections){
+          courseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
+            return previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0);
+          }, 0);
+        } else {
+          courseSeats = 0;
+        }
+
+        if (courseSeats <= sectionGroup.plannedSeats){
           CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
             $rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
             var action = {
@@ -152,6 +158,7 @@ class CourseActionCreators {
             $rootScope.$emit('toast', { message: "Could not update course offering.", type: "ERROR" });
           });
         }
+
       },
       removeSectionGroup: function (sectionGroup) {
         if (!sectionGroup) { return; }
@@ -430,6 +437,7 @@ class CourseActionCreators {
             let failures = attempted.filter(x => !successes.includes(x));
             if (successes.length > 0){
               $rootScope.$emit('toast', { message: "Updated section(s) " + successes.join(), type: "SUCCESS" });
+              this.updateSectionGroup(CourseStateService._state.sectionGroups.selectedSectionGroup);
             }
             else {
               $rootScope.$emit('toast', { message: "Failed to updated section(s) " + failures.join(), type: "ERROR" });
