@@ -27,3 +27,11 @@
 .student-support-call-form__page {
 	display: flex;
 }
+
+.student-support-call-form__message {
+	border: 1px solid #ebebeb;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	width: 100%;
+	padding: 30px;
+}

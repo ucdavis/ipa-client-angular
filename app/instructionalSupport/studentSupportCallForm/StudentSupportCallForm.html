@@ -37,6 +37,10 @@
   <div ng-if="!noAccess && view.state && view.state.supportCallResponse" class="student-support-call-form__container">
     <div class="student-support-call-form__page">
       <div class="student-support-call-form__main">
+        <div ng-if="view.state.supportCallResponse.message">
+          <ipa-section-header header-text="'Message'"></ipa-section-header>
+          <div class="student-support-call-form__message" ng-bind-html="view.state.supportCallResponse.message"></div>
+        </div>
         <confirm-eligible support-call-response="view.state.supportCallResponse"></confirm-eligible>
         <language-proficiencies support-call-response="view.state.supportCallResponse"></language-proficiencies>
         <student-preferences state="view.state"></student-preferences>
