@@ -6,6 +6,8 @@
  * Service in the courseApp.
  * Central location for sharedState information.
  */
+import { isNumber } from 'shared/helpers/types';
+
 class CourseActionCreators {
   constructor (CourseStateService, $route, CourseService, $rootScope, Role, ActionTypes) {
     return {
@@ -399,7 +401,7 @@ class CourseActionCreators {
           }, 0);
         }
 
-        if (maxCourseSeats >= proposedCourseSeats){
+        if (maxCourseSeats >= proposedCourseSeats || isNumber(section.sequenceNumber)){
           let attempted = [];
           let successes = [];
           let promises = [];
