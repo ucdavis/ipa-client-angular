@@ -96,6 +96,13 @@
         <span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
 
         <span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+
+        <active-filters
+          filters="view.state.filters"
+          tags="view.state.tags"
+          workgroup-id="workgroupId"
+          year="year">
+        </active-filters>
       </div>
       <!-- .table-toolbar -->
     </div>
