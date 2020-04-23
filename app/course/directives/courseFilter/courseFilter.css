@@ -3,6 +3,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   margin-right: 30px;
 }
 
@@ -14,7 +15,6 @@
 .courses-filter__token {
   background-color: #e6e6e6;
   color: #333;
-  display: inline-block;
   font-size: 85%;
   line-height: normal;
   margin-right: 5px;
