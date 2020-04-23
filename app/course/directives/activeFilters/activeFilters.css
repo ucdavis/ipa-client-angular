@@ -1,5 +1,5 @@
 
-.courses-filter {
+.courses-active-filters {
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -7,12 +7,12 @@
   margin-right: 30px;
 }
 
-.courses-filter__label {
+.courses-active-filters__label {
   margin-right: 5px;
   margin-bottom: 0;
 }
 
-.courses-filter__token {
+.courses-active-filters__token {
   background-color: #e6e6e6;
   color: #333;
   font-size: 85%;
@@ -22,6 +22,6 @@
   border-radius: .25em;
 }
 
-.courses-filter__token-remove {
+.courses-active-filters__token-remove {
   margin-left: 0.3em;
 }

@@ -1,9 +1,9 @@
-import './courseFilter.css';
+import './activeFilters.css';
 
-let courseFilter = function (CourseActionCreators) {
+let activeFilters = function (CourseActionCreators) {
   return {
     restrict: "E",
-    template: require('./courseFilter.html'),
+    template: require('./activeFilters.html'),
 		replace: true,
     scope: {
       filters: '<',
@@ -31,4 +31,4 @@ let courseFilter = function (CourseActionCreators) {
   };
 };
 
-export default courseFilter;
+export default activeFilters;
