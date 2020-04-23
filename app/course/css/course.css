@@ -665,7 +665,8 @@ td.sg-cell.is-offered input[type=number]:placeholder-shown {
   border-color: #ff9800;
 }
 td.sg-cell.is-offered input[type=number]:placeholder-shown + .warning {
-  display: block;
+  display: flex;
+  align-items: center;
 }
 
 td.import-course.course-cell {
