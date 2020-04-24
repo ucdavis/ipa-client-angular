@@ -55,7 +55,7 @@ class BudgetActions {
 
 							currentCensusSnapshot.forEach(function(courseCensus) {
 								sectionGroupCosts.forEach(function(sectionGroupCost) {
-									if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode) {
+									if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && courseCensus.sequenceNumber.includes(sectionGroupCost.sequencePattern)) {
 										sectionGroupCost.currentEnrollment ?
 											(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
 											sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
