@@ -66,7 +66,7 @@ class BudgetActions {
 								});
 							});
 						});
-					}
+					});
 
 					// Generate department subject codes and account numbers for use as filters
 					var subjectCodeFilters = [];
