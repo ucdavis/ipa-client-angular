@@ -24,16 +24,27 @@ class RegistrarReconciliationReportStateService {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						sections = {
-							ids: []
+							ids : [],
+							sectionsKeyById : {}
 						};
 						var sectionList = {};
 						var length = action.payload.sectionDiffs ? action.payload.sectionDiffs.length : 0;
 						for (var i = 0; i < length; i++) {
 							var ipaSectionData = action.payload.sectionDiffs[i].ipaSection;
 							var dwSectionData = action.payload.sectionDiffs[i].dwSection;
-							var sectionChanges = action.payload.sectionDiffs[i].changes;
+							var sectionChanges = [];
+							var diffsChanges = action.payload.sectionDiffs[i].changes;
+							var acceptedChanges = ["instructors", "activities", "bannerLocation", "startTime", "endTime", "dayIndicator","crn", "seats"];
+							if (diffsChanges){
+								diffsChanges.forEach(function(diffChange){
+									var isAccepted = acceptedChanges.includes(diffChange.propertyName);
+										if (isAccepted){
+											sectionChanges.push(diffChange);
+										}
+								});
+							}
 							var syncActions = action.payload.sectionDiffs[i].syncActions;
-	
+
 							var sectionKey = null;
 							// Calculate unique key of subj-course-seq, example : 'art-001-A01'
 							if (ipaSectionData) {
@@ -45,19 +56,24 @@ class RegistrarReconciliationReportStateService {
 							} else {
 								continue;
 							}
-	
+
 							if (sections.ids.indexOf(sectionKey) == -1) {
 								sections.ids.push(sectionKey);
+
+								var section = sectionList[sectionKey];
+
+								if (section.id > 0) {
+									sections.sectionsKeyById[section.id] = sectionKey;
+								}
 							}
-	
+
 							var slotSection = sectionList[sectionKey];
-	
 							// translate DiffView changes list into stateService language
-							if (ipaSectionData != null && dwSectionData == null && sectionChanges == null) {
+							if (ipaSectionData != null && dwSectionData == null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// DW version does not exist
 								slotSection.dwHasChanges = true;
 								slotSection.noRemote = true;
-							} else if (ipaSectionData == null && dwSectionData != null && sectionChanges == null) {
+							} else if (ipaSectionData == null && dwSectionData != null && (sectionChanges == null || sectionChanges.length === 0)) {
 								// IPA version does not exist
 								slotSection.dwHasChanges = true;
 								slotSection.noLocal = true;
@@ -67,6 +83,7 @@ class RegistrarReconciliationReportStateService {
 							} else {
 								// DW version does have some changes
 								slotSection.dwHasChanges = true;
+
 								if (sectionChanges) {
 									sectionChanges.forEach(function (change) {
 	
@@ -94,6 +111,7 @@ class RegistrarReconciliationReportStateService {
 														var instructors = slotSection.instructors;
 														instructors.push(instructor);
 													});
+
 												break;
 											case "activities":
 												// Code to handle activities
@@ -117,6 +135,28 @@ class RegistrarReconciliationReportStateService {
 														var activities = slotSection.activities;
 														activities.push(activity);
 													});
+												// DW has different activity properties
+											change.changes.forEach(function(activityChange) {
+													if (!activityChange.leftValue) { return; }
+
+														var leftValue = activityChange.leftValue;
+														var rightValue = activityChange.rightValue;
+														let activity = _.find(slotSection.activities, { uniqueKey: leftValue.uniqueKey }); // eslint-disable-line no-undef
+
+													if (leftValue.bannerLocation != rightValue.bannerLocation) {
+														change.propertyName = "bannerLocation";
+														activity.dwChanges = activity.dwChanges || {};
+														activity.dwChanges[change.propertyName] = { isToDo: false };
+														activity.dwChanges[change.propertyName].value = rightValue[change.propertyName];
+													}
+
+													if (leftValue.dayIndicator != rightValue.dayIndicator) {
+														change.propertyName = "dayIndicator";
+														activity.dwChanges = activity.dwChanges || {};
+														activity.dwChanges[change.propertyName] = { isToDo: false };
+														activity.dwChanges[change.propertyName].value = rightValue[change.propertyName];
+													}
+												});
 												break;
 											case "bannerLocation":
 											case "startTime":
@@ -146,14 +186,14 @@ class RegistrarReconciliationReportStateService {
 									});
 								}
 							}
-	
+
 							// Apply syncActions to section properties
-	
+
 							for (var s = 0; s < syncActions.length; s++) {
 								slotSection = this._togglePropertyToDo(slotSection, syncActions[s]);
 							}
 						}
-	
+
 						sections.ids.sort();
 	
 						// Flag the first section in a sectionGroup as a groupHead
@@ -165,8 +205,11 @@ class RegistrarReconciliationReportStateService {
 								sectionList[id].groupHead = true;
 							}
 						});
-	
+
 						sections.list = sectionList;
+						return sections;
+					case ActionTypes.UPDATE_SECTION_RECONCILIATION:
+						sections.list[action.payload.sectionKey].dwHasChanges = action.payload.dwHasChanges;
 						return sections;
 					case ActionTypes.UPDATE_SECTION:
 						section = sections.list[action.payload.uniqueKey];

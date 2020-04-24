@@ -52,6 +52,25 @@ class SupportReducer {
 							sectionGroup.supportStaffConflicts = action.payload.conflicts.bySectionGroupId[sectionGroupId] || [];
 						}); 
 						return sectionGroups;
+					case ActionTypes.UPDATE_COURSE_TABLE_FILTER:
+						var activeFilter = action.payload;
+
+						if (activeFilter) {
+							sectionGroups.ids.forEach(function(sectionGroupId) {
+								var sectionGroup = sectionGroups.list[sectionGroupId];
+
+								if (sectionGroup.supportAssignments.length > 0 || sectionGroup.teachingAssistantAppointments || sectionGroup.readerAppointments) {
+									sectionGroup.isFiltered = false;
+								} else {
+									sectionGroup.isFiltered = true;
+								}
+							});
+						} else {
+							sectionGroups.ids.forEach(function(sectionGroupId) {
+								sectionGroups.list[sectionGroupId].isFiltered = false;
+							});
+						}
+						return sectionGroups;
 					default:
 						return sectionGroups;
 				}
@@ -403,6 +422,9 @@ class SupportReducer {
 									isOpen: (action.payload.schedule.supportStaffSupportCallReviewOpen[parseInt(action.shortTermCode) - 1] == "1"),
 									data: action.payload.schedule.supportStaffSupportCallReviewOpen
 								}
+							},
+							filters: {
+								hideCoursesWithoutTa: false
 							}
 						};
 	
@@ -446,6 +468,9 @@ class SupportReducer {
 								data: action.payload.schedule.supportStaffSupportCallReviewOpen
 							}
 						};
+						return ui;
+					case ActionTypes.TOGGLE_TA_FILTER:
+						ui.filters.hideCoursesWithoutTa = action.payload;
 						return ui;
 					default:
 						return ui;

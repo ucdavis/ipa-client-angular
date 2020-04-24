@@ -1,0 +1,10 @@
+.circleci
+.git
+.vscode
+.gitignore
+dist
+cypress
+node_modules
+clientConfig.example.js
+cypress.json
+Dockerfile

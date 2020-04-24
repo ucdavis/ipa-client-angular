@@ -10,7 +10,8 @@ let ipaFilter = function () {
 			selectItem: '&',
 			tooltip: '<',
 			title: '<',
-			buttonIcon: '<'
+			buttonIcon: '<',
+			borderLess: '<'
 		},
 		link: function(scope) {
 			scope.isVisible = false;

@@ -29,7 +29,7 @@
         <div class="dean-report__header-cell"># Courses w/ Costs</div>
       </th>
       <th>
-        <div class="dean-report__header-cell"># Courses in Budget</div>
+        <div class="dean-report__header-cell">Courses Offered</div>
       </th>
       <th>
         <div class="dean-report__header-cell dean-report__header-cell--right"></div>
@@ -50,7 +50,7 @@
       </td>
       <td>
         <div class="dean-report__cell-container">
-          {{ costs.instructorCosts.byType[instructorTypeId].courses || 0 }}
+          {{ costs.instructorCosts.coursesWithCosts[instructorTypeId] || 0 }}
         </div>
       </td>
       <td>
@@ -98,7 +98,7 @@
       </td>
       <td>
         <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-          {{ costs.instructorCosts.total.courses || 0 }}
+          {{ costs.instructorCosts.total.coursesWithCosts || 0 }}
         </div>
       </td>
       <td>

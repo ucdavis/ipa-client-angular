@@ -41,6 +41,7 @@ let censusChart = function ($rootScope, $timeout) {
 
           for (var termCode in censusByTermCode) {
             var baseCensusObj = censusByTermCode[termCode].length > 0 ? JSON.parse(JSON.stringify(censusByTermCode[termCode][0])) : null;
+            baseCensusObj[property] = 0;
 
             censusByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, currentValue) {
               accumulator[property] += currentValue[property];

@@ -555,7 +555,22 @@ class SupportActions {
 					type: ActionTypes.SET_READ_ONLY_MODE,
 					payload: {}
 				});
-			}
+			},
+			toggleCoursesWithoutTa: function (payload) {
+				this.updateCourseTableFilter(payload);
+				var action = {
+					type: ActionTypes.TOGGLE_TA_FILTER,
+					payload: payload
+				};
+				SupportReducer.reduce(action);
+			},
+			updateCourseTableFilter: function (payload) {
+				var action = {
+					type: ActionTypes.UPDATE_COURSE_TABLE_FILTER,
+					payload: payload
+				};
+				SupportReducer.reduce(action);
+			},
 		};
 	}
 }

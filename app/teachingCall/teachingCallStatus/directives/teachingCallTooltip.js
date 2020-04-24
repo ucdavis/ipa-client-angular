@@ -62,7 +62,7 @@ let teachingCallTooltip = function ($document, $timeout) {
 				message = attrs.message || "",
 				termsBlob = attrs.termsBlob || "no termsBlob",
 				showUnavail = attrs.showUnavail || "no showUnavail",
-
+				showSeats = attrs.showSeats == "true",
 				title = attrs.title || "Confirm",
 				placement = attrs.placement || "bottom";
 
@@ -70,12 +70,14 @@ let teachingCallTooltip = function ($document, $timeout) {
 				showUnavail = (showUnavail == "true");
 			}
 			var collectUnavailDescription = showUnavail ? 'Yes' : 'No';
+			var showSeatsDescription = showSeats ? 'Yes' : 'No';
 			var termsList = scope.termsBlobToTerms(termsBlob);
 
 			var html = "<div id=\"button-" + buttonId + "\" style=\"position: relative; width: 250px;\">";
 			
 			html += '<p class="confirmbutton-msg"><b>Terms:</b> ' + termsList + '</p>';
 			html += '<p class="confirmbutton-msg"><b>Collect Unavailabilities</b>: ' + collectUnavailDescription + '</p>';
+			html += '<p class="confirmbutton-msg"><b>Show Seats</b>: ' + showSeatsDescription + '</p>';
 
 			if (message && message.length > 0) {
 				html += '<p class="confirmbutton-msg"><b>Email:</b> ' + message + '</p>';

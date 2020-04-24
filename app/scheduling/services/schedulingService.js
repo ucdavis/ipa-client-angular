@@ -19,7 +19,7 @@ class SchedulingService {
 				return ApiService.delete("/api/schedulingView/activities/" + activityId);
 			},
 			createSharedActivity: function (activityCode, sectionGroupId) {
-				return ApiService.post("/api/schedulingView/sectionGroups/" + sectionGroupId + "/activities/" + activityCode);
+				return ApiService.post("/api/schedulingView/sectionGroups/" + sectionGroupId + "/activities/" + encodeURIComponent(activityCode));
 			},
 			createActivity: function (activityCode, sectionId) {
 				return ApiService.post("/api/schedulingView/sections/" + sectionId + "/activities/" + activityCode);

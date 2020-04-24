@@ -2,7 +2,7 @@ import { _array_sortByProperty } from 'shared/helpers/array';
 import { sequenceNumberToPattern } from 'shared/helpers/sections';
 
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, CourseService, $route) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, CourseService, $route, WorkloadSummaryExcelService) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
@@ -31,6 +31,9 @@ class WorkloadSummaryActions {
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId, year);
 				this._getSections(workgroupId, year);
+			},
+			download: function() {
+				WorkloadSummaryExcelService.generateDownload();
 			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
@@ -308,6 +311,7 @@ class WorkloadSummaryActions {
 						byInstructorTypeId: {},
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
@@ -323,12 +327,14 @@ class WorkloadSummaryActions {
 						previousEnrollment: 0,
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						instructorCount: 0
 					},
 					genericInstructorTotals: {
 						displayName: "TBD Instructors",
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
@@ -342,7 +348,8 @@ class WorkloadSummaryActions {
 						seats: 0,
 						previousEnrollment: 0,
 						units: 0,
-						studentCreditHours: 0
+						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 					}
 				};
 
@@ -351,12 +358,13 @@ class WorkloadSummaryActions {
 					calculatedView.totals.byInstructorTypeId[instructorTypeId] = {
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						seats: 0,
 						enrollment: 0,
 						previousEnrollment: 0,
 						lastOfferedEnrollment: 0,
 						assignmentCount: 0
-          };
+					};
 				});
 
 				instructors.ids.forEach(function(instructorId) {
@@ -373,6 +381,7 @@ class WorkloadSummaryActions {
 					instructor.totals = {
 						units: 0,
 						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
 						enrollment: 0,
 						seats: 0,
 						actualEnrollment: 0,
@@ -433,8 +442,10 @@ class WorkloadSummaryActions {
 							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
-							assignment.units = CourseService.getUnits(course);
-							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course);
+							assignment.units = CourseService.getUnits(course, sectionGroup);
+							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);
+							assignment.studentMaxCreditHours = assignment.units * assignment.seats;
+							assignment.studentCreditHoursPercentage = assignment.studentCreditHours && assignment.studentMaxCreditHours ? parseInt((assignment.studentCreditHours / assignment.studentMaxCreditHours) * 100) : "0";
 
 							calculatedView.totals.assignmentCount += 1;
 							calculatedView.totals.seats += assignment.seats;
@@ -443,6 +454,7 @@ class WorkloadSummaryActions {
 							calculatedView.totals.lastOfferedEnrollment += assignment.lastOfferedEnrollment;
 							calculatedView.totals.units += assignment.units;
 							calculatedView.totals.studentCreditHours += assignment.studentCreditHours;
+							calculatedView.totals.studentMaxCreditHours += assignment.studentMaxCreditHours;
 
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].assignmentCount += 1;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].seats += assignment.seats;
@@ -451,12 +463,14 @@ class WorkloadSummaryActions {
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].lastOfferedEnrollment += assignment.lastOfferedEnrollment;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].units += assignment.units;
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentCreditHours += assignment.studentCreditHours;
+							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentMaxCreditHours += assignment.studentMaxCreditHours;
 						}
 
 						instructor.assignments.push(assignment);
 
 						instructor.totals.units += assignment.units || 0;
 						instructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
+						instructor.totals.studentMaxCreditHours += assignment.studentMaxCreditHours || 0;
 						instructor.totals.enrollment += assignment.enrollment || 0;
 						instructor.totals.seats += assignment.seats || 0;
 						instructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
@@ -493,8 +507,9 @@ class WorkloadSummaryActions {
 					unassignedCourse.seats = seats;
 					unassignedCourse.enrollment = _self._getEnrollment(sectionGroup);
 					unassignedCourse.previousEnrollment = sectionGroup.previousEnrollment;
-					unassignedCourse.units = CourseService.getUnits(course);
-					unassignedCourse.studentCreditHours = CourseService.getSCH(unassignedCourse.seats, course);
+					unassignedCourse.units = CourseService.getUnits(course, sectionGroup);
+					unassignedCourse.studentCreditHours = CourseService.getSCH(unassignedCourse.enrollment, course, sectionGroup);
+					unassignedCourse.studentMaxCreditHours = unassignedCourse.units * unassignedCourse.seats;
 
 					calculatedView.unassignedTotals.assignmentCount += 1;
 					calculatedView.unassignedTotals.seats += unassignedCourse.seats;
@@ -502,6 +517,7 @@ class WorkloadSummaryActions {
 					calculatedView.unassignedTotals.previousEnrollment += unassignedCourse.previousEnrollment;
 					calculatedView.unassignedTotals.units += unassignedCourse.units;
 					calculatedView.unassignedTotals.studentCreditHours += unassignedCourse.studentCreditHours;
+					calculatedView.unassignedTotals.studentMaxCreditHours += unassignedCourse.studentMaxCreditHours;
 
 					return unassignedCourse;
 				});
@@ -526,6 +542,7 @@ class WorkloadSummaryActions {
 								totals: {
 									units: 0,
 									studentCreditHours: 0,
+									studentMaxCreditHours: 0,
 									enrollment: 0,
 									seats: 0,
 									actualEnrollment: 0,
@@ -573,8 +590,10 @@ class WorkloadSummaryActions {
 							assignment.seats = seats;
 							assignment.previousEnrollment = sectionGroup.previousEnrollment;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
-							assignment.units = CourseService.getUnits(course);
-							assignment.studentCreditHours = CourseService.getSCH(assignment.seats, course);
+							assignment.units = CourseService.getUnits(course, sectionGroup);
+							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);
+							assignment.studentMaxCreditHours = assignment.units * assignment.seats;
+							assignment.studentCreditHoursPercentage = assignment.studentCreditHours && assignment.studentMaxCreditHours ? parseInt((assignment.studentCreditHours / assignment.studentMaxCreditHours) * 100) : "0";
 
 							calculatedView.genericInstructorTotals.assignmentCount += 1;
 							calculatedView.genericInstructorTotals.seats += assignment.seats;
@@ -589,6 +608,7 @@ class WorkloadSummaryActions {
 
 						genericInstructor.totals.units += assignment.units || 0;
 						genericInstructor.totals.studentCreditHours += assignment.studentCreditHours || 0;
+						genericInstructor.totals.studentMaxCreditHours += assignment.studentMaxCreditHours || 0;
 						genericInstructor.totals.enrollment += assignment.enrollment || 0;
 						genericInstructor.totals.seats += assignment.seats || 0;
 						genericInstructor.totals.actualEnrollment += assignment.actualEnrollment || 0;
@@ -602,6 +622,7 @@ class WorkloadSummaryActions {
 						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
 						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].units += assignment.units || 0;
 						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentCreditHours += assignment.studentCreditHours || 0;
+						calculatedView.totals.byInstructorTypeId[genericInstructorTypeId].studentMaxCreditHours += assignment.studentMaxCreditHours || 0;
 					});
 
 					genericInstructor.assignments = _array_sortByProperty(genericInstructor.assignments, ["termCode", "description"]);
@@ -626,6 +647,7 @@ class WorkloadSummaryActions {
 					acc.previousEnrollment += total.previousEnrollment || 0;
 					acc.units += total.units || 0;
 					acc.studentCreditHours += total.studentCreditHours || 0;
+					acc.studentMaxCreditHours += total.studentMaxCreditHours || 0;
 
 					return acc;
 				}, calculatedView.combinedTotals);
@@ -818,6 +840,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', 'CourseService', '$route'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', 'CourseService', '$route', 'WorkloadSummaryExcelService'];
 
 export default WorkloadSummaryActions;

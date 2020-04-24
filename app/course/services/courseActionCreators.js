@@ -10,10 +10,13 @@ class CourseActionCreators {
   constructor (CourseStateService, $route, CourseService, $rootScope, Role, ActionTypes) {
     return {
       getInitialState: function () {
+        var self = this;
         var workgroupId = $route.current.params.workgroupId;
         var year = $route.current.params.year;
 
         CourseService.getScheduleByWorkgroupIdAndYear(workgroupId, year).then(function (payload) {
+          payload.flaggedSectionGroups = self._generateAttentionFlags(payload);
+          payload.requiresAttention = payload.flaggedSectionGroups > 0;
           var action = {
             type: ActionTypes.INIT_STATE,
             payload: payload
@@ -116,14 +119,17 @@ class CourseActionCreators {
       },
       addSectionGroup: function (sectionGroup) {
         CourseService.addSectionGroup(sectionGroup).then(function (sectionGroup) {
-          $rootScope.$emit('toast', { message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
-          var action = {
+          CourseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
+            $rootScope.$emit('toast', { message: "Created course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
+            var action = {
             type: ActionTypes.ADD_SECTION_GROUP,
             payload: {
-              sectionGroup: sectionGroup
+              sectionGroup: sectionGroup,
+              sections: sections
             }
           };
           CourseStateService.reduce(action);
+          });
         }, function () {
           $rootScope.$emit('toast', { message: "Could not create course offering.", type: "ERROR" });
         });
@@ -391,10 +397,19 @@ class CourseActionCreators {
           window.ipa_analyze_event('courses', 'section created');
 
           $rootScope.$emit('toast', { message: "Created section " + section.sequenceNumber, type: "SUCCESS" });
+
+          var sectionGroup = CourseStateService._state.sectionGroups.list[section.sectionGroupId];
+          var flaggedSectionGroups = CourseStateService._state.uiState.flaggedSectionGroups;
+          if (sectionGroup.sectionIds.length === 0) {
+            flaggedSectionGroups -= 1;
+          }
+
           var action = {
             type: ActionTypes.CREATE_SECTION,
             payload: {
-              section: section
+              section: section,
+              flaggedSectionGroups: flaggedSectionGroups,
+              requiresAttention: flaggedSectionGroups > 0
             }
           };
           CourseStateService.reduce(action);
@@ -407,10 +422,22 @@ class CourseActionCreators {
           window.ipa_analyze_event('courses', 'section deleted');
 
           $rootScope.$emit('toast', { message: "Deleted section " + section.sequenceNumber, type: "SUCCESS" });
+
+          var sectionGroup = CourseStateService._state.sectionGroups.list[section.sectionGroupId];
+          var flaggedSectionGroups = CourseStateService._state.uiState.flaggedSectionGroups;
+
+          if (sectionGroup.sectionIds.length === 1) {
+            flaggedSectionGroups += 1;
+          }
+
+          var requiresAttention = flaggedSectionGroups > 0;
+
           var action = {
             type: ActionTypes.REMOVE_SECTION,
             payload: {
-              section: section
+              section: section,
+              flaggedSectionGroups,
+              requiresAttention
             }
           };
           CourseStateService.reduce(action);
@@ -493,6 +520,34 @@ class CourseActionCreators {
           type: ActionTypes.CLOSE_COURSE_DELETION_MODAL,
           payload: {}
         });
+      },
+      _generateAttentionFlags: function(payload) {
+        var sectionGroups = [];
+        var sections = [];
+        var flagsGenerated = 0;
+
+        if (payload == undefined) {
+          sectionGroups = Object.values(CourseStateService._state.sectionGroups.list);
+          sections = Object.values(CourseStateService._state.sections.list);
+        } else {
+          sectionGroups = payload.sectionGroups;
+          sections = payload.sections;
+        } 
+
+        for (var i = 0; i < sectionGroups.length; i++) {
+          var sectionGroup = sectionGroups[i];
+
+          sectionGroup.sections = sections.filter(function(section) {
+            return (section.sectionGroupId === sectionGroup.id);
+          });
+
+          if (sectionGroup.sections.length === 0 && sectionGroup.plannedSeats) {
+            sectionGroup.requiresAttention = true;
+            flagsGenerated += 1;
+          }
+        }
+
+        return flagsGenerated;
       }
     };
   }

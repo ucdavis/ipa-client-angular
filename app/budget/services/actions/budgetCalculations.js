@@ -607,8 +607,6 @@ class BudgetCalculations {
 
 				// Course has no instructor
 				if (!instructorTypeId && !instructor) {
-					if (!replacementCost) { return replacementCosts; }
-
 					replacementCosts.unassignedCost = replacementCosts.unassignedCost || 0;
 					replacementCosts.unassignedCost += replacementCost;
 					replacementCosts.unassignedCount = replacementCosts.unassignedCount || 0;

@@ -22,6 +22,7 @@ import newCourse from './directives/newCourse/newCourse.js';
 import sectionGroupDetails from './directives/sectionGroupDetails/sectionGroupDetails.js';
 import censusChart from './directives/censusChart.js';
 import courseTable from './directives/courseTable.js';
+import activeFilters from './directives/activeFilters/activeFilters.js';
 
 // Dependencies
 var dependencies = [
@@ -84,6 +85,7 @@ const courseApp = angular.module("courseApp", dependencies) // eslint-disable-li
 .directive('sectionGroupDetails', sectionGroupDetails)
 .directive('censusChart', censusChart)
 .directive('courseTable', courseTable)
+.directive('activeFilters', activeFilters)
 .constant('ActionTypes', {
   INIT_STATE: "INIT_STATE",
   NEW_COURSE: "NEW_COURSE",

@@ -1,15 +1,45 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
-<ipa-header page-title="Workload Summary Report"></ipa-header>
+<ipa-header page-title="Workload Summary Report" class="hidden-print"></ipa-header>
 
 <div ng-if="noAccess">
   <no-access workgroup-name="sharedState.workgroup.name"></no-access>
 </div>
 
 <div ng-if="!noAccess && view.state && view.state.calculations.isInitialFetchComplete && view.state.calculations.dwCallsCompleted == view.state.calculations.dwCallsOpened">
-  <div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-class="{'workload-table__last':$last }">
-    <div class="workload-summary__table-label">
-      {{ view.state.instructorTypes.list[instructorTypeId].description }}
+
+  <div class="row hidden-print">
+    <div class="col-sm-12">
+      <div class="table-toolbar">
+        <span class="anchor-links">
+          Jump to: 
+          <span ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds">
+            <a ng-click="goToSection(instructorTypeId)">
+              {{ view.state.instructorTypes.list[instructorTypeId].description }}
+            </a>
+            {{ $last ? "" : "|" }}
+          </span>
+        </span>
+
+        <span>
+          <span
+            class="tool-icon glyphicon glyphicon-download-alt"
+            uib-tooltip="Download as Excel"
+            ng-click="download()"
+          ></span>
+          <span
+            class="tool-icon glyphicon glyphicon-print"
+            uib-tooltip="Print"
+            ng-click="print()"
+          ></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-init="instructorTypeDescription = view.state.instructorTypes.list[instructorTypeId].description" ng-class="{'workload-table__last':$last }">
+    <div class="workload-summary__table-label" id="{{ instructorTypeDescription }}">
+      {{ instructorTypeDescription }}
     </div>
     <workload-table instructors="view.state.calculations.calculatedView.byInstructorType[instructorTypeId]"
                     totals="view.state.calculations.calculatedView.totals.byInstructorTypeId[instructorTypeId]"></workload-table>
@@ -20,3 +50,5 @@
   <workload-totals workload-totals="view.state.calculations.calculatedView.workloadTotals"
                    combined-totals="view.state.calculations.calculatedView.combinedTotals"></workload-totals>
 </div>
+
+<back-to-top></back-to-top>

@@ -23,9 +23,11 @@ let sectionDiff = function (RegistrarReconciliationReportActionCreators) {
 				RegistrarReconciliationReportActionCreators.createSection(section);
 			};
 
-			scope.setActiveChangeAction = function (event, object, index, property) {
+			scope.setActiveChangeAction = function (event, object, index, property, crn) {
 				property = property || '';
 				var actionKey = object.uniqueKey + index + property;
+
+				if (crn) { actionKey += crn; }
 
 				if (scope.view.activeChangeAction == actionKey) {
 					scope.view.activeChangeAction = '';

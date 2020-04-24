@@ -96,12 +96,23 @@
         <span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
 
         <span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+
+        <active-filters
+          filters="view.state.filters"
+          tags="view.state.tags"
+          workgroup-id="workgroupId"
+          year="year">
+        </active-filters>
       </div>
       <!-- .table-toolbar -->
     </div>
     <!-- .col-sm-12 -->
   </div>
   <!-- .row -->
+
+  <div ng-if="view.state.uiState.requiresAttention" class="course-header__warn">
+    <i class="entypo-attention text-warning"></i> This offering has planned seats but no available sections
+  </div>
 
   <div class="row hidden-print" ng-if="view.state.uiState.massImportMode">
     <div class="col-md-12">
@@ -200,3 +211,5 @@
 </div>
 </div>
 </div>
+
+<back-to-top></back-to-top>

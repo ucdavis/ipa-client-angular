@@ -72,7 +72,7 @@
 							<small class="text-muted">{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].title }}</small>
 							<br />
 							<small class="text-muted">
-								Units: {{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].unitsLow }}
+								Units: {{ view.state.sectionGroups.list[sectionGroupId].displayUnits }}
 
 								<!-- TODO: Display enrollment and total seats (Involves modifying payload to include all sections) -->
 

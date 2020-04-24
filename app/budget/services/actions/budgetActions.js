@@ -8,6 +8,7 @@ class BudgetActions {
 				var workgroupId = $route.current.params.workgroupId;
 				var year = $route.current.params.year;
 				var selectedBudgetScenarioId = selectedBudgets[year];
+				var activeTab = localStorage.getItem('activeTab');
 
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
 					// BudgetScenario was set in localStorage, need to sanity check
@@ -32,26 +33,28 @@ class BudgetActions {
 									selectedBudgetScenarioId = budgetScenario.id;
 								}
 							});
-
+						} else {
 							selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
-							selectedBudgets[year] = selectedBudgetScenarioId;
-							localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 						}
+
+						selectedBudgets[year] = selectedBudgetScenarioId;
+						localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 					}
 
-					var sectionGroupCosts = results.sectionGroupCosts;
-					var terms = Object.keys(TermService.termCodeDescriptions);
-					var subjectCode = results.courses[0].subjectCode;
-					var termCodes = terms.map(function(term) {
-						return TermService.termToTermCode(term, year);
-					});
+					if (results.sectionGroupCosts.length > 0) {
+						var sectionGroupCosts = results.sectionGroupCosts;
+						var terms = Object.keys(TermService.termCodeDescriptions);
+						var subjectCode = results.courses[0].subjectCode;
+						var termCodes = terms.map(function(term) {
+							return TermService.termToTermCode(term, year);
+						});
 
-					termCodes.forEach(function(termCode) {
-						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censuses) {
-							// match courseNumber and TermCode and inject currentEnrollment number
-							const currentCensusSnapshot = censuses.filter(function(census) {
-								return census.snapshotCode == "CURRENT";
-							});
+						termCodes.forEach(function(termCode) {
+							DwService.getDwCensusData(subjectCode, null, termCode).then(function(censuses) {
+								// match courseNumber and TermCode and inject currentEnrollment number
+								const currentCensusSnapshot = censuses.filter(function(census) {
+									return census.snapshotCode == "CURRENT";
+								});
 
 							currentCensusSnapshot.forEach(function(courseCensus) {
 								sectionGroupCosts.forEach(function(sectionGroupCost) {
@@ -63,6 +66,21 @@ class BudgetActions {
 								});
 							});
 						});
+					}
+
+					// Generate department subject codes and account numbers for use as filters
+					var subjectCodeFilters = [];
+					results.courses.forEach(function(course) {
+						if (!subjectCodeFilters.includes(course.subjectCode)) {
+							subjectCodeFilters.push(course.subjectCode);
+						}
+					});
+
+					var accountNumberFilters = [];
+					results.lineItems.forEach(function(lineItem) {
+						if (lineItem.accountNumber && !accountNumberFilters.includes(lineItem.accountNumber)) {
+							accountNumberFilters.push(lineItem.accountNumber);
+						}
 					});
 
 					BudgetReducers.reduce({
@@ -71,7 +89,9 @@ class BudgetActions {
 						year: year,
 						workgroupId: workgroupId,
 						selectedBudgetScenarioId: selectedBudgetScenarioId,
-						selectedTerm: selectedTerm
+						selectedTerm: selectedTerm,
+						activeTab: activeTab,
+						filters: {subjectCodes: subjectCodeFilters, accountNumbers: accountNumberFilters}
 					});
 
 					// Ensure budgetScenario is properly set
@@ -855,21 +875,31 @@ class BudgetActions {
 
 				return instructorType;
 			},
-			updateCourseTag: function (tag) {
-				var tags = BudgetReducers._state.ui.filters.tags;
+			updateFilter: function (filter) {
+				var filters = BudgetReducers._state.ui.filters.list;
 
-				tags.forEach(function(slotTag) {
-					if (slotTag.id == tag.id) {
-						slotTag.selected = tag.selected;
-					}
-				});
+				if (filter.id == null) {
+					// not a tag
+					var selectedFilter = filters.find(function(slotFilter) {
+						return slotFilter.description == filter.description;
+					});
+
+					selectedFilter.selected = filter.selected;
+				} else {
+					filters.forEach(function(slotFilter) {
+						if (slotFilter.id == filter.id) {
+							slotFilter.selected = filter.selected;
+						}
+					});
+				}
 
 				BudgetReducers.reduce({
-					type: ActionTypes.UPDATE_COURSE_TAGS,
+					type: ActionTypes.UPDATE_FILTERS,
 					payload: {
-						tags: tags
+						filters: filters
 					}
 				});
+				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateSectionGroups();
 			}
 		};

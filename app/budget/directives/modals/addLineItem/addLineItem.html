@@ -14,7 +14,7 @@
 					</button>
 
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="category in state.lineItemCategories" class="category-item">
+						<li ng-repeat="category in state.lineItemCategories | orderBy:'description'" class="category-item">
 							<a ng-click="selectLineItemCategory(category)">
 								{{ category.description }}
 							</a>
@@ -34,6 +34,15 @@
 						allow-negative="true"
 						mode="'number'">
 					</ipa-input>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Document Number</label>
+			<div class="col-sm-5">
+				<div class="input-group form-input" >
+					<ipa-input value="newLineItem.documentNumber"></ipa-input>
 				</div>
 			</div>
 		</div>

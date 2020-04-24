@@ -38,7 +38,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         ActionTypes.REMOVE_SECTION_GROUP,
         ActionTypes.ADD_SECTION_GROUP,
         ActionTypes.DELETE_MULTIPLE_COURSES,
-        ActionTypes.MASS_ASSIGN_TAGS
+        ActionTypes.MASS_ASSIGN_TAGS,
+        ActionTypes.CREATE_SECTION,
+        ActionTypes.REMOVE_SECTION
       ];
 
       $rootScope.$on('courseStateChanged', function (event, data) {
@@ -56,6 +58,8 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         if (data.action.type == ActionTypes.ADD_SECTION_GROUP) {
           // Indicate on the textbox that the sectionGroup is offered
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered"); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', '0 planned seats' ); // eslint-disable-line
+
 
           return;
         }
@@ -64,6 +68,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           // Empty the textbox
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input.planned-seats').val(""); // eslint-disable-line no-undef
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').removeClass("is-offered"); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', 'No course offering' ); // eslint-disable-line
 
           return;
         }
@@ -361,7 +366,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
       scope.getCheckbox = function(courseId, type, isChecked) {
         var checkedClass = (isChecked == true) ? " checked" : "";
-      
+
         return '' +
         '<div class="checkbox-container" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
             '<div class="checkbox checkbox-replace color-primary neon-cb-replacement' + checkedClass + '" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
@@ -415,7 +420,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
       scope.getCourseRow = function (rowIdx, courseId, termsToRender, state) {
         var rowClass = "odd gradeX";
 
-        if (state.uiState.selectedCourseId == courseId) {
+        if (state.uiState.selectedCourseId == courseId && !state.uiState.selectedTermCode) {
           rowClass += " selected-tr";
         }
         var row = "<tr class=\"" + rowClass + "\" data-course-id=\"" + courseId + "\" >";
@@ -456,17 +461,27 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             // TODO: Calculate this boolean by comparing the sum of all section seats to the plannedSeats
             var requiresAttention = false;
 
-            // Determine if the term is readonly
-            var cellClass = sectionGroupId ? "sg-cell is-offered" : "sg-cell";
+            if (sectionGroup) {
+              requiresAttention = sectionGroup.requiresAttention;
+            }
 
-            row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass + "\"><div>";
+            // Determine if the term is readonly
+            var cellClass = sectionGroupId ? ["sg-cell is-offered"] : ["sg-cell"];
+
+            if (state.uiState.selectedCourseId == courseId && state.uiState.selectedTermCode == termCode) {
+              cellClass.push("selected-td");
+            }
+
+            row += "<td data-term-code=\"" + termCode + "\" class=\"" + cellClass.join(" ") + "\"><div>";
             if (state.uiState.tableLocked) {
               row += plannedSeats;
             } else {
               if (requiresAttention) {
                 row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
               }
-              row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
+              const placeholder = sectionGroupId ? '0 planned seats' : 'No course offering';
+              row += `<input type="number" min="0" value="${ plannedSeats }" class="form-control planned-seats" placeholder="${ placeholder }"></input>`;
+              row += `<span class="warning">⚠</span>`;
             }
 
             row += "</div></td>";

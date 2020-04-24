@@ -1,5 +1,5 @@
 class BudgetComparisonReportCalculations {
-  constructor(BudgetComparisonReportReducers, ActionTypes, Roles, UserService) {
+  constructor(BudgetComparisonReportReducers, ActionTypes) {
     return {
       calculateView: function() {
         var budget = BudgetComparisonReportReducers._state.budget;
@@ -121,7 +121,7 @@ class BudgetComparisonReportCalculations {
         sectionGroupCosts.ids.forEach(sectionGroupCostId => {
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
-          if (sectionGroupCost.disabled) {
+          if (sectionGroupCost.disabled || sectionGroupCost.hidden) {
             return;
           }
           if (sectionGroupCost.budgetScenarioId != selectedScenarioId) {
@@ -137,7 +137,6 @@ class BudgetComparisonReportCalculations {
 
           var courseNumber = parseInt(sectionGroupCost.courseNumber);
           var seats = sectionGroupCost.enrollment;
-
           if (courseNumber < 100) {
             miscStats.lower.courses += 1;
             miscStats.lower.seats += seats;
@@ -197,12 +196,8 @@ class BudgetComparisonReportCalculations {
       // Returns the cost associated with an assignment's instructor, based on the selected budget scenario
       _calculateAssignmentCost(
         sectionGroupCost,
-        teachingAssignment,
-        selectedScenarioId,
         instructorTypeCosts,
-        instructorCosts,
-        sectionGroupCosts,
-        teachingAssignments
+        instructorCosts
       ) {
         var cost = null;
         var instructorTypeId = null;
@@ -212,17 +207,16 @@ class BudgetComparisonReportCalculations {
         var courseCost = sectionGroupCost.cost;
 
         // If an instructor is set
-        if (sectionGroupCost.instructorId) {
+        if (sectionGroupCost.instructorId && instructorCosts.byInstructorId[sectionGroupCost.instructorId]) {
           var instructorCostId =
             instructorCosts.byInstructorId[sectionGroupCost.instructorId];
           instructorCost = instructorCosts.list[instructorCostId]
             ? instructorCosts.list[instructorCostId].cost
             : instructorCost;
 
-          var instructorType = this._calculateInstructorType(
-            sectionGroupCost.instructorId,
-            teachingAssignments
-          );
+          var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes.current;
+          var instructorType = instructorTypes.list[sectionGroupCost.instructorTypeId];
+          
           if (!instructorType) {
             return null;
           }
@@ -243,29 +237,6 @@ class BudgetComparisonReportCalculations {
             ? instructorTypeCosts.list[instructorTypeCostId].cost
             : null;
           instructorTypeId = sectionGroupCost.instructorTypeId;
-          // If there is an assignment
-        } else if (teachingAssignment) {
-          if (teachingAssignment.instructorId) {
-            instructorTypeId = teachingAssignment.instructorTypeId;
-            instructorCost = instructorCosts.byInstructorId[
-              teachingAssignment.instructorId
-            ]
-              ? instructorCosts.byInstructorId[teachingAssignment.instructorId]
-                  .cost
-              : null;
-            instructorTypeCost = instructorTypeCosts.byInstructorTypeId[
-              instructorTypeId
-            ]
-              ? instructorTypeCosts.byInstructorTypeId[instructorTypeId].cost
-              : null;
-          } else if (teachingAssignment.instructorTypeId) {
-            instructorTypeId = teachingAssignment.instructorTypeId;
-            instructorTypeCost = instructorTypeCosts.byInstructorTypeId[
-              instructorTypeId
-            ]
-              ? instructorTypeCosts.byInstructorTypeId[instructorTypeId].cost
-              : null;
-          }
         } else {
           return null;
         }
@@ -299,21 +270,22 @@ class BudgetComparisonReportCalculations {
           byType: {},
           byTypeNoCost: {},
           scenarioCourses: {},
+          coursesWithCosts: {},
           unassigned: 0,
           total: {
             cost: 0,
             courses: 0,
-            scenarioCourses: 0
+            scenarioCourses: 0,
+            coursesWithCosts: 0,
           }
         };
-
         sectionGroupCosts.ids.forEach(function(sectionGroupCostId) {
           var sectionGroupCost = sectionGroupCosts.list[sectionGroupCostId];
 
           if (sectionGroupCost.budgetScenarioId != selectedScenarioId) {
             return;
           }
-          if (sectionGroupCost.disabled) {
+          if (sectionGroupCost.disabled || sectionGroupCost.hidden) {
             return;
           }
 
@@ -325,17 +297,10 @@ class BudgetComparisonReportCalculations {
             instructionCosts.unassigned++;
           }
 
-          var teachingAssignment = _self._getTeachingAssignment(
-            sectionGroupCost.sectionGroupId
-          );
           var assignmentCosts = _self._calculateAssignmentCost(
             sectionGroupCost,
-            teachingAssignment,
-            selectedScenarioId,
             instructorTypeCosts,
-            instructorCosts,
-            sectionGroupCosts,
-            teachingAssignments
+            instructorCosts
           );
 
           if (!assignmentCosts) {
@@ -373,12 +338,15 @@ class BudgetComparisonReportCalculations {
 
         instructorTypes.forEach(function(instructorType) {
           instructionCosts.scenarioCourses[instructorType] =
-            (instructionCosts.byType[instructorType].courses || 0) -
-            (instructionCosts.byTypeNoCost[instructorType] || 0);
+            (instructionCosts.byType[instructorType].courses || 0);
           instructionCosts.total.scenarioCourses +=
             instructionCosts.scenarioCourses[instructorType];
+          if (instructionCosts.byType[instructorType].cost > 0){
+            instructionCosts.coursesWithCosts[instructorType] = instructionCosts.byType[instructorType].courses;
+            instructionCosts.total.coursesWithCosts += instructionCosts.byType[instructorType].courses;
+          }
         });
-
+        instructionCosts.total.scenarioCourses += instructionCosts.unassigned;
         return instructionCosts;
       },
       // Generates support (reader and TA) based costs and course count
@@ -402,7 +370,7 @@ class BudgetComparisonReportCalculations {
 
           if (
             sectionGroupCost.budgetScenarioId != selectedScenarioId ||
-            sectionGroupCost.disabled
+            sectionGroupCost.disabled || sectionGroupCost.hidden
           ) {
             return;
           }
@@ -527,7 +495,6 @@ class BudgetComparisonReportCalculations {
           var currentCoursesCount = currentInstructorCost
             ? currentCosts.instructorCosts.scenarioCourses[instructorTypeId]
             : 0;
-
           var previousInstructorCost =
             previousCosts.instructorCosts.byType[instructorTypeId];
           var previousCost = previousInstructorCost
@@ -554,7 +521,6 @@ class BudgetComparisonReportCalculations {
             )
           };
         });
-
         costs.instructorCosts.total = {
           rawCost:
             currentCosts.instructorCosts.total.cost -
@@ -701,71 +667,6 @@ class BudgetComparisonReportCalculations {
 
         return sectionGroupCost;
       },
-      _getTeachingAssignment(sectionGroupId) {
-        var teachingAssignmentIds =
-          BudgetComparisonReportReducers._state.teachingAssignments.current
-            .bySectionGroupId[sectionGroupId] ||
-          BudgetComparisonReportReducers._state.teachingAssignments.previous
-            .bySectionGroupId[sectionGroupId];
-
-        if (teachingAssignmentIds) {
-          return (
-            BudgetComparisonReportReducers._state.teachingAssignments.current
-              .list[teachingAssignmentIds[0]] ||
-            BudgetComparisonReportReducers._state.teachingAssignments.previous
-              .list[teachingAssignmentIds[0]]
-          );
-        } else {
-          return null;
-        }
-      },
-      // Will first look at userRoles for a match, and then teachingAssignments as a fallback.
-      _calculateInstructorType: function(instructorId, teachingAssignments) {
-        var instructors = BudgetComparisonReportReducers._state.instructors;
-        var users = BudgetComparisonReportReducers._state.users;
-        var userRoles = BudgetComparisonReportReducers._state.userRoles;
-        var instructorTypes =
-          BudgetComparisonReportReducers._state.instructorTypes.current;
-        var instructorType = null;
-        var instructor = instructors.list[instructorId];
-
-        if (!instructor) {
-          return null;
-        }
-
-        var user = UserService.getUserByInstructor(instructor, users);
-
-        if (!user) {
-          return;
-        }
-
-        if (userRoles.byUserId[user.id]) {
-          userRoles.byUserId[user.id].forEach(function(userRole) {
-            if (userRole.roleId != Roles.instructor) {
-              return;
-            }
-
-            instructorType = instructorTypes.list[userRole.instructorTypeId];
-          });
-        }
-
-        if (instructorType) {
-          return instructorType;
-        }
-
-        // Find instructorType by teachingAssignment
-        teachingAssignments.ids.forEach(function(teachingAssignmentId) {
-          var teachingAssignment =
-            teachingAssignments.list[teachingAssignmentId];
-
-          if (teachingAssignment.instructorId == instructor.id) {
-            instructorType =
-              instructorTypes.list[teachingAssignment.instructorTypeId];
-          }
-        });
-
-        return instructorType;
-      }
     };
   }
 }
