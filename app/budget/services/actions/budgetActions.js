@@ -56,17 +56,18 @@ class BudgetActions {
 									return census.snapshotCode == "CURRENT";
 								});
 
-							currentCensusSnapshot.forEach(function(courseCensus) {
-								sectionGroupCosts.forEach(function(sectionGroupCost) {
-									if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && courseCensus.sequenceNumber.includes(sectionGroupCost.sequencePattern)) {
-										sectionGroupCost.currentEnrollment ?
-											(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
-											sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
-									}
+								currentCensusSnapshot.forEach(function(courseCensus) {
+									sectionGroupCosts.forEach(function(sectionGroupCost) {
+										if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && courseCensus.sequenceNumber.includes(sectionGroupCost.sequencePattern)) {
+											sectionGroupCost.currentEnrollment ?
+												(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
+												sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
+										}
+									});
 								});
 							});
 						});
-					});
+					}
 
 					// Generate department subject codes and account numbers for use as filters
 					var subjectCodeFilters = [];
