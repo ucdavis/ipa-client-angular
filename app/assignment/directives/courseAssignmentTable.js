@@ -377,7 +377,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 														courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
 														courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
-														courseHtml += " href=\"#\">" + instructor.fullName + " (" + priority + ")" + "</a></li>";
+														courseHtml += " href=\"#\">" + instructor.lastName + ", " + instructor.firstName + " (" + priority + ")" + "</a></li>";
 
 														numberOfInstructorsAdded++;
 													}
@@ -394,7 +394,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 													courseHtml += "<li><a";
 													courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 													courseHtml += " data-instructor-id=\"" + instructorId + "\"";
-													courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+													courseHtml += " href=\"#\">" + instructor.lastName + ", " + instructor.firstName + "</a></li>";
 													numberOfInstructorsAdded++;
 												}
 											});
@@ -412,14 +412,14 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 												courseHtml += '<li><a';
 												courseHtml += ' data-section-group-id="' + sectionGroupId + '"';
 												courseHtml += ' data-support-staff-id="' + supportStaff.id + '"';
-												courseHtml += ' href="#">' + supportStaff.fullName + ' (' + supportStaff.priority + ')</a></li>';
+												courseHtml += ' href="#">' + supportStaff.lastName + ", " + supportStaff.firstName + ' (' + supportStaff.priority + ')</a></li>';
 											});
 
 											sectionGroup.aiAssignmentOptions.other.forEach(function(supportStaff) {
 												courseHtml += '<li><a';
 												courseHtml += ' data-section-group-id="' + sectionGroupId + '"';
 												courseHtml += ' data-support-staff-id="' + supportStaff.id + '"';
-												courseHtml += ' href="#">' + supportStaff.fullName + '</a></li>';
+												courseHtml += ' href="#">' + supportStaff.lastName + ", " + supportStaff.firstName + '</a></li>';
 											});
 
 											courseHtml += "</ul></div>";
