@@ -15,6 +15,13 @@
         <div class="course-table__header">
           <div class="course-table__header-detail">
             <div>
+              Term
+            </div>
+          </div>
+        </div>
+        <div class="course-table__header">
+          <div class="course-table__header-detail">
+            <div>
               Due Date
             </div>
           </div>
@@ -36,6 +43,9 @@
               View Support Call Form
             </a>
           </div>
+        </div>
+        <div class="course-table__row-detail">
+          {{ getTermName(supportCallResponse.termCode) }}
         </div>
         <div class="course-table__row-detail">
           {{ supportCallResponse.dueDate }}
