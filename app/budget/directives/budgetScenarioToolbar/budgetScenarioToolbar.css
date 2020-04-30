@@ -3,6 +3,16 @@
 	display: flex;
 	margin-bottom: 20px;
 	justify-content: space-between;
+
+	position: fixed;
+	top: 146px;
+	left: 200px;
+	width: calc(100% - 200px );
+	margin-top: -30px;
+	padding: 10px 20px;
+	background-color: #fff;
+	border-bottom: 1px solid #e3e3e3;
+	z-index: 1;
 }
 
 .budget-scenario-toolbar__tool-container {
