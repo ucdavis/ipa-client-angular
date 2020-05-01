@@ -17,6 +17,14 @@
 			            on-click="showScenarioRenameUI()"
 			            tooltip-message="'Rename Scenario'">
 			</ipa-button>
+
+			<div 
+				ng-if="state.ui.sectionNav.activeTab == 'Schedule Costs' && showTermChip" 
+				class="budget-scenario-toolbar__term-display"
+			>
+				{{ state.ui.termNav.activeTab }}
+			</div>
+
 		</div>
 
 		<!-- Rename scenario UI -->

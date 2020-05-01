@@ -17,6 +17,13 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.isNewScenarioNameValid = true;
 			scope.validationError = "";
 			scope.activeFilters = [];
+			scope.showTermChip = false;
+
+			$window.onscroll = function () {
+				const VERTICAL_OFFSET = 98;
+				scope.showTermChip = this.scrollY > VERTICAL_OFFSET;
+				scope.$apply();
+			};
 
 			scope.openSupportCostModal = function() {
 				BudgetActions.toggleSupportCostModal();
