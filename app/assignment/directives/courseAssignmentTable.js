@@ -649,6 +649,11 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 							source: {
 									data: instructors
 							},
+							matcher: function (item) {
+									const sectionGroupTeachingAssignmentIds = scope.view.state.sectionGroups.list[item.sectionGroupId].teachingAssignmentIds;
+									const assignedInstructorIds = sectionGroupTeachingAssignmentIds.map(assignmentId => scope.view.state.teachingAssignments.list[assignmentId].instructorId);
+									return !assignedInstructorIds.includes(item.id);
+							},
 							callback: {
 									onClickAfter: function (node, a, item, event) {
 										event.preventDefault();
