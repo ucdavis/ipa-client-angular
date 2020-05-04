@@ -141,6 +141,9 @@
 	background: white;
 	width: 100%;
 	text-align: left;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .set-term-menu {
@@ -204,11 +207,6 @@ button.btn.assign-dropdown-btn {
 	align-items: center;
 }
 
-.main-content .caret {
-	position: absolute;
-	top: 50%;
-	right: 5%;
-}
 .select2-default {
 	border-color: rgb(235, 235, 235);
 }
@@ -1031,17 +1029,16 @@ li.active-term .dropdown-term-row {
 	display: none;
 	flex-grow: 2;
 }
-
+.instructor-typeahead-placeholder .typeahead__container {
+	font-size: 12px;
+}
 .instructor-typeahead-placeholder .typeahead__query>input {
 	border-radius: 4px;
-	font-size: 12px;
 	padding: 6px 12px;
 	line-height: 1.7rem;
 }
-
-.instructor-typeahead-placeholder .typeahead__list>li {
-	font-size: 12px;
-	line-height: 1.7rem;
+.instructor-typeahead-placeholder .typeahead__container.result .typeahead__list {
+	border-radius: 4px;
 }
 
 .instructor-search-toggle {

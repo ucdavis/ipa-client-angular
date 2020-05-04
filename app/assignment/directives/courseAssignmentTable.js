@@ -626,13 +626,15 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								<div class="typeahead__container">
 									<div class="typeahead__field">
 										<div class="typeahead__query">
-										<input data-event-type="instructorSearchInput" class="js-typeahead-${sectionGroupId}" data-section-group-id="${sectionGroupId}" name="q" autocomplete="off" placeholder="Search Department Instructors By Name"></div>
+										<input data-event-type="instructorSearchInput" class="js-typeahead-${sectionGroupId}" data-section-group-id="${sectionGroupId}" name="q" autocomplete="off" placeholder="Search Department Instructors By Name" autofocus></div>
 									</div>
 								</div>
 							</form>
 						`;
 						
 						$el.prev('.instructor-typeahead-placeholder').toggle().append(typeaheadTemplate).prev('div.assign-dropdown').toggle();
+
+						$(`.js-typeahead-${sectionGroupId}`).trigger('click'); // using .focus() would not search
 					}
 				}
 				else if ($el.data('event-type') == 'instructorSearchInput') {
