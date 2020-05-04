@@ -129,7 +129,8 @@ module.exports = {
         './node_modules/fullcalendar/dist/fullcalendar.css',
         './node_modules/ng-notify/dist/ng-notify.min.css',
         './node_modules/ui-select/dist/select.css',
-        './node_modules/selectize/dist/css/selectize.default.css'
+        './node_modules/selectize/dist/css/selectize.default.css',
+        './node_modules/jquery-typeahead/dist/jquery.typeahead.min.css'
       ],
     }),
     // Concat shared CSS
@@ -157,6 +158,7 @@ module.exports = {
       { from: 'clientConfig.js', to: 'js', flatten: true },
       { from: 'node_modules/bootstrap/dist/js/*', to: 'js', flatten: true },
       { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
+      { from: 'node_modules/jquery-typeahead/dist/jquery.typeahead.min.js', to: 'js', flatten: true },
       { from: 'vendor/js/*', to: 'js', flatten: true },
     ]),
     // Concat lib JS
@@ -166,6 +168,7 @@ module.exports = {
       fileName: 'js/lib.js',
       filesToConcat: [
         './node_modules/jquery/dist/jquery.js',
+        './node_modules/jquery-typeahead/dist/jquery.typeahead.min.js',
         './node_modules/underscore/underscore-min.js',
         './node_modules/moment/min/moment.min.js',
         './app/shared/helpers/string_prototypes.js',

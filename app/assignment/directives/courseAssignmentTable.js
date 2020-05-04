@@ -302,7 +302,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 										});
 
 										if (scope.userCanEdit()) {
-
+											courseHtml += `<div class="assignment-inputs">`;
 											// Add an assign button to add more instructors
 											courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
 											courseHtml += "<button class=\"btn btn-default dropdown-toggle assign-dropdown-btn\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
@@ -423,8 +423,25 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											});
 
 											courseHtml += "</ul></div>";
-										} // End scope.userCanEdit check
 
+											var typeaheadTemplate =
+												`<div class="instructor-typeahead">
+													<form>
+														<div class="typeahead__container">
+															<div class="typeahead__field">
+																<div class="typeahead__query">
+																<input data-event-type="instructorSearchInput" class="js-typeahead-${sectionGroupId}" data-section-group-id="${sectionGroupId}" name="q" autocomplete="off" placeholder="Search Workgroup Instructors By Name" autofocus></div>
+															</div>
+														</div>
+													</form>
+												</div>`;
+
+											courseHtml += typeaheadTemplate;
+
+											courseHtml += `<i class="glyphicon glyphicon-search instructor-search-toggle" data-event-type="toggleInstructorSearch" data-toggle="tooltip" data-placement="top" data-original-title="Toggle Instructor Search" ></i>`;
+
+											courseHtml += `</div>`; // assignment-inputs
+										}
 									} else {
 										courseHtml += "Not Offered";
 									}
@@ -608,6 +625,42 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				else if ($el.data('event-type') == 'dismissDeletePlaceholderAIPop') {
 					// Dismiss the delete course dialog
 					$el.closest("div.popover").popover('hide');
+				}
+				else if ($el.data('event-type') == 'toggleInstructorSearch') {
+					$el.prev("div.instructor-typeahead").toggle().prev('div.assign-dropdown').toggle();
+				}
+				else if ($el.data('event-type') == 'instructorSearchInput') {
+					let sectionGroupId = $el.data('section-group-id');
+
+					let instructors = Object.values(scope.view.state.instructors.list).map(function(instructor) { instructor.sectionGroupId = sectionGroupId; return instructor;});
+
+					$('.js-typeahead-' + sectionGroupId).typeahead({
+							order: "desc",
+							display: "fullName",
+							template: "<span data-section-group-id='{{sectionGroupId}}' data-instructor-id='{{id}}'>{{fullName}}</span>",
+							source: {
+									data: instructors
+							},
+							callback: {
+									onClickAfter: function (node, a, item, event) {
+										// Stop normal click behavior and submit directly
+										event.preventDefault();
+										event.stopPropagation();
+
+										var sectionGroup = scope.view.state.sectionGroups.list[item.sectionGroupId];
+										teachingAssignment = {
+											sectionGroupId: item.sectionGroupId,
+											instructorId: item.id,
+											termCode: sectionGroup.termCode,
+											priority: 1,
+											approved: true
+										};
+										AssignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
+
+										$('#result-container').text('');
+									}
+							}
+					});
 				}
 			}); // end UI event handler
 		} // end link

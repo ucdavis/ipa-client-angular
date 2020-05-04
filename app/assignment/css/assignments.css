@@ -133,6 +133,10 @@
 	color: #949494;
 }
 
+.assign-dropdown {
+	flex-grow: 2;
+}
+
 .assign-dropdown .dropdown-toggle {
 	background: white;
 	width: 100%;
@@ -1016,6 +1020,27 @@ li.active-term .dropdown-term-row {
 /* Improper BEM styling to override bootstrap */
 .course-assignments__course-note input {
 	height: 30px;
+}
+
+.assignment-inputs {
+	display: flex;
+	align-items: center;
+}
+
+.instructor-typeahead {
+	display: none;
+	flex-grow: 2;
+}
+
+.instructor-typeahead .typeahead__query>input{
+	border-radius: 4px;
+	font-size: 12px;
+	padding: 6px 12px;
+	line-height: 1.7rem;
+}
+
+.instructor-search-toggle {
+	margin-left: 5px;
 }
 
 .add-note__text-area {
