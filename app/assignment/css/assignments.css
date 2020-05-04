@@ -1027,15 +1027,20 @@ li.active-term .dropdown-term-row {
 	align-items: center;
 }
 
-.instructor-typeahead {
+.instructor-typeahead-placeholder {
 	display: none;
 	flex-grow: 2;
 }
 
-.instructor-typeahead .typeahead__query>input{
+.instructor-typeahead-placeholder .typeahead__query>input {
 	border-radius: 4px;
 	font-size: 12px;
 	padding: 6px 12px;
+	line-height: 1.7rem;
+}
+
+.instructor-typeahead-placeholder .typeahead__list>li {
+	font-size: 12px;
 	line-height: 1.7rem;
 }
 

@@ -424,23 +424,10 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 											courseHtml += "</ul></div>";
 
-											var typeaheadTemplate =
-												`<div class="instructor-typeahead">
-													<form>
-														<div class="typeahead__container">
-															<div class="typeahead__field">
-																<div class="typeahead__query">
-																<input data-event-type="instructorSearchInput" class="js-typeahead-${sectionGroupId}" data-section-group-id="${sectionGroupId}" name="q" autocomplete="off" placeholder="Search Workgroup Instructors By Name" autofocus></div>
-															</div>
-														</div>
-													</form>
-												</div>`;
+											courseHtml += `<div class="instructor-typeahead-placeholder"></div>`;
+											courseHtml += `<i class="glyphicon glyphicon-search instructor-search-toggle" data-event-type="toggleInstructorSearch" data-section-group-id=${sectionGroupId} data-toggle="tooltip" data-placement="top" data-original-title="Toggle Instructor Search" ></i>`;
 
-											courseHtml += typeaheadTemplate;
-
-											courseHtml += `<i class="glyphicon glyphicon-search instructor-search-toggle" data-event-type="toggleInstructorSearch" data-toggle="tooltip" data-placement="top" data-original-title="Toggle Instructor Search" ></i>`;
-
-											courseHtml += `</div>`; // assignment-inputs
+											courseHtml += `</div>`; // assignment-inputs div
 										}
 									} else {
 										courseHtml += "Not Offered";
@@ -627,12 +614,31 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					$el.closest("div.popover").popover('hide');
 				}
 				else if ($el.data('event-type') == 'toggleInstructorSearch') {
-					$el.prev("div.instructor-typeahead").toggle().prev('div.assign-dropdown').toggle();
+					const isTypeaheadEnabled = $el.prev('.instructor-typeahead-placeholder').is(':parent');
+
+					if (isTypeaheadEnabled) {
+						$el.prev('.instructor-typeahead-placeholder').toggle().prev('div.assign-dropdown').toggle();
+					} else {
+						const sectionGroupId = $el.data('section-group-id');
+
+						const typeaheadTemplate = `
+							<form>
+								<div class="typeahead__container">
+									<div class="typeahead__field">
+										<div class="typeahead__query">
+										<input data-event-type="instructorSearchInput" class="js-typeahead-${sectionGroupId}" data-section-group-id="${sectionGroupId}" name="q" autocomplete="off" placeholder="Search Department Instructors By Name"></div>
+									</div>
+								</div>
+							</form>
+						`;
+						
+						$el.prev('.instructor-typeahead-placeholder').toggle().append(typeaheadTemplate).prev('div.assign-dropdown').toggle();
+					}
 				}
 				else if ($el.data('event-type') == 'instructorSearchInput') {
-					let sectionGroupId = $el.data('section-group-id');
+					const sectionGroupId = $el.data('section-group-id');
 
-					let instructors = Object.values(scope.view.state.instructors.list).map(function(instructor) { instructor.sectionGroupId = sectionGroupId; return instructor;});
+					const instructors = Object.values(scope.view.state.instructors.list).map(function(instructor) { instructor.sectionGroupId = sectionGroupId; return instructor;});
 
 					$('.js-typeahead-' + sectionGroupId).typeahead({
 							order: "desc",
@@ -643,7 +649,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 							},
 							callback: {
 									onClickAfter: function (node, a, item, event) {
-										// Stop normal click behavior and submit directly
 										event.preventDefault();
 										event.stopPropagation();
 
