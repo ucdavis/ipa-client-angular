@@ -62,5 +62,8 @@
     "ui-select": "0.19.8",
     "underscore": "1.8.3",
     "xlsx": "0.14.1"
+  },
+  "engines": {
+    "node": ">=10.13.0"
   }
 }
