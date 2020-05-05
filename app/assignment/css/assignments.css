@@ -1039,6 +1039,7 @@ li.active-term .dropdown-term-row {
 }
 .instructor-typeahead-placeholder .typeahead__container.result .typeahead__list {
 	border-radius: 4px;
+	line-height: 1.7rem;
 }
 
 .instructor-search-toggle {
