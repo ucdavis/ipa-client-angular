@@ -4,13 +4,17 @@
 		// enable nodejs environment
 		"node": true,
 		// enable browser environment
-		"browser": true
+		"browser": true,
+		"cypress/globals": true
 	},
 	"parserOptions": {
 		"ecmaVersion": 6,
 		"sourceType": "module"
 	},
-	"extends": "eslint:recommended",
+	"extends": [
+		"eslint:recommended",
+		"plugin:cypress/recommended"
+	],
 	"rules": {
 		// Possible Errors
 		"no-debugger": 1, // warn about the use of debugger
@@ -26,10 +30,8 @@
 		"no-unexpected-multiline": 1, // warn about confusing multiline expressions
 		"no-unreachable": 2, // disallow unreachable code after return, throw, continue, and break statements
 		"use-isnan": 2, // require calls to isNaN() when checking for NaN
-
 		"valid-jsdoc": 0, // enforce valid JSDoc comments
 		"valid-typeof": 2, // enforce comparing typeof expressions against valid strings
-
 		// Best Practices
 		"no-empty-function": 1, // warn about empty functions
 		"curly": 2, // enforce consistent brace style for all control statements
@@ -39,20 +41,21 @@
 		"no-redeclare": 0, // warn about variable redeclaration
 		"space-infix-ops": 1, // warn about whitespace around operators
 		"keyword-spacing": 1, // warn about spaces around 'if', etc.
-		"space-in-parens": [1, "never"],
-
+		"space-in-parens": [
+			1,
+			"never"
+		],
 		// Variables
 		"no-delete-var": 2, // The delete operator is used to remove a property from an object. deleting a variable might lead to unexpected behavior
-
 		// Stylistic Issues
 		"semi": 1, // require or disallow semicolons instead of ASI
 		"no-mixed-spaces-and-tabs": 1, // disallow mixed spaces and tabs for indentation
-
 		// Angular
 		// TODO: Add more angular rules https://github.com/Gillespie59/eslint-plugin-angular
 		"angular/document-service": 2 // require and specify a prefix for all controller names
 	},
 	"plugins": [
-		"angular"
+		"angular",
+		"cypress"
 	]
 }
