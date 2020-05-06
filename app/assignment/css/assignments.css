@@ -134,7 +134,8 @@
 }
 
 .assign-dropdown {
-	flex-grow: 2;
+	width: 100%;
+	margin: 5px;
 }
 
 .assign-dropdown .dropdown-toggle {
@@ -1022,12 +1023,14 @@ li.active-term .dropdown-term-row {
 
 .assignment-inputs {
 	display: flex;
-	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 
 .instructor-typeahead-placeholder {
 	display: none;
-	flex-grow: 2;
+	width: 100%;
+	margin: 5px;
 }
 .instructor-typeahead-placeholder .typeahead__container {
 	font-size: 12px;
@@ -1043,7 +1046,7 @@ li.active-term .dropdown-term-row {
 }
 
 .instructor-search-toggle {
-	margin-left: 5px;
+	margin: 0 3px;
 }
 
 .add-note__text-area {

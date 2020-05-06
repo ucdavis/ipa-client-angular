@@ -425,7 +425,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											courseHtml += "</ul></div>";
 
 											courseHtml += `<div class="instructor-typeahead-placeholder"></div>`;
-											courseHtml += `<i class="glyphicon glyphicon-search instructor-search-toggle" data-event-type="toggleInstructorSearch" data-section-group-id=${sectionGroupId} data-toggle="tooltip" data-placement="top" data-original-title="Toggle Instructor Search" ></i>`;
+											courseHtml += `Click the <i class="glyphicon glyphicon-search instructor-search-toggle" data-event-type="toggleInstructorSearch" data-section-group-id=${sectionGroupId} data-toggle="tooltip" data-placement="bottom" data-original-title="Toggle Instructor Search"></i> to toggle Instructor Search`;
 
 											courseHtml += `</div>`; // assignment-inputs div
 										}
