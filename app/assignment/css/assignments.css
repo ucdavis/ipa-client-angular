@@ -1049,6 +1049,13 @@ li.active-term .dropdown-term-row {
 	margin: 0 3px;
 }
 
+.btn-toggle-search {
+	font-size: 12px;
+	color: rgb(153, 153, 153);
+	margin: 0 5px;
+	width: 100%;
+}
+
 .add-note__text-area {
 	resize: none;
 	border-color: #e2e2e2;

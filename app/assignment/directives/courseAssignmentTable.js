@@ -425,7 +425,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											courseHtml += "</ul></div>";
 
 											courseHtml += `<div class="instructor-typeahead-placeholder"></div>`;
-											courseHtml += `Click the <i class="glyphicon glyphicon-search instructor-search-toggle" data-event-type="toggleInstructorSearch" data-section-group-id=${sectionGroupId} data-toggle="tooltip" data-placement="bottom" data-original-title="Toggle Instructor Search"></i> to toggle Instructor Search`;
+											courseHtml += `<button class="btn btn-default btn-toggle-search" data-event-type="toggleInstructorSearch" data-section-group-id=${sectionGroupId}><i class="glyphicon glyphicon-search instructor-search-toggle"></i> Toggle Instructor Search</button>`;
 
 											courseHtml += `</div>`; // assignment-inputs div
 										}
@@ -614,27 +614,25 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					$el.closest("div.popover").popover('hide');
 				}
 				else if ($el.data('event-type') == 'toggleInstructorSearch') {
+					const sectionGroupId = $el.data('section-group-id');
 					const isTypeaheadEnabled = $el.prev('.instructor-typeahead-placeholder').is(':parent');
 
 					if (isTypeaheadEnabled) {
 						$el.prev('.instructor-typeahead-placeholder').toggle().prev('div.assign-dropdown').toggle();
+						$(`.js-typeahead-${sectionGroupId}`).focus().click();
 					} else {
-						const sectionGroupId = $el.data('section-group-id');
-
-						const typeaheadTemplate = `
-							<form>
+						const typeaheadTemplate =
+							`<form>
 								<div class="typeahead__container">
 									<div class="typeahead__field">
 										<div class="typeahead__query">
-										<input data-event-type="instructorSearchInput" class="js-typeahead-${sectionGroupId}" data-section-group-id="${sectionGroupId}" name="q" autocomplete="off" placeholder="Search Department Instructors By Name" autofocus></div>
+										<input data-event-type="instructorSearchInput" class="js-typeahead-${sectionGroupId}" data-section-group-id="${sectionGroupId}" name="q" autocomplete="off" placeholder="Search Department Instructors By Name"></div>
 									</div>
 								</div>
-							</form>
-						`;
+							</form>`;
 						
 						$el.prev('.instructor-typeahead-placeholder').toggle().append(typeaheadTemplate).prev('div.assign-dropdown').toggle();
-
-						$(`.js-typeahead-${sectionGroupId}`).trigger('click'); // using .focus() would not search
+						$(`.js-typeahead-${sectionGroupId}`).focus().click();
 					}
 				}
 				else if ($el.data('event-type') == 'instructorSearchInput') {
