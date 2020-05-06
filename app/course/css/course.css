@@ -633,11 +633,40 @@ td.sg-cell {
 }
 
 td.sg-cell input[type=number] {
+  border-style: dashed;
   text-align: center;
+  font-size: 14px;
 }
 
 td.sg-cell.is-offered input[type=number] {
-  border-color: #999;
+  border: 2px solid #022851;
+  color: #022851;
+  font-weight: 500;
+}
+td.sg-cell input[type=number] + .warning {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 16px;
+  height: 100%;
+  line-height: 52px;
+  font-size: 20px;
+  color: #ff9800;
+  z-index: 1;
+}
+td.sg-cell input[type=number]:placeholder-shown:focus::placeholder {
+  color: transparent;
+}
+td.sg-cell.is-offered input[type=number]::placeholder {
+  font-weight: 400;
+  color: #000;
+}
+td.sg-cell.is-offered input[type=number]:placeholder-shown {
+  border-color: #ff9800;
+}
+td.sg-cell.is-offered input[type=number]:placeholder-shown + .warning {
+  display: flex;
+  align-items: center;
 }
 
 td.import-course.course-cell {

@@ -20,5 +20,12 @@
 
 .support-assignments__header {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
+	margin-bottom: 1em;
+}
+
+.support-assignments__toolbar {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }

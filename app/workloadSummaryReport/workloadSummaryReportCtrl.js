@@ -1,10 +1,11 @@
 class WorkloadSummaryReportCtrl {
-	constructor ($scope, $rootScope, $routeParams, WorkloadSummaryActions, AuthService, validate) {
+	constructor ($scope, $rootScope, $routeParams, $anchorScroll, WorkloadSummaryActions, AuthService, validate) {
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$routeParams = $routeParams;
 		this.WorkloadSummaryActions = WorkloadSummaryActions;
 		this.AuthService = AuthService;
+		$anchorScroll.yOffset = 90;
 
 		$scope.noAccess = validate ? validate.noAccess : null;
 		$scope.workgroupId = $routeParams.workgroupId;
@@ -26,9 +27,13 @@ class WorkloadSummaryReportCtrl {
 			WorkloadSummaryActions.download();
 		};
 
+		$scope.goToSection = function(id) {
+			var tableSection = $scope.view.state.instructorTypes.list[id].description;
+			$anchorScroll(tableSection);
+		};
 	}
 }
 
-WorkloadSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'WorkloadSummaryActions', 'AuthService', 'validate'];
+WorkloadSummaryReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', '$anchorScroll', 'WorkloadSummaryActions', 'AuthService', 'validate'];
 
 export default WorkloadSummaryReportCtrl;

@@ -1,0 +1,12 @@
+<div class="courses-active-filters">
+  <label ng-if="filters.enabledTagIds.length > 0" class="courses-active-filters__label">Filters: </label>
+      <div class="courses-active-filters__token" ng-repeat="tagId in filters.enabledTagIds track by $index">
+        {{ tags.list[tagId].name }}
+        <i class="glyphicon glyphicon-remove clickable courses-active-filters__token-remove" ng-click="toggleTagFilter(tagId)"></i>
+      </div>
+      <div class="courses-active-filters__token" ng-show="filters.enableUnpublishedCourses == true">
+        Unpublished
+        <i class="glyphicon glyphicon-remove clickable courses-active-filters__token-remove" ng-click="unpublishedCoursesToggled()"></i>
+      </div>
+  </label>
+</div>

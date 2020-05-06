@@ -371,7 +371,7 @@ class CourseCtrl {
 
     _self.$scope.sectionSeatTotal = function (sectionGroup) {
       return sectionGroup.sectionIds.reduce(function (previousValue, sectionId) {
-        return previousValue + _self.$scope.view.state.sections.list[sectionId].seats;
+        return previousValue + (parseInt(_self.$scope.view.state.sections.list[sectionId].seats) || 0);
       }, 0);
     };
 

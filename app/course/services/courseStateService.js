@@ -249,6 +249,7 @@ class CourseStateService {
             sectionGroups.list[action.payload.sectionGroup.id].sectionIds = [action.payload.sections[0].id];
             sectionGroups.ids.push(action.payload.sectionGroup.id);
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+            sectionGroups.selectedSectionGroup.sections = action.payload.sections;
             sectionGroups.newSectionGroup = null;
             return sectionGroups;
           case ActionTypes.REMOVE_SECTION_GROUP:
@@ -277,6 +278,7 @@ class CourseStateService {
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.section.sectionGroupId];
             if (!sectionGroups.selectedSectionGroup.sectionIds) { sectionGroups.selectedSectionGroup.sectionIds = []; }
             sectionGroups.selectedSectionGroup.sectionIds.push(action.payload.section.id);
+            sectionGroups.selectedSectionGroup.sections.push(new Section(action.payload.section));
             sectionGroups.selectedSectionGroup.requiresAttention = false;
             return sectionGroups;
           case ActionTypes.REMOVE_SECTION:

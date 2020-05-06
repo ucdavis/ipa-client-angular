@@ -31,12 +31,20 @@
 
 	<div class="support-assignments__header">
 		<support-assignment-search></support-assignment-search>
-		<review-tools
+	</div>
+
+	<div class="support-assignments__toolbar">
+		<support-assignment-filter
+			state="view.state"
+			button-icon="'glyphicon-filter'"
+			tooltip="'Filters'"
+			select-item="toggleCoursesWithoutTa()">
+		</support-assignment-filter>
+			<review-tools
 			support-review="view.state.ui.review"
 			read-only="view.state.ui.readOnlyMode">
 		</review-tools>
 	</div>
-
 	<ipa-section-header header-text="'Support Assignments'">
 		<support-assignment-toolbar></support-assignment-toolbar>
 	</ipa-section-header>

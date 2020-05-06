@@ -62,16 +62,27 @@
               </a>
             </td>
           </tr>
-          <tr ng-if="view.selectedEntity.sectionIds.length > 1">
+          <tr ng-if="isSeries() && view.selectedEntity.sectionIds.length >= 1">
             <td><strong>Total</strong></td>
             <td class="text-center"
-                ng-class="{'section-group-details__total--overflow': view.selectedEntity.plannedSeats > 0 && sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats }">
+                ng-class="{'section-group-details__total--overflow': isSeries() && view.selectedEntity.plannedSeats > 0 && sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats }">
               {{ sectionSeatTotal(view.selectedEntity) }} <span ng-if="view.selectedEntity.plannedSeats > 0">/ {{ view.selectedEntity.plannedSeats }}</span>
             </td>
             <td></td>
           </tr>
         </tbody>
       </table>
+      <div ng-if="isSeries() && view.selectedEntity.sectionIds.length >= 1 && sectionSeatTotal(view.selectedEntity) > view.selectedEntity.plannedSeats" class="section-group-details__total--overflow">
+        <strong>
+          Changes have not been saved.
+        </strong>
+        <br />
+        <strong>
+          Reason: Section seating of {{ sectionSeatTotal(view.selectedEntity) }} exceeds total available course seats of {{ view.selectedEntity.plannedSeats || 0}}.
+        </strong>
+        <br />
+        <br />
+      </div>
       <spinner ng-show="view.selectedEntity.id && !view.selectedEntity.sectionIds"></spinner>
       <div ng-show="view.selectedEntity.sectionIds">
         <div ng-if="view.selectedEntity.sectionIds.length == 0" class="text-center text-muted" style="padding: 1em;">No sections available</div>

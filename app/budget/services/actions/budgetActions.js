@@ -33,11 +33,12 @@ class BudgetActions {
 									selectedBudgetScenarioId = budgetScenario.id;
 								}
 							});
-
+						} else {
 							selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
-							selectedBudgets[year] = selectedBudgetScenarioId;
-							localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 						}
+
+						selectedBudgets[year] = selectedBudgetScenarioId;
+						localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 					}
 
 					if (results.sectionGroupCosts.length > 0) {
@@ -57,7 +58,7 @@ class BudgetActions {
 
 								currentCensusSnapshot.forEach(function(courseCensus) {
 									sectionGroupCosts.forEach(function(sectionGroupCost) {
-										if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode) {
+										if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && courseCensus.sequenceNumber.includes(sectionGroupCost.sequencePattern)) {
 											sectionGroupCost.currentEnrollment ?
 												(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
 												sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
