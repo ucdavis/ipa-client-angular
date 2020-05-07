@@ -1,6 +1,7 @@
 FROM node:10-alpine AS builder
 WORKDIR /usr/src
 COPY . .
+RUN apk --no-cache add git
 RUN npm install
 RUN npm run build
 
