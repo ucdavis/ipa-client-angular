@@ -1,3 +1,4 @@
 {
-  "baseUrl": "https://ipa.ucdavis.edu/"
+  "baseUrl": "http://localhost:9000",
+  "chromeWebSecurity": false
 }

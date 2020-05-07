@@ -16,7 +16,7 @@ describe('Summary Page', () => {
   });
 
   it('redirects to CAS login', () => {
-    cy.location().should(loc => {
+    cy.location().should((loc) => {
       expect(loc.origin).to.eq(Cypress.env('CAS_URL'));
     });
   });
@@ -26,7 +26,14 @@ describe('Summary Page', () => {
     cy.get('#password').type(Cypress.env('password'));
     cy.get('#submit').click();
 
-    cy.get('[name=proceed]').click(); // currently needed for dssapps on ssodev
+    // needed for dssapps on ssodev
+    cy.get('[name=proceed]').click().then(($body) => {
+      // ssodev occasionally shows a https warning page
+      if ($body.find('input[name="_eventId_success"]').length > 0) {
+        $body.find('input[name="_eventId_success"]').click();
+      }
+    }
+    );
   });
 
   it('redirects to summary after login', () => {
@@ -34,7 +41,7 @@ describe('Summary Page', () => {
     cy.contains(new Date().getFullYear());
   });
 
-    after(() => {
-      cy.contains('Logout').click();
-    });
+  after(() => {
+    cy.contains('Logout').click();
+  });
 });
