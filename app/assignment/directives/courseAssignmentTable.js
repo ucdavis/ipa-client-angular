@@ -302,7 +302,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 										});
 
 										if (scope.userCanEdit()) {
-
+											courseHtml += `<div class="assignment-inputs">`;
 											// Add an assign button to add more instructors
 											courseHtml += "<div class=\"dropdown assign-dropdown hidden-print\">";
 											courseHtml += "<button class=\"btn btn-default dropdown-toggle assign-dropdown-btn\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">";
@@ -377,7 +377,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 														courseHtml += " data-instructor-id=\"" + teachingAssignment.instructorId + "\"";
 														courseHtml += " data-teaching-assignment-id=\"" + teachingAssignmentId + "\"";
 
-														courseHtml += " href=\"#\">" + instructor.fullName + " (" + priority + ")" + "</a></li>";
+														courseHtml += " href=\"#\">" + instructor.lastName + ", " + instructor.firstName + " (" + priority + ")" + "</a></li>";
 
 														numberOfInstructorsAdded++;
 													}
@@ -394,7 +394,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 													courseHtml += "<li><a";
 													courseHtml += " data-section-group-id=\"" + sectionGroupId + "\"";
 													courseHtml += " data-instructor-id=\"" + instructorId + "\"";
-													courseHtml += " href=\"#\">" + instructor.fullName + "</a></li>";
+													courseHtml += " href=\"#\">" + instructor.lastName + ", " + instructor.firstName + "</a></li>";
 													numberOfInstructorsAdded++;
 												}
 											});
@@ -412,19 +412,23 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 												courseHtml += '<li><a';
 												courseHtml += ' data-section-group-id="' + sectionGroupId + '"';
 												courseHtml += ' data-support-staff-id="' + supportStaff.id + '"';
-												courseHtml += ' href="#">' + supportStaff.fullName + ' (' + supportStaff.priority + ')</a></li>';
+												courseHtml += ' href="#">' + supportStaff.lastName + ", " + supportStaff.firstName + ' (' + supportStaff.priority + ')</a></li>';
 											});
 
 											sectionGroup.aiAssignmentOptions.other.forEach(function(supportStaff) {
 												courseHtml += '<li><a';
 												courseHtml += ' data-section-group-id="' + sectionGroupId + '"';
 												courseHtml += ' data-support-staff-id="' + supportStaff.id + '"';
-												courseHtml += ' href="#">' + supportStaff.fullName + '</a></li>';
+												courseHtml += ' href="#">' + supportStaff.lastName + ", " + supportStaff.firstName + '</a></li>';
 											});
 
 											courseHtml += "</ul></div>";
-										} // End scope.userCanEdit check
 
+											courseHtml += `<div class="instructor-typeahead-placeholder"></div>`;
+											courseHtml += `<button class="btn btn-default btn-toggle-search" data-event-type="toggleInstructorSearch" data-section-group-id=${sectionGroupId}><i class="glyphicon glyphicon-search instructor-search-toggle"></i> Toggle Instructor Search</button>`;
+
+											courseHtml += `</div>`; // assignment-inputs div
+										}
 									} else {
 										courseHtml += "Not Offered";
 									}
@@ -608,6 +612,65 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				else if ($el.data('event-type') == 'dismissDeletePlaceholderAIPop') {
 					// Dismiss the delete course dialog
 					$el.closest("div.popover").popover('hide');
+				}
+				else if ($el.data('event-type') == 'toggleInstructorSearch') {
+					const sectionGroupId = $el.data('section-group-id');
+					const isTypeaheadEnabled = $el.prev('.instructor-typeahead-placeholder').is(':parent');
+
+					if (isTypeaheadEnabled) {
+						$el.prev('.instructor-typeahead-placeholder').toggle().prev('div.assign-dropdown').toggle();
+						$(`.js-typeahead-${sectionGroupId}`).focus().click();
+					} else {
+						const typeaheadTemplate =
+							`<form>
+								<div class="typeahead__container">
+									<div class="typeahead__field">
+										<div class="typeahead__query">
+										<input data-event-type="instructorSearchInput" class="js-typeahead-${sectionGroupId}" data-section-group-id="${sectionGroupId}" name="q" autocomplete="off" placeholder="Search Department Instructors By Name"></div>
+									</div>
+								</div>
+							</form>`;
+						
+						$el.prev('.instructor-typeahead-placeholder').toggle().append(typeaheadTemplate).prev('div.assign-dropdown').toggle();
+						$(`.js-typeahead-${sectionGroupId}`).focus().click();
+					}
+				}
+				else if ($el.data('event-type') == 'instructorSearchInput') {
+					const sectionGroupId = $el.data('section-group-id');
+
+					const instructors = Object.values(scope.view.state.instructors.list).map(function(instructor) { instructor.sectionGroupId = sectionGroupId; return instructor;});
+
+					$('.js-typeahead-' + sectionGroupId).typeahead({
+							order: "desc",
+							display: "fullName",
+							template: "<span data-section-group-id='{{sectionGroupId}}' data-instructor-id='{{id}}'>{{fullName}}</span>",
+							source: {
+									data: instructors
+							},
+							matcher: function (item) {
+									const sectionGroupTeachingAssignmentIds = scope.view.state.sectionGroups.list[item.sectionGroupId].teachingAssignmentIds;
+									const assignedInstructorIds = sectionGroupTeachingAssignmentIds.map(assignmentId => scope.view.state.teachingAssignments.list[assignmentId].instructorId);
+									return !assignedInstructorIds.includes(item.id);
+							},
+							callback: {
+									onClickAfter: function (node, a, item, event) {
+										event.preventDefault();
+										event.stopPropagation();
+
+										var sectionGroup = scope.view.state.sectionGroups.list[item.sectionGroupId];
+										teachingAssignment = {
+											sectionGroupId: item.sectionGroupId,
+											instructorId: item.id,
+											termCode: sectionGroup.termCode,
+											priority: 1,
+											approved: true
+										};
+										AssignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
+
+										$('#result-container').text('');
+									}
+							}
+					});
 				}
 			}); // end UI event handler
 		} // end link
