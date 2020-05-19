@@ -7,7 +7,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
 		template: require('./budgetScenarioToolbar.html'), // directive html found here:
 		replace: true, // Replace with the template
-		
+
 		scope: {
 			state: '<'
 		},
@@ -110,6 +110,12 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.print = function() {
 				window.print();
 			};
+
+			scope.foo = ( item ) => {
+				BudgetActions.selectTerm( item.description );
+
+			};
+			console.log(scope.state.ui.termNav);
 		} // End Link
 	};
 };
