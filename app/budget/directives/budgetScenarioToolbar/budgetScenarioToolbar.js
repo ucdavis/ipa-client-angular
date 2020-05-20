@@ -103,6 +103,33 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.print = function() {
 				window.print();
 			};
+
+			scope.syncBudgetScenarioTerm = function() {
+				let trackedChanges = scope.state.calculatedCourseList.map(course => course.trackedChanges).flat();
+
+				trackedChanges.forEach(change => {
+					let sectionGroupCost = scope.state.calculatedCourseList.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
+
+					switch (change.action) {
+						case "syncEnrollment":
+							sectionGroupCost.enrollment = sectionGroupCost.sectionGroup.totalSeats;
+							break;
+						case "syncSectionCount":
+					sectionGroupCost.sectionCount = sectionGroupCost.sectionGroup.sectionCount;
+							break;
+						case "syncTaCount":
+							sectionGroupCost.taCount = sectionGroupCost.sectionGroup.teachingAssistantAppointments;
+							break;
+						case "syncReaderCount":
+							sectionGroupCost.readerCount = sectionGroupCost.sectionGroup.readerAppointments;
+							break;
+						default:
+							return;
+					}
+
+					BudgetActions.updateSectionGroupCost(sectionGroupCost);
+				});
+			};
 		} // End Link
 	};
 };

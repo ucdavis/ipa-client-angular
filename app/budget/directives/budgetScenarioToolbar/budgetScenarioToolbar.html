@@ -17,6 +17,14 @@
 			            on-click="showScenarioRenameUI()"
 			            tooltip-message="'Rename Scenario'">
 			</ipa-button>
+
+			<ipa-button class="budget-scenario-toolbar__edit-button do-not-print"
+									icon-class="'glyphicon glyphicon-repeat'"
+									size="'small'"
+									ng-show="!state.ui.fromLiveData"
+									on-click="syncBudgetScenarioTerm()"
+									tooltip-message="'Sync Current Term with Live Data Changes'">
+			</ipa-button>
 		</div>
 
 		<!-- Rename scenario UI -->

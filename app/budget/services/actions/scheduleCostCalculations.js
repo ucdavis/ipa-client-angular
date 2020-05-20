@@ -110,6 +110,9 @@ class ScheduleCostCalculations {
             }
           }
 
+          // Track scenario changes to accept all
+          _this._calculateScenarioChanges(sectionGroupCost);
+
           // Calculate instructor cost
           _this._calculateInstructorCost(sectionGroupCost);
 
@@ -159,6 +162,29 @@ class ScheduleCostCalculations {
         var instructorType = instructorTypes.list[userRole.instructorTypeId];
 
         return instructorType;
+      },
+      _calculateScenarioChanges: function(sectionGroupCost) {
+        if (sectionGroupCost.trackedChanges) { return; }
+
+        sectionGroupCost.trackedChanges = [];
+
+        if (sectionGroupCost.sectionGroup) {
+          if (sectionGroupCost.enrollment !== sectionGroupCost.sectionGroup.totalSeats) {
+            sectionGroupCost.trackedChanges.push({action: "syncEnrollment", sectionGroupCostId: sectionGroupCost.id});
+          }
+
+          if (sectionGroupCost.sectionCount != sectionGroupCost.sectionGroup.sectionCount) {
+            sectionGroupCost.trackedChanges.push({action: "syncSectionCount", sectionGroupCostId: sectionGroupCost.id});
+          }
+
+          if (sectionGroupCost.taCount != sectionGroupCost.sectionGroup.teachingAssistantAppointments) {
+            sectionGroupCost.trackedChanges.push({action: "syncTaCount", sectionGroupCostId: sectionGroupCost.id});
+          }
+
+          if (sectionGroupCost.readerCount != sectionGroupCost.sectionGroup.readerAppointments) {
+            sectionGroupCost.trackedChanges.push({action: "syncReaderCount", sectionGroupCostId: sectionGroupCost.id});
+          }
+        }
       },
       _calculateInstructorCost: function(sectionGroupCost) {
         sectionGroupCost.overrideInstructorCost = null;
