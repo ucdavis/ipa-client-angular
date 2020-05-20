@@ -15,7 +15,7 @@
 			message="{{confirmMessage}}"
 			yes="Confirm"
 			no="Cancel"
-			placement="top">
+			placement="{{ confirmPlacement || 'top' }}">
 			<div class="ipa-button__text" ng-show="text">
 				{{ text }}
 			</div>
