@@ -18,7 +18,9 @@ class ScheduleCostCalculations {
         var scheduleCosts = {
           terms: selectedBudgetScenario.terms,
           byTerm: {},
-          byUniqueKey: {}
+          byUniqueKey: {},
+          sectionGroupCosts: [],
+          trackedChanges: []
         };
 
         activeTerms.forEach(function(term) {
@@ -111,7 +113,7 @@ class ScheduleCostCalculations {
           }
 
           // Track scenario changes to accept all
-          _this._calculateScenarioChanges(sectionGroupCost);
+          _this._calculateScenarioChanges(sectionGroupCost, scheduleCosts);
 
           // Calculate instructor cost
           _this._calculateInstructorCost(sectionGroupCost);
@@ -126,6 +128,8 @@ class ScheduleCostCalculations {
           var container = _this._findOrAddSectionGroupContainer(sectionGroupCost, scheduleCosts.byTerm[shortTerm]);
           container.sectionGroupCosts.push(sectionGroupCost);
           scheduleCosts.byUniqueKey[container.uniqueKey] = container;
+
+          scheduleCosts.sectionGroupCosts.push(sectionGroupCost);
         });
 
         // Sort termCourses
@@ -163,26 +167,22 @@ class ScheduleCostCalculations {
 
         return instructorType;
       },
-      _calculateScenarioChanges: function(sectionGroupCost) {
-        if (sectionGroupCost.trackedChanges) { return; }
-
-        sectionGroupCost.trackedChanges = [];
-
+      _calculateScenarioChanges: function(sectionGroupCost, scheduleCosts) {
         if (sectionGroupCost.sectionGroup) {
           if (sectionGroupCost.enrollment !== sectionGroupCost.sectionGroup.totalSeats) {
-            sectionGroupCost.trackedChanges.push({action: "syncEnrollment", sectionGroupCostId: sectionGroupCost.id});
+            scheduleCosts.trackedChanges.push({action: "syncEnrollment", sectionGroupCostId: sectionGroupCost.id});
           }
 
           if (sectionGroupCost.sectionCount != sectionGroupCost.sectionGroup.sectionCount) {
-            sectionGroupCost.trackedChanges.push({action: "syncSectionCount", sectionGroupCostId: sectionGroupCost.id});
+            scheduleCosts.trackedChanges.push({action: "syncSectionCount", sectionGroupCostId: sectionGroupCost.id});
           }
 
           if (sectionGroupCost.taCount != sectionGroupCost.sectionGroup.teachingAssistantAppointments) {
-            sectionGroupCost.trackedChanges.push({action: "syncTaCount", sectionGroupCostId: sectionGroupCost.id});
+            scheduleCosts.trackedChanges.push({action: "syncTaCount", sectionGroupCostId: sectionGroupCost.id});
           }
 
           if (sectionGroupCost.readerCount != sectionGroupCost.sectionGroup.readerAppointments) {
-            sectionGroupCost.trackedChanges.push({action: "syncReaderCount", sectionGroupCostId: sectionGroupCost.id});
+            scheduleCosts.trackedChanges.push({action: "syncReaderCount", sectionGroupCostId: sectionGroupCost.id});
           }
         }
       },

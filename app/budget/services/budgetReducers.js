@@ -528,7 +528,9 @@ class BudgetReducers {
 						calculatedScheduleCosts = {
 							terms: [],
 							byTerm: {},
-							byUniqueKey: {}
+							byUniqueKey: {},
+							sectionGroupCosts: [],
+							trackedChanges: []
 						};
 						return calculatedScheduleCosts;
 					case ActionTypes.CALCULATE_SCHEDULE_COSTS:

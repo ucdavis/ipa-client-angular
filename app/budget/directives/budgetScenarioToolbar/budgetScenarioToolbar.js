@@ -105,10 +105,17 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.syncBudgetScenarioTerm = function() {
-				let trackedChanges = scope.state.calculatedCourseList.map(course => course.trackedChanges).flat();
+				// let trackedChanges = scope.state.calculatedCourseList.map(course => course.trackedChanges).flat();
 
-				trackedChanges.forEach(change => {
-					let sectionGroupCost = scope.state.calculatedCourseList.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
+				// let scenarioScheduleCosts = Object.values(scope.state.calculatedScheduleCosts.byTerm).flat();
+				// let scenarioSectionGroupCosts = scenarioScheduleCosts.map(scheduleCost => scheduleCost.sectionGroupCosts.flat()).flat();
+				// let scenarioTrackedChanges = scenarioSectionGroupCosts.filter(sectionGroupCost => sectionGroupCost.trackedChanges.length > 0);
+
+				let scenarioTrackedChanges = scope.state.calculatedScheduleCosts.trackedChanges;
+				let scenarioSectionGroupCosts = scope.state.calculatedScheduleCosts.sectionGroupCosts;
+
+				scenarioTrackedChanges.forEach(change => {
+					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
 
 					switch (change.action) {
 						case "syncEnrollment":
