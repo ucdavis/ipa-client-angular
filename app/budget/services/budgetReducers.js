@@ -9,7 +9,7 @@ class BudgetReducers {
 							ids: [],
 							list: {}
 						};
-	
+
 						action.payload.budgetScenarios.forEach(function(budgetScenario) {
 							budgetScenarios.ids.push(budgetScenario.id);
 							budgetScenarios.list[budgetScenario.id] = budgetScenario;
@@ -52,7 +52,7 @@ class BudgetReducers {
 							instructorTypes.list[instructorType.id] = instructorType;
 							instructorTypes.ids.push(instructorType.id);
 						});
-	
+
 						return instructorTypes;
 					default:
 						return instructorTypes;
@@ -196,7 +196,7 @@ class BudgetReducers {
 							ids: [],
 							list: []
 						};
-	
+
 						action.payload.lineItemCategories.forEach(function(lineItemCategory) {
 							lineItemCategories.ids.push(lineItemCategory.id);
 							lineItemCategories.list[lineItemCategory.id] = lineItemCategory;
@@ -326,13 +326,13 @@ class BudgetReducers {
 							ids: [],
 							list: []
 						};
-	
+
 						// Create hash for quick lookup
 						var instructorCostsByInstructorId = {};
 						action.payload.instructorCosts.forEach(function(instructorCost) {
 							instructorCostsByInstructorId[instructorCost.instructorId] = instructorCost;
 						});
-	
+
 						action.payload.assignedInstructors.forEach(function(instructor) {
 							var instructorCost = instructorCostsByInstructorId[instructor.id];
 							if (instructorCost) {
@@ -356,19 +356,19 @@ class BudgetReducers {
 							ids: [],
 							list: []
 						};
-	
+
 						// Create hash for quick lookup
 						var instructorCostsByInstructorId = {};
 						action.payload.instructorCosts.forEach(function(instructorCost) {
 							instructorCostsByInstructorId[instructorCost.instructorId] = instructorCost;
 						});
-	
+
 						action.payload.activeInstructors.forEach(function(instructor) {
 							var instructorCost = instructorCostsByInstructorId[instructor.id];
 							if (instructorCost) {
 								instructor.instructorCostId = instructorCost.id;
 							}
-	
+
 							activeInstructors.ids.push(instructor.id);
 							activeInstructors.list[instructor.id] = instructor;
 						});
@@ -407,7 +407,7 @@ class BudgetReducers {
 						var instructorCost = action.payload.instructorCost;
 						instructorCosts.list[instructorCost.id] = instructorCost;
 						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
-	
+
 						return instructorCosts;
 					case ActionTypes.CREATE_INSTRUCTOR_COST:
 						var instructorCost = action.payload.instructorCost;
@@ -421,19 +421,19 @@ class BudgetReducers {
 			},
 			sectionGroupReducers: function (action, sectionGroups) {
 				switch (action.type) {
-	
+
 					case ActionTypes.INIT_STATE:
 						sectionGroups = {
 							ids: [],
 							list: [],
 							idsByUniqueKey: {}
 						};
-	
+
 						var courses = {
 							ids: [],
 							list: [],
 						};
-	
+
 						action.payload.courses.forEach(function(course) {
 							courses.ids.push(course.id);
 							courses.list[course.id] = course;
@@ -459,7 +459,7 @@ class BudgetReducers {
 			},
 			courseReducers: function (action, courses) {
 				switch (action.type) {
-	
+
 					case ActionTypes.INIT_STATE:
 						courses = {
 							ids: [],
@@ -546,7 +546,7 @@ class BudgetReducers {
 							list: [],
 							byLoginId: {}
 						};
-	
+
 						action.payload.users.forEach(function(user) {
 							users.ids.push(user.id);
 							users.list[user.id] = user;
@@ -565,7 +565,7 @@ class BudgetReducers {
 							list: [],
 							byUserId: {}
 						};
-	
+
 						action.payload.userRoles.forEach(function(userRole) {
 							userRoles.ids.push(userRole.id);
 							userRoles.list[userRole.id] = userRole;
@@ -648,30 +648,30 @@ class BudgetReducers {
 							uniqueKeys: [],
 							list: []
 						};
-	
+
 						sectionGroups.ids.forEach(function(sectionGroupId) {
 							var sectionGroup = sectionGroups.list[sectionGroupId];
 							var course = courses.list[sectionGroup.courseId];
 							var uniqueKey = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern + "-" + sectionGroup.termCode;
-	
+
 							sectionGroup.sectionCount = 0;
 							sectionGroup.totalSeats = 0;
 							sectionGroup.sequencePattern = course.sequencePattern;
 							// calculate sectionCount and totalSeats
 							sections.ids.forEach(function(sectionId) {
 								var section = sections.list[sectionId];
-	
+
 								if (section.sectionGroupId == sectionGroup.id) {
 									sectionGroup.sectionCount++;
 									sectionGroup.totalSeats += section.seats;
 								}
 							});
-	
+
 							sectionGroup.assignedInstructorIds = [];
 							sectionGroup.assignedInstructorNames = [];
 							sectionGroup.assignedInstructorTypeIds = [];
 							sectionGroup.assignedInstructorTypeNames = [];
-	
+
 							// calculate assignedInstructors
 							teachingAssignments.ids.forEach(function(teachingAssignmentId) {
 								var teachingAssignment = teachingAssignments.list[teachingAssignmentId];
@@ -694,11 +694,11 @@ class BudgetReducers {
 							});
 							// Add to payload
 							sectionGroup.uniqueKey = uniqueKey;
-	
+
 							scheduleSectionGroups.uniqueKeys.push(uniqueKey);
 							scheduleSectionGroups.list[uniqueKey] = sectionGroup;
 						});
-	
+
 						return scheduleSectionGroups;
 					}
 					default:
@@ -712,7 +712,7 @@ class BudgetReducers {
 							ids: [],
 							list: []
 						};
-	
+
 						action.payload.sectionGroupCostComments.forEach(function(sectionGroupCostComment) {
 							sectionGroupCostComments.ids.push(sectionGroupCostComment.id);
 							sectionGroupCostComments.list[sectionGroupCostComment.id] = sectionGroupCostComment;
@@ -740,7 +740,7 @@ class BudgetReducers {
 							ids: [],
 							list: []
 						};
-	
+
 						action.payload.lineItemComments.forEach(function(lineItemComment) {
 							lineItemComments.ids.push(lineItemComment.id);
 							lineItemComments.list[lineItemComment.id] = lineItemComment;
@@ -824,7 +824,7 @@ class BudgetReducers {
 							workgroupId: action.workgroupId,
 							year: action.year
 						};
-	
+
 						// Set initial lineItemDetail UI states
 						action.payload.lineItems.forEach(function(lineItem) {
 								ui.lineItemDetails[lineItem.id] = {
@@ -834,7 +834,7 @@ class BudgetReducers {
 									displayNotesInput: false
 								};
 						});
-	
+
 						// Set initial sectionGroupCostDetail UI states
 						action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
 								ui.sectionGroupCostDetails[sectionGroupCost.id] = {
@@ -867,7 +867,7 @@ class BudgetReducers {
 									description: subjectCode,
 									selected: false
 								};
-								
+
 								ui.filters.list.push(subjectCodeFilter);
 							});
 						}
@@ -881,7 +881,7 @@ class BudgetReducers {
 									description: accountNumber,
 									selected: false
 								};
-								
+
 								ui.filters.list.push(accountNumberFilter);
 							});
 						}
@@ -893,12 +893,13 @@ class BudgetReducers {
 					case ActionTypes.CALCULATE_INSTRUCTORS:
 						ui.instructorAssignmentOptions = action.payload.instructorAssignmentOptions;
 						ui.regularInstructorAssignmentOptions = action.payload.regularInstructorAssignmentOptions;
-	
+
 						return ui;
 					case ActionTypes.CALCULATE_SCENARIO_TERMS:
 						ui.termNav.allTabs = action.payload.allTermTabs;
 						ui.termNav.activeTab = action.payload.activeTermTab;
 						ui.termNav.activeTerm = action.payload.activeTerm;
+						ui.termNav.budgetScenarioDropdownTerms = action.payload.budgetScenarioDropdownTerms;
 						return ui;
 					case ActionTypes.TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN:
 						ui.filters.lineItems.showHidden.selected = !ui.filters.lineItems.showHidden.selected;
@@ -913,7 +914,7 @@ class BudgetReducers {
 									displayNotesInput: false
 								};
 						});
-	
+
 						// Set initial sectionGroupCostDetail UI states
 						action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
 								ui.sectionGroupCostDetails[sectionGroupCost.id] = {
@@ -925,7 +926,7 @@ class BudgetReducers {
 									displayReasonInput: false,
 								};
 						});
-	
+
 						return ui;
 					case ActionTypes.SELECT_TERM:
 						ui.selectedTerm = action.payload.term;
@@ -1034,7 +1035,7 @@ class BudgetReducers {
 			},
 			reduce: function (action) {
 				var scope = this;
-	
+
 				let newState = {};
 				newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 				newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
@@ -1065,12 +1066,12 @@ class BudgetReducers {
 				newState.calculatedCourseList = scope.calculatedCourseListReducers(action, scope._state.calculatedCourseList);
 
 				scope._state = newState;
-	
+
 				// Build new 'page state'
 				// This is the 'view friendly' version of the store
 				let newPageState = {};
 				newPageState.selectedBudgetScenario = BudgetSelectors.generateSelectedBudgetScenario(newState.budgetScenarios, newState.ui);
-	
+
 				newPageState.budgetScenarios = BudgetSelectors.generateBudgetScenarios(newState.budgetScenarios);
 				newPageState.budget = newState.budget;
 				newPageState.ui = newState.ui;
