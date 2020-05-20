@@ -110,6 +110,8 @@ class ScheduleCostCalculations {
             else if (assignedInstructorTypeId) {
               sectionGroupCost.reversionDisplayName = assignedInstructorType.description;
             }
+
+            scheduleCosts.trackedChanges.push({action: "syncInstructor", sectionGroupCostId: sectionGroupCost.id});
           }
 
           // Track scenario changes to accept all

@@ -118,6 +118,10 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
 
 					switch (change.action) {
+						case "syncInstructor":
+							sectionGroupCost.instructorId = sectionGroupCost.sectionGroup.assignedInstructor ? sectionGroupCost.sectionGroup.assignedInstructor.id : null;
+							sectionGroupCost.instructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorType ? sectionGroupCost.sectionGroup.assignedInstructorType.id : null;
+							break;
 						case "syncEnrollment":
 							sectionGroupCost.enrollment = sectionGroupCost.sectionGroup.totalSeats;
 							break;
