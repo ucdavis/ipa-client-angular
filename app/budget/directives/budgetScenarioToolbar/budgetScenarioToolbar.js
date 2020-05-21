@@ -112,12 +112,6 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.syncBudgetScenarioTerm = function() {
-				// let trackedChanges = scope.state.calculatedCourseList.map(course => course.trackedChanges).flat();
-
-				// let scenarioScheduleCosts = Object.values(scope.state.calculatedScheduleCosts.byTerm).flat();
-				// let scenarioSectionGroupCosts = scenarioScheduleCosts.map(scheduleCost => scheduleCost.sectionGroupCosts.flat()).flat();
-				// let scenarioTrackedChanges = scenarioSectionGroupCosts.filter(sectionGroupCost => sectionGroupCost.trackedChanges.length > 0);
-
 				let scenarioTrackedChanges = scope.state.calculatedScheduleCosts.trackedChanges;
 				let scenarioSectionGroupCosts = scope.state.calculatedScheduleCosts.sectionGroupCosts;
 
@@ -150,9 +144,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 			scope.setBudgetScenarioTerm = ( item ) => {
 				BudgetActions.selectTerm( item.description );
-
 			};
-			console.log(scope.state.ui.termNav);
 		} // End Link
 	};
 };
