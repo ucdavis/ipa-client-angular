@@ -3,6 +3,16 @@
 	display: flex;
 	margin-bottom: 20px;
 	justify-content: space-between;
+
+	position: fixed;
+	top: 146px;
+	left: 200px;
+	width: calc(100% - 200px );
+	margin-top: -30px;
+	padding: 10px 20px;
+	background-color: #fff;
+	border-bottom: 1px solid #e3e3e3;
+	z-index: 1;
 }
 
 .budget-scenario-toolbar__tool-container {
@@ -35,7 +45,6 @@
 .budget-scenario-toolbar__edit-ui {
 	align-items: center;
 	display: flex;
-	width: 30%;
 }
 
 .budget-scenario-toolbar__container {
@@ -45,6 +54,13 @@
 }
 
 .budget-scenario-toolbar__edit-button {
+	margin-left: 10px;
+}
+
+.budget-scenario-toolbar__term-display {
+	border: 1px solid rgba(27,31,35,0.2);
+	border-radius: 0.25em;
+	padding: 3px 12px;
 	margin-left: 10px;
 }
 
