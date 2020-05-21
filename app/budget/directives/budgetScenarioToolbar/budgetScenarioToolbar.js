@@ -111,9 +111,9 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				window.print();
 			};
 
-			scope.syncBudgetScenarioTerm = function() {
-				let scenarioTrackedChanges = scope.state.calculatedScheduleCosts.trackedChanges;
-				let scenarioSectionGroupCosts = scope.state.calculatedScheduleCosts.sectionGroupCosts;
+			scope.syncBudgetScenario = function() {
+				const scenarioTrackedChanges = scope.state.calculatedScheduleCosts.trackedChanges;
+				const scenarioSectionGroupCosts = scope.state.calculatedScheduleCosts.sectionGroupCosts;
 
 				scenarioTrackedChanges.forEach(change => {
 					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
@@ -142,6 +142,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 					BudgetActions.updateSectionGroupCost(sectionGroupCost);
 				});
 			};
+
 			scope.setBudgetScenarioTerm = ( item ) => {
 				BudgetActions.selectTerm( item.description );
 			};
