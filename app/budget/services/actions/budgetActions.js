@@ -129,7 +129,7 @@ class BudgetActions {
 			createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
 				var self = this;
 				if (scenarioId == null) { scenarioId = 0;}
-	
+
 				BudgetService.createBudgetScenario(newBudgetScenario, budgetId, scenarioId).then(function (results) {
 					window.ipa_analyze_event('budget', 'budget scenario created');
 
@@ -201,10 +201,10 @@ class BudgetActions {
 			},
 			createInstructorCost: function (instructorCostDto) {
 				var instructorCost = Object.assign({}, instructorCostDto);
-	
+
 				// Ensure cost is passed as a number
 				instructorCost.cost = parseFloat(instructorCost.cost);
-	
+
 				BudgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
 					window.ipa_analyze_event('budget', 'instructor cost created');
 
@@ -228,7 +228,7 @@ class BudgetActions {
 				var self = this;
 				// Ensure amount is properly formatted as a float
 				newLineItem.amount = newLineItem.amount ? parseFloat(newLineItem.amount) : null;
-	
+
 				BudgetService.createLineItem(newLineItem, budgetScenarioId).then(function (newLineItem) {
 					window.ipa_analyze_event('budget', 'line item created');
 
@@ -238,7 +238,7 @@ class BudgetActions {
 					};
 					$rootScope.$emit('toast', { message: message || "Created line item", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
-	
+
 					// Close modal
 					self.closeAddLineItemModal();
 					BudgetCalculations.calculateLineItems();
@@ -249,16 +249,16 @@ class BudgetActions {
 			},
 			updateLineItem: function (lineItem) {
 				var self = this;
-	
+
 				// Create instead of update if appropriate
 				if (lineItem.id == null || lineItem.id == 0) {
 					this.createLineItem(lineItem, lineItem.budgetScenarioId);
 					return;
 				}
-	
+
 				// Ensure amount is properly formatted as a float
 				lineItem.amount = parseFloat(lineItem.amount);
-	
+
 				BudgetService.updateLineItem(lineItem, lineItem.budgetScenarioId).then(function (results) {
 					window.ipa_analyze_event('budget', 'line item updated');
 
@@ -268,7 +268,7 @@ class BudgetActions {
 					};
 					$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
-	
+
 					// Close modal
 					self.closeAddLineItemModal();
 					BudgetCalculations.calculateLineItems();
@@ -306,8 +306,8 @@ class BudgetActions {
 			/**
 			 * Updates existing sectionGroupCost. Happens when TA count, reader count,
 			 * instructor assignment, cost override, etc. are touched.
-			 * 
-			 * @param {*} sectionGroupCost 
+			 *
+			 * @param {*} sectionGroupCost
 			 */
 			updateSectionGroupCost: function (sectionGroupCost) {
 				BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
@@ -380,7 +380,7 @@ class BudgetActions {
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateInstructorTypeCosts();
-					
+
 					$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
@@ -413,7 +413,7 @@ class BudgetActions {
 			},
 			_updateInstructorTypeCost: function (newInstructorTypeCost) {
 				newInstructorTypeCost.cost = parseFloat(newInstructorTypeCost.cost);
-	
+
 				BudgetService.updateInstructorTypeCost(newInstructorTypeCost).then(function (instructorTypeCost) {
 					BudgetReducers.reduce({
 						type: ActionTypes.UPDATE_INSTRUCTOR_TYPE_COST,
@@ -421,7 +421,7 @@ class BudgetActions {
 							instructorTypeCost: instructorTypeCost
 						}
 					});
-	
+
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					BudgetCalculations.calculateInstructorTypeCosts();
 					BudgetCalculations.calculateInstructors();
@@ -456,7 +456,7 @@ class BudgetActions {
 						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId,
 						originalInstructorId: originalInstructorId
 					};
-	
+
 					BudgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
 						BudgetReducers.reduce({
 							type: ActionTypes.CREATE_SECTION_GROUP_COST,
@@ -464,7 +464,7 @@ class BudgetActions {
 								sectionGroupCost: newSectionGroupCost
 							}
 						});
-	
+
 						self.updateSectionGroupCost(newSectionGroupCost);
 						$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 					}, function () {
@@ -478,7 +478,7 @@ class BudgetActions {
 			setInstructorTypeFromSectionGroup: function (sectionGroup, instructorType) {
 				var self = this;
 				var sectionGroupCost = sectionGroup.sectionGroupCost;
-	
+
 				// Instructor being assigned matches schedule data, so we should nullify the override
 				if (sectionGroup.assignedInstructorTypeIds.indexOf(instructorType.id) > -1) {
 					if (sectionGroupCost != false) {
@@ -488,7 +488,7 @@ class BudgetActions {
 						return;
 					}
 				}
-	
+
 				// Create sectionGroupCost if necessary
 				if (sectionGroupCost == false || sectionGroupCost == null) {
 					var sectionGroupCostDTO = {
@@ -497,7 +497,7 @@ class BudgetActions {
 						instructorTypeId: instructorType.id,
 						instructorId: null
 					};
-	
+
 					BudgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
 						BudgetReducers.reduce({
 							type: ActionTypes.CREATE_SECTION_GROUP_COST,
@@ -519,7 +519,7 @@ class BudgetActions {
 			setInstructorFromSectionGroup: function (sectionGroup, instructor) {
 				var self = this;
 				var sectionGroupCost = sectionGroup.sectionGroupCost;
-	
+
 				// Instructor being assigned matches schedule data, so we should nullify the override
 				if (sectionGroup.assignedInstructorIds.indexOf(instructor.id) > -1) {
 					if (sectionGroupCost != false) {
@@ -529,7 +529,7 @@ class BudgetActions {
 						return;
 					}
 				}
-	
+
 				// Create sectionGroupCost if necessary
 				if (sectionGroupCost == false || sectionGroupCost == null) {
 					var sectionGroupCostDTO = {
@@ -538,7 +538,7 @@ class BudgetActions {
 						instructorId: instructor.id,
 						instructorTypeId: null
 					};
-	
+
 					BudgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
 						BudgetReducers.reduce({
 							type: ActionTypes.CREATE_SECTION_GROUP_COST,
@@ -558,12 +558,12 @@ class BudgetActions {
 				}
 			},
 			// Will also create sectionGroupCost if it does not already exist.
-			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroupCost, currentUserLoginId) {	
+			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroupCost, currentUserLoginId) {
 				var sectionGroupCostComment = {};
 				sectionGroupCostComment.comment = comment;
 				sectionGroupCostComment.loginId = currentUserLoginId;
 				sectionGroupCostComment.sectionGroupCostId = parseInt(sectionGroupCost.id);
-	
+
 				BudgetService.createSectionGroupCostComment(sectionGroupCostComment).then(function (newSectionGroupCostComment) {
 					BudgetReducers.reduce({
 						type: ActionTypes.CREATE_SECTION_GROUP_COST_COMMENT,
@@ -580,21 +580,21 @@ class BudgetActions {
 			// Will create the lineItem if necessary
 			createLineItemComment: function(comment, lineItem, currentUserLoginId) {
 				var self = this;
-	
+
 				// Create lineItem if necessary
 				if (lineItem.id == null || lineItem.id <= 0) {
 					var budgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
-	
+
 					BudgetService.createLineItem(lineItem, budgetScenarioId).then(function (newLineItem) {
 						lineItem.id = newLineItem.id;
-	
+
 						BudgetReducers.reduce({
 							type: ActionTypes.CREATE_LINE_ITEM,
 							payload: lineItem
 						});
 						BudgetCalculations.calculateLineItems();
 						BudgetCalculations.calculateTotalCost();
-	
+
 						$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 						self._createLineItemComment(comment, lineItem, currentUserLoginId);
 					}, function () {
@@ -609,7 +609,7 @@ class BudgetActions {
 				lineItemComment.comment = comment;
 				lineItemComment.loginId = currentUserLoginId;
 				lineItemComment.lineItemId = parseInt(lineItem.id);
-	
+
 				BudgetService.createLineItemComment(lineItemComment).then(function (newLineItemComment) {
 					var action = {
 						type: ActionTypes.CREATE_LINE_ITEM_COMMENT,
@@ -637,7 +637,7 @@ class BudgetActions {
 					type: ActionTypes.CLOSE_ADD_LINE_ITEM_MODAL,
 					payload: {}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			openAddLineItemModal: function(lineItemToEdit) {
@@ -647,7 +647,7 @@ class BudgetActions {
 						lineItemToEdit: lineItemToEdit
 					}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			openAddCourseModal: function () {
@@ -673,7 +673,7 @@ class BudgetActions {
 					type: ActionTypes.TOGGLE_ADD_BUDGET_SCENARIO_MODAL,
 					payload: {}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			openAddCourseCommentsModal: function(sectionGroupCost) {
@@ -683,7 +683,7 @@ class BudgetActions {
 						sectionGroupCost: sectionGroupCost
 					}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			openAddLineItemCommentsModal: function(lineItem) {
@@ -693,7 +693,7 @@ class BudgetActions {
 						lineItem: lineItem
 					}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			closeAddCourseCommentsModal: function() {
@@ -701,7 +701,7 @@ class BudgetActions {
 					type: ActionTypes.OPEN_ADD_COURSE_COMMENT_MODAL,
 					payload: {}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			selectBudgetScenario: function(selectedScenarioId) {
@@ -735,7 +735,7 @@ class BudgetActions {
 						fromLiveData: fromLiveData
 					}
 				};
-	
+
 				BudgetReducers.reduce(action);
 				BudgetCalculations.calculateScenarioTerms();
 				BudgetCalculations.calculateLineItems();
@@ -801,19 +801,19 @@ class BudgetActions {
 			},
 			toggleLineItemFilter: function(filter) {
 				var actionType = null;
-	
+
 				if (filter.type == "showHidden") {
 					actionType = ActionTypes.TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN;
 				}
-	
+
 				// No matching filter found
 				if (actionType == null) { return; }
-	
+
 				BudgetReducers.reduce({
 					type: actionType,
 					payload: {}
 				});
-	
+
 				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateTotalCost();
 			},

@@ -27,6 +27,18 @@
 									confirm-message="'Are you sure you want to accept all schedule updates in this Scenario from Live Data?<br><br>(Affects Instructor, Enrollment, Sections, TAs, Readers)'"
 									confirm-placement="'bottom'">
 			</ipa-button>
+
+			<div class="budget-scenario-toolbar__scenario-label"
+			     ng-if="state.ui.sectionNav.activeTab == 'Schedule Costs' && showTermChip" 
+			     style="margin-left: 10px;">
+				Budget Scenario Term
+			</div>
+			<ipa-dropdown items="state.ui.termNav.budgetScenarioDropdownTerms"
+			              button-text="state.ui.termNav.activeTab"
+										select-item="setBudgetScenarioTerm(item)"
+										ng-if="state.ui.sectionNav.activeTab == 'Schedule Costs' && showTermChip"
+										style="'minimal'"></ipa-dropdown>
+
 		</div>
 
 		<!-- Rename scenario UI -->

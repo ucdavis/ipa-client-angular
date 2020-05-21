@@ -7,7 +7,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
 		template: require('./budgetScenarioToolbar.html'), // directive html found here:
 		replace: true, // Replace with the template
-		
+
 		scope: {
 			state: '<'
 		},
@@ -17,6 +17,13 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.isNewScenarioNameValid = true;
 			scope.validationError = "";
 			scope.activeFilters = [];
+			scope.showTermChip = false;
+
+			$window.onscroll = function () {
+				const VERTICAL_OFFSET = 98;
+				scope.showTermChip = this.scrollY > VERTICAL_OFFSET;
+				scope.$apply();
+			};
 
 			scope.openSupportCostModal = function() {
 				BudgetActions.toggleSupportCostModal();
@@ -141,6 +148,11 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 					BudgetActions.updateSectionGroupCost(sectionGroupCost);
 				});
 			};
+			scope.setBudgetScenarioTerm = ( item ) => {
+				BudgetActions.selectTerm( item.description );
+
+			};
+			console.log(scope.state.ui.termNav);
 		} // End Link
 	};
 };
