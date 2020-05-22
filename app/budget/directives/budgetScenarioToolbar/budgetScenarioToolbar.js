@@ -127,7 +127,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 							sectionGroupCost.enrollment = sectionGroupCost.sectionGroup.totalSeats;
 							break;
 						case "syncSectionCount":
-					sectionGroupCost.sectionCount = sectionGroupCost.sectionGroup.sectionCount;
+							sectionGroupCost.sectionCount = sectionGroupCost.sectionGroup.sectionCount;
 							break;
 						case "syncTaCount":
 							sectionGroupCost.taCount = sectionGroupCost.sectionGroup.teachingAssistantAppointments;
