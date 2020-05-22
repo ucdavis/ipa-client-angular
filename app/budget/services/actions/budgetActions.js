@@ -132,6 +132,7 @@ class BudgetActions {
 
 				scenarioTrackedChanges.forEach(change => {
 					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
+					let originalSectionGroupCost = JSON.parse(JSON.stringify(sectionGroupCost)); // to revert in case of failure
 
 					switch (change.action) {
 						case "syncInstructor":
@@ -154,7 +155,45 @@ class BudgetActions {
 							return;
 					}
 
-					this.updateSectionGroupCost(sectionGroupCost);
+					// this.updateSectionGroupCost(sectionGroupCost);
+
+					BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SECTION_GROUP_COST,
+							payload: {
+								sectionGroupCost: newSectionGroupCost
+							}
+						});
+
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SYNC_STATUS,
+							payload: {
+								syncUpdateFulfilled: true,
+							},
+						});
+
+						BudgetCalculations.calculateSectionGroups();
+						BudgetCalculations.calculateTotalCost();
+						BudgetCalculations.calculateCourseList();
+					}, function() {
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SECTION_GROUP_COST,
+							payload: {
+								sectionGroupCost: originalSectionGroupCost
+							}
+						});
+
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SYNC_STATUS,
+							payload: {
+								syncUpdateFulfilled: false,
+							}
+						});
+
+						BudgetCalculations.calculateSectionGroups();
+						BudgetCalculations.calculateTotalCost();
+						BudgetCalculations.calculateCourseList();
+					});
 				});
 			},
 			createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
@@ -361,6 +400,13 @@ class BudgetActions {
 					BudgetCalculations.calculateCourseList();
 				}, function () {
 					const courseDescription = `${_sectionGroupCost.subjectCode} ${_sectionGroupCost.courseNumber}, ${TermService.getShortTermName(_sectionGroupCost.shortTermCode)}`;
+
+					BudgetReducers._state.calculatedScheduleCosts.trackedChanges;
+
+										BudgetCalculations.calculateSectionGroups();
+					BudgetCalculations.calculateTotalCost();
+					BudgetCalculations.calculateCourseList();
+
 					$rootScope.$emit('toast', { message: "Could not update " + courseDescription, type: "ERROR"});
 				});
 			},

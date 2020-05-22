@@ -815,6 +815,8 @@ class BudgetReducers {
 							isBudgetConfigModalOpen: false,
 							isLineItemOpen: false,
 							isCourseCostOpen: false,
+							showSyncWarning: false,
+							syncUpdateStatuses: [],
 							instructorAssignmentOptions: [],
 							regularInstructorAssignmentOptions: [],
 							openLineItems: [],
@@ -1030,6 +1032,10 @@ class BudgetReducers {
 						if (ui.selectedBudgetScenarioId == action.payload.budgetScenarioId) {
 							ui.selectedBudgetScenarioId = null;
 						}
+						return ui;
+					case ActionTypes.UPDATE_SYNC_STATUS:
+						ui.syncUpdateStatuses = [...ui.syncUpdateStatuses, action.payload.syncUpdateFulfilled];
+						ui.showSyncWarning = ui.syncUpdateStatuses.some(el => el === false);
 						return ui;
 					default:
 						return ui;
