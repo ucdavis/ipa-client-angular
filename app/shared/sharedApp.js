@@ -351,13 +351,15 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .run(['$rootScope',
 	function ($rootScope) {
 		$rootScope.$on('toast', function (event, data) {
-			let defaultOptions = {
-				preventDuplicates: true
+
+			// Default options
+			toastr.options = {
+				"preventDuplicates": true
 			};
 
 			var title = data.title ? data.title : '';
 			var message = data.message ? data.message : '';
-			var options = data.options ? data.options : defaultOptions;
+			var options = data.options ? data.options : {};
 
 			switch (data.type) {
 				case "SUCCESS":
