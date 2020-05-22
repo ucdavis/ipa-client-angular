@@ -112,35 +112,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.syncBudgetScenario = function() {
-				const scenarioTrackedChanges = scope.state.calculatedScheduleCosts.trackedChanges;
-				const scenarioSectionGroupCosts = scope.state.calculatedScheduleCosts.sectionGroupCosts;
-
-				scenarioTrackedChanges.forEach(change => {
-					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
-
-					switch (change.action) {
-						case "syncInstructor":
-							sectionGroupCost.instructorId = sectionGroupCost.sectionGroup.assignedInstructor ? sectionGroupCost.sectionGroup.assignedInstructor.id : null;
-							sectionGroupCost.instructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorType ? sectionGroupCost.sectionGroup.assignedInstructorType.id : null;
-							break;
-						case "syncEnrollment":
-							sectionGroupCost.enrollment = sectionGroupCost.sectionGroup.totalSeats;
-							break;
-						case "syncSectionCount":
-							sectionGroupCost.sectionCount = sectionGroupCost.sectionGroup.sectionCount;
-							break;
-						case "syncTaCount":
-							sectionGroupCost.taCount = sectionGroupCost.sectionGroup.teachingAssistantAppointments;
-							break;
-						case "syncReaderCount":
-							sectionGroupCost.readerCount = sectionGroupCost.sectionGroup.readerAppointments;
-							break;
-						default:
-							return;
-					}
-
-					BudgetActions.updateSectionGroupCost(sectionGroupCost);
-				});
+				BudgetActions.syncBudgetScenario();
 			};
 
 			scope.setBudgetScenarioTerm = ( item ) => {
