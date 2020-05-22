@@ -525,7 +525,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           scope.view.state.sections.ids.forEach(function(sectionId) {
             var section = scope.view.state.sections.list[sectionId];
 
-            if (section.sectionGroupId == sectionGroup.id && (isNumber(section.sequenceNumber) || sectionCount === 1)) {
+            if (section.sectionGroupId === sectionGroup.id && (isNumber(section.sequenceNumber) || sectionCount === 1)) {
               section.seats = sectionGroup.plannedSeats;
               CourseActionCreators.updateSection(section);
             }
