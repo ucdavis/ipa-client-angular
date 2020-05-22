@@ -521,10 +521,11 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           CourseActionCreators.updateSectionGroup(sectionGroup);
 
           // If sequence is numeric sync the seats on the section to the new sectionGroup value
+          let sectionCount = sectionGroup.sections.length;
           scope.view.state.sections.ids.forEach(function(sectionId) {
             var section = scope.view.state.sections.list[sectionId];
 
-            if (section.sectionGroupId == sectionGroup.id && isNumber(section.sequenceNumber)) {
+            if (section.sectionGroupId == sectionGroup.id && (isNumber(section.sequenceNumber) || sectionCount == 1)) {
               section.seats = sectionGroup.plannedSeats;
               CourseActionCreators.updateSection(section);
             }
