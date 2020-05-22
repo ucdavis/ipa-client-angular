@@ -303,7 +303,7 @@ class CourseCtrl {
       // Will update the sectionGroup plannedSeats using section seats
       // If the section is numeric based (example: 'PSC 040 - 001')
       // or if their is only one section in the group
-      if (isNumber(section.sequenceNumber) == true || sectionGroup.sections.length == 1) {
+      if (isNumber(section.sequenceNumber) == true || sectionGroup.sections.length === 1) {
         sectionGroup.plannedSeats = section.seats;
         _self.courseActionCreators.updateSectionGroup(sectionGroup);
 
