@@ -143,8 +143,6 @@ class ScheduleCostCalculations {
           });
         });
 
-        scheduleCosts.changeSummaryHtml = scheduleCosts.trackedChanges.map(change => `${change.termName}, ${change.courseDescription}, ${change.name}`).join("<br>");
-
         BudgetReducers.reduce({
           type: ActionTypes.CALCULATE_SCHEDULE_COSTS,
           payload: {

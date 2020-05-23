@@ -810,13 +810,16 @@ class BudgetReducers {
 								activeTab: 'Funds',
 								tabOverrides: {}
 							},
+							syncScenario: {
+								showSyncWarning: false,
+								updateFailures: [],
+								summaryHtml: ""
+							},
 							isAddBudgetScenarioModalOpen: false,
 							isAddLineItemModalOpen: false,
 							isBudgetConfigModalOpen: false,
 							isLineItemOpen: false,
 							isCourseCostOpen: false,
-							showSyncWarning: false,
-							syncUpdateStatuses: [],
 							instructorAssignmentOptions: [],
 							regularInstructorAssignmentOptions: [],
 							openLineItems: [],
@@ -1034,8 +1037,9 @@ class BudgetReducers {
 						}
 						return ui;
 					case ActionTypes.UPDATE_SYNC_STATUS:
-						ui.syncUpdateStatuses = [...ui.syncUpdateStatuses, action.payload.syncUpdateFulfilled];
-						ui.showSyncWarning = ui.syncUpdateStatuses.some(el => el === false);
+						ui.syncScenario.updateFailures = [...ui.syncScenario.updateFailures, action.payload.updateFailure];
+						ui.syncScenario.showSyncWarning = ui.syncScenario.updateFailures.length > 0;
+						ui.syncScenario.summaryHtml = ui.syncScenario.updateFailures.map(change => `${change.termName}, ${change.courseDescription}, ${change.name}`).join("<br>");
 						return ui;
 					default:
 						return ui;

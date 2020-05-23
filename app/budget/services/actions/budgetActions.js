@@ -177,7 +177,7 @@ class BudgetActions {
 						BudgetReducers.reduce({
 							type: ActionTypes.UPDATE_SYNC_STATUS,
 							payload: {
-								syncUpdateFulfilled: false,
+								updateFailure: change
 							}
 						});
 
