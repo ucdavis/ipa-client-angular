@@ -115,6 +115,12 @@
 	cursor: pointer;
 	margin-bottom: 2px;
 }
+.budget-scenario-toolbar__sync-button:hover {
+	background-color: #e6ebf1;
+	background-image: linear-gradient(-180deg, #f0f3f6 0%, #e6ebf1 90%);
+	border-color: rgba(27,31,35,0.35);
+	color: #24292e;
+}
 .budget-scenario-toolbar__sync-button--text {
 	font-family: "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
 }
