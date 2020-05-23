@@ -45,7 +45,7 @@ class BudgetService {
 	
 			// SectionGroupCost
 			updateSectionGroupCost: function(sectionGroupCost) {
-				return ApiService.put("/api/budgetView/sectionGdroupCosts/" + sectionGroupCost.id, sectionGroupCost);
+				return ApiService.put("/api/budgetView/sectionGroupCosts/" + sectionGroupCost.id, sectionGroupCost);
 			},
 			createSectionGroupCost: function (sectionGroupCost) {
 				return ApiService.post("/api/budgetView/budgetScenarios/" + sectionGroupCost.budgetScenarioId + "/sectionGroupCosts", sectionGroupCost);
