@@ -380,8 +380,6 @@ class BudgetActions {
 			 * @param {*} sectionGroupCost
 			 */
 			updateSectionGroupCost: function (sectionGroupCost) {
-				const _sectionGroupCost = sectionGroupCost;
-
 				BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 					window.ipa_analyze_event('budget', 'section group cost updated');
 
@@ -399,15 +397,7 @@ class BudgetActions {
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateCourseList();
 				}, function () {
-					const courseDescription = `${_sectionGroupCost.subjectCode} ${_sectionGroupCost.courseNumber}, ${TermService.getShortTermName(_sectionGroupCost.shortTermCode)}`;
-
-					BudgetReducers._state.calculatedScheduleCosts.trackedChanges;
-
-										BudgetCalculations.calculateSectionGroups();
-					BudgetCalculations.calculateTotalCost();
-					BudgetCalculations.calculateCourseList();
-
-					$rootScope.$emit('toast', { message: "Could not update " + courseDescription, type: "ERROR"});
+					$rootScope.$emit('toast', { message: "Could not update course.", type: "ERROR" });
 				});
 			},
 			createSectionGroupCost: function (sectionGroupCost) {
