@@ -20,7 +20,6 @@ let ipaButton = function () {
 			disabledTooltipMessage: '<?', // Will only show if button is disabled, overrides tooltipMessage
 			tooltipMessage: '<?',
 			confirmMessage: '<?', // Uses a confirm tooltip with the supplied message. Will also wrap the action into the confirm
-			confirmPlacement: '<?', // defaults to 'top' for historical reason
 			text: '<?', // Displayed on body of button
 			size: '<?', // Current options are 'slim', 'short'
 			isWide: '<?', // Boolean: makes button attempt to take 100% width, default is to only take as much width as needed

@@ -350,13 +350,13 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 // Listen to toast requests
 .run(['$rootScope',
 	function ($rootScope) {
+
+		// Default options
+		toastr.options = {
+			"preventDuplicates": true
+		};
+
 		$rootScope.$on('toast', function (event, data) {
-
-			// Default options
-			toastr.options = {
-				"preventDuplicates": true
-			};
-
 			var title = data.title ? data.title : '';
 			var message = data.message ? data.message : '';
 			var options = data.options ? data.options : {};
@@ -367,7 +367,6 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 					break;
 				case "ERROR":
 					options.timeOut = 0; // do not auto-hide error messages
-					options.extendedTimeOut = 0;
 					options.closeButton = true;
 					toastr.error(title, message, options);
 					break;

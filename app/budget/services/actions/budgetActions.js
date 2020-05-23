@@ -155,21 +155,12 @@ class BudgetActions {
 							return;
 					}
 
-					// this.updateSectionGroupCost(sectionGroupCost);
-
 					BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
 						BudgetReducers.reduce({
 							type: ActionTypes.UPDATE_SECTION_GROUP_COST,
 							payload: {
 								sectionGroupCost: newSectionGroupCost
 							}
-						});
-
-						BudgetReducers.reduce({
-							type: ActionTypes.UPDATE_SYNC_STATUS,
-							payload: {
-								syncUpdateFulfilled: true,
-							},
 						});
 
 						BudgetCalculations.calculateSectionGroups();
