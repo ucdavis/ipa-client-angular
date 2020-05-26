@@ -401,7 +401,8 @@ class CourseActionCreators {
           }, 0);
         }
 
-        if (maxCourseSeats >= proposedCourseSeats || isNumber(section.sequenceNumber)){
+        let sectionCount = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.length;
+        if (maxCourseSeats >= proposedCourseSeats || isNumber(section.sequenceNumber) || sectionCount === 1){
           let attempted = [];
           let successes = [];
           let promises = [];

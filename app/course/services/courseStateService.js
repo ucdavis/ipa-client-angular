@@ -285,6 +285,10 @@ class CourseStateService {
             var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
             sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.splice(sectionIdIndex, 1);
 
+            sectionGroups.selectedSectionGroup.sections = sectionGroups.selectedSectionGroup.sections.filter(function( section ) {
+              return section.id !== action.payload.section.id;
+            });
+
             if (sectionGroups.selectedSectionGroup.plannedSeats && sectionGroups.selectedSectionGroup.sectionIds.length === 0) {
               sectionGroups.selectedSectionGroup.requiresAttention = true;
             }
