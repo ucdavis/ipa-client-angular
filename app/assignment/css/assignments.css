@@ -82,6 +82,8 @@
 }
 
 .assignment-seats-container {
+	display: flex;
+	justify-content: space-between;
 	margin-bottom: 10px;
 }
 .select2-drop.select2-drop-above.select2-drop-active {
@@ -1054,6 +1056,19 @@ li.active-term .dropdown-term-row {
 	color: rgb(153, 153, 153);
 	margin: 0 5px;
 	width: 100%;
+}
+
+.btn--update-term {
+	font-size: 11px;
+	color: rgb(153, 153, 153);
+	align-items: flex-start;
+}
+.btn--update-term-text {
+	margin-left: 5px;
+}
+.update-term-dropdown-item {
+	padding: 5px;
+	cursor: pointer;
 }
 
 .add-note__text-area {

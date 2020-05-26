@@ -232,6 +232,20 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 										// Display nothing if plannedSeats is not set
 										var plannedSeats = scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats || "";
 										courseHtml += plannedSeats + "</span>";
+
+										courseHtml += `<div class="dropdown hidden-print">`;
+										courseHtml += `<button class="btn btn-default btn--update-term" type="button" id="termDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">`;
+										courseHtml += `<i class="glyphicon glyphicon-move btn--update-term-icon"></i> Update Term`;
+										courseHtml += "</button>";
+										courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right\">";
+										scope.view.state.userInterface.enabledTerms.ids.forEach(function(termId) {
+											let termCode = scope.view.state.userInterface.enabledTerms.list[termId];
+											courseHtml += `<li class="update-term-dropdown-item" data-event-type="updateTerm" data-section-group-id="${sectionGroup.id}" data-new-term-code="${termCode}">${termCode.getTermCodeDisplayName(true)}</li>`;
+										});
+
+										courseHtml += "</ul>";
+										courseHtml += "</div>";
+
 										courseHtml += "</div>";
 
 										// Display placeholder AI
@@ -612,6 +626,13 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				else if ($el.data('event-type') == 'dismissDeletePlaceholderAIPop') {
 					// Dismiss the delete course dialog
 					$el.closest("div.popover").popover('hide');
+				}
+				else if ($el.data('event-type') == 'updateTerm') {
+					let newTermCode = $el.data('new-term-code');
+					sectionGroupId = $el.data('section-group-id');
+					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
+					sectionGroup.termCode = newTermCode;
+					AssignmentActionCreators.updateSectionGroupTermCode(sectionGroup);
 				}
 				else if ($el.data('event-type') == 'toggleInstructorSearch') {
 					const sectionGroupId = $el.data('section-group-id');
