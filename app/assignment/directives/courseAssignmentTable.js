@@ -233,23 +233,24 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 										var plannedSeats = scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats || "";
 										courseHtml += plannedSeats + "</span>";
 
-										courseHtml += `<div class="dropdown hidden-print">`;
-										courseHtml += `<button class="btn btn-default btn--update-term" type="button" id="termDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">`;
-										courseHtml += `<i class="glyphicon glyphicon-move btn--update-term-icon"></i> Update Term`;
-										courseHtml += "</button>";
-										courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right\">";
-										scope.view.state.userInterface.enabledTerms.ids.forEach(function(termId) {
-											let termCode = scope.view.state.userInterface.enabledTerms.list[termId];
-											let existingTermCodes = Object.keys(course.sectionGroupTermCodeIds);
+										if (scope.view.state.userInterface.enabledTerms.ids.length !== Object.keys(course.sectionGroupTermCodeIds).length) {
+											courseHtml += `<div class="dropdown hidden-print">`;
+											courseHtml += `<button class="btn btn-default btn--update-term" type="button" id="termDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">`;
+											courseHtml += `<i class="glyphicon glyphicon-move btn--update-term-icon"></i> Update Term`;
+											courseHtml += "</button>";
+											courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right\">";
+											scope.view.state.userInterface.enabledTerms.ids.forEach(function(termId) {
+												let termCode = scope.view.state.userInterface.enabledTerms.list[termId];
+												let existingTermCodes = Object.keys(course.sectionGroupTermCodeIds);
 
-											if (!existingTermCodes.includes(termCode)) {
-												courseHtml += `<li class="update-term-dropdown-item" data-event-type="updateTerm" data-section-group-id="${sectionGroup.id}" data-new-term-code="${termCode}">${termCode.getTermCodeDisplayName(true)}</li>`;
-											}
-										});
+												if (!existingTermCodes.includes(termCode)) {
+													courseHtml += `<li class="update-term-dropdown-item" data-event-type="updateTerm" data-section-group-id="${sectionGroup.id}" data-new-term-code="${termCode}">${termCode.getTermCodeDisplayName(true)}</li>`;
+												}
+											});
 
 										courseHtml += "</ul>";
 										courseHtml += "</div>";
-
+										}
 										courseHtml += "</div>";
 
 										// Display placeholder AI
