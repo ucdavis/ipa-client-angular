@@ -95,14 +95,17 @@ class AssignmentStateService {
 					case ActionTypes.UPDATE_SECTION_GROUP_TERM: {
 						const updatedSectionGroup = action.payload.sectionGroup;
 						const course = courses.list[updatedSectionGroup.courseId];
-debugger;
-						const sectionGroupIds = Object.values(course.sectionGroupTermCodeIds);
-						let sectionGroupTermCodeIds = {}
-						course.sectionGroupTermCodeIds = sectionGroupIds.forEach(function (sectionGroupId) {
-							sectionGroupTermCodeIds[sectionGroup.termCode] = sectionGroupId;
-						});
+						let newSectionGroupTermCodeIds = {};
 
-						course.sectionGroupTermCodeIds = sectionGroupTermCodeIds;
+						for (let [termCode, sectionGroupId] of Object.entries(course.sectionGroupTermCodeIds)) {
+							if (sectionGroupId === updatedSectionGroup.id) {
+								newSectionGroupTermCodeIds[updatedSectionGroup.termCode] = updatedSectionGroup.id;
+							} else {
+								newSectionGroupTermCodeIds[termCode] = sectionGroupId;
+							}
+						}
+
+						course.sectionGroupTermCodeIds = newSectionGroupTermCodeIds;
 						return courses;
 					}
 					default:
