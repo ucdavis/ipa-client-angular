@@ -240,7 +240,10 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 										courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right\">";
 										scope.view.state.userInterface.enabledTerms.ids.forEach(function(termId) {
 											let termCode = scope.view.state.userInterface.enabledTerms.list[termId];
-											courseHtml += `<li class="update-term-dropdown-item" data-event-type="updateTerm" data-section-group-id="${sectionGroup.id}" data-new-term-code="${termCode}">${termCode.getTermCodeDisplayName(true)}</li>`;
+											if (termCode !== sectionGroup.termCode) {
+												courseHtml += `<li class="update-term-dropdown-item" data-event-type="updateTerm" data-section-group-id="${sectionGroup.id}" data-new-term-code="${termCode}">${termCode.getTermCodeDisplayName(true)}</li>`;
+											}
+
 										});
 
 										courseHtml += "</ul>";
