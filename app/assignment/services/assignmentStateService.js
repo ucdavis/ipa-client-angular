@@ -92,6 +92,19 @@ class AssignmentStateService {
 							courses.list[course.id].sectionGroupTermCodeIds[sectionGroup.termCode] = sectionGroup.id;
 						}
 						return courses;
+					case ActionTypes.UPDATE_SECTION_GROUP_TERM: {
+						const updatedSectionGroup = action.payload.sectionGroup;
+						const course = courses.list[updatedSectionGroup.courseId];
+debugger;
+						const sectionGroupIds = Object.values(course.sectionGroupTermCodeIds);
+						let sectionGroupTermCodeIds = {}
+						course.sectionGroupTermCodeIds = sectionGroupIds.forEach(function (sectionGroupId) {
+							sectionGroupTermCodeIds[sectionGroup.termCode] = sectionGroupId;
+						});
+
+						course.sectionGroupTermCodeIds = sectionGroupTermCodeIds;
+						return courses;
+					}
 					default:
 						return courses;
 				}
@@ -689,6 +702,9 @@ class AssignmentStateService {
 					case ActionTypes.REMOVE_PLACEHOLDER_STAFF:
 						sectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
 						sectionGroup.isAssigned = action.payload.sectionGroup.isAssigned;
+						return sectionGroups;
+					case ActionTypes.UPDATE_SECTION_GROUP_TERM:
+						sectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
 						return sectionGroups;
 					default:
 						return sectionGroups;

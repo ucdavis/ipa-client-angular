@@ -628,7 +628,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					$el.closest("div.popover").popover('hide');
 				}
 				else if ($el.data('event-type') == 'updateTerm') {
-					let newTermCode = $el.data('new-term-code');
+					let newTermCode = $el.data('new-term-code').toString();
 					sectionGroupId = $el.data('section-group-id');
 					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
 					sectionGroup.termCode = newTermCode;

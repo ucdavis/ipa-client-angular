@@ -391,6 +391,19 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not remove The Staff.", type: "ERROR" });
 				});
 			},
+			updateSectionGroupTermCode: function(sectionGroup) {
+				_self.AssignmentService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
+					_self.$rootScope.$emit('toast', { message: "Updated course offering term", type: "SUCCESS" });
+
+					let action = {
+						type: ActionTypes.UPDATE_SECTION_GROUP_TERM,
+						payload: { sectionGroup }
+					};
+					_self.AssignmentStateService.reduce(action);
+				}, function () {
+					_self.$rootScope.$emit('toast', { message: "Could not update course offering term", type: "ERROR"});
+				});
+			},
 			unapproveInstructorAssignment: function (originalTeachingAssignment) {
 				originalTeachingAssignment.approved = false;
 				_self.AssignmentService.updateInstructorAssignment(originalTeachingAssignment).then(function (teachingAssignment) {
