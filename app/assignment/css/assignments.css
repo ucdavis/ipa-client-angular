@@ -1070,6 +1070,10 @@ li.active-term .dropdown-term-row {
 	padding: 5px;
 	cursor: pointer;
 }
+.update-term-dropdown-item:hover {
+	color: #262626;
+	background-color: #f5f5f5;
+}
 
 .add-note__text-area {
 	resize: none;
