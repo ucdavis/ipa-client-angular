@@ -489,7 +489,7 @@ class CourseStateService {
             uiState.selectedTermCode = null;
             return uiState;
           case ActionTypes.UPDATE_SECTION_GROUP:
-            uiState.selectedCourseId = null;
+            uiState.selectedCourseId = action.payload.sectionGroup.courseId;
             uiState.selectedTermCode = action.payload.sectionGroup.termCode;
             return uiState;
           case ActionTypes.CLOSE_NEW_COURSE_DETAILS:
