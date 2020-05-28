@@ -4,6 +4,10 @@ let sectionGroupDetails = function (CourseActionCreators) {
     template: require('./sectionGroupDetails.html'),
     replace: true,
     link: function (scope) {
+      scope.courseTermCodes = Object.values(scope.view.state.sectionGroups.list).filter(sectionGroup => sectionGroup.courseId == scope.view.selectedEntity.courseId).map(sectionGroup => sectionGroup.termCode);
+
+      scope.showTermDropdown = scope.courseTermCodes.length !== scope.view.state.filters.enabledTerms.length;
+
       scope.termDropdownItems = scope.view.state.filters.enabledTerms.map(
         (enabledTerm) => {
           let year = localStorage.getItem('year');
