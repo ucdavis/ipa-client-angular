@@ -846,3 +846,7 @@ width: 180px;
 .section-group-details__variable-units--label {
   margin: 0px 5px;
 }
+
+.section-group-details__delete-btn {
+  margin-top: 20px;
+}

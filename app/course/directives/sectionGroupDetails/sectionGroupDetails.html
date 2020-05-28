@@ -104,12 +104,12 @@
           button-text="'Move Offering to Different Term'"
           select-item="updateSectionGroup(item.sectionGroup, item.id)"
           style="'minimal'"
+          is-wide="true"
           auto-scroll="true"
         ></ipa-dropdown>
       </div>
-      <div class="col-sm-12 text-center" ng-if="view.selectedEntity.id">
-        <hr>
-        <button class="btn btn-danger"
+      <div class="text-center" ng-if="view.selectedEntity.id">
+        <button class="btn btn-danger section-group-details__delete-btn"
                 ng-if="!isLocked()"
                 confirm-button="removeSectionGroup(view.selectedEntity)"
                 message="Are you sure you want to delete this offering? this will also delete all of its sections and meetings"
