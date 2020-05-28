@@ -4,12 +4,12 @@ let sectionGroupDetails = function (CourseActionCreators) {
     template: require('./sectionGroupDetails.html'),
     replace: true,
     link: function (scope) {
-      scope.courseTermCodes = Object.values(scope.view.state.sectionGroups.list).filter(sectionGroup => sectionGroup.courseId == scope.view.selectedEntity.courseId).map(sectionGroup => sectionGroup.termCode);
+      scope.existingTermCodes = Object.values(scope.view.state.sectionGroups.list).filter(sectionGroup => sectionGroup.courseId == scope.view.selectedEntity.courseId).map(sectionGroup => sectionGroup.termCode);
 
-      scope.showTermDropdown = scope.courseTermCodes.length !== scope.view.state.filters.enabledTerms.length;
+      scope.showTermDropdown = scope.existingTermCodes.length !== scope.view.state.filters.enabledTerms.length;
 
-      scope.termDropdownItems = scope.view.state.filters.enabledTerms.map(
-        (enabledTerm) => {
+      scope.termDropdownItems = scope.view.state.filters.enabledTerms
+        .map((enabledTerm) => {
           let year = localStorage.getItem('year');
 
           let termIdToTermCode = {
@@ -30,13 +30,13 @@ let sectionGroupDetails = function (CourseActionCreators) {
 
           let termCode = year + termIdToTermCode[enabledTerm];
 
-          return {
-            id: termCode,
-            description: termCode.getTermCodeDisplayName(true),
-            sectionGroup: scope.view.selectedEntity,
-          };
-        }
-      );
+            return {
+              id: termCode,
+              description: termCode.getTermCodeDisplayName(true),
+              sectionGroup: scope.view.selectedEntity,
+            };
+        })
+        .filter((item) => !scope.existingTermCodes.includes(item.id));
 
       scope.isLocked = function () {
         return scope.view.state.uiState.tableLocked;
