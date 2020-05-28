@@ -232,25 +232,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 										// Display nothing if plannedSeats is not set
 										var plannedSeats = scope.view.state.sectionGroups.list[sectionGroupId].plannedSeats || "";
 										courseHtml += plannedSeats + "</span>";
-
-										if (scope.view.state.userInterface.enabledTerms.ids.length !== Object.keys(course.sectionGroupTermCodeIds).length) {
-											courseHtml += `<div class="dropdown hidden-print">`;
-											courseHtml += `<button class="btn btn-default btn--update-term" type="button" id="termDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">`;
-											courseHtml += `<i class="glyphicon glyphicon-move btn--update-term-icon"></i> Update Term`;
-											courseHtml += "</button>";
-											courseHtml += "<ul class=\"dropdown-menu dropdown-menu-right\">";
-											scope.view.state.userInterface.enabledTerms.ids.forEach(function(termId) {
-												let termCode = scope.view.state.userInterface.enabledTerms.list[termId];
-												let existingTermCodes = Object.keys(course.sectionGroupTermCodeIds);
-
-												if (!existingTermCodes.includes(termCode)) {
-													courseHtml += `<li class="update-term-dropdown-item" data-event-type="updateTerm" data-section-group-id="${sectionGroup.id}" data-new-term-code="${termCode}">${termCode.getTermCodeDisplayName(true)}</li>`;
-												}
-											});
-
-										courseHtml += "</ul>";
-										courseHtml += "</div>";
-										}
 										courseHtml += "</div>";
 
 										// Display placeholder AI
@@ -632,13 +613,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					// Dismiss the delete course dialog
 					$el.closest("div.popover").popover('hide');
 				}
-				else if ($el.data('event-type') == 'updateTerm') {
-					let newTermCode = $el.data('new-term-code').toString();
-					sectionGroupId = $el.data('section-group-id');
-					sectionGroup = scope.view.state.sectionGroups.list[sectionGroupId];
-					sectionGroup.termCode = newTermCode;
-					AssignmentActionCreators.updateSectionGroupTermCode(sectionGroup);
-				}
 				else if ($el.data('event-type') == 'toggleInstructorSearch') {
 					const sectionGroupId = $el.data('section-group-id');
 					const isTypeaheadEnabled = $el.prev('.instructor-typeahead-placeholder').is(':parent');
@@ -656,7 +630,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									</div>
 								</div>
 							</form>`;
-
+						
 						$el.prev('.instructor-typeahead-placeholder').toggle().append(typeaheadTemplate).prev('div.assign-dropdown').toggle();
 						$(`.js-typeahead-${sectionGroupId}`).focus().click();
 					}
