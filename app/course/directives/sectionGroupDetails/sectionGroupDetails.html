@@ -21,12 +21,12 @@
                     course-id="view.selectedEntity.courseId"
                     sequence-pattern="view.state.courses.list[view.selectedEntity.courseId].sequencePattern"></census-chart>
       <hr />
-      <div 
+      <div
         class="section-group-details__variable-units--container"
         ng-show="view.state.courses.list[view.selectedEntity.courseId].unitsHigh > 0"
       >
         <div class="section-group-details__variable-units--label">
-          Variable Units: 
+          Variable Units:
         </div>
         <ipa-input mode="'number'" value="view.selectedEntity.unitsVariable" on-update="updateSectionGroup(view.selectedEntity)"></ipa-input>
       </div>
@@ -96,6 +96,15 @@
       <div class="col-sm-12 text-center" ng-if="!view.selectedEntity.id">
         <p>No Course Offering for {{view.selectedEntity.termCode.getTermCodeDisplayName()}}</p>
         <button class="btn btn-primary" ng-click="addSectionGroup()" ng-if="!isLocked()">Create Offering</button>
+      </div>
+      <div class="col-sm-12 text-center" ng-if="view.selectedEntity.id && showTermDropdown">
+        <hr>
+        <ipa-dropdown
+          items="termDropdownItems"
+          button-text="'Move Offering to Different Term'"
+          select-item="updateSectionGroup(item.sectionGroup, item.id)"
+          style="'minimal'"
+        ></ipa-dropdown>
       </div>
       <div class="col-sm-12 text-center" ng-if="view.selectedEntity.id">
         <hr>

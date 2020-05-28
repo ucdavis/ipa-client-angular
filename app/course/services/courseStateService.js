@@ -264,6 +264,8 @@ class CourseStateService {
             return sectionGroups;
           case ActionTypes.UPDATE_SECTION_GROUP:
             sectionGroups.list[action.payload.sectionGroup.id].plannedSeats = action.payload.sectionGroup.plannedSeats;
+            sectionGroups.list[action.payload.sectionGroup.id].termCode = action.payload.sectionGroup.termCode;
+            sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
             return sectionGroups;
           case ActionTypes.FETCH_SECTIONS:
             sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
@@ -485,6 +487,10 @@ class CourseStateService {
           case ActionTypes.CLOSE_DETAILS:
             uiState.selectedCourseId = null;
             uiState.selectedTermCode = null;
+            return uiState;
+          case ActionTypes.UPDATE_SECTION_GROUP:
+            uiState.selectedCourseId = null;
+            uiState.selectedTermCode = action.payload.sectionGroup.termCode;
             return uiState;
           case ActionTypes.CLOSE_NEW_COURSE_DETAILS:
             uiState.tableLocked = false;

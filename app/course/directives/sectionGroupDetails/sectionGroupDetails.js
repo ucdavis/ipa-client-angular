@@ -4,6 +4,36 @@ let sectionGroupDetails = function (CourseActionCreators) {
     template: require('./sectionGroupDetails.html'),
     replace: true,
     link: function (scope) {
+      scope.termDropdownItems = scope.view.state.filters.enabledTerms.map(
+        (enabledTerm) => {
+          let year = localStorage.getItem('year');
+
+          let termIdToTermCode = {
+            1: '01',
+            2: '02',
+            3: '03',
+            5: '05',
+            6: '06',
+            7: '07',
+            8: '08',
+            9: '09',
+            10: '10',
+          };
+
+          if (enabledTerm < 4) {
+            year = parseInt(year) + 1;
+          }
+
+          let termCode = year + termIdToTermCode[enabledTerm];
+
+          return {
+            id: termCode,
+            description: termCode.getTermCodeDisplayName(true),
+            sectionGroup: scope.view.selectedEntity,
+          };
+        }
+      );
+
       scope.isLocked = function () {
         return scope.view.state.uiState.tableLocked;
       };
@@ -20,7 +50,11 @@ let sectionGroupDetails = function (CourseActionCreators) {
         CourseActionCreators.createSection(section);
       };
 
-      scope.updateSectionGroup = function (sectionGroup) {
+      scope.updateSectionGroup = function (sectionGroup, termCode) {
+        if (termCode && sectionGroup.termCode !== termCode) {
+            sectionGroup.termCode = termCode;
+        }
+
         sectionGroup.unitsVariable ? parseFloat(sectionGroup.unitsVariable) : null;
 
         CourseActionCreators.updateSectionGroup(sectionGroup);
