@@ -11,7 +11,7 @@ let ipaDropdown = function() {
 			buttonClass: '<?',
 			isWide: '<?',
 			style: '<?', // Current options are 'minimal' or leaving blank gives default styling
-			autoScroll: '<?'
+			overflowAuto: '<?' // Override overflow to auto instead of scroll
 		},
 		replace: true, // Replace with the template below
 		link: function(scope, element, attrs) {
@@ -38,7 +38,7 @@ let ipaDropdown = function() {
 			scope.expanded = false;
 			scope.searchable = false;
 			scope.overrideStyles = {};
-			scope.autoScroll = scope.autoScroll || false;
+			scope.overflowAuto = scope.overflowAuto || false;
 
 			// Load attributes
 			if (attrs.overrideStyles) {

@@ -15,7 +15,7 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
           ).code
       );
 
-      scope.$on('newSectionGroupSelected', function () {
+      scope.$on('sectionGroupCellSelected', function () {
         scope.courseTermCodes = Object.values(
           scope.view.state.sectionGroups.list
         )
