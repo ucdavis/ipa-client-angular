@@ -4,39 +4,50 @@ let sectionGroupDetails = function (CourseActionCreators) {
     template: require('./sectionGroupDetails.html'),
     replace: true,
     link: function (scope) {
-      scope.existingTermCodes = Object.values(scope.view.state.sectionGroups.list).filter(sectionGroup => sectionGroup.courseId == scope.view.selectedEntity.courseId).map(sectionGroup => sectionGroup.termCode);
+      scope.$on('newSectionGroupSelected', function () {
+        scope.existingTermCodes = Object.values(
+          scope.view.state.sectionGroups.list
+        )
+          .filter(
+            (sectionGroup) =>
+              sectionGroup.courseId == scope.view.selectedEntity.courseId
+          )
+          .map((sectionGroup) => sectionGroup.termCode);
 
-      scope.showTermDropdown = scope.existingTermCodes.length !== scope.view.state.filters.enabledTerms.length;
+        scope.showTermDropdown =
+          scope.existingTermCodes.length !==
+          scope.view.state.filters.enabledTerms.length;
 
-      scope.termDropdownItems = scope.view.state.filters.enabledTerms
-        .map((enabledTerm) => {
-          let year = localStorage.getItem('year');
+        scope.termDropdownItems = scope.view.state.filters.enabledTerms
+          .map((enabledTerm) => {
+            let year = localStorage.getItem('year');
 
-          let termIdToTermCode = {
-            1: '01',
-            2: '02',
-            3: '03',
-            5: '05',
-            6: '06',
-            7: '07',
-            8: '08',
-            9: '09',
-            10: '10',
-          };
+            let termIdToTermCode = {
+              1: '01',
+              2: '02',
+              3: '03',
+              5: '05',
+              6: '06',
+              7: '07',
+              8: '08',
+              9: '09',
+              10: '10',
+            };
 
-          if (enabledTerm < 4) {
-            year = parseInt(year) + 1;
-          }
+            if (enabledTerm < 4) {
+              year = parseInt(year) + 1;
+            }
 
-          let termCode = year + termIdToTermCode[enabledTerm];
+            let termCode = year + termIdToTermCode[enabledTerm];
 
             return {
               id: termCode,
               description: termCode.getTermCodeDisplayName(true),
               sectionGroup: scope.view.selectedEntity,
             };
-        })
-        .filter((item) => !scope.existingTermCodes.includes(item.id));
+          })
+          .filter((item) => !scope.existingTermCodes.includes(item.id));
+      });
 
       scope.isLocked = function () {
         return scope.view.state.uiState.tableLocked;
