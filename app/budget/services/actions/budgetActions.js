@@ -166,6 +166,8 @@ class BudgetActions {
 						BudgetCalculations.calculateSectionGroups();
 						BudgetCalculations.calculateTotalCost();
 						BudgetCalculations.calculateCourseList();
+
+						$rootScope.$emit('toast', { message: "Updated course(s)", type: "SUCCESS" });
 					}, function() {
 						BudgetReducers.reduce({
 							type: ActionTypes.UPDATE_SECTION_GROUP_COST,
@@ -184,6 +186,8 @@ class BudgetActions {
 						BudgetCalculations.calculateSectionGroups();
 						BudgetCalculations.calculateTotalCost();
 						BudgetCalculations.calculateCourseList();
+
+						$rootScope.$emit('toast', { message: "Could not update course(s)", type: "ERROR" });
 					});
 				});
 			},
