@@ -8,33 +8,35 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         Term.prototype.generateTable(scope.year)
       );
 
+      scope.enabledTermCodes = scope.view.state.filters.enabledTerms.map(
+        (enabledTerm) =>
+          scope.termDefinitions.find(
+            (termDefinition) => termDefinition.id === enabledTerm
+          ).code
+      );
+
       scope.$on('newSectionGroupSelected', function () {
-        scope.existingTermCodes = Object.values(
+        scope.courseTermCodes = Object.values(
           scope.view.state.sectionGroups.list
         )
           .filter(
             (sectionGroup) =>
-              sectionGroup.courseId == scope.view.selectedEntity.courseId
+              sectionGroup.courseId === scope.view.selectedEntity.courseId &&
+              scope.enabledTermCodes.includes(sectionGroup.termCode)
           )
           .map((sectionGroup) => sectionGroup.termCode);
 
-        scope.showTermDropdown =
-          scope.existingTermCodes.length !==
-          scope.view.state.filters.enabledTerms.length;
+        scope.showTermDropdown = scope.enabledTermCodes.length > scope.courseTermCodes.length;
 
-        scope.termDropdownItems = scope.view.state.filters.enabledTerms
-          .map((enabledTerm) => {
-            let termCode = scope.termDefinitions.find(
-              (termDefinition) => termDefinition.id === enabledTerm
-            ).code;
-
+        scope.termDropdownItems = scope.enabledTermCodes
+          .filter((termCode) => !scope.courseTermCodes.includes(termCode))
+          .map((termCode) => {
             return {
               id: termCode,
               description: termCode.getTermCodeDisplayName(true),
               sectionGroup: scope.view.selectedEntity,
             };
-          })
-          .filter((item) => !scope.existingTermCodes.includes(item.id));
+          });
       });
 
       scope.isLocked = function () {
