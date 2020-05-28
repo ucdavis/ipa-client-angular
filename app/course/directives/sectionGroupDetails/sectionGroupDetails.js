@@ -1,9 +1,13 @@
-let sectionGroupDetails = function (CourseActionCreators) {
+let sectionGroupDetails = function (CourseActionCreators, Term) {
   return {
     restrict: 'E',
     template: require('./sectionGroupDetails.html'),
     replace: true,
     link: function (scope) {
+      scope.termDefinitions = Object.values(
+        Term.prototype.generateTable(scope.year)
+      );
+
       scope.$on('newSectionGroupSelected', function () {
         scope.existingTermCodes = Object.values(
           scope.view.state.sectionGroups.list
@@ -20,25 +24,9 @@ let sectionGroupDetails = function (CourseActionCreators) {
 
         scope.termDropdownItems = scope.view.state.filters.enabledTerms
           .map((enabledTerm) => {
-            let year = localStorage.getItem('year');
-
-            let termIdToTermCode = {
-              1: '01',
-              2: '02',
-              3: '03',
-              5: '05',
-              6: '06',
-              7: '07',
-              8: '08',
-              9: '09',
-              10: '10',
-            };
-
-            if (enabledTerm < 4) {
-              year = parseInt(year) + 1;
-            }
-
-            let termCode = year + termIdToTermCode[enabledTerm];
+            let termCode = scope.termDefinitions.find(
+              (termDefinition) => termDefinition.id === enabledTerm
+            ).code;
 
             return {
               id: termCode,
@@ -116,7 +104,6 @@ let sectionGroupDetails = function (CourseActionCreators) {
         let course = scope.view.state.courses.list[selectedEntity.courseId];
         return course.isSeries();
       };
-
     }
   };
 };
