@@ -10,7 +10,8 @@ let ipaDropdown = function() {
 			selectItem: '&',
 			buttonClass: '<?',
 			isWide: '<?',
-			style: '<?' // Current options are 'minimal' or leaving blank gives default styling
+			style: '<?', // Current options are 'minimal' or leaving blank gives default styling
+			autoScroll: '<?'
 		},
 		replace: true, // Replace with the template below
 		link: function(scope, element, attrs) {
@@ -37,6 +38,7 @@ let ipaDropdown = function() {
 			scope.expanded = false;
 			scope.searchable = false;
 			scope.overrideStyles = {};
+			scope.autoScroll = scope.autoScroll || false;
 
 			// Load attributes
 			if (attrs.overrideStyles) {

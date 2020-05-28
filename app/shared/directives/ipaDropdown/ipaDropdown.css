@@ -137,6 +137,10 @@
 	justify-content: center;
 }
 
+.ipa-dropdown .auto-scroll {
+	overflow-y: auto;
+}
+
 .ipa-dropdown__wide {
 	width: 100%;
 }

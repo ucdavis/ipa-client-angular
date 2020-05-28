@@ -17,7 +17,7 @@
 		<div class="dropdown-mask" ng-click="closeDropdown()">
 		</div>
 
-		<div class="dropdown">
+		<div class="dropdown" ng-class="{'auto-scroll': autoScroll}">
 			<div ng-show="headerText" class="header-row">
 				<div>
 					{{ headerText }}
