@@ -528,7 +528,9 @@ class BudgetReducers {
 						calculatedScheduleCosts = {
 							terms: [],
 							byTerm: {},
-							byUniqueKey: {}
+							byUniqueKey: {},
+							sectionGroupCosts: [],
+							trackedChanges: []
 						};
 						return calculatedScheduleCosts;
 					case ActionTypes.CALCULATE_SCHEDULE_COSTS:
@@ -808,6 +810,11 @@ class BudgetReducers {
 								activeTab: 'Funds',
 								tabOverrides: {}
 							},
+							syncScenario: {
+								showSyncWarning: false,
+								updateFailures: [],
+								summaryHtml: ""
+							},
 							isAddBudgetScenarioModalOpen: false,
 							isAddLineItemModalOpen: false,
 							isBudgetConfigModalOpen: false,
@@ -1028,6 +1035,11 @@ class BudgetReducers {
 						if (ui.selectedBudgetScenarioId == action.payload.budgetScenarioId) {
 							ui.selectedBudgetScenarioId = null;
 						}
+						return ui;
+					case ActionTypes.UPDATE_SYNC_STATUS:
+						ui.syncScenario.updateFailures = [...ui.syncScenario.updateFailures, action.payload.updateFailure];
+						ui.syncScenario.showSyncWarning = ui.syncScenario.updateFailures.length > 0;
+						ui.syncScenario.summaryHtml = ui.syncScenario.updateFailures.map(change => `${change.termName}, ${change.courseDescription}, ${change.name}`).join("<br>");
 						return ui;
 					default:
 						return ui;

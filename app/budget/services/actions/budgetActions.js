@@ -126,6 +126,71 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 				});
 			},
+			syncBudgetScenario: function () {
+				const scenarioTrackedChanges = BudgetReducers._state.calculatedScheduleCosts.trackedChanges;
+				const scenarioSectionGroupCosts = BudgetReducers._state.calculatedScheduleCosts.sectionGroupCosts;
+
+				scenarioTrackedChanges.forEach(change => {
+					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
+					let originalSectionGroupCost = JSON.parse(JSON.stringify(sectionGroupCost)); // to revert in case of failure
+
+					switch (change.action) {
+						case "syncInstructor":
+							sectionGroupCost.instructorId = sectionGroupCost.sectionGroup.assignedInstructor ? sectionGroupCost.sectionGroup.assignedInstructor.id : null;
+							sectionGroupCost.instructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorType ? sectionGroupCost.sectionGroup.assignedInstructorType.id : null;
+							break;
+						case "syncEnrollment":
+							sectionGroupCost.enrollment = sectionGroupCost.sectionGroup.totalSeats;
+							break;
+						case "syncSectionCount":
+							sectionGroupCost.sectionCount = sectionGroupCost.sectionGroup.sectionCount;
+							break;
+						case "syncTaCount":
+							sectionGroupCost.taCount = sectionGroupCost.sectionGroup.teachingAssistantAppointments;
+							break;
+						case "syncReaderCount":
+							sectionGroupCost.readerCount = sectionGroupCost.sectionGroup.readerAppointments;
+							break;
+						default:
+							return;
+					}
+
+					BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SECTION_GROUP_COST,
+							payload: {
+								sectionGroupCost: newSectionGroupCost
+							}
+						});
+
+						BudgetCalculations.calculateSectionGroups();
+						BudgetCalculations.calculateTotalCost();
+						BudgetCalculations.calculateCourseList();
+
+						$rootScope.$emit('toast', { message: "Updated course(s)", type: "SUCCESS" });
+					}, function() {
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SECTION_GROUP_COST,
+							payload: {
+								sectionGroupCost: originalSectionGroupCost
+							}
+						});
+
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SYNC_STATUS,
+							payload: {
+								updateFailure: change
+							}
+						});
+
+						BudgetCalculations.calculateSectionGroups();
+						BudgetCalculations.calculateTotalCost();
+						BudgetCalculations.calculateCourseList();
+
+						$rootScope.$emit('toast', { message: "Could not update course(s)", type: "ERROR" });
+					});
+				});
+			},
 			createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
 				var self = this;
 				if (scenarioId == null) { scenarioId = 0;}

@@ -111,11 +111,13 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				window.print();
 			};
 
+			scope.syncBudgetScenario = function() {
+				BudgetActions.syncBudgetScenario();
+			};
+
 			scope.setBudgetScenarioTerm = ( item ) => {
 				BudgetActions.selectTerm( item.description );
-
 			};
-			console.log(scope.state.ui.termNav);
 		} // End Link
 	};
 };
