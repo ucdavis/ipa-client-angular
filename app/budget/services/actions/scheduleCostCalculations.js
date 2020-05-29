@@ -111,7 +111,13 @@ class ScheduleCostCalculations {
               sectionGroupCost.reversionDisplayName = assignedInstructorType.description;
             }
 
-            scheduleCosts.trackedChanges.push({action: "syncInstructor", sectionGroupCostId: sectionGroupCost.id});
+            scheduleCosts.trackedChanges.push({
+              sectionGroupCostId: sectionGroupCost.id,
+              courseDescription: `${sectionGroupCost.subjectCode} ${sectionGroupCost.courseNumber}`,
+              termName: TermService.getShortTermName(TermService.termCodeToTerm(sectionGroupCost.termCode)),
+              name: 'Instructor',
+              action: 'syncInstructor'
+            });
           }
 
           // Track scenario changes to accept all
@@ -171,34 +177,38 @@ class ScheduleCostCalculations {
       },
       _calculateScenarioChanges: function(sectionGroupCost, scheduleCosts) {
         if (sectionGroupCost.sectionGroup) {
-          let trackedChange = {
+          let baseTrackedChange = {
             sectionGroupCostId: sectionGroupCost.id,
             courseDescription: `${sectionGroupCost.subjectCode} ${sectionGroupCost.courseNumber}`,
             termName: TermService.getShortTermName(TermService.termCodeToTerm(sectionGroupCost.termCode)),
           };
 
           if (sectionGroupCost.enrollment !== sectionGroupCost.sectionGroup.totalSeats) {
+            let trackedChange = { ...baseTrackedChange };
             trackedChange.name = "Enrollment";
             trackedChange.action = "syncEnrollment";
             scheduleCosts.trackedChanges.push(trackedChange);
           }
 
           if (sectionGroupCost.sectionCount != sectionGroupCost.sectionGroup.sectionCount) {
+            let trackedChange = { ...baseTrackedChange };
             trackedChange.name = "Section";
             trackedChange.action = "syncSectionCount";
             scheduleCosts.trackedChanges.push(trackedChange);
           }
 
           if (sectionGroupCost.taCount != sectionGroupCost.sectionGroup.teachingAssistantAppointments) {
-              trackedChange.name = "TAs";
-              trackedChange.action = "syncTaCount";
-              scheduleCosts.trackedChanges.push(trackedChange);
-            }
+            let trackedChange = { ...baseTrackedChange };
+            trackedChange.name = "TAs";
+            trackedChange.action = "syncTaCount";
+            scheduleCosts.trackedChanges.push(trackedChange);
+          }
 
           if (sectionGroupCost.readerCount != sectionGroupCost.sectionGroup.readerAppointments) {
-              trackedChange.name = 'Readerss';
-              trackedChange.action = 'syncReaderCount';
-              scheduleCosts.trackedChanges.push(trackedChange);
+            let trackedChange = { ...baseTrackedChange };
+            trackedChange.name = 'Readers';
+            trackedChange.action = 'syncReaderCount';
+            scheduleCosts.trackedChanges.push(trackedChange);
           }
         }
       },
