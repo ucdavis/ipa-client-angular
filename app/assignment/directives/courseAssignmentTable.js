@@ -365,7 +365,11 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 													}
 
 													if (teachingAssignment.approved === false && instructor) {
-														// Ensure header is aded only if there is appropriate to display
+														if (sectionGroup.termCode !== teachingAssignment.termCode) {
+															return; // skip if sectionGroup termCode changed since Teaching Call was submitted
+														}
+
+														// Ensure header is added only if there is appropriate to display
 														if (firstInstructorAdded === false) {
 															courseHtml += "<li><div class=\"dropdown-assign-header\">Interested</div></li>";
 															firstInstructorAdded = true;
@@ -630,7 +634,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									</div>
 								</div>
 							</form>`;
-						
+
 						$el.prev('.instructor-typeahead-placeholder').toggle().append(typeaheadTemplate).prev('div.assign-dropdown').toggle();
 						$(`.js-typeahead-${sectionGroupId}`).focus().click();
 					}
