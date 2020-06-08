@@ -113,11 +113,12 @@
 	border: 1px solid #ebebeb;
 }
 .term-cell {
-	flex: 1 1 200px;
+	flex: 1 0 200px;
+  max-width: 200px;
 }
 
 .description-cell, .course-description-cell {
-	flex: 2 1 200px;
+	flex: 2 0 200px;
 }
 
 .description-cell div {
