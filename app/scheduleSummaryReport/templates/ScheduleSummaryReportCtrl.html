@@ -21,10 +21,10 @@
           <span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
           <ul class="dropdown-menu dropdown-menu-right">
             <li style="cursor: pointer;">
-              <a ng-click="download(true)">Download Current Term</a>
+              <a ng-click="download(true)">Download {{ getTermName(termShortCode) }} as Excel</a>
             </li>
             <li style="cursor: pointer;">
-              <a ng-click="download(false)">Download All Terms</a>
+              <a ng-click="download(false)">Download All Terms as Excel</a>
             </li>
           </ul>
           </div>
