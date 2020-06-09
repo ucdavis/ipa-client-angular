@@ -31,9 +31,9 @@ class ScheduleSummaryReportCtrl {
 		}
 
 		$scope.download = function (filterByTerm) {
-			if(filterByTerm){
+			if (filterByTerm){
 				ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, $scope.termShortCode);
-			} else{
+			} else {
 				ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, null);
 			}
 		};
