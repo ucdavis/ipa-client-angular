@@ -17,11 +17,17 @@
     <div class="row hidden-print">
       <div class="col-sm-12">
         <div class="table-toolbar">
-          <span
-            class="tool-icon glyphicon glyphicon-download-alt"
-            uib-tooltip="Download as Excel"
-            ng-click="download()"
-          ></span>
+        <div class="btn-group" uib-tooltip="Download as Excel">
+          <span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li style="cursor: pointer;">
+              <a ng-click="download(true)">Download Current Term</a>
+            </li>
+            <li style="cursor: pointer;">
+              <a ng-click="download(false)">Download All Terms</a>
+            </li>
+          </ul>
+          </div>
 
           <span
             class="tool-icon glyphicon glyphicon-print"
