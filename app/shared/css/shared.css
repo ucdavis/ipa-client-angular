@@ -18,6 +18,7 @@ h3,
   overflow-y: auto;
   top: 0;
   bottom: 0;
+  background-color: #303641;
 }
 .page-container.sidebar-collapsed .sidebar-menu .sidebar-menu-inner {
   overflow-y: unset;
