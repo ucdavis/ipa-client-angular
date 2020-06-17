@@ -15,9 +15,10 @@ h3,
 .page-container .sidebar-menu .sidebar-menu-inner {
   position: fixed;
   width: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
   top: 0;
   bottom: 0;
+  background-color: #303641;
 }
 .page-container.sidebar-collapsed .sidebar-menu .sidebar-menu-inner {
   overflow-y: unset;
