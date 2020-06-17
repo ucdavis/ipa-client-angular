@@ -630,7 +630,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									</div>
 								</div>
 							</form>`;
-						
+
 						$el.prev('.instructor-typeahead-placeholder').toggle().append(typeaheadTemplate).prev('div.assign-dropdown').toggle();
 						$(`.js-typeahead-${sectionGroupId}`).focus().click();
 					}
@@ -642,8 +642,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 					$('.js-typeahead-' + sectionGroupId).typeahead({
 							order: "desc",
-							display: "fullName",
-							template: "<span data-section-group-id='{{sectionGroupId}}' data-instructor-id='{{id}}'>{{fullName}}</span>",
+							display: ["lastName", "firstName"],
+							template: "<span data-section-group-id='{{sectionGroupId}}' data-instructor-id='{{id}}'>{{lastName}}, {{firstName}}</span>",
 							source: {
 									data: instructors
 							},
