@@ -646,8 +646,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 					$('.js-typeahead-' + sectionGroupId).typeahead({
 							order: "desc",
-							display: "fullName",
-							template: "<span data-section-group-id='{{sectionGroupId}}' data-instructor-id='{{id}}'>{{fullName}}</span>",
+							display: ["lastName", "firstName"],
+							template: "<span data-section-group-id='{{sectionGroupId}}' data-instructor-id='{{id}}'>{{lastName}}, {{firstName}}</span>",
 							source: {
 									data: instructors
 							},

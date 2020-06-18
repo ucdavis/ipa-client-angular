@@ -30,8 +30,12 @@ class ScheduleSummaryReportCtrl {
 			$scope.view.state = {};
 		}
 
-		$scope.download = function () {
-			ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, $scope.termShortCode);
+		$scope.download = function (filterByTerm) {
+			if (filterByTerm){
+				ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, $scope.termShortCode);
+			} else {
+				ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, null);
+			}
 		};
 
 		$scope.getTermName = function(termCode) {

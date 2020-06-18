@@ -16,8 +16,13 @@ class ScheduleSummaryReportService {
 			},
 			downloadSchedule: function (workgroupId, year, shortTermCode) {
 				var deferred = $q.defer();
-	
-				$http.get(window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + shortTermCode + "/generateExcel", { withCredentials: true })
+				let endpoint;
+				if (shortTermCode){
+					endpoint = window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + shortTermCode + "/generateExcel";
+				} else {
+					endpoint = window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel";
+				}
+				$http.get(endpoint, { withCredentials: true })
 					.then(function (payload) {
 						$window.location.href = payload.data.redirect;
 						deferred.resolve(payload.data);

@@ -111,13 +111,14 @@
 	padding: 8px;
 	font-size: 12px;
 	border: 1px solid #ebebeb;
+	min-width: 200px;
 }
 .term-cell {
-	flex: 1 1 200px;
+	flex: 1 0 200px;
 }
 
 .description-cell, .course-description-cell {
-	flex: 2 1 200px;
+	flex: 2 0 200px;
 }
 
 .description-cell div {
@@ -966,6 +967,8 @@ li.active-term .dropdown-term-row {
 
 .assignments-container .main-content {
 	display: block;
+	overflow-x: auto;
+	height: calc(100vh - 127px);
 }
 
 .assignments-container .filter-container {

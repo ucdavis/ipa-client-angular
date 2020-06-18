@@ -18,8 +18,31 @@
 			            tooltip-message="'Rename Scenario'">
 			</ipa-button>
 
+			<div class="budget-scenario-toolbar__sync-button"
+				uib-tooltip="Accept all schedule updates from Live Data"
+				tooltip-append-to-body="true"
+				confirm-button="syncBudgetScenario()"
+				message="Are you sure you want to accept all schedule updates in this Scenario from Live Data?<br><br>Affects Instructors, Enrollments, Sections, TAs, and Readers"
+				yes="Confirm"
+				no="Cancel"
+				ng-show="!state.ui.fromLiveData && state.calculatedScheduleCosts.trackedChanges.length > 0 && !state.ui.syncScenario.showSyncWarning">
+				<i class="glyphicon glyphicon-repeat"></i>
+				<span class="budget-scenario-toolbar__sync-button--text">Accept All Changes</span>
+			</div>
+			<div class="budget-scenario-toolbar__sync-button"
+				uib-tooltip="View Unsuccessful Updates"
+				tooltip-append-to-body="true"
+				confirm-button="syncBudgetScenario()"
+				message="Could not update the following courses. Try again?<br><br>{{ state.ui.syncScenario.summaryHtml}}"
+				yes="Confirm"
+				no="Cancel"
+				ng-if="!state.ui.fromLiveData && state.calculatedScheduleCosts.trackedChanges.length > 0 && state.ui.syncScenario.showSyncWarning">
+				<i class="glyphicon glyphicon-warning-sign text-danger"></i>
+				<span class="budget-scenario-toolbar__sync-button--text">View Unsuccessful Updates</span>
+			</div>
+
 			<div class="budget-scenario-toolbar__scenario-label"
-			     ng-if="state.ui.sectionNav.activeTab == 'Schedule Costs' && showTermChip" 
+			     ng-if="state.ui.sectionNav.activeTab == 'Schedule Costs' && showTermChip"
 			     style="margin-left: 10px;">
 				Budget Scenario Term
 			</div>
