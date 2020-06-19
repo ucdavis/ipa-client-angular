@@ -28,9 +28,9 @@ class StudentFormActions {
 					$rootScope.$emit('toast', { message: "Could not load support staff form initial state.", type: "ERROR" });
 				});
 			},
-			addStudentPreference: function (sectionGroupId, type) {
+			addStudentPreference: function (sectionGroupId, type, termCode) {
 				var _self = this;
-				StudentFormService.addStudentPreference(sectionGroupId, type).then(function (payload) {
+				StudentFormService.addStudentPreference(sectionGroupId, type, termCode).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
 					var action = {
 						type: ActionTypes.ADD_STUDENT_PREFERENCE,
@@ -70,11 +70,11 @@ class StudentFormActions {
 			},
 			applyCrnToAvailability: function() {
 				var self = this;
-	
+
 				var crnBlob = StudentFormReducers._state.ui.crnSearch.blob;
 				var supportCallResponse = StudentFormReducers._state.supportCallResponse;
 				supportCallResponse.availabilityBlob = supportCallResponse.availabilityBlob ? self.combineBlobs(supportCallResponse.availabilityBlob, crnBlob) : crnBlob;
-	
+
 				self.updateAvailability(supportCallResponse);
 				self.clearCrnSearch();
 			},
@@ -160,7 +160,7 @@ class StudentFormActions {
 				var self = this;
 				StudentFormService.updatePreference(scheduleId, preference).then(function (payload) {
 					$rootScope.$emit('toast', { message: "Updated preference comments", type: "SUCCESS" });
-	
+
 					StudentFormReducers._state.preferences.list[payload.id] = payload;
 					var action = {
 						type: ActionTypes.UPDATE_PREFERENCE,
@@ -221,23 +221,23 @@ class StudentFormActions {
 					if (review.requirePreferenceAmount.required && review.requirePreferenceAmount.complete == false) {
 						validationErrorMessage += "You must provide at least " + StudentFormReducers._state.supportCallResponse.minimumNumberOfPreferences + " preferences";
 					}
-	
+
 				if (review.requireEligible.required && review.requireEligible.complete == false) {
 					if (validationErrorMessage.length > 0) {
 						validationErrorMessage += ", ";
 					}
-	
+
 					validationErrorMessage += "You must confirm your eligibility";
 				}
-	
+
 				if (review.requirePreferenceComments.required && review.requirePreferenceComments.complete == false) {
 					if (validationErrorMessage.length > 0) {
 						validationErrorMessage += ", and ";
 					}
-	
+
 					validationErrorMessage += "You must provide comments for your preferences";
 				}
-	
+
 				StudentFormReducers.reduce({
 					type: ActionTypes.CALCULATE_FORM_VALID,
 					payload: {
@@ -248,19 +248,19 @@ class StudentFormActions {
 			},
 			fetchTimesByCrn: function(crn) {
 				var self = this;
-	
+
 				StudentFormReducers.reduce({
 					type: ActionTypes.BEGIN_FETCH_ACTIVITIES_BY_CRN,
 					payload: {
 						crn: crn
 					}
 				});
-	
+
 				DwService.getDwActivitiesByCrn(crn, StudentFormReducers._state.misc.termCode).then(function (payload) {
 					StudentFormReducers.reduce({
 						type: ActionTypes.COMPLETE_FETCH_ACTIVITIES_BY_CRN
 					});
-	
+
 					self.generateTimesForCrn(payload, crn);
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not fetch activities by crn.", type: "ERROR" });
@@ -268,7 +268,7 @@ class StudentFormActions {
 			},
 			generateTimesForCrn: function(activities, crn) {
 				var self = this;
-	
+
 				if (!activities || activities.length == 0) {
 					StudentFormReducers.reduce({
 						type: ActionTypes.CALCULATE_TIMESLOTS_FOR_CRN,
@@ -279,22 +279,22 @@ class StudentFormActions {
 							crnSearchBlob: null
 						}
 					});
-	
+
 					return;
 				}
-	
+
 				// Default availability value, where '1' denotes 'available'
 				var crnSearchBlob = "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
 				var crnSearchFeedback = "";
 				var crnSearchTimes = "";
-	
+
 				activities.forEach(function(activity) {
 					crnSearchFeedback = "Course found: " + activity.ssbsect_subj_code + " " + activity.ssbsect_crse_numb + " " + activity.ssbsect_seq_numb + " " + activity.scbcrse_title;
 					var activityTimes = self.calculateTimes(activity);
 					crnSearchTimes += activityTimes.description + " ";
 					crnSearchBlob = self.combineBlobs(crnSearchBlob, activityTimes.blob);
 				});
-	
+
 				StudentFormReducers.reduce({
 					type: ActionTypes.CALCULATE_TIMESLOTS_FOR_CRN,
 					payload: {
@@ -311,26 +311,26 @@ class StudentFormActions {
 					blob: "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1",
 					description: ""
 				};
-	
+
 				if (!activity.ssrmeet_begin_time || !activity.ssrmeet_end_time) {
 					return activityTimes;
 				}
-	
+
 				var startHour = activity.ssrmeet_begin_time.substring(0, 2);
 				var startHourIndex = startHour - 7; // 7am should correspond to 0 index.
 				var endHour = activity.ssrmeet_end_time.substring(0, 2);
 				var endHourIndex = endHour - 7; // 7am should correspond to 0 index.
-	
+
 				// If end minutes is zero, do not block out that hour. Example 0810-0900 should only block out the 8am-9am block
 				var endMinute = activity.ssrmeet_end_time.substring(2, 4);
-	
+
 				if (endMinute == "00") {
 					endHourIndex--;
 				}
-	
+
 				if (activity.ssrmeet_mon_day) {
 					activityTimes.description += "M";
-	
+
 					var dayOffset = 0; // Monday starts at 0 in the blob
 					for (var i = startHourIndex; i <= endHourIndex; i++) {
 						var blobIndex = (i * 2) + dayOffset;
@@ -339,7 +339,7 @@ class StudentFormActions {
 				}
 				if (activity.ssrmeet_tue_day) {
 					activityTimes.description += "T";
-	
+
 					var dayOffset = 30; // Tuesday starts at 30 in the blob
 					for (var i = startHourIndex; i <= endHourIndex; i++) {
 						var blobIndex = (i * 2) + dayOffset;
@@ -348,7 +348,7 @@ class StudentFormActions {
 				}
 				if (activity.ssrmeet_wed_day) {
 					activityTimes.description += "W";
-	
+
 					var dayOffset = 60; // Wednesday starts at 60 in the blob
 					for (var i = startHourIndex; i <= endHourIndex; i++) {
 						var blobIndex = (i * 2) + dayOffset;
@@ -357,7 +357,7 @@ class StudentFormActions {
 				}
 				if (activity.ssrmeet_thu_day) {
 					activityTimes.description += "R";
-	
+
 					var dayOffset = 90; // Thursday starts at 90 in the blob
 					for (var i = startHourIndex; i <= endHourIndex; i++) {
 						var blobIndex = (i * 2) + dayOffset;
@@ -372,14 +372,14 @@ class StudentFormActions {
 						activityTimes.blob = setCharAt(activityTimes.blob, blobIndex, "0");
 					}
 				}
-	
+
 				activityTimes.description += " " + activity.ssrmeet_begin_time + "-" + activity.ssrmeet_end_time;
-	
+
 				return activityTimes;
 			},
 			setCharAt: function(str, index, chr) {
 				if (index > str.length - 1) { return str; }
-	
+
 				return str.substr(0, index) + chr + str.substr(index + 1);
 			},
 			combineBlobs: function (blobOne, blobTwo) {
@@ -388,7 +388,7 @@ class StudentFormActions {
 						blobOne = setCharAt(blobOne, i, "0");
 					}
 				}
-	
+
 				return blobOne;
 			}
 		};
