@@ -6,6 +6,10 @@ class BudgetService {
 				return ApiService.get("/api/budgetView/workgroups/" + workgroupId + "/years/" + year);
 			},
 	
+			// Excel download
+			downloadWorkgroupScenariosExcel: function(workgroupScenarios) {
+				return ApiService.postWithResponseType("/api/budgetView/helloworld2", workgroupScenarios, '', 'arraybuffer');
+			},
 			// Line Items
 			createLineItem: function(newLineItem, budgetScenarioId) {
 				return ApiService.post("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/lineItems", newLineItem);
