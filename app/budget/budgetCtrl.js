@@ -67,6 +67,23 @@ class BudgetCtrl {
         localStorage.removeItem("selectedTerm");
       }
     });
+
+    _self.$scope.helloButton = function helloButton (){
+      console.log('Hello');
+      const headers = new Headers();
+      headers.append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlZG5wZXJleiIsImxvZ2luSWQiOiJlZG5wZXJleiIsInJlYWxVc2VyTG9naW5JZCI6ImVkbnBlcmV6IiwiZXhwaXJhdGlvbkRhdGUiOjE1OTMwNDEyMDcyNDMsImlhdCI6MTU5MzAzNzYwN30.rJ3Biu693OdBD-IRfeteWWUGQEi3y2OsWyinH_lN0mo');
+      headers.append('Cookie', 'JSESSIONID=71B825CEA9A9A84D77CA4078F9B405EF');
+      var resp = fetch('http://localhost:8080/api/budgetView/helloworld2', {'method': 'POST', 'headers': headers}).then(response => response.blob())
+        .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = window.document.createElement('a');
+            a.href = url;
+            a.download = "filename.xls";
+            window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();    
+            a.remove();  //afterwards we remove the element again         
+        });
+    };
   }
 }
 
