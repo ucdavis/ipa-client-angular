@@ -56,13 +56,9 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
       };
 
       scope.updateSectionGroup = function (sectionGroup, termCode) {
-        if (termCode && sectionGroup.termCode !== termCode) {
-            sectionGroup.termCode = termCode;
-        }
-
         sectionGroup.unitsVariable ? parseFloat(sectionGroup.unitsVariable) : null;
 
-        CourseActionCreators.updateSectionGroup(sectionGroup);
+        CourseActionCreators.updateSectionGroup(sectionGroup, termCode);
       };
 
       scope.removeSectionGroup = function (sectionGroup) {
