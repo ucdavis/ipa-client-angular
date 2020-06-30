@@ -74,6 +74,8 @@ class BudgetCtrl {
       _self.BudgetService.downloadWorkgroupScenariosExcel(
           [{
             id: 381,
+          },{
+            id: 170,
           }]
       )
       .then(blob => {
