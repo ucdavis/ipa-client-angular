@@ -86,7 +86,7 @@ class AuthService {
 					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 					localStorage.setItem('JWT', token);
 
-					location.reload();
+					$window.location.href = '/summary';
 				}, function () {
 					// FIXME: Shouuldn't we do something here?
 				});
