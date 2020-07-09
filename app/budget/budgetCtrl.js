@@ -72,11 +72,17 @@ class BudgetCtrl {
 
     _self.$scope.helloButton = function helloButton() {
       _self.BudgetService.downloadWorkgroupScenariosExcel(
-          [{
-            id: 381,
-          },{
-            id: 170,
-          }]
+          [
+            {
+              id: 303, // physics 19/20, testing enrollment data
+            }
+            // {
+            //   id: 381,
+            // },
+            // {
+            //   id: 170,
+            // }
+        ]
       )
       .then(blob => {
           var url = window.URL.createObjectURL(
