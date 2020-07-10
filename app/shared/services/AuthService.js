@@ -88,7 +88,6 @@ class AuthService {
 
 					let workgroup = JSON.parse(localStorage.getItem("workgroup"));
 					let year = localStorage.getItem("year");
-
 					$window.location.href = "/summary/" + workgroup.id + "/" + year;
 				}, function () {
 					// FIXME: Shouuldn't we do something here?
@@ -109,7 +108,9 @@ class AuthService {
 					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 					localStorage.setItem('JWT', token);
 
-					location.reload();
+					let workgroup = JSON.parse(localStorage.getItem('workgroup'));
+					let year = localStorage.getItem('year');
+					$window.location.href = '/summary/' + workgroup.id + '/' + year;
 				}, function () {
 					// FIXME: Shouldn't we do something here?
 				});
