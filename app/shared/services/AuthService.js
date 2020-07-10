@@ -86,13 +86,10 @@ class AuthService {
 					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 					localStorage.setItem('JWT', token);
 
-					// Pull out the workgroupId and year from the existing url to create a new summary url
-					var explodedUrl = $window.location.href.split('/');
-					var workgroupIndex = explodedUrl.indexOf("workgroups");
-					var workgroupId = explodedUrl[workgroupIndex + 1];
-					var year = explodedUrl[workgroupIndex + 2];
+					let workgroup = JSON.parse(localStorage.getItem("workgroup"));
+					let year = localStorage.getItem("year");
 
-					$window.location.href = "/summary/" + workgroupId + "/" + year;
+					$window.location.href = "/summary/" + workgroup.id + "/" + year;
 				}, function () {
 					// FIXME: Shouuldn't we do something here?
 				});
