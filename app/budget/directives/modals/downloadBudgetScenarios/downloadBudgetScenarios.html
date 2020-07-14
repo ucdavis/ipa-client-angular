@@ -36,39 +36,25 @@
 			<tr>
 				<th scope="col">Department</th>
 				<th scope="col">Budget Scenario</th>
-				<th scope="col">Exclude</th>
+				<!-- <th scope="col">Exclude</th> -->
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="department in budgetScenariosAccessible">
 				<td>{{department.id}}</td>
 				<td>
-					<div class="input-group" class="category-selection-container">
-						<button class="btn btn-category-dropdown dropdown-toggle"
-										type="button" data-toggle="dropdown"
-										class="btn-category-dropdown">
-							<span class="btn-category-dropdown-label">
-								{{ department.selectBudgetScenario.name || "Live Data" }}
-							</span>
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" aria-labelledby="budgetScenarios">
-							<li ng-repeat="scenario in department.budgetScenarios" class="scenario-item">
-								<a ng-click="selectBudgetScenario(scenario, department)">
-									{{ scenario.name }}
-								</a>
-							</li>
-						</ul>
-					</div>
+					<select style="width: 100%; padding:4px 8px;" ng-model="department.selectedScenario">
+						<option ng-repeat="scenario in department.budgetScenarios" value={{scenario.id}}>{{scenario.name}}</option>
+					</select>
 				</td>
-				<td>
+				<!-- <td>
 					<div class="line-item-filters__checkbox-container" stop-event="click">
 						<ipa-checkbox
 						is-checked="department.exclude"
 						click-action="toggleExclude(department)">
 						</ipa-checkbox>
 					</div>
-				</td>
+				</td> -->
 			</tr>
 		</tbody>
 	</table> 

@@ -1,23 +1,30 @@
 import { dateToCalendar, dateToRelative } from 'shared/helpers/dates';
 
 import './downloadBudgetScenarios.css';
+import BudgetService from '../../../services/budgetService';
 
-let downloadBudgetScenarios = function ($rootScope, BudgetActions) {
+let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService) {
 	return {
 		restrict: 'E',
 		template: require('./downloadBudgetScenarios.html'),
 		replace: true,
 		scope: {
 			budgetScenarios: '<',
+			userWorkgroupsScenarios: '<',
 			isOpen: '=',
 			isVisible: '='
 		},
 		link: function (scope) {
 			scope.newComment = "";
-			scope.budgetScenariosAccessible = [{
-				id: "DSS",
-				budgetScenarios: scope.budgetScenarios
-			}];
+			// {
+			//   "DSS": [sceanrio1, 2, 3],
+			//   "Design": [...]
+			//  }
+			scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios).map(workgroup => ({
+				id: workgroup,
+				budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
+				selectedScenario: `${scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data").id}`
+			}));
 
 			scope.isFormValid = function() {
 				if (scope.newComment.length > 0) {
@@ -53,20 +60,25 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions) {
 
 			scope.submit = function() {
 				console.log("Submitting");
-				let scenarioIds = [];
-				for (var department in scope.budgetScenariosAccessible){
-					if (!department.exclude){
-						if (department.selectBudgetScenario){
-							scenarioIds.push(department.selectBudgetScenario.id);
-						} else {
-							let liveData = department.budgetScenarios.find(s => s.name === 'Live Data');
-							if (liveData){
-								scenarioIds.push(liveData.id);
-							}
-						}
+				// let scenarioIds = [];
+
+				let scenarioIds = scope.budgetScenariosAccessible.map(scenario => ({id: parseInt(scenario.selectedScenario)}));
+				// debugger;
+				BudgetService.downloadWorkgroupScenariosExcel(scenarioIds)
+				.then(
+					(blob) => {
+						var url = window.URL.createObjectURL(
+							new Blob([blob], { type: 'application/vnd.ms-excel' })
+						);
+						var a = window.document.createElement('a');
+						a.href = url;
+						a.download = 'Budget Report Download.xlsx';
+						window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+						a.click();
+						a.remove(); //afterwards we remove the element again
 					}
-				}
-				console.log('Sending the following list ', scenarioIds);
+				);
+
 			};
 		} // end link
 	};

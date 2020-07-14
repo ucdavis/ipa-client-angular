@@ -9,7 +9,7 @@ class BudgetReducers {
 							ids: [],
 							list: {}
 						};
-
+					  this._state.userWorkgroupsScenarios = action.payload.userWorkgroupsScenarios;
 						action.payload.budgetScenarios.forEach(function(budgetScenario) {
 							budgetScenarios.ids.push(budgetScenario.id);
 							budgetScenarios.list[budgetScenario.id] = budgetScenario;
@@ -773,6 +773,14 @@ class BudgetReducers {
 						return summary;
 				}
 			},
+			userWorkgroupsScenariosReducers: function (action, userWorkgroupsScenarios) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return userWorkgroupsScenarios;
+					default:
+						return userWorkgroupsScenarios;
+				}
+			},
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -1055,6 +1063,7 @@ class BudgetReducers {
 				var scope = this;
 
 				let newState = {};
+				// newState.userWorkgroupsScenarios = scope._state.userWorkgroupsScenarios;
 				newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 				newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
 				newState.courses = scope.courseReducers(action, scope._state.courses);
@@ -1075,6 +1084,7 @@ class BudgetReducers {
 				newState.instructorTypeCosts = scope.instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.teachingAssignments = scope.teachingAssignmentReducers(action, scope._state.teachingAssignments);
 				newState.tags = scope.tagReducers(action, scope._state.tags);
+				newState.userWorkgroupsScenarios = scope.userWorkgroupsScenariosReducers(action, scope._state.userWorkgroupsScenarios);
 
 				newState.calculatedScheduleCosts = scope.calculatedScheduleCostReducers(action, scope._state.calculatedScheduleCosts);
 				newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
@@ -1082,7 +1092,7 @@ class BudgetReducers {
 				newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
 				newState.summary = scope.summaryReducers(action, scope._state.summary);
 				newState.calculatedCourseList = scope.calculatedCourseListReducers(action, scope._state.calculatedCourseList);
-
+// debugger;
 				scope._state = newState;
 
 				// Build new 'page state'
@@ -1105,6 +1115,7 @@ class BudgetReducers {
 				newPageState.calculatedLineItems = newState.calculatedLineItems;
 				newPageState.summary = newState.summary;
 				newPageState.instructorTypes = newState.instructorTypes;
+				newPageState.userWorkgroupsScenarios = scope._state.userWorkgroupsScenarios;
 
 				$rootScope.$emit('budgetStateChanged', newPageState);
 			}
