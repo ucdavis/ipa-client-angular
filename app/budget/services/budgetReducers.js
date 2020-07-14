@@ -786,6 +786,9 @@ class BudgetReducers {
 							lineItemCommentsModal: {
 								isOpen: false
 							},
+							budgetScenariosModal: {
+								isOpen: false
+							},
 							filters: {
 								lineItems: {
 									showHidden: {
@@ -1016,6 +1019,9 @@ class BudgetReducers {
 						return ui;
 					case ActionTypes.TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
 						ui.isAddBudgetScenarioModalOpen = ! ui.isAddBudgetScenarioModalOpen;
+						return ui;
+					case ActionTypes.OPEN_DOWNLOAD_BUDGET_SCENARIOS:
+						ui.budgetScenariosModal.isOpen = true;
 						return ui;
 					case ActionTypes.CREATE_LINE_ITEM:
 						var lineItem = action.payload;

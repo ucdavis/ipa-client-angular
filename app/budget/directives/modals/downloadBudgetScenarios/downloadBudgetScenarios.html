@@ -1,0 +1,74 @@
+<div class="add-line-item-comments">
+	<div class="input-container">
+		<div class="comment-text-container">
+			<textarea
+				class="comment-textarea"
+				ng-model="newComment"
+				placeholder="Add a comment">
+			</textarea>
+		</div>
+		<div class="input-footer">
+			<button ng-if="isFormValid() == true"
+				type="button"
+				class="btn neon-dark-confirm-btn"
+				ng-click="submit()">
+				Comment
+			</button>
+			<button ng-if="isFormValid() == false"
+				tooltip-placement="left"
+				type="button"
+				class="disabled btn btn-info neon-dark-confirm-btn">
+				Comment
+			</button>
+		</div>
+	</div> <!-- input container -->
+	{{budgetScenarios}}
+	<div ng-repeat="comment in lineItem.comments" class="add-line-item__comment-container" ng-class="{'add-line-item__comment-container--last' : $last }">
+		<div class="comment-header">
+			{{ comment.authorName }}&nbsp;
+			<span class="comment-date" uib-tooltip="{{ dateToCalendar(comment.lastModifiedOn) }}">
+				({{ dateToRelative(comment.lastModifiedOn) }})
+			</span>
+		</div>
+		<div class="comment-body">{{ comment.comment }}</div>
+	</div>
+	{
+		'budgetScenriosWecanSee':{
+			'physics': [{id: 1}, ]
+		}
+	}
+	<table class="table table-dark">
+		<thead>
+			<tr>
+				<th scope="col">Department</th>
+				<th scope="col">Budget Scenario</th>
+				<th scope="col">Exclude</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="department in budgetScenariosAccessible">
+				<td>{{department.id}}</td>
+				<td>
+					<div class="input-group" class="category-selection-container">
+						<button class="btn btn-category-dropdown dropdown-toggle"
+										type="button" data-toggle="dropdown"
+										class="btn-category-dropdown">
+							<span class="btn-category-dropdown-label">
+								{{ department.selectBudgetScenario.name || "Live Data" }}
+							</span>
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="budgetScenarios">
+							<li ng-repeat="scenario in department.budgetScenarios" class="scenario-item">
+								<a ng-click="selectBudgetScenario(scenario, department)">
+									{{ scenario.name }}
+								</a>
+							</li>
+						</ul>
+					</div>
+				</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table> 
+</div>

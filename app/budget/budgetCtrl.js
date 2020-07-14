@@ -90,7 +90,7 @@ class BudgetCtrl {
           );
           var a = window.document.createElement('a');
           a.href = url;
-          a.download = "filename.xls";
+          a.download = "filename.xlsx";
           window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
           a.click();
           a.remove();  //afterwards we remove the element again

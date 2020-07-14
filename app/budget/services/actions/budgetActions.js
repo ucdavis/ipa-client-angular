@@ -769,6 +769,14 @@ class BudgetActions {
 
 				BudgetReducers.reduce(action);
 			},
+			openBudgetScenarioModal: function() {
+				var action = {
+					type: ActionTypes.OPEN_DOWNLOAD_BUDGET_SCENARIOS,
+					payload: {}
+				};
+
+				BudgetReducers.reduce(action);
+			},
 			selectBudgetScenario: function(selectedScenarioId) {
 				var fromLiveData = false;
 

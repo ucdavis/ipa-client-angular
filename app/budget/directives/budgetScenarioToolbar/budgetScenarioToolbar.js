@@ -2,7 +2,7 @@ import { setCharAt } from 'shared/helpers/string';
 
 import './budgetScenarioToolbar.css';
 
-let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions) {
+let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions, BudgetService) {
 	return {
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
 		template: require('./budgetScenarioToolbar.html'), // directive html found here:
@@ -117,6 +117,39 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 
 			scope.setBudgetScenarioTerm = ( item ) => {
 				BudgetActions.selectTerm( item.description );
+			};
+
+			scope.getCurrentScenario = function(){
+				console.log("State", scope.state);
+				return scope.state.selectedBudgetScenario.name;
+			};
+
+			scope.downloadBudgetScenarioExcel = function(isAll) {
+				console.log("Do we want all? " + isAll);
+				let scenarios = [];
+				if (isAll) {
+					BudgetActions.openBudgetScenarioModal();
+				} else {
+					scenarios.push({
+						id: scope.state.selectedBudgetScenario.id
+					});
+					BudgetService.downloadWorkgroupScenariosExcel(
+						scenarios
+					)
+					.then(blob => {
+						var url = window.URL.createObjectURL(
+							new Blob([blob], { type: 'application/vnd.ms-excel' })
+						);
+						var a = window.document.createElement('a');
+						a.href = url;
+						var workgroupInfo = JSON.parse(localStorage.getItem('workgroup'));
+						a.download = `Budget-Report-${workgroupInfo.name}-${localStorage.getItem('year')}-${scope.state.selectedBudgetScenario.name}.xlsx`;
+						window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+						a.click();
+						a.remove();  //afterwards we remove the element again
+					});
+				}
+
 			};
 		} // End Link
 	};
