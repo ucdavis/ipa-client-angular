@@ -151,6 +151,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				}
 
 			};
+
 		} // End Link
 	};
 };
