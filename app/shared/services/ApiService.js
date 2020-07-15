@@ -81,7 +81,7 @@ class ApiService {
 
 				$http(config)
 				.then(function(response) {
-					deferred.resolve(response.data, response.status);
+					deferred.resolve(response.data);
 				},
 				function() {
 					deferred.reject();

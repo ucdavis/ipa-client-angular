@@ -1,6 +1,6 @@
 .table-dark tbody {
   display: block;
-  max-height: 220px;
+  max-height: 233px;
   overflow: auto;
 }
 .table-dark thead,
@@ -10,11 +10,32 @@
   table-layout: fixed;
 }
 
+#budget-scenarios-table{
+  margin-bottom: 0;
+}
+
 .download-budget-scenarios-footer {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+}
+
+.download-budget-scenarios-footer__status {
+  display: flex;
+  align-items: center;
+  
+}
+.download-budget-scenarios-footer__status span {
+  padding: 4px;
+}
+
+.download-budget-scenarios-footer__buttons {
+  display: flex;
+  align-items: center;
 }
 
 .download-budget-scenarios-footer button {
-  margin: 4px;
+  display: inline-block;
+  margin: 8px;
 }
