@@ -1,5 +1,7 @@
 <div class="ipa-modal" ng-show="isVisible">
-	<div class="ipa-modal-dark-overlay" ng-click="close()">
+	<div class="ipa-modal-dark-overlay" ng-click="close()" ng-if="!overrideClickOut">
+	</div>
+	<div class="ipa-modal-dark-overlay" ng-if="overrideClickOut">
 	</div>
 
 	<div class="ipa-modal-container" ng-style="styles">

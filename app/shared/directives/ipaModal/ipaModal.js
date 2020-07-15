@@ -5,6 +5,7 @@ let ipaModal = function() {
 		scope: {
 			isVisible: '=',
 			onClose: '&?',
+			overrideClickOut: '<?',
 			styles: '=?'
 		},
 		replace: true, // Replace with the template below
