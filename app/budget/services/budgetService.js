@@ -8,7 +8,7 @@ class BudgetService {
 	
 			// Excel download
 			downloadWorkgroupScenariosExcel: function(workgroupScenarios) {
-				return ApiService.postWithResponseType("/api/budgetView/helloworld2", workgroupScenarios, '', 'arraybuffer');
+				return ApiService.postWithResponseType("/api/budgetView/downloadExcel", workgroupScenarios, '', 'arraybuffer');
 			},
 			// Line Items
 			createLineItem: function(newLineItem, budgetScenarioId) {
