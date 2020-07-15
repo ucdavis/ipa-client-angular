@@ -59,7 +59,8 @@ class ApiService {
 					url: serverUrl + url,
 					data: data,
 					responseType: responseType,
-					withCredentials: true
+					withCredentials: true,
+					overrideTimeout: true
 				};
 				return this.queryFull(config);
 			},

@@ -179,6 +179,8 @@ function slowConnectionInterceptor ($rootScope, $timeout, $q) {
 	return {
 		request: function (config) {
 			reqCount++;
+
+			if (config.overrideTimeout) { return config; }
 			if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
 			if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
 
@@ -318,7 +320,8 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .config(exceptionHandler)
 
 // Intercept Ajax traffic
- .config(function($httpProvider) {
+.config(function($httpProvider) {
+	 debugger;
 	$httpProvider.interceptors.push(['$rootScope', '$timeout', '$q', slowConnectionInterceptor]);
 })
 

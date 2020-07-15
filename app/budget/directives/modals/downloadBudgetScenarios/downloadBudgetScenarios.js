@@ -38,8 +38,6 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 				scope.isDisabled = true;
 				let scenarioIds = scope.budgetScenariosAccessible.filter(scenario => parseInt(scenario.selectedScenario)).map(scenario => ({id: parseInt(scenario.selectedScenario)}));
 
-				$rootScope.$emit('toast', { message: "Excel Download in Progress - This may take a few minutes.", type: "WARNING", options: { timeOut: 0, extendedTimeOut: 0 } });
-
 				BudgetService.downloadWorkgroupScenariosExcel(scenarioIds)
 				.then(
 					(response) => {
@@ -55,13 +53,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 						a.click();
 						a.remove(); //afterwards we remove the element again
 
-						// if (response.status === 200) {
 						scope.status = response.status;
-							// $rootScope.$emit('toast', { message: "Download", type: "SUCCESS" });
-						// } else {
-						// 
-							// $rootScope.$emit('toast', { message: 'Excel Download Failed', type: "ERROR" });
-						// }
 						scope.isDisabled = false;
 					}
 				);
