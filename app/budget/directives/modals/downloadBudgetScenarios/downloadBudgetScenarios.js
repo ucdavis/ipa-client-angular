@@ -26,10 +26,6 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 				department.selectBudgetScenario = scenario;
 			};
 
-			scope.toggleExclude = function(department) {
-				department.exclude = (department.exclude ? false : true);
-			};
-
 			scope.close = function() {
 				BudgetActions.toggleBudgetScenarioModal();
 			};
@@ -41,8 +37,6 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 				BudgetService.downloadWorkgroupScenariosExcel(scenarioIds)
 				.then(
 					(response) => {
-						$rootScope.$emit('toast-clear');
-
 						var url = window.URL.createObjectURL(
 							new Blob([response.data], { type: 'application/vnd.ms-excel' })
 						);

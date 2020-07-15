@@ -1,36 +1,4 @@
 <div class="download-budget-scenarios">
-	<!--<div class="input-container">
-		<div class="comment-text-container">
-			<textarea
-				class="comment-textarea"
-				ng-model="newComment"
-				placeholder="Add a comment">
-			</textarea>
-		</div>
-		<div class="input-footer">
-			<button ng-if="isFormValid() == true"
-				type="button"
-				class="btn neon-dark-confirm-btn"
-				ng-click="submit()">
-				Comment
-			</button>
-			<button ng-if="isFormValid() == false"
-				tooltip-placement="left"
-				type="button"
-				class="disabled btn btn-info neon-dark-confirm-btn">
-				Comment
-			</button>
-		</div>
-	</div>
-	<div ng-repeat="comment in lineItem.comments" class="add-line-item__comment-container" ng-class="{'add-line-item__comment-container--last' : $last }">
-		<div class="comment-header">
-			{{ comment.authorName }}&nbsp;
-			<span class="comment-date" uib-tooltip="{{ dateToCalendar(comment.lastModifiedOn) }}">
-				({{ dateToRelative(comment.lastModifiedOn) }})
-			</span>
-		</div>
-		<div class="comment-body">{{ comment.comment }}</div>
-	</div>-->
 	<div>
 		<table class="table table-dark" id="budget-scenarios-table">
 			<thead style="border-bottom: 1px solid #ddd;">
@@ -48,14 +16,6 @@
 							<option ng-repeat="scenario in department.budgetScenarios" value={{scenario.id}}>{{scenario.name}}</option>
 						</select>
 					</td>
-					<!-- <td>
-						<div class="line-item-filters__checkbox-container" stop-event="click">
-							<ipa-checkbox
-							is-checked="department.exclude"
-							click-action="toggleExclude(department)">
-							</ipa-checkbox>
-						</div>
-					</td> -->
 				</tr>
 			</tbody>
 		</table> 
@@ -82,7 +42,7 @@
 				type="button" class="btn neon-dark-confirm-btn"
 				ng-disabled="isDisabled"
 			>
-				{{ "Download" }}
+				Download
 			</button>
 		</div>
 	</div>
