@@ -9,7 +9,6 @@ class BudgetReducers {
 							ids: [],
 							list: {}
 						};
-					  this._state.userWorkgroupsScenarios = action.payload.userWorkgroupsScenarios;
 						action.payload.budgetScenarios.forEach(function(budgetScenario) {
 							budgetScenarios.ids.push(budgetScenario.id);
 							budgetScenarios.list[budgetScenario.id] = budgetScenario;
@@ -776,6 +775,7 @@ class BudgetReducers {
 			userWorkgroupsScenariosReducers: function (action, userWorkgroupsScenarios) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
+						userWorkgroupsScenarios = action.payload.userWorkgroupsScenarios;
 						return userWorkgroupsScenarios;
 					default:
 						return userWorkgroupsScenarios;
@@ -1063,7 +1063,6 @@ class BudgetReducers {
 				var scope = this;
 
 				let newState = {};
-				// newState.userWorkgroupsScenarios = scope._state.userWorkgroupsScenarios;
 				newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 				newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
 				newState.courses = scope.courseReducers(action, scope._state.courses);
@@ -1092,7 +1091,7 @@ class BudgetReducers {
 				newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
 				newState.summary = scope.summaryReducers(action, scope._state.summary);
 				newState.calculatedCourseList = scope.calculatedCourseListReducers(action, scope._state.calculatedCourseList);
-// debugger;
+
 				scope._state = newState;
 
 				// Build new 'page state'
