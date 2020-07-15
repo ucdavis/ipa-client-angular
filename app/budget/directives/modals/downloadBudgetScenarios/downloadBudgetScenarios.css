@@ -1,19 +1,20 @@
 .table-dark tbody {
-    display:block;
-    height:220px;
-    overflow:auto;
+  display: block;
+  max-height: 220px;
+  overflow: auto;
 }
-.table-dark thead, .table-dark tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
+.table-dark thead,
+.table-dark tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 .download-budget-scenarios-footer {
-	display: flex;
-	justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .download-budget-scenarios-footer button {
-	margin: 4px;
+  margin: 4px;
 }
