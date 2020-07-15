@@ -1028,8 +1028,8 @@ class BudgetReducers {
 					case ActionTypes.TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
 						ui.isAddBudgetScenarioModalOpen = ! ui.isAddBudgetScenarioModalOpen;
 						return ui;
-					case ActionTypes.OPEN_DOWNLOAD_BUDGET_SCENARIOS:
-						ui.budgetScenariosModal.isOpen = true;
+					case ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS:
+						ui.budgetScenariosModal.isOpen = !ui.budgetScenariosModal.isOpen;
 						return ui;
 					case ActionTypes.CREATE_LINE_ITEM:
 						var lineItem = action.payload;

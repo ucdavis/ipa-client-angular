@@ -769,9 +769,9 @@ class BudgetActions {
 
 				BudgetReducers.reduce(action);
 			},
-			openBudgetScenarioModal: function() {
+			toggleBudgetScenarioModal: function() {
 				var action = {
-					type: ActionTypes.OPEN_DOWNLOAD_BUDGET_SCENARIOS,
+					type: ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS,
 					payload: {}
 				};
 

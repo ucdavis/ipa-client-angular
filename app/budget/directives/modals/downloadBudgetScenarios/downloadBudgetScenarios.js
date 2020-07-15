@@ -11,11 +11,10 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 		scope: {
 			budgetScenarios: '<',
 			userWorkgroupsScenarios: '<',
-			isOpen: '=',
-			isVisible: '='
 		},
 		link: function (scope) {
 			scope.newComment = "";
+			scope.isDisabled = false;
 			// {
 			//   "DSS": [sceanrio1, 2, 3],
 			//   "Design": [...]
@@ -23,7 +22,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios).map(workgroup => ({
 				id: workgroup,
 				budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
-				selectedScenario: `${scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data").id}`
+				selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`
 			}));
 
 			scope.isFormValid = function() {
@@ -53,22 +52,20 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			};
 
 			scope.close = function() {
-				console.log("closing");
-				scope.isOpen = false;
-				scope.isVisible = false;
+				BudgetActions.toggleBudgetScenarioModal();
 			};
 
 			scope.submit = function() {
 				console.log("Submitting");
 				// let scenarioIds = [];
-
-				let scenarioIds = scope.budgetScenariosAccessible.map(scenario => ({id: parseInt(scenario.selectedScenario)}));
+				scope.isDisabled = true;
+				let scenarioIds = scope.budgetScenariosAccessible.filter(scenario => parseInt(scenario.selectedScenario)).map(scenario => ({id: parseInt(scenario.selectedScenario)}));
 				// debugger;
 				BudgetService.downloadWorkgroupScenariosExcel(scenarioIds)
 				.then(
-					(blob) => {
+					(response) => {
 						var url = window.URL.createObjectURL(
-							new Blob([blob], { type: 'application/vnd.ms-excel' })
+							new Blob([response.data], { type: 'application/vnd.ms-excel' })
 						);
 						var a = window.document.createElement('a');
 						a.href = url;
@@ -76,6 +73,11 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 						window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
 						a.click();
 						a.remove(); //afterwards we remove the element again
+
+						if (response.status === 200){
+							BudgetActions.toggleBudgetScenarioModal();
+						}
+						scope.isDisabled = false;
 					}
 				);
 

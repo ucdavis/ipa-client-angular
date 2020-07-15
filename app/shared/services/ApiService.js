@@ -61,14 +61,27 @@ class ApiService {
 					responseType: responseType,
 					withCredentials: true
 				};
-				return this.query(config);
+				return this.queryFull(config);
+			},
+			queryFull: function (config) {
+				var deferred = $q.defer();
+
+				$http(config)
+				.then(function(response) {
+					deferred.resolve(response);
+				},
+				function() {
+					deferred.reject();
+				});
+
+				return deferred.promise;
 			},
 			query: function (config) {
 				var deferred = $q.defer();
 
 				$http(config)
 				.then(function(response) {
-					deferred.resolve(response.data);
+					deferred.resolve(response.data, response.status);
 				},
 				function() {
 					deferred.reject();

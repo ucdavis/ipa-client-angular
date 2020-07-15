@@ -128,7 +128,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				console.log("Do we want all? " + isAll);
 				let scenarios = [];
 				if (isAll) {
-					BudgetActions.openBudgetScenarioModal();
+					BudgetActions.toggleBudgetScenarioModal();
 				} else {
 					scenarios.push({
 						id: scope.state.selectedBudgetScenario.id
