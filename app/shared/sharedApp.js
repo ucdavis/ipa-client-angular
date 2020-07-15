@@ -321,7 +321,6 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 
 // Intercept Ajax traffic
 .config(function($httpProvider) {
-	 debugger;
 	$httpProvider.interceptors.push(['$rootScope', '$timeout', '$q', slowConnectionInterceptor]);
 })
 
