@@ -1,7 +1,4 @@
-import { dateToCalendar, dateToRelative } from 'shared/helpers/dates';
-
 import './downloadBudgetScenarios.css';
-import BudgetService from '../../../services/budgetService';
 
 let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService) {
 	return {
@@ -13,7 +10,6 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			userWorkgroupsScenarios: '<',
 		},
 		link: function (scope) {
-			scope.newComment = "";
 			scope.isDisabled = false;
 			// {
 			//   "DSS": [sceanrio1, 2, 3],
@@ -25,26 +21,8 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 				selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`
 			}));
 
-			scope.isFormValid = function() {
-				if (scope.newComment.length > 0) {
-					return true;
-				}
-
-				return false;
-			};
-
-			scope.dateToCalendar = function(date) {
-				return dateToCalendar(date);
-			};
-
-			scope.dateToRelative = function(date) {
-				return dateToRelative(date);
-			};
-
 			scope.selectBudgetScenario = function(scenario, department){
-				console.log('On click', scenario);
 				department.selectBudgetScenario = scenario;
-				console.log('Update scope scenarios is ', scope.budgetScenariosAccessible);
 			};
 
 			scope.toggleExclude = function(department) {
@@ -56,31 +34,31 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			};
 
 			scope.submit = function() {
-				console.log("Submitting");
-				// let scenarioIds = [];
 				scope.isDisabled = true;
 				let scenarioIds = scope.budgetScenariosAccessible.filter(scenario => parseInt(scenario.selectedScenario)).map(scenario => ({id: parseInt(scenario.selectedScenario)}));
-				// debugger;
+
+				$rootScope.$emit('toast', { message: "Excel Download in Progress", type: "WARNING", options: { timeOut: 0, extendedTimeOut: 0, closeButton: true } });
+
 				BudgetService.downloadWorkgroupScenariosExcel(scenarioIds)
 				.then(
 					(response) => {
 						var url = window.URL.createObjectURL(
 							new Blob([response.data], { type: 'application/vnd.ms-excel' })
 						);
-						var a = window.document.createElement('a');
+						var a = window.document.createElement('a'); // eslint-disable-line
 						a.href = url;
 						a.download = 'Budget Report Download.xlsx';
-						window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+						window.document.body.appendChild(a); // eslint-disable-line
 						a.click();
 						a.remove(); //afterwards we remove the element again
 
 						if (response.status === 200){
+							$rootScope.$emit('toast-clear');
 							BudgetActions.toggleBudgetScenarioModal();
 						}
 						scope.isDisabled = false;
 					}
 				);
-
 			};
 		} // end link
 	};

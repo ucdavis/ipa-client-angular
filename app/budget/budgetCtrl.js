@@ -70,31 +70,31 @@ class BudgetCtrl {
       }
     });
 
-    _self.$scope.helloButton = function helloButton() {
-      _self.BudgetService.downloadWorkgroupScenariosExcel(
-          [
-            {
-              id: 303, // physics 19/20, testing enrollment data
-            }
-            // {
-            //   id: 381,
-            // },
-            // {
-            //   id: 170,
-            // }
-        ]
-      )
-      .then(blob => {
-          var url = window.URL.createObjectURL(
-            new Blob([blob], { type: 'application/vnd.ms-excel' })
-          );
-          var a = window.document.createElement('a');
-          a.href = url;
-          a.download = "filename.xlsx";
-          window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-          a.click();
-          a.remove();  //afterwards we remove the element again
-        });
+    // _self.$scope.helloButton = function helloButton() {
+    //   _self.BudgetService.downloadWorkgroupScenariosExcel(
+    //       [
+    //         {
+    //           id: 303, // physics 19/20, testing enrollment data
+    //         }
+    //         // {
+    //         //   id: 381,
+    //         // },
+    //         // {
+    //         //   id: 170,
+    //         // }
+    //     ]
+    //   )
+    //   .then(blob => {
+    //       var url = window.URL.createObjectURL(
+    //         new Blob([blob], { type: 'application/vnd.ms-excel' })
+    //       );
+    //       var a = window.document.createElement('a');
+    //       a.href = url;
+    //       a.download = "filename.xlsx";
+    //       window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+    //       a.click();
+    //       a.remove();  //afterwards we remove the element again
+    //     });
 
 
       // console.log('Hello');
@@ -114,7 +114,7 @@ class BudgetCtrl {
       //       a.click();
       //       a.remove();  //afterwards we remove the element again
       //   });
-    };
+    // };
   }
 }
 

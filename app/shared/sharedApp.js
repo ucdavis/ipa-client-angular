@@ -378,6 +378,10 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 					break;
 			}
 		});
+
+		$rootScope.$on('toast-clear', function () {
+			toastr.clear();
+		});
 	}]
 );
 

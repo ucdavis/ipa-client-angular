@@ -120,36 +120,27 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.getCurrentScenario = function(){
-				console.log("State", scope.state);
 				return scope.state.selectedBudgetScenario.name;
 			};
 
 			scope.downloadBudgetScenarioExcel = function(isAll) {
-				console.log("Do we want all? " + isAll);
-				let scenarios = [];
 				if (isAll) {
 					BudgetActions.toggleBudgetScenarioModal();
 				} else {
-					scenarios.push({
-						id: scope.state.selectedBudgetScenario.id
-					});
-					BudgetService.downloadWorkgroupScenariosExcel(
-						scenarios
-					)
-					.then(blob => {
+					BudgetService.downloadWorkgroupScenariosExcel([{id: scope.state.selectedBudgetScenario.id}])
+					.then(response => {
 						var url = window.URL.createObjectURL(
-							new Blob([blob], { type: 'application/vnd.ms-excel' })
+							new Blob([response.data], { type: 'application/vnd.ms-excel' })
 						);
-						var a = window.document.createElement('a');
+						var a = window.document.createElement('a'); // eslint-disable-line
 						a.href = url;
 						var workgroupInfo = JSON.parse(localStorage.getItem('workgroup'));
 						a.download = `Budget-Report-${workgroupInfo.name}-${localStorage.getItem('year')}-${scope.state.selectedBudgetScenario.name}.xlsx`;
-						window.document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+						window.document.body.appendChild(a); // eslint-disable-line
 						a.click();
 						a.remove();  //afterwards we remove the element again
 					});
 				}
-
 			};
 
 		} // End Link
