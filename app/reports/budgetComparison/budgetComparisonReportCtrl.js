@@ -1,7 +1,7 @@
 import './budgetComparisonReport.css';
 
 class BudgetComparisonReportCtrl {
-  constructor ($scope, $rootScope, $routeParams, validate, AuthService, BudgetComparisonReportActions) {
+  constructor ($scope, $rootScope, $routeParams, validate, AuthService, ApiService, BudgetComparisonReportActions) {
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.$routeParams = $routeParams;
@@ -39,9 +39,28 @@ class BudgetComparisonReportCtrl {
 
         $scope.toggleFilter(filter);
     };
+
+    $scope.downloadMultiple = function() {
+      let scenarioPairs = [
+        [{ id: 259 }, { id: 56 }],
+        // [{ id: 429 }, { id: 381 }],
+      ];
+
+      ApiService.postWithResponseType("/api/budgetView/downloadBudgetComparisonExcel", scenarioPairs, '', 'arraybuffer').then((response) => {
+        var url = window.URL.createObjectURL(
+          new Blob([response.data], { type: 'application/vnd.ms-excel' })
+        );
+        var a = window.document.createElement('a'); // eslint-disable-line
+        a.href = url;
+        a.download = 'Budget Report Download.xlsx';
+        window.document.body.appendChild(a); // eslint-disable-line
+        a.click();
+        a.remove(); //afterwards we remove the element again
+      });
+    };
   }
 }
 
-BudgetComparisonReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'validate', 'AuthService', 'BudgetComparisonReportActions'];
+BudgetComparisonReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'validate', 'AuthService', 'ApiService', 'BudgetComparisonReportActions'];
 
 export default BudgetComparisonReportCtrl;
