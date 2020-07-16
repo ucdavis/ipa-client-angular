@@ -42,8 +42,8 @@ class BudgetComparisonReportCtrl {
 
     $scope.downloadMultiple = function() {
       let scenarioPairs = [
-        [{ id: 259 }, { id: 56 }],
-        // [{ id: 429 }, { id: 381 }],
+        [{ id: 303 }, { id: 652 }],
+        [{ id: 259 }, { id: 56 }]
       ];
 
       ApiService.postWithResponseType("/api/budgetView/downloadBudgetComparisonExcel", scenarioPairs, '', 'arraybuffer').then((response) => {
