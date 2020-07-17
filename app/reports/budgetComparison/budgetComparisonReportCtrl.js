@@ -1,7 +1,7 @@
 import './budgetComparisonReport.css';
 
 class BudgetComparisonReportCtrl {
-  constructor ($scope, $rootScope, $routeParams, validate, AuthService, ApiService, BudgetComparisonReportActions) {
+  constructor ($scope, $rootScope, $routeParams, validate, AuthService, BudgetComparisonReportActions) {
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.$routeParams = $routeParams;
@@ -41,7 +41,6 @@ class BudgetComparisonReportCtrl {
     };
 
     $scope.downloadBudgetComparisonExcel = function(isMany) {
-      debugger;
       if (isMany) {
         // open modal
         let scenarioPairs = [
@@ -58,6 +57,6 @@ class BudgetComparisonReportCtrl {
   }
 }
 
-BudgetComparisonReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'validate', 'AuthService', 'ApiService', 'BudgetComparisonReportActions'];
+BudgetComparisonReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'validate', 'AuthService', 'BudgetComparisonReportActions'];
 
 export default BudgetComparisonReportCtrl;

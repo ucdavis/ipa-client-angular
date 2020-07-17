@@ -10,6 +10,17 @@
   <no-access workgroup-name="sharedState.workgroup.name"></no-access>
 </div>
 
+<ipa-modal
+  is-visible="true"
+  header-text="Please select Budget Scenarios to download"
+  override-click-out="true"
+>
+  <download-excel-modal
+    budget-scenarios="view.state.budgetScenarios"
+    user-workgroups-scenarios="view.state.userWorkgroupsScenarios"
+  ></download-excel-modal>
+</ipa-modal>
+
 <div class="budget-comparison-report__workgroup-title">
   {{ sharedState.workgroup.name }} Budget Comparison Report
 </div>
