@@ -42,6 +42,7 @@ class BudgetComparisonReportActions {
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId);
 				this._getInstructors(workgroupId, year);
+				this._getUserWorkgroupsScenarios(year);
 			},
 			_getBudget: function (workgroupId, year, action) {
 				var _self = this;
@@ -114,6 +115,16 @@ class BudgetComparisonReportActions {
 					_self._performCalculations();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
+			_getUserWorkgroupsScenarios: function (year) {
+				BudgetComparisonReportService.getUserWorkgroupsScenarios(year).then(function (userWorkgroupsScenarios) {
+					BudgetComparisonReportReducers.reduce({
+						type: ActionTypes.GET_USER_WORKGROUPS_SCENARIOS,
+						payload: {
+							userWorkgroupsScenarios: userWorkgroupsScenarios
+						}
+					});
 				});
 			},
 			_getInstructors: function (workgroupId, year) {
@@ -676,6 +687,11 @@ class BudgetComparisonReportActions {
 				});
 
 				BudgetComparisonReportCalculations.calculateView();
+			},
+			toggleDownloadModal: function() {
+				BudgetComparisonReportReducers.reduce({
+					type: ActionTypes.TOGGLE_DOWNLOAD_MODAL
+				});
 			}
 		};
 	}

@@ -43,12 +43,13 @@ class BudgetComparisonReportCtrl {
     $scope.downloadBudgetComparisonExcel = function(isMany) {
       if (isMany) {
         // open modal
-        let scenarioPairs = [
-          [{ id: 303 }, { id: 652 }],
-          [{ id: 259 }, { id: 56 }]
-        ];
+        BudgetComparisonReportActions.toggleDownloadModal();
+        // let scenarioPairs = [
+        //   [{ id: 303 }, { id: 652 }],
+        //   [{ id: 259 }, { id: 56 }]
+        // ];
 
-        BudgetComparisonReportActions.downloadBudgetComparisonExcel(scenarioPairs);
+        // BudgetComparisonReportActions.downloadBudgetComparisonExcel(scenarioPairs);
       } else {
         // TODO: change to downloadBudgetComparisonExcel
         BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);

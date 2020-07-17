@@ -46,6 +46,9 @@ class BudgetComparisonReportService {
 			getUserRoles: function (workgroupId) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/userRoles");
 			},
+			getUserWorkgroupsScenarios: function (year) {
+				return _self.ApiService.get("/api/years/" + year + "/budgetScenarios");
+			},
 			getInstructors: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/instructors");
 			},
