@@ -18,9 +18,9 @@ class BudgetComparisonReportCtrl {
       $scope.view.state = data.state;
     });
 
-    $scope.downloadAsExcel = function() {
-      BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
-    };
+    // $scope.downloadAsExcel = function() {
+    //   BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
+    // };
 
     $scope.toggleFilter = function(filter) {
       filter.selected = !filter.selected;
@@ -40,23 +40,20 @@ class BudgetComparisonReportCtrl {
         $scope.toggleFilter(filter);
     };
 
-    $scope.downloadMultiple = function() {
-      let scenarioPairs = [
-        [{ id: 303 }, { id: 652 }],
-        [{ id: 259 }, { id: 56 }]
-      ];
+    $scope.downloadBudgetComparisonExcel = function(isMany) {
+      debugger;
+      if (isMany) {
+        // open modal
+        let scenarioPairs = [
+          [{ id: 303 }, { id: 652 }],
+          [{ id: 259 }, { id: 56 }]
+        ];
 
-      ApiService.postWithResponseType("/api/budgetView/downloadBudgetComparisonExcel", scenarioPairs, '', 'arraybuffer').then((response) => {
-        var url = window.URL.createObjectURL(
-          new Blob([response.data], { type: 'application/vnd.ms-excel' })
-        );
-        var a = window.document.createElement('a'); // eslint-disable-line
-        a.href = url;
-        a.download = 'Budget Report Download.xlsx';
-        window.document.body.appendChild(a); // eslint-disable-line
-        a.click();
-        a.remove(); //afterwards we remove the element again
-      });
+        BudgetComparisonReportActions.downloadBudgetComparisonExcel(scenarioPairs);
+      } else {
+        // TODO: change to downloadBudgetComparisonExcel
+        BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
+      }
     };
   }
 }

@@ -50,7 +50,21 @@ class BudgetComparisonReportService {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/instructors");
 			},
 			downloadAsExcel: function (viewState, year, workgroupName) {
+				// TODO: delete
 				_self.BudgetComparisonReportExcelService.downloadAsExcel(viewState, year, workgroupName);
+			},
+			downloadBudgetComparisonExcel: function (budgetScenarioIdPairs) {
+				return _self.ApiService.postWithResponseType("/api/budgetView/downloadBudgetComparisonExcel", budgetScenarioIdPairs, '', 'arraybuffer').then((response) => {
+					var url = window.URL.createObjectURL(
+						new Blob([response.data], { type: 'application/vnd.ms-excel' })
+					);
+					var a = window.document.createElement('a'); // eslint-disable-line
+					a.href = url;
+					a.download = 'Budget Report Download.xlsx';
+					window.document.body.appendChild(a); // eslint-disable-line
+					a.click();
+					a.remove(); //afterwards we remove the element again
+				});
 			}
 		};
 	}

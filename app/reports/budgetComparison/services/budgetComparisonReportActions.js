@@ -601,8 +601,12 @@ class BudgetComparisonReportActions {
 				this._performCalculations();
 			},
 			downloadAsExcel: function(year, workgroupName) {
+				// TODO: delete
 				var viewState = BudgetComparisonReportReducers._state;
 				BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
+			},
+			downloadBudgetComparisonExcel: function(budgetScenarioIdPairs) {
+				BudgetComparisonReportService.downloadBudgetComparisonExcel(budgetScenarioIdPairs);
 			},
 			toggleFilter: function(filter) {
 				let filters = BudgetComparisonReportReducers._state.ui.filters;
