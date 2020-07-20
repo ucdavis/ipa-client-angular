@@ -773,6 +773,14 @@ class BudgetActions {
 
 				BudgetReducers.reduce(action);
 			},
+			toggleBudgetScenarioModal: function() {
+				var action = {
+					type: ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS,
+					payload: {}
+				};
+
+				BudgetReducers.reduce(action);
+			},
 			selectBudgetScenario: function(selectedScenarioId) {
 				var fromLiveData = false;
 

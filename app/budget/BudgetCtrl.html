@@ -94,6 +94,19 @@
       </add-line-item-comments>
     </ipa-modal>
 
+    <ipa-modal
+      is-visible="view.state.ui.budgetScenariosModal.isOpen"
+      header-text="Please select Budget Scenarios to download"
+      override-click-out="true"
+      hide-dismiss="true"
+    >
+      <download-budget-scenarios
+        budget-scenarios="view.state.budgetScenarios"
+        user-workgroups-scenarios="view.state.userWorkgroupsScenarios"
+      >
+      </download-budget-scenarios>
+    </ipa-modal>
+
     <budget-scenario-toolbar
       state="view.state"
       class="do-not-print"

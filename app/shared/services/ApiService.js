@@ -52,6 +52,31 @@ class ApiService {
 
 				return this.query(config);
 			},
+			postWithResponseType: function(url, data, serverUrl, responseType) {
+				serverUrl = serverUrl || window.serverRoot;
+				var config = {
+					method: "POST",
+					url: serverUrl + url,
+					data: data,
+					responseType: responseType,
+					withCredentials: true,
+					overrideTimeout: true
+				};
+				return this.queryFull(config);
+			},
+			queryFull: function (config) {
+				var deferred = $q.defer();
+
+				$http(config)
+				.then(function(response) {
+					deferred.resolve(response);
+				},
+				function() {
+					deferred.reject();
+				});
+
+				return deferred.promise;
+			},
 			query: function (config) {
 				var deferred = $q.defer();
 
