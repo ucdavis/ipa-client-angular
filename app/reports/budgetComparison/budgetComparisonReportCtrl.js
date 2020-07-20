@@ -18,10 +18,6 @@ class BudgetComparisonReportCtrl {
       $scope.view.state = data.state;
     });
 
-    // $scope.downloadAsExcel = function() {
-    //   BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
-    // };
-
     $scope.toggleFilter = function(filter) {
       filter.selected = !filter.selected;
 
@@ -42,14 +38,7 @@ class BudgetComparisonReportCtrl {
 
     $scope.downloadBudgetComparisonExcel = function(isMany) {
       if (isMany) {
-        // open modal
         BudgetComparisonReportActions.toggleDownloadModal();
-        // let scenarioPairs = [
-        //   [{ id: 303 }, { id: 652 }],
-        //   [{ id: 259 }, { id: 56 }]
-        // ];
-
-        // BudgetComparisonReportActions.downloadBudgetComparisonExcel(scenarioPairs);
       } else {
         // TODO: change to downloadBudgetComparisonExcel
         BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
