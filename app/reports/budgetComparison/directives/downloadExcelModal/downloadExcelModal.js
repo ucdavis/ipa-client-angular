@@ -39,19 +39,16 @@ let downloadExcelModal = function (BudgetComparisonReportActions) {
         }
       }, true);
 
-      // scope.selectBudgetScenario = function (scenario, department) {
-      //   department.selectBudgetScenario = scenario;
-      // };
-
       scope.close = function () {
         BudgetComparisonReportActions.toggleDownloadModal();
       };
 
       scope.submit = function () {
         scope.isDisabled = true;
-        let scenarioIdPairs = scope.budgetScenariosAccessible
-          .filter((scenario) => parseInt(scenario.selectedScenario))
-          .map((scenario) => ({ id: parseInt(scenario.selectedScenario) }));
+        let scenarioIdPairs = scope.departmentScenarios.map((scenario) => [
+          { id: parseInt(scenario.selectedPrevious) },
+          { id: parseInt(scenario.selectedCurrent) },
+        ]);
 
         BudgetComparisonReportActions.downloadBudgetComparisonExcel(scenarioIdPairs);
       };
