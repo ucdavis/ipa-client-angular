@@ -1,6 +1,6 @@
 import './downloadExcelModal.css';
 
-let downloadExcelModal = function (BudgetComparisonReportActions) {
+let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparisonReportService) {
   return {
     restrict: 'E',
     template: require('./downloadExcelModal.html'),
@@ -50,7 +50,20 @@ let downloadExcelModal = function (BudgetComparisonReportActions) {
           { id: parseInt(scenario.selectedCurrent) },
         ]);
 
-        BudgetComparisonReportActions.downloadBudgetComparisonExcel(scenarioIdPairs);
+        BudgetComparisonReportService.downloadBudgetComparisonExcel(scenarioIdPairs).then((res) => {
+          var url = window.URL.createObjectURL(
+            new Blob([res.data], { type: 'application/vnd.ms-excel' })
+          );
+          var a = window.document.createElement('a'); // eslint-disable-line angular/document-service
+          a.href = url;
+          a.download = 'Budget Comparison Report Download.xlsx';
+          window.document.body.appendChild(a); // eslint-disable-line angular/document-service
+          a.click();
+          a.remove(); //afterwards we remove the element again
+
+          scope.status = res.status;
+          scope.isDisabled = false;
+        });
       };
     }, // end link
   };

@@ -616,9 +616,6 @@ class BudgetComparisonReportActions {
 				var viewState = BudgetComparisonReportReducers._state;
 				BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
 			},
-			downloadBudgetComparisonExcel: function(budgetScenarioIdPairs) {
-				BudgetComparisonReportService.downloadBudgetComparisonExcel(budgetScenarioIdPairs);
-			},
 			toggleFilter: function(filter) {
 				let filters = BudgetComparisonReportReducers._state.ui.filters;
 				let lineItems = BudgetComparisonReportReducers._state.lineItems;
