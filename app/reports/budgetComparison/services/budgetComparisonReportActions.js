@@ -611,11 +611,11 @@ class BudgetComparisonReportActions {
 	
 				this._performCalculations();
 			},
-			downloadAsExcel: function(year, workgroupName) {
-				// TODO: delete
-				var viewState = BudgetComparisonReportReducers._state;
-				BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
-			},
+			// old frontend excel download method
+			// downloadAsExcel: function(year, workgroupName) {
+			// 	var viewState = BudgetComparisonReportReducers._state;
+			// 	BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
+			// },
 			toggleFilter: function(filter) {
 				let filters = BudgetComparisonReportReducers._state.ui.filters;
 				let lineItems = BudgetComparisonReportReducers._state.lineItems;

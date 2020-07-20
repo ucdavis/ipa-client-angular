@@ -1,7 +1,7 @@
 import './budgetComparisonReport.css';
 
 class BudgetComparisonReportCtrl {
-  constructor ($scope, $rootScope, $routeParams, validate, AuthService, BudgetComparisonReportActions) {
+  constructor ($scope, $rootScope, $routeParams, validate, AuthService, BudgetComparisonReportActions, BudgetComparisonReportService) {
     this.$scope = $scope;
     this.$rootScope = $rootScope;
     this.$routeParams = $routeParams;
@@ -44,13 +44,34 @@ class BudgetComparisonReportCtrl {
       if (isMany) {
         BudgetComparisonReportActions.toggleDownloadModal();
       } else {
-        // TODO: change to downloadBudgetComparisonExcel
-        BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
+        // old frontend excel download method
+        // BudgetComparisonReportActions.downloadAsExcel($scope.year, $scope.sharedState.workgroup.name);
+
+        let scenarioIdPair = [
+          [
+            { id: $scope.view.state.budgetScenarios.previousSelectedScenarioId },
+            { id: $scope.view.state.budgetScenarios.currentSelectedScenarioId }
+          ]
+        ];
+
+        BudgetComparisonReportService.downloadBudgetComparisonExcel(scenarioIdPair).then((res) => {
+          var url = window.URL.createObjectURL(
+            new Blob([res.data], { type: 'application/vnd.ms-excel' })
+          );
+          var a = window.document.createElement('a'); // eslint-disable-line angular/document-service
+          a.href = url;
+          let workgroupName = JSON.parse(localStorage.getItem('workgroup')).name;
+          let academicYear = (parseInt(localStorage.year) - 1).toString().yearToAcademicYear();
+          a.download = `Budget-Comparison-Report-${workgroupName}-${academicYear}.xlsx`;
+          window.document.body.appendChild(a); // eslint-disable-line angular/document-service
+          a.click();
+          a.remove(); //afterwards we remove the element again
+        });
       }
     };
   }
 }
 
-BudgetComparisonReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'validate', 'AuthService', 'BudgetComparisonReportActions'];
+BudgetComparisonReportCtrl.$inject = ['$scope', '$rootScope', '$routeParams', 'validate', 'AuthService', 'BudgetComparisonReportActions', 'BudgetComparisonReportService'];
 
 export default BudgetComparisonReportCtrl;

@@ -52,10 +52,10 @@ class BudgetComparisonReportService {
 			getInstructors: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/instructors");
 			},
-			downloadAsExcel: function (viewState, year, workgroupName) {
-				// TODO: delete
-				_self.BudgetComparisonReportExcelService.downloadAsExcel(viewState, year, workgroupName);
-			},
+			// old frontend excel download method
+			// downloadAsExcel: function (viewState, year, workgroupName) {
+			// 	_self.BudgetComparisonReportExcelService.downloadAsExcel(viewState, year, workgroupName);
+			// },
 			downloadBudgetComparisonExcel: function (budgetScenarioIdPairs) {
 				return _self.ApiService.postWithResponseType("/api/budgetView/downloadBudgetComparisonExcel", budgetScenarioIdPairs, '', 'arraybuffer');
 			}
