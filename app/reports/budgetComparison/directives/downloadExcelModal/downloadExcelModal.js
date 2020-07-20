@@ -40,6 +40,7 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
       }, true);
 
       scope.close = function () {
+        scope.status = null;
         BudgetComparisonReportActions.toggleDownloadModal();
       };
 
