@@ -36,6 +36,10 @@ class BudgetComparisonReportCtrl {
         $scope.toggleFilter(filter);
     };
 
+    $scope.closeDownloadModal = function() {
+      BudgetComparisonReportActions.toggleDownloadModal();
+    };
+
     $scope.downloadBudgetComparisonExcel = function(isMany) {
       if (isMany) {
         BudgetComparisonReportActions.toggleDownloadModal();

@@ -14,10 +14,12 @@
   is-visible="view.state.ui.showDownloadModal"
   header-text="Please select Budget Scenarios to download"
   override-click-out="true"
+  on-close="closeDownloadModal()"
 >
   <download-excel-modal
     budget-scenarios="view.state.budgetScenarios"
     user-workgroups-scenarios="view.state.userWorkgroupsScenarios"
+    download-status="view.state.ui.downloadStatus"
   ></download-excel-modal>
 </ipa-modal>
 

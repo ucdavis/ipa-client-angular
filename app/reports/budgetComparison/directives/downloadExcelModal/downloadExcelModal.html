@@ -30,10 +30,10 @@
 			<span ng-show="isDisabled">
 				<i class="glyphicon glyphicon-info-sign" style="padding-left: 10px; padding-right: 8px; color: #21a9e1;"></i> Excel Download in Progress - This may take a few minutes.
 			</span>
-			<span ng-show="status && status === 200 && !isDisabled" style="color: #00a651;">
+			<span ng-show="downloadStatus && downloadStatus === 200 && !isDisabled" style="color: #00a651;">
 				<i class="glyphicon glyphicon-ok" style="padding-left: 10px; padding-right: 8px"></i> Excel Download Successful
 			</span>
-			<span ng-show="status && status !== 200 && !isDisabled" style="color: #cc2424;">
+			<span ng-show="downloadStatus && downloadStatus !== 200 && !isDisabled" style="color: #cc2424;">
 				<i class="glyphicon glyphicon-warning-sign" style="padding-left: 10px; padding-right: 8px"></i> Excel Download Failed
 			</span>
 		</div>

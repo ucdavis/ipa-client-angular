@@ -8,10 +8,10 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
     scope: {
       budgetScenarios: '<',
       userWorkgroupsScenarios: '<',
+      downloadStatus: '='
     },
     link: function (scope) {
       scope.isDisabled = false;
-      scope.status = null;
       scope.previousYear = (parseInt(localStorage.getItem('year')) - 1).toString().yearToAcademicYear();
       scope.currentYear = localStorage.getItem('year').yearToAcademicYear();
 
@@ -40,7 +40,6 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
       }, true);
 
       scope.close = function () {
-        scope.status = null;
         BudgetComparisonReportActions.toggleDownloadModal();
       };
 
@@ -62,7 +61,7 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
           a.click();
           a.remove(); //afterwards we remove the element again
 
-          scope.status = res.status;
+          scope.downloadStatus = res.status;
           scope.isDisabled = false;
         });
       };
