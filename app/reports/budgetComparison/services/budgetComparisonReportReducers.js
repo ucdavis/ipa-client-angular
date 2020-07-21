@@ -268,7 +268,7 @@ class BudgetComparisonReportReducers {
 			_uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						ui = { filters: [], showDownloadModal: false, downloadStatus: null };
+						ui = { filters: [], showDownloadModal: false };
 						return ui;
 					case ActionTypes.GENERATE_FILTERS:
 						ui.filters = action.payload.filters;
@@ -277,7 +277,6 @@ class BudgetComparisonReportReducers {
 						ui.filters = action.payload.filters;
 						return ui;
 					case ActionTypes.TOGGLE_DOWNLOAD_MODAL:
-						ui.downloadStatus = null;
 						ui.showDownloadModal = !ui.showDownloadModal;
 						return ui;
 					default:
