@@ -8,15 +8,15 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         Term.prototype.generateTable(scope.year)
       );
 
-      scope.enabledTermCodes = scope.view.state.filters.enabledTerms.map(
-        (enabledTerm) =>
-          scope.termDefinitions.find(
-            (termDefinition) => termDefinition.id === enabledTerm
-          ).code
-      );
-
       scope.$on('sectionGroupCellSelected', function () {
-        scope.courseTermCodes = Object.values(
+        scope.enabledTermCodes = scope.view.state.filters.enabledTerms.map(
+          (enabledTerm) =>
+            scope.termDefinitions.find(
+              (termDefinition) => termDefinition.id === enabledTerm
+            ).code
+        );
+
+        scope.occupiedTermCodes = Object.values(
           scope.view.state.sectionGroups.list
         )
           .filter(
@@ -26,17 +26,18 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
           )
           .map((sectionGroup) => sectionGroup.termCode);
 
-        scope.showTermDropdown = scope.enabledTermCodes.length > scope.courseTermCodes.length;
+        scope.showTermDropdown = scope.enabledTermCodes.length > scope.occupiedTermCodes.length;
 
-        scope.termDropdownItems = scope.enabledTermCodes
-          .filter((termCode) => !scope.courseTermCodes.includes(termCode))
-          .map((termCode) => {
-            return {
+        if (scope.showTermDropdown) {
+          scope.termDropdownItems = scope.enabledTermCodes
+            .filter((termCode) => !scope.occupiedTermCodes.includes(termCode))
+            .map((termCode) => ({
               id: termCode,
               description: termCode.getTermCodeDisplayName(true),
               sectionGroup: scope.view.selectedEntity,
-            };
-          });
+            }))
+            .sort((a, b) => a.id - b.id);
+        }
       });
 
       scope.isLocked = function () {
