@@ -6,6 +6,7 @@ let ipaModal = function() {
 			isVisible: '=',
 			onClose: '&?',
 			overrideClickOut: '<?',
+			hideDismiss: '<?',
 			styles: '=?'
 		},
 		replace: true, // Replace with the template below
