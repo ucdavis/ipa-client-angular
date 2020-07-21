@@ -552,7 +552,7 @@ class BudgetCalculations {
 
 							var units = CourseService.getUnits(sectionGroupCost) || 0;
 
-							if (sectionGroupCost.courseNumber >= 200) {
+							if (parseInt(sectionGroupCost.courseNumber.slice(0,3)) >= 200) {
 								summary.byTerm[term].gradSCH += CourseService.getSCH(sectionGroupCost.enrollment, sectionGroupCost);
 							} else {
 								summary.byTerm[term].undergradSCH += CourseService.getSCH(sectionGroupCost.enrollment, sectionGroupCost);

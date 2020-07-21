@@ -86,9 +86,11 @@ class AuthService {
 					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 					localStorage.setItem('JWT', token);
 
-					location.reload();
+					let workgroup = JSON.parse(localStorage.getItem("workgroup"));
+					let year = localStorage.getItem("year");
+					$window.location.href = "/summary/" + workgroup.id + "/" + year;
 				}, function () {
-					// FIXME: Shouuldn't we do something here?
+					$rootScope.$emit('toast', { message: "Could not impersonate user. Try reloading the page.", type: "ERROR", timeOut: 3000 });
 				});
 
 				return deferred.promise;
@@ -106,9 +108,11 @@ class AuthService {
 					$http.defaults.headers.common.Authorization = 'Bearer ' + token;
 					localStorage.setItem('JWT', token);
 
-					location.reload();
+					let workgroup = JSON.parse(localStorage.getItem('workgroup'));
+					let year = localStorage.getItem('year');
+					$window.location.href = '/summary/' + workgroup.id + '/' + year;
 				}, function () {
-					// FIXME: Shouldn't we do something here?
+					$rootScope.$emit('toast', { message: "Could not unimpersonate user. Try reloading the page.", type: "ERROR", timeOut: 3000 });
 				});
 
 				return deferred.promise;
