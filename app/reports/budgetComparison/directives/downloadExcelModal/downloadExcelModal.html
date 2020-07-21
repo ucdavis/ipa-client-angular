@@ -28,7 +28,7 @@
 	<div class="download-excel-modal-footer">
 		<div class="download-excel-modal-footer__status">
 			<span ng-show="isDisabled">
-				<i class="glyphicon glyphicon-info-sign" style="padding-left: 10px; padding-right: 8px; color: #21a9e1;"></i> Excel Download in Progress - This may take a few minutes.
+				<i class="glyphicon glyphicon-info-sign" style="padding-left: 10px; padding-right: 8px; color: #21a9e1;"></i> Generating Excel Download - This may take a few minutes.
 			</span>
 			<span ng-show="downloadStatus && downloadStatus === 200 && !isDisabled" style="color: #00a651;">
 				<i class="glyphicon glyphicon-ok" style="padding-left: 10px; padding-right: 8px"></i> Excel Download Successful
@@ -38,7 +38,9 @@
 			</span>
 		</div>
 		<div class="download-excel-modal-footer__buttons">
-			<button ng-click="close()"
+			<button 
+							ng-show="!isDisabled"
+							ng-click="close()"
 							type="button"
 							class="btn btn-default modal-button">
 				Cancel
