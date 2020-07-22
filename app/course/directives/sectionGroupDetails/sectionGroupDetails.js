@@ -56,6 +56,10 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         CourseActionCreators.createSection(section);
       };
 
+      scope.toggleMoveCourseModal = function (sectionGroup, termCode) {
+        CourseActionCreators.toggleMoveCourseModal(sectionGroup, termCode);
+      };
+
       scope.updateSectionGroup = function (sectionGroup, termCode) {
         sectionGroup.unitsVariable ? parseFloat(sectionGroup.unitsVariable) : null;
 

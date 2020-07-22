@@ -576,6 +576,15 @@ class CourseActionCreators {
           payload: {}
         });
       },
+      toggleMoveCourseModal: function(sectionGroup, termCode) {
+        CourseStateService.reduce({
+          type: ActionTypes.TOGGLE_MOVE_COURSE_MODAL,
+          payload: {
+            selectedSectionGroup: sectionGroup,
+            selectedTermCode: termCode
+          }
+        });
+      },
       _generateAttentionFlags: function(payload) {
         var sectionGroups = [];
         var sections = [];

@@ -446,6 +446,11 @@ class CourseStateService {
               searchingCourseToImport: false,
               selectedCourseRowIds: [],
               isCourseDeleteModalOpen: false,
+              moveCourseModal: {
+                show: false,
+                selectedSectionGroup: null,
+                selectedTermCode: null
+              },
               requiresAttention: false,
               flaggedSectionGroups: 0,
             };
@@ -560,6 +565,11 @@ class CourseStateService {
             return uiState;
           case ActionTypes.CLOSE_COURSE_DELETION_MODAL:
             uiState.isCourseDeleteModalOpen = false;
+            return uiState;
+          case ActionTypes.TOGGLE_MOVE_COURSE_MODAL:
+            uiState.moveCourseModal.show = !uiState.moveCourseModal.show;
+            uiState.moveCourseModal.selectedSectionGroup = action.payload.selectedSectionGroup;
+            uiState.moveCourseModal.selectedTermCode = action.payload.selectedTermCode;
             return uiState;
           default:
             return uiState;

@@ -1,0 +1,36 @@
+<div class="move-course-modal">
+  <form role="form" class="form-horizontal">
+    <div class="move-course-warning">
+      <p>
+        <strong>
+          Are you sure you want to move 
+          {{ state.courses.list[state.uiState.moveCourseModal.selectedSectionGroup.courseId].subjectCode }}
+          {{ state.courses.list[state.uiState.moveCourseModal.selectedSectionGroup.courseId].courseNumber }}
+          to {{ state.uiState.moveCourseModal.selectedTermCode.slice(4,6).getTermDisplayName() }}?
+        </strong>
+      </p>
+      <p>
+        This will move the <strong>sections, activities, preferences and assignments</move> that belong to the courses.
+      </p>
+      <p>
+        This will also move the corresponding <strong>Schedule Cost</strong> in existing <strong>Budget Scenarios</strong> (e.g. Live Data, Default Scenario, Initial Budget Request, etc...)</strong>
+      </p>
+      <p>
+        Teaching Call and Support Call entries will remain untouched.
+      </p>
+    </div>
+
+    <div class="move-course-modal-footer">
+      <button ng-click="close()"
+              type="button"
+              class="btn btn-default modal-button">
+        Cancel
+      </button>
+      <button ng-click="confirmMoveCourse()"
+              type="button"
+              class="btn btn-danger modal-button">
+        Move course
+      </button>
+    </div>
+  </form>
+</div>

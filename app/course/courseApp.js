@@ -23,6 +23,7 @@ import sectionGroupDetails from './directives/sectionGroupDetails/sectionGroupDe
 import censusChart from './directives/censusChart.js';
 import courseTable from './directives/courseTable.js';
 import activeFilters from './directives/activeFilters/activeFilters.js';
+import moveCourseModal from './directives/moveCourseModal/moveCourseModal.js';
 
 // Dependencies
 var dependencies = [
@@ -80,6 +81,7 @@ const courseApp = angular.module("courseApp", dependencies) // eslint-disable-li
 .directive('assignTagTooltip', assignTagTooltip)
 .directive('courseDetails', courseDetails)
 .directive('deleteCourseModal', deleteCourseModal)
+.directive('moveCourseModal', moveCourseModal)
 .directive('massImportSummary', massImportSummary)
 .directive('newCourse', newCourse)
 .directive('sectionGroupDetails', sectionGroupDetails)
@@ -120,6 +122,7 @@ const courseApp = angular.module("courseApp", dependencies) // eslint-disable-li
   DESELECT_ALL_COURSE_ROWS: "DESELECT_ALL_COURSE_ROWS",
   OPEN_COURSE_DELETION_MODAL: "OPEN_COURSE_DELETION_MODAL",
   CLOSE_COURSE_DELETION_MODAL: "CLOSE_COURSE_DELETION_MODAL",
+  TOGGLE_MOVE_COURSE_MODAL: "TOGGLE_MOVE_COURSE_MODAL",
   DELETE_MULTIPLE_COURSES: "DELETE_MULTIPLE_COURSES",
   MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS"
 });
