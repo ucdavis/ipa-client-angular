@@ -1,0 +1,63 @@
+.table-dark tbody {
+  display: block;
+  max-height: 233px;
+  overflow: auto;
+}
+.table-dark thead,
+.table-dark tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.neon-dark-confirm-btn,
+.neon-dark-confirm-btn:focus,
+.neon-dark-confirm-btn:active,
+.neon-dark-confirm-btn {
+  background-color: rgb(48, 54, 65);
+  border-color: rgb(48, 54, 65);
+  color: white;
+}
+
+.neon-dark-confirm-btn:hover {
+  background-color: rgb(18, 24, 35); /* Darker Version for hover */
+  color: white;
+}
+
+.neon-dark-confirm-btn.disabled,
+.neon-dark-confirm-btn.disabled:hover,
+.neon-dark-confirm-btn.disabled:focus,
+.neon-dark-confirm-btn.disabled:active {
+  background-color: rgb(48, 54, 65);
+  color: white;
+}
+
+#download-excel-modal-table{
+  margin-bottom: 0;
+}
+
+.download-excel-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+}
+
+.download-excel-modal-footer__status {
+  display: flex;
+  align-items: center;
+  
+}
+.download-excel-modal-footer__status span {
+  padding: 4px;
+}
+
+.download-excel-modal-footer__buttons {
+  display: flex;
+  align-items: center;
+}
+
+.download-excel-modal-footer button {
+  display: inline-block;
+  margin: 8px;
+}

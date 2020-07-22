@@ -6,12 +6,14 @@ let ipaModal = function() {
 			isVisible: '=',
 			onClose: '&?',
 			overrideClickOut: '<?',
-			hideDismiss: '<?',
+			showDismiss: '<?', // default to true
 			styles: '=?'
 		},
 		replace: true, // Replace with the template below
 		transclude: true, // we want to insert custom content inside the directive
 		link: function(scope, element, attrs) {
+			scope.showDismiss = scope.showDismiss === undefined ? true : scope.showDismiss;
+
 			// Validate Attributes
 			scope.headerText = "";
 			// Stores a copy of the last state, useful in handling unexpected termination of modal
