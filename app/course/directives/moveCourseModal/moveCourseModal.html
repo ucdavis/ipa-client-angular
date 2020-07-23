@@ -6,17 +6,19 @@
           Are you sure you want to move 
           {{ state.courses.list[state.uiState.moveCourseModal.selectedSectionGroup.courseId].subjectCode }}
           {{ state.courses.list[state.uiState.moveCourseModal.selectedSectionGroup.courseId].courseNumber }}
-          to {{ state.uiState.moveCourseModal.selectedTermCode.slice(4,6).getTermDisplayName() }}?
+          from {{ state.uiState.moveCourseModal.selectedSectionGroup.termCode.slice(-2).getTermDisplayName() }}
+          to {{ state.uiState.moveCourseModal.selectedTermCode.slice(-2).getTermDisplayName() }}?
         </strong>
       </p>
       <p>
-        This will move the <strong>sections, activities, preferences and assignments</move> that belong to the courses.
+        This will carry over <strong>sections, activities, instructor assignments, and support assignments</strong> that belongs to the course.
       </p>
       <p>
-        This will also move the corresponding <strong>Schedule Cost</strong> in existing <strong>Budget Scenarios</strong> (e.g. Live Data, Default Scenario, Initial Budget Request, etc...)</strong>
+        This will also move the course's corresponding <strong>Schedule Costs</strong> in <strong>ALL</strong> existing <strong>Budget Scenarios</strong>.<br>
+        (e.g. Live Data, Default Scenario, Initial Budget Request, etc...)
       </p>
       <p>
-        Teaching Call and Support Call entries will remain untouched.
+        <strong>Teaching Call</strong> and <strong>Support Call</strong> preferences will remain unchanged.
       </p>
     </div>
 
@@ -28,8 +30,8 @@
       </button>
       <button ng-click="confirmMoveCourse()"
               type="button"
-              class="btn btn-danger modal-button">
-        Move course
+              class="btn btn-primary modal-button">
+        Move offering
       </button>
     </div>
   </form>
