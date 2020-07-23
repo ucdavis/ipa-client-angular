@@ -394,10 +394,10 @@ class WorkloadSummaryActions {
 
 					instructorAssignments.forEach(function(teachingAssignment) {
 						var assignment = {};
-						var termCode = teachingAssignment.termCode;
 
 						var sectionGroup = teachingAssignment.sectionGroupId > 0 ? sectionGroups.list[teachingAssignment.sectionGroupId] : null;
 						var course = sectionGroup ? courses.list[sectionGroup.courseId] : null;
+						let termCode = sectionGroup?.termCode || teachingAssignment.termCode;
 
 						assignment.term = TermService.getTermName(termCode);
 						assignment.termCode = termCode;

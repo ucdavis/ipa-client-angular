@@ -50,18 +50,19 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 					var description = TeachingAssignmentService.getDescription (teachingAssignment, course);
 					description = course ? description += " - " + course.title + " - " + course.sequencePattern : description;
 					var meetings = sectionGroup ? scope.generateMeetingsInSectionGroup(sectionGroup, data.sections, data.activities) : null;
+					let scheduledTermCode = sectionGroup?.termCode || teachingAssignment.termCode;
 
 					var instructorAssignment = {
 						description: description,
-						termCode: teachingAssignment.termCode,
+						termCode: scheduledTermCode,
 						meetings: meetings,
 						sectionGroupId: sectionGroup ? sectionGroup.id : null
 					};
 
 					scope.instructorAssignments.push(instructorAssignment);
 
-					if (scope.termCodes.indexOf(teachingAssignment.termCode) == -1) {
-						scope.termCodes.push(teachingAssignment.termCode);
+					if (scope.termCodes.indexOf(scheduledTermCode) == -1) {
+						scope.termCodes.push(scheduledTermCode);
 					}
 				});
 
