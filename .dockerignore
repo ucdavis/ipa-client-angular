@@ -8,3 +8,4 @@ node_modules
 clientConfig.example.js
 cypress.json
 Dockerfile
+.DS_Store

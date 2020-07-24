@@ -42,27 +42,31 @@ class BudgetActions {
 					}
 
 					if (results.sectionGroupCosts.length > 0) {
+						let budgetScenario = results.budgetScenarios.find(scenario => scenario.id === selectedBudgetScenarioId);
 						var sectionGroupCosts = results.sectionGroupCosts;
-						var terms = Object.keys(TermService.termCodeDescriptions);
-						var subjectCode = results.courses[0].subjectCode;
-						var termCodes = terms.map(function(term) {
+						let activeTerms = budgetScenario.terms;
+						let scenarioSubjectCodes = [...new Set(results.sectionGroupCosts.map(sgc => sgc.subjectCode))];
+
+						let activeTermCodes = activeTerms.map(function(term) {
 							return TermService.termToTermCode(term, year);
 						});
 
-						termCodes.forEach(function(termCode) {
-							DwService.getDwCensusData(subjectCode, null, termCode).then(function(censuses) {
-								// match courseNumber and TermCode and inject currentEnrollment number
-								const currentCensusSnapshot = censuses.filter(function(census) {
-									return census.snapshotCode == "CURRENT";
-								});
+						scenarioSubjectCodes.forEach(function(subjectCode) {
+							activeTermCodes.forEach(function(termCode) {
+								DwService.getDwCensusData(subjectCode, null, termCode).then(function(censuses) {
+									// match courseNumber and TermCode and inject currentEnrollment number
+									const currentCensusSnapshot = censuses.filter(function(census) {
+										return census.snapshotCode == "CURRENT";
+									});
 
-								currentCensusSnapshot.forEach(function(courseCensus) {
-									sectionGroupCosts.forEach(function(sectionGroupCost) {
-										if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && courseCensus.sequenceNumber.includes(sectionGroupCost.sequencePattern)) {
-											sectionGroupCost.currentEnrollment ?
-												(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
-												sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
-										}
+									currentCensusSnapshot.forEach(function(courseCensus) {
+										sectionGroupCosts.forEach(function(sectionGroupCost) {
+											if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && courseCensus.sequenceNumber.includes(sectionGroupCost.sequencePattern)) {
+												sectionGroupCost.currentEnrollment ?
+													(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
+													sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
+											}
+										});
 									});
 								});
 							});
@@ -764,6 +768,14 @@ class BudgetActions {
 			closeAddCourseCommentsModal: function() {
 				var action = {
 					type: ActionTypes.OPEN_ADD_COURSE_COMMENT_MODAL,
+					payload: {}
+				};
+
+				BudgetReducers.reduce(action);
+			},
+			toggleBudgetScenarioModal: function() {
+				var action = {
+					type: ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS,
 					payload: {}
 				};
 

@@ -1,0 +1,41 @@
+.table-dark tbody {
+  display: block;
+  max-height: 233px;
+  overflow: auto;
+}
+.table-dark thead,
+.table-dark tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#budget-scenarios-table{
+  margin-bottom: 0;
+}
+
+.download-budget-scenarios-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+}
+
+.download-budget-scenarios-footer__status {
+  display: flex;
+  align-items: center;
+  
+}
+.download-budget-scenarios-footer__status span {
+  padding: 4px;
+}
+
+.download-budget-scenarios-footer__buttons {
+  display: flex;
+  align-items: center;
+}
+
+.download-budget-scenarios-footer button {
+  display: inline-block;
+  margin: 8px;
+}

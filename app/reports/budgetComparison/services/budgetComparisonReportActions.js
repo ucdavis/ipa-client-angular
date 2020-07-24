@@ -42,6 +42,7 @@ class BudgetComparisonReportActions {
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId);
 				this._getInstructors(workgroupId, year);
+				this._getUserWorkgroupsScenarios(year);
 			},
 			_getBudget: function (workgroupId, year, action) {
 				var _self = this;
@@ -114,6 +115,16 @@ class BudgetComparisonReportActions {
 					_self._performCalculations();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
+			_getUserWorkgroupsScenarios: function (year) {
+				BudgetComparisonReportService.getUserWorkgroupsScenarios(year).then(function (userWorkgroupsScenarios) {
+					BudgetComparisonReportReducers.reduce({
+						type: ActionTypes.GET_USER_WORKGROUPS_SCENARIOS,
+						payload: {
+							userWorkgroupsScenarios: userWorkgroupsScenarios
+						}
+					});
 				});
 			},
 			_getInstructors: function (workgroupId, year) {
@@ -600,10 +611,11 @@ class BudgetComparisonReportActions {
 	
 				this._performCalculations();
 			},
-			downloadAsExcel: function(year, workgroupName) {
-				var viewState = BudgetComparisonReportReducers._state;
-				BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
-			},
+			// old frontend excel download method
+			// downloadAsExcel: function(year, workgroupName) {
+			// 	var viewState = BudgetComparisonReportReducers._state;
+			// 	BudgetComparisonReportService.downloadAsExcel(viewState, year, workgroupName);
+			// },
 			toggleFilter: function(filter) {
 				let filters = BudgetComparisonReportReducers._state.ui.filters;
 				let lineItems = BudgetComparisonReportReducers._state.lineItems;
@@ -672,6 +684,11 @@ class BudgetComparisonReportActions {
 				});
 
 				BudgetComparisonReportCalculations.calculateView();
+			},
+			toggleDownloadModal: function() {
+				BudgetComparisonReportReducers.reduce({
+					type: ActionTypes.TOGGLE_DOWNLOAD_MODAL
+				});
 			}
 		};
 	}

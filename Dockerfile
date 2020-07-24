@@ -1,4 +1,4 @@
-FROM node:10-alpine AS builder
+FROM node:10 AS builder
 WORKDIR /usr/src
 COPY . .
 RUN npm install
@@ -9,8 +9,7 @@ FROM nginx:alpine
 LABEL maintainer="UC Davis LS IT https://lsit.ucdavis.edu"
 
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /usr/src/dist /usr/share/nginx/html
 
-# Using port 9000 to match local dev
-EXPOSE 9000
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,7 +1,7 @@
 import { millisecondsToDate } from 'shared/helpers/dates';
 
 class StudentFormReducers {
-	constructor ($rootScope, $log, StudentFormSelectors, ActionTypes) {
+	constructor ($rootScope, $log, StudentFormSelectors, ActionTypes, TermService) {
 		this.$rootScope = $rootScope;
 		this.$log = $log;
 		this.StudentFormSelectors = StudentFormSelectors;
@@ -110,7 +110,7 @@ class StudentFormReducers {
 							workgroupId: action.workgroupId,
 							year: action.year,
 							termShortCode: action.termShortCode,
-							termCode: action.year + action.termShortCode
+							termCode: TermService.termToTermCode(action.termShortCode, action.year)
 						};
 						return misc;
 					default:
@@ -162,7 +162,7 @@ class StudentFormReducers {
 							preferenceCommentsComplete = false;
 							preferenceCommentsDisabled = true;
 						}
-	
+
 						ui = {
 							isPreferenceCommentModalOpen: false,
 							isFormLocked: false,
@@ -189,7 +189,7 @@ class StudentFormReducers {
 								}
 							}
 						};
-	
+
 						// Determine if form should be locked (due date is enforced and has passed)
 						var dueDate = action.payload.studentSupportCallResponse.dueDate;
 						var dueDateEnforced = action.payload.studentSupportCallResponse.allowSubmissionAfterDueDate == false;
@@ -199,7 +199,7 @@ class StudentFormReducers {
 								ui.isFormLocked = true;
 							}
 						}
-	
+
 						return ui;
 					case ActionTypes.CLEAR_CRN_SEARCH:
 						ui.crnSearch.feedback = null;
@@ -258,7 +258,7 @@ class StudentFormReducers {
 								+ "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,"
 								+ "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
 						}
-	
+
 						supportCallResponse.dueDateDescription = supportCallResponse.dueDate ? millisecondsToDate(supportCallResponse.dueDate) : "";
 						return supportCallResponse;
 					case ActionTypes.UPDATE_SUPPORT_CALL_RESPONSE:
@@ -271,7 +271,7 @@ class StudentFormReducers {
 			},
 			reduce: function (action) {
 				var scope = this;
-	
+
 				let newState = {};
 				newState.courses = scope._courseReducers(action, scope._state.courses);
 				newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);
@@ -280,40 +280,39 @@ class StudentFormReducers {
 				newState.preferences = scope._preferenceReducers(action, scope._state.preferences);
 				newState.supportCallResponse = scope._supportCallResponseReducers(action, scope._state.supportCallResponse);
 				newState.ui = scope._uiReducers(action, scope._state.ui);
-	
+
 				scope._state = newState;
-	
+
 				// Build new 'page state'
 				// This is the 'view friendly' version of the store
 				let newPageState = {};
 				newPageState.ui = angular.copy(scope._state.ui); // eslint-disable-line no-undef
 				newPageState.courses = angular.copy(scope._state.courses); // eslint-disable-line no-undef
 				newPageState.sectionGroups = angular.copy(scope._state.sectionGroups); // eslint-disable-line no-undef
-	
+
 				newPageState.supportCallResponse = angular.copy(scope._state.supportCallResponse); // eslint-disable-line no-undef
 				newPageState.misc = angular.copy(scope._state.misc); // eslint-disable-line no-undef
 				newPageState.supportAssignments = angular.copy(scope._state.supportAssignments); // eslint-disable-line no-undef
-	
+
 				newPageState.preferences = StudentFormSelectors.generatePreferences(
 																															scope._state.preferences,
 																															scope._state.courses,
 																															scope._state.sectionGroups
 																														);
-	
+
 				newPageState.potentialPreferences = StudentFormSelectors.generatePotentialPreferences(
 																																				scope._state.supportAssignments,
 																																				scope._state.courses,
 																																				scope._state.sectionGroups,
-																																				scope._state.preferences,
-																																				scope._state.supportCallResponse
+																																				scope._state.misc.termCode
 																																			);
-	
+
 				$rootScope.$emit('studentStateChanged', newPageState);
 			}
 		};
 	}
 }
 
-StudentFormReducers.$inject = ['$rootScope', '$log', 'StudentFormSelectors', 'ActionTypes'];
+StudentFormReducers.$inject = ['$rootScope', '$log', 'StudentFormSelectors', 'ActionTypes', 'TermService'];
 
 export default StudentFormReducers;

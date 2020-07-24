@@ -264,6 +264,8 @@ class CourseStateService {
             return sectionGroups;
           case ActionTypes.UPDATE_SECTION_GROUP:
             sectionGroups.list[action.payload.sectionGroup.id].plannedSeats = action.payload.sectionGroup.plannedSeats;
+            sectionGroups.list[action.payload.sectionGroup.id].termCode = action.payload.sectionGroup.termCode;
+            sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
             return sectionGroups;
           case ActionTypes.FETCH_SECTIONS:
             sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
@@ -444,6 +446,11 @@ class CourseStateService {
               searchingCourseToImport: false,
               selectedCourseRowIds: [],
               isCourseDeleteModalOpen: false,
+              moveCourseModal: {
+                show: false,
+                selectedSectionGroup: null,
+                selectedTermCode: null
+              },
               requiresAttention: false,
               flaggedSectionGroups: 0,
             };
@@ -485,6 +492,10 @@ class CourseStateService {
           case ActionTypes.CLOSE_DETAILS:
             uiState.selectedCourseId = null;
             uiState.selectedTermCode = null;
+            return uiState;
+          case ActionTypes.UPDATE_SECTION_GROUP:
+            uiState.selectedCourseId = action.payload.sectionGroup.courseId;
+            uiState.selectedTermCode = action.payload.sectionGroup.termCode;
             return uiState;
           case ActionTypes.CLOSE_NEW_COURSE_DETAILS:
             uiState.tableLocked = false;
@@ -554,6 +565,11 @@ class CourseStateService {
             return uiState;
           case ActionTypes.CLOSE_COURSE_DELETION_MODAL:
             uiState.isCourseDeleteModalOpen = false;
+            return uiState;
+          case ActionTypes.TOGGLE_MOVE_COURSE_MODAL:
+            uiState.moveCourseModal.show = !uiState.moveCourseModal.show;
+            uiState.moveCourseModal.selectedSectionGroup = action.payload.selectedSectionGroup;
+            uiState.moveCourseModal.selectedTermCode = action.payload.selectedTermCode;
             return uiState;
           default:
             return uiState;

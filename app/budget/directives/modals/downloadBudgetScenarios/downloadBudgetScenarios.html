@@ -1,0 +1,50 @@
+<div class="download-budget-scenarios">
+	<div>
+		<table class="table table-dark" id="budget-scenarios-table">
+			<thead style="border-bottom: 1px solid #ddd;">
+				<tr>
+					<th scope="col" style="padding-left: 10px;"><strong>Department</strong></th>
+					<th scope="col"><strong>Budget Scenario</strong></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="department in budgetScenariosAccessible">
+					<td style="padding-left: 10px; vertical-align: middle;">{{department.id}}</td>
+					<td>
+						<select style="width: 100%; padding:4px 8px;" ng-model="department.selectedScenario">
+							<option ng-repeat="scenario in department.budgetScenarios" value={{scenario.id}}>{{scenario.name}}</option>
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table> 
+	</div>
+	<div class="download-budget-scenarios-footer">
+		<div class="download-budget-scenarios-footer__status">
+			<span ng-show="isDisabled">
+				<i class="glyphicon glyphicon-info-sign" style="padding-left: 10px; padding-right: 8px; color: #21a9e1;"></i> Generating Excel Download - This may take a few minutes.
+			</span>
+			<span ng-show="status && status === 200 && !isDisabled" style="color: #00a651;">
+				<i class="glyphicon glyphicon-ok" style="padding-left: 10px; padding-right: 8px"></i> Excel Download Successful
+			</span>
+			<span ng-show="status && status !== 200 && !isDisabled" style="color: #cc2424;">
+				<i class="glyphicon glyphicon-warning-sign" style="padding-left: 10px; padding-right: 8px"></i> Excel Download Failed
+			</span>
+		</div>
+		<div class="download-budget-scenarios-footer__buttons">
+			<button 
+							ng-show="!isDisabled"
+							ng-click="close()"
+							type="button"
+							class="btn btn-default modal-button">
+				Cancel
+			</button>
+			<button ng-click="submit()"
+				type="button" class="btn neon-dark-confirm-btn"
+				ng-disabled="isDisabled"
+			>
+				Download
+			</button>
+		</div>
+	</div>
+</div>

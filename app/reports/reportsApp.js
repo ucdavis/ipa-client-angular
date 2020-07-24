@@ -21,6 +21,7 @@ import miscStats from './budgetComparison/directives/miscStats/miscStats.js';
 import miscStatChanges from './budgetComparison/directives/miscStatChanges/miscStatChanges.js';
 import teachingBalance from './budgetComparison/directives/teachingBalance/teachingBalance';
 import teachingBalanceChanges from './budgetComparison/directives/teachingBalanceChanges/teachingBalanceChanges';
+import downloadExcelModal from './budgetComparison/directives/downloadExcelModal/downloadExcelModal';
 
 // Dependencies
 var dependencies = [
@@ -72,11 +73,13 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                           .directive('budgetScenarioSelector', budgetScenarioSelector)
                           .directive('teachingBalance', teachingBalance)
                           .directive('teachingBalanceChanges', teachingBalanceChanges)
+                          .directive('downloadExcelModal', downloadExcelModal)
                           .config(config)
                           .constant('ActionTypes', {
                             INIT_STATE: "INIT_STATE",
                             GET_USERS: "GET_USERS",
                             GET_USER_ROLES: "GET_USER_ROLES",
+                            GET_USER_WORKGROUPS_SCENARIOS: "GET_USER_WORKGROUPS_SCENARIOS",
                             GET_INSTRUCTORS: "GET_INSTRUCTORS",
                             GET_CURRENT_BUDGET: "GET_CURRENT_BUDGET",
                             GET_CURRENT_COURSES: "GET_CURRENT_COURSES",
@@ -105,6 +108,7 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                             CALCULATE_VIEW: "CALCULATE_VIEW",
                             GENERATE_FILTERS: "GENERATE_FILTERS",
                             UPDATE_FILTER: "UPDATE_FILTER",
+                            TOGGLE_DOWNLOAD_MODAL: "TOGGLE_DOWNLOAD_MODAL",
                             CURRENT_YEAR_FETCH_COMPLETE: "CURRENT_YEAR_FETCH_COMPLETE",
                             PREVIOUS_YEAR_FETCH_COMPLETE: "PREVIOUS_YEAR_FETCH_COMPLETE",
                             SELECT_CURRENT_BUDGET_SCENARIO: "SELECT_CURRENT_BUDGET_SCENARIO",

@@ -225,6 +225,8 @@ class CourseCtrl {
         _self.$scope.view.selectedEntityType = "course";
       } else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
         // A sectionGroup is selected
+        _self.$scope.$broadcast('sectionGroupCellSelected');
+
         _self.$scope.view.selectedEntityType = "sectionGroup";
         var course = _self.$scope.view.state.courses.list[data.state.uiState.selectedCourseId];
         _self.$scope.view.selectedEntity = _self.$scope.view.state.sectionGroups.selectedSectionGroup || _self.$scope.view.state.sectionGroups.newSectionGroup;

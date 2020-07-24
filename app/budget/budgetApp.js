@@ -43,6 +43,7 @@ import addBudgetScenario from "./directives/modals/addBudgetScenario/addBudgetSc
 import addCourseComments from "./directives/modals/addCourseComments/addCourseComments.js";
 import addLineItem from "./directives/modals/addLineItem/addLineItem.js";
 import addLineItemComments from "./directives/modals/addLineItemComments/addLineItemComments.js";
+import downloadBudgetScenarios from "./directives/modals/downloadBudgetScenarios/downloadBudgetScenarios.js";
 
 import addCourse from "./directives/modals/addCourse/addCourse.js";
 
@@ -120,6 +121,7 @@ const budgetApp = angular // eslint-disable-line no-undef
   .directive("addLineItemComments", addLineItemComments)
   .directive("courseList", courseList)
   .directive("budgetCostsPrint", budgetCostsPrint)
+  .directive("downloadBudgetScenarios", downloadBudgetScenarios)
   .constant("ActionTypes", {
     INIT_STATE: "INIT_STATE",
     CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",
@@ -165,7 +167,8 @@ const budgetApp = angular // eslint-disable-line no-undef
     SELECT_FUNDS_NAV: "SELECT_FUNDS_NAV",
     OPEN_ADD_COURSE_MODAL: "OPEN_ADD_COURSE_MODAL",
     UPDATE_COURSE_TAG: "UPDATE_COURSE_TAG",
-    UPDATE_SYNC_STATUS: "UPDATE_SYNC_STATUS"
+    UPDATE_SYNC_STATUS: "UPDATE_SYNC_STATUS",
+    TOGGLE_DOWNLOAD_BUDGET_SCENARIOS: "TOGGLE_DOWNLOAD_BUDGET_SCENARIOS"
   });
 
 export default budgetApp;
