@@ -117,6 +117,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 
 			scope.setBudgetScenarioTerm = ( item ) => {
 				BudgetActions.selectTerm( item.description );
+				$window.scrollTo(0, 0);
 			};
 
 			scope.getCurrentScenario = function(){
