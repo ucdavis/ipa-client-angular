@@ -9,7 +9,6 @@ class BudgetReducers {
 							ids: [],
 							list: {}
 						};
-
 						action.payload.budgetScenarios.forEach(function(budgetScenario) {
 							budgetScenarios.ids.push(budgetScenario.id);
 							budgetScenarios.list[budgetScenario.id] = budgetScenario;
@@ -293,7 +292,7 @@ class BudgetReducers {
 								sectionGroupCosts.ids.push(sectionGroupCost.id);
 							}
 							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
-							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
+							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
 							sectionGroupCost.uniqueKey = uniqueKey;
 							sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
 							if (sectionGroupCosts.uniqueKeys.indexOf(uniqueKey) == -1) {
@@ -773,6 +772,15 @@ class BudgetReducers {
 						return summary;
 				}
 			},
+			userWorkgroupsScenariosReducers: function (action, userWorkgroupsScenarios) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						userWorkgroupsScenarios = action.payload.userWorkgroupsScenarios;
+						return userWorkgroupsScenarios;
+					default:
+						return userWorkgroupsScenarios;
+				}
+			},
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -784,6 +792,9 @@ class BudgetReducers {
 								isOpen: false
 							},
 							lineItemCommentsModal: {
+								isOpen: false
+							},
+							budgetScenariosModal: {
 								isOpen: false
 							},
 							filters: {
@@ -1017,6 +1028,9 @@ class BudgetReducers {
 					case ActionTypes.TOGGLE_ADD_BUDGET_SCENARIO_MODAL:
 						ui.isAddBudgetScenarioModalOpen = ! ui.isAddBudgetScenarioModalOpen;
 						return ui;
+					case ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS:
+						ui.budgetScenariosModal.isOpen = !ui.budgetScenariosModal.isOpen;
+						return ui;
 					case ActionTypes.CREATE_LINE_ITEM:
 						var lineItem = action.payload;
 						ui.lineItemDetails[lineItem.id] = {
@@ -1069,6 +1083,7 @@ class BudgetReducers {
 				newState.instructorTypeCosts = scope.instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.teachingAssignments = scope.teachingAssignmentReducers(action, scope._state.teachingAssignments);
 				newState.tags = scope.tagReducers(action, scope._state.tags);
+				newState.userWorkgroupsScenarios = scope.userWorkgroupsScenariosReducers(action, scope._state.userWorkgroupsScenarios);
 
 				newState.calculatedScheduleCosts = scope.calculatedScheduleCostReducers(action, scope._state.calculatedScheduleCosts);
 				newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
@@ -1099,6 +1114,7 @@ class BudgetReducers {
 				newPageState.calculatedLineItems = newState.calculatedLineItems;
 				newPageState.summary = newState.summary;
 				newPageState.instructorTypes = newState.instructorTypes;
+				newPageState.userWorkgroupsScenarios = scope._state.userWorkgroupsScenarios;
 
 				$rootScope.$emit('budgetStateChanged', newPageState);
 			}

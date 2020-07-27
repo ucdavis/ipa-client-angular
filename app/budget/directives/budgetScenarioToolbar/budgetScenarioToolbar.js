@@ -2,7 +2,7 @@ import { setCharAt } from 'shared/helpers/string';
 
 import './budgetScenarioToolbar.css';
 
-let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions) {
+let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions, BudgetService) {
 	return {
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
 		template: require('./budgetScenarioToolbar.html'), // directive html found here:
@@ -117,7 +117,33 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 
 			scope.setBudgetScenarioTerm = ( item ) => {
 				BudgetActions.selectTerm( item.description );
+				$window.scrollTo(0, 0);
 			};
+
+			scope.getCurrentScenario = function(){
+				return scope.state.selectedBudgetScenario.name;
+			};
+
+			scope.downloadBudgetScenarioExcel = function(isAll) {
+				if (isAll) {
+					BudgetActions.toggleBudgetScenarioModal();
+				} else {
+					BudgetService.downloadWorkgroupScenariosExcel([{id: scope.state.selectedBudgetScenario.id}])
+					.then(response => {
+						var url = window.URL.createObjectURL(
+							new Blob([response.data], { type: 'application/vnd.ms-excel' })
+						);
+						var a = window.document.createElement('a'); // eslint-disable-line
+						a.href = url;
+						var workgroupInfo = JSON.parse(localStorage.getItem('workgroup'));
+						a.download = `Budget-Report-${workgroupInfo.name}-${localStorage.getItem('year')}-${scope.state.selectedBudgetScenario.name}.xlsx`;
+						window.document.body.appendChild(a); // eslint-disable-line
+						a.click();
+						a.remove();  //afterwards we remove the element again
+					});
+				}
+			};
+
 		} // End Link
 	};
 };

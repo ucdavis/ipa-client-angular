@@ -136,12 +136,16 @@ class CourseActionCreators {
           $rootScope.$emit('toast', { message: "Could not create course offering.", type: "ERROR" });
         });
       },
-      updateSectionGroup: function (sectionGroup) {
+      updateSectionGroup: function (sectionGroup, newTermCode) {
         let courseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
           return previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0);
         }, 0);
 
-        if (courseSeats <= sectionGroup.plannedSeats){
+        if (courseSeats <= sectionGroup.plannedSeats) {
+          if (newTermCode) {
+            sectionGroup.termCode = newTermCode;
+          }
+
           CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
             $rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
             var action = {
@@ -570,6 +574,15 @@ class CourseActionCreators {
         CourseStateService.reduce({
           type: ActionTypes.CLOSE_COURSE_DELETION_MODAL,
           payload: {}
+        });
+      },
+      toggleMoveCourseModal: function(sectionGroup, termCode) {
+        CourseStateService.reduce({
+          type: ActionTypes.TOGGLE_MOVE_COURSE_MODAL,
+          payload: {
+            selectedSectionGroup: sectionGroup,
+            selectedTermCode: termCode
+          }
         });
       },
       _generateAttentionFlags: function(payload) {

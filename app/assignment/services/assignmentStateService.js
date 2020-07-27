@@ -348,7 +348,10 @@ class AssignmentStateService {
 								// Create array of teachingAssignmentIds that are associated to this termCode and instructor
 								action.payload.teachingAssignments
 									.filter(function (teachingAssignment) {
-										return (teachingAssignment.instructorId === instructor.id && teachingAssignment.termCode === termCode);
+										// consider sectionGroup termCode the most recent, some teachingAssignments don't have sectionGroups (suggested course/non-course options)
+										let sectionGroup = action.payload.sectionGroups.find(sg => sg.id === teachingAssignment.sectionGroupId);
+										let scheduledTermCode = sectionGroup?.termCode || teachingAssignment.termCode;
+										return (teachingAssignment.instructorId === instructor.id && scheduledTermCode === termCode);
 									})
 									.forEach(function (teachingAssignment) {
 										instructor.teachingAssignmentTermCodeIds[termCode].push(teachingAssignment.id);

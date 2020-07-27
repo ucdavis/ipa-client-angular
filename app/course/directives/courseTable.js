@@ -35,6 +35,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         ActionTypes.SEARCH_IMPORT_COURSES,
         ActionTypes.UPDATE_TAG_FILTERS,
         ActionTypes.TOGGLE_UNPUBLISHED_COURSES,
+        ActionTypes.UPDATE_SECTION_GROUP,
         ActionTypes.REMOVE_SECTION_GROUP,
         ActionTypes.ADD_SECTION_GROUP,
         ActionTypes.DELETE_MULTIPLE_COURSES,
