@@ -142,3 +142,23 @@
     display: block;
   }
 }
+
+.budget-view__nav-container.budget-nav {
+  position: fixed;
+  top: 161px;
+  left: 200px;
+  width: calc(100vw - 200px);
+  border-radius: 0;
+}
+
+.budget-nav__nav-item.budget-nav__nav-item--active {
+  padding: 13px 20px;
+}
+
+.budget-nav__balance {
+  padding-right: 6px;
+}
+
+.page-content {
+  margin-top: 50px;
+}
