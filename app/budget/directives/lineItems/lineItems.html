@@ -26,6 +26,11 @@
 							Description
 						</div>
 					</th>
+					<th class="line-items__table-header line-items__table--notes">
+						<div class="line-items__table-header-container">
+							Notes
+						</div>
+					</th>
 					<th class="line-items__table-header line-items__table--comments do-not-print">
 						<div class="line-items__table-header-container">
 							Comments
@@ -82,6 +87,11 @@
 					<!-- Description -->
 					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 						{{ lineItem.description }}
+					</td>
+
+					<!-- Notes -->
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						{{ lineItem.notes }}
 					</td>
 
 					<!-- Comments -->
