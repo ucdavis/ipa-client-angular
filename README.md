@@ -25,14 +25,14 @@ For production mode, you'll want to expose port 80 as port 80, 443 as 443. Use:
 $ docker-compose run -p 80:80 -p 443:443 web
 
 # Deployment
-## Test
+### Test
 1. Create a `clientConfig.js.staging` file in the root folder
 2. Go to AWS ECR > `ipa-client-test`
 3. Follow the steps under `View push commands`
 4. Go to AWS ECS > Clusters > Default > `ipa-client-test`
 5. Update service to `Force New Deployment`
 
-## Production
+### Production
 1. Log in to Jenkins
 2. Build and Deploy ipa-client-angular
 3. Hit `Build Now`
