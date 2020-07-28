@@ -9,6 +9,13 @@
       <delete-course-modal ng-if="view.state.uiState.isCourseDeleteModalOpen" state="view.state" is-visible="view.state.uiState.isCourseDeleteModalOpen"></delete-course-modal>
   </ipa-modal>
 
+  <ipa-modal
+    is-visible="view.state.uiState.moveCourseModal.show"
+    header-text="Confirm Move Offering"
+  >
+    <move-course-modal state="view.state"></move-course-modal>
+  </ipa-modal>
+
   <!-- Handle lack of access -->
   <div ng-if="noAccess">
     <no-access workgroup-name="sharedState.workgroup.name"></no-access>
@@ -96,6 +103,13 @@
         <span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
 
         <span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+
+        <active-filters
+          filters="view.state.filters"
+          tags="view.state.tags"
+          workgroup-id="workgroupId"
+          year="year">
+        </active-filters>
       </div>
       <!-- .table-toolbar -->
     </div>
@@ -204,3 +218,5 @@
 </div>
 </div>
 </div>
+
+<back-to-top></back-to-top>

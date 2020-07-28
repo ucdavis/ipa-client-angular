@@ -7,7 +7,7 @@ let studentPreferenceSelector = function (StudentFormActions) {
 		replace: true,
 		link: function (scope) {
 			scope.addPreference = function(preference, type) {
-				StudentFormActions.addStudentPreference(preference.id, type);
+				StudentFormActions.addStudentPreference(preference.id, type, preference.termCode);
 			};
 		}
 	};

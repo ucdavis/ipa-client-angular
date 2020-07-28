@@ -34,6 +34,7 @@ import supportCoursesTab from './directives/supportAssignmentTable/supportCourse
 import assignSupportStaff from './directives/supportAssignmentTable/supportCoursesTab/assignSupportStaff/assignSupportStaff.js';
 import courseHeader from './directives/supportAssignmentTable/supportCoursesTab/courseHeader/courseHeader.js';
 import courseAppointmentInput from './directives/supportAssignmentTable/supportCoursesTab/courseHeader/courseAppointmentInput/courseAppointmentInput.js';
+import supportAssignmentFilter from './directives/supportAssignmentFilter/supportAssignmentFilter.js';
 
 // Dependencies
 var dependencies = [
@@ -98,7 +99,10 @@ const supportAssignmentApp = angular.module("supportAssignmentApp", dependencies
 .directive('assignSupportStaff', assignSupportStaff)
 .directive('courseHeader', courseHeader)
 .directive('courseAppointmentInput', courseAppointmentInput)
+.directive('supportAssignmentFilter', supportAssignmentFilter)
 .constant('ActionTypes', {
+	TOGGLE_TA_FILTER: "TOGGLE_TA_FILTER",
+	UPDATE_COURSE_TABLE_FILTER: "UPDATE_COURSE_TABLE_FILTER",
 	UPDATE_TABLE_FILTER: "UPDATE_TABLE_FILTER",
 	SET_VIEW_PIVOT: "SET_VIEW_PIVOT",
 	SET_VIEW_TYPE: "SET_VIEW_TYPE",

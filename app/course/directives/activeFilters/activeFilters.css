@@ -1,0 +1,27 @@
+
+.courses-active-filters {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.courses-active-filters__label {
+  margin-right: 5px;
+  margin-bottom: 0;
+}
+
+.courses-active-filters__token {
+  background-color: #e6e6e6;
+  color: #333;
+  font-size: 85%;
+  line-height: normal;
+  margin-right: 5px;
+  padding: 6px 12px;
+  border-radius: .25em;
+}
+
+.courses-active-filters__token-remove {
+  margin-left: 0.3em;
+}

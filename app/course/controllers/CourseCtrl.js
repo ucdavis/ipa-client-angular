@@ -225,6 +225,8 @@ class CourseCtrl {
         _self.$scope.view.selectedEntityType = "course";
       } else if (data.state.uiState.selectedCourseId && data.state.uiState.selectedTermCode) {
         // A sectionGroup is selected
+        _self.$scope.$broadcast('sectionGroupCellSelected');
+
         _self.$scope.view.selectedEntityType = "sectionGroup";
         var course = _self.$scope.view.state.courses.list[data.state.uiState.selectedCourseId];
         _self.$scope.view.selectedEntity = _self.$scope.view.state.sectionGroups.selectedSectionGroup || _self.$scope.view.state.sectionGroups.newSectionGroup;
@@ -302,7 +304,8 @@ class CourseCtrl {
 
       // Will update the sectionGroup plannedSeats using section seats
       // If the section is numeric based (example: 'PSC 040 - 001')
-      if (isNumber(section.sequenceNumber) == true) {
+      // or if their is only one section in the group
+      if (isNumber(section.sequenceNumber) || sectionGroup.sections.length === 1) {
         sectionGroup.plannedSeats = section.seats;
         _self.courseActionCreators.updateSectionGroup(sectionGroup);
 
@@ -371,7 +374,7 @@ class CourseCtrl {
 
     _self.$scope.sectionSeatTotal = function (sectionGroup) {
       return sectionGroup.sectionIds.reduce(function (previousValue, sectionId) {
-        return previousValue + _self.$scope.view.state.sections.list[sectionId].seats;
+        return previousValue + (parseInt(_self.$scope.view.state.sections.list[sectionId].seats) || 0);
       }, 0);
     };
 

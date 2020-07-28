@@ -10,6 +10,19 @@
   <no-access workgroup-name="sharedState.workgroup.name"></no-access>
 </div>
 
+<ipa-modal
+  is-visible="view.state.ui.showDownloadModal"
+  header-text="Please select Budget Scenarios to download"
+  override-click-out="true"
+  show-dismiss="false"
+>
+  <download-excel-modal
+    budget-scenarios="view.state.budgetScenarios"
+    user-workgroups-scenarios="view.state.userWorkgroupsScenarios"
+    download-status="view.state.ui.downloadStatus"
+  ></download-excel-modal>
+</ipa-modal>
+
 <div class="budget-comparison-report__workgroup-title">
   {{ sharedState.workgroup.name }} Budget Comparison Report
 </div>
@@ -18,8 +31,28 @@
   <!-- Toolbar -->
   <div class="row hidden-print" style="clear: both; display: block; width: 100%;">
     <div class="table-toolbar">
+      <span ng-repeat="filter in activeFilters" class="budget-comparison-report__toolbar--token">
+        {{ filter.description }}
+        <i class="glyphicon glyphicon-remove budget-comparison-report__toolbar--token-remove clickable hoverable" ng-click="removeToken(filter)"></i>
+      </span>
+      <ipa-filter
+        items="view.state.ui.filters"
+        title="'Filters'"
+        tooltip="'Filters'"
+        button-icon="'glyphicon-filter'"
+        select-item="toggleFilter(item)"
+        border-less="true"
+      ></ipa-filter>
       <div class="btn-group">
-        <span data-toggle="tooltip" data-placement="top" data-original-title="Download as Excel" data-container="body" ng-click="downloadAsExcel()" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false"></span>
+        <span data-toggle="dropdown" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false"></span>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li style="cursor: pointer;">
+            <a ng-click="downloadBudgetComparisonExcel(false)">Download as Excel</a>
+          </li>
+          <li style="cursor: pointer;">
+            <a ng-click="downloadBudgetComparisonExcel(true)">Download Multiple Departments as Excel</a>
+          </li>
+        </ul>
       </div>
       <span data-toggle="tooltip" data-placement="top" data-original-title="Print" ng-click="print()" class="tool-icon glyphicon glyphicon-print"></span>
     </div>
@@ -111,6 +144,27 @@
                                 instructor-types="view.state.instructorTypes"
                                 line-item-categories="view.state.lineItemCategories">
       </support-and-fund-changes>
+    </div>
+  </div>
+  <!-- Total Teaching Cost & Balance -->
+  <div class="budget-comparison-report__section-container">
+    <div class="budget-comparison-report__section">
+      <teaching-balance costs="view.state.calculations.calculatedView.previous.costs"
+                        funding="view.state.calculations.calculatedView.previous.funding"
+                        is-current="false">
+      </teaching-balance>
+    </div>
+    <div class="budget-comparison-report__section">
+      <teaching-balance costs="view.state.calculations.calculatedView.current.costs"
+                        funding="view.state.calculations.calculatedView.current.funding"
+                        is-current="true">
+      </teaching-balance>
+    </div>
+    <div class="budget-comparison-report__section">
+      <teaching-balance-changes costs="view.state.calculations.calculatedView.change.costs"
+                                funding="view.state.calculations.calculatedView.change.funding"
+                                is-current="true">
+      </teaching-balance-changes>
     </div>
   </div>
   <!-- misc -->

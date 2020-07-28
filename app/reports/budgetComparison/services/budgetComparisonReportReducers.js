@@ -13,7 +13,9 @@ class BudgetComparisonReportReducers {
 				lineItemCategories: {},
 				instructorTypeCosts: {},
 				instructorCosts: {},
-				sectionGroupCosts: {}
+				sectionGroupCosts: {},
+				userWorkgroupsScenarios: {},
+				ui: {}
 			},
 			_budgetReducer: function (action, budget) {
 				switch (action.type) {
@@ -39,6 +41,9 @@ class BudgetComparisonReportReducers {
 					case ActionTypes.GET_PREVIOUS_LINE_ITEMS:
 					lineItems.previous = action.payload.lineItems;
 						return lineItems;
+					case ActionTypes.TOGGLE_FILTER:
+						lineItems = action.payload.lineItems;
+						return lineItems;
 					default:
 						return lineItems;
 				}
@@ -63,6 +68,17 @@ class BudgetComparisonReportReducers {
 						return userRoles;
 					default:
 						return userRoles;
+				}
+			},
+			_userWorkgroupsScenariosReducers: function (action, userWorkgroupsScenarios) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_USER_WORKGROUPS_SCENARIOS:
+						userWorkgroupsScenarios = action.payload.userWorkgroupsScenarios;
+						return userWorkgroupsScenarios;
+					default:
+						return userWorkgroupsScenarios;
 				}
 			},
 			_instructorReducers: function (action, instructors) {
@@ -128,6 +144,9 @@ class BudgetComparisonReportReducers {
 						return sectionGroupCosts;
 					case ActionTypes.GET_PREVIOUS_SECTION_GROUP_COSTS:
 						sectionGroupCosts.previous = action.payload.sectionGroupCosts;
+						return sectionGroupCosts;
+					case ActionTypes.TOGGLE_FILTER:
+						sectionGroupCosts = action.payload.sectionGroupCosts;
 						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
@@ -246,6 +265,24 @@ class BudgetComparisonReportReducers {
 						return calculations;
 				}
 			},
+			_uiReducers: function (action, ui) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						ui = { filters: [], showDownloadModal: false };
+						return ui;
+					case ActionTypes.GENERATE_FILTERS:
+						ui.filters = action.payload.filters;
+						return ui;
+					case ActionTypes.TOGGLE_FILTER:
+						ui.filters = action.payload.filters;
+						return ui;
+					case ActionTypes.TOGGLE_DOWNLOAD_MODAL:
+						ui.showDownloadModal = !ui.showDownloadModal;
+						return ui;
+					default:
+						return ui;
+				}
+			},
 			reduce: function (action) {
 				var scope = this;
 
@@ -264,8 +301,10 @@ class BudgetComparisonReportReducers {
 				newState.sectionGroupCosts = scope._sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
 				newState.users = scope._userReducers(action, scope._state.users);
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
+				newState.userWorkgroupsScenarios = scope._userWorkgroupsScenariosReducers(action, scope._state.userWorkgroupsScenarios);
 				newState.instructors = scope._instructorReducers(action, scope._state.instructors);
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
+				newState.ui = scope._uiReducers(action, scope._state.ui);
 
 				scope._state = newState;
 				$rootScope.$emit('budgetComparisonReportStateChanged', {

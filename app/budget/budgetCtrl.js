@@ -8,6 +8,7 @@ class BudgetCtrl {
     $routeParams,
     $timeout,
     BudgetActions,
+    BudgetService,
     AuthService,
     validate
   ) {
@@ -19,6 +20,7 @@ class BudgetCtrl {
     this.$routeParams = $routeParams;
     this.$timeout = $timeout;
     this.BudgetActions = BudgetActions;
+    this.BudgetService = BudgetService;
     this.AuthService = AuthService;
     var _self = this;
 
@@ -79,6 +81,7 @@ BudgetCtrl.$inject = [
   "$routeParams",
   "$timeout",
   "BudgetActions",
+  "BudgetService",
   "AuthService",
   "validate"
 ];

@@ -5,7 +5,7 @@
 }
 
 .line-items__table-header {
-	width: 10%;
+	width: 35%;
 	border-bottom: 1px solid #ddd;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -25,24 +25,28 @@
 	height: 43px;
 }
 
-.line-items__table--type {
-	width: 3%;
-}
-
-.line-items__table--document-number {
-	width: 2%;
-}
-
-.line-items__table--amount {
-	width: 1%;
-}
-
 .line-items__table--checkbox {
-	width: 1%;
+	width: 5%;
+}
+
+.line-items__table--type {
+	width: 15%;
+}
+
+.line-items__table--notes {
+	width: 20%;
 }
 
 .line-items__table--comments {
-	width: 1%;
+	width: 5%;
+}
+
+.line-items__table--document-number {
+	width: 10%;
+}
+
+.line-items__table--amount {
+	width: 10%;
 }
 
 .line-items__table-cell--dark {
@@ -52,6 +56,7 @@
 .line-items__comment-container {
 	padding-top: 5px;
 	padding-bottom: 5px;
+	text-align: center;
 }
 
 .line-items__account-container {

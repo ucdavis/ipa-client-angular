@@ -35,6 +35,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         ActionTypes.SEARCH_IMPORT_COURSES,
         ActionTypes.UPDATE_TAG_FILTERS,
         ActionTypes.TOGGLE_UNPUBLISHED_COURSES,
+        ActionTypes.UPDATE_SECTION_GROUP,
         ActionTypes.REMOVE_SECTION_GROUP,
         ActionTypes.ADD_SECTION_GROUP,
         ActionTypes.DELETE_MULTIPLE_COURSES,
@@ -58,6 +59,8 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         if (data.action.type == ActionTypes.ADD_SECTION_GROUP) {
           // Indicate on the textbox that the sectionGroup is offered
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered"); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', '0 planned seats' ); // eslint-disable-line
+
 
           return;
         }
@@ -66,6 +69,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           // Empty the textbox
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input.planned-seats').val(""); // eslint-disable-line no-undef
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').removeClass("is-offered"); // eslint-disable-line no-undef
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', 'No course offering' ); // eslint-disable-line
 
           return;
         }
@@ -363,7 +367,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
       scope.getCheckbox = function(courseId, type, isChecked) {
         var checkedClass = (isChecked == true) ? " checked" : "";
-      
+
         return '' +
         '<div class="checkbox-container" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
             '<div class="checkbox checkbox-replace color-primary neon-cb-replacement' + checkedClass + '" data-event-type="' + type + '" data-course-id="' + courseId + '" data-is-checked="' + isChecked + '">' +
@@ -476,7 +480,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
               if (requiresAttention) {
                 row += "<div class=\"right-inner-addon form-group\"><i class=\"entypo-attention text-warning\"></i></div>";
               }
-              row += "<input type=\"number\" min=\"0\" value=\"" + plannedSeats + "\" class=\"form-control planned-seats\"></input>";
+              const placeholder = sectionGroupId ? '0 planned seats' : 'No course offering';
+              row += `<input type="number" min="0" value="${ plannedSeats }" class="form-control planned-seats" placeholder="${ placeholder }"></input>`;
+              row += `<span class="warning">⚠</span>`;
             }
 
             row += "</div></td>";
@@ -516,14 +522,19 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           CourseActionCreators.updateSectionGroup(sectionGroup);
 
           // If sequence is numeric sync the seats on the section to the new sectionGroup value
+          let sectionCount = sectionGroup.sections.length;
           scope.view.state.sections.ids.forEach(function(sectionId) {
             var section = scope.view.state.sections.list[sectionId];
 
-            if (section.sectionGroupId == sectionGroup.id && isNumber(section.sequenceNumber)) {
+            if (section.sectionGroupId === sectionGroup.id && (isNumber(section.sequenceNumber) || sectionCount === 1)) {
               section.seats = sectionGroup.plannedSeats;
               CourseActionCreators.updateSection(section);
             }
           });
+          // Check if any overflowed sections can be updated.  If yes, update them.
+          if (sectionGroup.sections && sectionGroup.sections.length > 0){
+            CourseActionCreators.updateSection();
+          }
 
         } else if (plannedSeats) {
           // Create a new sectionGroup

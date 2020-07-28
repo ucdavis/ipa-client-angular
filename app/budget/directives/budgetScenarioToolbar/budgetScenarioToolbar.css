@@ -3,6 +3,16 @@
 	display: flex;
 	margin-bottom: 20px;
 	justify-content: space-between;
+
+	position: fixed;
+	top: 146px;
+	left: 200px;
+	width: calc(100% - 200px );
+	margin-top: -30px;
+	padding: 10px 20px;
+	background-color: #fff;
+	border-bottom: 1px solid #e3e3e3;
+	z-index: 1;
 }
 
 .budget-scenario-toolbar__tool-container {
@@ -35,7 +45,6 @@
 .budget-scenario-toolbar__edit-ui {
 	align-items: center;
 	display: flex;
-	width: 30%;
 }
 
 .budget-scenario-toolbar__container {
@@ -45,6 +54,13 @@
 }
 
 .budget-scenario-toolbar__edit-button {
+	margin-left: 10px;
+}
+
+.budget-scenario-toolbar__term-display {
+	border: 1px solid rgba(27,31,35,0.2);
+	border-radius: 0.25em;
+	padding: 3px 12px;
 	margin-left: 10px;
 }
 
@@ -76,6 +92,38 @@
 	flex: 1 0 0px;
 	color: #21A9E1;
 	padding-right: 5px;
+}
+
+.budget-scenario-toolbar__token {
+	background-color: #e6e6e6;
+	color: #333;
+	margin-right: 5px;
+	display: inline-block;
+	font-size: 85%;
+	line-height: normal;
+}
+
+.budget-scenario-toolbar__token-remove {
+	margin-left: 0.7em;
+}
+
+.budget-scenario-toolbar__sync-button {
+	margin-left: 10px;
+	padding: 5px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-bottom: -1px;
+}
+.budget-scenario-toolbar__sync-button:hover {
+	background-color: #e6ebf1;
+	background-image: linear-gradient(-180deg, #f0f3f6 0%, #e6ebf1 90%);
+	border-color: rgba(27,31,35,0.35);
+	color: #24292e;
+}
+.budget-scenario-toolbar__sync-button--text {
+	font-family: "Helvetica Neue", Helvetica, "Noto Sans", sans-serif;
+	margin-left: 3px;
 }
 
 @media print {

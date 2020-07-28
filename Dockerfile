@@ -1,18 +1,16 @@
-FROM node:8
+FROM node:10 AS builder
+WORKDIR /usr/src
+COPY . .
+COPY clientConfig.js.staging clientConfig.js
+RUN npm install
+RUN npm run build
 
-EXPOSE 9000
+FROM nginx:alpine
 
-LABEL maintainer="UC Davis DSS IT http://it.dss.ucdavis.edu"
+LABEL maintainer="UC Davis LS IT https://lsit.ucdavis.edu"
 
-WORKDIR /usr/src/app
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /usr/src/dist /usr/share/nginx/html
 
-COPY package.json ./
-COPY yarn.lock ./
-COPY .eslintrc.json ./
-RUN yarn install
-
-COPY app/ ./app
-
-RUN yarn lint
-
-#CMD java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+CMD ["nginx", "-g", "daemon off;"]

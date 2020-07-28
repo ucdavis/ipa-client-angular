@@ -250,7 +250,7 @@ class BudgetExcelService {
 
 				// SCHEDULE COST REPORT
 				// Header
-				data.push(['Term', 'Subject Code', 'Course Number', 'Title', 'Units High', 'Units Low', 'Sequence', 'Enrollment', 'Sections', 'Instructor', 'Regular Instructor', 'Reason', 'TAs', 'Readers', 'TA Cost', 'Reader Cost', 'Support Cost', 'Instructor Cost', 'Total Cost']);
+				data.push(['Term', 'Subject Code', 'Course Number', 'Title', 'Units High', 'Units Low', 'Sequence', 'Enrollment', 'Current Enrollment', 'Sections', 'Instructor', 'Regular Instructor', 'Reason', 'TAs', 'Readers', 'TA Cost', 'Reader Cost', 'Support Cost', 'Instructor Cost', 'Total Cost']);
 		
 				viewState.calculatedScheduleCosts.terms.forEach(function(term) {
 					var scheduleCosts = viewState.calculatedScheduleCosts.byTerm[term];
@@ -271,6 +271,7 @@ class BudgetExcelService {
 							let childRow = [];
 							childRow.push(sectionGroupCosts[_i].sequencePattern);
 							childRow.push(sectionGroupCosts[_i].enrollment);
+							childRow.push(sectionGroupCosts[_i].currentEnrollment);
 							childRow.push(sectionGroupCosts[_i].sectionCount);
 							childRow.push(sectionGroupCosts[_i].instructorDescription);
 							childRow.push(sectionGroupCosts[_i].originalInstructorDescription);
@@ -301,6 +302,7 @@ class BudgetExcelService {
 					{wch: 10},
 					{wch: 10},
 					{wch: 10},
+					{wch: 15},
 					{wch: 10},
 					{wch: 25},
 					{wch: 25},

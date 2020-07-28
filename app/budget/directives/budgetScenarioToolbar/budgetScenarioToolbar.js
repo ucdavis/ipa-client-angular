@@ -2,12 +2,12 @@ import { setCharAt } from 'shared/helpers/string';
 
 import './budgetScenarioToolbar.css';
 
-let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions) {
+let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions, BudgetService) {
 	return {
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
 		template: require('./budgetScenarioToolbar.html'), // directive html found here:
 		replace: true, // Replace with the template
-		
+
 		scope: {
 			state: '<'
 		},
@@ -16,6 +16,14 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			scope.isNewScenarioNameValid = true;
 			scope.validationError = "";
+			scope.activeFilters = [];
+			scope.showTermChip = false;
+
+			$window.onscroll = function () {
+				const VERTICAL_OFFSET = 98;
+				scope.showTermChip = this.scrollY > VERTICAL_OFFSET;
+				scope.$apply();
+			};
 
 			scope.openSupportCostModal = function() {
 				BudgetActions.toggleSupportCostModal();
@@ -62,9 +70,30 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.isNewScenarioNameValid = isNamePresent && (isNameInUse == false);
 			};
 
-			scope.updateCourseTag = function (tag) {
-				tag.selected = !tag.selected;
-				BudgetActions.updateCourseTag(tag);
+			scope.updateFilter = function (filter) {
+				filter.selected = !filter.selected;
+
+				scope.activeFilters = scope.state.ui.filters.list.filter(function (filter) {
+					return filter.selected;
+				});
+
+				BudgetActions.updateFilter(filter);
+			};
+
+			scope.toggleFilter = function(description) {
+				let filter = scope.state.ui.filters.list.find(function(option) {
+					return option.description == description;
+				});
+
+				filter.selected = !filter.selected;
+
+				scope.activeFilters = scope.state.ui.filters.list.filter(
+					function(filter) {
+						return filter.selected;
+					}
+				);
+
+				BudgetActions.updateFilter(filter);
 			};
 
 			scope.selectBudgetScenarioTerm = function(term) {
@@ -81,6 +110,40 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.print = function() {
 				window.print();
 			};
+
+			scope.syncBudgetScenario = function() {
+				BudgetActions.syncBudgetScenario();
+			};
+
+			scope.setBudgetScenarioTerm = ( item ) => {
+				BudgetActions.selectTerm( item.description );
+				$window.scrollTo(0, 0);
+			};
+
+			scope.getCurrentScenario = function(){
+				return scope.state.selectedBudgetScenario.name;
+			};
+
+			scope.downloadBudgetScenarioExcel = function(isAll) {
+				if (isAll) {
+					BudgetActions.toggleBudgetScenarioModal();
+				} else {
+					BudgetService.downloadWorkgroupScenariosExcel([{id: scope.state.selectedBudgetScenario.id}])
+					.then(response => {
+						var url = window.URL.createObjectURL(
+							new Blob([response.data], { type: 'application/vnd.ms-excel' })
+						);
+						var a = window.document.createElement('a'); // eslint-disable-line
+						a.href = url;
+						var workgroupInfo = JSON.parse(localStorage.getItem('workgroup'));
+						a.download = `Budget-Report-${workgroupInfo.name}-${localStorage.getItem('year')}-${scope.state.selectedBudgetScenario.name}.xlsx`;
+						window.document.body.appendChild(a); // eslint-disable-line
+						a.click();
+						a.remove();  //afterwards we remove the element again
+					});
+				}
+			};
+
 		} // End Link
 	};
 };

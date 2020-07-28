@@ -1,7 +1,6 @@
 const path = require('path');
 var webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
 
@@ -75,11 +74,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      },
-      {
         // JS LOADER
         // Reference: https://github.com/babel/babel-loader
         // Transpile .js files using babel-loader
@@ -89,7 +83,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['es2015'],
+              presets: ['@babel/preset-env'],
             }
           },
           "eslint-loader"
@@ -107,7 +101,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(),
     // Copy html to output path (dist)
     new CopyWebpackPlugin([
       {
@@ -135,7 +129,8 @@ module.exports = {
         './node_modules/fullcalendar/dist/fullcalendar.css',
         './node_modules/ng-notify/dist/ng-notify.min.css',
         './node_modules/ui-select/dist/select.css',
-        './node_modules/selectize/dist/css/selectize.default.css'
+        './node_modules/selectize/dist/css/selectize.default.css',
+        './node_modules/jquery-typeahead/dist/jquery.typeahead.min.css'
       ],
     }),
     // Concat shared CSS
@@ -163,6 +158,7 @@ module.exports = {
       { from: 'clientConfig.js', to: 'js', flatten: true },
       { from: 'node_modules/bootstrap/dist/js/*', to: 'js', flatten: true },
       { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
+      { from: 'node_modules/jquery-typeahead/dist/jquery.typeahead.min.js', to: 'js', flatten: true },
       { from: 'vendor/js/*', to: 'js', flatten: true },
     ]),
     // Concat lib JS
@@ -172,6 +168,7 @@ module.exports = {
       fileName: 'js/lib.js',
       filesToConcat: [
         './node_modules/jquery/dist/jquery.js',
+        './node_modules/jquery-typeahead/dist/jquery.typeahead.min.js',
         './node_modules/underscore/underscore-min.js',
         './node_modules/moment/min/moment.min.js',
         './app/shared/helpers/string_prototypes.js',
@@ -185,10 +182,7 @@ module.exports = {
       uglify: false,
       sourceMap: false,
       fileName: 'js/snippets.js',
-      filesToConcat: [
-        './vendor/js/userEcho.js',
-        './vendor/js/googleAnalytics.js'
-      ],
+      filesToConcat: ['./vendor/js/googleAnalytics.js'],
     })
   ],
   devServer: {

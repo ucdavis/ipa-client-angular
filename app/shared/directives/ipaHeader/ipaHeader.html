@@ -15,6 +15,7 @@
 						{{ sharedState.currentUser.displayName }}
 					</button>
 				</div>
+				<span class="ipa-header__help"><a href="mailto:ipahelp@ucdavis.edu"><i class="glyphicon glyphicon-question-sign"></i> Help</a></span>
 				<span class="logout" ng-click="logout()">Logout</span>
 			</div>
 		</div>
@@ -32,7 +33,8 @@
 			</ul>
 			<div class="header--work-group btn-group" role="group" aria-label="...">
 				<button ng-if="userHasRolesForWorkgroup(['academicPlanner','reviewer'], sharedState.workgroup)"
-								ng-click="loadWorkgroupPage(sharedState.workgroup.id)" type="button" class="ipa-header__cog-btn ipa-header__workgroup-button btn btn-default">
+								ng-click="loadWorkgroupPage(sharedState.workgroup.id)" type="button" class="ipa-header__cog-btn ipa-header__workgroup-button btn btn-default"
+								uib-tooltip="Manage Department" tooltip-append-to-body="true">
 								<a style="color: #303641">
 									<i class="entypo-cog"></i>
 								</a>

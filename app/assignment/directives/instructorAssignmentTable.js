@@ -693,6 +693,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 
 												// Preferred TeachingAssignments
 												if (teachingAssignment.fromInstructor && course) {
+													if (sectionGroup && sectionGroup.termCode !== teachingAssignment.termCode) {
+														return; // skip if sectionGroup termCode changed since Teaching Call was submitted
+													}
+
 													if (firstInterestedCourseAdded === false) {
 														courseHtml += "<li><div class=\"dropdown-assign-header\">Preferred</div></li>";
 														firstInterestedCourseAdded = true;

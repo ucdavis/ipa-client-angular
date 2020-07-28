@@ -18,6 +18,10 @@ let supportSummary = function (TermService) {
         return TermService.getShortTermName(term);
       };
 
+      scope.getTermName = function(termCode) {
+        return TermService.getTermName(termCode);
+      };
+
       scope.isReviewOpenForTerm = function(term, reviewBlob) {
         return reviewBlob[parseInt(term) - 1] == "1";
       };

@@ -1,9 +1,45 @@
-let sectionGroupDetails = function (CourseActionCreators) {
+let sectionGroupDetails = function (CourseActionCreators, Term) {
   return {
     restrict: 'E',
     template: require('./sectionGroupDetails.html'),
     replace: true,
     link: function (scope) {
+      scope.termDefinitions = Object.values(
+        Term.prototype.generateTable(scope.year)
+      );
+
+      scope.$on('sectionGroupCellSelected', function () {
+        scope.enabledTermCodes = scope.view.state.filters.enabledTerms.map(
+          (enabledTerm) =>
+            scope.termDefinitions.find(
+              (termDefinition) => termDefinition.id === enabledTerm
+            ).code
+        );
+
+        scope.occupiedTermCodes = Object.values(
+          scope.view.state.sectionGroups.list
+        )
+          .filter(
+            (sectionGroup) =>
+              sectionGroup.courseId === scope.view.selectedEntity.courseId &&
+              scope.enabledTermCodes.includes(sectionGroup.termCode)
+          )
+          .map((sectionGroup) => sectionGroup.termCode);
+
+        scope.showTermDropdown = scope.enabledTermCodes.length > scope.occupiedTermCodes.length;
+
+        if (scope.showTermDropdown) {
+          scope.termDropdownItems = scope.enabledTermCodes
+            .filter((termCode) => !scope.occupiedTermCodes.includes(termCode))
+            .map((termCode) => ({
+              id: termCode,
+              description: termCode.getTermCodeDisplayName(true),
+              sectionGroup: scope.view.selectedEntity,
+            }))
+            .sort((a, b) => a.id - b.id);
+        }
+      });
+
       scope.isLocked = function () {
         return scope.view.state.uiState.tableLocked;
       };
@@ -20,10 +56,14 @@ let sectionGroupDetails = function (CourseActionCreators) {
         CourseActionCreators.createSection(section);
       };
 
-      scope.updateSectionGroup = function (sectionGroup) {
+      scope.toggleMoveCourseModal = function (sectionGroup, termCode) {
+        CourseActionCreators.toggleMoveCourseModal(sectionGroup, termCode);
+      };
+
+      scope.updateSectionGroup = function (sectionGroup, termCode) {
         sectionGroup.unitsVariable ? parseFloat(sectionGroup.unitsVariable) : null;
 
-        CourseActionCreators.updateSectionGroup(sectionGroup);
+        CourseActionCreators.updateSectionGroup(sectionGroup, termCode);
       };
 
       scope.removeSectionGroup = function (sectionGroup) {
@@ -62,6 +102,11 @@ let sectionGroupDetails = function (CourseActionCreators) {
         }
       };
 
+      scope.isSeries = function () {
+        let selectedEntity = scope.view.selectedEntity;
+        let course = scope.view.state.courses.list[selectedEntity.courseId];
+        return course.isSeries();
+      };
     }
   };
 };

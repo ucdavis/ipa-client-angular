@@ -33,37 +33,59 @@ class BudgetActions {
 									selectedBudgetScenarioId = budgetScenario.id;
 								}
 							});
-
+						} else {
 							selectedBudgetScenarioId = parseInt(results.budgetScenarios[0].id);
-							selectedBudgets[year] = selectedBudgetScenarioId;
-							localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 						}
+
+						selectedBudgets[year] = selectedBudgetScenarioId;
+						localStorage.setItem('selectedBudgets', JSON.stringify(selectedBudgets));
 					}
 
-					var sectionGroupCosts = results.sectionGroupCosts;
-					var terms = Object.keys(TermService.termCodeDescriptions);
-					var subjectCode = results.courses[0].subjectCode;
-					var termCodes = terms.map(function(term) {
-						return TermService.termToTermCode(term, year);
-					});
+					if (results.sectionGroupCosts.length > 0) {
+						let budgetScenario = results.budgetScenarios.find(scenario => scenario.id === selectedBudgetScenarioId);
+						var sectionGroupCosts = results.sectionGroupCosts;
+						let activeTerms = budgetScenario.terms;
+						let scenarioSubjectCodes = [...new Set(results.sectionGroupCosts.map(sgc => sgc.subjectCode))];
 
-					termCodes.forEach(function(termCode) {
-						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censuses) {
-							// match courseNumber and TermCode and inject currentEnrollment number
-							const currentCensusSnapshot = censuses.filter(function(census) {
-								return census.snapshotCode == "CURRENT";
-							});
+						let activeTermCodes = activeTerms.map(function(term) {
+							return TermService.termToTermCode(term, year);
+						});
 
-							currentCensusSnapshot.forEach(function(courseCensus) {
-								sectionGroupCosts.forEach(function(sectionGroupCost) {
-									if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode) {
-										sectionGroupCost.currentEnrollment ?
-											(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
-											sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
-									}
+						scenarioSubjectCodes.forEach(function(subjectCode) {
+							activeTermCodes.forEach(function(termCode) {
+								DwService.getDwCensusData(subjectCode, null, termCode).then(function(censuses) {
+									// match courseNumber and TermCode and inject currentEnrollment number
+									const currentCensusSnapshot = censuses.filter(function(census) {
+										return census.snapshotCode == "CURRENT";
+									});
+
+									currentCensusSnapshot.forEach(function(courseCensus) {
+										sectionGroupCosts.forEach(function(sectionGroupCost) {
+											if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && courseCensus.sequenceNumber.includes(sectionGroupCost.sequencePattern)) {
+												sectionGroupCost.currentEnrollment ?
+													(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
+													sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
+											}
+										});
+									});
 								});
 							});
 						});
+					}
+
+					// Generate department subject codes and account numbers for use as filters
+					var subjectCodeFilters = [];
+					results.courses.forEach(function(course) {
+						if (!subjectCodeFilters.includes(course.subjectCode)) {
+							subjectCodeFilters.push(course.subjectCode);
+						}
+					});
+
+					var accountNumberFilters = [];
+					results.lineItems.forEach(function(lineItem) {
+						if (lineItem.accountNumber && !accountNumberFilters.includes(lineItem.accountNumber)) {
+							accountNumberFilters.push(lineItem.accountNumber);
+						}
 					});
 
 					BudgetReducers.reduce({
@@ -73,7 +95,8 @@ class BudgetActions {
 						workgroupId: workgroupId,
 						selectedBudgetScenarioId: selectedBudgetScenarioId,
 						selectedTerm: selectedTerm,
-						activeTab: activeTab
+						activeTab: activeTab,
+						filters: {subjectCodes: subjectCodeFilters, accountNumbers: accountNumberFilters}
 					});
 
 					// Ensure budgetScenario is properly set
@@ -107,10 +130,75 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not update budget scenario.", type: "ERROR" });
 				});
 			},
+			syncBudgetScenario: function () {
+				const scenarioTrackedChanges = BudgetReducers._state.calculatedScheduleCosts.trackedChanges;
+				const scenarioSectionGroupCosts = BudgetReducers._state.calculatedScheduleCosts.sectionGroupCosts;
+
+				scenarioTrackedChanges.forEach(change => {
+					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
+					let originalSectionGroupCost = JSON.parse(JSON.stringify(sectionGroupCost)); // to revert in case of failure
+
+					switch (change.action) {
+						case "syncInstructor":
+							sectionGroupCost.instructorId = sectionGroupCost.sectionGroup.assignedInstructor ? sectionGroupCost.sectionGroup.assignedInstructor.id : null;
+							sectionGroupCost.instructorTypeId = sectionGroupCost.sectionGroup.assignedInstructorType ? sectionGroupCost.sectionGroup.assignedInstructorType.id : null;
+							break;
+						case "syncEnrollment":
+							sectionGroupCost.enrollment = sectionGroupCost.sectionGroup.totalSeats;
+							break;
+						case "syncSectionCount":
+							sectionGroupCost.sectionCount = sectionGroupCost.sectionGroup.sectionCount;
+							break;
+						case "syncTaCount":
+							sectionGroupCost.taCount = sectionGroupCost.sectionGroup.teachingAssistantAppointments;
+							break;
+						case "syncReaderCount":
+							sectionGroupCost.readerCount = sectionGroupCost.sectionGroup.readerAppointments;
+							break;
+						default:
+							return;
+					}
+
+					BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SECTION_GROUP_COST,
+							payload: {
+								sectionGroupCost: newSectionGroupCost
+							}
+						});
+
+						BudgetCalculations.calculateSectionGroups();
+						BudgetCalculations.calculateTotalCost();
+						BudgetCalculations.calculateCourseList();
+
+						$rootScope.$emit('toast', { message: "Updated course(s)", type: "SUCCESS" });
+					}, function() {
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SECTION_GROUP_COST,
+							payload: {
+								sectionGroupCost: originalSectionGroupCost
+							}
+						});
+
+						BudgetReducers.reduce({
+							type: ActionTypes.UPDATE_SYNC_STATUS,
+							payload: {
+								updateFailure: change
+							}
+						});
+
+						BudgetCalculations.calculateSectionGroups();
+						BudgetCalculations.calculateTotalCost();
+						BudgetCalculations.calculateCourseList();
+
+						$rootScope.$emit('toast', { message: "Could not update course(s)", type: "ERROR" });
+					});
+				});
+			},
 			createBudgetScenario: function (newBudgetScenario, budgetId, scenarioId) {
 				var self = this;
 				if (scenarioId == null) { scenarioId = 0;}
-	
+
 				BudgetService.createBudgetScenario(newBudgetScenario, budgetId, scenarioId).then(function (results) {
 					window.ipa_analyze_event('budget', 'budget scenario created');
 
@@ -182,10 +270,10 @@ class BudgetActions {
 			},
 			createInstructorCost: function (instructorCostDto) {
 				var instructorCost = Object.assign({}, instructorCostDto);
-	
+
 				// Ensure cost is passed as a number
 				instructorCost.cost = parseFloat(instructorCost.cost);
-	
+
 				BudgetService.createInstructorCost(instructorCost).then(function (newInstructorCost) {
 					window.ipa_analyze_event('budget', 'instructor cost created');
 
@@ -209,7 +297,7 @@ class BudgetActions {
 				var self = this;
 				// Ensure amount is properly formatted as a float
 				newLineItem.amount = newLineItem.amount ? parseFloat(newLineItem.amount) : null;
-	
+
 				BudgetService.createLineItem(newLineItem, budgetScenarioId).then(function (newLineItem) {
 					window.ipa_analyze_event('budget', 'line item created');
 
@@ -219,7 +307,7 @@ class BudgetActions {
 					};
 					$rootScope.$emit('toast', { message: message || "Created line item", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
-	
+
 					// Close modal
 					self.closeAddLineItemModal();
 					BudgetCalculations.calculateLineItems();
@@ -230,16 +318,16 @@ class BudgetActions {
 			},
 			updateLineItem: function (lineItem) {
 				var self = this;
-	
+
 				// Create instead of update if appropriate
 				if (lineItem.id == null || lineItem.id == 0) {
 					this.createLineItem(lineItem, lineItem.budgetScenarioId);
 					return;
 				}
-	
+
 				// Ensure amount is properly formatted as a float
 				lineItem.amount = parseFloat(lineItem.amount);
-	
+
 				BudgetService.updateLineItem(lineItem, lineItem.budgetScenarioId).then(function (results) {
 					window.ipa_analyze_event('budget', 'line item updated');
 
@@ -249,7 +337,7 @@ class BudgetActions {
 					};
 					$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
-	
+
 					// Close modal
 					self.closeAddLineItemModal();
 					BudgetCalculations.calculateLineItems();
@@ -287,8 +375,8 @@ class BudgetActions {
 			/**
 			 * Updates existing sectionGroupCost. Happens when TA count, reader count,
 			 * instructor assignment, cost override, etc. are touched.
-			 * 
-			 * @param {*} sectionGroupCost 
+			 *
+			 * @param {*} sectionGroupCost
 			 */
 			updateSectionGroupCost: function (sectionGroupCost) {
 				BudgetService.updateSectionGroupCost(sectionGroupCost).then(function (newSectionGroupCost) {
@@ -361,7 +449,7 @@ class BudgetActions {
 					BudgetCalculations.calculateTotalCost();
 					BudgetCalculations.calculateInstructors();
 					BudgetCalculations.calculateInstructorTypeCosts();
-					
+
 					$rootScope.$emit('toast', { message: "Assigned instructor type", type: "SUCCESS" });
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
@@ -394,7 +482,7 @@ class BudgetActions {
 			},
 			_updateInstructorTypeCost: function (newInstructorTypeCost) {
 				newInstructorTypeCost.cost = parseFloat(newInstructorTypeCost.cost);
-	
+
 				BudgetService.updateInstructorTypeCost(newInstructorTypeCost).then(function (instructorTypeCost) {
 					BudgetReducers.reduce({
 						type: ActionTypes.UPDATE_INSTRUCTOR_TYPE_COST,
@@ -402,7 +490,7 @@ class BudgetActions {
 							instructorTypeCost: instructorTypeCost
 						}
 					});
-	
+
 					$rootScope.$emit('toast', { message: "Updated instructor type", type: "SUCCESS" });
 					BudgetCalculations.calculateInstructorTypeCosts();
 					BudgetCalculations.calculateInstructors();
@@ -437,7 +525,7 @@ class BudgetActions {
 						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId,
 						originalInstructorId: originalInstructorId
 					};
-	
+
 					BudgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
 						BudgetReducers.reduce({
 							type: ActionTypes.CREATE_SECTION_GROUP_COST,
@@ -445,7 +533,7 @@ class BudgetActions {
 								sectionGroupCost: newSectionGroupCost
 							}
 						});
-	
+
 						self.updateSectionGroupCost(newSectionGroupCost);
 						$rootScope.$emit('toast', { message: "Saved comment", type: "SUCCESS" });
 					}, function () {
@@ -459,7 +547,7 @@ class BudgetActions {
 			setInstructorTypeFromSectionGroup: function (sectionGroup, instructorType) {
 				var self = this;
 				var sectionGroupCost = sectionGroup.sectionGroupCost;
-	
+
 				// Instructor being assigned matches schedule data, so we should nullify the override
 				if (sectionGroup.assignedInstructorTypeIds.indexOf(instructorType.id) > -1) {
 					if (sectionGroupCost != false) {
@@ -469,7 +557,7 @@ class BudgetActions {
 						return;
 					}
 				}
-	
+
 				// Create sectionGroupCost if necessary
 				if (sectionGroupCost == false || sectionGroupCost == null) {
 					var sectionGroupCostDTO = {
@@ -478,7 +566,7 @@ class BudgetActions {
 						instructorTypeId: instructorType.id,
 						instructorId: null
 					};
-	
+
 					BudgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
 						BudgetReducers.reduce({
 							type: ActionTypes.CREATE_SECTION_GROUP_COST,
@@ -500,7 +588,7 @@ class BudgetActions {
 			setInstructorFromSectionGroup: function (sectionGroup, instructor) {
 				var self = this;
 				var sectionGroupCost = sectionGroup.sectionGroupCost;
-	
+
 				// Instructor being assigned matches schedule data, so we should nullify the override
 				if (sectionGroup.assignedInstructorIds.indexOf(instructor.id) > -1) {
 					if (sectionGroupCost != false) {
@@ -510,7 +598,7 @@ class BudgetActions {
 						return;
 					}
 				}
-	
+
 				// Create sectionGroupCost if necessary
 				if (sectionGroupCost == false || sectionGroupCost == null) {
 					var sectionGroupCostDTO = {
@@ -519,7 +607,7 @@ class BudgetActions {
 						instructorId: instructor.id,
 						instructorTypeId: null
 					};
-	
+
 					BudgetService.createSectionGroupCost(sectionGroupCostDTO).then(function (newSectionGroupCost) {
 						BudgetReducers.reduce({
 							type: ActionTypes.CREATE_SECTION_GROUP_COST,
@@ -539,12 +627,12 @@ class BudgetActions {
 				}
 			},
 			// Will also create sectionGroupCost if it does not already exist.
-			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroupCost, currentUserLoginId) {	
+			createSectionGroupCostCommentFromSectionGroup: function (comment, sectionGroupCost, currentUserLoginId) {
 				var sectionGroupCostComment = {};
 				sectionGroupCostComment.comment = comment;
 				sectionGroupCostComment.loginId = currentUserLoginId;
 				sectionGroupCostComment.sectionGroupCostId = parseInt(sectionGroupCost.id);
-	
+
 				BudgetService.createSectionGroupCostComment(sectionGroupCostComment).then(function (newSectionGroupCostComment) {
 					BudgetReducers.reduce({
 						type: ActionTypes.CREATE_SECTION_GROUP_COST_COMMENT,
@@ -561,21 +649,21 @@ class BudgetActions {
 			// Will create the lineItem if necessary
 			createLineItemComment: function(comment, lineItem, currentUserLoginId) {
 				var self = this;
-	
+
 				// Create lineItem if necessary
 				if (lineItem.id == null || lineItem.id <= 0) {
 					var budgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
-	
+
 					BudgetService.createLineItem(lineItem, budgetScenarioId).then(function (newLineItem) {
 						lineItem.id = newLineItem.id;
-	
+
 						BudgetReducers.reduce({
 							type: ActionTypes.CREATE_LINE_ITEM,
 							payload: lineItem
 						});
 						BudgetCalculations.calculateLineItems();
 						BudgetCalculations.calculateTotalCost();
-	
+
 						$rootScope.$emit('toast', { message: "Saved line item", type: "SUCCESS" });
 						self._createLineItemComment(comment, lineItem, currentUserLoginId);
 					}, function () {
@@ -590,7 +678,7 @@ class BudgetActions {
 				lineItemComment.comment = comment;
 				lineItemComment.loginId = currentUserLoginId;
 				lineItemComment.lineItemId = parseInt(lineItem.id);
-	
+
 				BudgetService.createLineItemComment(lineItemComment).then(function (newLineItemComment) {
 					var action = {
 						type: ActionTypes.CREATE_LINE_ITEM_COMMENT,
@@ -618,7 +706,7 @@ class BudgetActions {
 					type: ActionTypes.CLOSE_ADD_LINE_ITEM_MODAL,
 					payload: {}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			openAddLineItemModal: function(lineItemToEdit) {
@@ -628,7 +716,7 @@ class BudgetActions {
 						lineItemToEdit: lineItemToEdit
 					}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			openAddCourseModal: function () {
@@ -654,7 +742,7 @@ class BudgetActions {
 					type: ActionTypes.TOGGLE_ADD_BUDGET_SCENARIO_MODAL,
 					payload: {}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			openAddCourseCommentsModal: function(sectionGroupCost) {
@@ -664,7 +752,7 @@ class BudgetActions {
 						sectionGroupCost: sectionGroupCost
 					}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			openAddLineItemCommentsModal: function(lineItem) {
@@ -674,7 +762,7 @@ class BudgetActions {
 						lineItem: lineItem
 					}
 				};
-	
+
 				BudgetReducers.reduce(action);
 			},
 			closeAddCourseCommentsModal: function() {
@@ -682,7 +770,15 @@ class BudgetActions {
 					type: ActionTypes.OPEN_ADD_COURSE_COMMENT_MODAL,
 					payload: {}
 				};
-	
+
+				BudgetReducers.reduce(action);
+			},
+			toggleBudgetScenarioModal: function() {
+				var action = {
+					type: ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS,
+					payload: {}
+				};
+
 				BudgetReducers.reduce(action);
 			},
 			selectBudgetScenario: function(selectedScenarioId) {
@@ -716,7 +812,7 @@ class BudgetActions {
 						fromLiveData: fromLiveData
 					}
 				};
-	
+
 				BudgetReducers.reduce(action);
 				BudgetCalculations.calculateScenarioTerms();
 				BudgetCalculations.calculateLineItems();
@@ -782,19 +878,19 @@ class BudgetActions {
 			},
 			toggleLineItemFilter: function(filter) {
 				var actionType = null;
-	
+
 				if (filter.type == "showHidden") {
 					actionType = ActionTypes.TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN;
 				}
-	
+
 				// No matching filter found
 				if (actionType == null) { return; }
-	
+
 				BudgetReducers.reduce({
 					type: actionType,
 					payload: {}
 				});
-	
+
 				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateTotalCost();
 			},
@@ -857,21 +953,31 @@ class BudgetActions {
 
 				return instructorType;
 			},
-			updateCourseTag: function (tag) {
-				var tags = BudgetReducers._state.ui.filters.tags;
+			updateFilter: function (filter) {
+				var filters = BudgetReducers._state.ui.filters.list;
 
-				tags.forEach(function(slotTag) {
-					if (slotTag.id == tag.id) {
-						slotTag.selected = tag.selected;
-					}
-				});
+				if (filter.id == null) {
+					// not a tag
+					var selectedFilter = filters.find(function(slotFilter) {
+						return slotFilter.description == filter.description;
+					});
+
+					selectedFilter.selected = filter.selected;
+				} else {
+					filters.forEach(function(slotFilter) {
+						if (slotFilter.id == filter.id) {
+							slotFilter.selected = filter.selected;
+						}
+					});
+				}
 
 				BudgetReducers.reduce({
-					type: ActionTypes.UPDATE_COURSE_TAGS,
+					type: ActionTypes.UPDATE_FILTERS,
 					payload: {
-						tags: tags
+						filters: filters
 					}
 				});
+				BudgetCalculations.calculateLineItems();
 				BudgetCalculations.calculateSectionGroups();
 			}
 		};

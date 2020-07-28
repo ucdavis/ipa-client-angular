@@ -66,6 +66,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param property
 			 */
 			updateSection: function (section, property, uniqueKey) {
+				var _this = this;
 				RegistrarReconciliationReportService.updateSection(section).then(function (updatedSection) {
 					$rootScope.$emit('toast', { message: "Updated section " + updatedSection.sequenceNumber + " " + property, type: "SUCCESS" });
 					var action = {
@@ -77,6 +78,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
+					_this.updateSectionReconciliation(updatedSection);
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
 				});
@@ -90,6 +92,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param property
 			 */
 			updateActivity: function (activity, property) {
+				var _this = this;
 				RegistrarReconciliationReportService.updateActivity(activity).then(function (updatedActivity) {
 					$rootScope.$emit('toast', { message: "Updated " + activity.typeCode.getActivityCodeDescription() + " " + property, type: "SUCCESS" });
 					var action = {
@@ -100,9 +103,66 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
+					_this.updateSectionReconciliation(updatedActivity);
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update activity.", type: "ERROR" });
 				});
+			},
+			updateSectionReconciliation: function (updatedSection) {
+				var sectionKey;
+				var sections = RegistrarReconciliationReportStateService._state.sections;
+				// When updatedSection is received after updateActivity()
+				// Look for sectionKey by the id of the change
+				if (updatedSection.activityState){
+					sectionKey = sections.ids
+					.filter(function (slotId) {
+						return sections.list[slotId].activities
+							.some(function (a) { return a.id == updatedSection.id; });
+					});
+				// When updatedSection is received after updateSection() or unAssignInstructor()
+				// sectionKey is provided by updatedSection
+				} else {
+					sectionKey = sections.sectionsKeyById[updatedSection.id];
+				}
+
+					var slotSection = sections.list[sectionKey];
+
+					// Check if slot instructors has changes
+					var instructorsHasChanges = sections.ids
+							.some(function (slotSectionKey) {
+								if (sectionKey == slotSectionKey) {
+								return sections.list[slotSectionKey].instructors
+									.some(function (i) { return i.noRemote || i.noLocal; });
+								}
+							});
+
+					// Check if slot activities has changes
+					var activitiesHasChanges = sections.ids
+							.some(function (slotSectionKey) {
+								if (sectionKey == slotSectionKey) {
+								return sections.list[slotSectionKey].activities
+									.some(function (i) { return i.dwChanges || i.noLocal || i.noRemote; });
+								}
+							});
+
+					// Check if slot section has changes
+					var sectionHasChanges = slotSection.dwChanges;
+
+					var dwHasChanges;
+					if (instructorsHasChanges || activitiesHasChanges || sectionHasChanges){
+						dwHasChanges = true;
+					} else {
+						dwHasChanges = false;
+					}
+
+				var action = {
+					type: ActionTypes.UPDATE_SECTION_RECONCILIATION,
+					payload: {
+						sectionKey: sectionKey,
+						dwHasChanges: dwHasChanges
+					}
+				};
+				RegistrarReconciliationReportStateService.reduce(action);
 			},
 			/**
 			 * Deletes an activity
@@ -130,6 +190,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param activity
 			 */
 			createActivity: function (section, activityIndex) {
+				var _this = this;
 				// Set the time to match the server format
 				var activity = section.activities[activityIndex];
 				activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
@@ -146,6 +207,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
+					_this.updateSectionReconciliation(section);
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
 				});
@@ -183,6 +245,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param instructor
 			 */
 			assignInstructor: function (section, instructor) {
+				var _this = this;
 				RegistrarReconciliationReportService.assignInstructor(section.sectionGroupId, instructor).then(function () {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
@@ -193,6 +256,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
+					_this.updateSectionReconciliation(section);
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign instructor.", type: "ERROR" });
 				});
@@ -204,6 +268,7 @@ class RegistrarReconciliationReportActionCreators {
 			 * @param instructor
 			 */
 			unAssignInstructor: function (section, instructor) {
+				var _this = this;
 				RegistrarReconciliationReportService.unAssignInstructor(section.sectionGroupId, instructor).then(function () {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
 					var action = {
@@ -214,6 +279,7 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					};
 					RegistrarReconciliationReportStateService.reduce(action);
+					_this.updateSectionReconciliation(section);
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not unassign instructor.", type: "ERROR" });
 				});

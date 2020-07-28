@@ -95,6 +95,7 @@ import stickyHeader from './directives/stickyHeader.js';
 import stopEvent from './directives/stopEvent.js';
 import termFilter from './directives/termFilter/termFilter.js';
 import noAccess from './directives/noAccess/noAccess.js';
+import backToTop from './directives/backToTop/backToTop.js';
 
 // Filters
 import lastCommaFirst from './filters/lastCommaFirst.js';
@@ -178,6 +179,8 @@ function slowConnectionInterceptor ($rootScope, $timeout, $q) {
 	return {
 		request: function (config) {
 			reqCount++;
+
+			if (config.overrideTimeout) { return config; }
 			if ($rootScope.slowResTime) { $timeout.cancel($rootScope.slowResTime); }
 			if ($rootScope.timeOutTimer) { $timeout.cancel($rootScope.timeOutTimer); }
 
@@ -301,6 +304,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .directive('termFilter', termFilter)
 .directive('noAccess', noAccess)
 .directive('ipaFilter', ipaFilter)
+.directive('backToTop', backToTop)
 .filter('lastCommaFirst', lastCommaFirst)
 .filter('lastSpaceInitial', lastSpaceInitial)
 .filter('ordinal', ordinal)
@@ -316,7 +320,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .config(exceptionHandler)
 
 // Intercept Ajax traffic
- .config(function($httpProvider) {
+.config(function($httpProvider) {
 	$httpProvider.interceptors.push(['$rootScope', '$timeout', '$q', slowConnectionInterceptor]);
 })
 
@@ -375,6 +379,10 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 					toastr.info(title, message, options);
 					break;
 			}
+		});
+
+		$rootScope.$on('toast-clear', function () {
+			toastr.clear();
 		});
 	}]
 );

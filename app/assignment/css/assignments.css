@@ -111,13 +111,14 @@
 	padding: 8px;
 	font-size: 12px;
 	border: 1px solid #ebebeb;
+	min-width: 200px;
 }
 .term-cell {
-	flex: 1 1 200px;
+	flex: 1 0 200px;
 }
 
 .description-cell, .course-description-cell {
-	flex: 2 1 200px;
+	flex: 2 0 200px;
 }
 
 .description-cell div {
@@ -152,10 +153,18 @@
 	border-radius: 4px;
 }
 
+.assign-dropdown {
+	width: 100%;
+	margin: 5px;
+}
+
 .assign-dropdown .dropdown-toggle {
 	background: white;
 	width: 100%;
 	text-align: left;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .set-term-menu {
@@ -219,11 +228,6 @@ button.btn.assign-dropdown-btn {
 	align-items: center;
 }
 
-.main-content .caret {
-	position: absolute;
-	top: 50%;
-	right: 5%;
-}
 .select2-default {
 	border-color: rgb(235, 235, 235);
 }
@@ -982,6 +986,8 @@ li.active-term .dropdown-term-row {
 
 .assignments-container .main-content {
 	display: block;
+	overflow-x: auto;
+	height: calc(100vh - 127px);
 }
 
 .assignments-container .filter-container {
@@ -1035,6 +1041,41 @@ li.active-term .dropdown-term-row {
 /* Improper BEM styling to override bootstrap */
 .course-assignments__course-note input {
 	height: 30px;
+}
+
+.assignment-inputs {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.instructor-typeahead-placeholder {
+	display: none;
+	width: 100%;
+	margin: 5px;
+}
+.instructor-typeahead-placeholder .typeahead__container {
+	font-size: 12px;
+}
+.instructor-typeahead-placeholder .typeahead__query>input {
+	border-radius: 4px;
+	padding: 6px 12px;
+	line-height: 1.7rem;
+}
+.instructor-typeahead-placeholder .typeahead__container.result .typeahead__list {
+	border-radius: 4px;
+	line-height: 1.7rem;
+}
+
+.instructor-search-toggle {
+	margin: 0 3px;
+}
+
+.btn-toggle-search {
+	font-size: 12px;
+	color: rgb(153, 153, 153);
+	margin: 0 5px;
+	width: 100%;
 }
 
 .add-note__text-area {

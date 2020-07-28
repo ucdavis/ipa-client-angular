@@ -9,3 +9,25 @@
 .workload-table__last {
 	padding-bottom: 30px;
 }
+
+.table-toolbar {
+	padding: 20px 20px 5px 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.tool-icon {
+	margin: 0 0.5em;
+	padding: 0.5em;
+}
+
+.tool-icon:hover {
+	cursor: pointer;
+	background: #ebebeb;
+	border-radius: 3px;
+}
+
+.anchor-links {
+	padding: 0.5em 0;
+	cursor: pointer;
+}
