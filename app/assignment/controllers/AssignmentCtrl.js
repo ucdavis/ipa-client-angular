@@ -31,7 +31,8 @@ class AssignmentCtrl {
 		$scope.unavailabilityModalStyles = { "width": "62%" };
 		$scope.modals = {
 			isCommentModalOpen: false,
-			isUnavailabilityModalOpen: false
+			isUnavailabilityModalOpen: false,
+			isCourseCommentModalOpen: false
 		};
 
 		$rootScope.$on('assignmentStateChanged', function (event, data) {
@@ -138,6 +139,12 @@ class AssignmentCtrl {
 			}
 
 			$scope.modals.isCommentModalOpen = true;
+			$scope.$apply();
+		};
+
+		$scope.openCourseCommentModal = function() {
+			console.log('openCourseCommentModal!');
+			$scope.modals.isCourseCommentModalOpen = true;
 			$scope.$apply();
 		};
 

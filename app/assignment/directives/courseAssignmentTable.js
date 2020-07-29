@@ -13,6 +13,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 			professionalTable: "=",
 			currentUser: "=",
 			workGroupId: "=",
+			openCourseCommentModal: "&"
 		},
 		template: '<div class="course-list-row" ng-if="lowerDivisionTable == true">' +
 		'<div class="course-header course-description-cell">&nbsp;</div></div>' +
@@ -118,6 +119,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				return header;
 			};
 
+
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
 
@@ -206,6 +208,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								// Add input for course notes
 								courseHtml += '<hr />';
+								courseHtml += "<button class='course-comment-button' data-course-id='" + course.id + "'>Click Me</button>";
 								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
 								courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-course-id="' + course.id + '" data-event-type="setCourseNote">' + (course.note || "") + '</textarea>';
 								courseHtml += "</div>";
@@ -675,6 +678,9 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									}
 							}
 					});
+				}
+				else if ($el.hasClass('course-comment-button')) {
+					scope.openCourseCommentModal();
 				}
 			}); // end UI event handler
 		} // end link
