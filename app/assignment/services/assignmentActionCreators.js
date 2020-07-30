@@ -1,3 +1,5 @@
+import newCourse from "../../course/directives/newCourse/newCourse";
+
 /**
  * @ngdoc service
  * @name workgroupApp.workgroupActionCreators
@@ -55,6 +57,20 @@ class AssignmentActionCreators {
 				}, function () {
 					_self.$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
 				});
+			},
+			createCourseComment: function (courseId, courseComment) {
+				_self.AssignmentService.createCourseComment(courseId, courseComment).then(function (newCourseComment) {
+					let action = {
+						type: ActionTypes.CREATE_COURSE_COMMENT,
+						payload: {
+							courseId,
+							courseComment: newCourseComment
+						},
+					};
+
+					_self.AssignmentStateService.reduce(action);
+				}
+				);
 			},
 			updateCourseNote: function (courseId, note) {
 				var course = AssignmentStateService._state.courses.list[courseId];

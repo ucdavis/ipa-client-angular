@@ -92,6 +92,9 @@ class AssignmentStateService {
 							courses.list[course.id].sectionGroupTermCodeIds[sectionGroup.termCode] = sectionGroup.id;
 						}
 						return courses;
+					case ActionTypes.CREATE_COURSE_COMMENT:
+						courses.list[action.payload.courseId].courseComments.push(action.payload.courseComment);
+						return courses;
 					default:
 						return courses;
 				}

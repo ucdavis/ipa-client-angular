@@ -2,13 +2,12 @@ import { dateToCalendar } from '../../../../shared/helpers/dates';
 
 import './courseCommentModal.css';
 
-let courseCommentModal = function ($rootScope, AssignmentService) {
+let courseCommentModal = function ($rootScope, AssignmentActionCreators) {
   return {
     restrict: 'E',
     template: require('./courseCommentModal.html'),
     replace: true,
     scope: {
-      state: '<',
       selectedCourse: '<',
     },
     link: function (scope) {
@@ -18,15 +17,8 @@ let courseCommentModal = function ($rootScope, AssignmentService) {
         const commentPayload = scope.courseComment.trim();
 
         if (commentPayload) {
-          AssignmentService.createCourseComment(scope.selectedCourse.id, {
-            comment: scope.courseComment.trim(),
-          });
-
-          scope.selectedCourse.courseComments.unshift({
-            comment: scope.courseComment,
-            authorName: JSON.parse(localStorage.getItem('currentUser'))
-              .displayName,
-            creationDate: Date.now(),
+          AssignmentActionCreators.createCourseComment(scope.selectedCourse.id, {
+            comment: commentPayload,
           });
         } else {
           $rootScope.$emit('toast', {
@@ -35,7 +27,6 @@ let courseCommentModal = function ($rootScope, AssignmentService) {
           });
         }
         scope.courseComment = "";
-        $rootScope.$emit('assignmentStateChanged', scope.state);
       };
 
       scope.close = function () {
