@@ -1,5 +1,7 @@
 import { dateToCalendar } from '../../../../shared/helpers/dates';
 
+import './courseCommentModal.css';
+
 let courseCommentModal = function ($rootScope, AssignmentService) {
   return {
     restrict: 'E',

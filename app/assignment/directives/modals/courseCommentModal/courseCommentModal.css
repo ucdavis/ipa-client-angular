@@ -1,0 +1,22 @@
+.course-comment-modal {
+  position: relative;
+  width: 100%;
+  padding: 15px;
+  overflow-x: hidden;
+}
+
+.course-comment-modal textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.course-comment-modal__form-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-comment-modal__comments-count {
+  margin-top: 20px;
+}

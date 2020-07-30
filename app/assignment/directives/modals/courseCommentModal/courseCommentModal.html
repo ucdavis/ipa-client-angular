@@ -7,12 +7,15 @@
 			</div>
 		</div>
 		{{ selectedCourse.approvedTeachingAssignments }}
-		<textarea ng-model="courseComment" maxlength="600"></textarea>
-		<div>
+		<textarea ng-model="courseComment" maxlength="600" rows="4"></textarea>
+		<div class="course-comment-modal__form-controls">
 			<button ng-click="addComment()">Add Comment</button>
 			<span>{{ 600 - courseComment.length }}</span>
 		</div>
-	<div class="course-comments-list">
+		
+	<div class="course-comment-modal__comments-count">{{ selectedCourse.courseComments.length }} Comments</div>
+
+	<div class="course-comment-modal__list">
 		<div ng-repeat="comment in selectedCourse.courseComments">
 			{{ comment.comment }} - {{ comment.authorName }} - {{ dateToCalendar(comment.creationDate) }}
 		</div>
