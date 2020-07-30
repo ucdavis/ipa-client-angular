@@ -1,8 +1,8 @@
 <div class="course-comment-modal">
-	<span>{{ course.id }}</span>
+	<span>Course ID: {{ selectedCourse.id }}</span>
 	<div class="course-comments-list">
-		<span ng-repeat="comment in course.courseComments">
-			{{ comment.comment }}
+		<span ng-repeat="comment in selectedCourse.courseComments">
+			{{ comment.comment }} - {{ comment.authorName }} - {{ dateToCalendar(comment.creationDate) }}
 		</span>
 	</div>
 </div>

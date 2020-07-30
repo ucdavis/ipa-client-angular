@@ -19,6 +19,7 @@ import courseAssignmentTable from './directives/courseAssignmentTable.js';
 import instructorAssignmentTable from './directives/instructorAssignmentTable.js';
 import commentModal from './directives/modals/commentModal/commentModal.js';
 import unavailabilityModal from './directives/modals/unavailabilityModal/unavailabilityModal.js';
+import courseCommentModal from './directives/modals/courseCommentModal/courseCommentModal.js';
 
 // Dependencies
 var dependencies = [
@@ -80,6 +81,7 @@ const assignmentApp = angular.module("assignmentApp", dependencies) // eslint-di
 .directive('instructorAssignmentTable', instructorAssignmentTable)
 .directive('commentModal', commentModal)
 .directive('unavailabilityModal', unavailabilityModal)
+.directive('courseCommentModal', courseCommentModal)
 .constant('ActionTypes', {
 	INIT_ASSIGNMENT_VIEW: "INIT_ASSIGNMENT_VIEW",
 	ADD_TEACHING_ASSIGNMENT: "ADD_TEACHING_ASSIGNMENT",
