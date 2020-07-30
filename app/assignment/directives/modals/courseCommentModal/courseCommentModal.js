@@ -1,6 +1,6 @@
 import { dateToCalendar } from '../../../../shared/helpers/dates';
 
-let courseCommentModal = function () {
+let courseCommentModal = function (AssignmentService) {
   return {
     restrict: 'E',
     template: require('./courseCommentModal.html'),
@@ -9,6 +9,11 @@ let courseCommentModal = function () {
       selectedCourse: '<',
     },
     link: function (scope) {
+      scope.courseComment = "";
+      scope.addComment = function () {
+        AssignmentService.createCourseComment(scope.selectedCourse.id, { "comment": scope.courseComment });
+      };
+
       scope.close = function () {
         scope.isVisible = false;
       };

@@ -209,7 +209,11 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								// Add input for course notes
 								courseHtml += '<hr />';
-								courseHtml += "<button class='course-comment-button' data-course-id='" + course.id + "'>Click Me</button>";
+								courseHtml += '<p><strong>Comments</strong></p>';
+								// sort comments by id
+								let latestCourseComment = course.courseComments.length > 0 ? course.courseComments.sort((a,b) => b.creationDate - a.creationDate)[0].comment : '';
+								courseHtml += 'Latest Comment: ' + latestCourseComment;
+								courseHtml += "<button class='course-comment-button' data-course-id='" + course.id + "'>View Comments</button>";
 								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
 								courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-course-id="' + course.id + '" data-event-type="setCourseNote">' + (course.note || "") + '</textarea>';
 								courseHtml += "</div>";

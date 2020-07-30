@@ -1,8 +1,17 @@
 <div class="course-comment-modal">
-	<span>Course ID: {{ selectedCourse.id }}</span>
+	<div>{{ selectedCourse.subjectCode }} {{ selectedCourse.courseNumber }} - {{ selectedCourse.sequencePattern }} - {{ selectedCourse.title }}
+		<div ng-repeat="offering in selectedCourse.offerings">
+			{{ offering[0].termCode.getTermCodeDisplayName() }}
+			<div ng-repeat="assignment in offering" class="alert alert-info">
+				{{ assignment.instructorDisplayName }}
+			</div>
+		</div>
+		{{ selectedCourse.approvedTeachingAssignments }}
+		<textarea ng-model="courseComment"></textarea>
+		<button ng-click="addComment()">Add Comment</button>
 	<div class="course-comments-list">
-		<span ng-repeat="comment in selectedCourse.courseComments">
+		<div ng-repeat="comment in selectedCourse.courseComments">
 			{{ comment.comment }} - {{ comment.authorName }} - {{ dateToCalendar(comment.creationDate) }}
-		</span>
+		</div>
 	</div>
 </div>
