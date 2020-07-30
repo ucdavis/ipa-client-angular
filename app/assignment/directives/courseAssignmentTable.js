@@ -120,6 +120,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 			};
 
 			scope.openCourseCommentModal = scope.openCourseCommentModal();
+			// scope.courseComments =
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;

@@ -152,7 +152,6 @@ class AssignmentCtrl {
 				.filter(teachingAssignment => teachingAssignment.approved === true));
 			
 			$scope.view.selectedCourse.offerings = approvedTeachingAssignments;
-			console.log(approvedTeachingAssignments);
 			$scope.$apply();
 		};
 
