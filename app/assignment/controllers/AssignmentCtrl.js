@@ -142,9 +142,11 @@ class AssignmentCtrl {
 			$scope.$apply();
 		};
 
-		$scope.openCourseCommentModal = function() {
+		$scope.openCourseCommentModal = function(courseId) {
 			console.log('openCourseCommentModal!');
 			$scope.modals.isCourseCommentModalOpen = true;
+			console.log(courseId);
+			console.log($scope.view.state.courses.list[courseId]);
 			$scope.$apply();
 		};
 

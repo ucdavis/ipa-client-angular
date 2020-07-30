@@ -119,6 +119,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				return header;
 			};
 
+			scope.openCourseCommentModal = scope.openCourseCommentModal();
 
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
@@ -680,7 +681,9 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 					});
 				}
 				else if ($el.hasClass('course-comment-button')) {
-					scope.openCourseCommentModal();
+					var courseId = $el.data('course-id');
+					console.log('Opening modal for course ' + courseId);
+					scope.openCourseCommentModal(courseId);
 				}
 			}); // end UI event handler
 		} // end link
