@@ -13,10 +13,27 @@ let courseCommentModal = function ($rootScope, AssignmentService) {
       scope.courseComment = "";
 
       scope.addComment = function () {
-        AssignmentService.createCourseComment(scope.selectedCourse.id, { "comment": scope.courseComment });
-        scope.selectedCourse.courseComments.unshift({"comment": scope.courseComment, "authorName": JSON.parse(localStorage.getItem("currentUser")).displayName, "creationDate": Date.now()});
+        const commentPayload = scope.courseComment.trim();
 
-				$rootScope.$emit('assignmentStateChanged', scope.state);
+        if (commentPayload) {
+          AssignmentService.createCourseComment(scope.selectedCourse.id, {
+            comment: scope.courseComment.trim(),
+          });
+
+          scope.selectedCourse.courseComments.unshift({
+            comment: scope.courseComment,
+            authorName: JSON.parse(localStorage.getItem('currentUser'))
+              .displayName,
+            creationDate: Date.now(),
+          });
+        } else {
+          $rootScope.$emit('toast', {
+            message: 'Please enter a comment',
+            type: 'ERROR',
+          });
+        }
+        scope.courseComment = "";
+        $rootScope.$emit('assignmentStateChanged', scope.state);
       };
 
       scope.close = function () {
