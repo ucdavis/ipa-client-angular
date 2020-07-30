@@ -1,5 +1,3 @@
-import newCourse from "../../course/directives/newCourse/newCourse";
-
 /**
  * @ngdoc service
  * @name workgroupApp.workgroupActionCreators
