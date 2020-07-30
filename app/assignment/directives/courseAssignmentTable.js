@@ -214,12 +214,13 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								let latestCourseComment = course.courseComments.length > 0 ? course.courseComments.sort((a,b) => b.creationDate - a.creationDate)[0].comment : '';
 								courseHtml += 'Latest Comment: ' + latestCourseComment;
 								courseHtml += "<button class='course-comment-button' data-course-id='" + course.id + "'>View Comments</button>";
-								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
-								courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-course-id="' + course.id + '" data-event-type="setCourseNote">' + (course.note || "") + '</textarea>';
-								courseHtml += "</div>";
-								courseHtml += "<div class='visible-print'>";
-								courseHtml += course.note || "";
-								courseHtml += "</div>";
+								// TODO: DELETE ME
+								// courseHtml += "<div class='course-assignments__course-note hidden-print'>";
+								// courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-course-id="' + course.id + '" data-event-type="setCourseNote">' + (course.note || "") + '</textarea>';
+								// courseHtml += "</div>";
+								// courseHtml += "<div class='visible-print'>";
+								// courseHtml += course.note || "";
+								// courseHtml += "</div>";
 
 								courseHtml += "</div></div>"; // End course-description-cell
 
@@ -472,15 +473,16 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 			}); // end on event 'assignmentStateChanged'
 
 			// Handle input box edits
-			element.on("change", function(e) {
-				var $el = $(e.target); // eslint-disable-line no-undef
-				if ($el.data('event-type') != 'setCourseNote') { return; }
+			// TODO: DELETE
+			// element.on("change", function(e) {
+			// 	var $el = $(e.target); // eslint-disable-line no-undef
+			// 	if ($el.data('event-type') != 'setCourseNote') { return; }
 
-				var courseId = $el.data('course-id');
-				var note = e.target.value;
+			// 	var courseId = $el.data('course-id');
+			// 	var note = e.target.value;
 
-				AssignmentActionCreators.updateCourseNote(courseId, note);
-			});
+			// 	AssignmentActionCreators.updateCourseNote(courseId, note);
+			// });
 
 			// Handle Instructor UI events
 			element.click(function (e) {
