@@ -209,18 +209,17 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 
 								// Add input for course notes
 								courseHtml += '<hr />';
-								courseHtml += '<p><strong>Comments</strong></p>';
-								// sort comments by id
-								let latestCourseComment = course.courseComments.length > 0 ? course.courseComments.sort((a,b) => b.creationDate - a.creationDate)[0].comment : '';
-								courseHtml += 'Latest Comment: ' + latestCourseComment;
-								courseHtml += "<button class='course-comment-button' data-course-id='" + course.id + "'>View Comments</button>";
-								// TODO: DELETE ME
-								// courseHtml += "<div class='course-assignments__course-note hidden-print'>";
-								// courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-course-id="' + course.id + '" data-event-type="setCourseNote">' + (course.note || "") + '</textarea>';
-								// courseHtml += "</div>";
-								// courseHtml += "<div class='visible-print'>";
-								// courseHtml += course.note || "";
-								// courseHtml += "</div>";
+								courseHtml += '<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">';
+								courseHtml += '<div><strong>Comments (' + (course.courseComments.length + (course.note ? 1 : 0)) + ') </strong></div>';
+								courseHtml += '<div class="course-comment-more" data-course-id="' + course.id + '" style="cursor: pointer">Add Comment <i class="glyphicon glyphicon-share-alt course-comment-more" data-course-id="' + course.id + '"></i></div>';
+								courseHtml += '</div>';
+								if (course.note && course.courseComments.length < 1) {
+									courseHtml += course.note;
+								}
+								else if (course.courseComments.length > 0) {
+									let latestComment = course.courseComments.sort((a,b) => b.creationDate - a.creationDate)[0];
+									courseHtml += latestComment.comment + '<br/><p style="float: right;"> by ' + latestComment.authorName + '</p>';
+								}
 
 								courseHtml += "</div></div>"; // End course-description-cell
 
@@ -686,9 +685,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 							}
 					});
 				}
-				else if ($el.hasClass('course-comment-button')) {
+				else if ($el.hasClass('course-comment-button') || $el.hasClass('course-comment-more')) {
 					var courseId = $el.data('course-id');
-					console.log('Opening modal for course ' + courseId);
 					scope.openCourseCommentModal(courseId);
 				}
 			}); // end UI event handler

@@ -16,13 +16,8 @@
 			<span>{{ 600 - courseComment.length }}</span>
 		</div>
 		
-	<div class="course-comment-modal__comments-count">{{ selectedCourse.courseComments.length }} Comments</div>
+	<div class="course-comment-modal__comments-count">{{ selectedCourse.courseComments.length + (selectedCourse.note ? 1 : 0) }} Comment(s)</div>
 
-	<!--<div class="course-comment-modal__list">
-		<div ng-repeat="comment in selectedCourse.courseComments">
-			{{ comment.comment }} - {{ comment.authorName }} - {{ dateToCalendar(comment.creationDate) }}
-		</div>
-	</div>-->
 	<div ng-repeat="comment in selectedCourse.courseComments" class="course-comment-modal__comment-container">
 		<div class="course-comment-modal__comment-header">
 			{{ comment.authorName }}&nbsp;
@@ -31,5 +26,11 @@
 			</span>
 		</div>
 		<div class="course-comment-modal__comment-body">{{ comment.comment }}</div>
+	</div>
+	<div class="course-comment-modal__course-note" ng-show="selectedCourse.note">
+		<div class="course-comment-modal__comment-header">
+			<em>Legacy Comments</em>
+		</div>
+		<div class="course-comment-modal__comment-body">{{ selectedCourse.note }}</div>
 	</div>
 </div>
