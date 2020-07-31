@@ -1,23 +1,35 @@
 <div class="course-comment-modal">
-	<div>{{ selectedCourse.subjectCode }} {{ selectedCourse.courseNumber }} - {{ selectedCourse.sequencePattern }} - {{ selectedCourse.title }}
-		<div ng-repeat="offering in selectedCourse.offerings">
-			{{ offering[0].termCode.getTermCodeDisplayName() }}
-			<div ng-repeat="assignment in offering" class="alert alert-info">
-				{{ assignment.instructorDisplayName }}
+	<div>
+		<h3>{{ selectedCourse.subjectCode }} {{ selectedCourse.courseNumber }} - {{ selectedCourse.sequencePattern }} - {{ selectedCourse.title }}</h3>
+		<div ng-repeat="offering in selectedCourse.offerings"  class="course-comment-modal__offerings">
+			<strong>{{ offering[0].termCode.getTermCodeDisplayName() }}</strong>
+			<div class="course-comment-modal__assigment-container" >
+				<div ng-repeat="assignment in offering" class="alert alert-info">
+					{{ assignment.instructorDisplayName }}
+				</div>
 			</div>
 		</div>
 		{{ selectedCourse.approvedTeachingAssignments }}
 		<textarea ng-model="courseComment" maxlength="600" rows="4"></textarea>
 		<div class="course-comment-modal__form-controls">
-			<button ng-click="addComment()">Add Comment</button>
+			<button ng-click="addComment()" class="btn btn-info neon-dark-confirm-btn">Add Comment</button>
 			<span>{{ 600 - courseComment.length }}</span>
 		</div>
 		
 	<div class="course-comment-modal__comments-count">{{ selectedCourse.courseComments.length }} Comments</div>
 
-	<div class="course-comment-modal__list">
+	<!--<div class="course-comment-modal__list">
 		<div ng-repeat="comment in selectedCourse.courseComments">
 			{{ comment.comment }} - {{ comment.authorName }} - {{ dateToCalendar(comment.creationDate) }}
 		</div>
+	</div>-->
+	<div ng-repeat="comment in selectedCourse.courseComments" class="course-comment-modal__comment-container">
+		<div class="course-comment-modal__comment-header">
+			{{ comment.authorName }}&nbsp;
+			<span class="course-comment-modal__comment-date">
+				{{ dateToCalendar(comment.creationDate) }}
+			</span>
+		</div>
+		<div class="course-comment-modal__comment-body">{{ comment.comment }}</div>
 	</div>
 </div>
