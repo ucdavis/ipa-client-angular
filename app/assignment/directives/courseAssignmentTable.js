@@ -471,18 +471,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				}
 			}); // end on event 'assignmentStateChanged'
 
-			// Handle input box edits
-			// TODO: DELETE
-			// element.on("change", function(e) {
-			// 	var $el = $(e.target); // eslint-disable-line no-undef
-			// 	if ($el.data('event-type') != 'setCourseNote') { return; }
-
-			// 	var courseId = $el.data('course-id');
-			// 	var note = e.target.value;
-
-			// 	AssignmentActionCreators.updateCourseNote(courseId, note);
-			// });
-
 			// Handle Instructor UI events
 			element.click(function (e) {
 				let $el = $(e.target); // eslint-disable-line no-undef

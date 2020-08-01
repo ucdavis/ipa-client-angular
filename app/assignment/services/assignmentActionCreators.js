@@ -70,25 +70,6 @@ class AssignmentActionCreators {
 				}
 				);
 			},
-			// TODO: DELETE
-			// updateCourseNote: function (courseId, note) {
-			// 	var course = AssignmentStateService._state.courses.list[courseId];
-			// 	course.note = note;
-			// 	_self.AssignmentService.updateCourse(course).then(function (newCourse) {
-			// 		window.ipa_analyze_event('instructor assignments', 'course note updated');
-
-			// 		_self.$rootScope.$emit('toast', { message: "Updated course note", type: "SUCCESS" });
-			// 		var action = {
-			// 			type: ActionTypes.UPDATE_COURSE_NOTE,
-			// 			payload: {
-			// 				course: newCourse
-			// 			}
-			// 		};
-			// 		_self.AssignmentStateService.reduce(action);
-			// 	}, function () {
-			// 		_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
-			// 	});
-			// },
 			updateTagFilters: function (tagIds) {
 				var action = {
 					type: ActionTypes.UPDATE_TAG_FILTERS,
