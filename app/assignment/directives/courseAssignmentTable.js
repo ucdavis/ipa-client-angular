@@ -216,11 +216,13 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								// Course comments body
 								courseHtml += '<div>'
 								if (course.note && course.courseComments.length < 1) {
+									courseHtml += '<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">Latest Comment:</div>';
 									courseHtml += `<p>${course.note}</p>`;
 								}
 								else if (course.courseComments.length > 0) {
 									let latestComment = course.courseComments.sort((a,b) => b.creationDate - a.creationDate)[0];
 									let commentTimestamp = dateToCalendar(latestComment.creationDate);
+									courseHtml += '<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">Latest Comment:</div>';
 									courseHtml += `<div style="display=inline; margin-bottom: 10px;">${latestComment.authorName} ${commentTimestamp}</div>`;
 									courseHtml += `<div style="text-align: left; margin-bottom: 10px;">${latestComment.comment}</div>`;
 								}
