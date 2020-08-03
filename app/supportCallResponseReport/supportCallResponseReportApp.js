@@ -55,8 +55,8 @@ function config($routeProvider) {
 config.$inject = ['$routeProvider'];
 
 // App declaration
-const SupportCallResponseReportApp = angular
-  .module('SupportCallResponseReportApp', dependencies) // eslint-disable-line no-undef
+const SupportCallResponseReportApp = angular // eslint-disable-line no-undef
+  .module('SupportCallResponseReportApp', dependencies)
   .config(config)
   .controller('SupportCallResponseReportCtrl', SupportCallResponseReportCtrl)
   .service(
