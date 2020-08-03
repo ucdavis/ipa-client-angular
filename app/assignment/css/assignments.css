@@ -1083,3 +1083,9 @@ li.active-term .dropdown-term-row {
 .instructor-assignment-table__course-definition {
   font-weight: bold;
 }
+
+.course-comments-more {
+	font-size: 12px;
+	color: rgb(153, 153, 153);
+	width: 100%;
+}
