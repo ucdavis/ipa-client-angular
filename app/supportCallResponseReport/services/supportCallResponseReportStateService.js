@@ -85,9 +85,13 @@ class SupportCallResponseReportStateService {
               supportStaff.supportCallResponse = action.payload.studentSupportCallResponses.find(
                 (response) => response.supportStaffId === supportStaff.id
               );
-              supportStaff.preferences = action.payload.studentSupportPreferences.filter(
-                (preference) => preference.supportStaffId === supportStaff.id
-              );
+              supportStaff.preferences = action.payload.studentSupportPreferences
+                .filter(
+                  (preference) => preference.supportStaffId === supportStaff.id
+                )
+                .sort((a, b) => {
+                  return a.priority - b.priority;
+                });
               supportStaff.availabilities = AvailabilityService.availabilityBlobToDescriptions(
                 supportStaff.supportCallResponse.availabilityBlob
               );

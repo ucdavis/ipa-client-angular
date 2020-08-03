@@ -110,10 +110,7 @@
               <div class="preferences-cell">
                 <div ng-repeat="preference in supportStaff.preferences" style="background-color: #ddd; margin: 10px; padding: 10px;">
                   <p ng-init="course = view.state.courses[view.state.sectionGroups[preference.sectionGroupId].courseId]">
-                    {{ $index + 1 }}. {{ course.subjectCode }} {{ course.courseNumber }} - {{ preference.type === 'teachingAssistant' ? "Teaching Assistant" : "Reader"}} 
-                    </p>
-                    <p>
-                      Priority: {{ preference.priority }}
+                    Priority: {{ preference.priority }}. {{ course.subjectCode }} {{ course.courseNumber }} - {{ preference.type === 'teachingAssistant' ? "Teaching Assistant" : "Reader"}} 
                     </p>
                     <p>
                       Comment: {{ preference.comment }}
