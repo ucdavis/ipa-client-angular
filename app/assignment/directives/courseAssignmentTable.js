@@ -214,7 +214,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								courseHtml += '<strong>' + commentCount + ' Comment(s)</strong></div>';
 
 								// Course comments body
-								courseHtml += '<div>'
+								courseHtml += '<div>';
 								if (course.note && course.courseComments.length < 1) {
 									courseHtml += '<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">Latest Comment:</div>';
 									courseHtml += `<p>${course.note}</p>`;
@@ -226,7 +226,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									courseHtml += `<div style="display=inline; margin-bottom: 10px;">${latestComment.authorName} ${commentTimestamp}</div>`;
 									courseHtml += `<div style="text-align: left; margin-bottom: 10px;">${latestComment.comment}</div>`;
 								}
-								courseHtml += '</div>'
+								courseHtml += '</div>';
 
 								// Course comments action bar
 								courseHtml += `<button class="btn btn-default course-comments-more" data-course-id=${course.id}><i class="glyphicon glyphicon-share-alt course-comment-more"></i> View/Add Comments</button>`;
