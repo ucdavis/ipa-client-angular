@@ -32,6 +32,15 @@
 			                      is-visible="modals.isUnavailabilityModalOpen">
 			</unavailability-modal>
 		</ipa-modal>
+		<ipa-modal
+		  is-visible="modals.isCourseCommentModalOpen"
+		  header-text="Course Comments"
+		>
+			<course-comment-modal
+				selected-course="view.selectedCourse"
+			>
+			</course-comment-modal>
+		</ipa-modal>
 		<div ng-if="!noAccess" class="row hidden-print" style="margin-bottom: 2em;">
 			<div class="col-sm-offset-3 col-sm-6">
 				<input type="search" class="form-control" placeholder="Search" ng-model="searchQuery" ng-change="filterTable(searchQuery)"/>
@@ -112,7 +121,8 @@
 		     lower-division-table="true"
 		     upper-division-table="false"
 		     graduate-table="false"
-		     professional-table="false">
+		     professional-table="false"
+		     open-course-comment-modal="openCourseCommentModal">
 		</div>
 		<div course-assignment-table id="courses-table" ng-show="(!view.state || view.state.userInterface.showCourses)  && !noAccess"
 		     state="view.state"
@@ -159,7 +169,10 @@
 			     shared-state="view.sharedState">
 			</div>
 		</div>
+
 	</div>
+
 </div>
+
 
 <back-to-top></back-to-top>

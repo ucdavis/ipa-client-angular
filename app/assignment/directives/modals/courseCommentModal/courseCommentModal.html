@@ -1,0 +1,36 @@
+<div class="course-comment-modal">
+	<div>
+		<h3>{{ selectedCourse.subjectCode }} {{ selectedCourse.courseNumber }} - {{ selectedCourse.sequencePattern }} - {{ selectedCourse.title }}</h3>
+		<div ng-repeat="offering in selectedCourse.offerings"  class="course-comment-modal__offerings">
+			<strong>{{ offering[0].termCode.getTermCodeDisplayName() }}</strong>
+			<div class="course-comment-modal__assigment-container" >
+				<div ng-repeat="assignment in offering" class="alert alert-info">
+					{{ assignment.instructorDisplayName }}
+				</div>
+			</div>
+		</div>
+		{{ selectedCourse.approvedTeachingAssignments }}
+		<textarea ng-model="courseComment" maxlength="600" rows="4"></textarea>
+		<div class="course-comment-modal__form-controls">
+			<button ng-click="addComment()" class="btn btn-info neon-dark-confirm-btn">Add Comment</button>
+			<span>{{ 600 - courseComment.length }}</span>
+		</div>
+		
+	<div class="course-comment-modal__comments-count">{{ selectedCourse.courseComments.length + (selectedCourse.note ? 1 : 0) }} Comment(s)</div>
+
+	<div ng-repeat="comment in selectedCourse.courseComments" class="course-comment-modal__comment-container">
+		<div class="course-comment-modal__comment-header">
+			{{ comment.authorName }}&nbsp;
+			<span class="course-comment-modal__comment-date">
+				{{ dateToCalendar(comment.creationDate) }}
+			</span>
+		</div>
+		<div class="course-comment-modal__comment-body">{{ comment.comment }}</div>
+	</div>
+	<div class="course-comment-modal__course-note" ng-show="selectedCourse.note">
+		<div class="course-comment-modal__comment-header">
+			<em>Legacy Comment</em>
+		</div>
+		<div class="course-comment-modal__comment-body">{{ selectedCourse.note }}</div>
+	</div>
+</div>
