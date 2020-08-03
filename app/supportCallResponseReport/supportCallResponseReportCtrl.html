@@ -4,7 +4,7 @@
   workgroup-id="{{ workgroupId }}"
 ></nav>
 
-<div class="teaching-call-response-report-container">
+<div class="support-call-response-report-container">
   <ipa-header page-title="Support Call Response Report"></ipa-header>
 
   <!-- handle no access -->
@@ -13,19 +13,19 @@
   </div>
 
   <!-- handle lack of teaching call data-->
-  <div ng-if="!noAccess && view.state && view.state.termCodes.length == 0">
+  <div ng-if="!noAccess && view.state && view.state.supportCallResponses.length === 0">
     <div
       class="jumbotron"
       style="text-align: center; height: 100%; background-color: white;"
     >
       <p class="lead">
-        No Teaching Call Responses found for {{sharedState.workgroup.name}} {{
+        No Support Call Responses found for {{sharedState.workgroup.name}} {{
         year.yearToAcademicYear() }}
       </p>
     </div>
   </div>
 
-  <div ng-if="!noAccess && view.state" class="main-content">
+  <div ng-if="!noAccess && view.state && view.state.supportCallResponses.length > 0" class="main-content">
     <!-- Toolbar -->
     <div class="row hidden-print">
       <div class="table-toolbar">
@@ -58,31 +58,17 @@
       </div>
     </div>
 
-    <div
-      style="
-        margin-top: 10px;
-        margin-bottom: 20px;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-      "
-    >
-      <div style="font-size: 10px; color: #888; width: 30%;">
-        Please note that this report will only include preferences created by
-        the Instructor. To see preferences and assignments created by the
-        Academic Planner please see the Assignments view.
-      </div>
-    </div>
-
     <table>
       <thead>
         <tr>
           <th>
             Students
           </th>
-          <th ng-repeat="termCode in view.state.termCodes">
+          <!-- <th ng-repeat="termCode in view.state.termCodes">
             {{ getTermName(termCode) }}
-          </th>
+          </th> -->
+          <th style="width: 33%;">Availabilities</th>
+          <th style="width: 33%;">Preferences</th>
           <th style="width: 33%;">Comments</th>
         </tr>
       </thead>
@@ -93,7 +79,6 @@
           style="border-bottom: none;"
         >
           <td
-            rowspan="2"
             style="
               font-weight: bold;
               font-size: 14px;
@@ -103,7 +88,7 @@
           >
             {{ supportStaff.lastName }}, {{ supportStaff.firstName }}
             <i
-              ng-if="supportStaff.submitted"
+              ng-if="supportStaff.supportCallResponse.submitted"
               class="green glyphicon glyphicon-ok"
               uib-tooltip="Submitted Preferences"
               tooltip-placement="top"
@@ -111,30 +96,38 @@
             ></i>
           </td>
 
-          <td ng-repeat="termCode in view.state.termCodes">
-            <div
-              style="padding: 20px 15px 20px 15px;"
-              ng-if="instructor.preferencesByTermCode[termCode].length > 0"
-            >
-              <div
-                ng-repeat="preference in instructor.preferencesByTermCode[termCode]"
-              >
-                {{ $index + 1 }}. {{ preference.description }}
+          <!-- availabilities -->
+          <td>
+            <div style="margin: 20px;">
+            <availability-grid blob="supportStaff.supportCallResponse.availabilityBlob"
+              read-only="true"></availability-grid>
+            </div>
+          </td>
+
+          <!-- preferences -->
+          <td>
+            <div style="padding: 20px 15px 20px 15px;">
+              <div class="preferences-cell">
+                <div ng-repeat="preference in supportStaff.preferences" style="background-color: #ddd; margin: 10px; padding: 10px;">
+                  <p ng-init="course = view.state.courses[view.state.sectionGroups[preference.sectionGroupId].courseId]">
+                    {{ $index + 1 }}. {{ course.subjectCode }} {{ course.courseNumber }} - {{ preference.type === 'teachingAssistant' ? "Teaching Assistant" : "Reader"}} 
+                    </p>
+                    <p>
+                      Priority: {{ preference.priority }}
+                    </p>
+                    <p>
+                      Comment: {{ preference.comment }}
+                    </p>
+                </div>
               </div>
             </div>
           </td>
 
           <!-- comment row -->
-          <td rowspan="2">
-            <div
-              ng-if="instructor.comments.length > 0"
-              style="padding: 20px 15px 20px 15px;"
-            >
-              <div
-                class="comment-cell"
-                ng-repeat="comment in instructor.comments | orderBy: '-lastModifiedOn'"
-              >
-                {{ $index + 1 }}. {{ comment.comment }}
+          <td>
+            <div style="padding: 20px 15px 20px 15px;">
+              <div class="comment-cell">
+              {{ supportStaff.supportCallResponse.generalComments }}
               </div>
             </div>
           </td>
