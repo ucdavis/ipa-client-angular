@@ -5,7 +5,7 @@
 
 .modal-add-support-call__checkbox-row {
 	display: flex;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 
 .modal-add-support-call__checkbox {
@@ -14,4 +14,8 @@
 
 .modal-add-support-call__checkbox-label {
 	cursor: pointer;
+}
+
+.modal-add-support-call__info {
+	margin-left: 5px;
 }
