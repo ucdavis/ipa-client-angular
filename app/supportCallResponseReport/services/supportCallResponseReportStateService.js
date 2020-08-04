@@ -95,7 +95,12 @@ class SupportCallResponseReportStateService {
               supportStaff.availabilities = supportStaff.supportCallResponse ? AvailabilityService.availabilityBlobToDescriptions(
                 supportStaff.supportCallResponse.availabilityBlob
               ) : [];
+
             });
+              console.log(
+                supportStaff.filter((ss) => ss.lastName === 'Abbott')
+              );
+
             return supportStaff;
           }
           default:

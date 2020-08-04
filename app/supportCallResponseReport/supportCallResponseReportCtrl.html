@@ -13,7 +13,9 @@
   </div>
 
   <!-- handle lack of teaching call data-->
-  <div ng-if="!noAccess && view.state && view.state.supportCallResponses.length === 0">
+  <div
+    ng-if="!noAccess && view.state && view.state.supportCallResponses.length === 0"
+  >
     <div
       class="jumbotron"
       style="text-align: center; height: 100%; background-color: white;"
@@ -25,7 +27,10 @@
     </div>
   </div>
 
-  <div ng-if="!noAccess && view.state && view.state.supportCallResponses.length > 0" class="main-content">
+  <div
+    ng-if="!noAccess && view.state && view.state.supportCallResponses.length > 0"
+    class="main-content"
+  >
     <!-- Toolbar -->
     <div class="row hidden-print">
       <div class="table-toolbar">
@@ -61,10 +66,22 @@
     <table>
       <thead>
         <tr>
-          <th>Students</th>
-          <th ng-if="view.state.ui.showAvailabilities" style="width: 33%;">Not Available</th>
-          <th ng-if="view.state.ui.showPreferences" style="width: 33%;">Preferences</th>
-          <th ng-if="view.state.ui.showGeneralComments" style="width: 33%;">Comments</th>
+          <th style="width: 10%;">Students</th>
+          <th ng-if="view.state.ui.showAvailabilities" style="width: 15%;">
+            Not Available
+          </th>
+          <th ng-if="view.state.ui.showPreferences" style="width: 25%;">
+            Preferences
+          </th>
+          <th
+            ng-if="view.state.ui.showTeachingQualifications"
+            style="width: 25%;"
+          >
+            Teaching Qualifications
+          </th>
+          <th ng-if="view.state.ui.showGeneralComments" style="width: 25%;">
+            Comments
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -75,27 +92,61 @@
         >
           <td
             style="
-              font-weight: bold;
               font-size: 14px;
               overflow: hidden;
               padding: 20px 15px 20px 15px;
             "
           >
-            {{ supportStaff.lastName }}, {{ supportStaff.firstName }}
-            <i
-              ng-if="supportStaff.supportCallResponse.submitted"
-              class="green glyphicon glyphicon-ok"
-              uib-tooltip="Submitted Preferences"
-              tooltip-placement="top"
-              tooltip-append-to-body="true"
-            ></i>
+            <p>
+              <strong
+                >{{ supportStaff.lastName }}, {{ supportStaff.firstName
+                }}</strong
+              >
+            </p>
+
+            <div>
+              <small
+                >Submitted:
+                <i
+                  ng-if="supportStaff.supportCallResponse.submitted"
+                  class="green glyphicon glyphicon-ok"
+                  uib-tooltip="Submitted Preferences"
+                  tooltip-placement="top"
+                  tooltip-append-to-body="true"
+                ></i>
+              </small>
+            </div>
+            <div ng-if="view.state.ui.showEligibilityConfirmation">
+              <small>
+                Confirmed Eligibility:
+                <i
+                  ng-if="supportStaff.supportCallResponse.eligibilityConfirmed"
+                  class="green glyphicon glyphicon-ok"
+                  uib-tooltip="Submitted Preferences"
+                  tooltip-placement="top"
+                  tooltip-append-to-body="true"
+                ></i>
+              </small>
+            </div>
+            <div ng-if="view.state.ui.showLanguageProficiencies">
+              <small>
+                Language Proficiency:
+                <div style="padding-left: 15px; max-width: 75%;">
+                  {{
+                  getLanguageProficiencyDescription(supportStaff.supportCallResponse.languageProficiency)
+                  }}
+                </div>
+              </small>
+            </div>
           </td>
 
           <!-- availabilities -->
           <td ng-if="view.state.ui.showAvailabilities">
             <div style="margin: 20px;">
-            <availability-grid blob="supportStaff.supportCallResponse.availabilityBlob"
-              read-only="true"></availability-grid>
+              <availability-grid
+                blob="supportStaff.supportCallResponse.availabilityBlob"
+                read-only="true"
+              ></availability-grid>
             </div>
             <!-- 
             <p ng-repeat="availability in supportStaff.availabilities">
@@ -108,23 +159,39 @@
           <td ng-if="view.state.ui.showPreferences">
             <div style="padding: 20px 15px 20px 15px;">
               <div class="preferences-cell">
-                <div ng-repeat="preference in supportStaff.preferences" style="background-color: #ddd; margin: 10px; padding: 10px;">
-                  <p ng-init="course = view.state.courses[view.state.sectionGroups[preference.sectionGroupId].courseId]">
-                    Priority: {{ preference.priority }}. {{ course.subjectCode }} {{ course.courseNumber }} - {{ preference.type === 'teachingAssistant' ? "Teaching Assistant" : "Reader"}} 
-                    </p>
-                    <p>
-                      Comment: {{ preference.comment }}
-                    </p>
+                <div
+                  ng-repeat="preference in supportStaff.preferences"
+                  style="background-color: #ddd; margin: 10px; padding: 10px;"
+                >
+                  <p
+                    ng-init="course = view.state.courses[view.state.sectionGroups[preference.sectionGroupId].courseId]"
+                  >
+                    Priority: {{ preference.priority }}. {{ course.subjectCode
+                    }} {{ course.courseNumber }} - {{ preference.type ===
+                    'teachingAssistant' ? "Teaching Assistant" : "Reader"}}
+                  </p>
+                  <p>
+                    Comment: {{ preference.comment }}
+                  </p>
                 </div>
               </div>
             </div>
           </td>
 
-          <!-- comment row -->
+          <!-- teaching qualifications -->
+          <td ng-if="view.state.ui.showTeachingQualifications">
+            <div style="padding: 20px 15px 20px 15px;">
+              <div class="comment-cell">
+                {{ supportStaff.supportCallResponse.teachingQualifications }}
+              </div>
+            </div>
+          </td>
+
+          <!-- general comment -->
           <td ng-if="view.state.ui.showGeneralComments">
             <div style="padding: 20px 15px 20px 15px;">
               <div class="comment-cell">
-              {{ supportStaff.supportCallResponse.generalComments }}
+                {{ supportStaff.supportCallResponse.generalComments }}
               </div>
             </div>
           </td>

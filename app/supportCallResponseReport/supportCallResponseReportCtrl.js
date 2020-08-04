@@ -7,6 +7,7 @@ class SupportCallResponseReportCtrl {
     SupportCallResponseReportActionCreators,
     AuthService,
     SupportCallResponseReportService,
+    SupportCallService,
     TermService,
     validate
   ) {
@@ -40,6 +41,10 @@ class SupportCallResponseReportCtrl {
 
     $scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
+    $scope.getLanguageProficiencyDescription = function (langaugeProficiency) {
+      return SupportCallService.getLanguageProficiencyDescription(langaugeProficiency);
+    };
+
     $scope.getTermName = function (term) {
       return TermService.getTermName(term);
     };
@@ -61,6 +66,7 @@ SupportCallResponseReportCtrl.$inject = [
   'SupportCallResponseReportActionCreators',
   'AuthService',
   'SupportCallResponseReportService',
+  'SupportCallService',
   'TermService',
   'validate',
 ];
