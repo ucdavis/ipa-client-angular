@@ -25,12 +25,12 @@ class SupportCallResponseReportCtrl {
     $scope.workgroupId = this.$routeParams.workgroupId;
     $scope.year = this.$routeParams.year;
     $scope.termShortCode = $routeParams.termShortCode;
-
+    $scope.termCode = TermService.termToTermCode($scope.termShortCode, $scope.year);
     $scope.view = {};
 
     $rootScope.$on('reportStateChanged', function (event, data) {
       _self.$scope.view.state = data.state;
-      console.log(data.state);
+      console.log(data.state); // TODO: DELETE ME
 
       _self.$scope.view.hasAccess =
         _self.$scope.sharedState.currentUser.isAdmin() ||
