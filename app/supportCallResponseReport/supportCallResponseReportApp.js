@@ -22,13 +22,10 @@ function config($routeProvider) {
     .when('/:workgroupId/:year', {
       template: require('./supportCallResponseReportCtrl.html'),
       controller: 'SupportCallResponseReportCtrl',
-      resolve: {
-        validate: function (
-          AuthService,
-        ) {
-          return AuthService.validate();
-        },
-      },
+      redirectTo: function (params, path) {
+        const FALL_QUARTER = '10';
+        return `${path}/${FALL_QUARTER}`;
+      }
     })
     .when('/:workgroupId/:year/:termShortCode', {
       template: require('./supportCallResponseReportCtrl.html'),
