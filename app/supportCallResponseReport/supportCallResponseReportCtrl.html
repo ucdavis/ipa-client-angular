@@ -7,6 +7,12 @@
 <div class="support-call-response-report-container">
   <ipa-header page-title="Support Call Response Report"></ipa-header>
 
+  <spinner
+    ng-if="!noAccess && !view.state"
+    style="position: absolute; top: 50%;"
+  >
+  </spinner>
+
   <!-- handle no access -->
   <div ng-if="noAccess">
     <no-access workgroup-name="sharedState.workgroup.name"></no-access>
