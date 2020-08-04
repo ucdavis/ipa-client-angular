@@ -12,14 +12,15 @@ class SupportCallResponseReportActionCreators {
     this.ActionTypes = ActionTypes;
 
     return {
-      getInitialState: function (workgroupId, year) {
-        var workgroupId = $route.current.params.workgroupId;
-        var year = $route.current.params.year;
+      getInitialState: function () {
+        let workgroupId = $route.current.params.workgroupId;
+        let year = $route.current.params.year;
+        let termShortCode = $route.current.params.termShortCode;
 
         SupportCallResponseReportService.getInitialState(
           workgroupId,
           year,
-          '05'
+          termShortCode
         ).then(
           function (payload) {
             var action = {

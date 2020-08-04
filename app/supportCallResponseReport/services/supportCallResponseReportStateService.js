@@ -92,14 +92,13 @@ class SupportCallResponseReportStateService {
                 .sort((a, b) => {
                   return a.priority - b.priority;
                 });
-              supportStaff.availabilities = supportStaff.supportCallResponse ? AvailabilityService.availabilityBlobToDescriptions(
-                supportStaff.supportCallResponse.availabilityBlob
-              ) : [];
-
+              supportStaff.availabilities = supportStaff.supportCallResponse
+                ? AvailabilityService.availabilityBlobToDescriptions(
+                    supportStaff.supportCallResponse.availabilityBlob
+                  )
+                : [];
             });
-              console.log(
-                supportStaff.filter((ss) => ss.lastName === 'Abbott')
-              );
+            console.log(supportStaff.filter((ss) => ss.lastName === 'Abbott'));
 
             return supportStaff;
           }
@@ -112,13 +111,33 @@ class SupportCallResponseReportStateService {
           case ActionTypes.INIT_STATE: {
             let sampleResponse = action.payload.studentSupportCallResponses[0];
             let ui = {
-              showAvailabilities: sampleResponse.collectAvailabilityByCrn || sampleResponse.collectAvailabilityByGrid,
-              showEligibilityConfirmation: sampleResponse.collectEligibilityConfirmation,
-              showGeneralComments: sampleResponse.collectGeneralComments,
-              showLanguageProficiencies: sampleResponse.collectLanguageProficiencies,
-              showTeachingQualifications: sampleResponse.collectTeachingQualifications,
-              showPreferences: sampleResponse.collectAssociateInstructorPreferences || sampleResponse.collectTeachingAssistantPreferences || sampleResponse.collectReaderPreferences
+              showAvailabilities: false,
+              showEligibilityConfirmation: false,
+              showGeneralComments: false,
+              showLanguageProficiencies: false,
+              showTeachingQualifications: false,
+              showPreferences: false,
             };
+
+            if (sampleResponse) {
+              ui = {
+                showAvailabilities:
+                  sampleResponse.collectAvailabilityByCrn ||
+                  sampleResponse.collectAvailabilityByGrid,
+                showEligibilityConfirmation:
+                  sampleResponse.collectEligibilityConfirmation,
+                showGeneralComments: sampleResponse.collectGeneralComments,
+                showLanguageProficiencies:
+                  sampleResponse.collectLanguageProficiencies,
+                showTeachingQualifications:
+                  sampleResponse.collectTeachingQualifications,
+                showPreferences:
+                  sampleResponse.collectAssociateInstructorPreferences ||
+                  sampleResponse.collectTeachingAssistantPreferences ||
+                  sampleResponse.collectReaderPreferences,
+              };
+            }
+
             return ui;
           }
           default:
@@ -146,10 +165,7 @@ class SupportCallResponseReportStateService {
             action,
             scope._state.supportStaff
           ),
-          ui: scope._uiReducers(
-            action,
-            scope._state.ui
-          ),
+          ui: scope._uiReducers(action, scope._state.ui),
         };
 
         $rootScope.$emit('reportStateChanged', {

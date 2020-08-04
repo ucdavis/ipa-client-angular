@@ -24,6 +24,7 @@ class SupportCallResponseReportCtrl {
     $scope.noAccess = validate ? validate.noAccess : null;
     $scope.workgroupId = this.$routeParams.workgroupId;
     $scope.year = this.$routeParams.year;
+    $scope.termShortCode = $routeParams.termShortCode;
 
     $scope.view = {};
 

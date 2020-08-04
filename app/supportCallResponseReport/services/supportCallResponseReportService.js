@@ -6,14 +6,14 @@ class SupportCallResponseReportService {
     this.apiService = ApiService;
 
     return {
-      getInitialState: function (workgroupId, year, shortTermCode) {
+      getInitialState: function (workgroupId, year, termShortCode) {
         return ApiService.get(
           '/api/instructionalSupportView/workgroups/' +
             workgroupId +
             '/years/' +
             year +
             '/termCode/' +
-            shortTermCode
+            termShortCode
         );
       },
       // download: function (workgroupId, year) {

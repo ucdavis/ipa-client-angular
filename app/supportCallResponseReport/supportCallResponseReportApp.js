@@ -25,6 +25,17 @@ function config($routeProvider) {
       resolve: {
         validate: function (
           AuthService,
+        ) {
+          return AuthService.validate();
+        },
+      },
+    })
+    .when('/:workgroupId/:year/:termShortCode', {
+      template: require('./supportCallResponseReportCtrl.html'),
+      controller: 'SupportCallResponseReportCtrl',
+      resolve: {
+        validate: function (
+          AuthService,
           $route,
           SupportCallResponseReportActionCreators
         ) {
