@@ -61,21 +61,16 @@
     <table>
       <thead>
         <tr>
-          <th>
-            Students
-          </th>
-          <!-- <th ng-repeat="termCode in view.state.termCodes">
-            {{ getTermName(termCode) }}
-          </th> -->
-          <th style="width: 33%;">Availabilities</th>
-          <th style="width: 33%;">Preferences</th>
-          <th style="width: 33%;">Comments</th>
+          <th>Students</th>
+          <th ng-if="view.state.ui.showAvailabilities" style="width: 33%;">Not Available</th>
+          <th ng-if="view.state.ui.showPreferences" style="width: 33%;">Preferences</th>
+          <th ng-if="view.state.ui.showGeneralComments" style="width: 33%;">Comments</th>
         </tr>
       </thead>
       <tbody>
         <!-- table body (row pairs) -->
         <tr
-          ng-repeat-start="supportStaff in view.state.supportStaff | orderBy: 'lastName'"
+          ng-repeat="supportStaff in view.state.supportStaff | orderBy: 'lastName'"
           style="border-bottom: none;"
         >
           <td
@@ -97,15 +92,20 @@
           </td>
 
           <!-- availabilities -->
-          <td>
+          <td ng-if="view.state.ui.showAvailabilities">
             <div style="margin: 20px;">
             <availability-grid blob="supportStaff.supportCallResponse.availabilityBlob"
               read-only="true"></availability-grid>
             </div>
+            <!-- 
+            <p ng-repeat="availability in supportStaff.availabilities">
+              <strong>{{ availability.day }}</strong> {{ availability.times }}
+            </p>
+            -->
           </td>
 
           <!-- preferences -->
-          <td>
+          <td ng-if="view.state.ui.showPreferences">
             <div style="padding: 20px 15px 20px 15px;">
               <div class="preferences-cell">
                 <div ng-repeat="preference in supportStaff.preferences" style="background-color: #ddd; margin: 10px; padding: 10px;">
@@ -121,24 +121,10 @@
           </td>
 
           <!-- comment row -->
-          <td>
+          <td ng-if="view.state.ui.showGeneralComments">
             <div style="padding: 20px 15px 20px 15px;">
               <div class="comment-cell">
               {{ supportStaff.supportCallResponse.generalComments }}
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr ng-repeat-end>
-          <td ng-repeat="termCode in view.state.termCodes">
-            <div
-              ng-if="instructor.availabilityByTermCode[termCode].length > 0"
-              style="padding: 20px 15px 20px 15px;"
-            >
-              <div
-                ng-repeat="availability in instructor.availabilityByTermCode[termCode]"
-              >
-                <b>{{ availability.day }}</b> {{ availability.times }}
               </div>
             </div>
           </td>

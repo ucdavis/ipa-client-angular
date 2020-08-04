@@ -92,14 +92,32 @@ class SupportCallResponseReportStateService {
                 .sort((a, b) => {
                   return a.priority - b.priority;
                 });
-              supportStaff.availabilities = AvailabilityService.availabilityBlobToDescriptions(
+              supportStaff.availabilities = supportStaff.supportCallResponse ? AvailabilityService.availabilityBlobToDescriptions(
                 supportStaff.supportCallResponse.availabilityBlob
-              );
+              ) : [];
             });
             return supportStaff;
           }
           default:
             return supportStaff;
+        }
+      },
+      _uiReducers: function (action, ui) {
+        switch (action.type) {
+          case ActionTypes.INIT_STATE: {
+            let sampleResponse = action.payload.studentSupportCallResponses[0];
+            let ui = {
+              showAvailabilities: sampleResponse.collectAvailabilityByCrn || sampleResponse.collectAvailabilityByGrid,
+              showEligibilityConfirmation: sampleResponse.collectEligibilityConfirmation,
+              showGeneralComments: sampleResponse.collectGeneralComments,
+              showLanguageProficiencies: sampleResponse.collectLanguageProficiencies,
+              showTeachingQualifications: sampleResponse.collectTeachingQualifications,
+              showPreferences: sampleResponse.collectAssociateInstructorPreferences || sampleResponse.collectTeachingAssistantPreferences || sampleResponse.collectReaderPreferences
+            };
+            return ui;
+          }
+          default:
+            return ui;
         }
       },
       reduce: function (action) {
@@ -122,6 +140,10 @@ class SupportCallResponseReportStateService {
           supportStaff: scope._supportStaffReducers(
             action,
             scope._state.supportStaff
+          ),
+          ui: scope._uiReducers(
+            action,
+            scope._state.ui
           ),
         };
 
