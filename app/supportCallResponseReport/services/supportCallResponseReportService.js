@@ -16,10 +16,10 @@ class SupportCallResponseReportService {
             termShortCode
         );
       },
-      download: function (workgroupId, year) {
+      download: function (workgroupId, year, termShortCode) {
         var deferred = $q.defer();
 
-        $http.get(window.serverRoot + "/api/supportCallResponseReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
+        $http.get(window.serverRoot + "/api/supportCallResponseReportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termShortCode + "/generateExcel", { withCredentials: true })
         .then(function(payload) {
           $window.location.href = payload.data.redirect;
           deferred.resolve(payload.data);

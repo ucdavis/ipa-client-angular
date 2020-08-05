@@ -53,7 +53,8 @@ class SupportCallResponseReportCtrl {
     $scope.download = function () {
       SupportCallResponseReportService.download(
         $scope.workgroupId,
-        $scope.year
+        $scope.year,
+        $scope.termShortCode
       );
     };
   }
