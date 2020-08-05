@@ -126,7 +126,8 @@ class SupportCallResponseReportStateService {
                   sampleResponse.collectAvailabilityByGrid,
                 showEligibilityConfirmation:
                   sampleResponse.collectEligibilityConfirmation,
-                showGeneralComments: sampleResponse.collectGeneralComments,
+                showGeneralComments:
+                  sampleResponse.collectGeneralComments,
                 showLanguageProficiencies:
                   sampleResponse.collectLanguageProficiencies,
                 showTeachingQualifications:
