@@ -40,6 +40,8 @@ class SupportCallResponseReportActionCreators {
         );
       },
       toggleFilter: function (filter) {
+        filter.selected = !filter.selected;
+
         SupportCallResponseReportStateService.reduce({
           type: ActionTypes.TOGGLE_FILTER,
           payload: {

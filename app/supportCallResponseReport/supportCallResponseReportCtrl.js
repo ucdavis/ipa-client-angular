@@ -40,13 +40,21 @@ class SupportCallResponseReportCtrl {
           _self.$scope.sharedState.workgroup.id
         );
 
-        _self.$scope.filters = Object.keys(_self.$scope.view.state.ui).map(colKey => (
+        _self.$scope.filters = Object.keys(_self.$scope.view.state.ui).map(key => (
           {
-            colKey,
-            description: colKey.slice(4).split(/(?=[A-Z])/).join(" "),
-            selected: _self.$scope.view.state.ui[colKey]
+            key,
+            description: key.slice(4).split(/(?=[A-Z])/).join(" "),
+            selected: _self.$scope.view.state.ui[key]
           }
         ));
+
+        if (_self.$scope.view.state.ui.showSubmitted === true) {
+          _self.$scope.filteredSupportStaff = _self.$scope.view.state.supportStaff.filter(staff => {
+            return staff.preferences.length > 0;
+          });
+        } else {
+          _self.$scope.filteredSupportStaff = _self.$scope.view.state.supportStaff;
+        }
     });
 
     $scope.sharedState = $scope.sharedState || AuthService.getSharedState();

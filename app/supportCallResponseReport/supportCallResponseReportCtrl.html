@@ -42,8 +42,7 @@
       <div class="table-toolbar">
         <ipa-filter
           items="filters"
-          title="'Toggle Columns'"
-          tooltip="'Toggle Columns'"
+          title="'Toggle Filters'"
           button-icon="'glyphicon-filter'"
           select-item="toggleFilter(item)"
           border-less="true"
@@ -100,7 +99,7 @@
       </thead>
       <tbody>
         <tr
-          ng-repeat="supportStaff in view.state.supportStaff | orderBy: 'lastName'"
+          ng-repeat="supportStaff in filteredSupportStaff | orderBy: 'lastName'"
           ng-class-even="'support-call-response-report__row--even'"
           style="border-bottom: none;"
         >

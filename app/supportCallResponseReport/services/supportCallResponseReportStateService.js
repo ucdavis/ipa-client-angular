@@ -95,6 +95,7 @@ class SupportCallResponseReportStateService {
           case ActionTypes.INIT_STATE: {
             let sampleResponse = action.payload.studentSupportCallResponses[0];
             let ui = {
+              showSubmitted: false,
               showPreferences: true,
             };
 
@@ -121,9 +122,7 @@ class SupportCallResponseReportStateService {
             return ui;
           }
           case ActionTypes.TOGGLE_FILTER: {
-            ui[action.payload.filter.colKey] = !ui[
-              action.payload.filter.colKey
-            ];
+            ui[action.payload.filter.key] = action.payload.filter.selected;
             return ui;
           }
           default:
