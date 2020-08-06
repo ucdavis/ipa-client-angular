@@ -94,30 +94,34 @@ class SupportCallResponseReportStateService {
         switch (action.type) {
           case ActionTypes.INIT_STATE: {
             let sampleResponse = action.payload.studentSupportCallResponses[0];
-            let ui = {
-              showSubmitted: false,
-              showPreferences: true,
-            };
+            let ui = {};
 
             if (sampleResponse) {
+              if (sampleResponse.collectEligibilityConfirmation) {
+                ui['showConfirmedEligibility'] = true;
+              }
+
+              if (sampleResponse.collectLanguageProficiencies) {
+                ui['showLanguageProficiency'] = true;
+              }
               if (
                 sampleResponse.collectAvailabilityByCrn ||
                 sampleResponse.collectAvailabilityByGrid
               ) {
-                ui['showAvailabilities'] = true;
+                ui['showUnavailableTimes'] = true;
               }
-              if (sampleResponse.collectEligibilityConfirmation) {
-                ui['showEligibilityConfirmation'] = true;
-              }
-              if (sampleResponse.collectGeneralComments) {
-                ui['showGeneralComments'] = true;
-              }
-              if (sampleResponse.collectLanguageProficiencies) {
-                ui['showLanguageProficiencies'] = true;
-              }
+
+              ui['showPreferences'] = true; // always collected
+
               if (sampleResponse.collectTeachingQualifications) {
                 ui['showTeachingQualifications'] = true;
               }
+
+              if (sampleResponse.collectGeneralComments) {
+                ui['showComments'] = true;
+              }
+
+              ui['showSubmitted'] = false;
             }
             return ui;
           }

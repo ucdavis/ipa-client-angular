@@ -80,7 +80,7 @@
       <thead>
         <tr>
           <th style="width: 10%;">Students</th>
-          <th ng-if="view.state.ui.showAvailabilities" style="width: 15%;">
+          <th ng-if="view.state.ui.showUnavailableTimes" style="width: 15%;">
             Unavailable Times
           </th>
           <th ng-if="view.state.ui.showPreferences" style="width: 25%;">
@@ -92,7 +92,7 @@
           >
             Teaching Qualifications
           </th>
-          <th ng-if="view.state.ui.showGeneralComments" style="width: 25%;">
+          <th ng-if="view.state.ui.showComments" style="width: 25%;">
             Comments
           </th>
         </tr>
@@ -129,7 +129,7 @@
                 ></i>
               </small>
             </div>
-            <div ng-if="view.state.ui.showEligibilityConfirmation">
+            <div ng-if="view.state.ui.showConfirmedEligibility">
               <small>
                 Confirmed Eligibility:
                 <i
@@ -141,7 +141,7 @@
                 ></i>
               </small>
             </div>
-            <div ng-if="view.state.ui.showLanguageProficiencies">
+            <div ng-if="view.state.ui.showLanguageProficiency">
               <small>
                 Language Proficiency:
                 <div style="padding-left: 15px; max-width: 75%;">
@@ -154,7 +154,7 @@
           </td>
 
           <!-- availabilities -->
-          <td ng-if="view.state.ui.showAvailabilities">
+          <td ng-if="view.state.ui.showUnavailableTimes">
             <div style="margin: 20px;">
               <availability-grid
                 blob="supportStaff.supportCallResponse.availabilityBlob"
@@ -206,7 +206,7 @@
           </td>
 
           <!-- general comment -->
-          <td ng-if="view.state.ui.showGeneralComments">
+          <td ng-if="view.state.ui.showComments">
             <div style="padding: 20px 15px 20px 15px;">
               <div class="comment-cell">
                 {{ supportStaff.supportCallResponse.generalComments }}
