@@ -61,25 +61,10 @@ class SupportCallResponseReportStateService {
             return supportCallResponses;
         }
       },
-      // _studentSupportPreferencesReducers: function (
-      //   action,
-      //   studentSupportPreferences
-      // ) {
-      //   switch (action.type) {
-      //     case ActionTypes.INIT_STATE: {
-      //       studentSupportPreferences =
-      //         action.payload.studentSupportPreferences;
-      //       action.payload.studentSupportPreferences;
-      //       return studentSupportPreferences;
-      //     }
-      //     default:
-      //       return studentSupportPreferences;
-      //   }
-      // },
       _supportStaffReducers: function (action, supportStaff) {
         switch (action.type) {
           case ActionTypes.INIT_STATE: {
-            supportStaff = action.payload.supportStaffList;
+            supportStaff = action.payload.supportStaff;
 
             supportStaff.map((supportStaff) => {
               supportStaff.supportCallResponse = action.payload.studentSupportCallResponses.find(
@@ -98,7 +83,6 @@ class SupportCallResponseReportStateService {
                   )
                 : [];
             });
-            console.log(supportStaff.filter((ss) => ss.lastName === 'Abbott'));
 
             return supportStaff;
           }

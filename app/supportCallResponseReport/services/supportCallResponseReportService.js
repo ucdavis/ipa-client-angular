@@ -8,7 +8,7 @@ class SupportCallResponseReportService {
     return {
       getInitialState: function (workgroupId, year, termShortCode) {
         return ApiService.get(
-          '/api/instructionalSupportView/workgroups/' +
+          '/api/supportCallResponseReportView/workgroups/' +
             workgroupId +
             '/years/' +
             year +
