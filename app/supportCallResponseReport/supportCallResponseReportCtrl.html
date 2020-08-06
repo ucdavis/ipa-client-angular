@@ -27,7 +27,8 @@
       style="text-align: center; height: 100%; background-color: white;"
     >
       <p class="lead">
-        No Support Call Responses found for {{sharedState.workgroup.name}}, {{ termCode.getTermCodeDisplayName() }}
+        No Support Call Responses found for {{sharedState.workgroup.name}}, {{
+        termCode.getTermCodeDisplayName() }}
       </p>
     </div>
   </div>
@@ -39,15 +40,15 @@
     <!-- Toolbar -->
     <div class="row hidden-print">
       <div class="table-toolbar">
+        <ipa-filter
+          items="filters"
+          title="'Toggle Columns'"
+          tooltip="'Toggle Columns'"
+          button-icon="'glyphicon-filter'"
+          select-item="toggleFilter(item)"
+          border-less="true"
+        ></ipa-filter>
         <div class="btn-group">
-          <ipa-filter
-            items="filters"
-            title="'Toggle Columns'"
-            tooltip="'Toggle Columns'"
-            button-icon="'glyphicon-filter'"
-            select-item="toggleFilter(item)"
-            border-less="true"
-          ></ipa-filter>
           <span
             data-toggle="tooltip"
             data-placement="top"
@@ -174,13 +175,18 @@
               <div class="preferences-cell">
                 <div
                   ng-repeat="preference in supportStaff.preferences"
-                  style="background-color: #ddd; margin: 10px; padding: 10px; border-radius: 3px;"
+                  style="
+                    background-color: #ddd;
+                    margin: 10px;
+                    padding: 10px;
+                    border-radius: 3px;
+                  "
                 >
                   <p
                     ng-init="course = view.state.courses[view.state.sectionGroups[preference.sectionGroupId].courseId]"
                   >
-                    {{ preference.priority }}) {{ course.subjectCode
-                    }} {{ course.courseNumber }} - {{ preference.type ===
+                    {{ preference.priority }}) {{ course.subjectCode }} {{
+                    course.courseNumber }} - {{ preference.type ===
                     'teachingAssistant' ? "Teaching Assistant" : "Reader"}}
                   </p>
                   <p>
