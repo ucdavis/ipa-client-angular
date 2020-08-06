@@ -157,9 +157,11 @@
           <td ng-if="view.state.ui.showUnavailableTimes">
             <div style="margin: 20px;">
               <availability-grid
+                ng-if="supportStaff.supportCallResponse.availabilityBlob"
                 blob="supportStaff.supportCallResponse.availabilityBlob"
                 read-only="true"
               ></availability-grid>
+              <p ng-if="!supportStaff.supportCallResponse.availabilityBlob" style="font-weight:200">No times submitted</p>
             </div>
             <!-- 
             <p ng-repeat="availability in supportStaff.availabilities">
