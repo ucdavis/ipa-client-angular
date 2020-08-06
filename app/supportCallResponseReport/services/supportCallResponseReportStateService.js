@@ -95,34 +95,35 @@ class SupportCallResponseReportStateService {
           case ActionTypes.INIT_STATE: {
             let sampleResponse = action.payload.studentSupportCallResponses[0];
             let ui = {
-              showAvailabilities: false,
-              showEligibilityConfirmation: false,
-              showGeneralComments: false,
-              showLanguageProficiencies: false,
-              showTeachingQualifications: false,
-              showPreferences: false,
+              showPreferences: true,
             };
 
             if (sampleResponse) {
-              ui = {
-                showAvailabilities:
-                  sampleResponse.collectAvailabilityByCrn ||
-                  sampleResponse.collectAvailabilityByGrid,
-                showEligibilityConfirmation:
-                  sampleResponse.collectEligibilityConfirmation,
-                showGeneralComments:
-                  sampleResponse.collectGeneralComments,
-                showLanguageProficiencies:
-                  sampleResponse.collectLanguageProficiencies,
-                showTeachingQualifications:
-                  sampleResponse.collectTeachingQualifications,
-                showPreferences:
-                  sampleResponse.collectAssociateInstructorPreferences ||
-                  sampleResponse.collectTeachingAssistantPreferences ||
-                  sampleResponse.collectReaderPreferences,
-              };
+              if (
+                sampleResponse.collectAvailabilityByCrn ||
+                sampleResponse.collectAvailabilityByGrid
+              ) {
+                ui['showAvailabilities'] = true;
+              }
+              if (sampleResponse.collectEligibilityConfirmation) {
+                ui['showEligibilityConfirmation'] = true;
+              }
+              if (sampleResponse.collectGeneralComments) {
+                ui['showGeneralComments'] = true;
+              }
+              if (sampleResponse.collectLanguageProficiencies) {
+                ui['showLanguageProficiencies'] = true;
+              }
+              if (sampleResponse.collectTeachingQualifications) {
+                ui['showTeachingQualifications'] = true;
+              }
             }
-
+            return ui;
+          }
+          case ActionTypes.TOGGLE_FILTER: {
+            ui[action.payload.filter.colKey] = !ui[
+              action.payload.filter.colKey
+            ];
             return ui;
           }
           default:

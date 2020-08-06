@@ -26,6 +26,7 @@ class SupportCallResponseReportCtrl {
     $scope.year = this.$routeParams.year;
     $scope.termShortCode = $routeParams.termShortCode;
     $scope.termCode = TermService.termToTermCode($scope.termShortCode, $scope.year);
+    $scope.filters = [];
     $scope.view = {};
 
     $rootScope.$on('reportStateChanged', function (event, data) {
@@ -38,16 +39,24 @@ class SupportCallResponseReportCtrl {
           'academicPlanner',
           _self.$scope.sharedState.workgroup.id
         );
+
+        _self.$scope.filters = Object.keys(_self.$scope.view.state.ui).map(colKey => (
+          {
+            colKey,
+            description: colKey.slice(4).split(/(?=[A-Z])/).join(" "),
+            selected: _self.$scope.view.state.ui[colKey]
+          }
+        ));
     });
 
     $scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
-    $scope.getLanguageProficiencyDescription = function (langaugeProficiency) {
-      return SupportCallService.getLanguageProficiencyDescription(langaugeProficiency);
+    $scope.toggleFilter = function (filter) {
+      SupportCallResponseReportActionCreators.toggleFilter(filter);
     };
 
-    $scope.getTermName = function (term) {
-      return TermService.getTermName(term);
+    $scope.getLanguageProficiencyDescription = function (langaugeProficiency) {
+      return SupportCallService.getLanguageProficiencyDescription(langaugeProficiency);
     };
 
     $scope.download = function () {

@@ -81,6 +81,7 @@ const SupportCallResponseReportApp = angular // eslint-disable-line no-undef
   .service('AvailabilityService', AvailabilityService)
   .constant('ActionTypes', {
     INIT_STATE: 'INIT_STATE',
+    TOGGLE_FILTER: 'TOGGLE_FILTER',
   });
 
 export default SupportCallResponseReportApp;

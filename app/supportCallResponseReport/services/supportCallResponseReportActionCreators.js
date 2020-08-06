@@ -39,6 +39,14 @@ class SupportCallResponseReportActionCreators {
           }
         );
       },
+      toggleFilter: function (filter) {
+        SupportCallResponseReportStateService.reduce({
+          type: ActionTypes.TOGGLE_FILTER,
+          payload: {
+            filter
+          }
+        });
+      }
     };
   }
 }
