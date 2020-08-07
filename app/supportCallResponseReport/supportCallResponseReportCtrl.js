@@ -67,12 +67,24 @@ class SupportCallResponseReportCtrl {
       return SupportCallService.getLanguageProficiencyDescription(langaugeProficiency);
     };
 
-    $scope.download = function () {
-      SupportCallResponseReportService.download(
-        $scope.workgroupId,
-        $scope.year,
-        $scope.termShortCode
-      );
+    $scope.getShortTermName = function (termShortCode) {
+      return TermService.getShortTermName(termShortCode);
+    };
+
+    $scope.download = function (singleTerm) {
+      if (singleTerm) {
+        SupportCallResponseReportService.download(
+          $scope.workgroupId,
+          $scope.year,
+          $scope.termShortCode
+        );
+      } else {
+        SupportCallResponseReportService.download(
+          $scope.workgroupId,
+          $scope.year,
+        );
+      }
+
     };
   }
 }

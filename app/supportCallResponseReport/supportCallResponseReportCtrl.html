@@ -49,16 +49,23 @@
         ></ipa-filter>
         <div class="btn-group">
           <span
-            data-toggle="tooltip"
+            data-toggle="dropdown"
             data-placement="top"
             data-original-title="Download as Excel"
             data-container="body"
-            ng-click="download()"
             class="tool-icon glyphicon glyphicon-download-alt"
             aria-haspopup="true"
             aria-expanded="false"
           >
           </span>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li style="cursor: pointer;">
+               <a ng-click="download(true)">Download {{ getShortTermName(termShortCode) }} as Excel</a>
+            </li>
+            <li style="cursor: pointer;">
+              <a ng-click="download(false)">Download All Terms as Excel</a>
+            </li>
+          </ul>
         </div>
         <!-- <span
           data-toggle="tooltip"
