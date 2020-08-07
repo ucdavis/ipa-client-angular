@@ -22,12 +22,6 @@ table tbody tr {
   border-bottom: 1px solid #ebebeb;
 }
 
-.comment-cell {
-  margin: 10px;
-  padding: 10px;
-  white-space: pre-line;
-}
-
 .green {
   color: green;
 }
@@ -42,12 +36,35 @@ table tbody tr {
   display: block;
 }
 
+.support-call-response-report-container__cell--header {
+  font-size: 14px;
+  overflow: hidden;
+  padding: 20px 15px 20px 15px;
+}
+
 .support-call-response-report__row--even {
   background-color: #f5f5f5;
 }
 
-/* Toolbar styles */
+.support-call-response-report__cell {
+  display: flex;
+  justify-content: center;
+  padding: 20px 15px 20px 15px;
+}
 
+.support-call-response-report__cell--comment {
+  margin-top: -1.5em;
+  white-space: pre-line;
+}
+
+.support-call-response-report__cell--preference {
+  width: 80%;
+  background-color: #ddd;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+/* Toolbar styles */
 .table-toolbar {
   display: flex;
   justify-content: flex-end;
@@ -58,6 +75,7 @@ table tbody tr {
 .tool-icon {
   margin: 0 0.5em;
   padding: 0.5em;
+  font-size: 14px;
 }
 .tool-icon:hover {
   cursor: pointer;
@@ -73,15 +91,4 @@ table tbody tr {
 
 .table-toolbar .dropdown-menu {
   min-width: 200px;
-}
-
-.table-toolbar .tool-icon {
-  margin: 0 0.5em;
-  padding: 0.5em;
-}
-
-.table-toolbar .tool-icon:hover {
-  cursor: pointer;
-  background: #ebebeb;
-  border-radius: 3px;
 }

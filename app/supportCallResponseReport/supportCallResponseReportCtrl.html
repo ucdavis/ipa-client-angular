@@ -59,12 +59,6 @@
             aria-expanded="false"
           >
           </span>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="#" class="small">as Excel</a>
-            </li>
-            <li><a href="#" class="small">as CSV</a></li>
-          </ul>
         </div>
         <!-- <span
           data-toggle="tooltip"
@@ -103,13 +97,7 @@
           ng-class-even="'support-call-response-report__row--even'"
           style="border-bottom: none;"
         >
-          <td
-            style="
-              font-size: 14px;
-              overflow: hidden;
-              padding: 20px 15px 20px 15px;
-            "
-          >
+          <td class="support-call-response-report-container__cell--header">
             <p>
               <strong
                 >{{ supportStaff.lastName }}, {{ supportStaff.firstName
@@ -123,9 +111,6 @@
                 <i
                   ng-if="supportStaff.supportCallResponse.submitted"
                   class="green glyphicon glyphicon-ok"
-                  uib-tooltip="Submitted Preferences"
-                  tooltip-placement="top"
-                  tooltip-append-to-body="true"
                 ></i>
               </small>
             </div>
@@ -135,9 +120,6 @@
                 <i
                   ng-if="supportStaff.supportCallResponse.eligibilityConfirmed"
                   class="green glyphicon glyphicon-ok"
-                  uib-tooltip="Submitted Preferences"
-                  tooltip-placement="top"
-                  tooltip-append-to-body="true"
                 ></i>
               </small>
             </div>
@@ -155,14 +137,14 @@
 
           <!-- availabilities -->
           <td ng-if="view.state.ui.showUnavailableTimes">
-            <div style="margin: 20px;">
+            <div class="support-call-response-report__cell">
               <availability-grid
                 ng-if="supportStaff.supportCallResponse.availabilityBlob"
                 blob="supportStaff.supportCallResponse.availabilityBlob"
                 read-only="true"
               ></availability-grid>
-              <p ng-if="!supportStaff.supportCallResponse.availabilityBlob" style="font-weight:200">No times submitted</p>
-            </div>
+          </div>
+            <!-- <p ng-if="!supportStaff.supportCallResponse.availabilityBlob" style="font-weight:200">No times submitted</p> -->
             <!-- 
             <p ng-repeat="availability in supportStaff.availabilities">
               <strong>{{ availability.day }}</strong> {{ availability.times }}
@@ -172,17 +154,8 @@
 
           <!-- preferences -->
           <td ng-if="view.state.ui.showPreferences">
-            <div style="padding: 20px 15px 20px 15px;">
-              <div class="preferences-cell">
-                <div
-                  ng-repeat="preference in supportStaff.preferences"
-                  style="
-                    background-color: #ddd;
-                    margin: 10px;
-                    padding: 10px;
-                    border-radius: 3px;
-                  "
-                >
+            <div class="support-call-response-report__cell">
+              <div ng-repeat="preference in supportStaff.preferences" class="support-call-response-report__cell--preference">
                   <p
                     ng-init="course = view.state.courses[view.state.sectionGroups[preference.sectionGroupId].courseId]"
                   >
@@ -200,19 +173,19 @@
 
           <!-- teaching qualifications -->
           <td ng-if="view.state.ui.showTeachingQualifications">
-            <div style="padding: 20px 15px 20px 15px;">
-              <div class="comment-cell">
-                {{ supportStaff.supportCallResponse.teachingQualifications }}
+              <div class="support-call-response-report__cell">
+                <p class="support-call-response-report__cell--comment">
+                  {{ supportStaff.supportCallResponse.teachingQualifications.trim() }}
+                </p>
               </div>
-            </div>
           </td>
 
           <!-- general comment -->
           <td ng-if="view.state.ui.showComments">
-            <div style="padding: 20px 15px 20px 15px;">
-              <div class="comment-cell">
-                {{ supportStaff.supportCallResponse.generalComments }}
-              </div>
+            <div class="support-call-response-report__cell">
+              <p class="support-call-response-report__cell--comment">
+                {{ supportStaff.supportCallResponse.generalComments.trim() }}
+              </p>
             </div>
           </td>
         </tr>
