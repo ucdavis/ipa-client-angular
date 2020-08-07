@@ -48,6 +48,7 @@ table tbody tr {
 
 .support-call-response-report__cell {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 20px 15px 20px 15px;
 }
@@ -60,6 +61,7 @@ table tbody tr {
 .support-call-response-report__cell--preference {
   width: 80%;
   background-color: #ddd;
+  margin-bottom: 10px;
   border-radius: 3px;
   padding: 10px;
 }
