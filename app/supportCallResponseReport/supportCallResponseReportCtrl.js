@@ -84,7 +84,6 @@ class SupportCallResponseReportCtrl {
           $scope.year,
         );
       }
-
     };
   }
 }

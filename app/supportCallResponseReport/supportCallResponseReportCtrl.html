@@ -5,7 +5,8 @@
 ></nav>
 
 <div class="support-call-response-report-container">
-  <ipa-header page-title="Support Call Response Report"></ipa-header>
+  <ipa-header page-title="Support Call Response Report" class="do-not-print"></ipa-header>
+  <h4 class="print-only">Support Call Response Report - {{ termCode.getTermCodeDisplayName() }}</h4>
 
   <spinner
     ng-if="!noAccess && !view.state"
@@ -67,13 +68,13 @@
             </li>
           </ul>
         </div>
-        <!-- <span
+        <span
           data-toggle="tooltip"
           data-placement="top"
           data-original-title="Print"
           ng-click="print()"
           class="tool-icon glyphicon glyphicon-print"
-        ></span> -->
+        ></span>
       </div>
     </div>
 
@@ -101,10 +102,10 @@
       <tbody>
         <tr
           ng-repeat="supportStaff in filteredSupportStaff | orderBy: 'lastName'"
+          ng-class-odd="'support-call-response-report__row--odd'"
           ng-class-even="'support-call-response-report__row--even'"
-          style="border-bottom: none;"
         >
-          <td class="support-call-response-report-container__cell--header">
+          <td class="support-call-response-report__cell--header">
             <p>
               <strong
                 >{{ supportStaff.lastName }}, {{ supportStaff.firstName
@@ -133,7 +134,7 @@
             <div ng-if="view.state.ui.showLanguageProficiency">
               <small>
                 Language Proficiency:
-                <div style="padding-left: 15px; max-width: 75%;">
+                <div class="support-call-reponse-report__cell--language">
                   {{
                   getLanguageProficiencyDescription(supportStaff.supportCallResponse.languageProficiency)
                   }}
