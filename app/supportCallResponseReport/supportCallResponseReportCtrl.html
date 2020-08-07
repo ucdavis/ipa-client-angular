@@ -63,7 +63,7 @@
                <a ng-click="download(true)">Download {{ getShortTermName(termShortCode) }} as Excel</a>
             </li>
             <li style="cursor: pointer;">
-              <a ng-click="download(false)">Download All Terms as Excel</a>
+              <a ng-click="download(false)">Download {{ year.yearToAcademicYear() }} as Excel</a>
             </li>
           </ul>
         </div>
