@@ -31,7 +31,6 @@ class SupportCallResponseReportCtrl {
 
     $rootScope.$on('reportStateChanged', function (event, data) {
       _self.$scope.view.state = data.state;
-      console.log(data.state); // TODO: DELETE ME
 
       _self.$scope.view.hasAccess =
         _self.$scope.sharedState.currentUser.isAdmin() ||
