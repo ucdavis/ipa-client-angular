@@ -89,6 +89,10 @@ class AssignmentService {
 			searchCourses: function(query) {
 				return ApiService.get("/courses/search?q=" + query + "&token=" + window.dwToken, null, window.dwUrl);
 			},
+			createCourseComment: function (courseId, courseComment) {
+				let workgroupId = JSON.parse(localStorage.getItem('workgroup')).id;
+				return ApiService.post(`/api/assignmentView/${workgroupId}/course/${courseId}/courseComments`, courseComment);
+			},
 			allTerms: function () {
 				var allTerms = {
 					'05': 'Summer Session 1',

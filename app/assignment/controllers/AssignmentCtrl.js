@@ -31,7 +31,8 @@ class AssignmentCtrl {
 		$scope.unavailabilityModalStyles = { "width": "62%" };
 		$scope.modals = {
 			isCommentModalOpen: false,
-			isUnavailabilityModalOpen: false
+			isUnavailabilityModalOpen: false,
+			isCourseCommentModalOpen: false
 		};
 
 		$rootScope.$on('assignmentStateChanged', function (event, data) {
@@ -138,6 +139,19 @@ class AssignmentCtrl {
 			}
 
 			$scope.modals.isCommentModalOpen = true;
+			$scope.$apply();
+		};
+
+		$scope.openCourseCommentModal = function(courseId) {
+			$scope.modals.isCourseCommentModalOpen = true;
+			$scope.view.selectedCourse = $scope.view.state.courses.list[courseId];
+
+			let courseSectionGroups = Object.values($scope.view.state.sectionGroups.list).filter(sectionGroup => sectionGroup.courseId === courseId);
+			let approvedTeachingAssignments = courseSectionGroups.map(sectionGroup => sectionGroup.teachingAssignmentIds
+				.map(teachingAssignmentId => $scope.view.state.teachingAssignments.list[teachingAssignmentId])
+				.filter(teachingAssignment => teachingAssignment.approved === true));
+			
+			$scope.view.selectedCourse.offerings = approvedTeachingAssignments;
 			$scope.$apply();
 		};
 
