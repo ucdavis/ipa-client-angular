@@ -141,7 +141,7 @@ table tbody tr {
     border: 1px solid #ebebeb;
   }
   table.availability-grid tr td.unavailable {
-    background-color: rgba(200, 200, 200, 0.8) !important;
+    background-color: #EF5350 !important;
     -webkit-print-color-adjust: exact !important;
   }
 
