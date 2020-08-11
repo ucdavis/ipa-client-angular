@@ -1,4 +1,5 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
+import { dateToCalendar } from '../../shared/helpers/dates';
 
 /**
  * Provides the main course table in the Courses View
@@ -13,6 +14,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 			professionalTable: "=",
 			currentUser: "=",
 			workGroupId: "=",
+			openCourseCommentModal: "&"
 		},
 		template: '<div class="course-list-row" ng-if="lowerDivisionTable == true">' +
 		'<div class="course-header course-description-cell">&nbsp;</div></div>' +
@@ -118,6 +120,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				return header;
 			};
 
+			scope.openCourseCommentModal = scope.openCourseCommentModal();
+
 			$rootScope.$on('assignmentStateChanged', function (event, data) {
 				scope.view.state = data;
 
@@ -202,18 +206,31 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									courseHtml += '<div class="label course-tag" style="background-color:' + tag.color + '">' + tag.name + "</div>";
 								});
 
-								courseHtml += "</div>"; // End tags
+								courseHtml += "</div><hr />"; // End tags
 
-								// Add input for course notes
-								courseHtml += '<hr />';
-								courseHtml += "<div class='course-assignments__course-note hidden-print'>";
-								courseHtml += '<textarea maxlength="750" class="form-control add-note__text-area" placeholder="Add Note" data-course-id="' + course.id + '" data-event-type="setCourseNote">' + (course.note || "") + '</textarea>';
-								courseHtml += "</div>";
-								courseHtml += "<div class='visible-print'>";
-								courseHtml += course.note || "";
-								courseHtml += "</div>";
+								// Course comments header
+								let commentCount = course.courseComments.length + (course.note ? 1 : 0);
+								courseHtml += '<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">';
+								courseHtml += '<strong>' + commentCount + ' Comment(s)</strong></div>';
 
-								courseHtml += "</div></div>"; // End course-description-cell
+								// Course comments body
+								courseHtml += '<div>';
+								if (course.note && course.courseComments.length < 1) {
+									courseHtml += '<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">Latest Comment:</div>';
+									courseHtml += `<p>${course.note}</p>`;
+								}
+								else if (course.courseComments.length > 0) {
+									let latestComment = course.courseComments.sort((a,b) => b.creationDate - a.creationDate)[0];
+									let commentTimestamp = dateToCalendar(latestComment.creationDate);
+									courseHtml += '<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">Latest Comment:</div>';
+									courseHtml += `<div style="display=inline; margin-bottom: 10px;">${latestComment.authorName} ${commentTimestamp}</div>`;
+									courseHtml += `<div style="text-align: left; margin-bottom: 10px;">${latestComment.comment}</div>`;
+								}
+								courseHtml += '</div>';
+
+								// Course comments action bar
+								courseHtml += `<button class="btn btn-default course-comments-more" data-course-id=${course.id}><i class="glyphicon glyphicon-share-alt course-comment-more"></i> View/Add Comments</button>`;
+								courseHtml += "</div></div>";
 
 								// Loop over active terms
 								$.each(scope.view.state.userInterface.enabledTerms.ids, function (i, termCodeId) { // eslint-disable-line no-undef
@@ -463,17 +480,6 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 				}
 			}); // end on event 'assignmentStateChanged'
 
-			// Handle input box edits
-			element.on("change", function(e) {
-				var $el = $(e.target); // eslint-disable-line no-undef
-				if ($el.data('event-type') != 'setCourseNote') { return; }
-
-				var courseId = $el.data('course-id');
-				var note = e.target.value;
-
-				AssignmentActionCreators.updateCourseNote(courseId, note);
-			});
-
 			// Handle Instructor UI events
 			element.click(function (e) {
 				let $el = $(e.target); // eslint-disable-line no-undef
@@ -675,6 +681,10 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 									}
 							}
 					});
+				}
+				else if ($el.hasClass('course-comments-more')) {
+					var courseId = $el.data('course-id');
+					scope.openCourseCommentModal(courseId);
 				}
 			}); // end UI event handler
 		} // end link

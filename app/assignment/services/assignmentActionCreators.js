@@ -56,23 +56,19 @@ class AssignmentActionCreators {
 					_self.$rootScope.$emit('toast', { message: "Could not load assignment view.", type: "ERROR" });
 				});
 			},
-			updateCourseNote: function (courseId, note) {
-				var course = AssignmentStateService._state.courses.list[courseId];
-				course.note = note;
-				_self.AssignmentService.updateCourse(course).then(function (newCourse) {
-					window.ipa_analyze_event('instructor assignments', 'course note updated');
-
-					_self.$rootScope.$emit('toast', { message: "Updated course note", type: "SUCCESS" });
-					var action = {
-						type: ActionTypes.UPDATE_COURSE_NOTE,
+			createCourseComment: function (courseId, courseComment) {
+				_self.AssignmentService.createCourseComment(courseId, courseComment).then(function (newCourseComment) {
+					let action = {
+						type: ActionTypes.CREATE_COURSE_COMMENT,
 						payload: {
-							course: newCourse
-						}
+							courseId,
+							courseComment: newCourseComment
+						},
 					};
+
 					_self.AssignmentStateService.reduce(action);
-				}, function () {
-					_self.$rootScope.$emit('toast', { message: "Could not update course note.", type: "ERROR" });
-				});
+				}
+				);
 			},
 			updateTagFilters: function (tagIds) {
 				var action = {

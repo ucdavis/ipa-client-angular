@@ -1,0 +1,205 @@
+<nav
+  year="{{ year }}"
+  term-short-code="{{ termShortCode }}"
+  workgroup-id="{{ workgroupId }}"
+></nav>
+
+<div class="support-call-response-report-container">
+  <ipa-header page-title="Support Call Response Report" class="do-not-print"></ipa-header>
+  <h4 class="print-only">Support Call Response Report - {{ termCode.getTermCodeDisplayName() }}</h4>
+
+  <spinner
+    ng-if="!noAccess && !view.state"
+    style="position: absolute; top: 50%;"
+  >
+  </spinner>
+
+  <!-- handle no access -->
+  <div ng-if="noAccess">
+    <no-access workgroup-name="sharedState.workgroup.name"></no-access>
+  </div>
+
+  <!-- handle lack of support call data-->
+  <div
+    ng-if="!noAccess && view.state && view.state.supportCallResponses.length === 0"
+  >
+    <div
+      class="jumbotron"
+      style="text-align: center; height: 100%; background-color: white;"
+    >
+      <p class="lead">
+        No Support Call Responses found for {{sharedState.workgroup.name}}, {{
+        termCode.getTermCodeDisplayName() }}
+      </p>
+    </div>
+  </div>
+
+  <div
+    ng-if="!noAccess && view.state && view.state.supportCallResponses.length > 0"
+    class="main-content"
+  >
+    <!-- Toolbar -->
+    <div class="row hidden-print">
+      <div class="table-toolbar">
+        <ipa-filter
+          items="filters"
+          title="'Toggle Filters'"
+          button-icon="'glyphicon-filter'"
+          select-item="toggleFilter(item)"
+          border-less="true"
+        ></ipa-filter>
+        <div class="btn-group">
+          <span
+            data-toggle="dropdown"
+            data-placement="top"
+            data-original-title="Download as Excel"
+            data-container="body"
+            class="tool-icon glyphicon glyphicon-download-alt"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+          </span>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li style="cursor: pointer;">
+               <a ng-click="download(true)">Download {{ getShortTermName(termShortCode) }} as Excel</a>
+            </li>
+            <li style="cursor: pointer;">
+              <a ng-click="download(false)">Download {{ year.yearToAcademicYear() }} as Excel</a>
+            </li>
+          </ul>
+        </div>
+        <span
+          data-toggle="tooltip"
+          data-placement="top"
+          data-original-title="Print"
+          ng-click="print()"
+          class="tool-icon glyphicon glyphicon-print"
+        ></span>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 10%;">Students</th>
+          <th ng-if="view.state.ui.showUnavailableTimes" style="width: 15%;">
+            Unavailable Times
+          </th>
+          <th ng-if="view.state.ui.showPreferences" style="width: 25%;">
+            Preferences
+          </th>
+          <th
+            ng-if="view.state.ui.showTeachingQualifications"
+            style="width: 25%;"
+          >
+            Teaching Qualifications
+          </th>
+          <th ng-if="view.state.ui.showComments" style="width: 25%;">
+            Comments
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          ng-repeat="supportStaff in filteredSupportStaff | orderBy: 'lastName'"
+          ng-class-odd="'support-call-response-report__row--odd'"
+          ng-class-even="'support-call-response-report__row--even'"
+        >
+          <td class="support-call-response-report__cell--header">
+            <p>
+              <strong
+                >{{ supportStaff.lastName }}, {{ supportStaff.firstName
+                }}</strong
+              >
+            </p>
+
+            <div>
+              <small
+                >Submitted:
+                <i
+                  ng-if="supportStaff.supportCallResponse.submitted"
+                  class="green glyphicon glyphicon-ok"
+                ></i>
+              </small>
+            </div>
+            <div ng-if="view.state.ui.showConfirmedEligibility">
+              <small>
+                Confirmed Eligibility:
+                <i
+                  ng-if="supportStaff.supportCallResponse.eligibilityConfirmed"
+                  class="green glyphicon glyphicon-ok"
+                ></i>
+              </small>
+            </div>
+            <div ng-if="view.state.ui.showLanguageProficiency">
+              <small>
+                Language Proficiency:
+                <div class="support-call-reponse-report__cell--language">
+                  {{
+                  getLanguageProficiencyDescription(supportStaff.supportCallResponse.languageProficiency)
+                  }}
+                </div>
+              </small>
+            </div>
+          </td>
+
+          <!-- availabilities -->
+          <td ng-if="view.state.ui.showUnavailableTimes">
+            <div class="support-call-response-report__cell">
+              <availability-grid
+                ng-if="supportStaff.supportCallResponse.availabilityBlob"
+                blob="supportStaff.supportCallResponse.availabilityBlob"
+                read-only="true"
+              ></availability-grid>
+          </div>
+            <!-- <p ng-if="!supportStaff.supportCallResponse.availabilityBlob" style="font-weight:200">No times submitted</p> -->
+            <!-- 
+            <p ng-repeat="availability in supportStaff.availabilities">
+              <strong>{{ availability.day }}</strong> {{ availability.times }}
+            </p>
+            -->
+          </td>
+
+          <!-- preferences -->
+          <td ng-if="view.state.ui.showPreferences">
+            <div class="support-call-response-report__cell">
+              <div ng-repeat="preference in supportStaff.preferences" class="support-call-response-report__cell--preference">
+                  <p
+                    ng-init="course = view.state.courses[view.state.sectionGroups[preference.sectionGroupId].courseId]"
+                  >
+                    {{ preference.priority }}) {{ course.subjectCode }} {{
+                    course.courseNumber }} - {{ preference.type ===
+                    'teachingAssistant' ? "Teaching Assistant" : "Reader"}}
+                  </p>
+                  <p>
+                    Comment: {{ preference.comment }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </td>
+
+          <!-- teaching qualifications -->
+          <td ng-if="view.state.ui.showTeachingQualifications">
+              <div class="support-call-response-report__cell">
+                <p class="support-call-response-report__cell--comment">
+                  {{ supportStaff.supportCallResponse.teachingQualifications.trim() }}
+                </p>
+              </div>
+          </td>
+
+          <!-- general comment -->
+          <td ng-if="view.state.ui.showComments">
+            <div class="support-call-response-report__cell">
+              <p class="support-call-response-report__cell--comment">
+                {{ supportStaff.supportCallResponse.generalComments.trim() }}
+              </p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<back-to-top></back-to-top>

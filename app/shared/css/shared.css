@@ -110,7 +110,7 @@ table.availability-grid tr th.hover {
 }
 
 table.availability-grid tr td.unavailable {
-  background-color: rgba(200, 200, 200, 0.8);
+  background-color: #EF5350;
 }
 
 table.availability-grid tr td {

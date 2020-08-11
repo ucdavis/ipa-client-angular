@@ -1,0 +1,62 @@
+.course-comment-modal {
+  position: relative;
+  width: 100%;
+  padding: 15px;
+  overflow-x: hidden;
+}
+
+.course-comment-modal textarea {
+  width: 100%;
+  resize: vertical;
+  margin-top: 20px;
+}
+
+.course-comment-modal__form-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-comment-modal__comments-count {
+  margin-top: 20px;
+}
+
+.course-comment-modal__comment-header {
+  display: flex;
+  justify-content: flex-start;
+  border-top: 1px solid #c1c1c1;
+  padding: 1%;
+}
+
+.course-comment-modal__comment-body {
+  padding: 1%;
+  white-space: pre-wrap;
+  width: 100%;
+  word-break: break-all;
+}
+
+.course-comment-modal__comment-date {
+  color: #b1b1b1;
+}
+
+.course-comment-modal__offerings {
+  padding-left: 10px;
+  padding-right: 20px;
+}
+
+.course-comment-modal__assigment-container {
+  padding-left: 10px;
+}
+
+.course-comment-modal__assigment-container .alert {
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.course-comment-modal__comment-header em {
+  color: #b1b1b1;
+}
+.course-comment-modal h3 {
+  margin-top: 0px;
+}

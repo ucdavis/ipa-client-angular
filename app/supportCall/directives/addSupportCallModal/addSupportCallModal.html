@@ -113,7 +113,9 @@
 							<div class="min-preferences-label">Minimum number of preferences</div>
 						</li>
 
-						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectGeneralComments()">
+						<li style="margin-bottom: 10px;"><strong>Select boxes below to customize items to include in support call form that recipients will see. Hover over each info icon for a brief explaination.</strong></li>
+
+						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectGeneralComments()" class="modal-add-support-call__checkbox-row">
 								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 									ng-class="{ 'checked': supportCallConfigData.collectGeneralComments }">
 									<label class="cb-wrapper">
@@ -121,9 +123,10 @@
 									</label>
 									<label>Collect general comments</label>
 								</div>
+								<i class="glyphicon glyphicon-info-sign modal-add-support-call__info" uib-tooltip="Adds text input field"></i>
 						</li>
 
-						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectTeachingQualifications()">
+						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectTeachingQualifications()" class="modal-add-support-call__checkbox-row">
 								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 									ng-class="{ 'checked': supportCallConfigData.collectTeachingQualifications }">
 									<label class="cb-wrapper">
@@ -131,9 +134,10 @@
 									</label>
 									<label>Collect teaching qualifications</label>
 								</div>
+								<i class="glyphicon glyphicon-info-sign modal-add-support-call__info" uib-tooltip="Adds text input field"></i>
 						</li>
 
-						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectPreferenceComments()">
+						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectPreferenceComments()" class="modal-add-support-call__checkbox-row">
 								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 									ng-class="{ 'checked': supportCallConfigData.collectPreferenceComments }">
 									<label class="cb-wrapper">
@@ -141,9 +145,10 @@
 									</label>
 									<label>Collect preference comments</label>
 								</div>
+								<i class="glyphicon glyphicon-info-sign modal-add-support-call__info" uib-tooltip="Adds additional comment for a course preference"></i>
 						</li>
 
-						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleRequirePreferenceComments()">
+						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleRequirePreferenceComments()" class="modal-add-support-call__checkbox-row">
 								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 									ng-class="{ 'checked': supportCallConfigData.requirePreferenceComments }">
 									<label class="cb-wrapper">
@@ -151,35 +156,32 @@
 									</label>
 									<label>Require preference comments</label>
 								</div>
+								<i class="glyphicon glyphicon-info-sign modal-add-support-call__info" uib-tooltip="Requires additional comment for a course preference"></i>
 						</li>
 
-						<li class="modal-add-support-call__checkbox-row" ng-if="supportCallConfigData.mode == 'supportStaff'">
-							<div class="modal-add-support-call__checkbox">
-								<ipa-checkbox
-									is-checked="supportCallConfigData.collectAvailabilityByGrid"
-									click-action="toggleCollectAvailabilityByGrid()">
-								</ipa-checkbox>
+						<li ng-if="supportCallConfigData.mode == 'supportStaff'" ng-click="toggleCollectAvailabilityByGrid()" class="modal-add-support-call__checkbox-row">
+							<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+								ng-class="{ 'checked': supportCallConfigData.collectAvailabilityByGrid }">
+								<label class="cb-wrapper">
+									<div class="checked"></div>
+								</label>
+								<label>Collect availability</label>
 							</div>
-							<div class="modal-add-support-call__checkbox-label"
-								ng-click="toggleCollectAvailabilityByGrid()">
-									Collect availability
-							</div>
+							<i class="glyphicon glyphicon-info-sign modal-add-support-call__info" uib-tooltip="Adds grid to block out unavailable times"></i>
 						</li>
 
-						<li class="modal-add-support-call__checkbox-row" ng-if="supportCallConfigData.mode == 'supportStaff'">
-							<div class="modal-add-support-call__checkbox">
-								<ipa-checkbox
-									is-checked="supportCallConfigData.collectAvailabilityByCrn"
-									click-action="toggleCollectAvailabilityByCrn()">
-								</ipa-checkbox>
+						<li ng-if="supportCallConfigData.mode == 'supportStaff'" ng-click="toggleCollectAvailabilityByCrn()" class="modal-add-support-call__checkbox-row">
+							<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
+								ng-class="{ 'checked': supportCallConfigData.collectAvailabilityByCrn }">
+								<label class="cb-wrapper">
+									<div class="checked"></div>
+								</label>
+								<label>Collect availability (via CRN)</label>
 							</div>
-							<div class="modal-add-support-call__checkbox-label"
-								ng-click="toggleCollectAvailabilityByCrn()">
-									Collect availability (via CRN)
-							</div>
+							<i class="glyphicon glyphicon-info-sign modal-add-support-call__info" uib-tooltip="Adds option to block out unavailable times by CRN lookup"></i>
 						</li>
 
-						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectLanguageProficiencies()">
+						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectLanguageProficiencies()" class="modal-add-support-call__checkbox-row">
 								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 									ng-class="{ 'checked': supportCallConfigData.collectLanguageProficiencies }">
 									<label class="cb-wrapper">
@@ -187,9 +189,10 @@
 									</label>
 									<label>Collect language proficiencies</label>
 								</div>
+							<i class="glyphicon glyphicon-info-sign modal-add-support-call__info" uib-tooltip="Adds dropdown to select proficiency from: undergrad from institution where English is sole language of instruction, TOEFL, IELTS, SPEAK, TOEP"></i>
 						</li>
 
-						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectEligibilityConfirmation()">
+						<li ng-if="supportCallConfigData.mode == 'supportStaff'" role="menuitem" ng-click="toggleCollectEligibilityConfirmation()" class="modal-add-support-call__checkbox-row">
 								<div class="checkbox checkbox-replace color-primary neon-cb-replacement"
 									ng-class="{ 'checked': supportCallConfigData.collectEligibilityConfirmation }">
 									<label class="cb-wrapper">
@@ -197,6 +200,7 @@
 									</label>
 									<label>Collect eligibility confirmations</label>
 								</div>
+								<i class="glyphicon glyphicon-info-sign modal-add-support-call__info" uib-tooltip="Adds checkbox to confirm TA eligibility: 12 units, >3.0 GPA, completed TA orientation, total appointments not exceeding 75%"></i>
 						</li>
 
 						<li class="modal-add-support-call__item-divider" ng-if="supportCallConfigData.mode == 'supportStaff'">
