@@ -17,7 +17,14 @@
 			            on-click="showScenarioRenameUI()"
 			            tooltip-message="'Rename Scenario'">
 			</ipa-button>
-
+			<ipa-button
+				size="'small'"
+				text="'Create Snapshot'"
+				on-click="createBudgetScenarioSnapshot()"
+				tooltip-message="'Create snapshot from displayed scenario'"
+				style="margin-left: 10px;"
+			>
+			</ipa-button>
 			<div class="budget-scenario-toolbar__sync-button"
 				uib-tooltip="Accept all schedule updates from Live Data"
 				tooltip-append-to-body="true"

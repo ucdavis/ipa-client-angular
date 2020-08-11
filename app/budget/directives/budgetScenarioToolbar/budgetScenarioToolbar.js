@@ -49,6 +49,10 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.displayScenarioRenameUI = false;
 			};
 
+			scope.createBudgetScenarioSnapshot = function() {
+				BudgetActions.createBudgetScenarioSnapshot(scope.state.selectedBudgetScenario);
+			};
+
 			// Verifies that name is unique (within budgets for that schedule) and at least 1 character long.
 			// Will generate an appropriate error message if this is not the case.
 			scope.scenarioNameIsValid = function () {

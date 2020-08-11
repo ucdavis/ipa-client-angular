@@ -240,6 +240,13 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not delete budget scenario.", type: "ERROR" });
 				});
 			},
+			createBudgetScenarioSnapshot: function (selectedBudgetScenario) {
+				BudgetService.createBudgetScenarioSnapshot(selectedBudgetScenario).then(
+					function (results) {
+						console.log('createSnapshot results:' + results);
+					}
+				);
+			},
 			updateInstructorCost: function (instructorCostDto) {
 				var self = this;
 				var instructorCost = Object.assign({}, instructorCostDto);
