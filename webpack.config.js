@@ -40,6 +40,7 @@ module.exports = {
     scheduleSummaryReportApp: './app/scheduleSummaryReport/scheduleSummaryReportApp.js',
     registrarReconciliationReportApp: './app/registrarReconciliationReport/registrarReconciliationReportApp.js',
     teachingCallResponseReportApp: './app/teachingCallResponseReport/teachingCallResponseReportApp.js',
+    supportCallResponseReportApp: './app/supportCallResponseReport/supportCallResponseReportApp.js',
     assignmentApp: './app/assignment/assignmentApp.js',
     adminApp: './app/admin/adminApp.js',
     budgetApp: './app/budget/budgetApp.js',
@@ -209,6 +210,7 @@ module.exports = {
           if ((req.url.indexOf("/registrarReconciliationReport") > -1 ) && (req.url != "/registrarReconciliationReport.html")) { return "/registrarReconciliationReport.html"; }
           if ((req.url.indexOf("/teachingCallResponseReport") > -1 ) && (req.url != "/teachingCallResponseReport.html")) { return "/teachingCallResponseReport.html"; }
           if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
+          if ((req.url.indexOf("/supportCallResponseReport") > -1 ) && (req.url != "/supportCallResponseReport.html")) { return "/supportCallResponseReport.html"; }
           if ((req.url.indexOf("/workloadSummaryReport") > -1 ) && (req.url != "/workloadSummaryReport.html")) { return "/workloadSummaryReport.html"; }
 
           return req.url;
