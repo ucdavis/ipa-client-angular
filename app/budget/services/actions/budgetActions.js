@@ -790,6 +790,7 @@ class BudgetActions {
 			},
 			selectBudgetScenario: function(selectedScenarioId) {
 				var fromLiveData = false;
+				let isSnapshot = false;
 
 				// If scenarioId was not provided, attempt to use currently selected scenario
 				if (selectedScenarioId == null) {
@@ -805,6 +806,7 @@ class BudgetActions {
 				} else {
 					var budgetScenario = BudgetReducers._state.budgetScenarios.list[selectedScenarioId];
 					fromLiveData = budgetScenario.fromLiveData;
+					isSnapshot = budgetScenario.isSnapshot;
 				}
 
 				var year = BudgetReducers._state.ui.year;
@@ -816,7 +818,8 @@ class BudgetActions {
 					type: ActionTypes.SELECT_BUDGET_SCENARIO,
 					payload: {
 						budgetScenarioId: selectedScenarioId,
-						fromLiveData: fromLiveData
+						fromLiveData: fromLiveData,
+						isSnapshot: isSnapshot
 					}
 				};
 
