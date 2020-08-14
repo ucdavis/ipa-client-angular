@@ -68,7 +68,9 @@ class BudgetReducers {
 						action.payload.instructorTypeCosts.forEach(function(instructorTypeCost) {
 							instructorTypeCosts.ids.push(instructorTypeCost.id);
 							instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
-							instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+							if (!instructorTypeCost.budgetScenarioId) {
+								instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+							}
 						});
 						return instructorTypeCosts;
 					case ActionTypes.CREATE_INSTRUCTOR_TYPE_COST:

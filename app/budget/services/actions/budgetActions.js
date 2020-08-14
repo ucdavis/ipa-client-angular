@@ -822,7 +822,9 @@ class BudgetActions {
 
 				BudgetReducers.reduce(action);
 				BudgetCalculations.calculateScenarioTerms();
+				BudgetCalculations.calculateInstructors();
 				BudgetCalculations.calculateLineItems();
+				BudgetCalculations.calculateInstructorTypeCosts();
 				ScheduleCostCalculations.calculateScheduleCosts();
 				BudgetCalculations.calculateSectionGroups();
 				BudgetCalculations.calculateTotalCost();
