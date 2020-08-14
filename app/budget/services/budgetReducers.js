@@ -786,7 +786,6 @@ class BudgetReducers {
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						debugger;
 						ui = {
 							addCourseModal: {
 								isOpen: false

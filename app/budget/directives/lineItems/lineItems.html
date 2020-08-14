@@ -9,7 +9,7 @@
 			<thead>
 				<tr>
 					<th class="line-items__table-header line-items__table--checkbox do-not-print">
-						<div class="line-items__table-header-container line-items__table-container--checkbox">
+						<div ng-if="!ui.isSnapshot" class="line-items__table-header-container line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
 							              is-checked="ui.areAllLineItemsSelected"
 							              click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
@@ -53,7 +53,7 @@
 				<tr ng-repeat="lineItem in lineItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
 					<!-- Checkbox -->
 					<td class="line-items__table-cell do-not-print" ng-class-odd="'line-items__table-cell--dark'">
-						<div class="line-items__table-container--checkbox">
+						<div ng-if="!ui.isSnapshot" class="line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
 							              is-disabled="!(lineItem.id)"
 							              is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
@@ -117,7 +117,7 @@
 							<div>
 								{{ toCurrency(lineItem.amount) }}
 							</div>
-							<div class="do-not-print">
+							<div ng-if="!ui.isSnapshot" class="do-not-print">
 								<line-item-dropdown line-item="lineItem"></line-item-dropdown>
 							</div>
 						</div>
@@ -146,7 +146,6 @@
 				<tr>
 					<th class="line-items__table-header line-items__table--checkbox">
 						<div class="line-items__table-header-container line-items__table-container--checkbox">
-
 						</div>
 					</th>
 					<th class="line-items__table-header line-items__table--type">
@@ -169,7 +168,7 @@
 			<tbody>
 				<tr ng-repeat="lineItem in lineItems track by $index" ng-show="!lineItem.id || lineItem.hidden">
 					<!-- Checkbox -->
-					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					<td ng-if="!ui.isSnapshot" class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__table-container--checkbox">
 						</div>
 					</td>
