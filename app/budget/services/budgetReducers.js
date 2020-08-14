@@ -786,6 +786,7 @@ class BudgetReducers {
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
+						debugger;
 						ui = {
 							addCourseModal: {
 								isOpen: false
@@ -840,6 +841,7 @@ class BudgetReducers {
 							lineItemDetails: {},
 							sectionGroupCostDetails: {},
 							selectedBudgetScenarioId: parseInt(action.selectedBudgetScenarioId),
+							isSnapshot: action.payload.budgetScenarios.find(scenario => scenario.id == action.selectedBudgetScenarioId).isSnapshot,
 							selectedTerm: action.selectedTerm,
 							workgroupId: action.workgroupId,
 							year: action.year

@@ -13,11 +13,12 @@
 			<ipa-button class="budget-scenario-toolbar__edit-button do-not-print"
 			            icon-class="'glyphicon glyphicon-pencil'"
 			            size="'small'"
-			            ng-show="!state.ui.fromLiveData"
+			            ng-show="!state.ui.fromLiveData && !state.selectedBudgetScenario.isSnapshot"
 			            on-click="showScenarioRenameUI()"
 			            tooltip-message="'Rename Scenario'">
 			</ipa-button>
 			<ipa-button
+				ng-if="!state.ui.isSnapshot"
 				size="'small'"
 				text="'Create Snapshot'"
 				on-click="createBudgetScenarioSnapshot()"
