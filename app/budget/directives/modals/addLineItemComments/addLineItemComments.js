@@ -9,7 +9,8 @@ let addLineItemComments = function ($rootScope, BudgetActions) {
 		replace: true,
 		scope: {
 			lineItem: '<',
-			currentUserLoginId: '<'
+			currentUserLoginId: '<',
+			isSnapshot: '<'
 		},
 		link: function (scope) {
 			scope.newComment = "";
