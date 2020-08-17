@@ -63,13 +63,23 @@ class BudgetReducers {
 						instructorTypeCosts = {
 							ids: [],
 							list: {},
-							byInstructorTypeId: {}
+							byInstructorTypeId: {},
+							byBudgetScenarioId: {}
 						};
 						action.payload.instructorTypeCosts.forEach(function(instructorTypeCost) {
 							instructorTypeCosts.ids.push(instructorTypeCost.id);
 							instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
 							if (!instructorTypeCost.budgetScenarioId) {
 								instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+							} else {
+								if (!instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId]) {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId] = {
+										byInstructorTypeId: {}
+									};
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								} else {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								}
 							}
 						});
 						return instructorTypeCosts;
@@ -394,13 +404,26 @@ class BudgetReducers {
 						instructorCosts = {
 							ids: [],
 							list: [],
-							byInstructorId: {}
+							byInstructorId: {},
+							byBudgetScenarioId: {}
 						};
 
 						action.payload.instructorCosts.forEach(function(instructorCost) {
 							instructorCosts.ids.push(instructorCost.id);
 							instructorCosts.list[instructorCost.id] = instructorCost;
-							instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+
+							if (!instructorCost.budgetScenarioId) {
+								instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+							} else {
+								if (!instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId]) {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId] = {
+										byInstructorId: {}
+									};
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								} else {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								}
+							}
 						});
 
 						return instructorCosts;
