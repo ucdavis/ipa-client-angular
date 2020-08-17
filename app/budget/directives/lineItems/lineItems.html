@@ -8,8 +8,8 @@
 		<table class="line-items__table" ng-show="ui.fundsNav.activeTab == 'Funds'">
 			<thead>
 				<tr>
-					<th class="line-items__table-header line-items__table--checkbox do-not-print">
-						<div ng-if="!ui.isSnapshot" class="line-items__table-header-container line-items__table-container--checkbox">
+					<th ng-if="!ui.isSnapshot" class="line-items__table-header line-items__table--checkbox do-not-print">
+						<div class="line-items__table-header-container line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
 							              is-checked="ui.areAllLineItemsSelected"
 							              click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
@@ -52,8 +52,8 @@
 			<tbody>
 				<tr ng-repeat="lineItem in lineItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
 					<!-- Checkbox -->
-					<td class="line-items__table-cell do-not-print" ng-class-odd="'line-items__table-cell--dark'">
-						<div ng-if="!ui.isSnapshot" class="line-items__table-container--checkbox">
+					<td ng-if="!ui.isSnapshot" class="line-items__table-cell do-not-print" ng-class-odd="'line-items__table-cell--dark'">
+						<div class="line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
 							              is-disabled="!(lineItem.id)"
 							              is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
