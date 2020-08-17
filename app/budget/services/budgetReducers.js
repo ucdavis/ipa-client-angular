@@ -809,6 +809,7 @@ class BudgetReducers {
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
+						var isSnapshot = action.payload.budgetScenarios.find(scenario => scenario.id == action.selectedBudgetScenarioId).isSnapshot;
 						ui = {
 							addCourseModal: {
 								isOpen: false
@@ -842,7 +843,7 @@ class BudgetReducers {
 								allTabs: null
 							},
 							fundsNav: {
-								allTabs: ['Funds', 'Suggested'],
+								allTabs: isSnapshot ? ['Funds'] : ['Funds', 'Suggested'],
 								activeTab: 'Funds',
 								tabOverrides: {}
 							},
@@ -863,7 +864,7 @@ class BudgetReducers {
 							lineItemDetails: {},
 							sectionGroupCostDetails: {},
 							selectedBudgetScenarioId: parseInt(action.selectedBudgetScenarioId),
-							isSnapshot: action.payload.budgetScenarios.find(scenario => scenario.id == action.selectedBudgetScenarioId).isSnapshot,
+							isSnapshot: isSnapshot,
 							selectedTerm: action.selectedTerm,
 							workgroupId: action.workgroupId,
 							year: action.year
@@ -1067,6 +1068,7 @@ class BudgetReducers {
 						};
 						return ui;
 					case ActionTypes.SELECT_BUDGET_SCENARIO:
+						ui.fundsNav.allTabs = action.payload.isSnapshot ? ['Funds'] : ['Funds', 'Suggested'];
 						ui.shouldShowCourseList = !action.payload.fromLiveData && !action.payload.isSnapshot;
 						ui.fromLiveData = action.payload.fromLiveData;
 						ui.isSnapshot = action.payload.isSnapshot;
