@@ -99,8 +99,9 @@
 						<div class="line-items__comment-container">
 							<ipa-button superscript="lineItem.commentCountDisplay"
 							            icon-color="lineItem.commentCountDisplay ? '' : 'gray'"
-							            tooltip-message="'View Comments'"
-							            icon-class="'entypo entypo-chat'"
+							            tooltip-message="(ui.isSnapshot && lineItem.commentCountDisplay == 0) ? 'No comments to show' : 'View Comments'"
+													icon-class="'entypo entypo-chat'"
+													is-disabled="ui.isSnapshot && lineItem.commentCountDisplay == 0"
 							            on-click="openAddLineItemCommentsModal(lineItem)">
 							</ipa-button>
 						</div>

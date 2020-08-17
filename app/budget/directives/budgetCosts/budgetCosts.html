@@ -106,9 +106,10 @@
                     <td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
                       <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
                                   icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
-                                  tooltip-message="'View Comments'"
+                                  tooltip-message="(isSnapshot && sectionGroupCost.commentCount == 0) ? 'No comments to show' : 'View Comments'"
                                   icon-class="'entypo entypo-chat'"
                                   text="'Comments'"
+                                  is-disabled="isSnapshot && sectionGroupCost.commentCount == 0"
                                   on-click="openAddCourseCommentsModal(sectionGroupCost)">
                       </ipa-button>
                     </td>
