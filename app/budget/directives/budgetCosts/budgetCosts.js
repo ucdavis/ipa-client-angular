@@ -32,6 +32,12 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			scope.getTagTextColor = function (color) {
 				return TagService.getTagTextColor(color);
 			};
+
+			scope.addSectionGroupCostInstructor = function(sectionGroupCost) {
+				/*console.log('Adding section group cost instructor: ', sectionGroupCost);
+				BudgetActions.createSectionGroupCostInstructor(sectionGroupCost);*/
+				BudgetActions.toggleSectionGroupCostInstructorModal(sectionGroupCost);
+			};
 		}
 	};
 };

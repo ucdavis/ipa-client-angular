@@ -436,6 +436,15 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not add course.", type: "ERROR" });
 				});
 			},
+			createSectionGroupCostInstructor: function (sectionGroupCost) {
+				console.log('Budget Actions instructor is ', sectionGroupCost);
+				var sectionGroupCostInstructor = {
+					instructorId: sectionGroupCost.originalInstructorId,
+					cost: sectionGroupCost.cost,
+				};
+				console.log('Budget actions sending to post the following ', sectionGroupCostInstructor);
+				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.id, sectionGroupCostInstructor);
+			},
 			asignInstructorType: function(instructorCost) {
 				BudgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 					var action = {
@@ -777,6 +786,16 @@ class BudgetActions {
 				var action = {
 					type: ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS,
 					payload: {}
+				};
+
+				BudgetReducers.reduce(action);
+			},
+			toggleSectionGroupCostInstructorModal: function(sectionGroupCost) {
+				var action = {
+					type: ActionTypes.TOGGLE_SECTION_GROUP_COST_INSTRUCTOR_MODAL,
+					payload: {
+						sectionGroupCost: sectionGroupCost
+					}
 				};
 
 				BudgetReducers.reduce(action);

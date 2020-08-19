@@ -829,6 +829,7 @@ class BudgetReducers {
 							isAddBudgetScenarioModalOpen: false,
 							isAddLineItemModalOpen: false,
 							isBudgetConfigModalOpen: false,
+							isSectionGroupCostInstructorModalOpen: false,
 							isLineItemOpen: false,
 							isCourseCostOpen: false,
 							instructorAssignmentOptions: [],
@@ -1030,6 +1031,10 @@ class BudgetReducers {
 						return ui;
 					case ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS:
 						ui.budgetScenariosModal.isOpen = !ui.budgetScenariosModal.isOpen;
+						return ui;
+					case ActionTypes.TOGGLE_SECTION_GROUP_COST_INSTRUCTOR_MODAL:
+						ui.isSectionGroupCostInstructorModalOpen = !ui.isSectionGroupCostInstructorModalOpen;
+						ui.sectionGroupCostToEdit = ui.isSectionGroupCostInstructorModalOpen ? action.payload.sectionGroupCost : null;
 						return ui;
 					case ActionTypes.CREATE_LINE_ITEM:
 						var lineItem = action.payload;

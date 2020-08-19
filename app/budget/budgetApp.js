@@ -46,6 +46,7 @@ import addLineItemComments from "./directives/modals/addLineItemComments/addLine
 import downloadBudgetScenarios from "./directives/modals/downloadBudgetScenarios/downloadBudgetScenarios.js";
 
 import addCourse from "./directives/modals/addCourse/addCourse.js";
+import sectionGroupCostInstructorModal from "./directives/modals/sectionGroupCostInstructorModal/sectionGroupCostInstructorModal.js";
 
 // Dependencies
 var dependencies = ["sharedApp", "ngRoute"];
@@ -122,6 +123,7 @@ const budgetApp = angular // eslint-disable-line no-undef
   .directive("courseList", courseList)
   .directive("budgetCostsPrint", budgetCostsPrint)
   .directive("downloadBudgetScenarios", downloadBudgetScenarios)
+  .directive("sectionGroupCostInstructorModal", sectionGroupCostInstructorModal)
   .constant("ActionTypes", {
     INIT_STATE: "INIT_STATE",
     CREATE_BUDGET_SCENARIO: "CREATE_BUDGET_SCENARIO",
@@ -168,7 +170,8 @@ const budgetApp = angular // eslint-disable-line no-undef
     OPEN_ADD_COURSE_MODAL: "OPEN_ADD_COURSE_MODAL",
     UPDATE_COURSE_TAG: "UPDATE_COURSE_TAG",
     UPDATE_SYNC_STATUS: "UPDATE_SYNC_STATUS",
-    TOGGLE_DOWNLOAD_BUDGET_SCENARIOS: "TOGGLE_DOWNLOAD_BUDGET_SCENARIOS"
+    TOGGLE_DOWNLOAD_BUDGET_SCENARIOS: "TOGGLE_DOWNLOAD_BUDGET_SCENARIOS",
+    TOGGLE_SECTION_GROUP_COST_INSTRUCTOR_MODAL: "TOGGLE_SECTION_GROUP_COST_INSTRUCTOR_MODAL"
   });
 
 export default budgetApp;

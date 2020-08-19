@@ -76,6 +76,12 @@ class BudgetService {
 			searchCourses: function (query) {
 				return ApiService.get("/courses/search?q=" + query + "&token=" + window.dwToken, null, window.dwUrl);
 			},
+
+			// SectionGroupCostInstructors
+			createSectionGroupCostInstructor: function(sectionGroupCostId, SectionGroupCostInstructor) {
+				console.log('Posting section group cost instructor to API from budget service ', SectionGroupCostInstructor);
+				return ApiService.post("/api/budgetView/sectionGroupCosts/" + sectionGroupCostId + "/sectionGroupCostInstructors", SectionGroupCostInstructor);
+			}
 		};
 	}
 }
