@@ -439,11 +439,11 @@ class BudgetActions {
 			createSectionGroupCostInstructor: function (sectionGroupCost) {
 				console.log('Budget Actions instructor is ', sectionGroupCost);
 				var sectionGroupCostInstructor = {
-					instructorId: sectionGroupCost.originalInstructorId,
+					instructorId: sectionGroupCost.instructorId,
 					cost: sectionGroupCost.cost,
 				};
 				console.log('Budget actions sending to post the following ', sectionGroupCostInstructor);
-				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.id, sectionGroupCostInstructor);
+				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor);
 			},
 			asignInstructorType: function(instructorCost) {
 				BudgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {

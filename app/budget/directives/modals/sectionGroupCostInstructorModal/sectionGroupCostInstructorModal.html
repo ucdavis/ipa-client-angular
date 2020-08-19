@@ -1,6 +1,26 @@
 <div class="section-group-cost-instructor-modal">
-	<span>{{sectionGroupCostToEdit.id}}</span>
-	<div ng-repeat="instructor in sectionGroupCostToEdit.sectionGroup.assignedInstructors">
-		<span>{{instructor.lastName}}</span>
+	<div>
+		<table class="table table-dark" id="assigned-instructors-table">
+			<thead style="border-bottom: 1px solid #ddd;">
+				<tr>
+					<th scope="col" style="padding-left: 10px;"><strong>Instructor</strong></th>
+					<th scope="col"><strong>Cost</strong></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="instructor in sectionGroupCostToEdit.sectionGroup.assignedInstructors">
+					<td style="padding-left: 10px; vertical-align: middle;">
+						{{instructor.lastName + ', ' + instructor.firstName}}
+					</td>
+					<td>
+						<ipa-input
+						value="instructor.cost"
+						mode="'currency'"
+						on-update="updateInstructorCost(sectionGroupCostToEdit.id, instructor)"
+						/>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
