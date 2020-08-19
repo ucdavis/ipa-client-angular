@@ -37,6 +37,7 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 				/*console.log('Adding section group cost instructor: ', sectionGroupCost);
 				BudgetActions.createSectionGroupCostInstructor(sectionGroupCost);*/
 				BudgetActions.toggleSectionGroupCostInstructorModal(sectionGroupCost);
+				console.log('Section group info ', sectionGroupCost);
 			};
 		}
 	};

@@ -672,6 +672,7 @@ class BudgetReducers {
 							sectionGroup.assignedInstructorNames = [];
 							sectionGroup.assignedInstructorTypeIds = [];
 							sectionGroup.assignedInstructorTypeNames = [];
+							sectionGroup.assignedInstructors = [];
 
 							// calculate assignedInstructors
 							teachingAssignments.ids.forEach(function(teachingAssignmentId) {
@@ -687,6 +688,9 @@ class BudgetReducers {
 									sectionGroup.assignedInstructorNames.push(instructorName);
 									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
 									sectionGroup.assignedInstructorTypeNames.push(instructorType.description);
+									// TODO is this better than accessing the above assignedInstructors list?
+									instructor.teachingAssignmentId = teachingAssignment.id;
+									sectionGroup.assignedInstructors.push(instructor);
 								} else if (teachingAssignment.instructorTypeId > 0 && !(teachingAssignment.instructorId)) {
 									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
 									var instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];

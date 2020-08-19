@@ -10,6 +10,8 @@ let sectionGroupCostInstructorModal = function () {
     },
     link: function (scope) {
 
+      console.log('Modal scope ', scope.sectionGroupCostToEdit);
+
       scope.close = function () {
         scope.isVisible = false;
       };
