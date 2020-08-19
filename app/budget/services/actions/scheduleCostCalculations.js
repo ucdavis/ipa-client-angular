@@ -130,7 +130,7 @@ class ScheduleCostCalculations {
           _this._calculateSectionGroupCostComments(sectionGroupCost);
 
           // Attach cost data
-          _this._calculateSectionGroupFinancialCosts(sectionGroupCost);
+          _this._calculateSectionGroupFinancialCosts(sectionGroupCost, selectedBudgetScenario);
 
           // Generate container if one does not already exist
           var container = _this._findOrAddSectionGroupContainer(sectionGroupCost, scheduleCosts.byTerm[shortTerm]);
@@ -287,12 +287,20 @@ class ScheduleCostCalculations {
         sectionGroupCost.comments = _array_sortByProperty(sectionGroupCost.comments, "lastModifiedOn", true);
       },
       // Calculate sectionGroup costs
-      _calculateSectionGroupFinancialCosts: function(sectionGroupCost) {
+      _calculateSectionGroupFinancialCosts: function(sectionGroupCost, selectedBudgetScenario) {
         var budget = BudgetReducers._state.budget;
+        let taCost, readerCost;
 
+        if (selectedBudgetScenario.isSnapshot) {
+          taCost = selectedBudgetScenario.taCost;
+          readerCost = selectedBudgetScenario.readerCost;
+        } else {
+          taCost = budget.taCost;
+          readerCost = budget.readerCost;
+        }
         // Support Costs
-        sectionGroupCost.readerCost = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount * budget.readerCost : 0;
-        sectionGroupCost.taCost = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount * budget.taCost : 0;
+        sectionGroupCost.readerCost = sectionGroupCost.readerCount > 0 ? sectionGroupCost.readerCount * readerCost : 0;
+        sectionGroupCost.taCost = sectionGroupCost.taCount > 0 ? sectionGroupCost.taCount * taCost : 0;
 
         sectionGroupCost.courseCostSubTotal = sectionGroupCost.taCost + sectionGroupCost.readerCost;
 
