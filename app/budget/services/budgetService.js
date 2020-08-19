@@ -81,6 +81,10 @@ class BudgetService {
 			createSectionGroupCostInstructor: function(sectionGroupCostId, SectionGroupCostInstructor) {
 				console.log('Posting section group cost instructor to API from budget service ', SectionGroupCostInstructor);
 				return ApiService.post("/api/budgetView/sectionGroupCosts/" + sectionGroupCostId + "/sectionGroupCostInstructors", SectionGroupCostInstructor);
+			},
+
+			updateSectionGroupCostInstructor: function(sectionGroupCostId, sectionGroupCostInstructor) {
+				return ApiService.put("/api/budgetView/sectionGroupCosts/" + sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id, sectionGroupCostInstructor);
 			}
 		};
 	}

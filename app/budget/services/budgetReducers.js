@@ -581,6 +581,7 @@ class BudgetReducers {
 			scheduleSectionGroupReducers: function (action, scheduleSectionGroups) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE: {
+						console.log('Schedule section reducer ', action);
 						let courses = {
 							ids: [],
 							list: {}
@@ -1039,7 +1040,7 @@ class BudgetReducers {
 						return ui;
 					case ActionTypes.TOGGLE_SECTION_GROUP_COST_INSTRUCTOR_MODAL:
 						ui.isSectionGroupCostInstructorModalOpen = !ui.isSectionGroupCostInstructorModalOpen;
-						ui.sectionGroupCostToEdit = ui.isSectionGroupCostInstructorModalOpen ? action.payload.sectionGroupCost : null;
+						ui.sectionGroupCostToEdit = ui.isSectionGroupCostInstructorModalOpen ? action.payload.sectionGroupCost : {};
 						return ui;
 					case ActionTypes.CREATE_LINE_ITEM:
 						var lineItem = action.payload;
