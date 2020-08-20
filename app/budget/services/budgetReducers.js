@@ -19,11 +19,6 @@ class BudgetReducers {
 						budgetScenarios.ids.push(newBudgetScenario.id);
 						budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
 						return budgetScenarios;
-					case ActionTypes.CREATE_BUDGET_SCENARIO_SNAPSHOT:
-						var newBudgetScenario = action.payload.budgetScenario;
-						budgetScenarios.ids.push(newBudgetScenario.id);
-						budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
-						return budgetScenarios;
 					case ActionTypes.UPDATE_BUDGET_SCENARIO:
 						var newBudgetScenario = action.payload.budgetScenario;
 						budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
@@ -99,6 +94,21 @@ class BudgetReducers {
 						instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
 						instructorTypeCosts.byInstructorTypeId[newInstructorTypeCost.instructorTypeId] = newInstructorTypeCost;
 						return instructorTypeCosts;
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
+						action.payload.instructorTypeCosts.forEach(function(instructorTypeCost) {
+							instructorTypeCosts.ids.push(instructorTypeCost.id);
+							instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
+
+							if (!instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId]) {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId] = {
+										byInstructorTypeId: {}
+									};
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								} else {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								}
+						});
+						return instructorTypeCosts;
 					default:
 						return instructorTypeCosts;
 				}
@@ -136,12 +146,6 @@ class BudgetReducers {
 						});
 						return lineItems;
 					case ActionTypes.CREATE_BUDGET_SCENARIO:
-						action.payload.lineItems.forEach(function(lineItem) {
-							lineItems.ids.push(lineItem.id);
-							lineItems.list[lineItem.id] = lineItem;
-						});
-						return lineItems;
-					case ActionTypes.CREATE_BUDGET_SCENARIO_SNAPSHOT:
 						action.payload.lineItems.forEach(function(lineItem) {
 							lineItems.ids.push(lineItem.id);
 							lineItems.list[lineItem.id] = lineItem;
@@ -323,20 +327,6 @@ class BudgetReducers {
 							}
 						});
 						return sectionGroupCosts;
-					case ActionTypes.CREATE_BUDGET_SCENARIO_SNAPSHOT:
-						action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
-							if (sectionGroupCosts.ids.indexOf(sectionGroupCost.id) == -1) {
-								sectionGroupCosts.ids.push(sectionGroupCost.id);
-							}
-							sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
-							var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
-							sectionGroupCost.uniqueKey = uniqueKey;
-							sectionGroupCosts.idsByUniqueKey[uniqueKey] = sectionGroupCost.id;
-							if (sectionGroupCosts.uniqueKeys.indexOf(uniqueKey) == -1) {
-								sectionGroupCosts.uniqueKeys.push(uniqueKey);
-							}
-						});
-						return sectionGroupCosts;
 					case ActionTypes.UPDATE_SECTION_GROUP_COST:
 						var sectionGroupCost = action.payload.sectionGroupCost;
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
@@ -463,6 +453,21 @@ class BudgetReducers {
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
 						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+						return instructorCosts;
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
+						action.payload.instructorCosts.forEach(function(instructorCost) {
+							instructorCosts.ids.push(instructorCost.id);
+							instructorCosts.list[instructorCost.id] = instructorCost;
+
+							if (!instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId]) {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId] = {
+										byInstructorId: {}
+									};
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								} else {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								}
+						});
 						return instructorCosts;
 					default:
 						return instructorCosts;
@@ -975,30 +980,6 @@ class BudgetReducers {
 						ui.filters.lineItems.showHidden.selected = !ui.filters.lineItems.showHidden.selected;
 						return ui;
 					case ActionTypes.CREATE_BUDGET_SCENARIO:
-						// Set initial lineItemDetail UI states
-						action.payload.lineItems.forEach(function(lineItem) {
-								ui.lineItemDetails[lineItem.id] = {
-									displayDescriptionInput: false,
-									displayAmountInput: false,
-									displayTypeInput: false,
-									displayNotesInput: false
-								};
-						});
-
-						// Set initial sectionGroupCostDetail UI states
-						action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
-								ui.sectionGroupCostDetails[sectionGroupCost.id] = {
-									displaySectionCountInput: false,
-									displayTaCountInput: false,
-									displayReaderCountInput: false,
-									displayEnrollmentInput: false,
-									displayInstructorCostInput: false,
-									displayReasonInput: false,
-								};
-						});
-
-						return ui;
-					case ActionTypes.CREATE_BUDGET_SCENARIO_SNAPSHOT:
 						// Set initial lineItemDetail UI states
 						action.payload.lineItems.forEach(function(lineItem) {
 								ui.lineItemDetails[lineItem.id] = {

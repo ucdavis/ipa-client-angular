@@ -228,7 +228,7 @@ class BudgetActions {
 						console.log('createSnapshot results:' + results);
 
 						let action = {
-							type: ActionTypes.CREATE_BUDGET_SCENARIO_SNAPSHOT,
+							type: ActionTypes.CREATE_BUDGET_SCENARIO,
 							payload: results
 						};
 
