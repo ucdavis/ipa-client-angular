@@ -445,6 +445,28 @@ class BudgetActions {
 				console.log('Budget actions sending to post the following ', sectionGroupCostInstructor);
 				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor);
 			},
+			updateSectionGroupCostInstructor: function (sectionGroupCost) {
+				console.log('Budget Actions instructor is ', sectionGroupCost);
+				var sectionGroupCostInstructor = {
+					id: sectionGroupCost.id,
+					instructorId: sectionGroupCost.instructorId,
+					cost: sectionGroupCost.cost,
+				};
+				console.log('Budget actions sending to put the following ', sectionGroupCostInstructor);
+				BudgetService.updateSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
+					/*var action = {
+						type: ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR,
+						payload: {
+							newSectionGroupCostInstructor
+						}
+					};
+					BudgetReducers.reduce(action);*/
+
+					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+				});
+			},
 			asignInstructorType: function(instructorCost) {
 				BudgetService.updateInstructorCost(instructorCost).then(function (newInstructorCost) {
 					var action = {

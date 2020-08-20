@@ -242,6 +242,7 @@ class BudgetReducers {
 						});
 
 						action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
+							console.log('Section Group Cost reducer ', sectionGroupCost);
 							var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern;
 							sectionGroupCost.tagIds = sectionGroupsCache.bySectionGroupKey[sectionGroupKey] ? sectionGroupsCache.bySectionGroupKey[sectionGroupKey].tagIds : [];
 							sectionGroupCost.hidden = false;
@@ -255,6 +256,7 @@ class BudgetReducers {
 							if (sectionGroupCosts.uniqueKeys.indexOf(uniqueKey) == -1) {
 								sectionGroupCosts.uniqueKeys.push(uniqueKey);
 							}
+
 						});
 						return sectionGroupCosts;
 					case ActionTypes.UPDATE_FILTERS:
@@ -708,6 +710,10 @@ class BudgetReducers {
 
 						return scheduleSectionGroups;
 					}
+					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
+						console.log('Updating section group cost instructor');
+						console.log(scheduleSectionGroups);
+						return scheduleSectionGroups;
 					default:
 						return scheduleSectionGroups;
 				}

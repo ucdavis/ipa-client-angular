@@ -84,9 +84,14 @@
                       regular-instructor-assignment-options="regularInstructorAssignmentOptions"
                       is-live-data-scenario="isLiveDataScenario">
                   </tr>
+                  <tr ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
+                      instructor-costs
+                      instructor="instructor"
+                  >
+                  </tr>
                 </tbody>
-                <button ng-click="addSectionGroupCostInstructor(sectionGroupCost)">Click Me!
-                </button>
+                <!--<button ng-click="addSectionGroupCostInstructor(sectionGroupCost)">Click Me!
+                </button>-->
               </table>
             </div>
           </div>

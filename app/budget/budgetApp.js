@@ -38,6 +38,7 @@ import budgetCostsPrint from './directives/budgetCosts/budgetCostsPrint/budgetCo
 import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
 import instructorCostsRow from './directives/budgetCosts/instructorCostsRow/instructorCostsRow.js';
 import instructorAssignmentDropdown from './directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
+import instructorCosts from './directives/budgetCosts/instructorCosts/instructorCosts.js';
 
 import addBudgetScenario from "./directives/modals/addBudgetScenario/addBudgetScenario.js";
 import addCourseComments from "./directives/modals/addCourseComments/addCourseComments.js";
@@ -111,6 +112,7 @@ const budgetApp = angular // eslint-disable-line no-undef
   .directive("courseCostsRow", courseCostsRow)
   .directive("instructorCostsRow", instructorCostsRow)
   .directive("instructorAssignmentDropdown", instructorAssignmentDropdown)
+  .directive("instructorCosts", instructorCosts)
   .directive("lineItems", lineItems)
   .directive("lineItemDropdown", lineItemDropdown)
   .directive("budgetSummary", budgetSummary)
