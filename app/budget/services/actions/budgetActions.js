@@ -437,13 +437,23 @@ class BudgetActions {
 				});
 			},
 			createSectionGroupCostInstructor: function (sectionGroupCost) {
-				console.log('Budget Actions instructor is ', sectionGroupCost);
 				var sectionGroupCostInstructor = {
 					instructorId: sectionGroupCost.instructorId,
 					cost: sectionGroupCost.cost,
 				};
-				console.log('Budget actions sending to post the following ', sectionGroupCostInstructor);
-				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor);
+				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
+					var action = {
+						type: ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR,
+						payload: {
+							sectionGroupCostInstructor: newSectionGroupCostInstructor
+						}
+					};
+					BudgetReducers.reduce(action);
+					ScheduleCostCalculations.calculateScheduleCosts();
+					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+				});
 			},
 			updateSectionGroupCostInstructor: function (sectionGroupCost) {
 				console.log('Budget Actions instructor is ', sectionGroupCost);
@@ -454,13 +464,14 @@ class BudgetActions {
 				};
 				console.log('Budget actions sending to put the following ', sectionGroupCostInstructor);
 				BudgetService.updateSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
-					/*var action = {
-						type: ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR,
+					var action = {
+						type: ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR,
 						payload: {
-							newSectionGroupCostInstructor
+							sectionGroupCostInstructor: newSectionGroupCostInstructor
 						}
 					};
-					BudgetReducers.reduce(action);*/
+					BudgetReducers.reduce(action);
+					ScheduleCostCalculations.calculateScheduleCosts();
 
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
 				}, function () {
