@@ -220,6 +220,32 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 				});
 			},
+			createBudgetScenarioSnapshot: function (selectedBudgetScenario) {
+				let self = this;
+				BudgetService.createBudgetScenarioSnapshot(selectedBudgetScenario).then(
+					function (results) {
+						window.ipa_analyze_event('budget', 'budget scenario snapshot created');
+						console.log('createSnapshot results:' + results);
+
+						let action = {
+							type: ActionTypes.CREATE_BUDGET_SCENARIO_SNAPSHOT,
+							payload: results
+						};
+
+						$rootScope.$emit('toast', { message: "Created budget snapshot", type: "SUCCESS" });
+						BudgetReducers.reduce(action);
+						self.selectBudgetScenario(results.budgetScenario.id);
+						self.attachInstructorTypesToInstructors();
+
+						// Perform follow up calculations
+						BudgetCalculations.calculateInstructors();
+						BudgetCalculations.calculateLineItems();
+						BudgetCalculations.calculateInstructorTypeCosts();
+
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not create budget scenario snapshot.", type: "ERROR" });
+				});
+			},
 			deleteBudgetScenario: function (budgetScenarioId) {
 				var self = this;
 
@@ -239,13 +265,6 @@ class BudgetActions {
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete budget scenario.", type: "ERROR" });
 				});
-			},
-			createBudgetScenarioSnapshot: function (selectedBudgetScenario) {
-				BudgetService.createBudgetScenarioSnapshot(selectedBudgetScenario).then(
-					function (results) {
-						console.log('createSnapshot results:' + results);
-					}
-				);
 			},
 			updateInstructorCost: function (instructorCostDto) {
 				var self = this;
