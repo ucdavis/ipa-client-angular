@@ -177,10 +177,12 @@ class BudgetComparisonReportCalculations {
             instructorCosts,
             sectionGroupCosts,
             selectedScenarioId,
+            selectedScenario,
             activeTerms
           ),
           supportCosts: this._generateSupportCosts(
             budget,
+            selectedScenario,
             selectedScenarioId,
             sectionGroupCosts,
             activeTerms
@@ -195,6 +197,7 @@ class BudgetComparisonReportCalculations {
       },
       // Returns the cost associated with an assignment's instructor, based on the selected budget scenario
       _calculateAssignmentCost(
+        selectedScenario,
         sectionGroupCost,
         instructorTypeCosts,
         instructorCosts
@@ -207,35 +210,24 @@ class BudgetComparisonReportCalculations {
         var courseCost = sectionGroupCost.cost;
 
         // If an instructor is set
-        if (sectionGroupCost.instructorId && instructorCosts.byInstructorId[sectionGroupCost.instructorId]) {
-          var instructorCostId =
-            instructorCosts.byInstructorId[sectionGroupCost.instructorId];
-          instructorCost = instructorCosts.list[instructorCostId]
-            ? instructorCosts.list[instructorCostId].cost
-            : instructorCost;
+        if (sectionGroupCost.instructorId) {
+          instructorCost = selectedScenario.isSnapshot
+            ? instructorCosts.byBudgetScenarioId[selectedScenario.id].byInstructorId[sectionGroupCost.instructorId]
+            : instructorCosts.byInstructorId[sectionGroupCost.instructorId];
 
-          var instructorTypes = BudgetComparisonReportReducers._state.instructorTypes.current;
-          var instructorType = instructorTypes.list[sectionGroupCost.instructorTypeId];
-          
-          if (!instructorType) {
-            return null;
-          }
+          instructorTypeId = sectionGroupCost.instructorTypeId;
 
-          instructorTypeId = instructorType.id;
-          var instructorTypeCostId =
-            instructorTypeCosts.byInstructorTypeId[instructorTypeId];
-          instructorTypeCost = instructorTypeCosts.list[instructorTypeCostId]
-            ? instructorTypeCosts.list[instructorTypeCostId].cost
-            : null;
-          // If an instructorType is set
+          // if no explicit instructor cost, attempt to find instructorType cost
+          instructorTypeCost = selectedScenario.isSnapshot
+            ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[instructorTypeId]
+            : instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+
+          // If only instructorType is set
         } else if (sectionGroupCost.instructorTypeId) {
-          var instructorTypeCostId =
-            instructorTypeCosts.byInstructorTypeId[
-              sectionGroupCost.instructorTypeId
-            ];
-          instructorTypeCost = instructorTypeCosts.list[instructorTypeCostId]
-            ? instructorTypeCosts.list[instructorTypeCostId].cost
-            : null;
+          instructorTypeCost = selectedScenario.isSnapshot
+            ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[sectionGroupCost.instructorTypeId]
+            : instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
+
           instructorTypeId = sectionGroupCost.instructorTypeId;
         } else {
           return null;
@@ -244,9 +236,9 @@ class BudgetComparisonReportCalculations {
         if (courseCost || courseCost == 0) {
           cost = courseCost;
         } else if (instructorCost) {
-          cost = instructorCost;
+          cost = instructorCost.cost;
         } else if (instructorTypeCost) {
-          cost = instructorTypeCost;
+          cost = instructorTypeCost.cost;
         } else {
           cost = null;
         }
@@ -263,6 +255,7 @@ class BudgetComparisonReportCalculations {
         instructorCosts,
         sectionGroupCosts,
         selectedScenarioId,
+        selectedScenario,
         activeTerms
       ) {
         var _self = this;
@@ -298,6 +291,7 @@ class BudgetComparisonReportCalculations {
           }
 
           var assignmentCosts = _self._calculateAssignmentCost(
+            selectedScenario,
             sectionGroupCost,
             instructorTypeCosts,
             instructorCosts
@@ -352,6 +346,7 @@ class BudgetComparisonReportCalculations {
       // Generates support (reader and TA) based costs and course count
       _generateSupportCosts(
         budget,
+        selectedScenario,
         selectedScenarioId,
         sectionGroupCosts,
         activeTerms
@@ -382,8 +377,10 @@ class BudgetComparisonReportCalculations {
           supportCosts.readerCount += sectionGroupCost.readerCount || 0;
         });
 
-        supportCosts.taCost = supportCosts.taCount * budget.taCost;
-        supportCosts.readerCost = supportCosts.readerCount * budget.readerCost;
+        const baseTaCost = selectedScenario.isSnapshot ? selectedScenario.taCost : budget.taCost;
+        const baseReaderCost = selectedScenario.isSnapshot ? selectedScenario.readerCost : budget.readerCost;
+        supportCosts.taCost = supportCosts.taCount * baseTaCost;
+        supportCosts.readerCost = supportCosts.readerCount * baseReaderCost;
 
         supportCosts.totalCount +=
           supportCosts.taCount + supportCosts.readerCount;
