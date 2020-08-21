@@ -6,6 +6,7 @@ let instructorCosts = function (BudgetActions) {
 		template: require('./instructorCosts.html'),
 		scope: {
 			instructor: '<',
+			sectionGroupCost: '<'
 		},
 		replace: true,
 		link: function (scope) {
@@ -19,14 +20,14 @@ let instructorCosts = function (BudgetActions) {
 						id: instructor.sectionGroupCostInstructorId,
 						instructorId: instructor.id,
 						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
-						sectionGroupCostId: instructor.sectionGroupCostId
+						sectionGroupCostId: scope.sectionGroupCost.id
 					};
 					BudgetActions.updateSectionGroupCostInstructor(sectionGroupCost);
 				} else {
 					var sectionGroupCost = {
 						instructorId: instructor.id,
 						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
-						sectionGroupCostId: instructor.sectionGroupCostId
+						sectionGroupCostId: scope.sectionGroupCost.id
 					};
 					BudgetActions.createSectionGroupCostInstructor(sectionGroupCost);
 				}

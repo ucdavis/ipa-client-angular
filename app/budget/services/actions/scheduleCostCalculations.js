@@ -49,19 +49,21 @@ class ScheduleCostCalculations {
 
           var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
-          var instructors = Object.assign({}, ...sectionGroupCost.sectionGroup.assignedInstructors.map((x) => ({[x.id]: x})));
-          sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor){
-            if (instructors[sectionGroupCostInstructor.instructorId]){
-              instructors[sectionGroupCostInstructor.instructorId].cost = '$' + sectionGroupCostInstructor.cost.toString();
-              instructors[sectionGroupCostInstructor.instructorId].sectionGroupCostInstructorId = sectionGroupCostInstructor.id;
-            }
-          });
-          instructors = Object.keys(instructors).map(function(key){
-            var info = instructors[key];
-            info.sectionGroupCostId = sectionGroupCost.id;
-            return info;
-          });
-          sectionGroupCost.sectionGroupCostInstructors = instructors;
+          if (sectionGroupCost.sectionGroup){
+            let instructors = Object.assign({}, ...sectionGroupCost.sectionGroup.assignedInstructors.map((x) => ({[x.id]: x})));
+            sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor){
+              if (instructors[sectionGroupCostInstructor.instructorId]){
+                instructors[sectionGroupCostInstructor.instructorId].cost = '$' + sectionGroupCostInstructor.cost.toString();
+                instructors[sectionGroupCostInstructor.instructorId].sectionGroupCostInstructorId = sectionGroupCostInstructor.id;
+              }
+            });
+            instructors = Object.keys(instructors).map(function(key){
+              let info = instructors[key];
+              info.sectionGroupCostId = sectionGroupCost.id;
+              return info;
+            });
+            sectionGroupCost.sectionGroupCostInstructors = [...instructors];
+          }
 
           // Set sectionGroupCost instructor descriptions
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
@@ -307,6 +309,12 @@ class ScheduleCostCalculations {
         sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
 
         sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal + sectionGroupCost.instructorCostSubTotal;
+        if (sectionGroupCost.sectionGroupCostInstructors){
+          sectionGroupCost.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
+            console.log(sectionGroupCostInstructor.cost);
+            sectionGroupCost.totalCost += parseFloat((sectionGroupCostInstructor.cost || '0.0').replace(/\D/g,''));
+          });
+        }
       },
       // Find or create a container for this sectionGroupCost
       _findOrAddSectionGroupContainer: function(sectionGroupCost, containers) {
