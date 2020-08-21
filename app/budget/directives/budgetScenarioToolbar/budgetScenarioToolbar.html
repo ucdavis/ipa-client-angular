@@ -17,16 +17,17 @@
 			            on-click="showScenarioRenameUI()"
 			            tooltip-message="'Rename Scenario'">
 			</ipa-button>
-			<ipa-button
+			<div 
 				ng-if="!state.ui.isSnapshot"
-				size="'small'"
-				text="'Create Snapshot'"
-				on-click="createBudgetScenarioSnapshot()"
-				tooltip-message="'Create snapshot from displayed scenario'"
-				style="margin-left: 10px; font-size: 8px;"
+				class="budget-scenario-toolbar__button"
+				uib-tooltip="Create snapshot from selected scenario"
+				tooltip-append-to-body="true"
+				ng-click="createBudgetScenarioSnapshot()"
 			>
-			</ipa-button>
-			<div class="budget-scenario-toolbar__sync-button"
+				<i class="glyphicon glyphicon-camera"></i>
+				<span class="budget-scenario-toolbar__button--text">Create Snapshot</span>
+			</div>
+			<div class="budget-scenario-toolbar__button"
 				uib-tooltip="Accept all schedule updates from Live Data"
 				tooltip-append-to-body="true"
 				confirm-button="syncBudgetScenario()"
@@ -35,9 +36,9 @@
 				no="Cancel"
 				ng-show="!state.ui.fromLiveData && !state.ui.isSnapshot && state.calculatedScheduleCosts.trackedChanges.length > 0 && !state.ui.syncScenario.showSyncWarning">
 				<i class="glyphicon glyphicon-repeat"></i>
-				<span class="budget-scenario-toolbar__sync-button--text">Accept All Changes</span>
+				<span class="budget-scenario-toolbar__button--text">Accept All Changes</span>
 			</div>
-			<div class="budget-scenario-toolbar__sync-button"
+			<div class="budget-scenario-toolbar__button"
 				uib-tooltip="View Unsuccessful Updates"
 				tooltip-append-to-body="true"
 				confirm-button="syncBudgetScenario()"
@@ -46,7 +47,7 @@
 				no="Cancel"
 				ng-if="!state.ui.fromLiveData && state.calculatedScheduleCosts.trackedChanges.length > 0 && state.ui.syncScenario.showSyncWarning">
 				<i class="glyphicon glyphicon-warning-sign text-danger"></i>
-				<span class="budget-scenario-toolbar__sync-button--text">View Unsuccessful Updates</span>
+				<span class="budget-scenario-toolbar__button--text">View Unsuccessful Updates</span>
 			</div>
 
 			<div class="budget-scenario-toolbar__scenario-label"
