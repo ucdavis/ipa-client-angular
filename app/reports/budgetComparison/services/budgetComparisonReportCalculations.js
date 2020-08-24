@@ -1,3 +1,5 @@
+import { dateToCalendar } from '../../../shared/helpers/dates';
+
 class BudgetComparisonReportCalculations {
   constructor(BudgetComparisonReportReducers, ActionTypes) {
     return {
@@ -632,7 +634,7 @@ class BudgetComparisonReportCalculations {
 
         budgetScenarios.ids.forEach(function(budgetScenarioId) {
           var budgetScenario = budgetScenarios.list[budgetScenarioId];
-          budgetScenario.description = budgetScenario.name;
+          budgetScenario.description = budgetScenario.isSnapshot ? `SNAPSHOT - ${dateToCalendar(budgetScenario.creationDate)} - ${budgetScenario.name}` : budgetScenario.name;
           scenarios.push(budgetScenarios.list[budgetScenarioId]);
         });
 
@@ -663,7 +665,7 @@ class BudgetComparisonReportCalculations {
         });
 
         return sectionGroupCost;
-      },
+      }
     };
   }
 }
