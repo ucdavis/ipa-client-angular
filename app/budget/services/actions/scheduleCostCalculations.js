@@ -49,7 +49,7 @@ class ScheduleCostCalculations {
 
           var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
-          if (sectionGroupCost.sectionGroup){
+          if (sectionGroupCost.sectionGroup && sectionGroupCost.sectionGroupCostInstructors.length > 0){
             let instructors = Object.assign({}, ...sectionGroupCost.sectionGroup.assignedInstructors.map((x) => ({[x.id]: x})));
             sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor){
               if (instructors[sectionGroupCostInstructor.instructorId]){
@@ -311,8 +311,7 @@ class ScheduleCostCalculations {
         sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal + sectionGroupCost.instructorCostSubTotal;
         if (sectionGroupCost.sectionGroupCostInstructors){
           sectionGroupCost.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
-            console.log(sectionGroupCostInstructor.cost);
-            sectionGroupCost.totalCost += parseFloat((sectionGroupCostInstructor.cost || '0.0').replace(/\D/g,''));
+            sectionGroupCost.totalCost += parseFloat((sectionGroupCostInstructor.cost.toString() || '0.0').replace(/\D/g,''));
           });
         }
       },

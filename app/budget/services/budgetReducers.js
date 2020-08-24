@@ -242,7 +242,6 @@ class BudgetReducers {
 						});
 
 						action.payload.sectionGroupCosts.forEach(function(sectionGroupCost) {
-							console.log('Section Group Cost reducer ', sectionGroupCost);
 							var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern;
 							sectionGroupCost.tagIds = sectionGroupsCache.bySectionGroupKey[sectionGroupKey] ? sectionGroupsCache.bySectionGroupKey[sectionGroupKey].tagIds : [];
 							sectionGroupCost.hidden = false;
@@ -587,7 +586,6 @@ class BudgetReducers {
 			scheduleSectionGroupReducers: function (action, scheduleSectionGroups) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE: {
-						console.log('Schedule section reducer ', action);
 						let courses = {
 							ids: [],
 							list: {}

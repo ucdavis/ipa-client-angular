@@ -73,6 +73,8 @@
                     <col style="width: 10%;">
                     <col style="width: 10%;">
                     <col style="width: 10%;">
+                    <col style="width: 12%;">
+                    <col style="width: 6%;">
                   </colgroup>
                 </thead>
                 <tbody>
@@ -85,10 +87,27 @@
                       is-live-data-scenario="isLiveDataScenario">
                   </tr>
                   <tr ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
+                      instructor-costs-live-data
+                      instructor="instructor"
+                      section-group-cost="sectionGroupCost"
+                      ng-show="isLiveDataScenario"
+                  >
+                  </tr>
+                  <tr ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
+                      ng-if="instructor.sectionGroupCostId"
                       instructor-costs
                       instructor="instructor"
                       section-group-cost="sectionGroupCost"
+                      instructor-assignment-options="regularInstructorAssignmentOptions"
+                      ng-show="!isLiveDataScenario"
                   >
+                  <tr
+                      add-instructor-cost
+                      section-group-cost="sectionGroupCost"
+                      instructor-assignment-options="regularInstructorAssignmentOptions"
+                      ng-show="!isLiveDataScenario"
+                  >
+                  </tr>
                   </tr>
                 </tbody>
                 <!--<button ng-click="addSectionGroupCostInstructor(sectionGroupCost)">Click Me!
@@ -98,7 +117,7 @@
           </div>
         </div>
 
-        <div class="budget-costs__shared-container">
+        <!--<div class="budget-costs__shared-container">
           <div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
             <div class="budget-costs__course-title-space"></div>
             <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
@@ -109,8 +128,8 @@
                 </colgroup>
                 <tbody>
                   <tr>
-                    <!-- Comments -->
-                    <td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+
+                    <td rowspan="5" class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
                       <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
                                   icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
                                   tooltip-message="'View Comments'"
@@ -119,8 +138,8 @@
                                   on-click="openAddCourseCommentsModal(sectionGroupCost)">
                       </ipa-button>
                     </td>
-                    <!-- Total -->
-                    <td class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+
+                    <td rowspan="5" class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
                       <div class="budget-costs__total-container">
                         <div class="budget-costs__label">
                           Total
@@ -135,7 +154,7 @@
               </table>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
   </ipa-tabs>

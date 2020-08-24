@@ -13,23 +13,6 @@ let sectionGroupCostInstructorModal = function (BudgetActions) {
       console.log('Modal scope ', scope);
       scope.instructors = [];
 
-      // TODO dont use watch
-      scope.$watch("sectionGroupCostToEdit", function(sectionGroupCostToEdit) {
-          console.log("seciton group changed", sectionGroupCostToEdit);
-          if (sectionGroupCostToEdit){
-            var instructors = Object.assign({}, ...sectionGroupCostToEdit.sectionGroup.assignedInstructors.map((x) => ({[x.id]: x})));
-            sectionGroupCostToEdit.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor){
-              if (instructors[sectionGroupCostInstructor.instructorId]){
-                instructors[sectionGroupCostInstructor.instructorId].cost = '$' + sectionGroupCostInstructor.cost.toString();
-                instructors[sectionGroupCostInstructor.instructorId].sectionGroupCostInstructorId = sectionGroupCostInstructor.id;
-              }
-            });
-            scope.instructors = Object.keys(instructors).map(function(key){
-                return instructors[key];
-            });
-          }
-      });
-
       scope.close = function () {
         scope.isVisible = false;
       };
