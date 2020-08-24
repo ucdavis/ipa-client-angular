@@ -84,7 +84,7 @@
                     </ipa-input>
                   </div>
                 </div>
-                <span ng-if="selectedBudgetScenario.isSnapshot">{{ instructor.instructorCost.cost }}</span>
+                <span ng-if="selectedBudgetScenario.isSnapshot">{{ instructor.instructorCost.cost || 'N/A' }}</span>
               </div>
             </td>
           </tr>
