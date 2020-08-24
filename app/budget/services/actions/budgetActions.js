@@ -225,7 +225,6 @@ class BudgetActions {
 				BudgetService.createBudgetScenarioSnapshot(selectedBudgetScenario).then(
 					function (results) {
 						window.ipa_analyze_event('budget', 'budget scenario snapshot created');
-						console.log('createSnapshot results:' + results);
 
 						let action = {
 							type: ActionTypes.CREATE_BUDGET_SCENARIO,
