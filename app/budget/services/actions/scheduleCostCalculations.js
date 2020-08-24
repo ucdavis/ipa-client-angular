@@ -49,12 +49,15 @@ class ScheduleCostCalculations {
 
           var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
-          if (sectionGroupCost.sectionGroup && sectionGroupCost.sectionGroupCostInstructors.length > 0){
+
+          if (sectionGroupCost.sectionGroup && sectionGroupCost.isLiveData){
             let instructors = Object.assign({}, ...sectionGroupCost.sectionGroup.assignedInstructors.map((x) => ({[x.id]: x})));
+
             sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor){
               if (instructors[sectionGroupCostInstructor.instructorId]){
                 instructors[sectionGroupCostInstructor.instructorId].cost = '$' + sectionGroupCostInstructor.cost.toString();
                 instructors[sectionGroupCostInstructor.instructorId].sectionGroupCostInstructorId = sectionGroupCostInstructor.id;
+                instructors[sectionGroupCostInstructor.instructorId].reason = sectionGroupCostInstructor.reason;
               }
             });
             instructors = Object.keys(instructors).map(function(key){
@@ -311,7 +314,7 @@ class ScheduleCostCalculations {
         sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal + sectionGroupCost.instructorCostSubTotal;
         if (sectionGroupCost.sectionGroupCostInstructors){
           sectionGroupCost.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
-            sectionGroupCost.totalCost += parseFloat((sectionGroupCostInstructor.cost.toString() || '0.0').replace(/\D/g,''));
+            sectionGroupCost.totalCost += parseFloat(((sectionGroupCostInstructor.cost || 0.0).toString()).replace(/\D/g,''));
           });
         }
       },

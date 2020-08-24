@@ -440,6 +440,7 @@ class BudgetActions {
 				var sectionGroupCostInstructor = {
 					instructorId: sectionGroupCost.instructorId,
 					cost: sectionGroupCost.cost,
+					reason: sectionGroupCost.reason
 				};
 				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
 					var action = {
