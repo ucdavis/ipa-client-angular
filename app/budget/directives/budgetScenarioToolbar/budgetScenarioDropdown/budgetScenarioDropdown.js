@@ -17,7 +17,6 @@ let budgetScenarioDropdown = function($window, $location, $routeParams, $rootSco
 			};
 
 			scope.selectBudgetScenario = function (budgetScenario) {
-				debugger;
 				BudgetActions.selectBudgetScenario(budgetScenario.id);
 			};
 
@@ -34,8 +33,8 @@ let budgetScenarioDropdown = function($window, $location, $routeParams, $rootSco
 			scope.scenarioSnapshots = scope.state.budgetScenarios.filter(budgetScenario => budgetScenario.isSnapshot);
 
 			scope.dateToCalendar = function (date) {
-        return dateToCalendar(date);
-      };
+				return dateToCalendar(date);
+			};
 		}
 	};
 };
