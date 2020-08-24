@@ -16,7 +16,8 @@ let instructorCosts = function (BudgetActions) {
 				var sectionGroupCost = {
 					id: instructor.id,
 					instructorId: instructor.instructorId,
-					cost: parseFloat(instructor.cost.replace(/\D/g,'')),
+					cost: parseFloat((instructor.cost || '0.0').replace(/\D/g,'')),
+					reason: instructor.reason,
 					sectionGroupCostId: scope.sectionGroupCost.id
 				};
 				BudgetActions.updateSectionGroupCostInstructor(sectionGroupCost);

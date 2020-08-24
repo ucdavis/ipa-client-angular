@@ -110,51 +110,10 @@
                   </tr>
                   </tr>
                 </tbody>
-                <!--<button ng-click="addSectionGroupCostInstructor(sectionGroupCost)">Click Me!
-                </button>-->
               </table>
             </div>
           </div>
         </div>
-
-        <!--<div class="budget-costs__shared-container">
-          <div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
-            <div class="budget-costs__course-title-space"></div>
-            <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-              <table class="budget-costs__table">
-                <colgroup>
-                  <col style="width: 70%;">
-                  <col style="width: 30%;">
-                </colgroup>
-                <tbody>
-                  <tr>
-
-                    <td rowspan="5" class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
-                      <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
-                                  icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
-                                  tooltip-message="'View Comments'"
-                                  icon-class="'entypo entypo-chat'"
-                                  text="'Comments'"
-                                  on-click="openAddCourseCommentsModal(sectionGroupCost)">
-                      </ipa-button>
-                    </td>
-
-                    <td rowspan="5" class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
-                      <div class="budget-costs__total-container">
-                        <div class="budget-costs__label">
-                          Total
-                        </div>
-                        <div>
-                          {{ toCurrency(sectionGroupCost.totalCost) }}
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>-->
       </div>
     </div>
   </ipa-tabs>

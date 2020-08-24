@@ -58,6 +58,10 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 			scope.toCurrency = function (value) {
 				return toCurrency(value);
 			};
+
+			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
+				BudgetActions.openAddCourseCommentsModal(sectionGroupCost);
+			};
 		}
 	};
 };

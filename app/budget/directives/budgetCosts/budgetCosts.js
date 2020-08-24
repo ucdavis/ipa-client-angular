@@ -17,10 +17,6 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			tags: '<'
 		},
 		link: function (scope) {
-			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
-				BudgetActions.openAddCourseCommentsModal(sectionGroupCost);
-			};
-
 			scope.setActiveTerm = function(activeTermTab) {
 				BudgetActions.selectTerm(activeTermTab);
 			};

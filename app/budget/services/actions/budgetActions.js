@@ -456,14 +456,13 @@ class BudgetActions {
 				});
 			},
 			updateSectionGroupCostInstructor: function (sectionGroupCost) {
-				console.log('Budget Actions instructor is ', sectionGroupCost);
 				var sectionGroupCostInstructor = {
 					id: sectionGroupCost.id,
 					instructorId: sectionGroupCost.instructorId,
 					cost: sectionGroupCost.cost,
+					reason: sectionGroupCost.reason
 				};
-				console.log('Budget actions sending to put the following ', sectionGroupCostInstructor);
-				BudgetService.updateSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
+				BudgetService.updateSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function () {
 					ScheduleCostCalculations.calculateScheduleCosts();
 
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
