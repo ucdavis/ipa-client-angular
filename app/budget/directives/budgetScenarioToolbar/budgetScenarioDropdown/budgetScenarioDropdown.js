@@ -30,7 +30,15 @@ let budgetScenarioDropdown = function($window, $location, $routeParams, $rootSco
 				}
 			});
 
-			scope.scenarioSnapshots = scope.state.budgetScenarios.filter(budgetScenario => budgetScenario.isSnapshot);
+			scope.filterSnapshots = function(budgetScenarios) {
+				return budgetScenarios.filter((budgetScenario) => budgetScenario.isSnapshot).sort((a, b) => b.creationDate - a.creationDate);
+			};
+
+			scope.scenarioSnapshots = scope.filterSnapshots(scope.state.budgetScenarios);
+
+			$rootScope.$on('budgetStateChanged', function (event, data) {
+				scope.scenarioSnapshots = scope.filterSnapshots(data.budgetScenarios);
+			});
 
 			scope.dateToCalendar = function (date) {
 				return dateToCalendar(date);
