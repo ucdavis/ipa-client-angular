@@ -19,7 +19,8 @@ let instructorCostsLiveData = function (BudgetActions) {
 						instructorId: instructor.id,
 						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
 						reason: instructor.reason,
-						sectionGroupCostId: scope.sectionGroupCost.id
+						sectionGroupCostId: scope.sectionGroupCost.id,
+						teachingAssingnmentId: instructor.teachingAssignmentId
 					};
 					BudgetActions.updateSectionGroupCostInstructor(sectionGroupCost);
 				} else {
@@ -27,7 +28,8 @@ let instructorCostsLiveData = function (BudgetActions) {
 						instructorId: instructor.id,
 						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
 						reason: instructor.reason,
-						sectionGroupCostId: scope.sectionGroupCost.id
+						sectionGroupCostId: scope.sectionGroupCost.id,
+						teachingAssignmentId: instructor.teachingAssignmentId
 					};
 					BudgetActions.createSectionGroupCostInstructor(sectionGroupCost);
 				}

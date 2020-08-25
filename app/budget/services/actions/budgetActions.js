@@ -439,6 +439,7 @@ class BudgetActions {
 			createSectionGroupCostInstructor: function (sectionGroupCost) {
 				var sectionGroupCostInstructor = {
 					instructorId: sectionGroupCost.instructorId,
+					teachingAssignmentId: sectionGroupCost.teachingAssignmentId,
 					cost: sectionGroupCost.cost,
 					reason: sectionGroupCost.reason
 				};

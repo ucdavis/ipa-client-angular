@@ -687,7 +687,7 @@ class BudgetReducers {
 
 								if (teachingAssignment.instructorId) {
 									sectionGroup.assignedInstructorIds.push(teachingAssignment.instructorId);
-									var instructor = assignedInstructors.list[teachingAssignment.instructorId];
+									let instructor = { ...assignedInstructors.list[teachingAssignment.instructorId]};
 									var instructorName = instructor.lastName + ", " + instructor.firstName;
 									var instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
 									sectionGroup.assignedInstructorNames.push(instructorName);
@@ -709,7 +709,6 @@ class BudgetReducers {
 							scheduleSectionGroups.uniqueKeys.push(uniqueKey);
 							scheduleSectionGroups.list[uniqueKey] = sectionGroup;
 						});
-
 						return scheduleSectionGroups;
 					}
 					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
