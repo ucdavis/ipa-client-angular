@@ -1,4 +1,5 @@
 import { setCharAt } from 'shared/helpers/string';
+import { dateToCalendar } from '../../../shared/helpers/dates';
 
 import './budgetScenarioToolbar.css';
 
@@ -126,6 +127,10 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 
 			scope.getCurrentScenario = function(){
 				return scope.state.selectedBudgetScenario.name;
+			};
+
+			scope.dateToCalendar = function (date) {
+				return dateToCalendar(date);
 			};
 
 			scope.downloadBudgetScenarioExcel = function(isAll) {
