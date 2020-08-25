@@ -1,4 +1,10 @@
 <div class="budget-costs">
+  <h3
+    ng-if="isSnapshot"
+    style="text-align: center; color: #5b616b"
+  >
+    SNAPSHOT
+  </h3>
   <ipa-tabs tab-names="termNav.allTabs"
             active-tab="termNav.activeTab"
             select-tab="setActiveTerm"

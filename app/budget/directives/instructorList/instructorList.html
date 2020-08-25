@@ -1,4 +1,10 @@
 <div>
+  <h3
+    ng-if="selectedBudgetScenario.isSnapshot"
+    style="text-align: center; color: #5b616b"
+  >
+    SNAPSHOT
+  </h3>
   <div ng-if="!selectedBudgetScenario.isSnapshot" class="instructor-list__warning">
     Note: Salaries and Category Costs listed below are applied across all
     Scenarios (including Live Data) for the current year.

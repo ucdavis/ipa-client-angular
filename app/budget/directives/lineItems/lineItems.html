@@ -1,4 +1,10 @@
 <div class="line-items">
+	<h3
+		ng-if="ui.isSnapshot"
+		style="text-align: center; color: #5b616b"
+	>
+		SNAPSHOT
+	</h3>
 	<ipa-tabs tab-names="ui.fundsNav.allTabs"
 	          active-tab="ui.fundsNav.activeTab"
 	          select-tab="setActiveTab"
