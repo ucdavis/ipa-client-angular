@@ -9,14 +9,15 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 		replace: true,
 		scope: {
 			sectionGroupCost: '<',
-			isLiveDataScenario: '<'
+			isLiveDataScenario: '<',
+			instructorCount: '<'
 		},
 		link: function (scope) {
 			scope.updateSectionGroupCost = function (sectionGroupCost) {
 				scope.enforceNumericParams(sectionGroupCost);
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
-
+			scope.rowSpan = (scope.instructorCount || 0) + (scope.isLiveDataScenario ? 2 : 3);
 			// Will ensure certain properties are numbers, if they exist on the object.
 			scope.enforceNumericParams = function(obj) {
 				var propertiesShouldBeNumber = [
