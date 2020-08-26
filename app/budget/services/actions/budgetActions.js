@@ -464,7 +464,16 @@ class BudgetActions {
 					cost: sectionGroupCost.cost,
 					reason: sectionGroupCost.reason
 				};
-				BudgetService.updateSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function () {
+				console.log('Update is ', sectionGroupCostInstructor);
+				BudgetService.updateSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
+					var action = {
+						type: ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR,
+						payload: {
+							sectionGroupCostInstructor: newSectionGroupCostInstructor
+						}
+					};
+					BudgetReducers.reduce(action);
+
 					ScheduleCostCalculations.calculateScheduleCosts();
 
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });

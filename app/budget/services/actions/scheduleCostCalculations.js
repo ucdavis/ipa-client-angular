@@ -50,7 +50,7 @@ class ScheduleCostCalculations {
           var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
 
-          if (sectionGroupCost.sectionGroup && sectionGroupCost.isLiveData){
+          /*if (sectionGroupCost.sectionGroup && sectionGroupCost.isLiveData){
             let instructors = Object.assign({}, ...sectionGroupCost.sectionGroup.assignedInstructors.map((x) => ({[x.id]: x})));
 
             sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor){
@@ -66,7 +66,7 @@ class ScheduleCostCalculations {
               return info;
             });
             sectionGroupCost.sectionGroupCostInstructors = [...instructors];
-          }
+          }*/
 
           // Set sectionGroupCost instructor descriptions
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];

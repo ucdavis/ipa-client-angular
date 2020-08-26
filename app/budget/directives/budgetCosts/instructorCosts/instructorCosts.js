@@ -6,6 +6,7 @@ let instructorCosts = function (BudgetActions) {
 		template: require('./instructorCosts.html'),
 		scope: {
 			instructor: '<',
+			originalInstructor: '<',
 			sectionGroupCost: '<',
 			instructorAssignmentOptions: '<'
 		},

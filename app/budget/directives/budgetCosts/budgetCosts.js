@@ -17,6 +17,7 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			tags: '<'
 		},
 		link: function (scope) {
+			console.log('Budget Costs scope ', scope.scheduleCosts);
 			scope.setActiveTerm = function(activeTermTab) {
 				BudgetActions.selectTerm(activeTermTab);
 			};

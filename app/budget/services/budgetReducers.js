@@ -319,6 +319,8 @@ class BudgetReducers {
 						var sectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
 						sectionGroupCosts.list[sectionGroupCostInstructor.sectionGroupCostId].sectionGroupCostInstructors.push(sectionGroupCostInstructor);
 						return sectionGroupCosts;
+					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
+						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
 				}
