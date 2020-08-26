@@ -320,6 +320,16 @@ class BudgetReducers {
 						sectionGroupCosts.list[sectionGroupCostInstructor.sectionGroupCostId].sectionGroupCostInstructors.push(sectionGroupCostInstructor);
 						return sectionGroupCosts;
 					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
+						var newSectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
+						var newSectionGroupCostInstructors = [];
+						sectionGroupCosts.list[newSectionGroupCostInstructor.sectionGroupCostId].sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor){
+							if (sectionGroupCostInstructor.id == newSectionGroupCostInstructor.id){
+								newSectionGroupCostInstructors.push(newSectionGroupCostInstructor);
+							} else {
+								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
+							}
+						});
+						sectionGroupCosts.list[newSectionGroupCostInstructor.sectionGroupCostId].sectionGroupCostInstructors = newSectionGroupCostInstructors;
 						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
