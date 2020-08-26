@@ -895,6 +895,7 @@ class BudgetReducers {
 							sectionGroupCostDetails: {},
 							selectedBudgetScenarioId: parseInt(action.selectedBudgetScenarioId),
 							isSnapshot: isSnapshot,
+							createInProgress: false,
 							selectedTerm: action.selectedTerm,
 							workgroupId: action.workgroupId,
 							year: action.year
@@ -1001,7 +1002,7 @@ class BudgetReducers {
 									displayReasonInput: false,
 								};
 						});
-
+						ui.createInProgress = false;
 						return ui;
 					case ActionTypes.SELECT_TERM:
 						ui.selectedTerm = action.payload.term;

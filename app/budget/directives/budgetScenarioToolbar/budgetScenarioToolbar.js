@@ -19,6 +19,11 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.validationError = "";
 			scope.activeFilters = [];
 			scope.showTermChip = false;
+			scope.snapshotInProgress = false;
+
+			$rootScope.$on('budgetStateChanged', function (event, data) {
+				scope.snapshotInProgress = data.ui.createInProgress;
+			});
 
 			$window.onscroll = function () {
 				const VERTICAL_OFFSET = 98;
@@ -51,6 +56,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			};
 
 			scope.createBudgetScenarioSnapshot = function() {
+				scope.snapshotInProgress = true;
 				BudgetActions.createBudgetScenarioSnapshot(scope.state.selectedBudgetScenario);
 			};
 
