@@ -12,11 +12,16 @@ let addInstructorAssignmentDropdown = function (BudgetActions) {
 			scope.setInstructor = function(instructor) {
 				console.log('Setting instructor ', instructor);
 				var sectionGroupCost = {
-						instructorId: instructor.id,
 						cost: null,
-						sectionGroupCostId: scope.sectionGroupCost.id,
-						instructorTypeId: instructor.instructorType.id
+						sectionGroupCostId: scope.sectionGroupCost.id
 				};
+				if (instructor.isInstructorType){
+					sectionGroupCost.instructorTypeId = instructor.id;
+				} else {
+					sectionGroupCost.instructorTypeId = instructor.instructorType.id;
+					sectionGroupCost.instructorId = instructor.id;
+				}
+
 				BudgetActions.createSectionGroupCostInstructors([sectionGroupCost]);
 			};
 		}

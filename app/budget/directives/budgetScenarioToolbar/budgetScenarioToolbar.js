@@ -33,7 +33,6 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.state.calculatedScheduleCosts.sectionGroupCosts.forEach(function(sectionGroupCost){
 					if (sectionGroupCost.sectionGroup){
 						if (!_array_compare_objects_by_key(sectionGroupCost.sectionGroup.assignedInstructors, 'id', sectionGroupCost.sectionGroupCostInstructors, 'instructorId')){
-							console.log('Section group id ' + sectionGroupCost.id, ' is ', _array_compare_objects_by_key(sectionGroupCost.sectionGroup.assignedInstructors, 'id', sectionGroupCost.sectionGroupCostInstructors, 'instructorId'));
 							res = false;
 						}
 					}

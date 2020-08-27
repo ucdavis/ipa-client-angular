@@ -10,6 +10,7 @@ let editInstructorAssignmentDropdown = function (BudgetActions) {
 			instructor: '<'
 		},
 		link: function (scope) {
+			console.log('Edit instructor scope ', scope);
 			scope.setInstructor = function(newInstructor) {
 				console.log('Updating instructor ', scope.instructor);
 					var sectionGroupCost = {
