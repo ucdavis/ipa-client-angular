@@ -23,6 +23,16 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 				scope.sectionGroupCost.instructorId = scope.sectionGroupCost.sectionGroup.assignedInstructor ? scope.sectionGroupCost.sectionGroup.assignedInstructor.id : null;
 				scope.sectionGroupCost.instructorTypeId = scope.sectionGroupCost.sectionGroup.assignedInstructorType ? scope.sectionGroupCost.sectionGroup.assignedInstructorType.id : null;
 				BudgetActions.updateSectionGroupCost(scope.sectionGroupCost);
+				if (scope.sectionGroupCost.sectionGroup){
+					const instructors = scope.sectionGroupCost.sectionGroup.assignedInstructors.map(function(liveDataInstructor){
+						return {
+							instructorId: liveDataInstructor.id,
+							instructorTypeId: liveDataInstructor.instructorTypeId,
+							sectionGroupCostId: scope.sectionGroupCost.id
+						};
+					});
+					BudgetActions.createSectionGroupCostInstructors(instructors);
+				}
 			};
 
 			scope.removeOriginalInstructor = function(sectionGroupCost) {

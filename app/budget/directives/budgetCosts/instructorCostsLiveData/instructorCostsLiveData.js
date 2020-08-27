@@ -32,7 +32,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 						teachingAssignmentId: instructor.teachingAssignmentId,
 						instructorTypeId: instructor.instructorTypeId
 					};
-					BudgetActions.createSectionGroupCostInstructor([sectionGroupCostInstructor], true);
+					BudgetActions.createSectionGroupCostInstructors([sectionGroupCostInstructor], true);
 				}
 			};
 		} // end link

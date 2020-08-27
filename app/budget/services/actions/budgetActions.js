@@ -436,9 +436,9 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not add course.", type: "ERROR" });
 				});
 			},
-			createSectionGroupCostInstructor: function (sectionGroupCostInstructors, isLiveData) {
+			createSectionGroupCostInstructors: function (sectionGroupCostInstructors, isLiveData) {
 				var sectionGroupCostId = sectionGroupCostInstructors[0].sectionGroupCostId;
-				BudgetService.createSectionGroupCostInstructor(sectionGroupCostId, sectionGroupCostInstructors).then(function (newSectionGroupCostInstructors) {
+				BudgetService.createSectionGroupCostInstructors(sectionGroupCostId, sectionGroupCostInstructors).then(function (newSectionGroupCostInstructors) {
 					var action = {
 						type: ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR,
 						payload: {

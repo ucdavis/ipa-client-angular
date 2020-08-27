@@ -17,7 +17,7 @@ let addInstructorAssignmentDropdown = function (BudgetActions) {
 						sectionGroupCostId: scope.sectionGroupCost.id,
 						instructorTypeId: instructor.instructorType.id
 				};
-				BudgetActions.createSectionGroupCostInstructor([sectionGroupCost]);
+				BudgetActions.createSectionGroupCostInstructors([sectionGroupCost]);
 			};
 		}
 	};
