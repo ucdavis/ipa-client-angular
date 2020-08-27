@@ -10,8 +10,6 @@ let addInstructorCost = function () {
 			instructorAssignmentOptions: '<'
 		},
 		replace: true,
-		link: function () {
-		} // end link
 	};
 };
 

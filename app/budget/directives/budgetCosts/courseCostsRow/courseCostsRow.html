@@ -1,5 +1,5 @@
 <tr>
-	<td rowspan="{{ rowSpan }}" class="course-costs__table-cell-sequence">
+	<td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="course-costs__table-cell-sequence">
 		<div class="course-costs__sequence-container">
 			{{ sectionGroupCost.sequencePattern }}
 		</div>
@@ -139,7 +139,7 @@
 	</td>
 
 	<!-- Comments -->
-    <td rowspan="{{ rowSpan }}" class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
       <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
                   icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
                   tooltip-message="'View Comments'"
@@ -150,7 +150,7 @@
     </td>
 
     <!-- Total -->
-    <td rowspan="{{ rowSpan }}" class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
       <div class="budget-costs__total-container">
         <div class="budget-costs__label">
           Total

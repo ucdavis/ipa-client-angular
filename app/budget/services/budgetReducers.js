@@ -331,6 +331,17 @@ class BudgetReducers {
 						});
 						sectionGroupCosts.list[newSectionGroupCostInstructor.sectionGroupCostId].sectionGroupCostInstructors = newSectionGroupCostInstructors;
 						return sectionGroupCosts;
+					case ActionTypes.DELETE_SECTION_GROUP_COST_INSTRUCTOR:
+						var removedSectionGroupCostInstructorId = action.payload.removedSectionGroupCostInstructorId;
+						var sectionGroupCostId = action.payload.sectionGroupCostId;
+						var newSectionGroupCostInstructors = [];
+						sectionGroupCosts.list[sectionGroupCostId].sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor){
+							if (sectionGroupCostInstructor.id != removedSectionGroupCostInstructorId){
+								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
+							}
+						});
+						sectionGroupCosts.list[sectionGroupCostId].sectionGroupCostInstructors = newSectionGroupCostInstructors;
+						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
 				}
@@ -854,7 +865,6 @@ class BudgetReducers {
 							isAddBudgetScenarioModalOpen: false,
 							isAddLineItemModalOpen: false,
 							isBudgetConfigModalOpen: false,
-							isSectionGroupCostInstructorModalOpen: false,
 							isLineItemOpen: false,
 							isCourseCostOpen: false,
 							instructorAssignmentOptions: [],
@@ -1056,10 +1066,6 @@ class BudgetReducers {
 						return ui;
 					case ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS:
 						ui.budgetScenariosModal.isOpen = !ui.budgetScenariosModal.isOpen;
-						return ui;
-					case ActionTypes.TOGGLE_SECTION_GROUP_COST_INSTRUCTOR_MODAL:
-						ui.isSectionGroupCostInstructorModalOpen = !ui.isSectionGroupCostInstructorModalOpen;
-						ui.sectionGroupCostToEdit = ui.isSectionGroupCostInstructorModalOpen ? action.payload.sectionGroupCost : {};
 						return ui;
 					case ActionTypes.CREATE_LINE_ITEM:
 						var lineItem = action.payload;

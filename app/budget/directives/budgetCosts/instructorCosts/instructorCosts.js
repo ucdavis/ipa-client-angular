@@ -13,15 +13,18 @@ let instructorCosts = function (BudgetActions) {
 		replace: true,
 		link: function (scope) {
 			scope.updateInstructorCost = function (instructor) {
-
 				var sectionGroupCost = {
 					id: instructor.id,
 					instructorId: instructor.instructorId,
-					cost: parseFloat((instructor.cost || '0.0').replace(/\D/g,'')),
+					cost: instructor.cost === "" ? null : parseFloat(instructor.cost.replace(/\D/g,'')),
 					reason: instructor.reason,
 					sectionGroupCostId: scope.sectionGroupCost.id
 				};
 				BudgetActions.updateSectionGroupCostInstructor(sectionGroupCost);
+			};
+
+			scope.removeInstructorCost = function (instructor) {
+				BudgetActions.deleteSectionGroupCostInstructor(instructor);
 			};
 		} // end link
 	};

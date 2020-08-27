@@ -85,6 +85,11 @@ class BudgetService {
 
 			updateSectionGroupCostInstructor: function(sectionGroupCostId, sectionGroupCostInstructor) {
 				return ApiService.put("/api/budgetView/sectionGroupCosts/" + sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id, sectionGroupCostInstructor);
+			},
+
+			deleteSectionGroupCostInstructor: function(sectionGroupCostInstructor) {
+				console.log('Deleting SectionGroupCostInstructor ', sectionGroupCostInstructor, ' hitting endpoint ', "/api/budgetView/sectionGroupCosts/" + sectionGroupCostInstructor.sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id);
+				return ApiService.delete("/api/budgetView/sectionGroupCosts/" + sectionGroupCostInstructor.sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id);
 			}
 		};
 	}

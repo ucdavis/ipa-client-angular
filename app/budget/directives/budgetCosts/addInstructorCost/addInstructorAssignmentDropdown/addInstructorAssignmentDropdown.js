@@ -13,8 +13,9 @@ let addInstructorAssignmentDropdown = function (BudgetActions) {
 				console.log('Setting instructor ', instructor);
 				var sectionGroupCost = {
 						instructorId: instructor.id,
-						cost: parseFloat((instructor.cost || '0.0').replace(/\D/g,'')),
-						sectionGroupCostId: scope.sectionGroupCost.id
+						cost: null,
+						sectionGroupCostId: scope.sectionGroupCost.id,
+						instructorTypeId: instructor.instructorType.id
 				};
 				BudgetActions.createSectionGroupCostInstructor(sectionGroupCost);
 			};

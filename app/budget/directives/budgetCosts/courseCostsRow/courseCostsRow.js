@@ -17,7 +17,7 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 				scope.enforceNumericParams(sectionGroupCost);
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
-			scope.rowSpan = (scope.instructorCount || 0) + (scope.isLiveDataScenario ? 2 : 3);
+
 			// Will ensure certain properties are numbers, if they exist on the object.
 			scope.enforceNumericParams = function(obj) {
 				var propertiesShouldBeNumber = [

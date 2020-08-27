@@ -441,7 +441,8 @@ class BudgetActions {
 					instructorId: sectionGroupCost.instructorId,
 					teachingAssignmentId: sectionGroupCost.teachingAssignmentId,
 					cost: sectionGroupCost.cost,
-					reason: sectionGroupCost.reason
+					reason: sectionGroupCost.reason,
+					instructorTypeId: sectionGroupCost.instructorTypeId
 				};
 				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
 					var action = {
@@ -479,6 +480,22 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+				});
+			},
+			deleteSectionGroupCostInstructor: function (sectionGroupCostInstructor){
+				BudgetService.deleteSectionGroupCostInstructor(sectionGroupCostInstructor).then(function (removedSectionGroupCostInstructorId) {
+					var action = {
+						type: ActionTypes.DELETE_SECTION_GROUP_COST_INSTRUCTOR,
+						payload: {
+							removedSectionGroupCostInstructorId: removedSectionGroupCostInstructorId,
+							sectionGroupCostId: sectionGroupCostInstructor.sectionGroupCostId
+						}
+					};
+					BudgetReducers.reduce(action);
+					ScheduleCostCalculations.calculateScheduleCosts();
+					$rootScope.$emit('toast', { message: "Deleted instructor.", type: "SUCCESS" });
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not delete instructor.", type: "ERROR" });
 				});
 			},
 			asignInstructorType: function(instructorCost) {
@@ -822,16 +839,6 @@ class BudgetActions {
 				var action = {
 					type: ActionTypes.TOGGLE_DOWNLOAD_BUDGET_SCENARIOS,
 					payload: {}
-				};
-
-				BudgetReducers.reduce(action);
-			},
-			toggleSectionGroupCostInstructorModal: function(sectionGroupCost) {
-				var action = {
-					type: ActionTypes.TOGGLE_SECTION_GROUP_COST_INSTRUCTOR_MODAL,
-					payload: {
-						sectionGroupCost: sectionGroupCost
-					}
 				};
 
 				BudgetReducers.reduce(action);
