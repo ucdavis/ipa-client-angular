@@ -1,4 +1,5 @@
 import { setCharAt } from 'shared/helpers/string';
+import { _array_compare_objects_by_key } from 'shared/helpers/array';
 
 import './budgetScenarioToolbar.css';
 
@@ -12,6 +13,8 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			state: '<'
 		},
 		link: function (scope) {
+
+			console.log('Scenario toolbar scope',scope);
 			scope.displayScenarioRenameUI = false;
 			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			scope.isNewScenarioNameValid = true;
@@ -25,6 +28,18 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.$apply();
 			};
 
+			scope.areAddditionalInstructorsUpToDate = function() {
+				var res = true;
+				scope.state.calculatedScheduleCosts.sectionGroupCosts.forEach(function(sectionGroupCost){
+					if (sectionGroupCost.sectionGroup){
+						if (!_array_compare_objects_by_key(sectionGroupCost.sectionGroup.assignedInstructors, 'id', sectionGroupCost.sectionGroupCostInstructors, 'instructorId')){
+							console.log('Section group id ' + sectionGroupCost.id, ' is ', _array_compare_objects_by_key(sectionGroupCost.sectionGroup.assignedInstructors, 'id', sectionGroupCost.sectionGroupCostInstructors, 'instructorId'));
+							res = false;
+						}
+					}
+				});
+				return res;
+			};
 			scope.openSupportCostModal = function() {
 				BudgetActions.toggleSupportCostModal();
 			};

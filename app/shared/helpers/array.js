@@ -167,8 +167,6 @@ export function _array_compare_objects_by_key(arrayA, keyA, arrayB, keyB) {
 	if (arrayAIds.length !== arrayBIds.length){
 		return false;
 	}
-	console.log('Arr ',arrayAIds);
 	const res = arrayAIds.reduce((acc, cur) => (arrayBIds.includes(cur) && acc ), true);
-	console.log(res);
 	return res;
 }

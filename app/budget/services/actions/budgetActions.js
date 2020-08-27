@@ -134,6 +134,24 @@ class BudgetActions {
 				const scenarioTrackedChanges = BudgetReducers._state.calculatedScheduleCosts.trackedChanges;
 				const scenarioSectionGroupCosts = BudgetReducers._state.calculatedScheduleCosts.sectionGroupCosts;
 
+				scenarioSectionGroupCosts.forEach( sectionGroupCost => {
+					if (sectionGroupCost.sectionGroup){
+						var currentInstructorIds = sectionGroupCost.sectionGroupCostInstructors.map(function(instructor){
+							return instructor.instructorId;
+						});
+						const instructors = sectionGroupCost.sectionGroup.assignedInstructors.map(function(liveDataInstructor){
+							return {
+								instructorId: liveDataInstructor.id,
+								instructorTypeId: liveDataInstructor.instructorTypeId,
+								sectionGroupCostId: sectionGroupCost.id
+							};
+						}).filter(instructor => !currentInstructorIds.includes(instructor.instructorId));
+						if (instructors.length > 0){
+							this.createSectionGroupCostInstructors(instructors);
+						}
+					}
+				});
+
 				scenarioTrackedChanges.forEach(change => {
 					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
 					let originalSectionGroupCost = JSON.parse(JSON.stringify(sectionGroupCost)); // to revert in case of failure
