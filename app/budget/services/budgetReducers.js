@@ -316,8 +316,8 @@ class BudgetReducers {
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 						return sectionGroupCosts;
 					case ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR:
-						var sectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
-						sectionGroupCosts.list[sectionGroupCostInstructor.sectionGroupCostId].sectionGroupCostInstructors.push(sectionGroupCostInstructor);
+						var sectionGroupCostInstructors = action.payload.sectionGroupCostInstructors;
+						sectionGroupCosts.list[sectionGroupCostInstructors[0].sectionGroupCostId].sectionGroupCostInstructors = sectionGroupCosts.list[sectionGroupCostInstructors[0].sectionGroupCostId].sectionGroupCostInstructors.concat(sectionGroupCostInstructors);
 						return sectionGroupCosts;
 					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
 						var newSectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;

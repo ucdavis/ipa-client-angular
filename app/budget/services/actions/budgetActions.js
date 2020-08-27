@@ -436,26 +436,30 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not add course.", type: "ERROR" });
 				});
 			},
-			createSectionGroupCostInstructor: function (sectionGroupCost) {
-				var sectionGroupCostInstructor = {
-					instructorId: sectionGroupCost.instructorId,
-					teachingAssignmentId: sectionGroupCost.teachingAssignmentId,
-					cost: sectionGroupCost.cost,
-					reason: sectionGroupCost.reason,
-					instructorTypeId: sectionGroupCost.instructorTypeId
-				};
-				BudgetService.createSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
+			createSectionGroupCostInstructor: function (sectionGroupCostInstructors, isLiveData) {
+				var sectionGroupCostId = sectionGroupCostInstructors[0].sectionGroupCostId;
+				BudgetService.createSectionGroupCostInstructor(sectionGroupCostId, sectionGroupCostInstructors).then(function (newSectionGroupCostInstructors) {
 					var action = {
 						type: ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR,
 						payload: {
-							sectionGroupCostInstructor: newSectionGroupCostInstructor
+							sectionGroupCostInstructors: newSectionGroupCostInstructors
 						}
 					};
 					BudgetReducers.reduce(action);
 					ScheduleCostCalculations.calculateScheduleCosts();
-					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
+					var instructorMsg = sectionGroupCostInstructors.length > 1 ? 'instructors' : 'instructor';
+					if (isLiveData){
+						$rootScope.$emit('toast', { message: "Updated additional " + instructorMsg, type: "SUCCESS" });
+					} else {
+						$rootScope.$emit('toast', { message: "Created additional " + instructorMsg, type: "SUCCESS" });
+					}
 				}, function () {
-					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+					var instructorMsg = sectionGroupCostInstructors.length > 1 ? 'instructors' : 'instructor';
+					if (isLiveData){
+						$rootScope.$emit('toast', { message: "Failed to update additional " + instructorMsg, type: "SUCCESS" });
+					} else {
+						$rootScope.$emit('toast', { message: "Failed to create additional " + instructorMsg, type: "SUCCESS" });
+					}
 				});
 			},
 			updateSectionGroupCostInstructor: function (sectionGroupCost) {

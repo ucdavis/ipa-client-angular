@@ -24,7 +24,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 					BudgetActions.updateSectionGroupCostInstructor(sectionGroupCost);
 				} else {
 					console.log(instructor);
-					var sectionGroupCost = {
+					var sectionGroupCostInstructor = {
 						instructorId: instructor.id,
 						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
 						reason: instructor.reason,
@@ -32,7 +32,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 						teachingAssignmentId: instructor.teachingAssignmentId,
 						instructorTypeId: instructor.instructorTypeId
 					};
-					BudgetActions.createSectionGroupCostInstructor(sectionGroupCost);
+					BudgetActions.createSectionGroupCostInstructor([sectionGroupCostInstructor], true);
 				}
 			};
 		} // end link
