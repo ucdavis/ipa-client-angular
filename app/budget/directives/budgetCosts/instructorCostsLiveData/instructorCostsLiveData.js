@@ -13,7 +13,6 @@ let instructorCostsLiveData = function (BudgetActions) {
 			scope.updateInstructorCost = function (instructor) {
 				// We already have an entry for this user
 				if (instructor.sectionGroupCostInstructorId){
-					console.log('Updating, already exists');
 					var sectionGroupCost = {
 						id: instructor.sectionGroupCostInstructorId,
 						instructorId: instructor.id,
@@ -24,12 +23,14 @@ let instructorCostsLiveData = function (BudgetActions) {
 					};
 					BudgetActions.updateSectionGroupCostInstructor(sectionGroupCost);
 				} else {
+					console.log(instructor);
 					var sectionGroupCost = {
 						instructorId: instructor.id,
 						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
 						reason: instructor.reason,
 						sectionGroupCostId: scope.sectionGroupCost.id,
-						teachingAssignmentId: instructor.teachingAssignmentId
+						teachingAssignmentId: instructor.teachingAssignmentId,
+						instructorTypeId: instructor.instructorTypeId
 					};
 					BudgetActions.createSectionGroupCostInstructor(sectionGroupCost);
 				}

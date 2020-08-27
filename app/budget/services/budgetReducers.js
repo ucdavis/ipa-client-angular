@@ -719,6 +719,7 @@ class BudgetReducers {
 									// TODO is this better than accessing the above assignedInstructors list?
 									instructor.teachingAssignmentId = teachingAssignment.id;
 									instructor.sectionGroupId = sectionGroup.id;
+									instructor.instructorTypeId = instructorType.id;
 									sectionGroup.assignedInstructors.push(instructor);
 								} else if (teachingAssignment.instructorTypeId > 0 && !(teachingAssignment.instructorId)) {
 									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
