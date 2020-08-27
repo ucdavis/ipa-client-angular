@@ -12,9 +12,9 @@
 				</instructor-assignment-dropdown>
 			</div>
 
-			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
+			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) && _array_compare_objects_by_key(sectionGroupCost.sectionGroupCostInstructors, 'instructorId', sectionGroupCost.sectionGroup.assignedInstructors, 'id') }">
 				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
-				     uib-tooltip="Update to {{ sectionGroupCost.reversionDisplayName }}"
+				     uib-tooltip="Update instructors from Live Data"
 				     tooltip-append-to-body="true"
 				     confirm-button="syncInstructor()"
 				     message="Update to {{ sectionGroupCost.reversionDisplayName }}?"

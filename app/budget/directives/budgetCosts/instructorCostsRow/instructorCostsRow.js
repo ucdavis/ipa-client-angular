@@ -1,4 +1,5 @@
 import { toCurrency } from 'shared/helpers/string';
+import { _array_compare_objects_by_key } from 'shared/helpers/array';
 
 import './instructorCostsRow.css';
 
@@ -15,6 +16,8 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 		},
 		replace: true,
 		link: function (scope) {
+			scope._array_compare_objects_by_key = _array_compare_objects_by_key;
+
 			scope.toggleCourseCostsSection = function() {
 				BudgetActions.toggleCourseCostsSection();
 			};
@@ -24,13 +27,16 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 				scope.sectionGroupCost.instructorTypeId = scope.sectionGroupCost.sectionGroup.assignedInstructorType ? scope.sectionGroupCost.sectionGroup.assignedInstructorType.id : null;
 				BudgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 				if (scope.sectionGroupCost.sectionGroup){
+					var currentInstructorIds = scope.sectionGroupCost.sectionGroupCostInstructors.map(function(instructor){
+						return instructor.instructorId;
+					});
 					const instructors = scope.sectionGroupCost.sectionGroup.assignedInstructors.map(function(liveDataInstructor){
 						return {
 							instructorId: liveDataInstructor.id,
 							instructorTypeId: liveDataInstructor.instructorTypeId,
 							sectionGroupCostId: scope.sectionGroupCost.id
 						};
-					});
+					}).filter(instructor => !currentInstructorIds.includes(instructor.instructorId));
 					BudgetActions.createSectionGroupCostInstructors(instructors);
 				}
 			};
