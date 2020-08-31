@@ -99,54 +99,17 @@ class ScheduleCostCalculations {
                 return;
               }
 
-            } else {
-              //TODO support insturctor types
+            } else if (sectionGroupCostInstructor.instructorTypeId > 0){
+                var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
+
+                if (instructorTypeCost) {
+                  sectionGroupCostInstructor.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
+                  sectionGroupCostInstructor.overrideInstructorCostSource = "instructor type";
+                  sectionGroupCostInstructor.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
+                  sectionGroupCostInstructor.newInstructorCost = null;
+                  return;
+                }
             }
-
-            /*if (sectionGroupCost.cost === 0 || sectionGroupCost.cost > 0) {
-              sectionGroupCost.overrideInstructorCost = angular.copy(sectionGroupCost.cost); // eslint-disable-line no-undef
-              sectionGroupCost.overrideInstructorCostSource = "course";
-              sectionGroupCost.newInstructorCost = null;
-              return;
-            }
-
-            // If instructor => Use instructor cost
-            if (sectionGroupCost.instructorId > 0) {
-              var instructorCost = BudgetReducers._state.instructorCosts.byInstructorId[sectionGroupCost.instructorId];
-              var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
-
-              if (instructorCost && instructorCost.cost > 0) {
-                sectionGroupCost.overrideInstructorCost = angular.copy(instructorCost.cost); // eslint-disable-line no-undef
-                sectionGroupCost.overrideInstructorCostSource = "instructor";
-                sectionGroupCost.overrideInstructorCostSourceDescription = instructor.firstName + " " + instructor.lastName;
-                sectionGroupCost.newInstructorCost = null;
-                return;
-              }
-
-              var instructorTypeId = sectionGroupCost.instructorTypeId;
-              var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
-
-              if (instructorTypeCost && instructorTypeCost.cost > 0) {
-                sectionGroupCost.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
-                sectionGroupCost.overrideInstructorCostSource = "instructor type";
-                sectionGroupCost.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
-                sectionGroupCost.newInstructorCost = null;
-                return;
-              }
-            }
-
-            // If instructorType => use instructorType cost
-            if (sectionGroupCost.instructorTypeId > 0) {
-              var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
-
-              if (instructorTypeCost) {
-                sectionGroupCost.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
-                sectionGroupCost.overrideInstructorCostSource = "instructor type";
-                sectionGroupCost.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
-                sectionGroupCost.newInstructorCost = null;
-                return;
-              }
-            }*/
           });
 
           // Set sectionGroupCost instructor descriptions

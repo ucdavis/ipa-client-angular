@@ -10,11 +10,10 @@ let editInstructorAssignmentDropdown = function (BudgetActions) {
 			instructor: '<'
 		},
 		link: function (scope) {
-			console.log('Edit instructor scope ', scope);
 			scope.setInstructor = function(newInstructor) {
 				var sectionGroupCostInstructor = {
 					id: scope.instructor.id,
-					cost: parseFloat((scope.instructor.cost || '0.0').toString().replace(/\D/g,'')),
+					cost: (scope.instructor.cost || "") === "" ? null : parseFloat(scope.instructor.cost.replace(/\D/g,'')),
 					reason: scope.instructor.reason,
 					sectionGroupCostId: scope.instructor.sectionGroupCostId,
 				};
