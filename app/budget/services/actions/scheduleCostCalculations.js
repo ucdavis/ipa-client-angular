@@ -51,21 +51,24 @@ class ScheduleCostCalculations {
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
 
           if (sectionGroupCost.sectionGroup && sectionGroupCost.isLiveData){
-            let instructors = Object.assign({}, ...sectionGroupCost.sectionGroup.assignedInstructors.map((x) => ({[x.id]: x})));
-
-            sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor){
-              if (instructors[sectionGroupCostInstructor.instructorId]){
-                instructors[sectionGroupCostInstructor.instructorId].cost = '$' + sectionGroupCostInstructor.cost.toString();
-                instructors[sectionGroupCostInstructor.instructorId].sectionGroupCostInstructorId = sectionGroupCostInstructor.id;
-                instructors[sectionGroupCostInstructor.instructorId].reason = sectionGroupCostInstructor.reason;
+            var teachingAssignmentIds = sectionGroupCost.sectionGroupCostInstructors.map((obj) => obj.teachingAssignmentId);
+            for (var i = 0; i < sectionGroupCost.sectionGroup.assignedInstructors.length; i++){
+              var instructor = sectionGroupCost.sectionGroup.assignedInstructors[i];
+              if (instructor.teachingAssignmentId && !teachingAssignmentIds.includes(instructor.teachingAssignmentId)){
+                teachingAssignmentIds.push(instructor.teachingAssignmentId);
+                var sectionGroupCostInstructor = {
+                  cost: null,
+                  sectionGroupCostInstructorId: null,
+                  teachingAssignmentId: instructor.teachingAssignmentId,
+                  instructorTypeDescription: instructor.instructorTypeDescription,
+                  instructorTypeId: instructor.instructorTypeId,
+                  instructorName: instructor.instructorName,
+                  instructorId: instructor.id
+                };
+                sectionGroupCost.sectionGroupCostInstructors.push(sectionGroupCostInstructor);
               }
-            });
-            instructors = Object.keys(instructors).map(function(key){
-              let info = instructors[key];
-              info.sectionGroupCostId = sectionGroupCost.id;
-              return info;
-            });
-            sectionGroupCost.sectionGroupCostInstructors = [...instructors];
+            }
+
           }
           sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor) {
             sectionGroupCostInstructor.overrideInstructorCost = null;

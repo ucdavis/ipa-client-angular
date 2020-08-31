@@ -317,7 +317,9 @@ class BudgetReducers {
 						return sectionGroupCosts;
 					case ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR:
 						var sectionGroupCostInstructors = action.payload.sectionGroupCostInstructors;
-						sectionGroupCosts.list[sectionGroupCostInstructors[0].sectionGroupCostId].sectionGroupCostInstructors = sectionGroupCosts.list[sectionGroupCostInstructors[0].sectionGroupCostId].sectionGroupCostInstructors.concat(sectionGroupCostInstructors);
+						var teachingAssignmentIds = action.payload.sectionGroupCostInstructors.map((obj) => obj.teachingAssignmentId);
+						sectionGroupCosts.list[sectionGroupCostInstructors[0].sectionGroupCostId].sectionGroupCostInstructors = sectionGroupCosts.list[sectionGroupCostInstructors[0].sectionGroupCostId].sectionGroupCostInstructors.concat(sectionGroupCostInstructors)
+						.filter(instructor => ((teachingAssignmentIds.includes(instructor.teachingAssignmentId) && instructor.sectionGroupCostId) || !teachingAssignmentIds.includes(instructor.teachingAssignmentId)));
 						return sectionGroupCosts;
 					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
 						var newSectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
@@ -720,11 +722,20 @@ class BudgetReducers {
 									instructor.teachingAssignmentId = teachingAssignment.id;
 									instructor.sectionGroupId = sectionGroup.id;
 									instructor.instructorTypeId = instructorType.id;
+									instructor.instructorTypeDescription = instructorType.description;
+									instructor.instructorName = instructor.firstName + ' ' + instructor.lastName;
 									sectionGroup.assignedInstructors.push(instructor);
 								} else if (teachingAssignment.instructorTypeId > 0 && !(teachingAssignment.instructorId)) {
 									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
 									var instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
 									sectionGroup.assignedInstructorTypeNames.push(instructorType.description);
+									var instructor = {
+										instructorTypeId: teachingAssignment.instructorTypeId,
+										sectionGroupId: sectionGroup.id,
+										instructorTypeDescription: instructorType.description,
+										teachingAssignmentId: teachingAssignment.id
+									};
+									sectionGroup.assignedInstructors.push(instructor);
 								}
 							});
 							// Add to payload

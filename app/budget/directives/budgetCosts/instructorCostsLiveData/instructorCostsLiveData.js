@@ -11,21 +11,20 @@ let instructorCostsLiveData = function (BudgetActions) {
 		replace: true,
 		link: function (scope) {
 			scope.updateInstructorCost = function (instructor) {
-				// We already have an entry for this user
-				if (instructor.sectionGroupCostInstructorId){
+				if (instructor.id){
 					var sectionGroupCost = {
-						id: instructor.sectionGroupCostInstructorId,
-						instructorId: instructor.id,
+						id: instructor.id,
+						instructorId: instructor.instructorId,
 						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
 						reason: instructor.reason,
 						sectionGroupCostId: scope.sectionGroupCost.id,
-						teachingAssingnmentId: instructor.teachingAssignmentId
+						teachingAssignmentId: instructor.teachingAssignmentId,
+						instructorTypeId: instructor.instructorTypeId
 					};
 					BudgetActions.updateSectionGroupCostInstructor(sectionGroupCost);
 				} else {
-					console.log(instructor);
 					var sectionGroupCostInstructor = {
-						instructorId: instructor.id,
+						instructorId: instructor.instructorId,
 						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
 						reason: instructor.reason,
 						sectionGroupCostId: scope.sectionGroupCost.id,

@@ -480,15 +480,8 @@ class BudgetActions {
 					}
 				});
 			},
-			updateSectionGroupCostInstructor: function (sectionGroupCost) {
-				var sectionGroupCostInstructor = {
-					id: sectionGroupCost.id,
-					instructorId: sectionGroupCost.instructorId,
-					cost: sectionGroupCost.cost,
-					reason: sectionGroupCost.reason
-				};
-				console.log('Update is ', sectionGroupCostInstructor);
-				BudgetService.updateSectionGroupCostInstructor(sectionGroupCost.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
+			updateSectionGroupCostInstructor: function (sectionGroupCostInstructor) {
+				BudgetService.updateSectionGroupCostInstructor(sectionGroupCostInstructor.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
 					var action = {
 						type: ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR,
 						payload: {

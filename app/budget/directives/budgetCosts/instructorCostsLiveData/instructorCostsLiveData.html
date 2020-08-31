@@ -6,7 +6,7 @@
 		</div>
 		<div class="instructor-costs__instructor-reversion-ui">
 			<div>
-				{{ instructor.lastName + ', ' + instructor.firstName }}
+				{{ instructor.instructorName ? instructor.instructorName.split(' ')[0] + ', ' + instructor.instructorName.split(' ')[1] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'Assign instructor') }}
 			</div>
 		</div>
 	</td>

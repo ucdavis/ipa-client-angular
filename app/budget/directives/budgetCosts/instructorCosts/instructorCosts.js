@@ -18,7 +18,8 @@ let instructorCosts = function (BudgetActions) {
 					instructorId: instructor.instructorId,
 					cost: (instructor.cost || "") === "" ? null : parseFloat(instructor.cost.replace(/\D/g,'')),
 					reason: instructor.reason,
-					sectionGroupCostId: scope.sectionGroupCost.id
+					sectionGroupCostId: scope.sectionGroupCost.id,
+					instructorTypeId: instructor.instructorTypeId
 				};
 				BudgetActions.updateSectionGroupCostInstructor(sectionGroupCost);
 			};
