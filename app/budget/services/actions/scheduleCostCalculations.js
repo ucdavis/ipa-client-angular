@@ -358,7 +358,11 @@ class ScheduleCostCalculations {
         sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal + sectionGroupCost.instructorCostSubTotal;
         if (sectionGroupCost.sectionGroupCostInstructors){
           sectionGroupCost.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
-            sectionGroupCost.totalCost += parseFloat(((sectionGroupCostInstructor.cost || 0.0).toString()).replace(/\D/g,''));
+            if (sectionGroupCostInstructor.cost){
+              sectionGroupCost.totalCost += parseFloat(sectionGroupCostInstructor.cost.toString().replace(/\D/g,''));
+            } else if (sectionGroupCostInstructor.overrideInstructorCost) {
+              sectionGroupCost.totalCost += sectionGroupCostInstructor.overrideInstructorCost;
+            }
           });
         }
       },
