@@ -474,9 +474,9 @@ class BudgetActions {
 				}, function () {
 					var instructorMsg = sectionGroupCostInstructors.length > 1 ? 'instructors' : 'instructor';
 					if (isLiveData){
-						$rootScope.$emit('toast', { message: `Failed to update additional ${instructorMsg}.`, type: "SUCCESS" });
+						$rootScope.$emit('toast', { message: `Failed to update additional ${instructorMsg}.`, type: "ERROR" });
 					} else {
-						$rootScope.$emit('toast', { message: `Failed to create additional ${instructorMsg}.`, type: "SUCCESS" });
+						$rootScope.$emit('toast', { message: `Failed to create additional ${instructorMsg}.`, type: "ERROR" });
 					}
 				});
 			},

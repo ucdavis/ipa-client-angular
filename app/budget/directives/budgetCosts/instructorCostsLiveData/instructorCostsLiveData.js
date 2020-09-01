@@ -11,11 +11,19 @@ let instructorCostsLiveData = function (BudgetActions) {
 		replace: true,
 		link: function (scope) {
 			scope.updateInstructorCost = function (instructor) {
+				// IPA Input tracks cost as string
+				// Backend sends cost as float
+				var cost = null;
+				if (instructor.cost && typeof instructor.cost === "string"){
+					cost = parseFloat(instructor.cost.replace(/\D/g,''));
+				} else if (instructor.cost) {
+					cost = instructor.cost;
+				}
 				if (instructor.id){
 					var sectionGroupCost = {
 						id: instructor.id,
 						instructorId: instructor.instructorId,
-						cost: (instructor.cost || "") === "" ? null : parseFloat(instructor.cost.replace(/\D/g,'')),
+						cost: cost,
 						reason: instructor.reason,
 						sectionGroupCostId: scope.sectionGroupCost.id,
 						teachingAssignmentId: instructor.teachingAssignmentId,
@@ -25,7 +33,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 				} else {
 					var sectionGroupCostInstructor = {
 						instructorId: instructor.instructorId,
-						cost: (instructor.cost || "") === "" ? null : parseFloat(instructor.cost.replace(/\D/g,'')),
+						cost: cost,
 						reason: instructor.reason,
 						sectionGroupCostId: scope.sectionGroupCost.id,
 						teachingAssignmentId: instructor.teachingAssignmentId,
