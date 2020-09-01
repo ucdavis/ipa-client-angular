@@ -13,8 +13,6 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			state: '<'
 		},
 		link: function (scope) {
-
-			console.log('Scenario toolbar scope',scope);
 			scope.displayScenarioRenameUI = false;
 			scope.newScenarioName = angular.copy(scope.state.selectedBudgetScenario.name); // eslint-disable-line no-undef
 			scope.isNewScenarioNameValid = true;

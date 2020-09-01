@@ -255,7 +255,6 @@ class BudgetReducers {
 							if (sectionGroupCosts.uniqueKeys.indexOf(uniqueKey) == -1) {
 								sectionGroupCosts.uniqueKeys.push(uniqueKey);
 							}
-
 						});
 						return sectionGroupCosts;
 					case ActionTypes.UPDATE_FILTERS:
@@ -746,10 +745,6 @@ class BudgetReducers {
 						});
 						return scheduleSectionGroups;
 					}
-					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
-						console.log('Updating section group cost instructor');
-						console.log(scheduleSectionGroups);
-						return scheduleSectionGroups;
 					default:
 						return scheduleSectionGroups;
 				}

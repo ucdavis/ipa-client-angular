@@ -15,7 +15,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 					var sectionGroupCost = {
 						id: instructor.id,
 						instructorId: instructor.instructorId,
-						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
+						cost: (instructor.cost || "") === "" ? null : parseFloat(instructor.cost.replace(/\D/g,'')),
 						reason: instructor.reason,
 						sectionGroupCostId: scope.sectionGroupCost.id,
 						teachingAssignmentId: instructor.teachingAssignmentId,
@@ -25,7 +25,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 				} else {
 					var sectionGroupCostInstructor = {
 						instructorId: instructor.instructorId,
-						cost: parseFloat(instructor.cost.replace(/\D/g,'')),
+						cost: (instructor.cost || "") === "" ? null : parseFloat(instructor.cost.replace(/\D/g,'')),
 						reason: instructor.reason,
 						sectionGroupCostId: scope.sectionGroupCost.id,
 						teachingAssignmentId: instructor.teachingAssignmentId,

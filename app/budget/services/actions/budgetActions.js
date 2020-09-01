@@ -467,16 +467,16 @@ class BudgetActions {
 					ScheduleCostCalculations.calculateScheduleCosts();
 					var instructorMsg = sectionGroupCostInstructors.length > 1 ? 'instructors' : 'instructor';
 					if (isLiveData){
-						$rootScope.$emit('toast', { message: "Updated additional " + instructorMsg, type: "SUCCESS" });
+						$rootScope.$emit('toast', { message: `Updated additional ${instructorMsg}.`, type: "SUCCESS" });
 					} else {
-						$rootScope.$emit('toast', { message: "Created additional " + instructorMsg, type: "SUCCESS" });
+						$rootScope.$emit('toast', { message: `Created additional ${instructorMsg}.`, type: "SUCCESS" });
 					}
 				}, function () {
 					var instructorMsg = sectionGroupCostInstructors.length > 1 ? 'instructors' : 'instructor';
 					if (isLiveData){
-						$rootScope.$emit('toast', { message: "Failed to update additional " + instructorMsg, type: "SUCCESS" });
+						$rootScope.$emit('toast', { message: `Failed to update additional ${instructorMsg}.`, type: "SUCCESS" });
 					} else {
-						$rootScope.$emit('toast', { message: "Failed to create additional " + instructorMsg, type: "SUCCESS" });
+						$rootScope.$emit('toast', { message: `Failed to create additional ${instructorMsg}.`, type: "SUCCESS" });
 					}
 				});
 			},
@@ -489,12 +489,10 @@ class BudgetActions {
 						}
 					};
 					BudgetReducers.reduce(action);
-
 					ScheduleCostCalculations.calculateScheduleCosts();
-
-					$rootScope.$emit('toast', { message: "Updated instructor cost", type: "SUCCESS" });
+					$rootScope.$emit('toast', { message: "Updated instructor cost.", type: "SUCCESS" });
 				}, function () {
-					$rootScope.$emit('toast', { message: "Could not assign instructor type.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
 				});
 			},
 			deleteSectionGroupCostInstructor: function (sectionGroupCostInstructor){

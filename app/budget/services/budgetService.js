@@ -79,7 +79,6 @@ class BudgetService {
 
 			// SectionGroupCostInstructors
 			createSectionGroupCostInstructors: function(sectionGroupCostId, SectionGroupCostInstructor) {
-				console.log('Posting section group cost instructor to API from budget service ', SectionGroupCostInstructor);
 				return ApiService.post("/api/budgetView/sectionGroupCosts/" + sectionGroupCostId + "/sectionGroupCostInstructors", SectionGroupCostInstructor);
 			},
 
@@ -88,7 +87,6 @@ class BudgetService {
 			},
 
 			deleteSectionGroupCostInstructor: function(sectionGroupCostInstructor) {
-				console.log('Deleting SectionGroupCostInstructor ', sectionGroupCostInstructor, ' hitting endpoint ', "/api/budgetView/sectionGroupCosts/" + sectionGroupCostInstructor.sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id);
 				return ApiService.delete("/api/budgetView/sectionGroupCosts/" + sectionGroupCostInstructor.sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id);
 			}
 		};

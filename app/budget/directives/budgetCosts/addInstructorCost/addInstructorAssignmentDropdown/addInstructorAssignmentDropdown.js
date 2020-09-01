@@ -10,7 +10,6 @@ let addInstructorAssignmentDropdown = function (BudgetActions) {
 		},
 		link: function (scope) {
 			scope.setInstructor = function(instructor) {
-				console.log('Setting instructor ', instructor);
 				var sectionGroupCost = {
 						cost: null,
 						sectionGroupCostId: scope.sectionGroupCost.id

@@ -17,7 +17,6 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			tags: '<'
 		},
 		link: function (scope) {
-			console.log('Budget Costs scope ', scope.scheduleCosts);
 			scope.setActiveTerm = function(activeTermTab) {
 				BudgetActions.selectTerm(activeTermTab);
 			};
@@ -31,10 +30,7 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			};
 
 			scope.addSectionGroupCostInstructor = function(sectionGroupCost) {
-				/*console.log('Adding section group cost instructor: ', sectionGroupCost);
-				BudgetActions.createSectionGroupCostInstructor(sectionGroupCost);*/
 				BudgetActions.toggleSectionGroupCostInstructorModal(sectionGroupCost);
-				console.log('Section group info ', sectionGroupCost);
 			};
 		}
 	};
