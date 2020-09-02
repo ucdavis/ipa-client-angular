@@ -139,7 +139,7 @@
 	</td>
 
 	<!-- Comments -->
-    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': divider }">
       <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
                   icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
                   tooltip-message="'View Comments'"
@@ -150,7 +150,7 @@
     </td>
 
     <!-- Total -->
-    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
+    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': divider }">
       <div class="budget-costs__total-container">
         <div class="budget-costs__label">
           Total

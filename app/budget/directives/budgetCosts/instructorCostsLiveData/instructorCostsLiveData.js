@@ -7,6 +7,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 		scope: {
 			instructor: '<',
 			sectionGroupCost: '<',
+			divider: '<',
 		},
 		replace: true,
 		link: function (scope) {

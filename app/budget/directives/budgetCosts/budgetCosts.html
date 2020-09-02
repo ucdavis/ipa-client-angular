@@ -61,7 +61,7 @@
                 </div>
               </span>
             </div>
-            <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+            <div ng-repeat="sectionGroupCost in course.sectionGroupCosts" ng-init="last = $last">
               <table class="budget-costs__table">
                 <thead>
                   <colgroup>
@@ -78,15 +78,21 @@
                   </colgroup>
                 </thead>
                 <tbody>
-                  <tr course-costs-row section-group-cost="sectionGroupCost" is-live-data-scenario="isLiveDataScenario" instructor-count="sectionGroupCost.sectionGroupCostInstructors.length"></tr>
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
+                    course-costs-row
+                    section-group-cost="sectionGroupCost"
+                    is-live-data-scenario="isLiveDataScenario"
+                    instructor-count="sectionGroupCost.sectionGroupCostInstructors.length">
+                  </tr>
+                  <tr divider="(course.sectionGroupCosts.length > 1 && $last == false && isLiveDataScenario && sectionGroupCost.sectionGroupCostInstructors.length < 1)"
                       instructor-costs-row
                       section-group-cost="sectionGroupCost"
                       instructor-assignment-options="instructorAssignmentOptions"
                       regular-instructor-assignment-options="regularInstructorAssignmentOptions"
                       is-live-data-scenario="isLiveDataScenario">
                   </tr>
-                  <tr ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
+                  <tr divider="(course.sectionGroupCosts.length > 1 && $last == true && !last)"
+                      ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
                       instructor-costs-live-data
                       instructor="instructor"
                       section-group-cost="sectionGroupCost"
@@ -101,7 +107,7 @@
                       instructor-assignment-options="instructorAssignmentOptions"
                       ng-show="!isLiveDataScenario"
                   >
-                  <tr
+                  <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
                       add-instructor-cost
                       section-group-cost="sectionGroupCost"
                       instructor-assignment-options="instructorAssignmentOptions"

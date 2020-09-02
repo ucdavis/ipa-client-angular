@@ -7,7 +7,8 @@ let addInstructorCost = function () {
 		scope: {
 			instructor: '<',
 			sectionGroupCost: '<',
-			instructorAssignmentOptions: '<'
+			instructorAssignmentOptions: '<',
+			divider: '<'
 		},
 		replace: true,
 	};

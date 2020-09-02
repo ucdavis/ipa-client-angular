@@ -1,44 +1,51 @@
-<tr>
+<tr class="instructor-costs__additional-instructor-row">
 	<!-- Instructor of record -->
 	<td colspan="2" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
-		<div class="budget-costs__label">
-			Instructor <span ng-if="instructor.instructorTypeDescription">({{ instructor.instructorTypeDescription }})</span>
-		</div>
-		<div class="instructor-costs__instructor-reversion-ui">
-			<div>
-				{{ instructor.instructorName ? instructor.instructorName.split(' ')[0] + ', ' + instructor.instructorName.split(' ')[1] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'Assign instructor') }}
+		<div class="instructor-costs__table-cell-insturctor">
+			<div class="budget-costs__label">
+				Instructor <span ng-if="instructor.instructorTypeDescription">({{ instructor.instructorTypeDescription }})</span>
+			</div>
+			<div class="instructor-costs__instructor-reversion-ui">
+				<div>
+					{{ instructor.instructorName ? instructor.instructorName.split(' ')[0] + ', ' + instructor.instructorName.split(' ')[1] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'Assign instructor') }}
+				</div>
 			</div>
 		</div>
 	</td>
 	<!-- Empty columns for spacing -->
 	<td colspan="2" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
+		<div class="instructor-costs__table-cell-reason"/>
 	</td>
 	<!-- Reason -->
 	<td colspan="2" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
-		<div class="budget-costs__label">
-			Reason
-		</div>
-		<div class="instructor-costs__cost-container">
-			<ipa-input value="instructor.reason"
-			           on-update="updateInstructorCost(instructor)"
-			           max-chars="30">
-			</ipa-input>
+		<div class="instructor-costs__table-cell-reason">
+			<div class="budget-costs__label">
+				Reason
+			</div>
+			<div class="instructor-costs__cost-container">
+				<ipa-input value="instructor.reason"
+				           on-update="updateInstructorCost(instructor)"
+				           max-chars="30">
+				</ipa-input>
+			</div>
 		</div>
 	</td>
 	<!-- Cost -->
 	<td class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
-		<div class="budget-costs__label">
-			Instructor Cost
-		</div>
-		<div class="instructor-costs__cost-container">
-			<div> 
-				<ipa-input
-				value="instructor.cost"
-				mode="'currency'"
-				update-delay="3000"
-				place-holder="(instructor.overrideInstructorCost ? '$' + instructor.overrideInstructorCost : '')"
-				on-update="updateInstructorCost(instructor)"
-				/>
+		<div class="instructor-costs__table-cell-cost">
+			<div class="budget-costs__label">
+				Instructor Cost
+			</div>
+			<div class="instructor-costs__cost-container">
+				<div>
+					<ipa-input
+					value="instructor.cost"
+					mode="'currency'"
+					update-delay="3000"
+					place-holder="(instructor.overrideInstructorCost ? '$' + instructor.overrideInstructorCost : '')"
+					on-update="updateInstructorCost(instructor)"
+					/>
+				</div>
 			</div>
 		</div>
 	</td>

@@ -1,3 +1,36 @@
 .instructor-costs__instructor-reversion-ui {
 	padding-left: 10px;
 }
+
+.instructor-costs__additional-instructor-row:hover .instructor-costs__table-cell-insturctor {
+	background:#b1b1b1;
+	padding: 5px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	height: 100%;
+	transition: 0.3s;
+}
+
+.instructor-costs__additional-instructor-row:hover .instructor-costs__table-cell-reason {
+	background:#b1b1b1;
+	padding: 5px;
+	height: 100%;
+	transition: 0.3s;
+}
+
+.instructor-costs__additional-instructor-row:hover .instructor-costs__table-cell-cost {
+	background:#b1b1b1;
+	padding: 5px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	height: 100%;
+	transition: 0.3s;
+}
+
+.instructor-costs__additional-instructor-row:hover .budget-costs__label {
+	color: #333;
+}
+
+.instructor-costs__additional-instructor-row:hover .instructor-costs__instructor-reversion-ui {
+	color: #000;
+}
