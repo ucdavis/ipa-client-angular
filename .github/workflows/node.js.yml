@@ -6,13 +6,9 @@ name: Node.js CI
 on: [push]
 
 jobs:
-  build:
+  lint:
 
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.13]
 
     steps:
     - name: Checkout
@@ -21,7 +17,7 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '10'
 
     - run: npm install
     - run: npm run lint
@@ -37,7 +33,7 @@ jobs:
             icon_emoji: ':autobots:',
             attachments: [{
               color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-              text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
+              text: `${process.env.AS_WORKFLOW}\n${{ job.status }}.toUpperCase(): ${process.env.AS_JOB} of ${process.env.AS_REPO}@${process.env.AS_REF}\n - process.env.AS_MESSAGE (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR} in ${process.env.AS_TOOK}`,
             }]
           }
       env:
