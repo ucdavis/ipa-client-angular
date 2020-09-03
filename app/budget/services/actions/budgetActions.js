@@ -11,6 +11,7 @@ class BudgetActions {
 				var activeTab = localStorage.getItem('activeTab');
 
 				BudgetService.getInitialState(workgroupId, year).then(function (results) {
+					var test = '';
 					// BudgetScenario was set in localStorage, need to sanity check
 					if (selectedBudgetScenarioId) {
 						var scenarioFound = false;
