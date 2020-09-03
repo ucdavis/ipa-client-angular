@@ -92,7 +92,7 @@ class ScheduleCostCalculations {
               sectionGroupCost.sectionGroup.instructorDescription = assignedInstructorType ? assignedInstructorType.description : null;
             }
           }
-
+let err= '';
           // Calculate reversion
           // Identify a difference
           if (sectionGroupCost.sectionGroup && sectionGroupCost.instructorId != assignedInstructorId || (assignedInstructorTypeId && sectionGroupCost.instructorTypeId != assignedInstructorTypeId)) {
