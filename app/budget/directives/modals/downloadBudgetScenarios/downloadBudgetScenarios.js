@@ -1,4 +1,5 @@
 import './downloadBudgetScenarios.css';
+import { dateToCalendar } from '../../../../shared/helpers/dates';
 
 let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService) {
 	return {
@@ -24,6 +25,10 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 
 			scope.selectBudgetScenario = function(scenario, department){
 				department.selectBudgetScenario = scenario;
+			};
+
+			scope.dateToCalendar = function(date) {
+				return dateToCalendar(date);
 			};
 
 			scope.close = function() {

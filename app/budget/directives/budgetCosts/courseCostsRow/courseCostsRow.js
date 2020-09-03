@@ -11,7 +11,8 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 			sectionGroupCost: '<',
 			isLiveDataScenario: '<',
 			instructorCount: '<',
-			divider: '<'
+			divider: '<',
+			isSnapshot: '<'
 		},
 		link: function (scope) {
 			scope.updateSectionGroupCost = function (sectionGroupCost) {

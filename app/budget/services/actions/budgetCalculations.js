@@ -341,10 +341,17 @@ class BudgetCalculations {
 
 				instructor.instructorType = this._calculateInstructorType(instructor.id);
 				// Attach instructorCost
+				let selectedBudgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
+				let isSnapshot = BudgetReducers._state.budgetScenarios.list[selectedBudgetScenarioId].isSnapshot;
+
 				instructorCosts.ids.forEach(function(instructorCostId) {
 					var instructorCost = instructorCosts.list[instructorCostId];
 
 					if (instructorCost.instructorId != instructor.id) { return; }
+
+					if (isSnapshot && !instructorCost.budgetScenarioId) { return; }
+
+					if (!isSnapshot && instructorCost.budgetScenarioId) { return; }
 
 					instructor.instructorCost = instructorCost;
 					var user = UserService.getUserByInstructor(instructor, users);
@@ -400,11 +407,19 @@ class BudgetCalculations {
 
 				var calculatedInstructorTypeCosts = [];
 
+				let selectedBudgetScenarioId = BudgetReducers._state.ui.selectedBudgetScenarioId;
+				let isSnapshot = BudgetReducers._state.budgetScenarios.list[selectedBudgetScenarioId].isSnapshot;
+
 				instructorTypes.ids.forEach(function(instructorTypeId) {
 					var instructorType = instructorTypes.list[instructorTypeId];
-					var instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+					let instructorTypeCost;
+					if (isSnapshot) {
+						instructorTypeCost = Object.values(instructorTypeCosts.list).find(itc => itc.budgetScenarioId === selectedBudgetScenarioId && itc.instructorTypeId === instructorTypeId);
+					} else {
+						instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+					}
 
-					if (instructorTypeCost == null) {
+					if (!instructorTypeCost) {
 						instructorTypeCost = {
 							cost: null,
 							instructorTypeId: instructorType.id,
