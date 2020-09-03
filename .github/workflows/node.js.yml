@@ -9,18 +9,14 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10]
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 10
 
     - run: npm install
     - run: npm run lint
@@ -36,7 +32,7 @@ jobs:
             icon_emoji: ':autobots:',
             attachments: [{
               color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-              text: `${process.env.AS_WORKFLOW}\n${{ job.status }}: ${process.env.AS_JOB} of ${process.env.AS_REPO}@${process.env.AS_REF}\n - ${process.env.AS_MESSAGE} (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}\nin ${process.env.AS_TOOK}`,
+              text: `${process.env.AS_WORKFLOW}\n${'${{ job.status }}'.charAt(0).toUpperCase() + '${{ job.status }}'.slice(1)}: ${process.env.AS_JOB} of ${process.env.AS_REPO}@${process.env.AS_REF}\n - ${process.env.AS_MESSAGE} (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}\nin ${process.env.AS_TOOK}`,
             }]
           }
       env:
