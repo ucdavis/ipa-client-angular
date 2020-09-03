@@ -18,7 +18,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.validationError = "";
 			scope.activeFilters = [];
 			scope.showTermChip = false;
-debugger;
+
 			$window.onscroll = function () {
 				const VERTICAL_OFFSET = 98;
 				scope.showTermChip = this.scrollY > VERTICAL_OFFSET;
