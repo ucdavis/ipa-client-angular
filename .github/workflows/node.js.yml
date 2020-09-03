@@ -29,7 +29,7 @@ jobs:
         custom_payload: |
           {
             username: 'GitHub Actions',
-            icon_emoji: ':autobots:',
+            icon_emoji: ':octocat:',
             attachments: [{
               color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
               text: `${process.env.AS_WORKFLOW}\n${'${{ job.status }}'.charAt(0).toUpperCase() + '${{ job.status }}'.slice(1)}: ${process.env.AS_JOB} of ${process.env.AS_REPO}@${process.env.AS_REF}\n - ${process.env.AS_MESSAGE} (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}\nin ${process.env.AS_TOOK}`,
