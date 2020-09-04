@@ -7,7 +7,7 @@
 			</div>
 			<div class="instructor-costs__instructor-reversion-ui">
 				<div>
-					{{ instructor.instructorName ? instructor.instructorName.split(' ')[0] + ', ' + instructor.instructorName.split(' ')[1] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'Assign instructor') }}
+					{{ instructor.instructorName ? instructor.instructorName.split(' ')[1] + ', ' + instructor.instructorName.split(' ')[0] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'Assign instructor') }}
 				</div>
 			</div>
 		</div>
@@ -25,8 +25,12 @@
 			<div class="instructor-costs__cost-container">
 				<ipa-input value="instructor.reason"
 				           on-update="updateInstructorCost(instructor)"
-				           max-chars="30">
+				           max-chars="30"
+				           ng-show="!isSnapshot">
 				</ipa-input>
+				<span ng-show="isSnapshot">
+					{{ instructor.reason || 'N/A' }}
+				</span>
 			</div>
 		</div>
 	</td>
@@ -44,7 +48,11 @@
 					update-delay="3000"
 					place-holder="(instructor.overrideInstructorCost ? '$' + instructor.overrideInstructorCost : '')"
 					on-update="updateInstructorCost(instructor)"
+					ng-show="!isSnapshot"
 					/>
+					<span ng-show="isSnapshot">
+						{{ instructor.cost || 'N/A' }}
+					</span>
 				</div>
 			</div>
 		</div>

@@ -103,7 +103,8 @@
                       instructor-costs-live-data
                       instructor="instructor"
                       section-group-cost="sectionGroupCost"
-                      ng-show="isLiveDataScenario"
+                      ng-show="isLiveDataScenario || isSnapshot"
+                      is-snapshot="isSnapshot"
                   >
                   </tr>
                   <tr ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
@@ -112,13 +113,13 @@
                       instructor="instructor"
                       section-group-cost="sectionGroupCost"
                       instructor-assignment-options="instructorAssignmentOptions"
-                      ng-show="!isLiveDataScenario"
+                      ng-show="!isLiveDataScenario && !isSnapshot"
                   >
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
                       add-instructor-cost
                       section-group-cost="sectionGroupCost"
                       instructor-assignment-options="instructorAssignmentOptions"
-                      ng-show="!isLiveDataScenario"
+                      ng-show="!isLiveDataScenario && !isSnapshot"
                   >
                   </tr>
                   </tr>
