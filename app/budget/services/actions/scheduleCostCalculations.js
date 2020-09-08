@@ -11,6 +11,7 @@ class ScheduleCostCalculations {
         var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
         var sectionGroupCosts = BudgetReducers._state.sectionGroupCosts;
         var sectionGroups = BudgetReducers._state.scheduleSectionGroups;
+        var sectionGroupCostInstructors = BudgetReducers._state.sectionGroupCostInstructors;
         var activeTerms = selectedBudgetScenario.terms;
 
         selectedBudgetScenario.budgetedCourseHiddenByTermFilter = false;
@@ -49,6 +50,7 @@ class ScheduleCostCalculations {
 
           var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
+          sectionGroupCost.sectionGroupCostInstructors = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || [];
 
           if (sectionGroupCost.sectionGroup && sectionGroupCost.isLiveData){
             var teachingAssignmentIds = sectionGroupCost.sectionGroupCostInstructors.map((obj) => obj.teachingAssignmentId);

@@ -341,35 +341,6 @@ class BudgetReducers {
             sectionGroupCosts.uniqueKeys.push(uniqueKey);
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 						return sectionGroupCosts;
-					case ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR:
-						var sectionGroupCostInstructors = action.payload.sectionGroupCostInstructors;
-						var teachingAssignmentIds = action.payload.sectionGroupCostInstructors.map((obj) => obj.teachingAssignmentId);
-						sectionGroupCosts.list[sectionGroupCostInstructors[0].sectionGroupCostId].sectionGroupCostInstructors = sectionGroupCosts.list[sectionGroupCostInstructors[0].sectionGroupCostId].sectionGroupCostInstructors.concat(sectionGroupCostInstructors)
-						.filter(instructor => ((teachingAssignmentIds.includes(instructor.teachingAssignmentId) && instructor.sectionGroupCostId) || !teachingAssignmentIds.includes(instructor.teachingAssignmentId)));
-						return sectionGroupCosts;
-					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
-						var newSectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
-						var newSectionGroupCostInstructors = [];
-						sectionGroupCosts.list[newSectionGroupCostInstructor.sectionGroupCostId].sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor){
-							if (sectionGroupCostInstructor.id == newSectionGroupCostInstructor.id){
-								newSectionGroupCostInstructors.push(newSectionGroupCostInstructor);
-							} else {
-								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
-							}
-						});
-						sectionGroupCosts.list[newSectionGroupCostInstructor.sectionGroupCostId].sectionGroupCostInstructors = newSectionGroupCostInstructors;
-						return sectionGroupCosts;
-					case ActionTypes.DELETE_SECTION_GROUP_COST_INSTRUCTOR:
-						var removedSectionGroupCostInstructorId = action.payload.removedSectionGroupCostInstructorId;
-						var sectionGroupCostId = action.payload.sectionGroupCostId;
-						var newSectionGroupCostInstructors = [];
-						sectionGroupCosts.list[sectionGroupCostId].sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor){
-							if (sectionGroupCostInstructor.id != removedSectionGroupCostInstructorId){
-								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
-							}
-						});
-						sectionGroupCosts.list[sectionGroupCostId].sectionGroupCostInstructors = newSectionGroupCostInstructors;
-						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
 				}
@@ -832,6 +803,58 @@ class BudgetReducers {
 						return sectionGroupCostComments;
 				}
 			},
+			sectionGroupCostInstructorReducers: function (action, sectionGroupCostInstructors) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						sectionGroupCostInstructors = {
+							bySectionGroupCostId : {}
+						};
+
+						action.payload.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
+
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
+						});
+						return sectionGroupCostInstructors;
+					case ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR:
+						var newSectionGroupCostInstructors = action.payload.sectionGroupCostInstructors;
+						var teachingAssignmentIds = action.payload.sectionGroupCostInstructors.map((obj) => obj.teachingAssignmentId);
+						var sectionGroupCostId = newSectionGroupCostInstructors[0].sectionGroupCostId;
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] || [];
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId].concat(newSectionGroupCostInstructors)
+						.filter(instructor => ((teachingAssignmentIds.includes(instructor.teachingAssignmentId) && instructor.sectionGroupCostId) || !teachingAssignmentIds.includes(instructor.teachingAssignmentId)));
+						return sectionGroupCostInstructors;
+					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
+						var newSectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
+						var newSectionGroupCostInstructors = [];
+
+						sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId] || [];
+
+						sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId].forEach(function(sectionGroupCostInstructor){
+							if (sectionGroupCostInstructor.id == newSectionGroupCostInstructor.id){
+								newSectionGroupCostInstructors.push(newSectionGroupCostInstructor);
+							} else {
+								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
+							}
+						});
+						sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId] = newSectionGroupCostInstructors;
+						return sectionGroupCostInstructors;
+					case ActionTypes.DELETE_SECTION_GROUP_COST_INSTRUCTOR:
+						var removedSectionGroupCostInstructorId = action.payload.removedSectionGroupCostInstructorId;
+						var sectionGroupCostId = action.payload.sectionGroupCostId;
+						var newSectionGroupCostInstructors = [];
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] || [];
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId].forEach(function(sectionGroupCostInstructor){
+							if (sectionGroupCostInstructor.id != removedSectionGroupCostInstructorId){
+								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
+							}
+						});
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = newSectionGroupCostInstructors;
+						return sectionGroupCostInstructors;
+					default:
+						return sectionGroupCostInstructors;
+				}
+			},
 			lineItemCommentReducers: function (action, lineItemComments) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -1175,6 +1198,7 @@ class BudgetReducers {
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
 				newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
+				newState.sectionGroupCostInstructors = scope.sectionGroupCostInstructorReducers(action, scope._state.sectionGroupCostInstructors);
 				newState.scheduleSectionGroups = scope.scheduleSectionGroupReducers(action, scope._state.scheduleSectionGroups);
 				newState.assignedInstructors = scope.assignedInstructorReducers(action, scope._state.assignedInstructors);
 				newState.activeInstructors = scope.activeInstructorReducers(action, scope._state.activeInstructors);
