@@ -65,6 +65,25 @@ let courseCostsRow = function ($rootScope, BudgetActions) {
 			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
 				BudgetActions.openAddCourseCommentsModal(sectionGroupCost);
 			};
+
+			scope.syncInstructor = function() {
+				scope.sectionGroupCost.instructorId = scope.sectionGroupCost.sectionGroup.assignedInstructor ? scope.sectionGroupCost.sectionGroup.assignedInstructor.id : null;
+				scope.sectionGroupCost.instructorTypeId = scope.sectionGroupCost.sectionGroup.assignedInstructorType ? scope.sectionGroupCost.sectionGroup.assignedInstructorType.id : null;
+				BudgetActions.updateSectionGroupCost(scope.sectionGroupCost);
+				if (scope.sectionGroupCost.sectionGroup){
+					var currentInstructorIds = scope.sectionGroupCost.sectionGroupCostInstructors.map(function(instructor){
+						return instructor.instructorId;
+					});
+					const instructors = scope.sectionGroupCost.sectionGroup.assignedInstructors.map(function(liveDataInstructor){
+						return {
+							instructorId: liveDataInstructor.id,
+							instructorTypeId: liveDataInstructor.instructorTypeId,
+							sectionGroupCostId: scope.sectionGroupCost.id
+						};
+					}).filter(instructor => !currentInstructorIds.includes(instructor.instructorId));
+					BudgetActions.createSectionGroupCostInstructors(instructors);
+				}
+			};
 		}
 	};
 };

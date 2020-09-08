@@ -1,7 +1,17 @@
 <tr>
+	<!-- Sequence and Sync -->
 	<td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="course-costs__table-cell-sequence">
 		<div class="course-costs__sequence-container">
-			{{ sectionGroupCost.sequencePattern }}
+				{{ sectionGroupCost.sequencePattern }}
+				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
+				     uib-tooltip="Update instructors from Live Data"
+				     tooltip-append-to-body="true"
+				     confirm-button="syncInstructor()"
+				     message="Update instructors?"
+				     yes="Update"
+				     no="Cancel"
+				     ng-show="!isLiveDataScenario && !isSnapshot">
+				</div>
 		</div>
 	</td>
 	<!-- Enrollment -->

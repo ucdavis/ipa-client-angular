@@ -88,16 +88,17 @@
                     course-costs-row
                     section-group-cost="sectionGroupCost"
                     is-live-data-scenario="isLiveDataScenario"
-                    instructor-count="sectionGroupCost.sectionGroupCostInstructors.length">
+                    instructor-count="sectionGroupCost.sectionGroupCostInstructors.length"
+                    is-snapshot="isSnapshot">
                   </tr>
-                  <tr divider="(course.sectionGroupCosts.length > 1 && $last == false && isLiveDataScenario && sectionGroupCost.sectionGroupCostInstructors.length < 1)"
+                  <!--<tr divider="(course.sectionGroupCosts.length > 1 && $last == false && isLiveDataScenario && sectionGroupCost.sectionGroupCostInstructors.length < 1)"
                       instructor-costs-row
                       section-group-cost="sectionGroupCost"
                       instructor-assignment-options="instructorAssignmentOptions"
                       regular-instructor-assignment-options="regularInstructorAssignmentOptions"
                       is-live-data-scenario="isLiveDataScenario"
                       is-snapshot="isSnapshot">
-                  </tr>
+                  </tr>-->
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == true && !last)"
                       ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
                       instructor-costs-live-data
@@ -105,6 +106,8 @@
                       section-group-cost="sectionGroupCost"
                       ng-show="isLiveDataScenario || isSnapshot"
                       is-snapshot="isSnapshot"
+                      is-first="$first"
+                      regular-instructor-assignment-options="regularInstructorAssignmentOptions"
                   >
                   </tr>
                   <tr ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
@@ -114,6 +117,8 @@
                       section-group-cost="sectionGroupCost"
                       instructor-assignment-options="instructorAssignmentOptions"
                       ng-show="!isLiveDataScenario && !isSnapshot"
+                      is-first="$first"
+                      regular-instructor-assignment-options="regularInstructorAssignmentOptions"
                   >
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
                       add-instructor-cost

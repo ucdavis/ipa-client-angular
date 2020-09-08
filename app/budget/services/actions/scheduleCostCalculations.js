@@ -369,9 +369,9 @@ class ScheduleCostCalculations {
         sectionGroupCost.courseCostSubTotal = sectionGroupCost.taCost + sectionGroupCost.readerCost;
 
         // Instructor Costs
-        sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
+        //sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
 
-        sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal + sectionGroupCost.instructorCostSubTotal;
+        sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal;// + sectionGroupCost.instructorCostSubTotal;
         if (sectionGroupCost.sectionGroupCostInstructors){
           sectionGroupCost.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
             if (sectionGroupCostInstructor.cost){

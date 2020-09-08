@@ -8,10 +8,13 @@ let instructorCostsLiveData = function (BudgetActions) {
 			instructor: '<',
 			sectionGroupCost: '<',
 			divider: '<',
-			isSnapshot: '<'
+			isSnapshot: '<',
+			isFirst: '<',
+			regularInstructorAssignmentOptions: '<',
 		},
 		replace: true,
 		link: function (scope) {
+			console.log('Live Data ', scope);
 			scope.updateInstructorCost = function (instructor) {
 				// IPA Input tracks cost as string
 				// Backend sends cost as float
@@ -42,6 +45,21 @@ let instructorCostsLiveData = function (BudgetActions) {
 						instructorTypeId: instructor.instructorTypeId
 					};
 					BudgetActions.createSectionGroupCostInstructors([sectionGroupCostInstructor], true);
+				}
+			};
+
+			scope.removeOriginalInstructor = function(sectionGroupCost) {
+				sectionGroupCost.originalInstructorTypeId = null;
+				sectionGroupCost.originalInstructorId = null;
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.findOriginalInstructorBySectionGroupCost = function(sectionGroupCost) {
+				if (sectionGroupCost.originalInstructorId) {
+					return scope.regularInstructorAssignmentOptions.find(
+						(instructor) =>
+							instructor.id === sectionGroupCost.originalInstructorId
+					);
 				}
 			};
 		} // end link

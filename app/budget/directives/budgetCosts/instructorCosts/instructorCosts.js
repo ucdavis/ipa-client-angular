@@ -8,7 +8,9 @@ let instructorCosts = function (BudgetActions) {
 			instructor: '<',
 			originalInstructor: '<',
 			sectionGroupCost: '<',
-			instructorAssignmentOptions: '<'
+			instructorAssignmentOptions: '<',
+			isFirst: '<',
+			regularInstructorAssignmentOptions: '<',
 		},
 		replace: true,
 		link: function (scope) {
@@ -26,6 +28,21 @@ let instructorCosts = function (BudgetActions) {
 
 			scope.removeInstructorCost = function (instructor) {
 				BudgetActions.deleteSectionGroupCostInstructor(instructor);
+			};
+
+			scope.removeOriginalInstructor = function(sectionGroupCost) {
+				sectionGroupCost.originalInstructorTypeId = null;
+				sectionGroupCost.originalInstructorId = null;
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.findOriginalInstructorBySectionGroupCost = function(sectionGroupCost) {
+				if (sectionGroupCost.originalInstructorId) {
+					return scope.regularInstructorAssignmentOptions.find(
+						(instructor) =>
+							instructor.id === sectionGroupCost.originalInstructorId
+					);
+				}
 			};
 		} // end link
 	};
