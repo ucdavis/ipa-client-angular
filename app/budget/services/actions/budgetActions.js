@@ -136,16 +136,29 @@ class BudgetActions {
 
 				scenarioSectionGroupCosts.forEach( sectionGroupCost => {
 					if (sectionGroupCost.sectionGroup){
-						var currentInstructorIds = sectionGroupCost.sectionGroupCostInstructors.map(function(instructor){
+						var sectionGroupCostInstructors = (BudgetReducers._state.sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || []);
+						var currentInstructorIds = sectionGroupCostInstructors.map(function(instructor){
 							return instructor.instructorId;
 						});
+
+						var currentTypeIdsCount = {};
+						for (var sectionGroupCostInstructor of sectionGroupCostInstructors){
+							if (!sectionGroupCostInstructor.instructorId){
+								if (currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId]){
+									currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId] += 1;
+								} else {
+									currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId] = 1;
+								}
+							}
+						}
+
 						const instructors = sectionGroupCost.sectionGroup.assignedInstructors.map(function(liveDataInstructor){
 							return {
 								instructorId: liveDataInstructor.id,
 								instructorTypeId: liveDataInstructor.instructorTypeId,
 								sectionGroupCostId: sectionGroupCost.id
 							};
-						}).filter(instructor => !currentInstructorIds.includes(instructor.instructorId));
+						}).filter(instructor => (!currentInstructorIds.includes(instructor.instructorId) && (instructor.instructorId ? true : !currentTypeIdsCount[instructor.instructorTypeId] || currentTypeIdsCount[instructor.instructorTypeId]-- < 1)));
 						if (instructors.length > 0){
 							this.createSectionGroupCostInstructors(instructors);
 						}
