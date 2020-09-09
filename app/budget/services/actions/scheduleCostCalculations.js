@@ -72,6 +72,8 @@ class ScheduleCostCalculations {
             }
 
           }
+
+          sectionGroupCost.sectionGroupCostInstructors = _array_sortByProperty(sectionGroupCost.sectionGroupCostInstructors, 'teachingAssignmentId');
           sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor) {
             sectionGroupCostInstructor.overrideInstructorCost = null;
             sectionGroupCostInstructor.overrideInstructorCostSource = null;

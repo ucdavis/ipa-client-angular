@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 class BudgetReducers {
 	constructor ($rootScope, $log, BudgetSelectors, ActionTypes) {
 		return {
@@ -814,6 +816,7 @@ class BudgetReducers {
 
 							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
 							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = _array_sortByProperty(sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId], 'teachingAssignmentId');
 						});
 						return sectionGroupCostInstructors;
 					case ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR:
@@ -823,6 +826,7 @@ class BudgetReducers {
 						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] || [];
 						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId].concat(newSectionGroupCostInstructors)
 						.filter(instructor => ((teachingAssignmentIds.includes(instructor.teachingAssignmentId) && instructor.sectionGroupCostId) || !teachingAssignmentIds.includes(instructor.teachingAssignmentId)));
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = _array_sortByProperty(sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId], 'teachingAssignmentId');
 						return sectionGroupCostInstructors;
 					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
 						var newSectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
@@ -837,6 +841,7 @@ class BudgetReducers {
 								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
 							}
 						});
+						newSectionGroupCostInstructors = _array_sortByProperty(newSectionGroupCostInstructors, 'teachingAssignmentId');
 						sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId] = newSectionGroupCostInstructors;
 						return sectionGroupCostInstructors;
 					case ActionTypes.DELETE_SECTION_GROUP_COST_INSTRUCTOR:
@@ -850,6 +855,7 @@ class BudgetReducers {
 							}
 						});
 						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = newSectionGroupCostInstructors;
+						newSectionGroupCostInstructors = _array_sortByProperty(newSectionGroupCostInstructors, 'teachingAssignmentId');
 						return sectionGroupCostInstructors;
 					case ActionTypes.CREATE_BUDGET_SCENARIO:
 						if (action.payload.sectionGroupCostInstructors){
@@ -857,6 +863,7 @@ class BudgetReducers {
 
 								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
 								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = _array_sortByProperty(sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId], 'teachingAssignmentId');
 							});
 						}
 						return sectionGroupCostInstructors;
