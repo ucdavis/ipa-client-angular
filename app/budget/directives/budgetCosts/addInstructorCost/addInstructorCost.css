@@ -2,12 +2,8 @@
 	font-style: italic;
 	color: #b1b1b1;
 	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 
 .add-instructor-cost__assignment-link {
 	display: flex;
-	align-items: center;
-	justify-content: center;
 }
