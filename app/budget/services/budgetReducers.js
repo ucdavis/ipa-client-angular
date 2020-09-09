@@ -851,6 +851,15 @@ class BudgetReducers {
 						});
 						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = newSectionGroupCostInstructors;
 						return sectionGroupCostInstructors;
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
+						if (action.payload.sectionGroupCostInstructors){
+							action.payload.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
+
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
+							});
+						}
+						return sectionGroupCostInstructors;
 					default:
 						return sectionGroupCostInstructors;
 				}
