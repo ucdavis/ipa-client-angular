@@ -120,13 +120,15 @@
                       is-first="$first"
                       regular-instructor-assignment-options="regularInstructorAssignmentOptions"
                   >
+                  </tr>
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
                       add-instructor-cost
                       section-group-cost="sectionGroupCost"
                       instructor-assignment-options="instructorAssignmentOptions"
-                      ng-show="!isLiveDataScenario && !isSnapshot"
+                      ng-show="!isSnapshot"
+                      is-live-data="isLiveDataScenario"
+                      instructor-count="sectionGroupCost.sectionGroupCostInstructors.length"
                   >
-                  </tr>
                   </tr>
                 </tbody>
               </table>

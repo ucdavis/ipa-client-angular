@@ -8,9 +8,16 @@ let addInstructorCost = function () {
 			instructor: '<',
 			sectionGroupCost: '<',
 			instructorAssignmentOptions: '<',
-			divider: '<'
+			divider: '<',
+			isLiveData: '<',
+			instructorCount: '<'
 		},
 		replace: true,
+		link: function (scope) {
+			scope.assignmentLink = function (){
+				return '/assignments/' + JSON.parse(localStorage.getItem('workgroup')).id + '/' + localStorage.getItem('year') + '/?tab=courses';
+			};
+		}
 	};
 };
 
