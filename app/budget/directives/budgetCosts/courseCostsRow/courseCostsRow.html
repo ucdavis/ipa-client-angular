@@ -1,5 +1,5 @@
 <tr>
-	<!-- Sequence and Sync -->
+	<!-- Sequence and Sync Instructor -->
 	<td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="course-costs__table-cell-sequence">
 		<div class="course-costs__sequence-container">
 				{{ sectionGroupCost.sequencePattern }}
@@ -10,7 +10,7 @@
 				     message="Update instructors?"
 				     yes="Update"
 				     no="Cancel"
-				     ng-show="!isLiveDataScenario && !isSnapshot">
+				     ng-show="!isLiveDataScenario && !isSnapshot && !isSubset()">
 				</div>
 		</div>
 	</td>
