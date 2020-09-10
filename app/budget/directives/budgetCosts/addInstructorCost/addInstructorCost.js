@@ -10,7 +10,8 @@ let addInstructorCost = function () {
 			instructorAssignmentOptions: '<',
 			divider: '<',
 			isLiveData: '<',
-			instructorCount: '<'
+			instructorCount: '<',
+			isSnapshot: '<'
 		},
 		replace: true,
 		link: function (scope) {
