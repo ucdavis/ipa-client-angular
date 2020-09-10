@@ -7,7 +7,7 @@
 			</div>
 			<div class="instructor-costs__instructor-reversion-ui">
 				<div>
-					{{ instructor.instructorName ? instructor.instructorName.split(' ')[1] + ', ' + instructor.instructorName.split(' ')[0] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'Assign instructor') }}
+					{{ instructor.instructorName ? instructor.instructorName.split(' ')[1] + ', ' + instructor.instructorName.split(' ')[0] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'None assigned') }}
 				</div>
 			</div>
 		</div>
@@ -48,6 +48,17 @@
 						{{ instructor.cost || 'N/A' }}
 					</span>
 				</div>
+					<div class="instructor-costs__instructor-reversion-ui" >
+						<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
+						     tooltip-append-to-body="true"
+						     uib-tooltip="Delete instuctor row"
+						     confirm-button="removeInstructorCost(instructor)"
+						     message="Are you sure you want to remove this instructor cost?"
+						     yes="Remove"
+						     no="Cancel"
+						     ng-show="!isSnapshot && !instructor.teachingAssignmentId">
+						</div>
+					</div>
 			</div>
 		</div>
 	</td>

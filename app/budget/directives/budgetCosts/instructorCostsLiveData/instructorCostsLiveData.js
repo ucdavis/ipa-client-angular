@@ -14,13 +14,12 @@ let instructorCostsLiveData = function (BudgetActions) {
 		},
 		replace: true,
 		link: function (scope) {
-			console.log('Live Data ', scope);
 			scope.updateInstructorCost = function (instructor) {
 				// IPA Input tracks cost as string
 				// Backend sends cost as float
 				var cost = null;
 				if (instructor.cost && typeof instructor.cost === "string"){
-					cost = parseFloat(instructor.cost.replace(/\D/g,''));
+					cost = parseFloat(instructor.cost.replace(/[^0-9.]/g,''));
 				} else if (instructor.cost) {
 					cost = instructor.cost;
 				}
@@ -61,6 +60,10 @@ let instructorCostsLiveData = function (BudgetActions) {
 							instructor.id === sectionGroupCost.originalInstructorId
 					);
 				}
+			};
+
+			scope.removeInstructorCost = function (instructor) {
+				BudgetActions.deleteSectionGroupCostInstructor(instructor);
 			};
 		} // end link
 	};

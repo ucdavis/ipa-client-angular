@@ -13,7 +13,7 @@ let editInstructorAssignmentDropdown = function (BudgetActions) {
 			scope.setInstructor = function(newInstructor) {
 				var sectionGroupCostInstructor = {
 					id: scope.instructor.id,
-					cost: (scope.instructor.cost || "") === "" ? null : parseFloat(scope.instructor.cost.replace(/\D/g,'')),
+					cost: (scope.instructor.cost || "") === "" ? null : parseFloat(scope.instructor.cost.replace(/[^0-9.]/g,'')),
 					reason: scope.instructor.reason,
 					sectionGroupCostId: scope.instructor.sectionGroupCostId,
 				};

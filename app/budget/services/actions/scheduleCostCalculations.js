@@ -374,15 +374,16 @@ class ScheduleCostCalculations {
         //sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
 
         sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal;// + sectionGroupCost.instructorCostSubTotal;
-        if (sectionGroupCost.sectionGroupCostInstructors){
-          sectionGroupCost.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
-            if (sectionGroupCostInstructor.cost){
-              sectionGroupCost.totalCost += parseFloat(sectionGroupCostInstructor.cost.toString().replace(/\D/g,''));
-            } else if (sectionGroupCostInstructor.overrideInstructorCost) {
-              sectionGroupCost.totalCost += sectionGroupCostInstructor.overrideInstructorCost;
-            }
-          });
-        }
+
+        var sectionGroupCostInstructors = BudgetReducers._state.sectionGroupCostInstructors;
+        var instructors = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || [];
+        instructors.forEach(function(sectionGroupCostInstructor) {
+          if (sectionGroupCostInstructor.cost){
+            sectionGroupCost.totalCost += parseFloat(sectionGroupCostInstructor.cost.toString().replace(/[^0-9.]/g,''));
+          } else if (sectionGroupCostInstructor.overrideInstructorCost) {
+            sectionGroupCost.totalCost += sectionGroupCostInstructor.overrideInstructorCost;
+          }
+        });
       },
       // Find or create a container for this sectionGroupCost
       _findOrAddSectionGroupContainer: function(sectionGroupCost, containers) {
