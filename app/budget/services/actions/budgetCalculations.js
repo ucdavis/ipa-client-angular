@@ -561,9 +561,9 @@ class BudgetCalculations {
 							summary.byTerm[term].readerCount += sectionGroupCost.readerCount || 0;
 							summary.byTerm[term].readerCost += sectionGroupCost.readerCost || 0;
 							summary.byTerm[term].supportCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0);
-							//summary.byTerm[term].replacementCosts.overall += sectionGroupCost.overrideInstructorCost || 0;
-							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost);
-							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + (sectionGroupCost.overrideInstructorCost || 0);
+							var replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost);
+							summary.byTerm[term].replacementCosts = replacementCosts[0];
+							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + replacementCosts[1];
 
 							var units = CourseService.getUnits(sectionGroupCost) || 0;
 
@@ -618,6 +618,7 @@ class BudgetCalculations {
 				replacementCosts.overall = replacementCosts.overall || 0;
 				replacementCosts.unassignedCost = replacementCosts.unassignedCost || 0;
 				replacementCosts.unassignedCount = replacementCosts.unassignedCount || 0;
+				var sectionGroupInstructorCost = 0;
 
 				var instructorCosts = BudgetReducers._state.sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || [];
 
@@ -634,6 +635,7 @@ class BudgetCalculations {
 						cost = instructorCost.overrideInstructorCost;
 					}
 					replacementCosts.overall += cost;
+					sectionGroupInstructorCost += cost;
 
 					if (instructorCost.instructorTypeId || instructorCost.instructorId){
 						var instructorTypeId = instructorCost.instructorTypeId;
@@ -642,7 +644,7 @@ class BudgetCalculations {
 							instructorTypeId = this._calculateInstructorType(instructorCost.instructorId).id;
 						}
 						if (instructorTypeId){
-							if (instructorTypeId in replacementCosts.instructorTypeIds){
+							if (replacementCosts.instructorTypeIds.indexOf(instructorTypeId) != -1){
 								replacementCosts.instructorTypeCount[instructorTypeId] += 1;
 							} else {
 								replacementCosts.instructorTypeIds.push(instructorTypeId);
@@ -661,7 +663,7 @@ class BudgetCalculations {
 					}
 				}
 
-				return replacementCosts;
+				return [replacementCosts, sectionGroupInstructorCost];
 			},
 			_combineReplacementCost: function (replacementCosts, termCosts) {
 				termCosts.instructorTypeIds.forEach(function (instructorTypeId) {
