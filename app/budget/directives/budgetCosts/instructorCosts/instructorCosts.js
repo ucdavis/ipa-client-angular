@@ -15,10 +15,16 @@ let instructorCosts = function (BudgetActions) {
 		replace: true,
 		link: function (scope) {
 			scope.updateInstructorCost = function (instructor) {
+				var cost = null;
+				if (instructor.cost && typeof instructor.cost === "string"){
+					cost = parseFloat(instructor.cost.replace(/[^0-9.]/g,''));
+				} else if (instructor.cost) {
+					cost = instructor.cost;
+				}
 				var sectionGroupCost = {
 					id: instructor.id,
 					instructorId: instructor.instructorId,
-					cost: (instructor.cost || "") === "" ? null : parseFloat(instructor.cost.replace(/[^0-9.]/g,'')),
+					cost: cost,
 					reason: instructor.reason,
 					sectionGroupCostId: scope.sectionGroupCost.id,
 					instructorTypeId: instructor.instructorTypeId

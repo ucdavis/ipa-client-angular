@@ -11,9 +11,15 @@ let editInstructorAssignmentDropdown = function (BudgetActions) {
 		},
 		link: function (scope) {
 			scope.setInstructor = function(newInstructor) {
+				var cost = null;
+				if (scope.instructor.cost && typeof scope.instructor.cost === "string"){
+					cost = parseFloat(scope.instructor.cost.replace(/[^0-9.]/g,''));
+				} else if (scope.instructor.cost) {
+					cost = scope.instructor.cost;
+				}
 				var sectionGroupCostInstructor = {
 					id: scope.instructor.id,
-					cost: (scope.instructor.cost || "") === "" ? null : parseFloat(scope.instructor.cost.replace(/[^0-9.]/g,'')),
+					cost: cost,
 					reason: scope.instructor.reason,
 					sectionGroupCostId: scope.instructor.sectionGroupCostId,
 				};
