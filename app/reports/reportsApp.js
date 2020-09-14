@@ -105,6 +105,8 @@ const reportsApp = angular.module("reportsApp", dependencies) // eslint-disable-
                             GET_PREVIOUS_INSTRUCTOR_COSTS: "GET_PREVIOUS_INSTRUCTOR_COSTS",
                             GET_PREVIOUS_SECTION_GROUP_COSTS: "GET_PREVIOUS_SECTION_GROUP_COSTS",
                             GET_CURRENT_SECTION_GROUP_COSTS: "GET_CURRENT_SECTION_GROUP_COSTS",
+                            GET_PREVIOUS_SECTION_GROUP_COST_INSTRUCTORS: "GET_PREVIOUS_SECTION_GROUP_COST_INSTRUCTORS",
+                            GET_CURRENT_SECTION_GROUP_COST_INSTRUCTORS: "GET_CURRENT_SECTION_GROUP_COST_INSTRUCTORS",
                             CALCULATE_VIEW: "CALCULATE_VIEW",
                             GENERATE_FILTERS: "GENERATE_FILTERS",
                             UPDATE_FILTER: "UPDATE_FILTER",

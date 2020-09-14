@@ -25,6 +25,7 @@ class BudgetComparisonReportActions {
 				this._getInstructorTypeCosts(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPE_COSTS);
 				this._getInstructorCosts(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_COSTS);
 				this._getSectionGroupCosts(workgroupId, year, ActionTypes.GET_CURRENT_SECTION_GROUP_COSTS);
+				this._getSectionGroupCostInstructors(workgroupId, year, ActionTypes.GET_CURRENT_SECTION_GROUP_COST_INSTRUCTORS);
 
 				this._getBudget(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_BUDGET);
 				this._getCourses(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_COURSES);
@@ -38,6 +39,7 @@ class BudgetComparisonReportActions {
 				this._getInstructorTypeCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPE_COSTS);
 				this._getInstructorCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_COSTS);
 				this._getSectionGroupCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTION_GROUP_COSTS);
+				this._getSectionGroupCostInstructors(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTION_GROUP_COST_INSTRUCTORS);
 
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId);
@@ -278,10 +280,42 @@ class BudgetComparisonReportActions {
 						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
 					});
 
+
 					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							sectionGroupCosts: sectionGroupCosts
+						}
+					});
+
+					_self._performCalculations();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
+			_getSectionGroupCostInstructors: function (workgroupId, year, action) {
+				var _self = this;
+
+				BudgetComparisonReportService.getSectionGroupCostInstructors(workgroupId, year).then(function (rawSectionGroupCostInstructors) {
+					var sectionGroupCostInstructors = {
+						bySectionGroupCostId : {}
+					};
+					var teachingAssignmentIds = [];
+
+					rawSectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
+						if (sectionGroupCostInstructor.teachingAssignmentId){
+							teachingAssignmentIds.push(sectionGroupCostInstructor.teachingAssignmentId);
+						}
+					});
+
+
+					BudgetComparisonReportReducers.reduce({
+						type: action,
+						payload: {
+							sectionGroupCostInstructors: sectionGroupCostInstructors,
+							teachingAssignmentIds: teachingAssignmentIds
 						}
 					});
 

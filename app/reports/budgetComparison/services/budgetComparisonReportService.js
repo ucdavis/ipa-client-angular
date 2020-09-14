@@ -40,6 +40,9 @@ class BudgetComparisonReportService {
 			getSectionGroupCosts: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sectionGroupCosts");
 			},
+			getSectionGroupCostInstructors: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sectionGroupCostInstructors");
+			},
 			getUsers: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/users");
 			},
