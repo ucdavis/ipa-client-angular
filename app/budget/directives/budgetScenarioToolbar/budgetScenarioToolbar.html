@@ -13,23 +13,34 @@
 			<ipa-button class="budget-scenario-toolbar__edit-button do-not-print"
 			            icon-class="'glyphicon glyphicon-pencil'"
 			            size="'small'"
-			            ng-show="!state.ui.fromLiveData"
+			            ng-show="!state.ui.fromLiveData && !state.selectedBudgetScenario.isSnapshot"
 			            on-click="showScenarioRenameUI()"
 			            tooltip-message="'Rename Scenario'">
 			</ipa-button>
-
-			<div class="budget-scenario-toolbar__sync-button"
+			<button
+				ng-if="!state.ui.isSnapshot"
+				class="budget-scenario-toolbar__button"
+				uib-tooltip="Create snapshot from selected scenario"
+				tooltip-append-to-body="true"
+				ng-click="createBudgetScenarioSnapshot()"
+				ng-disabled="snapshotInProgress"
+			>
+				<i class="glyphicon glyphicon-camera"></i>
+				<span ng-if="snapshotInProgress" class="budget-scenario-toolbar__button--text">Creating Snapshot...</span>
+				<span ng-if="!snapshotInProgress" class="budget-scenario-toolbar__button--text">Create Snapshot</span>
+			</button>
+			<div class="budget-scenario-toolbar__button"
 				uib-tooltip="Accept all schedule updates from Live Data"
 				tooltip-append-to-body="true"
 				confirm-button="syncBudgetScenario()"
 				message="Are you sure you want to accept all schedule updates in this Scenario from Live Data?<br><br>Affects Instructors, Enrollments, Sections, TAs, and Readers"
 				yes="Confirm"
 				no="Cancel"
-				ng-show="!state.ui.fromLiveData && state.calculatedScheduleCosts.trackedChanges.length > 0 && !state.ui.syncScenario.showSyncWarning">
+				ng-show="!state.ui.fromLiveData && !state.ui.isSnapshot && state.calculatedScheduleCosts.trackedChanges.length > 0 && !state.ui.syncScenario.showSyncWarning">
 				<i class="glyphicon glyphicon-repeat"></i>
-				<span class="budget-scenario-toolbar__sync-button--text">Accept All Changes</span>
+				<span class="budget-scenario-toolbar__button--text">Accept All Changes</span>
 			</div>
-			<div class="budget-scenario-toolbar__sync-button"
+			<div class="budget-scenario-toolbar__button"
 				uib-tooltip="View Unsuccessful Updates"
 				tooltip-append-to-body="true"
 				confirm-button="syncBudgetScenario()"
@@ -38,7 +49,7 @@
 				no="Cancel"
 				ng-if="!state.ui.fromLiveData && state.calculatedScheduleCosts.trackedChanges.length > 0 && state.ui.syncScenario.showSyncWarning">
 				<i class="glyphicon glyphicon-warning-sign text-danger"></i>
-				<span class="budget-scenario-toolbar__sync-button--text">View Unsuccessful Updates</span>
+				<span class="budget-scenario-toolbar__button--text">View Unsuccessful Updates</span>
 			</div>
 
 			<div class="budget-scenario-toolbar__scenario-label"
@@ -102,7 +113,7 @@
 			<span class="budget-scenario-toolbar__tool glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
 			<ul class="dropdown-menu dropdown-menu-right">
 				<li style="cursor: pointer;">
-					<a ng-click="downloadBudgetScenarioExcel(false)">Download {{ getCurrentScenario() }} as Excel</a>
+					<a ng-click="downloadBudgetScenarioExcel(false)">Download {{ getCurrentScenario() }} {{ state.ui.isSnapshot ? ' - SNAPSHOT - ' + dateToCalendar(state.selectedBudgetScenario.creationDate): '' }} as Excel</a>
 				</li>
 				<li style="cursor: pointer;">
 					<a ng-click="downloadBudgetScenarioExcel(true)">Download Multiple Departments as Excel</a>
