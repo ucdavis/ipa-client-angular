@@ -5,14 +5,15 @@
 			Instructor <span ng-if="sectionGroupCost.instructorTypeDescription">({{ sectionGroupCost.instructorTypeDescription }})</span>
 		</div>
 		<div class="instructor-costs__instructor-container">
-			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-dropdown-container">
-				<instructor-assignment-dropdown mode="'instructor'"
+			<div ng-show="!isLiveDataScenario && !isSnapshot" class="instructor-costs__instructor-dropdown-container">
+				<instructor-assignment-dropdown 
+				                               mode="'instructor'"
 				                                section-group-cost="sectionGroupCost"
 				                                instructors="instructorAssignmentOptions">
 				</instructor-assignment-dropdown>
 			</div>
 
-			<div ng-show="!isLiveDataScenario" class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
+			<div ng-show="!isLiveDataScenario && !isSnapshot" class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.reversionDisplayName) }">
 				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
 				     uib-tooltip="Update to {{ sectionGroupCost.reversionDisplayName }}"
 				     tooltip-append-to-body="true"
@@ -23,7 +24,7 @@
 				</div>
 			</div>
 			<div class="instructor-costs__instructor-reversion-ui" ng-class="{'instructor-costs-row__hidden': !(sectionGroupCost.instructorId ||  sectionGroupCost.instructorTypeId) }">
-				<div ng-if="!isLiveDataScenario"
+				<div ng-if="!isLiveDataScenario && !isSnapshot"
 				     class="glyphicon glyphicon-remove instructor-costs__revert-ui"
 				     tooltip-append-to-body="true"
 				     uib-tooltip="Remove instructor"
@@ -33,7 +34,7 @@
 				     no="Cancel">
 				</div>
 			</div>
-			<div ng-show="isLiveDataScenario">
+			<div ng-show="isLiveDataScenario || isSnapshot">
 				{{ sectionGroupCost.instructorDescription }}
         <span class="instructor-costs-row__no-instructor" ng-if="!sectionGroupCost.instructorDescription">
           None assigned
@@ -48,14 +49,15 @@
 			Regular Instructor
 		</div>
 		<div class="instructor-costs__instructor-container">
-			<div class="instructor-costs__instructor-dropdown-container">
-				<instructor-assignment-dropdown mode="'originalInstructor'"
+			<div ng-if="!isSnapshot" class="instructor-costs__instructor-dropdown-container">
+				<instructor-assignment-dropdown
+				                                mode="'originalInstructor'"
 				                                section-group-cost="sectionGroupCost"
 				                                instructors="regularInstructorAssignmentOptions"
 				                                course="course">
 				</instructor-assignment-dropdown>
 			</div>
-			<div class="instructor-costs__instructor-reversion-ui">
+			<div ng-if="!isSnapshot" class="instructor-costs__instructor-reversion-ui">
 				<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
 				     tooltip-append-to-body="true"
 				     uib-tooltip="Remove instructor"
@@ -66,6 +68,9 @@
 				     ng-class="{'instructor-costs-row__hidden': (sectionGroupCost.originalInstructorId > 0) == false }">
 				</div>
 			</div>
+			<div ng-if="isSnapshot">
+				{{ findOriginalInstructorBySectionGroupCost(sectionGroupCost).description || 'N/A' }}
+			</div>
 		</div>
 	</td>
 
@@ -75,10 +80,12 @@
 			Reason
 		</div>
 		<div class="instructor-costs__cost-container">
-			<ipa-input value="sectionGroupCost.reason"
+			<ipa-input ng-if="!isSnapshot"
+			           value="sectionGroupCost.reason"
 			           on-update="updateSectionGroupCost(sectionGroupCost)"
 			           max-chars="30">
 			</ipa-input>
+			<span ng-if="isSnapshot">{{ sectionGroupCost.reason || 'N/A' }}</span>
 		</div>
 	</td>
 
@@ -89,22 +96,26 @@
 		</div>
 		<div class="instructor-costs__cost-container">
 			<div ng-if="sectionGroupCost.overrideInstructorCostSource == 'course'">
-				<ipa-input mode="'currency'"
+				<ipa-input ng-if="!isSnapshot"
+				           mode="'currency'"
 				           value="sectionGroupCost.cost"
 				           update-delay="3000"
 				           on-update="updateInstructorCost(sectionGroupCost)">
 				</ipa-input>
+				<span ng-if="isSnapshot">{{ sectionGroupCost.cost || 'N/A' }}</span>
 			</div>
 
 			<div ng-if="sectionGroupCost.overrideInstructorCostSource != 'course' && sectionGroupCost.overrideInstructorCostSource.length > 0"
 			     uib-tooltip="Cost of {{ sectionGroupCost.overrideInstructorCostSourceDescription }}"
 			     tooltip-append-to-body="true">
-				<ipa-input mode="'currency'"
+				<ipa-input ng-if="!isSnapshot"
+				           mode="'currency'"
 				           place-holder="'$' + (sectionGroupCost.overrideInstructorCost || 0)"
 				           value="sectionGroupCost.cost"
 				           update-delay="3000"
 				           on-update="updateInstructorCost(sectionGroupCost)">
 				</ipa-input>
+					<span ng-if="isSnapshot">{{ sectionGroupCost.overrideInstructorCost || 'N/A' }}</span>
 			</div>
 		</div>
 	</td>

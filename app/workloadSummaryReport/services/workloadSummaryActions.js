@@ -440,7 +440,7 @@ class WorkloadSummaryActions {
 							}
 
 							assignment.seats = seats;
-							assignment.previousEnrollment = sectionGroup.previousEnrollment;
+							assignment.previousEnrollment = sectionGroup.previousEnrollment || 0;
 							assignment.enrollmentPercentage = assignment.maxEnrollment && assignment.actualEnrollment ? parseInt((assignment.actualEnrollment / assignment.maxEnrollment) * 100) : "0";
 							assignment.units = CourseService.getUnits(course, sectionGroup);
 							assignment.studentCreditHours = CourseService.getSCH(assignment.actualEnrollment, course, sectionGroup);

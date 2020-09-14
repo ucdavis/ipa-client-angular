@@ -63,12 +63,24 @@ class BudgetReducers {
 						instructorTypeCosts = {
 							ids: [],
 							list: {},
-							byInstructorTypeId: {}
+							byInstructorTypeId: {},
+							byBudgetScenarioId: {}
 						};
 						action.payload.instructorTypeCosts.forEach(function(instructorTypeCost) {
 							instructorTypeCosts.ids.push(instructorTypeCost.id);
 							instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
-							instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+							if (!instructorTypeCost.budgetScenarioId) {
+								instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+							} else {
+								if (!instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId]) {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId] = {
+										byInstructorTypeId: {}
+									};
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								} else {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								}
+							}
 						});
 						return instructorTypeCosts;
 					case ActionTypes.CREATE_INSTRUCTOR_TYPE_COST:
@@ -81,6 +93,21 @@ class BudgetReducers {
 						var newInstructorTypeCost = action.payload.instructorTypeCost;
 						instructorTypeCosts.list[newInstructorTypeCost.id] = newInstructorTypeCost;
 						instructorTypeCosts.byInstructorTypeId[newInstructorTypeCost.instructorTypeId] = newInstructorTypeCost;
+						return instructorTypeCosts;
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
+						action.payload.instructorTypeCosts.forEach(function(instructorTypeCost) {
+							instructorTypeCosts.ids.push(instructorTypeCost.id);
+							instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
+
+							if (!instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId]) {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId] = {
+										byInstructorTypeId: {}
+									};
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								} else {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								}
+						});
 						return instructorTypeCosts;
 					default:
 						return instructorTypeCosts;
@@ -392,13 +419,26 @@ class BudgetReducers {
 						instructorCosts = {
 							ids: [],
 							list: [],
-							byInstructorId: {}
+							byInstructorId: {},
+							byBudgetScenarioId: {}
 						};
 
 						action.payload.instructorCosts.forEach(function(instructorCost) {
 							instructorCosts.ids.push(instructorCost.id);
 							instructorCosts.list[instructorCost.id] = instructorCost;
-							instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+
+							if (!instructorCost.budgetScenarioId) {
+								instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+							} else {
+								if (!instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId]) {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId] = {
+										byInstructorId: {}
+									};
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								} else {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								}
+							}
 						});
 
 						return instructorCosts;
@@ -413,6 +453,21 @@ class BudgetReducers {
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
 						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+						return instructorCosts;
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
+						action.payload.instructorCosts.forEach(function(instructorCost) {
+							instructorCosts.ids.push(instructorCost.id);
+							instructorCosts.list[instructorCost.id] = instructorCost;
+
+							if (!instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId]) {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId] = {
+										byInstructorId: {}
+									};
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								} else {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								}
+						});
 						return instructorCosts;
 					default:
 						return instructorCosts;
@@ -784,6 +839,7 @@ class BudgetReducers {
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
+						var isSnapshot = action.payload.budgetScenarios.find(scenario => scenario.id == action.selectedBudgetScenarioId).isSnapshot;
 						ui = {
 							addCourseModal: {
 								isOpen: false
@@ -817,7 +873,7 @@ class BudgetReducers {
 								allTabs: null
 							},
 							fundsNav: {
-								allTabs: ['Funds', 'Suggested'],
+								allTabs: isSnapshot ? ['Funds'] : ['Funds', 'Suggested'],
 								activeTab: 'Funds',
 								tabOverrides: {}
 							},
@@ -838,6 +894,8 @@ class BudgetReducers {
 							lineItemDetails: {},
 							sectionGroupCostDetails: {},
 							selectedBudgetScenarioId: parseInt(action.selectedBudgetScenarioId),
+							isSnapshot: isSnapshot,
+							createInProgress: false,
 							selectedTerm: action.selectedTerm,
 							workgroupId: action.workgroupId,
 							year: action.year
@@ -944,7 +1002,7 @@ class BudgetReducers {
 									displayReasonInput: false,
 								};
 						});
-
+						ui.createInProgress = false;
 						return ui;
 					case ActionTypes.SELECT_TERM:
 						ui.selectedTerm = action.payload.term;
@@ -1041,8 +1099,10 @@ class BudgetReducers {
 						};
 						return ui;
 					case ActionTypes.SELECT_BUDGET_SCENARIO:
-						ui.shouldShowCourseList = !action.payload.fromLiveData;
+						ui.fundsNav.allTabs = action.payload.isSnapshot ? ['Funds'] : ['Funds', 'Suggested'];
+						ui.shouldShowCourseList = !action.payload.fromLiveData && !action.payload.isSnapshot;
 						ui.fromLiveData = action.payload.fromLiveData;
+						ui.isSnapshot = action.payload.isSnapshot;
 						ui.selectedBudgetScenarioId = parseInt(action.payload.budgetScenarioId);
 						return ui;
 					case ActionTypes.DELETE_BUDGET_SCENARIO:

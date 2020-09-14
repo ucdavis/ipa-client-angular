@@ -1,16 +1,18 @@
 
 .budget-scenario-dropdown__hover-ui {
-	display: none;
-	padding-right: 10px;
+	display: flex;
+	align-items: flex-end;
+	visibility: hidden;
+	padding-left: 10px;
 }
 
 .budget-scenario-dropdown__row:hover .budget-scenario-dropdown__hover-ui {
-	display: block;
+	visibility: visible;
 }
 
 .budget-scenario-dropdown__row {
 	cursor: pointer;
-	height: 30px;
+	min-height: 30px;
 }
 
 .budget-scenario-dropdown__toggle-ui {
@@ -24,13 +26,15 @@
 	display: block;
 }
 
-.budget-scenario-dropdown .dropdown-container {
-	width: 250px;
-}
-
 .budget-scenario-dropdown .budget-scenario-item {
 	display: flex;
 	justify-content: space-between;
+	padding-right: 10px;
+}
+
+.budget-scenario-dropdown {
+	display: flex;
+	align-items: center;
 }
 
 @media print {

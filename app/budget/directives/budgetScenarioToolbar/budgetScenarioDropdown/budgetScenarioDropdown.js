@@ -1,4 +1,5 @@
 import './budgetScenarioDropdown.css';
+import { dateToCalendar } from '../../../../shared/helpers/dates';
 
 let budgetScenarioDropdown = function($window, $location, $routeParams, $rootScope, BudgetActions) {
 	return {
@@ -28,6 +29,20 @@ let budgetScenarioDropdown = function($window, $location, $routeParams, $rootSco
 					scope.scenarioFromLiveData = budgetScenario;
 				}
 			});
+
+			scope.filterSnapshots = function(budgetScenarios) {
+				return budgetScenarios.filter((budgetScenario) => budgetScenario.isSnapshot).sort((a, b) => b.creationDate - a.creationDate);
+			};
+
+			scope.scenarioSnapshots = scope.filterSnapshots(scope.state.budgetScenarios);
+
+			$rootScope.$on('budgetStateChanged', function (event, data) {
+				scope.scenarioSnapshots = scope.filterSnapshots(data.budgetScenarios);
+			});
+
+			scope.dateToCalendar = function (date) {
+				return dateToCalendar(date);
+			};
 		}
 	};
 };

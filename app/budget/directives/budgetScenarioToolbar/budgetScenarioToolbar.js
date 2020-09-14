@@ -1,4 +1,5 @@
 import { setCharAt } from 'shared/helpers/string';
+import { dateToCalendar } from '../../../shared/helpers/dates';
 
 import './budgetScenarioToolbar.css';
 
@@ -18,6 +19,11 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.validationError = "";
 			scope.activeFilters = [];
 			scope.showTermChip = false;
+			scope.snapshotInProgress = false;
+
+			$rootScope.$on('budgetStateChanged', function (event, data) {
+				scope.snapshotInProgress = data.ui.createInProgress;
+			});
 
 			$window.onscroll = function () {
 				const VERTICAL_OFFSET = 98;
@@ -47,6 +53,11 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.state.selectedBudgetScenario.name = angular.copy(scope.newScenarioName); // eslint-disable-line no-undef
 				BudgetActions.updateBudgetScenario(scope.state.selectedBudgetScenario);
 				scope.displayScenarioRenameUI = false;
+			};
+
+			scope.createBudgetScenarioSnapshot = function() {
+				scope.snapshotInProgress = true;
+				BudgetActions.createBudgetScenarioSnapshot(scope.state.selectedBudgetScenario);
 			};
 
 			// Verifies that name is unique (within budgets for that schedule) and at least 1 character long.
@@ -124,6 +135,10 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				return scope.state.selectedBudgetScenario.name;
 			};
 
+			scope.dateToCalendar = function (date) {
+				return dateToCalendar(date);
+			};
+
 			scope.downloadBudgetScenarioExcel = function(isAll) {
 				if (isAll) {
 					BudgetActions.toggleBudgetScenarioModal();
@@ -136,7 +151,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 						var a = window.document.createElement('a'); // eslint-disable-line
 						a.href = url;
 						var workgroupInfo = JSON.parse(localStorage.getItem('workgroup'));
-						a.download = `Budget-Report-${workgroupInfo.name}-${localStorage.getItem('year')}-${scope.state.selectedBudgetScenario.name}.xlsx`;
+						a.download = `Budget-Report-${workgroupInfo.name}-${localStorage.getItem('year')}-${scope.state.selectedBudgetScenario.name}-${scope.state.selectedBudgetScenario.isSnapshot ? 'SNAPSHOT-' + dateToCalendar(scope.state.selectedBudgetScenario.creationDate) : ''}.xlsx`;
 						window.document.body.appendChild(a); // eslint-disable-line
 						a.click();
 						a.remove();  //afterwards we remove the element again

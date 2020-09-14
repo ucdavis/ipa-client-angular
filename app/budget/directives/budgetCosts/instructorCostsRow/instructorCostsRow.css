@@ -2,6 +2,10 @@
 	width: 100%;
 }
 
+.instructor-costs__table {
+	width: 100%;
+}
+
 .instructor-costs__table-header {
 	width: 10%;
 	padding-top: 15px;

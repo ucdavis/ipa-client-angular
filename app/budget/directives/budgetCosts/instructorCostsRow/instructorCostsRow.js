@@ -11,7 +11,8 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 			regularInstructorAssignmentOptions: '<',
 			sectionGroupCost: '<',
 			divider: '<',
-			isLiveDataScenario: '<'
+			isLiveDataScenario: '<',
+			isSnapshot: '<'
 		},
 		replace: true,
 		link: function (scope) {
@@ -29,6 +30,15 @@ let instructorCostsRow = function ($rootScope, BudgetActions) {
 				sectionGroupCost.originalInstructorTypeId = null;
 				sectionGroupCost.originalInstructorId = null;
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.findOriginalInstructorBySectionGroupCost = function(sectionGroupCost) {
+				if (sectionGroupCost.originalInstructorId) {
+					return scope.regularInstructorAssignmentOptions.find(
+						(instructor) =>
+							instructor.id === sectionGroupCost.originalInstructorId
+					);
+				}
 			};
 
 			scope.removeInstructor = function(sectionGroupCost) {

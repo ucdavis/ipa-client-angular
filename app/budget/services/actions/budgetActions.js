@@ -220,6 +220,31 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 				});
 			},
+			createBudgetScenarioSnapshot: function (selectedBudgetScenario) {
+				let self = this;
+				BudgetService.createBudgetScenarioSnapshot(selectedBudgetScenario).then(
+					function (results) {
+						window.ipa_analyze_event('budget', 'budget scenario snapshot created');
+
+						let action = {
+							type: ActionTypes.CREATE_BUDGET_SCENARIO,
+							payload: results
+						};
+
+						$rootScope.$emit('toast', { message: "Created budget snapshot", type: "SUCCESS" });
+						BudgetReducers.reduce(action);
+						self.selectBudgetScenario(results.budgetScenario.id);
+						self.attachInstructorTypesToInstructors();
+
+						// Perform follow up calculations
+						BudgetCalculations.calculateInstructors();
+						BudgetCalculations.calculateLineItems();
+						BudgetCalculations.calculateInstructorTypeCosts();
+
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not create budget scenario snapshot.", type: "ERROR" });
+				});
+			},
 			deleteBudgetScenario: function (budgetScenarioId) {
 				var self = this;
 
@@ -783,6 +808,7 @@ class BudgetActions {
 			},
 			selectBudgetScenario: function(selectedScenarioId) {
 				var fromLiveData = false;
+				let isSnapshot = false;
 
 				// If scenarioId was not provided, attempt to use currently selected scenario
 				if (selectedScenarioId == null) {
@@ -798,6 +824,7 @@ class BudgetActions {
 				} else {
 					var budgetScenario = BudgetReducers._state.budgetScenarios.list[selectedScenarioId];
 					fromLiveData = budgetScenario.fromLiveData;
+					isSnapshot = budgetScenario.isSnapshot;
 				}
 
 				var year = BudgetReducers._state.ui.year;
@@ -809,13 +836,16 @@ class BudgetActions {
 					type: ActionTypes.SELECT_BUDGET_SCENARIO,
 					payload: {
 						budgetScenarioId: selectedScenarioId,
-						fromLiveData: fromLiveData
+						fromLiveData: fromLiveData,
+						isSnapshot: isSnapshot
 					}
 				};
 
 				BudgetReducers.reduce(action);
 				BudgetCalculations.calculateScenarioTerms();
+				BudgetCalculations.calculateInstructors();
 				BudgetCalculations.calculateLineItems();
+				BudgetCalculations.calculateInstructorTypeCosts();
 				ScheduleCostCalculations.calculateScheduleCosts();
 				BudgetCalculations.calculateSectionGroups();
 				BudgetCalculations.calculateTotalCost();

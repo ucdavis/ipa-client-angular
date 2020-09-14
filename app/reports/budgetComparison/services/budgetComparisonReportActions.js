@@ -186,13 +186,26 @@ class BudgetComparisonReportActions {
 					let instructorTypeCosts = {
 						ids: [],
 						list: {},
-						byInstructorTypeId: {}
+						byInstructorTypeId: {},
+						byBudgetScenarioId: {}
 					};
 
 					rawInstructorTypeCosts.forEach(function(instructorTypeCost) {
 						instructorTypeCosts.ids.push(instructorTypeCost.id);
 						instructorTypeCosts.list[instructorTypeCost.id] = instructorTypeCost;
-						instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost.id;
+
+						if (!instructorTypeCost.budgetScenarioId) {
+								instructorTypeCosts.byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+							} else {
+								if (!instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId]) {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId] = {
+										byInstructorTypeId: {}
+									};
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								} else {
+									instructorTypeCosts.byBudgetScenarioId[instructorTypeCost.budgetScenarioId].byInstructorTypeId[instructorTypeCost.instructorTypeId] = instructorTypeCost;
+								}
+							}
 					});
 
 					BudgetComparisonReportReducers.reduce({
@@ -212,15 +225,28 @@ class BudgetComparisonReportActions {
 
 				BudgetComparisonReportService.getInstructorCosts(workgroupId, year).then(function (rawInstructorCosts) {
 					let instructorCosts = {
-						ids: [],
-						list: {},
-						byInstructorId: {}
-					};
+            ids: [],
+            list: {},
+            byInstructorId: {},
+            byBudgetScenarioId: {}
+          };
 
 					rawInstructorCosts.forEach(function(instructorCost) {
 						instructorCosts.ids.push(instructorCost.id);
 						instructorCosts.list[instructorCost.id] = instructorCost;
-						instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost.id;
+
+						if (!instructorCost.budgetScenarioId) {
+								instructorCosts.byInstructorId[instructorCost.instructorId] = instructorCost;
+							} else {
+								if (!instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId]) {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId] = {
+										byInstructorId: {}
+									};
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								} else {
+									instructorCosts.byBudgetScenarioId[instructorCost.budgetScenarioId].byInstructorId[instructorCost.instructorId] = instructorCost;
+								}
+							}
 					});
 
 					BudgetComparisonReportReducers.reduce({
