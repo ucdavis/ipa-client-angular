@@ -270,7 +270,8 @@ class BudgetComparisonReportActions {
 					let sectionGroupCosts = {
 						ids: [],
 						list: {},
-						bySectionGroupId: {}
+						bySectionGroupId: {},
+						byUniqueKey: {}
 					};
 
 					rawSectionGroupCosts.forEach(function(sectionGroupCost) {
@@ -278,8 +279,9 @@ class BudgetComparisonReportActions {
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] = sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] || [];
 						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
+						var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
+						sectionGroupCosts.byUniqueKey[uniqueKey] = sectionGroupCost;
 					});
-
 
 					BudgetComparisonReportReducers.reduce({
 						type: action,
