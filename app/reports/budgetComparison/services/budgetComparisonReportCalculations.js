@@ -215,7 +215,7 @@ class BudgetComparisonReportCalculations {
           var sectionGroupCostInstructor = sectionGroupCostInstructors[i];
 
           var cost = null;
-          var instructorTypeId = null;
+          var instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
 
           var instructorTypeCost = null;
           var instructorCost = null;
@@ -263,6 +263,58 @@ class BudgetComparisonReportCalculations {
 
         return assignmentCosts;
       },
+      _calculateInstructorTypeCosts(
+        selectedScenario,
+        sectionGroupCost,
+        instructorTypeCosts,
+        instructorCosts,
+        sectionGroupCostInstructors){
+        var assignmentCosts = [];
+
+        if (!sectionGroupCostInstructors){
+          sectionGroupCostInstructors = BudgetComparisonReportReducers._state.sectionGroupCostInstructors.previous.instructors.bySectionGroupCostId[sectionGroupCost.id]
+          || BudgetComparisonReportReducers._state.sectionGroupCostInstructors.current.instructors.bySectionGroupCostId[sectionGroupCost.id] || [];
+        }
+
+
+        for (var i = 0; i < sectionGroupCostInstructors.length; i++){
+          var sectionGroupCostInstructor = sectionGroupCostInstructors[i];
+          var cost = sectionGroupCostInstructor.cost;
+          var instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
+          var instructorId = sectionGroupCostInstructor.instructorId;
+
+          // If cost not explicitly set find implicit value
+          if (!cost){
+            // Check if instructor has explicit cost
+            if (instructorId){
+              var instructorCost = selectedScenario.isSnapshot
+              ? instructorCosts.byBudgetScenarioId[selectedScenario.id].byInstructorId[sectionGroupCostInstructor.instructorId]
+              : instructorCosts.byInstructorId[sectionGroupCostInstructor.instructorId];
+              if (instructorCost){
+                cost = instructorCost.cost;
+              }
+            }
+
+            // Check if instructor type has explicit cost
+            if (!cost && instructorTypeId){
+              var instructorTypeCost = selectedScenario.isSnapshot
+              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
+              : instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
+            }
+            if (instructorTypeCost){
+              cost = instructorTypeCost.cost;
+            }
+          }
+
+          assignmentCosts.push({
+              cost: cost,
+              instructorTypeId: instructorTypeId
+          });
+
+        }
+
+        return assignmentCosts;
+      },
       // Generates instructor costs (based on sectionGroupCosts, and the selected budget scenario)
       _generateInstructionCosts(
         teachingAssignments,
@@ -294,7 +346,7 @@ class BudgetComparisonReportCalculations {
         if (selectedScenario.fromLiveData){
           for (var teachingAssignmentId in teachingAssignments.list){
             var teachingAssignment  = teachingAssignments.list[teachingAssignmentId];
-            if (!teachingAssignmentIdsPrevious.includes(teachingAssignment.id) && !teachingAssignmentIdsCurrent.includes(teachingAssignment.id) && activeTerms.indexOf(teachingAssignment.termCode.slice(-2)) != -1){
+            if (teachingAssignment.sectionGroupId && teachingAssignment.sectionGroupId > 0 && !teachingAssignmentIdsPrevious.includes(teachingAssignment.id) && !teachingAssignmentIdsCurrent.includes(teachingAssignment.id) && activeTerms.indexOf(teachingAssignment.termCode.slice(-2)) != -1){
                 var sectionGroupCostInstructor = {
                   cost: null,
                   sectionGroupCostInstructorId: null,
@@ -307,7 +359,7 @@ class BudgetComparisonReportCalculations {
           }
         }
 
-        var assignmentCosts = _self._calculateAssignmentCost(
+        var assignmentCosts = _self._calculateInstructorTypeCosts(
             selectedScenario,
             null,
             instructorTypeCosts,
@@ -329,11 +381,7 @@ class BudgetComparisonReportCalculations {
             return;
           }
 
-          if (!sectionGroupCost.instructorTypeId) {
-            instructionCosts.unassigned++;
-          }
-
-          assignmentCosts = assignmentCosts.concat(_self._calculateAssignmentCost(
+          assignmentCosts = assignmentCosts.concat(_self._calculateInstructorTypeCosts(
             selectedScenario,
             sectionGroupCost,
             instructorTypeCosts,
@@ -345,24 +393,28 @@ class BudgetComparisonReportCalculations {
         for ( var i = 0; i < assignmentCosts.length; i++){
             var assignmentCost = assignmentCosts[i];
             var instructorTypeId = assignmentCost.instructorTypeId;
-            var assignmentCost = assignmentCost.cost;
+            var cost = assignmentCost.cost;
 
-            instructionCosts.byType[instructorTypeId] = instructionCosts.byType[
-              instructorTypeId
-            ] || {
-              cost: 0,
-              courses: 0
-            };
+            if (cost){
+              if (instructorTypeId) {
+                instructionCosts.byType[instructorTypeId] = instructionCosts.byType[instructorTypeId] || { cost: 0, courses: 0};
+                instructionCosts.byType[instructorTypeId].courses += 1;
+                instructionCosts.byType[instructorTypeId].cost += cost;
+              } else {
+                instructionCosts.unassigned = (instructionCosts.unassigned || 0) + 1;
+              }
 
-            if (!assignmentCost) {
-              instructionCosts.byTypeNoCost[instructorTypeId] =
-                instructionCosts.byTypeNoCost[instructorTypeId] || 0;
-              instructionCosts.byTypeNoCost[instructorTypeId] += 1;
+            } else {
+              if (instructorTypeId){
+                instructionCosts.byType[instructorTypeId] = instructionCosts.byType[instructorTypeId] || { cost: 0, courses: 0};
+                instructionCosts.byType[instructorTypeId].courses += 1;
+                instructionCosts.byTypeNoCost[instructorTypeId] = instructionCosts.byTypeNoCost[instructorTypeId] || 0;
+                instructionCosts.byTypeNoCost[instructorTypeId] += 1;
+              } else {
+                instructionCosts.unassigned = (instructionCosts.unassigned || 0) + 1;
+              }
             }
-
-            instructionCosts.byType[instructorTypeId].courses += 1;
-            instructionCosts.byType[instructorTypeId].cost += assignmentCost;
-            instructionCosts.total.cost += assignmentCost;
+            instructionCosts.total.cost += cost;
             instructionCosts.total.courses += 1;
         }
 
