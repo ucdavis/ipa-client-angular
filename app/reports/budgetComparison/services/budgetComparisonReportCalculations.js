@@ -400,6 +400,8 @@ class BudgetComparisonReportCalculations {
                 instructionCosts.byType[instructorTypeId] = instructionCosts.byType[instructorTypeId] || { cost: 0, courses: 0};
                 instructionCosts.byType[instructorTypeId].courses += 1;
                 instructionCosts.byType[instructorTypeId].cost += cost;
+                instructionCosts.total.cost += cost;
+                instructionCosts.total.courses += 1;
               } else {
                 instructionCosts.unassigned = (instructionCosts.unassigned || 0) + 1;
               }
@@ -410,12 +412,12 @@ class BudgetComparisonReportCalculations {
                 instructionCosts.byType[instructorTypeId].courses += 1;
                 instructionCosts.byTypeNoCost[instructorTypeId] = instructionCosts.byTypeNoCost[instructorTypeId] || 0;
                 instructionCosts.byTypeNoCost[instructorTypeId] += 1;
+                instructionCosts.total.cost += cost;
+                instructionCosts.total.courses += 1;
               } else {
                 instructionCosts.unassigned = (instructionCosts.unassigned || 0) + 1;
               }
             }
-            instructionCosts.total.cost += cost;
-            instructionCosts.total.courses += 1;
         }
 
         var instructorTypes = [
