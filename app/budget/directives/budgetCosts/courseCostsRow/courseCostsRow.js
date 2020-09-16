@@ -124,8 +124,9 @@ let courseCostsRow = function ($rootScope, BudgetActions, BudgetReducers) {
 					if (instructors.length === 0){
 						return true;
 					}
+					return false;
 				}
-				return false;
+				return true;
 			};
 		}
 	};

@@ -78,11 +78,13 @@ class ScheduleCostCalculations {
             sectionGroupCostInstructor.overrideInstructorCost = null;
             sectionGroupCostInstructor.overrideInstructorCostSource = null;
             sectionGroupCostInstructor.overrideInstructorCostSourceDescription = null;
-
+            const isSnapshot = BudgetReducers._state.budgetScenarios.list[sectionGroupCost.budgetScenarioId].isSnapshot;
 
             if (sectionGroupCostInstructor.instructorId){
               let instructorId = sectionGroupCostInstructor.instructorId;
-              var instructorCost = BudgetReducers._state.instructorCosts.byInstructorId[instructorId];
+              var instructorCost = isSnapshot
+                ? BudgetReducers._state.instructorCosts.byBudgetScenarioId[sectionGroupCost.budgetScenarioId]?.byInstructorId[instructorId]
+                : BudgetReducers._state.instructorCosts.byInstructorId[instructorId];
               var instructor = BudgetReducers._state.assignedInstructors.list[instructorId] || BudgetReducers._state.activeInstructors.list[instructorId];
 
               if (instructorCost && instructorCost.cost > 0) {
@@ -93,7 +95,9 @@ class ScheduleCostCalculations {
                 return;
               }
               var instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
-              var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+              var instructorTypeCost = isSnapshot
+                ? BudgetReducers._state.instructorTypeCosts.byBudgetScenarioId[sectionGroupCost.budgetScenarioId]?.byInstructorTypeId[instructorTypeId]
+                : BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
               if (instructorTypeCost && instructorTypeCost.cost > 0) {
                 sectionGroupCostInstructor.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
@@ -104,7 +108,10 @@ class ScheduleCostCalculations {
               }
 
             } else if (sectionGroupCostInstructor.instructorTypeId > 0){
-                var instructorTypeCost = BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
+                var instructorTypeCost = isSnapshot
+                  ? BudgetReducers._state.instructorTypeCosts.byBudgetScenarioId[sectionGroupCost.budgetScenarioId]?.byInstructorTypeId[instructorTypeId]
+                  : BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
+
 
                 if (instructorTypeCost) {
                   sectionGroupCostInstructor.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
