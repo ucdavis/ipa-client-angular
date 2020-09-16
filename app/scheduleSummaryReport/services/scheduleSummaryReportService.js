@@ -14,10 +14,13 @@ class ScheduleSummaryReportService {
 			getInitialState: function (workgroupId, year, termCode) {
 				return self.apiService.get("/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + termCode);
 			},
-			downloadSchedule: function (workgroupId, year, shortTermCode) {
+			downloadSchedule: function (workgroupId, year, shortTermCode, simpleView) {
 				var deferred = $q.defer();
 				let endpoint;
-				if (shortTermCode){
+
+				if (simpleView) {
+					endpoint = window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel/simpleView";
+				} else if (shortTermCode){
 					endpoint = window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/terms/" + shortTermCode + "/generateExcel";
 				} else {
 					endpoint = window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel";

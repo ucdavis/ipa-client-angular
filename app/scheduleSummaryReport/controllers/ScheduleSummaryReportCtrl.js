@@ -38,6 +38,10 @@ class ScheduleSummaryReportCtrl {
 			}
 		};
 
+		$scope.downloadSimpleView = function () {
+			ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, null, true);
+		};
+
 		$scope.getTermName = function(termCode) {
 			return TermService.getShortTermName(termCode);
 		};
