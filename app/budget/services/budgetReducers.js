@@ -991,6 +991,7 @@ class BudgetReducers {
 								summaryHtml: ""
 							},
 							isAddBudgetScenarioModalOpen: false,
+							isAddExpenseItemModalOpen: false,
 							isAddLineItemModalOpen: false,
 							isBudgetConfigModalOpen: false,
 							isLineItemOpen: false,
@@ -1176,6 +1177,14 @@ class BudgetReducers {
 					case ActionTypes.CLOSE_ADD_COURSE_COMMENT_MODAL:
 						ui.courseCommentsModal.isOpen = false;
 						ui.courseCommentsModal.course = null;
+						return ui;
+					case ActionTypes.OPEN_ADD_EXPENSE_ITEM_MODAL:
+						ui.isAddExpenseItemModalOpen = true;
+						ui.expenseItemToEdit = action.payload.expenseItemToEdit;
+						return ui;
+					case ActionTypes.CLOSE_ADD_EXPENSE_ITEM_MODAL:
+						ui.isAddExpenseItemModalOpen = false;
+						ui.expenseItemToEdit = null;
 						return ui;
 					case ActionTypes.OPEN_ADD_LINE_ITEM_MODAL:
 						ui.isAddLineItemModalOpen = true;

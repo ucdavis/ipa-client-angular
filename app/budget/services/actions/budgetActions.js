@@ -820,6 +820,24 @@ class BudgetActions {
 					}
 				});
 			},
+			closeAddExpenseItemModal: function() {
+				var action = {
+					type: ActionTypes.CLOSE_ADD_EXPENSE_ITEM_MODAL,
+					payload: {}
+				};
+
+				BudgetReducers.reduce(action);
+			},
+			openAddExpenseItemModal: function(expenseItemToEdit) {
+				var action = {
+					type: ActionTypes.OPEN_ADD_EXPENSE_ITEM_MODAL,
+					payload: {
+						expenseItemToEdit: expenseItemToEdit
+					}
+				};
+
+				BudgetReducers.reduce(action);
+			},
 			closeAddLineItemModal: function() {
 				var action = {
 					type: ActionTypes.CLOSE_ADD_LINE_ITEM_MODAL,

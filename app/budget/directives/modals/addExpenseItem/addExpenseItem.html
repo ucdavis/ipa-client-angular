@@ -1,0 +1,99 @@
+<div class="add-line-item">
+	<form role="form" class="form-horizontal add-line-item__container">
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Category</label>
+			<div class="col-sm-5">
+				<div class="input-group" class="category-selection-container">
+					<button class="btn btn-category-dropdown dropdown-toggle"
+									type="button" data-toggle="dropdown"
+									class="btn-category-dropdown">
+						<span class="btn-category-dropdown-label">
+							{{ newExpenseItem.categoryDescription }}
+						</span>
+						<span class="caret"></span>
+					</button>
+
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li ng-repeat="category in state.lineItemCategories | orderBy:'description'" class="category-item">
+							<a ng-click="selectLineItemCategory(category)">
+								{{ category.description }}
+							</a>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</div><!-- end form group -->
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Amount</label>
+			<div class="col-sm-5">
+				<div class="input-group form-input" >
+					<ipa-input
+						value="newExpenseItem.amount"
+						allow-negative="true"
+						mode="'number'">
+					</ipa-input>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Document Number</label>
+			<div class="col-sm-5">
+				<div class="input-group form-input" >
+					<ipa-input value="newExpenseItem.documentNumber"></ipa-input>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Account Number</label>
+			<div class="col-sm-5">
+				<div class="input-group form-input" >
+					<ipa-input value="newExpenseItem.accountNumber"></ipa-input>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Description</label>
+			<div class="col-sm-5">
+				<div class="input-group form-input">
+					<ipa-input value="newExpenseItem.description"
+					           max-chars="500"
+					           placeholder="Description">
+					</ipa-input>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Notes</label>
+			<div class="col-sm-5">
+				<div class="input-group form-input">
+					<textarea placeholder="Add a note" rows="3" maxlength="750" class="add-line-item__notes" ng-model="newExpenseItem.notes"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<div class="add-line-item-footer">
+			<button ng-click="close()"
+							type="button"
+							class="btn btn-default modal-button">
+				Cancel
+			</button>
+			<button ng-if="isFormValid() == true"
+							type="button" class="btn neon-dark-confirm-btn"
+							ng-click="submitLineItemForm()">
+							{{ (lineItemToEdit.id > 0 || lineItemToEdit.teachingAssignmentId > 0) ? 'Update' : 'Create' }}
+			</button>
+			<button ng-if="isFormValid() == false"
+							type="button" class="disabled btn btn-info neon-dark-confirm-btn"
+							tooltip-placement="left"
+							uib-tooltip="{{formValidationErrorMessage}}">
+							{{ (lineItemToEdit.id > 0 || lineItemToEdit.teachingAssignmentId > 0) ? 'Update' : 'Create' }}
+			</button>
+		</div>
+	</form>
+</div>

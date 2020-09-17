@@ -30,6 +30,19 @@
     </ipa-modal>
 
     <ipa-modal
+      is-visible="view.state.ui.isAddExpenseItemModalOpen"
+      header-text="Line Item"
+    >
+      <add-line-item
+        ng-if="view.state.ui.isAddExpenseItemModalOpen"
+        state="view.state"
+        is-visible="view.state.ui.isAddExpenseItemModalOpen"
+        line-item-to-edit="view.state.ui.lineItemToEdit"
+      >
+      </add-line-item>
+    </ipa-modal>
+
+    <ipa-modal
       is-visible="view.state.ui.isAddLineItemModalOpen"
       header-text="Line Item"
     >

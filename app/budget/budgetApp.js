@@ -49,6 +49,7 @@ import downloadBudgetScenarios from "./directives/modals/downloadBudgetScenarios
 
 import addCourse from "./directives/modals/addCourse/addCourse.js";
 import expenseItems from "./directives/expenseItems/expenseItems";
+import addExpenseItem from "./directives/modals/addExpenseItem/addExpenseItem";
 
 // Dependencies
 var dependencies = ["sharedApp", "ngRoute"];
@@ -123,6 +124,7 @@ const budgetApp = angular // eslint-disable-line no-undef
   .directive("addBudgetScenario", addBudgetScenario)
   .directive("addCourseComments", addCourseComments)
   .directive("addCourse", addCourse)
+  .directive("addExpenseItem", addExpenseItem)
   .directive("addLineItem", addLineItem)
   .directive("addLineItemComments", addLineItemComments)
   .directive("courseList", courseList)
