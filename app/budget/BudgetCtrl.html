@@ -136,6 +136,14 @@
         selected-budget-scenario="view.state.selectedBudgetScenario"
       >
       </budget-summary>
+      <expense-items
+        class="do-not-print"
+        ng-if="view.state.ui.sectionNav.activeTab == 'Additional Expenses'"
+        selected-budget-scenario="view.state.selectedBudgetScenario"
+        expense-items="view.state.calculatedLineItems"
+        ui="view.state.ui"
+      >
+      </expense-items>
       <line-items
         class="do-not-print"
         ng-if="view.state.ui.sectionNav.activeTab == 'Funds'"

@@ -1,0 +1,99 @@
+<div class="expense-items">
+	<h3
+		ng-if="ui.isSnapshot"
+		style="text-align: center; color: #5b616b"
+	>
+		SNAPSHOT
+	</h3>
+
+    <table class="expense-items__table">
+        <thead>
+            <tr>
+                <th ng-if="!ui.isSnapshot" class="expense-items__table-header expense-items__table--checkbox do-not-print">
+                    <div class="expense-items__table-header-container expense-items__table-container--checkbox">
+                        <ipa-checkbox style="'muted'"
+                                        is-checked="ui.areAllLineItemsSelected"
+                                        click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
+                        </ipa-checkbox>
+                    </div>
+                </th>
+                <th class="expense-items__table-header expense-items__table--type">
+                    <div class="expense-items__table-header-container">
+                        Type
+                    </div>
+                </th>
+                <th class="expense-items__table-header">
+                    <div class="expense-items__table-header-container">
+                        Description
+                    </div>
+                </th>
+                <th class="expense-items__table-header expense-items__table--amount">
+                    <div class="expense-items__table-header-amount-container">
+                        Amount
+                    </div>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="lineItem in lineItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
+                <!-- Checkbox -->
+                <td ng-if="!ui.isSnapshot" class="expense-items__table-cell do-not-print" ng-class-odd="'expense-items__table-cell--dark'">
+                    <div class="expense-items__table-container--checkbox">
+                        <ipa-checkbox style="'muted'"
+                                        is-disabled="!(lineItem.id)"
+                                        is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
+                                        click-action="selectLineItem(lineItem)">
+                        </ipa-checkbox>
+                    </div>
+                </td>
+
+                <!-- Category -->
+                <td class="expense-items__table-cell" ng-class-odd="'expense-items__table-cell--dark'">
+                    {{ lineItem.categoryDescription }}
+                    <span ng-if="lineItem.isOrphaned">
+                        <i class="entypo-attention expense-items__orphan-warn"
+                            tooltip-append-to-body="true"
+                            uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
+                        </i>
+                    </span>
+                    <span ng-if="lineItem.hidden">
+                        <i class="entypo-attention expense-items__orphan-warn"
+                            tooltip-append-to-body="true"
+                            uib-tooltip="This line item is being hidden, but the assignment its based on still exists.">
+                        </i>
+                        <ipa-button icon-class="'glyphicon glyphicon-plus'"
+                                    size="'small'"
+                                    on-click="unHideLineItem(lineItem)"
+                                    tooltip-message="'Restore line item'">
+                        </ipa-button>
+                    </span>
+                </td>
+
+                <!-- Description -->
+                <td class="expense-items__table-cell" ng-class-odd="'expense-items__table-cell--dark'">
+                    {{ lineItem.description }}
+                </td>
+
+                <!-- Amount -->
+                <td class="expense-items__table-cell" ng-class-odd="'expense-items__table-cell--dark'">
+                    <div class="expense-items__amount-container">
+                        <div>
+                            {{ toCurrency(lineItem.amount) }}
+                        </div>
+                        <div ng-if="!ui.isSnapshot" class="do-not-print">
+                            <line-item-dropdown line-item="lineItem"></line-item-dropdown>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="lineItems.length == 0">
+                <td colspan="5">
+                    <div class="expense-items__no-funds">
+                        No Expenses Added
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

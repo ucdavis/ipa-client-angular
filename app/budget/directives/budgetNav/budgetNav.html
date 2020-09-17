@@ -6,8 +6,11 @@
 		<div class="budget-nav__nav-item" ng-click="setRoute('Schedule Costs')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Schedule Costs' }">
 			Schedule Costs
 		</div>
+		<div class="budget-nav__nav-item" ng-click="setRoute('Additional Expenses')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Additional Expenses' }">
+			Additional Expenses
+		</div>
 		<div class="budget-nav__nav-item" ng-click="setRoute('Funds')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Funds' }">
-				Funds
+			Funds
 		</div>
 		<div class="budget-nav__nav-item" ng-click="setRoute('Instructor List')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Instructor List' }">
 			Instructor List
@@ -18,7 +21,27 @@
 	</div>
 
 	<div class="budget-nav__side-bar">
+
+		<div ng-if="selectedSection == 'Additional Expenses' && !selectedBudgetScenario.isSnapshot">
+			<div class="budget-nav__tool">
+				<ipa-button icon-class="'glyphicon glyphicon-trash'"
+				            size="'small'"
+				            is-disabled="selectedLineItems.length == 0"
+				            disabled-tooltip-message="'No expense selected'"
+				            on-click="deleteLineItems()"
+				            tooltip-message="'Delete expenses'"
+				            confirm-message="'Are you sure you want to remove the selected expenses?'">
+				</ipa-button>
+				<ipa-button icon-class="'glyphicon glyphicon-plus'"
+				            size="'small'"
+				            on-click="openAddLineItemModal()"
+				            tooltip-message="'Add expense'">
+				</ipa-button>
+			</div>
+		</div>
+
 		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Funds' && !selectedBudgetScenario.isBudgetRequest">
+
 			<div class="budget-nav__tool" ng-if="fundsNav == 'Funds'">
 				<ipa-button icon-class="'glyphicon glyphicon-trash'"
 				            size="'small'"
