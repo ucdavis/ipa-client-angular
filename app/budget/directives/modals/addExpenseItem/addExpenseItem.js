@@ -8,13 +8,13 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
     scope: {
       state: '<',
       isVisible: '=',
-      lineItemToEdit: '<?',
+      expenseItemToEdit: '<?',
     },
     link: function (scope) {
       scope.newExpenseItem = {};
 
-      if (scope.lineItemToEdit) {
-        scope.newExpenseItem = angular.copy(scope.lineItemToEdit); // eslint-disable-line no-undef
+      if (scope.expenseItemToEdit) {
+        scope.newExpenseItem = angular.copy(scope.expenseItemToEdit); // eslint-disable-line no-undef
       }
 
       scope.newExpenseItem.categoryDescription =
@@ -52,7 +52,7 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       scope.submitLineItemForm = function () {
         scope.newExpenseItem.budgetScenarioId =
           scope.state.selectedBudgetScenario.id;
-        if (scope.lineItemToEdit && scope.lineItemToEdit.id > 0) {
+        if (scope.expenseItemToEdit && scope.expenseItemToEdit.id > 0) {
           BudgetActions.updateLineItem(
             scope.newExpenseItem,
             scope.state.selectedBudgetScenario.id

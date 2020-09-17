@@ -31,15 +31,15 @@
 
     <ipa-modal
       is-visible="view.state.ui.isAddExpenseItemModalOpen"
-      header-text="Line Item"
+      header-text="Additional Expense"
     >
-      <add-line-item
+      <add-expense-item
         ng-if="view.state.ui.isAddExpenseItemModalOpen"
         state="view.state"
         is-visible="view.state.ui.isAddExpenseItemModalOpen"
-        line-item-to-edit="view.state.ui.lineItemToEdit"
+        expense-item-to-edit="view.state.ui.lineItemToEdit"
       >
-      </add-line-item>
+      </add-expense-item>
     </ipa-modal>
 
     <ipa-modal
@@ -134,6 +134,7 @@
       selected-section="view.state.ui.sectionNav.activeTab"
       selected-budget-scenario="view.state.selectedBudgetScenario"
       selected-line-items="view.state.ui.selectedLineItems"
+      selected-expense-items="view.state.ui.selectedExpenseItems"
       filters="view.state.ui.filters"
       funds-nav="view.state.ui.fundsNav.activeTab"
       should-show-course-list="view.state.ui.shouldShowCourseList"

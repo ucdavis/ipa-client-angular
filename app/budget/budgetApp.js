@@ -50,6 +50,7 @@ import downloadBudgetScenarios from "./directives/modals/downloadBudgetScenarios
 import addCourse from "./directives/modals/addCourse/addCourse.js";
 import expenseItems from "./directives/expenseItems/expenseItems";
 import addExpenseItem from "./directives/modals/addExpenseItem/addExpenseItem";
+import expenseItemDropdown from "./directives/expenseItems/expenseItemDropdown/expenseItemDropdown.js";
 
 // Dependencies
 var dependencies = ["sharedApp", "ngRoute"];
@@ -119,6 +120,7 @@ const budgetApp = angular // eslint-disable-line no-undef
   .directive("expenseItems", expenseItems)
   .directive("lineItems", lineItems)
   .directive("lineItemDropdown", lineItemDropdown)
+  .directive("expenseItemDropdown", expenseItemDropdown)
   .directive("budgetSummary", budgetSummary)
   .directive("instructorList", instructorList)
   .directive("addBudgetScenario", addBudgetScenario)
@@ -150,6 +152,8 @@ const budgetApp = angular // eslint-disable-line no-undef
     UPDATE_INSTRUCTOR_COST: "UPDATE_INSTRUCTOR_COST",
     OPEN_ADD_LINE_ITEM_MODAL: "OPEN_ADD_LINE_ITEM_MODAL",
     CLOSE_ADD_LINE_ITEM_MODAL: "CLOSE_ADD_LINE_ITEM_MODAL",
+    OPEN_ADD_EXPENSE_ITEM_MODAL: "OPEN_ADD_EXPENSE_ITEM_MODAL",
+    CLOSE_ADD_EXPENSE_ITEM_MODAL: "CLOSE_ADD_EXPENSE_ITEM_MODAL",
     OPEN_ADD_COURSE_COMMENT_MODAL: "OPEN_ADD_COURSE_COMMENT_MODAL",
     CLOSE_ADD_COURSE_COMMENT_MODAL: "CLOSE_ADD_COURSE_COMMENT_MODAL",
     TOGGLE_ADD_BUDGET_SCENARIO_MODAL: "TOGGLE_ADD_BUDGET_SCENARIO_MODAL",
@@ -161,6 +165,9 @@ const budgetApp = angular // eslint-disable-line no-undef
     TOGGLE_SELECT_LINE_ITEM: "TOGGLE_SELECT_LINE_ITEM",
     SELECT_ALL_LINE_ITEMS: "SELECT_ALL_LINE_ITEMS",
     DESELECT_ALL_LINE_ITEMS: "DESELECT_ALL_LINE_ITEMS",
+    TOGGLE_SELECT_EXPENSE_ITEM: "TOGGLE_SELECT_EXPENSE_ITEM",
+    SELECT_ALL_EXPENSE_ITEMS: "SELECT_ALL_EXPENSE_ITEMS",
+    DESELECT_ALL_EXPENSE_ITEMS: "DESELECT_ALL_EXPENSE_ITEMS",
     SET_ROUTE: "SET_ROUTE",
     TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN: "TOGGLE_FILTER_LINE_ITEM_SHOW_HIDDEN",
     CALCULATE_SCENARIO_TERMS: "CALCULATE_SCENARIO_TERMS",

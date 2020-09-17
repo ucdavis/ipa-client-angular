@@ -12,8 +12,8 @@
                 <th ng-if="!ui.isSnapshot" class="expense-items__table-header expense-items__table--checkbox do-not-print">
                     <div class="expense-items__table-header-container expense-items__table-container--checkbox">
                         <ipa-checkbox style="'muted'"
-                                        is-checked="ui.areAllLineItemsSelected"
-                                        click-action="selectAllLineItems(ui.areAllLineItemsSelected)">
+                                        is-checked="ui.areAllExpenseItemsSelected"
+                                        click-action="selectAllExpenseItems(ui.areAllExpenseItemsSelected)">
                         </ipa-checkbox>
                     </div>
                 </th>
@@ -36,14 +36,14 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="lineItem in lineItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
+            <tr ng-repeat="lineItem in expenseItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
                 <!-- Checkbox -->
                 <td ng-if="!ui.isSnapshot" class="expense-items__table-cell do-not-print" ng-class-odd="'expense-items__table-cell--dark'">
                     <div class="expense-items__table-container--checkbox">
                         <ipa-checkbox style="'muted'"
                                         is-disabled="!(lineItem.id)"
-                                        is-checked="ui.selectedLineItems.indexOf(lineItem.id) > -1"
-                                        click-action="selectLineItem(lineItem)">
+                                        is-checked="ui.selectedExpenseItems.indexOf(lineItem.id) > -1"
+                                        click-action="selectExpenseItem(lineItem)">
                         </ipa-checkbox>
                     </div>
                 </td>
@@ -64,7 +64,7 @@
                         </i>
                         <ipa-button icon-class="'glyphicon glyphicon-plus'"
                                     size="'small'"
-                                    on-click="unHideLineItem(lineItem)"
+                                    on-click="unHideExpenseItem(lineItem)"
                                     tooltip-message="'Restore line item'">
                         </ipa-button>
                     </span>
@@ -82,7 +82,7 @@
                             {{ toCurrency(lineItem.amount) }}
                         </div>
                         <div ng-if="!ui.isSnapshot" class="do-not-print">
-                            <line-item-dropdown line-item="lineItem"></line-item-dropdown>
+                            <expense-item-dropdown line-item="lineItem"></expense-item-dropdown>
                         </div>
                     </div>
                 </td>

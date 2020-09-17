@@ -835,7 +835,6 @@ class BudgetActions {
 						expenseItemToEdit: expenseItemToEdit
 					}
 				};
-
 				BudgetReducers.reduce(action);
 			},
 			closeAddLineItemModal: function() {
@@ -980,6 +979,42 @@ class BudgetActions {
 					payload: {
 						activeTab: tab
 					}
+				});
+			},
+			toggleSelectExpenseItem: function(expenseItem) {
+				BudgetReducers.reduce({
+					type: ActionTypes.TOGGLE_SELECT_EXPENSE_ITEM,
+					payload: {
+						expenseItem: expenseItem
+					}
+				});
+			},
+			selectAllExpenseItems: function(expenseItems) {
+				BudgetReducers.reduce({
+					type: ActionTypes.SELECT_ALL_EXPENSE_ITEMS,
+					payload: {
+						expenseItems: expenseItems
+					}
+				});
+			},
+			deselectAllExpenseItems: function() {
+				BudgetReducers.reduce({
+					type: ActionTypes.DESELECT_ALL_EXPENSE_ITEMS,
+					payload: {}
+				});
+			},
+			deleteExpenseItems: function(budgetScenario, expenseItemIds) {
+				BudgetService.deleteExpenseItems(budgetScenario, expenseItemIds).then(function () {
+					$rootScope.$emit('toast', { message: "Deleted line items", type: "SUCCESS" });
+					BudgetReducers.reduce({
+						type: ActionTypes.DELETE_EXPENSE_ITEMS,
+						payload: {
+							expenseItemIds: expenseItemIds
+						}
+					});
+					BudgetCalculations.calculateExpenseItems();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not delete line items.", type: "ERROR" });
 				});
 			},
 			toggleSelectLineItem: function(lineItem) {

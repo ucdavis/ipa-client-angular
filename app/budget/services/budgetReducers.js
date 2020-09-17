@@ -205,6 +205,76 @@ class BudgetReducers {
 						return lineItems;
 				}
 			},
+			expenseItemReducers: function (action, expenseItems) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						expenseItems = {
+							ids: [],
+							list: {}
+						};
+						action.payload.expenseItems.forEach(function(expenseItem) {
+							expenseItems.ids.push(expenseItem.id);
+							expenseItems.list[expenseItem.id] = expenseItem;
+						});
+						return expenseItems;
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
+						action.payload.expenseItems.forEach(function(expenseItem) {
+							expenseItems.ids.push(expenseItem.id);
+							expenseItems.list[expenseItem.id] = expenseItem;
+						});
+						return expenseItems;
+					case ActionTypes.CREATE_EXPENSE_ITEM:
+						var newLineItem = action.payload;
+						expenseItems.ids.push(newLineItem.id);
+						expenseItems.list[newLineItem.id] = newLineItem;
+						return expenseItems;
+					case ActionTypes.UPDATE_EXPENSE_ITEM:
+						var updatedLineItem = action.payload;
+						expenseItems.list[updatedLineItem.id] = updatedLineItem;
+						return expenseItems;
+					case ActionTypes.DELETE_EXPENSE_ITEMS:
+						action.payload.expenseItemIds.forEach(function(expenseItemId) {
+							var index = expenseItems.ids.indexOf(expenseItemId);
+							if (index > -1) {
+								expenseItems.ids.splice(index, 1);
+								delete expenseItems.list[expenseItemId];
+							}
+						});
+						return expenseItems;
+					case ActionTypes.DELETE_EXPENSE_ITEM:
+						var expenseItemId = action.payload.expenseItemId;
+						var index = expenseItems.ids.indexOf(expenseItemId);
+						expenseItems.ids.splice(index, 1);
+						delete expenseItems.list[expenseItemId];
+						return expenseItems;
+					case ActionTypes.UPDATE_FILTERS:
+						var selectedFilterDescriptions = action.payload.filters
+							.filter(function(filter) {
+								return filter.selected === true && filter.type === 'accountNumber';
+							}).map(function(filter) {
+								return filter.description;
+							});
+
+						if (selectedFilterDescriptions.length > 0) {
+						expenseItems.ids.forEach(function(expenseItemId) {
+								var slotLineItem = expenseItems.list[expenseItemId];
+
+								if (selectedFilterDescriptions.includes(slotLineItem.accountNumber)) {
+									slotLineItem.hidden = false;
+								} else {
+									slotLineItem.hidden = true;
+								}
+							});
+						} else {
+							expenseItems.ids.forEach(function(expenseItemId) {
+								expenseItems.list[expenseItemId].hidden = false;
+							});
+						}
+						return expenseItems;
+					default:
+						return expenseItems;
+				}
+			},
 			scheduleBudgetReducers: function (action, budget) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -998,6 +1068,8 @@ class BudgetReducers {
 							isCourseCostOpen: false,
 							instructorAssignmentOptions: [],
 							regularInstructorAssignmentOptions: [],
+							openExpenseItems: [],
+							selectedExpenseItems: [],
 							openLineItems: [],
 							selectedLineItems: [],
 							lineItemDetails: {},
@@ -1124,6 +1196,42 @@ class BudgetReducers {
 					case ActionTypes.SET_ROUTE:
 						ui.sectionNav.activeTab = action.payload.selectedRoute;
 						return ui;
+					case ActionTypes.TOGGLE_SELECT_EXPENSE_ITEM:
+							var expenseItemId = action.payload.expenseItem.id;
+							var index = ui.selectedExpenseItems.indexOf(expenseItemId);
+							if (index == -1) {
+								ui.selectedExpenseItems.push(expenseItemId);
+							} else {
+								ui.selectedExpenseItems.splice(index, 1);
+								ui.areAllExpenseItemsSelected = false;
+							}
+							return ui;
+					case ActionTypes.SELECT_ALL_EXPENSE_ITEMS:
+							action.payload.expenseItems.forEach(function(expenseItem) {
+								if (ui.selectedExpenseItems.indexOf(expenseItem.id) == -1) {
+									ui.selectedExpenseItems.push(expenseItem.id);
+								}
+							});
+							ui.areAllExpenseItemsSelected = true;
+							return ui;
+					case ActionTypes.DESELECT_ALL_EXPENSE_ITEMS:
+							ui.selectedExpenseItems = [];
+							ui.areAllExpenseItemsSelected = false;
+							return ui;
+					case ActionTypes.DELETE_EXPENSE_ITEMS:
+							action.payload.expenseItemIds.forEach(function(expenseItemId) {
+								var index = ui.selectedExpenseItems.indexOf(expenseItemId);
+								if (index > -1) {
+									ui.selectedExpenseItems.splice(index, 1);
+								}
+							});
+							return ui;
+					case ActionTypes.DELETE_EXPENSE_ITEM:
+							var index = ui.selectedExpenseItems.indexOf(action.payload.expenseItemId);
+							if (index > -1) {
+								ui.selectedExpenseItems.splice(index, 1);
+							}
+							return ui;
 					case ActionTypes.TOGGLE_SELECT_LINE_ITEM:
 						var lineItemId = action.payload.lineItem.id;
 						var index = ui.selectedLineItems.indexOf(lineItemId);
@@ -1238,13 +1346,17 @@ class BudgetReducers {
 			},
 			reduce: function (action) {
 				var scope = this;
-
+				//TO REMOVE ONCE BACKEND SUPPORTS EXPENSE ITEMS
+				if(!action.payload.expenseItems){
+					action.payload.expenseItems = action.payload.lineItems;
+				}
 				let newState = {};
 				newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 				newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
 				newState.courses = scope.courseReducers(action, scope._state.courses);
 				newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
+				newState.expenseItems = scope.expenseItemReducers(action, scope._state.expenseItems);
 				newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);

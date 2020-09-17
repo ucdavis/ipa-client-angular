@@ -28,13 +28,13 @@
 				            size="'small'"
 				            is-disabled="selectedLineItems.length == 0"
 				            disabled-tooltip-message="'No expense selected'"
-				            on-click="deleteLineItems()"
+				            on-click="deleteExpenses()"
 				            tooltip-message="'Delete expenses'"
 				            confirm-message="'Are you sure you want to remove the selected expenses?'">
 				</ipa-button>
 				<ipa-button icon-class="'glyphicon glyphicon-plus'"
 				            size="'small'"
-				            on-click="openAddLineItemModal()"
+				            on-click="openAddExpenseItemModal()"
 				            tooltip-message="'Add expense'">
 				</ipa-button>
 			</div>

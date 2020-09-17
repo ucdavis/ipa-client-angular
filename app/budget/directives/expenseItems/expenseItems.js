@@ -14,20 +14,20 @@ let expenseItems = function ($rootScope, BudgetActions) {
       // '<' This is proper one way binding, as opposed to string interpoation or passing value as a function that can be called
     },
     link: function (scope) {
-      scope.addLineItem = function (lineItem) {
-        BudgetActions.createLineItem(
-          lineItem,
+      scope.addExpenseItem = function (expenseItem) {
+        BudgetActions.createExpenseItem(
+          expenseItem,
           scope.selectedBudgetScenario.id,
-          lineItem.message
+          expenseItem.message
         );
       };
 
-      scope.hideLineItem = function (lineItem) {
-        lineItem.hidden = true;
-        BudgetActions.createLineItem(
-          lineItem,
+      scope.hideExpenseItem = function (expenseItem) {
+        expenseItem.hidden = true;
+        BudgetActions.createExpenseItem(
+          expenseItem,
           scope.selectedBudgetScenario.id,
-          lineItem.message
+          expenseItem.message
         );
       };
 
@@ -35,49 +35,49 @@ let expenseItems = function ($rootScope, BudgetActions) {
         BudgetActions.selectFundsNav(activeTab);
       };
 
-      scope.toggleLineItemSection = function () {
-        BudgetActions.toggleLineItemSection();
+      scope.toggleExpenseItemSection = function () {
+        BudgetActions.toggleExpenseItemSection();
       };
 
-      scope.openAddLineItemModal = function () {
-        BudgetActions.openAddLineItemModal();
+      scope.openAddExpenseItemModal = function () {
+        BudgetActions.openAddExpenseItemModal();
       };
 
-      scope.selectAllLineItems = function (areAllLineItemsSelected) {
-        if (areAllLineItemsSelected) {
-          BudgetActions.deselectAllLineItems();
+      scope.selectAllExpenseItems = function (areAllExpenseItemsSelected) {
+        if (areAllExpenseItemsSelected) {
+          BudgetActions.deselectAllExpenseItems();
         } else {
-          BudgetActions.selectAllLineItems(scope.expenseItems);
+          BudgetActions.selectAllExpenseItems(scope.expenseItems);
         }
       };
 
-      scope.deleteLineItems = function () {
-        BudgetActions.deleteLineItems(
+      scope.deleteExpenseItems = function () {
+        BudgetActions.deleteExpenseItems(
           scope.selectedBudgetScenario,
-          scope.ui.selectedLineItems
+          scope.ui.selectedExpenseItems
         );
       };
 
-      scope.deleteLineItem = function (lineItem) {
-        BudgetActions.deleteLineItem(lineItem);
+      scope.deleteExpenseItem = function (expenseItem) {
+        BudgetActions.deleteExpenseItem(expenseItem);
       };
 
-      scope.unHideLineItem = function (lineItem) {
-        lineItem.hidden = false;
-        BudgetActions.updateLineItem(lineItem);
+      scope.unHideExpenseItem = function (expenseItem) {
+        expenseItem.hidden = false;
+        BudgetActions.updateExpenseItem(expenseItem);
       };
 
-      scope.updateLineItem = function (lineItem, propertyName) {
-        BudgetActions.toggleLineItemDetail(lineItem.id, propertyName);
-        BudgetActions.updateLineItem(lineItem);
+      scope.updateExpenseItem = function (expenseItem, propertyName) {
+        BudgetActions.toggleExpenseItemDetail(expenseItem.id, propertyName);
+        BudgetActions.updateExpenseItem(expenseItem);
       };
 
-      scope.openAddLineItemCommentsModal = function (lineItem) {
-        BudgetActions.openAddLineItemCommentsModal(lineItem);
+      scope.openAddExpenseItemCommentsModal = function (expenseItem) {
+        BudgetActions.openAddExpenseItemCommentsModal(expenseItem);
       };
 
-      scope.selectLineItem = function (lineItem) {
-        BudgetActions.toggleSelectLineItem(lineItem);
+      scope.selectExpenseItem = function (expenseItem) {
+        BudgetActions.toggleSelectExpenseItem(expenseItem);
       };
 
       scope.toCurrency = function (amount) {
