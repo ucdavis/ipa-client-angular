@@ -444,7 +444,7 @@ class BudgetActions {
 
 					// Close modal
 					self.closeAddExpenseItemModal();
-					BudgetCalculations.calculateExpenseItems();
+					//BudgetCalculations.calculateExpenseItems(); TODO support if needed
 					BudgetCalculations.calculateTotalCost();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create expense.", type: "ERROR" });
@@ -474,8 +474,8 @@ class BudgetActions {
 
 					// Close modal
 					self.closeAddExpenseItemModal();
-					BudgetCalculations.calculateExpenseItems();
-					BudgetCalculations.calculateTotalCost();
+					//BudgetCalculations.calculateExpenseItems(); TODO remove if not needed
+					//BudgetCalculations.calculateTotalCost(); TODO add support for this
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not save expense.", type: "ERROR" });
 				});
@@ -500,7 +500,7 @@ class BudgetActions {
 
 					$rootScope.$emit('toast', { message: "Deleted expense", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
-					BudgetCalculations.calculateExpenseItems();
+					//BudgetCalculations.calculateExpenseItems(); TODO support if needed
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete expense.", type: "ERROR" });
 				});
@@ -1089,7 +1089,7 @@ class BudgetActions {
 							expenseItemIds: expenseItemIds
 						}
 					});
-					BudgetCalculations.calculateExpenseItems();
+					//BudgetCalculations.calculateExpenseItems(); TODO support if needed
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete line items.", type: "ERROR" });
 				});

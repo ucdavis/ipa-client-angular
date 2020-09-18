@@ -304,6 +304,23 @@ class BudgetReducers {
 						return lineItemCategories;
 				}
 			},
+			expenseItemCategoryReducers: function (action, expenseItemCategories) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						expenseItemCategories = {
+							ids: [],
+							list: []
+						};
+
+						action.payload.expenseItemCategories.forEach(function(expenseItemCategory) {
+							expenseItemCategories.ids.push(expenseItemCategory.id);
+							expenseItemCategories.list[expenseItemCategory.id] = expenseItemCategory;
+						});
+						return expenseItemCategories;
+					default:
+						return expenseItemCategories;
+				}
+			},
 			sectionGroupCostReducers: function (action, sectionGroupCosts) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -1346,9 +1363,18 @@ class BudgetReducers {
 			},
 			reduce: function (action) {
 				var scope = this;
-				//TO REMOVE ONCE BACKEND SUPPORTS EXPENSE ITEMS
+				//TODO REMOVE ONCE BACKEND SUPPORTS EXPENSE ITEMS
+				if(!action.payload.expenseItemCategories){
+					action.payload.expenseItemCategories = action.payload.lineItemCategories;
+				}
 				if(!action.payload.expenseItems){
 					action.payload.expenseItems = action.payload.lineItems;
+
+					if(action.payload.expenseItems){
+						action.payload.expenseItems.forEach((expenseItem) => {
+							expenseItem.expenseItemCategoryId = expenseItem.lineItemCategoryId;
+						});
+					}
 				}
 				let newState = {};
 				newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
@@ -1357,6 +1383,7 @@ class BudgetReducers {
 				newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 				newState.expenseItems = scope.expenseItemReducers(action, scope._state.expenseItems);
+				newState.expenseItemCategories = scope.expenseItemCategoryReducers(action, scope._state.expenseItemCategories)
 				newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
@@ -1395,7 +1422,7 @@ class BudgetReducers {
 				newPageState.ui = newState.ui;
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 				newPageState.reasonCategories = _array_sortByProperty(Object.values(newState.reasonCategories.list), ["description"]);
-
+				newPageState.expenseItemCategories = newState.expenseItemCategories.list;
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
 				newPageState.tags = newState.tags;
@@ -1405,6 +1432,8 @@ class BudgetReducers {
 				newPageState.calculatedInstructorTypeCosts = newState.calculatedInstructorTypeCosts;
 				newPageState.calculatedInstructors = newState.calculatedInstructors;
 				newPageState.calculatedLineItems = newState.calculatedLineItems;
+				newPageState.calculatedExpenseItems = newState.expenseItems.list;
+
 				newPageState.summary = newState.summary;
 				newPageState.instructorTypes = newState.instructorTypes;
 				newPageState.userWorkgroupsScenarios = scope._state.userWorkgroupsScenarios;

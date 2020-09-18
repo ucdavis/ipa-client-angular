@@ -14,7 +14,7 @@
 					</button>
 
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="category in state.lineItemCategories | orderBy:'description'" class="category-item">
+						<li ng-repeat="category in state.expenseItemCategories | orderBy:'description'" class="category-item">
 							<a ng-click="selectExpenseItemCategory(category)">
 								{{ category.description }}
 							</a>

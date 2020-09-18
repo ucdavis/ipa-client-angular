@@ -42,7 +42,6 @@ class BudgetCtrl {
 
     this.$rootScope.$on("budgetStateChanged", function(event, data) {
       _self.$scope.view.state = data;
-      console.log(data);
 
       // Set the active tab
       if (_self.$scope.view.state.ui.sectionNav) {
