@@ -1,4 +1,5 @@
 import './addBudgetScenario.css';
+import { dateToCalendar } from '../../../../shared/helpers/dates';
 
 let addBudgetScenario = function ($rootScope, BudgetActions) {
   return {
@@ -24,7 +25,7 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
           scope.newBudgetScenario.description = "Schedule Data";
         } else {
           scope.newBudgetScenario.budgetScenarioId = budgetScenario.id;
-          scope.newBudgetScenario.description = budgetScenario.name;
+          scope.newBudgetScenario.description = budgetScenario.isSnapshot ? budgetScenario.name + " - SNAPSHOT - " + dateToCalendar(budgetScenario.creationDate) : budgetScenario.name;
         }
       };
 
@@ -35,6 +36,10 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
 
       scope.toggleCopyFunds = function () {
         scope.newBudgetScenario.copyFunds = !scope.newBudgetScenario.copyFunds;
+      };
+
+      scope.dateToCalendar = function (date) {
+        return dateToCalendar(date);
       };
 
       scope.close = function() {
