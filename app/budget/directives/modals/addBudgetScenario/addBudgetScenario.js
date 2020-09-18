@@ -30,6 +30,9 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
       };
 
       scope.submitBudgetScenarioForm = function () {
+        if (scope.newBudgetScenario.budgetScenarioId === 0) {
+          scope.newBudgetScenario.copyFunds = false;
+        }
         BudgetActions.createBudgetScenario(scope.newBudgetScenario, scope.state.budget.id, scope.newBudgetScenario.budgetScenarioId);
         scope.close();
       };
