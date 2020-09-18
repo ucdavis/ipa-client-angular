@@ -36,58 +36,41 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="lineItem in expenseItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
+            <tr ng-repeat="expenseItem in expenseItems track by $index" ng-show="expenseItem.id > 0 && expenseItem.hidden == false">
                 <!-- Checkbox -->
                 <td ng-if="!ui.isSnapshot" class="expense-items__table-cell do-not-print" ng-class-odd="'expense-items__table-cell--dark'">
                     <div class="expense-items__table-container--checkbox">
                         <ipa-checkbox style="'muted'"
-                                        is-disabled="!(lineItem.id)"
-                                        is-checked="ui.selectedExpenseItems.indexOf(lineItem.id) > -1"
-                                        click-action="selectExpenseItem(lineItem)">
+                                        is-disabled="!(expenseItem.id)"
+                                        is-checked="ui.selectedExpenseItems.indexOf(expenseItem.id) > -1"
+                                        click-action="selectExpenseItem(expenseItem)">
                         </ipa-checkbox>
                     </div>
                 </td>
 
                 <!-- Category -->
                 <td class="expense-items__table-cell" ng-class-odd="'expense-items__table-cell--dark'">
-                    {{ lineItem.categoryDescription }}
-                    <span ng-if="lineItem.isOrphaned">
-                        <i class="entypo-attention expense-items__orphan-warn"
-                            tooltip-append-to-body="true"
-                            uib-tooltip="The assignment this line item was based on no longer exists on the schedule">
-                        </i>
-                    </span>
-                    <span ng-if="lineItem.hidden">
-                        <i class="entypo-attention expense-items__orphan-warn"
-                            tooltip-append-to-body="true"
-                            uib-tooltip="This line item is being hidden, but the assignment its based on still exists.">
-                        </i>
-                        <ipa-button icon-class="'glyphicon glyphicon-plus'"
-                                    size="'small'"
-                                    on-click="unHideExpenseItem(lineItem)"
-                                    tooltip-message="'Restore line item'">
-                        </ipa-button>
-                    </span>
+                    {{ expenseItem.categoryDescription }}
                 </td>
 
                 <!-- Description -->
                 <td class="expense-items__table-cell" ng-class-odd="'expense-items__table-cell--dark'">
-                    {{ lineItem.description }}
+                    {{ expenseItem.description }}
                 </td>
 
                 <!-- Amount -->
                 <td class="expense-items__table-cell" ng-class-odd="'expense-items__table-cell--dark'">
                     <div class="expense-items__amount-container">
                         <div>
-                            {{ toCurrency(lineItem.amount) }}
+                            {{ toCurrency(expenseItem.amount) }}
                         </div>
                         <div ng-if="!ui.isSnapshot" class="do-not-print">
-                            <expense-item-dropdown line-item="lineItem"></expense-item-dropdown>
+                            <expense-item-dropdown expense-item="expenseItem"></expense-item-dropdown>
                         </div>
                     </div>
                 </td>
             </tr>
-            <tr ng-if="lineItems.length == 0">
+            <tr ng-if="expenseItems.length == 0">
                 <td colspan="5">
                     <div class="expense-items__no-funds">
                         No Expenses Added

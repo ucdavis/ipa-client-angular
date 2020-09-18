@@ -24,8 +24,8 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       scope.isFormValid = function () {
         scope.formValidationErrorMessage = '';
         if (
-          !scope.newExpenseItem.lineItemCategoryId ||
-          scope.newExpenseItem.lineItemCategoryId == 0
+          !scope.newExpenseItem.expenseItemCategoryId ||
+          scope.newExpenseItem.expenseItemCategoryId == 0
         ) {
           scope.formValidationErrorMessage += ' You must select a category.';
         }
@@ -44,24 +44,24 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
         return true;
       };
 
-      scope.selectLineItemCategory = function (category) {
-        scope.newExpenseItem.lineItemCategoryId = category.id;
+      scope.selectExpenseItemCategory = function (category) {
+        scope.newExpenseItem.expenseItemCategoryId = category.id;
         scope.newExpenseItem.categoryDescription = category.description;
       };
 
-      scope.submitLineItemForm = function () {
+      scope.submitExpenseItemForm = function () {
         scope.newExpenseItem.budgetScenarioId =
           scope.state.selectedBudgetScenario.id;
         if (scope.expenseItemToEdit && scope.expenseItemToEdit.id > 0) {
-          BudgetActions.updateLineItem(
+          BudgetActions.updateExpenseItem(
             scope.newExpenseItem,
             scope.state.selectedBudgetScenario.id
           );
         } else {
-          BudgetActions.createLineItem(
+          BudgetActions.createExpenseItem(
             scope.newExpenseItem,
             scope.state.selectedBudgetScenario.id,
-            'Saved line item'
+            'Saved expense item'
           );
         }
       };

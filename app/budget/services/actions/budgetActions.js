@@ -427,7 +427,84 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 				});
 			},
+			createExpenseItem: function (newExpenseItem, budgetScenarioId, message) {
+				var self = this;
+				// Ensure amount is properly formatted as a float
+				newExpenseItem.amount = newExpenseItem.amount ? parseFloat(newExpenseItem.amount) : null;
 
+				BudgetService.createExpenseItem(newExpenseItem, budgetScenarioId).then(function (newExpenseItem) {
+					window.ipa_analyze_event('budget', 'expense item');
+
+					var action = {
+						type: ActionTypes.CREATE_EXPENSE_ITEM,
+						payload: newExpenseItem
+					};
+					$rootScope.$emit('toast', { message: message || "Created expense", type: "SUCCESS" });
+					BudgetReducers.reduce(action);
+
+					// Close modal
+					self.closeAddExpenseItemModal();
+					BudgetCalculations.calculateExpenseItems();
+					BudgetCalculations.calculateTotalCost();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not create expense.", type: "ERROR" });
+				});
+			},
+			updateExpenseItem: function (expenseItem) {
+				var self = this;
+
+				// Create instead of update if appropriate
+				if (expenseItem.id == null || expenseItem.id == 0) {
+					this.createExpenseItem(expenseItem, expenseItem.budgetScenarioId);
+					return;
+				}
+
+				// Ensure amount is properly formatted as a float
+				expenseItem.amount = parseFloat(expenseItem.amount);
+
+				BudgetService.updateExpenseItem(expenseItem, expenseItem.budgetScenarioId).then(function (results) {
+					window.ipa_analyze_event('budget', 'expense item');
+
+					var action = {
+						type: ActionTypes.UPDATE_EXPENSE_ITEM,
+						payload: results
+					};
+					$rootScope.$emit('toast', { message: "Saved expense", type: "SUCCESS" });
+					BudgetReducers.reduce(action);
+
+					// Close modal
+					self.closeAddExpenseItemModal();
+					BudgetCalculations.calculateExpenseItems();
+					BudgetCalculations.calculateTotalCost();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not save expense.", type: "ERROR" });
+				});
+			},
+			deleteExpenseItem: function(expenseItem) {
+				// If the expenseItem is based on a teachingAssignment, do not delete it, instead mark it as hidden
+				if (expenseItem.teachingAssignmentId > 0) {
+					expenseItem.hidden = true;
+					this.updateExpenseItem(expenseItem);
+					return;
+				}
+
+				BudgetService.deleteExpenseItem(expenseItem).then(function (expenseItemId) {
+					window.ipa_analyze_event('budget', 'expense deleted');
+
+					var action = {
+						type: ActionTypes.DELETE_EXPENSE_ITEM,
+						payload: {
+							expenseItemId: expenseItemId
+						}
+					};
+
+					$rootScope.$emit('toast', { message: "Deleted expense", type: "SUCCESS" });
+					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateExpenseItems();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not delete expense.", type: "ERROR" });
+				});
+			},
 			/**
 			 * Updates existing sectionGroupCost. Happens when TA count, reader count,
 			 * instructor assignment, cost override, etc. are touched.

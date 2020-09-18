@@ -17,7 +17,7 @@ let expenseItemDropdown = function (BudgetActions) {
 				BudgetActions.deleteExpenseItem(expenseItem);
 
 				// Ensure bootstrap dropdown closes properly when confirming deleting line item
-				$(".line-item-dropdown").removeClass("open"); // eslint-disable-line no-undef
+				$(".expense-item-dropdown").removeClass("open"); // eslint-disable-line no-undef
 			};
 		} // end link
 	};

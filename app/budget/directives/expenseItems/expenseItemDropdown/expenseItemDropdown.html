@@ -9,7 +9,7 @@
 
 	<ul class="dropdown-menu dropdown-container dropdown-menu-right expense-item-edit-dropdown">
 		<li class="expense-item-row">
-			<a ng-click="openEditExpenseItemModal(lineItem)" class="budget-scenario-item">
+			<a ng-click="openEditExpenseItemModal(expenseItem)" class="budget-scenario-item">
 				<span>
 					Edit
 				</span>
@@ -17,12 +17,12 @@
 		</li>
 		<li class="expense-item-row">
 			<a class="budget-scenario-item"
-			   uib-tooltip="Delete line item"
+			   uib-tooltip="Delete expense"
 			   tooltip-append-to-body="true"
 			   tooltip-placement="bottom"
-			   confirm-button="deleteExpenseItem(lineItem)"
+			   confirm-button="deleteExpenseItem(expenseItem)"
 			   btn-class="btn-danger"
-			   message="Are you sure you want to delete this line item?"
+			   message="Are you sure you want to delete this expense?"
 			   yes="Delete"
 			   no="Cancel"
 			   placement="top">
