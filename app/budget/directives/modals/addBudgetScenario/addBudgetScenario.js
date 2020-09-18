@@ -14,7 +14,7 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
       scope.newBudgetScenario = {};
       scope.newBudgetScenario.name = "";
       scope.newBudgetScenario.budgetScenarioId = 0;
-      scope.newBudgetScenario.description = "Schedule Data";
+      scope.newBudgetScenario.description = "Schedule Data (No Costs/Funds)";
       scope.newBudgetScenario.copyFunds = true;
 
       scope.budgetId = attrs.budgetId;
@@ -22,7 +22,7 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
       scope.selectBudgetScenario = function(budgetScenario) {
         if (budgetScenario == null) {
           scope.newBudgetScenario.budgetScenarioId = 0;
-          scope.newBudgetScenario.description = "Schedule Data";
+          scope.newBudgetScenario.description = "Schedule Data (No Costs/Funds)";
         } else {
           scope.newBudgetScenario.budgetScenarioId = budgetScenario.id;
           scope.newBudgetScenario.description = budgetScenario.isSnapshot ? budgetScenario.name + " - SNAPSHOT - " + dateToCalendar(budgetScenario.creationDate) : budgetScenario.name;
