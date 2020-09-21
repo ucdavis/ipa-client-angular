@@ -217,8 +217,25 @@
 						<div class="budget-summary__cell-container"></div>
 					</td>
 					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--last ">
+							{{ '-' + toCurrency(selectedBudgetScenario.funds) }}
+						</div>
+					</td>
+				</tr>
+
+				<!-- Expenses Costs -->
+				<tr>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--left">
+							Expenses
+						</div>
+					</td>
+					<td ng-repeat="term in summary.terms">
+						<div class="budget-summary__cell-container"></div>
+					</td>
+					<td>
 						<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell-container--last">
-							{{ toCurrency(selectedBudgetScenario.funds) }}
+							{{ toCurrency(selectedBudgetScenario.expenses) }}
 						</div>
 					</td>
 				</tr>

@@ -63,6 +63,7 @@ class BudgetCalculations {
 			calculateTotalCost: function() {
 				var courseCosts = 0;
 				var lineItemFunds = 0;
+				var expenseItemFunds = 0;
 				var scheduleCosts = BudgetReducers._state.calculatedScheduleCosts;
 
 				// Add sectionGroup costs
@@ -81,13 +82,19 @@ class BudgetCalculations {
 					lineItemFunds += lineItem.amount ? lineItem.amount : 0;
 				});
 
-				var totalCost = lineItemFunds - courseCosts;
+				// Expenses Costs
+				BudgetReducers._state.calculatedExpenseItems.forEach(function(expenseItem) {
+					expenseItemFunds += expenseItem.amount ? expenseItem.amount : 0;
+				});
+
+				var totalCost = lineItemFunds - courseCosts - expenseItemFunds;
 
 				BudgetReducers.reduce({
 					type: ActionTypes.CALCULATE_TOTAL_COST,
 					payload: {
 						totalCost: totalCost,
 						funds: lineItemFunds,
+						expenses: expenseItemFunds,
 						scheduleCost: courseCosts,
 						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
 					}

@@ -30,6 +30,7 @@ class BudgetReducers {
 						var budgetScenario = budgetScenarios.list[budgetScenarioId];
 						budgetScenario.totalCost = action.payload.totalCost;
 						budgetScenario.funds = action.payload.funds;
+						budgetScenario.expenses = action.payload.expenses;
 						budgetScenario.scheduleCost = action.payload.scheduleCost;
 						return budgetScenarios;
 					case ActionTypes.DELETE_BUDGET_SCENARIO:
@@ -1395,6 +1396,7 @@ class BudgetReducers {
 				newState.calculatedInstructorTypeCosts = scope.calculatedInstructorTypeCostReducers(action, scope._state.calculatedInstructorTypeCosts);
 				newState.calculatedInstructors = scope.calculatedInstructorReducers(action, scope._state.calculatedInstructors);
 				newState.calculatedLineItems = scope.calculatedLineItemReducers(action, scope._state.calculatedLineItems);
+				newState.calculatedExpenseItems = Object.values(newState.expenseItems.list);
 				newState.summary = scope.summaryReducers(action, scope._state.summary);
 				newState.calculatedCourseList = scope.calculatedCourseListReducers(action, scope._state.calculatedCourseList);
 
