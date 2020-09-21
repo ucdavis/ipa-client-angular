@@ -1363,19 +1363,7 @@ class BudgetReducers {
 			},
 			reduce: function (action) {
 				var scope = this;
-				//TODO REMOVE ONCE BACKEND SUPPORTS EXPENSE ITEMS
-				if(!action.payload.expenseItemCategories){
-					action.payload.expenseItemCategories = action.payload.lineItemCategories;
-				}
-				if(!action.payload.expenseItems){
-					action.payload.expenseItems = action.payload.lineItems;
 
-					if(action.payload.expenseItems){
-						action.payload.expenseItems.forEach((expenseItem) => {
-							expenseItem.expenseItemCategoryId = expenseItem.lineItemCategoryId;
-						});
-					}
-				}
 				let newState = {};
 				newState.budget = scope.scheduleBudgetReducers(action, scope._state.budget);
 				newState.budgetScenarios = scope.budgetScenarioReducers(action, scope._state.budgetScenarios);
@@ -1432,7 +1420,7 @@ class BudgetReducers {
 				newPageState.calculatedInstructorTypeCosts = newState.calculatedInstructorTypeCosts;
 				newPageState.calculatedInstructors = newState.calculatedInstructors;
 				newPageState.calculatedLineItems = newState.calculatedLineItems;
-				newPageState.calculatedExpenseItems = newState.expenseItems.list;
+				newPageState.calculatedExpenseItems = Object.values(newState.expenseItems.list);
 
 				newPageState.summary = newState.summary;
 				newPageState.instructorTypes = newState.instructorTypes;

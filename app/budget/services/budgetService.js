@@ -94,24 +94,16 @@ class BudgetService {
 			},
 			// Expense Items
 			createExpenseItem: function(newExpenseItem, budgetScenarioId) {
-				// TODO support on backend for expenses
-				//return ApiService.post("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/expenseItems", newExpenseItem);
-				newExpenseItem.lineItemCategoryId = newExpenseItem.expenseItemCategoryId;// TODO remove
-				return ApiService.post("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/lineItems", newExpenseItem);
+				return ApiService.post("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/expenseItems", newExpenseItem);
 			},
 			updateExpenseItem: function(expenseItem, budgetScenarioId) {
-				//return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/expenseItems/" + expenseItem.id, expenseItem);
-				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/lineItems/" + expenseItem.id, expenseItem);
+				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/expenseItems/" + expenseItem.id, expenseItem);
 			},
 			deleteExpenseItem: function(expenseItem) {
-				// TODO support on backend for expenses
-				//return ApiService.delete("/api/budgetView/expenseItems/" + expenseItem.id);
-				return ApiService.delete("/api/budgetView/lineItems/" + expenseItem.id);
+				return ApiService.delete("/api/budgetView/expenseItems/" + expenseItem.id);
 			},
 			deleteExpenseItems: function(budgetScenario, expenseItemIds) {
-				// TODO support on backend for expenses
-				//return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id + "/expenseItems", expenseItemIds);
-				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id + "/lineItems", expenseItemIds);
+				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id + "/expenseItems", expenseItemIds);
 			},
 		};
 	}

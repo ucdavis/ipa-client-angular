@@ -1080,9 +1080,9 @@ class BudgetActions {
 					payload: {}
 				});
 			},
-			deleteExpenseItems: function(budgetScenario, expenseItemIds) {
+			deleteExpenses: function(budgetScenario, expenseItemIds) {
 				BudgetService.deleteExpenseItems(budgetScenario, expenseItemIds).then(function () {
-					$rootScope.$emit('toast', { message: "Deleted line items", type: "SUCCESS" });
+					$rootScope.$emit('toast', { message: "Deleted expense items", type: "SUCCESS" });
 					BudgetReducers.reduce({
 						type: ActionTypes.DELETE_EXPENSE_ITEMS,
 						payload: {
@@ -1091,7 +1091,7 @@ class BudgetActions {
 					});
 					//BudgetCalculations.calculateExpenseItems(); TODO support if needed
 				}, function () {
-					$rootScope.$emit('toast', { message: "Could not delete line items.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not delete expense items.", type: "ERROR" });
 				});
 			},
 			toggleSelectLineItem: function(lineItem) {
