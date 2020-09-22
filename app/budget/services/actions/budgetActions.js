@@ -502,6 +502,8 @@ class BudgetActions {
 						}
 					};
 					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateSectionGroups();
+					BudgetCalculations.calculateTotalCost();
 					ScheduleCostCalculations.calculateScheduleCosts();
 					var instructorMsg = sectionGroupCostInstructors.length > 1 ? 'instructors' : 'instructor';
 					if (isLiveData){
@@ -527,6 +529,8 @@ class BudgetActions {
 						}
 					};
 					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateSectionGroups();
+					BudgetCalculations.calculateTotalCost();
 					ScheduleCostCalculations.calculateScheduleCosts();
 					$rootScope.$emit('toast', { message: "Updated instructor cost.", type: "SUCCESS" });
 				}, function () {
@@ -543,6 +547,8 @@ class BudgetActions {
 						}
 					};
 					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateSectionGroups();
+					BudgetCalculations.calculateTotalCost();
 					ScheduleCostCalculations.calculateScheduleCosts();
 					$rootScope.$emit('toast', { message: "Deleted instructor.", type: "SUCCESS" });
 				}, function () {

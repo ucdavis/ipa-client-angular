@@ -20,7 +20,7 @@
 			</div>
 			<ipa-input value="instructor.reason"
 			           on-update="updateInstructorCost(instructor)"
-			           max-chars="30"
+			           max-chars="200"
 			           ng-show="!isSnapshot">
 			</ipa-input>
 			<span ng-show="isSnapshot">
@@ -58,7 +58,6 @@
 				Remove Instructor
 			</div>
 			<div class="instructor-costs__cost-container">
-					<div class="instructor-costs__instructor-reversion-ui" >
 						<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
 						     tooltip-append-to-body="true"
 						     uib-tooltip="Delete instuctor row"
@@ -67,7 +66,6 @@
 						     yes="Remove"
 						     no="Cancel"
 						>
-						</div>
 					</div>
 			</div>
 		</div>

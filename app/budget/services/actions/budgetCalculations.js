@@ -620,7 +620,7 @@ class BudgetCalculations {
 				replacementCosts.unassignedCount = replacementCosts.unassignedCount || 0;
 				var sectionGroupInstructorCost = 0;
 
-				var instructorCosts = BudgetReducers._state.sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || [];
+				var instructorCosts = sectionGroupCost.sectionGroupCostInstructors || [];
 
 				if (instructorCosts.length < 1){
 					replacementCosts.unassignedCount += 1;
