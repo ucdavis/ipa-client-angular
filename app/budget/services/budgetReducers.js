@@ -347,6 +347,23 @@ class BudgetReducers {
 						return sectionGroupCosts;
 				}
 			},
+			reasonCategoryReducers: function (action, reasonCategories) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						reasonCategories = {
+							ids: [],
+							list: []
+						};
+
+						action.payload.reasonCategories.forEach(function(reasonCategory) {
+							reasonCategories.ids.push(reasonCategory.id);
+							reasonCategories.list[reasonCategory.id] = reasonCategory;
+						});
+						return reasonCategories;
+					default:
+						return reasonCategories;
+				}
+			},
 			assignedInstructorReducers: function (action, assignedInstructors) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -1213,6 +1230,7 @@ class BudgetReducers {
 				newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
+				newState.reasonCategories = scope.reasonCategoryReducers(action, scope._state.reasonCategories);
 				newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
 				newState.sectionGroupCostInstructors = scope.sectionGroupCostInstructorReducers(action, scope._state.sectionGroupCostInstructors);
 				newState.scheduleSectionGroups = scope.scheduleSectionGroupReducers(action, scope._state.scheduleSectionGroups);
@@ -1246,6 +1264,7 @@ class BudgetReducers {
 				newPageState.budget = newState.budget;
 				newPageState.ui = newState.ui;
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
+				newPageState.reasonCategories = Object.values(newState.reasonCategories.list);
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
 				newPageState.tags = newState.tags;
