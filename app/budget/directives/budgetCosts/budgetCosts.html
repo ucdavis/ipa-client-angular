@@ -49,35 +49,17 @@
                     instructor-count="sectionGroupCost.sectionGroupCostInstructors.length"
                     is-snapshot="isSnapshot">
                   </tr>
-                  <!--<tr divider="(course.sectionGroupCosts.length > 1 && $last == false && isLiveDataScenario && sectionGroupCost.sectionGroupCostInstructors.length < 1)"
-                      instructor-costs-row
-                      section-group-cost="sectionGroupCost"
-                      instructor-assignment-options="instructorAssignmentOptions"
-                      regular-instructor-assignment-options="regularInstructorAssignmentOptions"
-                      is-live-data-scenario="isLiveDataScenario"
-                      is-snapshot="isSnapshot">
-                  </tr>-->
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == true && !last)"
                       ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
-                      instructor-costs-live-data
-                      instructor="instructor"
-                      section-group-cost="sectionGroupCost"
-                      ng-show="isLiveDataScenario || isSnapshot"
-                      is-snapshot="isSnapshot"
-                      is-first="$first"
-                      regular-instructor-assignment-options="regularInstructorAssignmentOptions"
-                      reason-categories="reasonCategories"
-                  >
-                  </tr>
-                  <tr ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
-                      ng-if="instructor.sectionGroupCostId"
                       instructor-costs
                       instructor="instructor"
                       section-group-cost="sectionGroupCost"
-                      instructor-assignment-options="instructorAssignmentOptions"
-                      ng-show="!isLiveDataScenario && !isSnapshot"
+                      is-snapshot="isSnapshot"
+                      is-live-data="isLiveDataScenario"
                       is-first="$first"
+                      instructor-assignment-options="instructorAssignmentOptions"
                       regular-instructor-assignment-options="regularInstructorAssignmentOptions"
+                      reason-categories="reasonCategories"
                   >
                   </tr>
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"

@@ -1,35 +1,28 @@
 <tr class="instructor-costs__additional-instructor-row">
 	<!-- Instructor of record -->
-	<td class="instructor-costs__table-cell">
+	<td class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
 		<div class="instructor-costs__table-cell-insturctor">
 			<div class="budget-costs__label">
 				Instructor <span ng-if="instructor.instructorTypeDescription">({{ instructor.instructorTypeDescription }})</span>
 			</div>
-			<div class="instructor-costs__instructor-container">
+			<div class="instructor-costs__instructor-reversion-ui" ng-show="isLiveData">
+				<div>
+					{{ instructor.instructorName ? instructor.instructorName.split(' ')[1] + ', ' + instructor.instructorName.split(' ')[0] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'None assigned') }}
+				</div>
+			</div>
+			<div class="instructor-costs__instructor-container" ng-show="!isLiveData">
 				<div class="instructor-costs__instructor-dropdown-container">
 					<edit-instructor-assignment-dropdown mode="'instructor'"
-					                                section-group-cost="sectionGroupCost"
-					                                instructors="instructorAssignmentOptions"
-					                                instructor="instructor">
+																					section-group-cost="sectionGroupCost"
+																					instructors="instructorAssignmentOptions"
+																					instructor="instructor">
 					</edit-instructor-assignment-dropdown>
 				</div>
 			</div>
 		</div>
 	</td>
-	<!-- Reason -->
-	<td colspan="3" class="instructor-costs__table-cell">
-		<div class="instructor-costs__table-cell-reason">
-			<div class="budget-costs__label">
-				Reason
-			</div>
-			<ipa-input value="instructor.reason"
-			           on-update="updateInstructorCost(instructor)"
-			           max-chars="200">
-			</ipa-input>
-		</div>
-	</td>
 	<!-- Cost -->
-	<td class="instructor-costs__table-cell">
+	<td class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
 		<div class="instructor-costs__table-cell-cost">
 			<div class="budget-costs__label">
 				Instructor Cost
@@ -42,24 +35,36 @@
 					update-delay="3000"
 					place-holder="(instructor.overrideInstructorCost ? '$' + instructor.overrideInstructorCost : '')"
 					on-update="updateInstructorCost(instructor)"
+					ng-show="!isSnapshot"
 					/>
-				</div>
-				<div class="instructor-costs__instructor-reversion-ui" >
-					<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
-					     tooltip-append-to-body="true"
-					     uib-tooltip="Delete instuctor row"
-					     confirm-button="removeInstructorCost(instructor)"
-					     message="Are you sure you want to remove this instructor?"
-					     yes="Remove"
-					     no="Cancel">
-					</div>
+					<span ng-show="isSnapshot">
+						{{ instructor.cost || 'N/A' }}
+					</span>
 				</div>
 			</div>
 		</div>
 	</td>
-
+	<!-- Remove Row -->
+	<td class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isSnapshot && !instructor.teachingAssignmentId">
+		<div class="instructor-costs__table-cell-cost">
+			<div class="budget-costs__label">
+				Remove Instructor
+			</div>
+			<div class="instructor-costs__cost-container">
+						<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
+						     tooltip-append-to-body="true"
+						     uib-tooltip="Delete instuctor row"
+						     confirm-button="removeInstructorCost(instructor)"
+						     message="Are you sure you want to remove this instructor cost?"
+						     yes="Remove"
+						     no="Cancel"
+						>
+					</div>
+			</div>
+		</div>
+	</td>
 	<!-- Empty columns for spacing -->
-	<td colspan="1" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
+	<td colspan="1" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="isSnapshot || instructor.teachingAssignmentId">
 		<div class="instructor-costs__table-cell-reason"/>
 	</td>
 	<!-- Regular instructor -->
@@ -92,8 +97,38 @@
 			</div>
 		</div>
 	</td>
+	<!-- Reason Category -->
+	<td colspan="1" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="isFirst">
+		<div class="budget-costs__label">
+			{{ sectionGroupCost.id }}
+		</div>
+		<div class="instructor-costs__cost-container">
+			<ipa-dropdown
+										button-text="sectionGroupCost.reasonCategoryDescription || 'Select Reason'"
+										items="reasonCategories"
+										select-item="updateReasonCategory(item)">
+			</ipa-dropdown>
+			<span ng-if="isSnapshot">{{ sectionGroupCost.reason || 'N/A' }}</span>
+		</div>
+	</td>
+	<!-- Reason -->
+	<td colspan="2" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="isFirst">
+		<div class="instructor-costs__table-cell-reason">
+			<div class="budget-costs__label">
+				Additional Comments
+			</div>
+			<ipa-input ng-if="!isSnapshot"
+			           value="sectionGroupCost.reason"
+			           on-update="updateSectionGroupCost(sectionGroupCost)"
+			           max-chars="200">
+			</ipa-input>
+			<span ng-show="isSnapshot">
+				{{ sectionGroupCost.reason || 'N/A' }}
+			</span>
+		</div>
+	</td>
 	<!-- Empty columns for spacing -->
-	<td colspan="1" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isFirst">
+	<td colspan="4" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isFirst">
 		<div class="instructor-costs__table-cell-reason"/>
 	</td>
 </tr
