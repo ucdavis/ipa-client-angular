@@ -12,22 +12,6 @@
 			</div>
 		</div>
 	</td>
-	<!-- Reason -->
-	<td colspan="3" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
-		<div class="instructor-costs__table-cell-reason">
-			<div class="budget-costs__label">
-				Reason
-			</div>
-			<ipa-input value="instructor.reason"
-			           on-update="updateInstructorCost(instructor)"
-			           max-chars="200"
-			           ng-show="!isSnapshot">
-			</ipa-input>
-			<span ng-show="isSnapshot">
-				{{ instructor.reason || 'N/A' }}
-			</span>
-		</div>
-	</td>
 	<!-- Cost -->
 	<td class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }">
 		<div class="instructor-costs__table-cell-cost">
@@ -104,8 +88,38 @@
 			</div>
 		</div>
 	</td>
+	<!-- Reason Category -->
+	<td colspan="1" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="isFirst">
+		<div class="budget-costs__label">
+			{{ sectionGroupCost.id }}
+		</div>
+		<div class="instructor-costs__cost-container">
+			<ipa-dropdown
+										button-text="sectionGroupCost.reasonCategoryDescription || 'Select Reason'"
+										items="reasonCategories"
+										select-item="updateReasonCategory(item)">
+			</ipa-dropdown>
+			<span ng-if="isSnapshot">{{ sectionGroupCost.reason || 'N/A' }}</span>
+		</div>
+	</td>
+	<!-- Reason -->
+	<td colspan="2" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="isFirst">
+		<div class="instructor-costs__table-cell-reason">
+			<div class="budget-costs__label">
+				Additional Comments
+			</div>
+			<ipa-input ng-if="!isSnapshot"
+			           value="sectionGroupCost.reason"
+			           on-update="updateSectionGroupCost(sectionGroupCost)"
+			           max-chars="200">
+			</ipa-input>
+			<span ng-show="isSnapshot">
+				{{ sectionGroupCost.reason || 'N/A' }}
+			</span>
+		</div>
+	</td>
 	<!-- Empty columns for spacing -->
-	<td colspan="1" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isFirst">
+	<td colspan="4" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isFirst">
 		<div class="instructor-costs__table-cell-reason"/>
 	</td>
 </tr

@@ -11,6 +11,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 			isSnapshot: '<',
 			isFirst: '<',
 			regularInstructorAssignmentOptions: '<',
+			reasonCategories: '<'
 		},
 		replace: true,
 		link: function (scope) {
@@ -64,6 +65,16 @@ let instructorCostsLiveData = function (BudgetActions) {
 
 			scope.removeInstructorCost = function (instructor) {
 				BudgetActions.deleteSectionGroupCostInstructor(instructor);
+			};
+
+			scope.updateSectionGroupCost = function(sectionGroupCost) {
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
+
+			scope.updateReasonCategory = function(reasonCategory) {
+				var sectionGroupCost = scope.sectionGroupCost;
+				sectionGroupCost.reasonCategoryId = reasonCategory.id;
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
 		} // end link
 	};
