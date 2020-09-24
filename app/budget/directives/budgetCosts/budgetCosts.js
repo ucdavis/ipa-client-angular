@@ -15,7 +15,8 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			regularInstructorAssignmentOptions: '<',
 			isLiveDataScenario: '<',
 			isSnapshot: '<',
-			tags: '<'
+			tags: '<',
+			reasonCategories: '<'
 		},
 		link: function (scope) {
 			scope.setActiveTerm = function(activeTermTab) {
