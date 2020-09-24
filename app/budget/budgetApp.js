@@ -36,8 +36,6 @@ import courseList from "./directives/courseList/courseList.js";
 import budgetCosts from './directives/budgetCosts/budgetCosts.js';
 import budgetCostsPrint from './directives/budgetCosts/budgetCostsPrint/budgetCostsPrint.js';
 import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
-import instructorCostsRow from './directives/budgetCosts/instructorCostsRow/instructorCostsRow.js';
-import instructorAssignmentDropdown from './directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
 import instructorCosts from './directives/budgetCosts/instructorCosts/instructorCosts.js';
 import addInstructorCost from './directives/budgetCosts/addInstructorCost/addInstructorCost.js';
 import addInstructorAssignmentDropdown from './directives/budgetCosts/addInstructorCost/addInstructorAssignmentDropdown/addInstructorAssignmentDropdown.js';
@@ -112,8 +110,6 @@ const budgetApp = angular // eslint-disable-line no-undef
   .directive("budgetScenarioDropdown", budgetScenarioDropdown)
   .directive("budgetCosts", budgetCosts)
   .directive("courseCostsRow", courseCostsRow)
-  .directive("instructorCostsRow", instructorCostsRow)
-  .directive("instructorAssignmentDropdown", instructorAssignmentDropdown)
   .directive("instructorCosts", instructorCosts)
   .directive("addInstructorCost", addInstructorCost)
   .directive("addInstructorAssignmentDropdown", addInstructorAssignmentDropdown)
