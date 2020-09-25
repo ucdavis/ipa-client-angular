@@ -1,0 +1,9 @@
+.edit-instructor-assignment-dropdown {
+  width: 100%;
+  padding-right: 20px;
+}
+
+.edit-instructor-assignment-dropdown-reversion {
+  width: calc(100% - 44px);
+  padding-right: 0px;
+}

@@ -1,3 +1,5 @@
+import './addInstructorAssignmentDropdown.css'
+
 let addInstructorAssignmentDropdown = function (BudgetActions) {
 	return {
 		restrict: 'E',

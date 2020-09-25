@@ -94,3 +94,15 @@
   font-style: italic;
   color: #b1b1b1;
 }
+
+.instructor-costs__additional-instructor-row .ipa-dropdown {
+  width: 100%;
+}
+
+.instructor-costs__additional-instructor-row .ipa-dropdown .expand-button {
+  width: inherit;
+}
+
+.instructor-costs__additional-instructor-row .ipa-dropdown .ipa-dropdown__button-text {
+  width: inherit;
+}
