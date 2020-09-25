@@ -74,12 +74,12 @@
 		</div>
 		<div class="instructor-costs__instructor-container">
 			<div ng-if="!isSnapshot" class="instructor-costs__instructor-dropdown-container">
-				<instructor-assignment-dropdown
-				                                mode="'originalInstructor'"
+				<edit-instructor-assignment-dropdown
+				                                is-regular="true"
 				                                section-group-cost="sectionGroupCost"
 				                                instructors="regularInstructorAssignmentOptions"
 				                                course="course">
-				</instructor-assignment-dropdown>
+				</edit-instructor-assignment-dropdown>
 			</div>
 			<div ng-if="!isSnapshot" class="instructor-costs__instructor-reversion-ui">
 				<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"

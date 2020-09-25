@@ -1,9 +1,16 @@
 <div class="edit-instructor-assignment-dropdown">
-	<ipa-dropdown 
+	<ipa-dropdown	ng-show="!isRegular"
 	              expanded="sectionGroupCost.instructorDropdown"
 	              style="'minimal'"
 	              button-text="instructor.instructorName ? instructor.instructorName.split(' ')[0] + ', ' + instructor.instructorName.split(' ')[1] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'Assign instructor')"
 	              items="instructors"
 	              select-item="setInstructor(item)">
+	</ipa-dropdown>
+	<ipa-dropdown ng-show="isRegular"
+								expanded="sectionGroupCost.instructorDropdown"
+								style="'minimal'"
+								button-text="sectionGroupCost.originalInstructorDescription || 'Assign instructor'"
+								items="instructors"
+								select-item="setRegularInstructor(item)">
 	</ipa-dropdown>
 </div>

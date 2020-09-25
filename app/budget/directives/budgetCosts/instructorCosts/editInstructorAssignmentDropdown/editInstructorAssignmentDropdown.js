@@ -7,7 +7,8 @@ let editInstructorAssignmentDropdown = function (BudgetActions) {
 			mode: '<',
 			sectionGroupCost: '<',
 			instructors: '<',
-			instructor: '<'
+			instructor: '<',
+			isRegular: '<'
 		},
 		link: function (scope) {
 			scope.setInstructor = function(newInstructor) {
@@ -31,6 +32,11 @@ let editInstructorAssignmentDropdown = function (BudgetActions) {
 					sectionGroupCostInstructor.instructorTypeId = newInstructor.instructorType.id;
 				}
 				BudgetActions.updateSectionGroupCostInstructor(sectionGroupCostInstructor);
+			};
+
+			scope.setRegularInstructor = function(regularInstructor) {
+				scope.sectionGroupCost.originalInstructorId = regularInstructor.id;
+				BudgetActions.updateSectionGroupCost(scope.sectionGroupCost);
 			};
 		}
 	};
