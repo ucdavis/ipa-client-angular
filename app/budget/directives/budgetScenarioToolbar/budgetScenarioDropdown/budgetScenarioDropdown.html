@@ -39,8 +39,7 @@
 		<li ng-repeat="snapshot in scenarioSnapshots" class="budget-scenario-dropdown__row">
 			<a ng-click="selectBudgetScenario(snapshot)" class="budget-scenario-item">
 				<span>
-					<span class="badge badge-info">SNAPSHOT - {{ dateToCalendar(snapshot.creationDate) }}</span><br />
-					<span style="padding-left: 15px">{{ snapshot.name }}</span>
+					<span>{{ snapshot.name }}</span>
 				</span>
 				<div class="budget-scenario-dropdown__hover-ui">
 					<ipa-button
@@ -61,5 +60,4 @@
 			</a>
 		</li>
 	</ul>
-	<span ng-if="state.selectedBudgetScenario.isSnapshot" class="badge badge-info" style="margin-left: 10px;">SNAPSHOT - {{ dateToCalendar(state.selectedBudgetScenario.creationDate) }}</span> 
 </div>
