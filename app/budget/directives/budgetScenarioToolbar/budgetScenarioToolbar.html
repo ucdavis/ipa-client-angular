@@ -20,14 +20,14 @@
 			<button
 				ng-if="!state.ui.isSnapshot"
 				class="budget-scenario-toolbar__button"
-				uib-tooltip="Create snapshot from selected scenario"
+				uib-tooltip="Create budget request from selected scenario"
 				tooltip-append-to-body="true"
 				ng-click="createBudgetScenarioSnapshot()"
 				ng-disabled="snapshotInProgress"
 			>
 				<i class="glyphicon glyphicon-camera"></i>
-				<span ng-if="snapshotInProgress" class="budget-scenario-toolbar__button--text">Creating Snapshot...</span>
-				<span ng-if="!snapshotInProgress" class="budget-scenario-toolbar__button--text">Create Snapshot</span>
+				<span ng-if="snapshotInProgress" class="budget-scenario-toolbar__button--text">Creating Budget Request...</span>
+				<span ng-if="!snapshotInProgress" class="budget-scenario-toolbar__button--text">Create Budget Request</span>
 			</button>
 			<div class="budget-scenario-toolbar__button"
 				uib-tooltip="Accept all schedule updates from Live Data"
