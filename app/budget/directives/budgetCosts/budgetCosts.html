@@ -1,6 +1,6 @@
 <div class="budget-costs">
   <h3
-    ng-if="isSnapshot"
+    ng-if="isBudgetRequest"
     style="text-align: center; color: #5b616b"
   >
     BUDGET REQUEST
@@ -85,7 +85,7 @@
                   <tr course-costs-row
                       section-group-cost="sectionGroupCost"
                       is-live-data-scenario="isLiveDataScenario"
-                      is-snapshot="isSnapshot">
+                      is-budget-request="isBudgetRequest">
                   </tr>
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
                       instructor-costs-row
@@ -93,7 +93,7 @@
                       instructor-assignment-options="instructorAssignmentOptions"
                       regular-instructor-assignment-options="regularInstructorAssignmentOptions"
                       is-live-data-scenario="isLiveDataScenario"
-                      is-snapshot="isSnapshot">
+                      is-budget-request="isBudgetRequest">
                   </tr>
                 </tbody>
               </table>
@@ -116,10 +116,10 @@
                     <td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
                       <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
                                   icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
-                                  tooltip-message="(isSnapshot && sectionGroupCost.commentCount == 0) ? 'No comments to show' : 'View Comments'"
+                                  tooltip-message="(isBudgetRequest && sectionGroupCost.commentCount == 0) ? 'No comments to show' : 'View Comments'"
                                   icon-class="'entypo entypo-chat'"
                                   text="'Comments'"
-                                  is-disabled="isSnapshot && sectionGroupCost.commentCount == 0"
+                                  is-disabled="isBudgetRequest && sectionGroupCost.commentCount == 0"
                                   on-click="openAddCourseCommentsModal(sectionGroupCost)">
                       </ipa-button>
                     </td>

@@ -19,10 +19,10 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.validationError = "";
 			scope.activeFilters = [];
 			scope.showTermChip = false;
-			scope.snapshotInProgress = false;
+			scope.budgetRequestInProgress = false;
 
 			$rootScope.$on('budgetStateChanged', function (event, data) {
-				scope.snapshotInProgress = data.ui.createInProgress;
+				scope.budgetRequestInProgress = data.ui.createInProgress;
 			});
 
 			$window.onscroll = function () {
@@ -55,9 +55,9 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.displayScenarioRenameUI = false;
 			};
 
-			scope.createBudgetScenarioSnapshot = function() {
-				scope.snapshotInProgress = true;
-				BudgetActions.createBudgetScenarioSnapshot(scope.state.selectedBudgetScenario);
+			scope.createBudgetRequestScenario = function() {
+				scope.budgetRequestInProgress = true;
+				BudgetActions.createBudgetRequestScenario(scope.state.selectedBudgetScenario);
 			};
 
 			// Verifies that name is unique (within budgets for that schedule) and at least 1 character long.

@@ -1,6 +1,6 @@
 <div class="line-items">
 	<h3
-		ng-if="ui.isSnapshot"
+		ng-if="ui.isBudgetRequest"
 		style="text-align: center; color: #5b616b"
 	>
 		BUDGET REQUEST
@@ -14,7 +14,7 @@
 		<table class="line-items__table" ng-show="ui.fundsNav.activeTab == 'Funds'">
 			<thead>
 				<tr>
-					<th ng-if="!ui.isSnapshot" class="line-items__table-header line-items__table--checkbox do-not-print">
+					<th ng-if="!ui.isBudgetRequest" class="line-items__table-header line-items__table--checkbox do-not-print">
 						<div class="line-items__table-header-container line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
 							              is-checked="ui.areAllLineItemsSelected"
@@ -58,7 +58,7 @@
 			<tbody>
 				<tr ng-repeat="lineItem in lineItems track by $index" ng-show="lineItem.id > 0 && lineItem.hidden == false">
 					<!-- Checkbox -->
-					<td ng-if="!ui.isSnapshot" class="line-items__table-cell do-not-print" ng-class-odd="'line-items__table-cell--dark'">
+					<td ng-if="!ui.isBudgetRequest" class="line-items__table-cell do-not-print" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__table-container--checkbox">
 							<ipa-checkbox style="'muted'"
 							              is-disabled="!(lineItem.id)"
@@ -105,9 +105,9 @@
 						<div class="line-items__comment-container">
 							<ipa-button superscript="lineItem.commentCountDisplay"
 							            icon-color="lineItem.commentCountDisplay ? '' : 'gray'"
-							            tooltip-message="(ui.isSnapshot && lineItem.commentCountDisplay == 0) ? 'No comments to show' : 'View Comments'"
+							            tooltip-message="(ui.isBudgetRequest && lineItem.commentCountDisplay == 0) ? 'No comments to show' : 'View Comments'"
 													icon-class="'entypo entypo-chat'"
-													is-disabled="ui.isSnapshot && lineItem.commentCountDisplay == 0"
+													is-disabled="ui.isBudgetRequest && lineItem.commentCountDisplay == 0"
 							            on-click="openAddLineItemCommentsModal(lineItem)">
 							</ipa-button>
 						</div>
@@ -124,7 +124,7 @@
 							<div>
 								{{ toCurrency(lineItem.amount) }}
 							</div>
-							<div ng-if="!ui.isSnapshot" class="do-not-print">
+							<div ng-if="!ui.isBudgetRequest" class="do-not-print">
 								<line-item-dropdown line-item="lineItem"></line-item-dropdown>
 							</div>
 						</div>
@@ -175,7 +175,7 @@
 			<tbody>
 				<tr ng-repeat="lineItem in lineItems track by $index" ng-show="!lineItem.id || lineItem.hidden">
 					<!-- Checkbox -->
-					<td ng-if="!ui.isSnapshot" class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+					<td ng-if="!ui.isBudgetRequest" class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
 						<div class="line-items__table-container--checkbox">
 						</div>
 					</td>

@@ -14,9 +14,9 @@
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.enrollment"
 				           on-update="updateSectionGroupCost(sectionGroupCost)"
-				           ng-show="!isLiveDataScenario && !isSnapshot">
+				           ng-show="!isLiveDataScenario && !isBudgetRequest">
 				</ipa-input>
-				<div ng-show="isLiveDataScenario || isSnapshot">
+				<div ng-show="isLiveDataScenario || isBudgetRequest">
 					{{ sectionGroupCost.enrollment }}
 				</div>
 			</div>
@@ -28,7 +28,7 @@
 			     message="Update to schedule total seats of {{ !!(sectionGroupCost.sectionGroup.totalSeats) ? sectionGroupCost.sectionGroup.totalSeats : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!isSnapshot && sectionGroupCost.enrollment != sectionGroupCost.sectionGroup.totalSeats && sectionGroupCost.sectionGroup">
+			     ng-show="!isBudgetRequest && sectionGroupCost.enrollment != sectionGroupCost.sectionGroup.totalSeats && sectionGroupCost.sectionGroup">
 			</div>
 		</div>
 	</td>
@@ -38,7 +38,7 @@
 			Sections
 		</div>
 		<div class="course-costs__edit-container">
-			<div ng-show="!isLiveDataScenario && !isSnapshot" class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario && !isBudgetRequest" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.sectionCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -51,9 +51,9 @@
 			     message="Update to schedule section count of {{ !!(sectionGroupCost.sectionGroup.sectionCount) ? sectionGroupCost.sectionGroup.sectionCount : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!isSnapshot && sectionGroupCost.sectionCount != sectionGroupCost.sectionGroup.sectionCount && sectionGroupCost.sectionGroup">
+			     ng-show="!isBudgetRequest && sectionGroupCost.sectionCount != sectionGroupCost.sectionGroup.sectionCount && sectionGroupCost.sectionGroup">
 			</div>
-			<div ng-show="isLiveDataScenario || isSnapshot">
+			<div ng-show="isLiveDataScenario || isBudgetRequest">
 				{{ sectionGroupCost.sectionCount }}
 			</div>
 		</div>
@@ -64,7 +64,7 @@
 			TAs
 		</div>
 		<div class="course-costs__edit-container">
-			<div ng-show="!isLiveDataScenario && !isSnapshot" class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario && !isBudgetRequest" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.taCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -77,9 +77,9 @@
 			     message="Update to schedule TA count of {{ !!(sectionGroupCost.sectionGroup.teachingAssistantAppointments) ? sectionGroupCost.sectionGroup.teachingAssistantAppointments : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!isSnapshot && sectionGroupCost.taCount != sectionGroupCost.sectionGroup.teachingAssistantAppointments && sectionGroupCost.sectionGroup">
+			     ng-show="!isBudgetRequest && sectionGroupCost.taCount != sectionGroupCost.sectionGroup.teachingAssistantAppointments && sectionGroupCost.sectionGroup">
 			</div>
-			<div ng-show="isLiveDataScenario || isSnapshot">
+			<div ng-show="isLiveDataScenario || isBudgetRequest">
 				{{ sectionGroupCost.taCount || 0 }}
 			</div>
 		</div>
@@ -99,7 +99,7 @@
 			Readers
 		</div>
 		<div class="course-costs__edit-container">
-			<div ng-show="!isLiveDataScenario && !isSnapshot" class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario && !isBudgetRequest" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.readerCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -112,9 +112,9 @@
 			     message="Update to schedule reader count of {{ !!(sectionGroupCost.readerCount) ? sectionGroupCost.readerCount : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!isSnapshot && sectionGroupCost.readerCount != sectionGroupCost.sectionGroup.readerAppointments && sectionGroupCost.sectionGroup">
+			     ng-show="!isBudgetRequest && sectionGroupCost.readerCount != sectionGroupCost.sectionGroup.readerAppointments && sectionGroupCost.sectionGroup">
 			</div>
-			<div ng-show="isLiveDataScenario || isSnapshot">
+			<div ng-show="isLiveDataScenario || isBudgetRequest">
 				{{ sectionGroupCost.readerCount || 0 }}
 			</div>
 		</div>
