@@ -14,8 +14,10 @@ class BudgetComparisonReportCalculations {
           BudgetComparisonReportReducers._state.instructorCosts;
         var sectionGroupCosts =
           BudgetComparisonReportReducers._state.sectionGroupCosts;
+
         var courses = BudgetComparisonReportReducers._state.courses;
         var sectionGroups = BudgetComparisonReportReducers._state.sectionGroups;
+        var expenseItems = BudgetComparisonReportReducers._state.expenseItems;
 
         var currentSelectedBudgetScenario = this._getBudgetScenario(
           budgetScenarios.currentSelectedScenarioId,
@@ -52,6 +54,10 @@ class BudgetComparisonReportCalculations {
               lineItems.current,
               budgetScenarios.currentSelectedScenarioId
             ),
+            expenses: this._generateExpenses(
+              expenseItems.current,
+              budgetScenarios.currentSelectedScenarioId
+            ),
             miscStats: this._generateMiscStats(
               sectionGroupCosts.current,
               currentSelectedBudgetScenario
@@ -72,6 +78,10 @@ class BudgetComparisonReportCalculations {
               lineItems.previous,
               budgetScenarios.previousSelectedScenarioId
             ),
+            expenses: this._generateExpenses(
+              expenseItems.previous,
+              budgetScenarios.previousSelectedScenarioId
+            ),
             miscStats: this._generateMiscStats(
               sectionGroupCosts.previous,
               previousSelectedBudgetScenario
@@ -87,6 +97,10 @@ class BudgetComparisonReportCalculations {
           funding: this._generatefundingChange(
             calculatedView.current.funding,
             calculatedView.previous.funding
+          ),
+          expenses: this._generateExpenseChange(
+            calculatedView.current.expenses,
+            calculatedView.previous.expenses
           ),
           miscStats: this._generateMiscStatsChange(
             calculatedView.current.miscStats,
@@ -546,6 +560,28 @@ class BudgetComparisonReportCalculations {
 
         return funding;
       },
+      _generateExpenses(expenseItems, selectedScenarioId) {
+        var expenses = {
+          typeIds: [],
+          types: {},
+          total: 0
+        };
+        expenseItems.ids.forEach(function(expenseItemId){
+          var expenseItem = expenseItems.list[expenseItemId];
+          var expenseItemCategoryId = expenseItem.expenseItemCategoryId;
+          if(expenseItem.budgetScenarioId === selectedScenarioId){
+            if (expenses.typeIds.indexOf(expenseItemCategoryId) == -1) {
+              expenses.typeIds.push(expenseItemCategoryId);
+            }
+
+            expenses.types[expenseItemCategoryId] =
+            expenses.types[expenseItemCategoryId] || 0;
+            expenses.types[expenseItemCategoryId] += (expenseItem.amount || 0);
+            expenses.total += (expenseItem.amount || 0);
+          }
+        });
+        return expenses;
+      },
       // Generates previous -> current change values for costs
       _generateCostChange(currentCosts, previousCosts) {
         var _self = this;
@@ -697,6 +733,36 @@ class BudgetComparisonReportCalculations {
         );
 
         return fundingChange;
+      },
+      // Generates previous -> current change values for expenses
+      _generateExpenseChange(currentExpenses, previousExpenses) {
+        var _self = this;
+        var expenseItemCategories =
+          BudgetComparisonReportReducers._state.expenseItemCategories;
+
+        var expenseChange = {
+          types: {},
+          rawTotal: 0,
+          percentageTotal: 0
+        };
+
+        expenseItemCategories.current.ids.forEach(function(expenseItemCategoryId) {
+          var currentRaw = currentExpenses.types[expenseItemCategoryId] || 0;
+          var previousRaw = previousExpenses.types[expenseItemCategoryId] || 0;
+
+          expenseChange.types[expenseItemCategoryId] = {
+            raw: currentRaw - previousRaw,
+            percentage: _self._percentageChange(previousRaw, currentRaw)
+          };
+
+          expenseChange.rawTotal += expenseChange.types[expenseItemCategoryId].raw;
+        });
+
+        expenseChange.percentageTotal = this._percentageChange(
+          previousExpenses.total,
+          currentExpenses.total
+        );
+        return expenseChange;
       },
       // Generates previous -> current change values for misc calculations
       _generateMiscStatsChange(currentMiscStats, previousMiscStats) {

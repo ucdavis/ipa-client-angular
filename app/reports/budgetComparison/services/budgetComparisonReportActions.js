@@ -20,6 +20,8 @@ class BudgetComparisonReportActions {
 				this._getInstructorTypes(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPES);
 				this._getTeachingAssignments(workgroupId, year, ActionTypes.GET_CURRENT_TEACHING_ASSIGNMENTS);
 				this._getLineItems(workgroupId, year, ActionTypes.GET_CURRENT_LINE_ITEMS);
+				this._getExpenseItems(workgroupId, year, ActionTypes.GET_CURRENT_EXPENSE_ITEMS);
+				this._getExpenseItemCategories(workgroupId, year, ActionTypes.GET_CURRENT_EXPENSE_ITEM_CATEGORIES);
 				this._getBudgetScenarios(workgroupId, year, ActionTypes.GET_CURRENT_BUDGET_SCENARIOS);
 				this._getLineItemCategories(workgroupId, year, ActionTypes.GET_CURRENT_LINE_ITEM_CATEGORIES);
 				this._getInstructorTypeCosts(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPE_COSTS);
@@ -34,6 +36,8 @@ class BudgetComparisonReportActions {
 				this._getInstructorTypes(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPES);
 				this._getTeachingAssignments(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_TEACHING_ASSIGNMENTS);
 				this._getLineItems(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_LINE_ITEMS);
+				this._getExpenseItems(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_EXPENSE_ITEMS);
+				this._getExpenseItemCategories(workgroupId, year, ActionTypes.GET_PREVIOUS_EXPENSE_ITEM_CATEGORIES);
 				this._getBudgetScenarios(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_BUDGET_SCENARIOS);
 				this._getLineItemCategories(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_LINE_ITEM_CATEGORIES);
 				this._getInstructorTypeCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPE_COSTS);
@@ -378,6 +382,58 @@ class BudgetComparisonReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
+			_getExpenseItems: function (workgroupId, year, action) {
+				var _self = this;
+
+				BudgetComparisonReportService.getExpenseItems(workgroupId, year).then(function (rawExpenseItems) {
+					let expenseItems = {
+						ids: [],
+						list: {}
+					};
+
+					rawExpenseItems.forEach(function(expenseItem) {
+						expenseItems.ids.push(expenseItem.id);
+						expenseItems.list[expenseItem.id] = expenseItem;
+					});
+
+					BudgetComparisonReportReducers.reduce({
+						type: action,
+						payload: {
+							expenseItems: expenseItems
+						}
+					});
+
+					_self._performCalculations();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
+			_getExpenseItemCategories: function (workgroupId, year, action) {
+				var _self = this;
+
+				BudgetComparisonReportService.getExpenseItemCategories().then(function (rawExpenseItemCategories) {
+					let expenseItemCategories = {
+						ids: [],
+						list: {}
+					};
+
+					rawExpenseItemCategories.forEach(function(expenseItemCategory) {
+						expenseItemCategories.ids.push(expenseItemCategory.id);
+						expenseItemCategories.list[expenseItemCategory.id] = expenseItemCategory;
+					});
+
+					BudgetComparisonReportReducers.reduce({
+						type: action,
+						payload: {
+							expenseItemCategories: expenseItemCategories
+						}
+					});
+
+					_self._performCalculations();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
 			_getBudgetScenarios: function (workgroupId, year, action) {
 				var _self = this;
 
@@ -660,7 +716,7 @@ class BudgetComparisonReportActions {
 						budgetScenarioId: selectedScenarioId
 					}
 				});
-	
+
 				this._performCalculations();
 			},
 			selectPreviousBudgetScenario: function(selectedScenarioId) {
@@ -670,7 +726,7 @@ class BudgetComparisonReportActions {
 						budgetScenarioId: selectedScenarioId
 					}
 				});
-	
+
 				this._performCalculations();
 			},
 			// old frontend excel download method

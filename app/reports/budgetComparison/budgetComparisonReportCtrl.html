@@ -122,7 +122,9 @@
                          instructor-types="view.state.instructorTypes"
                          line-item-categories="view.state.lineItemCategories"
                          year="(year-1)"
-                         budget-scenario-name="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario.name">
+                         budget-scenario-name="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario.name"
+                         expenses="view.state.calculations.calculatedView.previous.expenses"
+                         expense-item-categories="view.state.expenseItemCategories">
       </support-and-funds>
     </div>
     <div class="budget-comparison-report__section">
@@ -133,7 +135,9 @@
                          instructor-types="view.state.instructorTypes"
                          line-item-categories="view.state.lineItemCategories"
                          year="year"
-                         budget-scenario-name="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario.name">
+                         budget-scenario-name="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario.name"
+                         expenses="view.state.calculations.calculatedView.current.expenses"
+                         expense-item-categories="view.state.expenseItemCategories">
       </support-and-funds>
     </div>
     <div class="budget-comparison-report__section">
@@ -142,7 +146,9 @@
                                 misc-stats="view.state.calculations.calculatedView.change.miscStats"
                                 is-current="true"
                                 instructor-types="view.state.instructorTypes"
-                                line-item-categories="view.state.lineItemCategories">
+                                line-item-categories="view.state.lineItemCategories"
+                                expenses="view.state.calculations.calculatedView.change.expenses"
+                                expense-item-categories="view.state.expenseItemCategories">
       </support-and-fund-changes>
     </div>
   </div>
@@ -151,18 +157,21 @@
     <div class="budget-comparison-report__section">
       <teaching-balance costs="view.state.calculations.calculatedView.previous.costs"
                         funding="view.state.calculations.calculatedView.previous.funding"
+                        expenses="view.state.calculations.calculatedView.previous.expenses"
                         is-current="false">
       </teaching-balance>
     </div>
     <div class="budget-comparison-report__section">
       <teaching-balance costs="view.state.calculations.calculatedView.current.costs"
                         funding="view.state.calculations.calculatedView.current.funding"
+                        expenses="view.state.calculations.calculatedView.current.expenses"
                         is-current="true">
       </teaching-balance>
     </div>
     <div class="budget-comparison-report__section">
       <teaching-balance-changes costs="view.state.calculations.calculatedView.change.costs"
                                 funding="view.state.calculations.calculatedView.change.funding"
+                                expenses="view.state.calculations.calculatedView.change.expenses"
                                 is-current="true">
       </teaching-balance-changes>
     </div>

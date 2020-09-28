@@ -41,12 +41,24 @@
     <tr>
       <td>
         <div class="dean-report__cell-container dean-report__cell-container--left">
+          Expenses
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last">
+          {{ toCurrency(expenses.rawTotal) }}
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--left">
           Balance
         </div>
       </td>
       <td>
         <div class="dean-report__cell-container dean-report__cell--total dean-report__cell--bold dean-report__cell-container--last">
-          {{ toCurrency((funding.rawTotal) - (costs.instructorCosts.total.rawCost + costs.supportCosts.rawTotalCost)) }}
+          {{ toCurrency((funding.rawTotal) - (costs.instructorCosts.total.rawCost + costs.supportCosts.rawTotalCost + expenses.rawTotal)) }}
         </div>
       </td>
     </tr>
