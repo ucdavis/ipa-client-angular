@@ -5,12 +5,12 @@
 			<div class="budget-costs__label">
 				Instructor <span ng-if="instructor.instructorTypeDescription">({{ instructor.instructorTypeDescription }})</span>
 			</div>
-			<div class="instructor-costs__instructor-reversion-ui" ng-show="isLiveData">
+			<div class="instructor-costs__instructor-reversion-ui" ng-show="isLiveData || isSnapshot">
 				<div>
 					{{ instructor.instructorName ? instructor.instructorName.split(' ')[1] + ', ' + instructor.instructorName.split(' ')[0] : (instructor.instructorTypeDescription ? instructor.instructorTypeDescription : 'None assigned') }}
 				</div>
 			</div>
-			<div class="instructor-costs__instructor-container" ng-show="!isLiveData">
+			<div class="instructor-costs__instructor-container" ng-show="!isLiveData && !isSnapshot">
 				<edit-instructor-assignment-dropdown mode="'instructor'"
 																				section-group-cost="sectionGroupCost"
 																				instructors="instructorAssignmentOptions"
@@ -99,13 +99,25 @@
 		<div class="budget-costs__label">
 			Reason Category
 		</div>
-		<div class="instructor-costs__cost-container">
+		<div class="instructor-costs__cost-container" ng-class="{ 'assignment-dropdown-reversion' : sectionGroupCost.reasonCategoryId}">
 			<ipa-dropdown
+										ng-if="!isSnapshot"
 										button-text="sectionGroupCost.reasonCategoryDescription || 'Select Reason'"
 										items="reasonCategories"
 										select-item="updateReasonCategory(item)">
 			</ipa-dropdown>
-			<span ng-if="isSnapshot">{{ sectionGroupCost.reason || 'N/A' }}</span>
+			<span ng-if="isSnapshot">{{ sectionGroupCost.reasonCategoryDescription || 'N/A' }}</span>
+			<div ng-if="!isSnapshot" class="instructor-costs__instructor-reversion-ui">
+				<div class="glyphicon glyphicon-remove instructor-costs__revert-ui"
+						 tooltip-append-to-body="true"
+						 uib-tooltip="Delete reason"
+						 confirm-button="removeReasonCategory(sectionGroupCost)"
+						 message="Are you sure you want to delete the reason?"
+						 yes="Delete"
+						 no="Cancel"
+						 ng-class="{'instructor-costs-row__hidden': !sectionGroupCost.reasonCategoryId}">
+				</div>
+			</div>
 		</div>
 	</td>
 	<!-- Reason -->

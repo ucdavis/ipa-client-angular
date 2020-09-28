@@ -78,6 +78,11 @@ let instructorCostsLiveData = function (BudgetActions) {
 				sectionGroupCost.reasonCategoryId = reasonCategory.id;
 				BudgetActions.updateSectionGroupCost(sectionGroupCost);
 			};
+
+			scope.removeReasonCategory = function(sectionGroupCost) {
+				sectionGroupCost.reasonCategoryId = null;
+				BudgetActions.updateSectionGroupCost(sectionGroupCost);
+			};
 		} // end link
 	};
 };
