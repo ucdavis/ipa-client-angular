@@ -12,7 +12,7 @@
 					<td style="padding-left: 10px; vertical-align: middle;">{{department.id}}</td>
 					<td>
 						<select style="width: 100%; padding:4px 8px;" ng-model="department.selectedScenario">
-							<option ng-repeat="scenario in department.budgetScenarios" value={{scenario.id}}>{{scenario.name}} {{ scenario.isSnapshot ? ' - SNAPSHOT - ' + dateToCalendar(scenario.creationDate) : '' }}</option>
+							<option ng-repeat="scenario in department.budgetScenarios" value={{scenario.id}}>{{scenario.name}}</option>
 						</select>
 					</td>
 				</tr>

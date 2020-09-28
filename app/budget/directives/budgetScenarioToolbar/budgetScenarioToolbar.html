@@ -113,7 +113,7 @@
 			<span class="budget-scenario-toolbar__tool glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
 			<ul class="dropdown-menu dropdown-menu-right">
 				<li style="cursor: pointer;">
-					<a ng-click="downloadBudgetScenarioExcel(false)">Download {{ getCurrentScenario() }} {{ state.ui.isSnapshot ? ' - SNAPSHOT - ' + dateToCalendar(state.selectedBudgetScenario.creationDate): '' }} as Excel</a>
+					<a ng-click="downloadBudgetScenarioExcel(false)">Download {{ getCurrentScenario() }} as Excel</a>
 				</li>
 				<li style="cursor: pointer;">
 					<a ng-click="downloadBudgetScenarioExcel(true)">Download Multiple Departments as Excel</a>
