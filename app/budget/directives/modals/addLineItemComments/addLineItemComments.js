@@ -10,7 +10,7 @@ let addLineItemComments = function ($rootScope, BudgetActions) {
 		scope: {
 			lineItem: '<',
 			currentUserLoginId: '<',
-			isSnapshot: '<'
+			isBudgetRequest: '<'
 		},
 		link: function (scope) {
 			scope.newComment = "";

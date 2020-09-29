@@ -17,7 +17,7 @@
 			</a>
 		</li>
 		<li role="presentation" class="divider courses-separator"></li>
-		<li ng-repeat="budgetScenario in state.budgetScenarios" ng-if="!budgetScenario.fromLiveData && !budgetScenario.isSnapshot" class="budget-scenario-dropdown__row">
+		<li ng-repeat="budgetScenario in state.budgetScenarios" ng-if="!budgetScenario.fromLiveData && !budgetScenario.isBudgetRequest" class="budget-scenario-dropdown__row">
 			<a ng-click="selectBudgetScenario(budgetScenario)" class="budget-scenario-item">
 				<span>
 					{{ budgetScenario.name }}
@@ -34,22 +34,21 @@
 				</div>
 			</a>
 		</li>
-		<li ng-if="scenarioSnapshots.length > 0" role="presentation" class="divider courses-separator"></li>
-		<!-- Snapshots section -->
-		<li ng-repeat="snapshot in scenarioSnapshots" class="budget-scenario-dropdown__row">
-			<a ng-click="selectBudgetScenario(snapshot)" class="budget-scenario-item">
+		<li ng-if="budgetRequests.length > 0" role="presentation" class="divider courses-separator"></li>
+		<!-- Budget Requests section -->
+		<li ng-repeat="budgetRequest in budgetRequests" class="budget-scenario-dropdown__row">
+			<a ng-click="selectBudgetScenario(budgetRequest)" class="budget-scenario-item">
 				<span>
-					<span class="badge badge-info">SNAPSHOT - {{ dateToCalendar(snapshot.creationDate) }}</span><br />
-					<span style="padding-left: 15px">{{ snapshot.name }}</span>
+					<span>{{ budgetRequest.name }}</span>
 				</span>
 				<div class="budget-scenario-dropdown__hover-ui">
 					<ipa-button
 						ng-show="state.budgetScenarios.length > 1"
 						icon-class="'glyphicon glyphicon-trash'"
 						size="'small'"
-						on-click="deleteBudgetScenario(snapshot)"
-						tooltip-message="'Delete snapshot'"
-						confirm-message="'Are you sure you want to delete this snapshot?'">
+						on-click="deleteBudgetScenario(budgetRequest)"
+						tooltip-message="'Delete budget request'"
+						confirm-message="'Are you sure you want to delete this budget request?'">
 					</ipa-button>
 				</div>
 			</a>
@@ -61,5 +60,4 @@
 			</a>
 		</li>
 	</ul>
-	<span ng-if="state.selectedBudgetScenario.isSnapshot" class="badge badge-info" style="margin-left: 10px;">SNAPSHOT - {{ dateToCalendar(state.selectedBudgetScenario.creationDate) }}</span> 
 </div>

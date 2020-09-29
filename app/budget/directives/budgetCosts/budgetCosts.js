@@ -14,11 +14,12 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
 			isLiveDataScenario: '<',
-			isSnapshot: '<',
+			isBudgetRequest: '<',
 			tags: '<',
 			reasonCategories: '<'
 		},
 		link: function (scope) {
+
 			scope.setActiveTerm = function(activeTermTab) {
 				BudgetActions.selectTerm(activeTermTab);
 			};

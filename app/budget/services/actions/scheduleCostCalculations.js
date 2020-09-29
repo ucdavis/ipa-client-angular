@@ -286,7 +286,7 @@ class ScheduleCostCalculations {
         }
       },
       _calculateInstructorCost: function(sectionGroupCost) {
-        const isSnapshot = BudgetReducers._state.budgetScenarios.list[sectionGroupCost.budgetScenarioId].isSnapshot;
+        const isBudgetRequest = BudgetReducers._state.budgetScenarios.list[sectionGroupCost.budgetScenarioId].isBudgetRequest;
 
         sectionGroupCost.overrideInstructorCost = null;
         sectionGroupCost.overrideInstructorCostSource = "course";
@@ -301,7 +301,7 @@ class ScheduleCostCalculations {
 
         // If instructor => Use instructor cost
         if (sectionGroupCost.instructorId > 0) {
-          let instructorCost = isSnapshot
+          let instructorCost = isBudgetRequest
             ? BudgetReducers._state.instructorCosts.byBudgetScenarioId[sectionGroupCost.budgetScenarioId]?.byInstructorId[sectionGroupCost.instructorId]
             : BudgetReducers._state.instructorCosts.byInstructorId[sectionGroupCost.instructorId];
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
@@ -328,7 +328,7 @@ class ScheduleCostCalculations {
 
         // If instructorType => use instructorType cost
         if (sectionGroupCost.instructorTypeId > 0) {
-          let instructorTypeCost = isSnapshot
+          let instructorTypeCost = isBudgetRequest
             ? BudgetReducers._state.instructorTypeCosts.byBudgetScenarioId[sectionGroupCost.budgetScenarioId]?.byInstructorTypeId[sectionGroupCost.instructorTypeId]
             : BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
 
@@ -364,7 +364,7 @@ class ScheduleCostCalculations {
         var budget = BudgetReducers._state.budget;
         let taCost, readerCost;
 
-        if (selectedBudgetScenario.isSnapshot) {
+        if (selectedBudgetScenario.isBudgetRequest) {
           taCost = selectedBudgetScenario.taCost;
           readerCost = selectedBudgetScenario.readerCost;
         } else {

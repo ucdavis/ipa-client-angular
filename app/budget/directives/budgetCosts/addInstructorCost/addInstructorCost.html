@@ -1,6 +1,6 @@
 <tr>
 	<!-- Instructor of record -->
-	<td class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isLiveData && !isSnapshot">
+	<td class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isLiveData && !isBudgetRequest">
 		<div class="budget-costs__label">
 			Add Instructor <span ng-if="instructor.instructorTypeDescription">({{ instructor.instructorTypeDescription }})</span>
 		</div>
@@ -12,11 +12,11 @@
 		</div>
 	</td>
 	<!-- Empty columns for spacing -->
-	<td colspan="8" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isLiveData && !isSnapshot">
+	<td colspan="8" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="!isLiveData && !isBudgetRequest">
 	</td>
 
 	<!-- Link to Assign Instructors Page -->
-	<td colspan="9" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="(isLiveData || isSnapshot) && instructorCount === 0">
+	<td colspan="9" class="instructor-costs__table-cell" ng-class="{ 'instructor-costs-row__divider' : divider }" ng-show="(isLiveData || isBudgetRequest) && instructorCount === 0">
         <span class="add-instructor-cost__none-assigned">
           No instructors assigned
         </span>

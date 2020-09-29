@@ -8,7 +8,7 @@ let instructorCostsLiveData = function (BudgetActions) {
 			instructor: '<',
 			sectionGroupCost: '<',
 			divider: '<',
-			isSnapshot: '<',
+			isBudgetRequest: '<',
 			isLiveData: '<',
 			isFirst: '<',
 			instructorAssignmentOptions: '<',

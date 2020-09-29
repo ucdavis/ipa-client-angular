@@ -1,9 +1,9 @@
 <div class="budget-costs">
   <h3
-    ng-if="isSnapshot"
+    ng-if="isBudgetRequest"
     style="text-align: center; color: #5b616b"
   >
-    SNAPSHOT
+    BUDGET REQUEST
   </h3>
   <ipa-tabs tab-names="termNav.allTabs"
             active-tab="termNav.activeTab"
@@ -47,14 +47,14 @@
                     section-group-cost="sectionGroupCost"
                     is-live-data-scenario="isLiveDataScenario"
                     instructor-count="sectionGroupCost.sectionGroupCostInstructors.length"
-                    is-snapshot="isSnapshot">
+                    is-budget-request="isBudgetRequest">
                   </tr>
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == true && !last)"
                       ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
                       instructor-costs
                       instructor="instructor"
                       section-group-cost="sectionGroupCost"
-                      is-snapshot="isSnapshot"
+                      is-budget-request="isBudgetRequest"
                       is-live-data="isLiveDataScenario"
                       is-first="$first"
                       instructor-assignment-options="instructorAssignmentOptions"
@@ -67,7 +67,7 @@
                       section-group-cost="sectionGroupCost"
                       instructor-assignment-options="instructorAssignmentOptions"
                       is-live-data="isLiveDataScenario"
-                      is-snapshot="isSnapshot"
+                      is-budget-request="isBudgetRequest"
                       instructor-count="sectionGroupCost.sectionGroupCostInstructors.length"
                   >
                   </tr>

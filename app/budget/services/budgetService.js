@@ -41,8 +41,8 @@ class BudgetService {
 			updateBudgetScenario: function(budgetScenario) {
 				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id, budgetScenario);
 			},
-			createBudgetScenarioSnapshot: function(selectedBudgetScenario) {
-				return ApiService.post("/api/budgetView/budgets/" + selectedBudgetScenario.budgetId + "/budgetScenarios/" + selectedBudgetScenario.id + "/snapshot");
+			createBudgetRequestScenario: function(selectedBudgetScenario) {
+				return ApiService.post("/api/budgetView/budgets/" + selectedBudgetScenario.budgetId + "/budgetScenarios/" + selectedBudgetScenario.id + "/budgetRequest");
 			},
 	
 			// Budget

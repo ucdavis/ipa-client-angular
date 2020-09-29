@@ -10,7 +10,7 @@ let addCourseComments = function ($rootScope, BudgetActions) {
 		scope: {
 			sectionGroupCost: '<',
 			currentUserLoginId: '<',
-			isSnapshot: '<'
+			isBudgetRequest: '<'
 		},
 		link: function (scope) {
 			scope.newComment = "";

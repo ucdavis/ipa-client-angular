@@ -19,10 +19,10 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.validationError = "";
 			scope.activeFilters = [];
 			scope.showTermChip = false;
-			scope.snapshotInProgress = false;
+			scope.budgetRequestInProgress = false;
 
 			$rootScope.$on('budgetStateChanged', function (event, data) {
-				scope.snapshotInProgress = data.ui.createInProgress;
+				scope.budgetRequestInProgress = data.ui.createInProgress;
 			});
 
 			$window.onscroll = function () {
@@ -83,9 +83,9 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.displayScenarioRenameUI = false;
 			};
 
-			scope.createBudgetScenarioSnapshot = function() {
-				scope.snapshotInProgress = true;
-				BudgetActions.createBudgetScenarioSnapshot(scope.state.selectedBudgetScenario);
+			scope.createBudgetRequestScenario = function() {
+				scope.budgetRequestInProgress = true;
+				BudgetActions.createBudgetRequestScenario(scope.state.selectedBudgetScenario);
 			};
 
 			// Verifies that name is unique (within budgets for that schedule) and at least 1 character long.
@@ -179,7 +179,7 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 						var a = window.document.createElement('a'); // eslint-disable-line
 						a.href = url;
 						var workgroupInfo = JSON.parse(localStorage.getItem('workgroup'));
-						a.download = `Budget-Report-${workgroupInfo.name}-${localStorage.getItem('year')}-${scope.state.selectedBudgetScenario.name}-${scope.state.selectedBudgetScenario.isSnapshot ? 'SNAPSHOT-' + dateToCalendar(scope.state.selectedBudgetScenario.creationDate) : ''}.xlsx`;
+						a.download = `Budget-Report-${workgroupInfo.name}-${localStorage.getItem('year')}-${scope.state.selectedBudgetScenario.name}.xlsx`;
 						window.document.body.appendChild(a); // eslint-disable-line
 						a.click();
 						a.remove();  //afterwards we remove the element again

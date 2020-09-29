@@ -938,7 +938,7 @@ class BudgetReducers {
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						var isSnapshot = action.payload.budgetScenarios.find(scenario => scenario.id == action.selectedBudgetScenarioId).isSnapshot;
+						var isBudgetRequest = action.payload.budgetScenarios.find(scenario => scenario.id == action.selectedBudgetScenarioId).isBudgetRequest;
 						ui = {
 							addCourseModal: {
 								isOpen: false
@@ -972,7 +972,7 @@ class BudgetReducers {
 								allTabs: null
 							},
 							fundsNav: {
-								allTabs: isSnapshot ? ['Funds'] : ['Funds', 'Suggested'],
+								allTabs: isBudgetRequest ? ['Funds'] : ['Funds', 'Suggested'],
 								activeTab: 'Funds',
 								tabOverrides: {}
 							},
@@ -993,7 +993,7 @@ class BudgetReducers {
 							lineItemDetails: {},
 							sectionGroupCostDetails: {},
 							selectedBudgetScenarioId: parseInt(action.selectedBudgetScenarioId),
-							isSnapshot: isSnapshot,
+							isBudgetRequest: isBudgetRequest,
 							createInProgress: false,
 							selectedTerm: action.selectedTerm,
 							workgroupId: action.workgroupId,
@@ -1198,10 +1198,10 @@ class BudgetReducers {
 						};
 						return ui;
 					case ActionTypes.SELECT_BUDGET_SCENARIO:
-						ui.fundsNav.allTabs = action.payload.isSnapshot ? ['Funds'] : ['Funds', 'Suggested'];
-						ui.shouldShowCourseList = !action.payload.fromLiveData && !action.payload.isSnapshot;
+						ui.fundsNav.allTabs = action.payload.isBudgetRequest ? ['Funds'] : ['Funds', 'Suggested'];
+						ui.shouldShowCourseList = !action.payload.fromLiveData && !action.payload.isBudgetRequest;
 						ui.fromLiveData = action.payload.fromLiveData;
-						ui.isSnapshot = action.payload.isSnapshot;
+						ui.isBudgetRequest = action.payload.isBudgetRequest;
 						ui.selectedBudgetScenarioId = parseInt(action.payload.budgetScenarioId);
 						return ui;
 					case ActionTypes.DELETE_BUDGET_SCENARIO:

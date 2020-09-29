@@ -11,7 +11,7 @@ let addInstructorCost = function () {
 			divider: '<',
 			isLiveData: '<',
 			instructorCount: '<',
-			isSnapshot: '<'
+			isBudgetRequest: '<'
 		},
 		replace: true,
 		link: function (scope) {

@@ -1,5 +1,3 @@
-import { dateToCalendar } from '../../../shared/helpers/dates';
-
 class BudgetComparisonReportCalculations {
   constructor(BudgetComparisonReportReducers, ActionTypes) {
     return {
@@ -505,8 +503,8 @@ class BudgetComparisonReportCalculations {
           supportCosts.readerCount += sectionGroupCost.readerCount || 0;
         });
 
-        const baseTaCost = selectedScenario.isSnapshot ? selectedScenario.taCost : budget.taCost;
-        const baseReaderCost = selectedScenario.isSnapshot ? selectedScenario.readerCost : budget.readerCost;
+        const baseTaCost = selectedScenario.isBudgetRequest ? selectedScenario.taCost : budget.taCost;
+        const baseReaderCost = selectedScenario.isBudgetRequest ? selectedScenario.readerCost : budget.readerCost;
         supportCosts.taCost = supportCosts.taCount * baseTaCost;
         supportCosts.readerCost = supportCosts.readerCount * baseReaderCost;
 
@@ -760,7 +758,7 @@ class BudgetComparisonReportCalculations {
 
         budgetScenarios.ids.forEach(function(budgetScenarioId) {
           var budgetScenario = budgetScenarios.list[budgetScenarioId];
-          budgetScenario.description = budgetScenario.isSnapshot ? `SNAPSHOT - ${dateToCalendar(budgetScenario.creationDate)} - ${budgetScenario.name}` : budgetScenario.name;
+          budgetScenario.description = budgetScenario.name;
           scenarios.push(budgetScenarios.list[budgetScenarioId]);
         });
 
