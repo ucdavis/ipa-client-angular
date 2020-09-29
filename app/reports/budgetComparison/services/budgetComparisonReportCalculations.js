@@ -1,5 +1,3 @@
-import { dateToCalendar } from '../../../shared/helpers/dates';
-
 class BudgetComparisonReportCalculations {
   constructor(BudgetComparisonReportReducers, ActionTypes) {
     return {
@@ -213,20 +211,20 @@ class BudgetComparisonReportCalculations {
 
         // If an instructor is set
         if (sectionGroupCost.instructorId) {
-          instructorCost = selectedScenario.isSnapshot
+          instructorCost = selectedScenario.isBudgetRequest
             ? instructorCosts.byBudgetScenarioId[selectedScenario.id].byInstructorId[sectionGroupCost.instructorId]
             : instructorCosts.byInstructorId[sectionGroupCost.instructorId];
 
           instructorTypeId = sectionGroupCost.instructorTypeId;
 
           // if no explicit instructor cost, attempt to find instructorType cost
-          instructorTypeCost = selectedScenario.isSnapshot
+          instructorTypeCost = selectedScenario.isBudgetRequest
             ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[instructorTypeId]
             : instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
           // If only instructorType is set
         } else if (sectionGroupCost.instructorTypeId) {
-          instructorTypeCost = selectedScenario.isSnapshot
+          instructorTypeCost = selectedScenario.isBudgetRequest
             ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[sectionGroupCost.instructorTypeId]
             : instructorTypeCosts.byInstructorTypeId[sectionGroupCost.instructorTypeId];
 
@@ -379,8 +377,8 @@ class BudgetComparisonReportCalculations {
           supportCosts.readerCount += sectionGroupCost.readerCount || 0;
         });
 
-        const baseTaCost = selectedScenario.isSnapshot ? selectedScenario.taCost : budget.taCost;
-        const baseReaderCost = selectedScenario.isSnapshot ? selectedScenario.readerCost : budget.readerCost;
+        const baseTaCost = selectedScenario.isBudgetRequest ? selectedScenario.taCost : budget.taCost;
+        const baseReaderCost = selectedScenario.isBudgetRequest ? selectedScenario.readerCost : budget.readerCost;
         supportCosts.taCost = supportCosts.taCount * baseTaCost;
         supportCosts.readerCost = supportCosts.readerCount * baseReaderCost;
 
@@ -634,7 +632,7 @@ class BudgetComparisonReportCalculations {
 
         budgetScenarios.ids.forEach(function(budgetScenarioId) {
           var budgetScenario = budgetScenarios.list[budgetScenarioId];
-          budgetScenario.description = budgetScenario.isSnapshot ? `SNAPSHOT - ${dateToCalendar(budgetScenario.creationDate)} - ${budgetScenario.name}` : budgetScenario.name;
+          budgetScenario.description = budgetScenario.name;
           scenarios.push(budgetScenarios.list[budgetScenarioId]);
         });
 

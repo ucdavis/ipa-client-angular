@@ -220,18 +220,18 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not create budget scenario.", type: "ERROR" });
 				});
 			},
-			createBudgetScenarioSnapshot: function (selectedBudgetScenario) {
+			createBudgetRequestScenario: function (selectedBudgetScenario) {
 				let self = this;
-				BudgetService.createBudgetScenarioSnapshot(selectedBudgetScenario).then(
+				BudgetService.createBudgetRequestScenario(selectedBudgetScenario).then(
 					function (results) {
-						window.ipa_analyze_event('budget', 'budget scenario snapshot created');
+						window.ipa_analyze_event('budget', 'budget request scenario created');
 
 						let action = {
 							type: ActionTypes.CREATE_BUDGET_SCENARIO,
 							payload: results
 						};
 
-						$rootScope.$emit('toast', { message: "Created budget snapshot", type: "SUCCESS" });
+						$rootScope.$emit('toast', { message: "Created budget request", type: "SUCCESS" });
 						BudgetReducers.reduce(action);
 						self.selectBudgetScenario(results.budgetScenario.id);
 						self.attachInstructorTypesToInstructors();
@@ -242,7 +242,7 @@ class BudgetActions {
 						BudgetCalculations.calculateInstructorTypeCosts();
 
 				}, function () {
-					$rootScope.$emit('toast', { message: "Could not create budget scenario snapshot.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not create budget request.", type: "ERROR" });
 				});
 			},
 			deleteBudgetScenario: function (budgetScenarioId) {
@@ -808,7 +808,7 @@ class BudgetActions {
 			},
 			selectBudgetScenario: function(selectedScenarioId) {
 				var fromLiveData = false;
-				let isSnapshot = false;
+				let isBudgetRequest = false;
 
 				// If scenarioId was not provided, attempt to use currently selected scenario
 				if (selectedScenarioId == null) {
@@ -824,7 +824,7 @@ class BudgetActions {
 				} else {
 					var budgetScenario = BudgetReducers._state.budgetScenarios.list[selectedScenarioId];
 					fromLiveData = budgetScenario.fromLiveData;
-					isSnapshot = budgetScenario.isSnapshot;
+					isBudgetRequest = budgetScenario.isBudgetRequest;
 				}
 
 				var year = BudgetReducers._state.ui.year;
@@ -837,7 +837,7 @@ class BudgetActions {
 					payload: {
 						budgetScenarioId: selectedScenarioId,
 						fromLiveData: fromLiveData,
-						isSnapshot: isSnapshot
+						isBudgetRequest: isBudgetRequest
 					}
 				};
 

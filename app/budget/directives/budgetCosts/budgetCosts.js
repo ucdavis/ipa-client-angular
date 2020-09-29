@@ -14,7 +14,7 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			instructorAssignmentOptions: '<',
 			regularInstructorAssignmentOptions: '<',
 			isLiveDataScenario: '<',
-			isSnapshot: '<',
+			isBudgetRequest: '<',
 			tags: '<'
 		},
 		link: function (scope) {
