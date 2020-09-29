@@ -101,6 +101,7 @@
 		</div>
 		<div class="instructor-costs__cost-container" ng-class="{ 'assignment-dropdown-reversion' : sectionGroupCost.reasonCategoryId}">
 			<ipa-dropdown
+										style="'minimal'"
 										ng-if="!isBudgetRequest"
 										button-text="sectionGroupCost.reasonCategoryDescription || 'Select Reason'"
 										items="reasonCategories"
