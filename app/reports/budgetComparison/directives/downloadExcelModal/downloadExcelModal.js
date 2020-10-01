@@ -28,6 +28,8 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
       scope.$watch('userWorkgroupsScenarios', function(userWorkgroupsScenarios) {
         if (localStorage.getItem("budgetComparisonDownloadSelections")) {
           scope.departmentScenarios = JSON.parse(localStorage.getItem("budgetComparisonDownloadSelections"));
+
+          scope.downloadAllDepartments = scope.departmentScenarios.every(department => department.download === true);
         } else if (userWorkgroupsScenarios) {
           scope.departmentScenarios = Object.keys(userWorkgroupsScenarios)
             .sort()
@@ -39,11 +41,25 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
               selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.name === 'Live Data') || {}).id}`,
               download: true
             }));
+
+            scope.downloadAllDepartments = true;
         }
       }, true);
 
+      scope.toggleAllDepartmentDownloads = function() {
+        if (scope.downloadAllDepartments) {
+          scope.departmentScenarios.forEach(department => department.download = false);
+          scope.downloadAllDepartments = false;
+        } else {
+          scope.departmentScenarios.forEach(department => department.download = true);
+          scope.downloadAllDepartments = true;
+        }
+      };
+
       scope.toggleDepartmentDownload = function (department) {
         department.download = !department.download;
+
+        scope.downloadAllDepartments = scope.departmentScenarios.every(department => department.download === true);
       };
 
       scope.close = function () {
