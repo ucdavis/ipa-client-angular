@@ -27,15 +27,15 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
       // }
       scope.$watch('userWorkgroupsScenarios', function(userWorkgroupsScenarios) {
         if (userWorkgroupsScenarios) {
-          scope.departmentScenarios = Object.keys(
-            userWorkgroupsScenarios
-          ).map((department) => ({
-            name: department,
-            current: userWorkgroupsScenarios[department].current,
-            previous: userWorkgroupsScenarios[department].previous,
-            selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.name === 'Live Data') || {}).id}`,
-            selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.name === 'Live Data') || {}).id}`
-          }));
+          scope.departmentScenarios = Object.keys(userWorkgroupsScenarios)
+            .sort()
+            .map((department) => ({
+              name: department,
+              current: userWorkgroupsScenarios[department].current,
+              previous: userWorkgroupsScenarios[department].previous,
+              selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.name === 'Live Data') || {}).id}`,
+              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.name === 'Live Data') || {}).id}`
+            }));
         }
       }, true);
 

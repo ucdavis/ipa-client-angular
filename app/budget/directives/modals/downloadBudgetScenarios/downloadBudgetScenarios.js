@@ -17,11 +17,13 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			//   "DSS": [sceanrio1, 2, 3],
 			//   "Design": [...]
 			//  }
-			scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios).map(workgroup => ({
-				id: workgroup,
-				budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
-				selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`
-			}));
+			scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
+				.sort()
+				.map(workgroup => ({
+					id: workgroup,
+					budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
+					selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`
+				}));
 
 			scope.selectBudgetScenario = function(scenario, department){
 				department.selectBudgetScenario = scenario;
