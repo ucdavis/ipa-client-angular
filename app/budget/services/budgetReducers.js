@@ -1264,7 +1264,8 @@ class BudgetReducers {
 				newPageState.budget = newState.budget;
 				newPageState.ui = newState.ui;
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
-				newPageState.reasonCategories = Object.values(newState.reasonCategories.list);
+				newPageState.reasonCategories = _array_sortByProperty(Object.values(newState.reasonCategories.list), ["description"]);
+
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
 				newPageState.tags = newState.tags;
