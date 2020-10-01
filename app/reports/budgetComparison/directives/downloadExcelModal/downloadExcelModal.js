@@ -36,10 +36,15 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
               current: userWorkgroupsScenarios[department].current,
               previous: userWorkgroupsScenarios[department].previous,
               selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.name === 'Live Data') || {}).id}`,
-              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.name === 'Live Data') || {}).id}`
+              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.name === 'Live Data') || {}).id}`,
+              download: true
             }));
         }
       }, true);
+
+      scope.toggleDepartmentDownload = function (department) {
+        department.download = !department.download;
+      };
 
       scope.close = function () {
         scope.status = null;
@@ -49,9 +54,11 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
 
       scope.submit = function () {
         scope.isDisabled = true;
-        let scenarioIdPairs = scope.departmentScenarios.map((scenario) => [
-          { id: parseInt(scenario.selectedPrevious) },
-          { id: parseInt(scenario.selectedCurrent) },
+        let scenarioIdPairs = scope.departmentScenarios
+          .filter(department => department.download)
+          .map((department) => [
+          { id: parseInt(department.selectedPrevious) },
+          { id: parseInt(department.selectedCurrent) },
         ]);
 
         BudgetComparisonReportService.downloadBudgetComparisonExcel(scenarioIdPairs).then((res) => {
