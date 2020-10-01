@@ -43,7 +43,7 @@
 				</span>
 				<div class="budget-scenario-dropdown__hover-ui">
 					<ipa-button
-						ng-show="state.budgetScenarios.length > 1"
+						ng-if="!budgetRequest.name.toLowerCase().includes('initial')"
 						icon-class="'glyphicon glyphicon-trash'"
 						size="'small'"
 						on-click="deleteBudgetScenario(budgetRequest)"
