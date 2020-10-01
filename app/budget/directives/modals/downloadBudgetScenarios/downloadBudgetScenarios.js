@@ -17,13 +17,18 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			//   "DSS": [sceanrio1, 2, 3],
 			//   "Design": [...]
 			//  }
-			scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
-				.sort()
-				.map(workgroup => ({
-					id: workgroup,
-					budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
-					selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`
-				}));
+
+			if (localStorage.getItem("budgetDownloadSelections")) {
+				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
+			} else {
+				scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
+					.sort()
+					.map(workgroup => ({
+						id: workgroup,
+						budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
+						selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`
+					}));
+			}
 
 			scope.selectBudgetScenario = function(scenario, department){
 				department.selectBudgetScenario = scenario;
@@ -35,6 +40,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 
 			scope.close = function() {
 				BudgetActions.toggleBudgetScenarioModal();
+				localStorage.setItem("budgetDownloadSelections", JSON.stringify(scope.budgetScenariosAccessible));
 			};
 
 			scope.submit = function() {
