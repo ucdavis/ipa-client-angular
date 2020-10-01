@@ -3,12 +3,16 @@
 		<table class="table table-dark" id="budget-scenarios-table">
 			<thead style="border-bottom: 1px solid #ddd;">
 				<tr>
+					<th style="width: 25px;"></th>
 					<th scope="col" style="padding-left: 10px;"><strong>Department</strong></th>
 					<th scope="col"><strong>Budget Scenario</strong></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="department in budgetScenariosAccessible">
+				<tr ng-repeat="department in budgetScenariosAccessible" >
+					<td style="width: 25px; vertical-align: middle;">
+						<ipa-checkbox is-checked="department.download" click-action="toggleDepartmentDownload(department)"></ipa-checkbox>
+					</td>
 					<td style="padding-left: 10px; vertical-align: middle;">{{department.id}}</td>
 					<td>
 						<select style="width: 100%; padding:4px 8px;" ng-model="department.selectedScenario">

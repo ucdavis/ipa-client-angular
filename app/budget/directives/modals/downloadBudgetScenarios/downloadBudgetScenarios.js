@@ -26,12 +26,17 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 					.map(workgroup => ({
 						id: workgroup,
 						budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
-						selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`
+						selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`,
+						download: true
 					}));
 			}
 
 			scope.selectBudgetScenario = function(scenario, department){
 				department.selectBudgetScenario = scenario;
+			};
+
+			scope.toggleDepartmentDownload = function(department) {
+				department.download = !department.download;
 			};
 
 			scope.dateToCalendar = function(date) {
@@ -45,7 +50,9 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 
 			scope.submit = function() {
 				scope.isDisabled = true;
-				let scenarioIds = scope.budgetScenariosAccessible.filter(scenario => parseInt(scenario.selectedScenario)).map(scenario => ({id: parseInt(scenario.selectedScenario)}));
+				let scenarioIds = scope.budgetScenariosAccessible
+					.filter(department => department.download && parseInt(department.selectedScenario))
+					.map(department => ({id: parseInt(department.selectedScenario)}));
 
 				BudgetService.downloadWorkgroupScenariosExcel(scenarioIds)
 				.then(
