@@ -18,11 +18,11 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			//   "Design": [...]
 			//  }
 
-			if (localStorage.getItem("budgetDownloadSelections")) {
-				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
+			scope.selectBudgetScenario = function(scenario, department){
+				department.selectBudgetScenario = scenario;
+			};
 
-				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
-			} else {
+			scope.initializeDownloadSelections = function() {
 				scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
 					.sort()
 					.map(workgroup => ({
@@ -33,10 +33,18 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 					}));
 
 				scope.downloadAllDepartments = true;
+			};
+
+			if (localStorage.getItem("budgetDownloadSelections")) {
+				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
+
+				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
+			} else {
+				scope.initializeDownloadSelections();
 			}
 
-			scope.selectBudgetScenario = function(scenario, department){
-				department.selectBudgetScenario = scenario;
+			scope.resetDownloadSelections = function() {
+				scope.initializeDownloadSelections();
 			};
 
 			scope.toggleAllDepartmentDownload = function() {
