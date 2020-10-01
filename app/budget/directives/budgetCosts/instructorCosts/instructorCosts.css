@@ -106,3 +106,7 @@
 .instructor-costs__additional-instructor-row .ipa-dropdown .ipa-dropdown__button-text {
   width: inherit;
 }
+
+.instructor-costs__cost-container .ipa-dropdown .dropdown {
+	min-width: 200px;
+}

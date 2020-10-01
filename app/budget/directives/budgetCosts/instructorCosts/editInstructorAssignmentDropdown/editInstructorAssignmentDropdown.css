@@ -7,3 +7,7 @@
   width: calc(100% - 44px);
   padding-right: 0px;
 }
+
+.edit-instructor-assignment-dropdown .ipa-dropdown .dropdown {
+	min-width: 200px;
+}
