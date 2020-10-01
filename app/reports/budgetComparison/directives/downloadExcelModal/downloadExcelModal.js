@@ -37,14 +37,23 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
               name: department,
               current: userWorkgroupsScenarios[department].current,
               previous: userWorkgroupsScenarios[department].previous,
-              selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.name === 'Live Data') || {}).id}`,
-              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.name === 'Live Data') || {}).id}`,
+              selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.fromLiveData === true) || {}).id}`,
+              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.fromLiveData === true) || {}).id}`,
               download: true
             }));
 
             scope.downloadAllDepartments = true;
         }
       }, true);
+
+      scope.resetDownloadSelections = function() {
+        scope.departmentScenarios.forEach(departmentScenarios => {
+          departmentScenarios.download = true;
+          departmentScenarios.selectedPrevious = `${departmentScenarios.previous.find(scenario => scenario.fromLiveData === true).id}`;
+          departmentScenarios.selectedCurrent = `${departmentScenarios.current.find(scenario => scenario.fromLiveData === true).id}`;
+        });
+        scope.downloadAllDepartments = true;
+      };
 
       scope.toggleAllDepartmentDownloads = function() {
         if (scope.downloadAllDepartments) {
