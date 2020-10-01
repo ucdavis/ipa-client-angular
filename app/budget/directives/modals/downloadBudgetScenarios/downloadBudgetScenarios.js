@@ -21,7 +21,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			if (localStorage.getItem("budgetDownloadSelections")) {
 				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
 
-				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download == true);
+				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
 			} else {
 				scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
 					.sort()
@@ -52,7 +52,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			scope.toggleDepartmentDownload = function(department) {
 				department.download = !department.download;
 
-				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download == true);
+				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
 			};
 
 			scope.dateToCalendar = function(date) {
