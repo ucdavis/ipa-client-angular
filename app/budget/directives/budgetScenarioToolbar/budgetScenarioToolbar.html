@@ -22,8 +22,7 @@
 				class="budget-scenario-toolbar__button"
 				uib-tooltip="Create budget request from selected scenario"
 				tooltip-append-to-body="true"
-				confirm-button="createBudgetRequestScenario()"
-				message="Are you sure you want to create a new budget request? Initial budget requests cannot be deleted, only subsequent updated budget requests."
+				ng-click="createBudgetRequestScenario()"
 				ng-disabled="budgetRequestInProgress"
 			>
 				<i class="glyphicon glyphicon-camera"></i>
