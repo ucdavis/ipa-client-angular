@@ -20,6 +20,8 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 
 			if (localStorage.getItem("budgetDownloadSelections")) {
 				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
+
+				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download == true);
 			} else {
 				scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
 					.sort()
@@ -29,14 +31,28 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 						selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`,
 						download: true
 					}));
+
+				scope.downloadAllDepartments = true;
 			}
 
 			scope.selectBudgetScenario = function(scenario, department){
 				department.selectBudgetScenario = scenario;
 			};
 
+			scope.toggleAllDepartmentDownload = function() {
+				if (scope.downloadAllDepartments) {
+					scope.budgetScenariosAccessible.forEach(department => department.download = false);
+					scope.downloadAllDepartments = false;
+				} else {
+					scope.budgetScenariosAccessible.forEach(department => department.download = true);
+					scope.downloadAllDepartments = true;
+				}
+			};
+
 			scope.toggleDepartmentDownload = function(department) {
 				department.download = !department.download;
+
+				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download == true);
 			};
 
 			scope.dateToCalendar = function(date) {
