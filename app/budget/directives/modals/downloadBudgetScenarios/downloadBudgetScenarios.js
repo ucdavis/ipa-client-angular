@@ -22,29 +22,30 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 				department.selectBudgetScenario = scenario;
 			};
 
-			scope.initializeDownloadSelections = function() {
-				scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
-					.sort()
-					.map(workgroup => ({
-						id: workgroup,
-						budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
-						selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`,
-						download: true
-					}));
-
-				scope.downloadAllDepartments = true;
-			};
-
 			if (localStorage.getItem("budgetDownloadSelections")) {
 				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
 
 				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
 			} else {
-				scope.initializeDownloadSelections();
+				scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
+					.sort()
+					.map(workgroup => ({
+						id: workgroup,
+						budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
+						selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.fromLiveData === true) || {}).id}`,
+						download: true
+					}));
+
+				scope.downloadAllDepartments = true;
 			}
 
 			scope.resetDownloadSelections = function() {
-				scope.initializeDownloadSelections();
+				scope.budgetScenariosAccessible.forEach(department => {
+					department.selectedScenario = `${(department.budgetScenarios.find(scenario => scenario.fromLiveData === true) || {}).id}`;
+					department.download = true;
+				});
+
+				scope.downloadAllDepartments = true;
 			};
 
 			scope.toggleAllDepartmentDownload = function() {
