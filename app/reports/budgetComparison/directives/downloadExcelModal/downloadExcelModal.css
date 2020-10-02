@@ -32,6 +32,13 @@
   color: white;
 }
 
+/* override to match Budget module */
+.btn-default {
+  color: #303641;
+  background-color: white;
+  border: 1px solid #d6d6d6;
+}
+
 #download-excel-modal-table{
   margin-bottom: 0;
 }
