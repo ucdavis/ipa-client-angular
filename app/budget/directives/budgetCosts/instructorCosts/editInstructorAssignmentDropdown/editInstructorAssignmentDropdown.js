@@ -1,4 +1,4 @@
-import './editInstructorAssignmentDropdown.css'
+import './editInstructorAssignmentDropdown.css';
 
 let editInstructorAssignmentDropdown = function (BudgetActions) {
 	return {
