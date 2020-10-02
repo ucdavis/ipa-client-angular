@@ -1,5 +1,6 @@
 import './downloadExcelModal.css';
 import { _array_sortByProperty } from '../../../../shared/helpers/array';
+import { dateToCalendar } from '../../../../shared/helpers/dates';
 
 let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparisonReportService) {
   return {
@@ -90,6 +91,10 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
         BudgetComparisonReportActions.toggleDownloadModal();
         localStorage.setItem("budgetComparisonDownloadSelections", JSON.stringify(scope.departmentScenarios));
         localStorage.setItem("budgetComparisonDownloadSorted", JSON.stringify(scope.isSortedByRecentActivity));
+      };
+
+      scope.dateToCalendar = function (date) {
+        return dateToCalendar(date);
       };
 
       scope.submit = function () {

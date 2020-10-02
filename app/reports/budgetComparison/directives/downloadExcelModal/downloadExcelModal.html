@@ -14,7 +14,10 @@
 			<tbody>
 				<tr ng-repeat="department in departmentScenarios">
 					<td style="width: 25px; vertical-align: middle;"><ipa-checkbox is-checked="department.download" click-action="toggleDepartmentDownload(department)"></ipa-checkbox></td>
-					<td style="padding-left: 10px; vertical-align: middle;">{{ department.name }}</td>
+					<td style="padding-left: 10px; vertical-align: middle;">
+						{{ department.name }}<br>
+						<small style="color:rgba(0, 0, 0, 0.6);">Last Active: {{ dateToCalendar(department.lastModifiedOn) }}</small>
+					</td>
 					<td>
 						<select style="width: 100%; padding:4px 8px;" ng-model="department.selectedPrevious">
 							<option ng-repeat="scenario in department.previous" value={{scenario.id}}>{{scenario.name}}</option>
