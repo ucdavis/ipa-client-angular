@@ -36,6 +36,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 
 			if (localStorage.getItem("budgetDownloadSelections")) {
 				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
+				scope.isSortedByRecentActivity = JSON.parse(localStorage.getItem("budgetDownloadSorted"));
 
 				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
 			} else {
@@ -84,6 +85,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			scope.close = function() {
 				BudgetActions.toggleBudgetScenarioModal();
 				localStorage.setItem("budgetDownloadSelections", JSON.stringify(scope.budgetScenariosAccessible));
+				localStorage.setItem("budgetDownloadSorted", JSON.stringify(scope.isSortedByRecentActivity));
 			};
 
 			scope.submit = function() {

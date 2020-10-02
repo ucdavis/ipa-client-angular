@@ -30,6 +30,7 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
       scope.$watch('userWorkgroupsScenarios', function(userWorkgroupsScenarios) {
         if (localStorage.getItem("budgetComparisonDownloadSelections")) {
           scope.departmentScenarios = JSON.parse(localStorage.getItem("budgetComparisonDownloadSelections"));
+          scope.isSortedByRecentActivity = JSON.parse(localStorage.getItem("budgetComparisonDownloadSorted"));
 
           scope.downloadAllDepartments = scope.departmentScenarios.every(department => department.download === true);
         } else if (userWorkgroupsScenarios) {
@@ -88,6 +89,7 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
         scope.status = null;
         BudgetComparisonReportActions.toggleDownloadModal();
         localStorage.setItem("budgetComparisonDownloadSelections", JSON.stringify(scope.departmentScenarios));
+        localStorage.setItem("budgetComparisonDownloadSorted", JSON.stringify(scope.isSortedByRecentActivity));
       };
 
       scope.submit = function () {
