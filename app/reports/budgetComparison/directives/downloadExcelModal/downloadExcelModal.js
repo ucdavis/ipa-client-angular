@@ -1,4 +1,5 @@
 import './downloadExcelModal.css';
+import { _array_sortByProperty } from '../../../../shared/helpers/array';
 
 let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparisonReportService) {
   return {
@@ -14,6 +15,7 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
       scope.status = null;
       scope.previousYear = (parseInt(localStorage.getItem('year')) - 1).toString().yearToAcademicYear();
       scope.currentYear = localStorage.getItem('year').yearToAcademicYear();
+      scope.isSortedByRecentActivity = false;
 
       // {
       //   "DSS": {
@@ -39,12 +41,23 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
               previous: userWorkgroupsScenarios[department].previous,
               selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.fromLiveData === true) || {}).id}`,
               selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.fromLiveData === true) || {}).id}`,
+              lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[department].current.map(scenario => scenario.lastModifiedOn)),
               download: true
             }));
 
             scope.downloadAllDepartments = true;
         }
       }, true);
+
+      scope.sortDepartmentsByRecentActivity = function() {
+        if (scope.isSortedByRecentActivity === false) {
+          scope.isSortedByRecentActivity = true;
+          scope.departmentScenarios = _array_sortByProperty(scope.departmentScenarios, "lastModifiedOn", true);
+        } else {
+          scope.isSortedByRecentActivity = false;
+          scope.departmentScenarios = _array_sortByProperty(scope.departmentScenarios, "name");
+        }
+      };
 
       scope.resetDownloadSelections = function() {
         scope.departmentScenarios.forEach(departmentScenarios => {

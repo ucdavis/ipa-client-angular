@@ -1,5 +1,6 @@
 import './downloadBudgetScenarios.css';
 import { dateToCalendar } from '../../../../shared/helpers/dates';
+import { _array_sortByProperty } from '../../../../shared/helpers/array';
 
 let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService) {
 	return {
@@ -13,10 +14,21 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 		link: function (scope) {
 			scope.isDisabled = false;
 			scope.status = null;
+			scope.isSortedByRecentActivity = false;
 			// {
 			//   "DSS": [sceanrio1, 2, 3],
 			//   "Design": [...]
 			//  }
+
+			scope.sortDepartmentsByRecentActivity = function() {
+				if (scope.isSortedByRecentActivity === false) {
+					scope.isSortedByRecentActivity = true;
+					scope.budgetScenariosAccessible = _array_sortByProperty(scope.budgetScenariosAccessible, "lastModifiedOn", true);
+				} else {
+					scope.isSortedByRecentActivity = false;
+					scope.budgetScenariosAccessible = _array_sortByProperty(scope.budgetScenariosAccessible, "id");
+				}
+			};
 
 			scope.selectBudgetScenario = function(scenario, department){
 				department.selectBudgetScenario = scenario;
@@ -33,6 +45,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 						id: workgroup,
 						budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
 						selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.fromLiveData === true) || {}).id}`,
+						lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[workgroup].map(scenario => scenario.lastModifiedOn)),
 						download: true
 					}));
 

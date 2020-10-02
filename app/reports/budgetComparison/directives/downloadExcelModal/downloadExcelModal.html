@@ -30,6 +30,14 @@
 		</table> 
 	</div>
 	<div class="download-excel-modal-footer">
+		<div style="display: flex; margin-left: 8px;">
+			<ipa-checkbox
+				is-checked="isSortedByRecentActivity"
+				click-action="sortDepartmentsByRecentActivity()"
+			>
+			</ipa-checkbox>
+			<span style="margin-left: 8px;">Sort By Recent Activity</span>
+		</div>
 		<div class="download-excel-modal-footer__status">
 			<span ng-show="isDisabled">
 				<i class="glyphicon glyphicon-info-sign" style="padding-left: 10px; padding-right: 8px; color: #21a9e1;"></i> Generating Excel Download - This may take a few minutes.
