@@ -762,7 +762,6 @@ class BudgetReducers {
 									sectionGroup.assignedInstructorNames.push(instructorName);
 									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
 									sectionGroup.assignedInstructorTypeNames.push(instructorType.description);
-									// TODO is this better than accessing the above assignedInstructors list?
 									instructor.teachingAssignmentId = teachingAssignment.id;
 									instructor.sectionGroupId = sectionGroup.id;
 									instructor.instructorTypeId = instructorType.id;
@@ -833,7 +832,9 @@ class BudgetReducers {
 
 							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
 							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
-							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = _array_sortByProperty(sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId], 'teachingAssignmentId');
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = _array_sortByProperty(
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId], 'teachingAssignmentId'
+							);
 						});
 						return sectionGroupCostInstructors;
 					case ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR:
@@ -841,9 +842,15 @@ class BudgetReducers {
 						var teachingAssignmentIds = action.payload.sectionGroupCostInstructors.map((obj) => obj.teachingAssignmentId);
 						var sectionGroupCostId = newSectionGroupCostInstructors[0].sectionGroupCostId;
 						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] || [];
-						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId].concat(newSectionGroupCostInstructors)
-						.filter(instructor => ((teachingAssignmentIds.includes(instructor.teachingAssignmentId) && instructor.sectionGroupCostId) || !teachingAssignmentIds.includes(instructor.teachingAssignmentId)));
-						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = _array_sortByProperty(sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId], 'teachingAssignmentId');
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId].concat(
+							newSectionGroupCostInstructors).filter(
+								instructor => ((
+									teachingAssignmentIds.includes(instructor.teachingAssignmentId) && instructor.sectionGroupCostId)
+									|| !teachingAssignmentIds.includes(instructor.teachingAssignmentId)
+								));
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = _array_sortByProperty(
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId], 'teachingAssignmentId'
+						);
 						return sectionGroupCostInstructors;
 					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
 						var newSectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
@@ -880,7 +887,9 @@ class BudgetReducers {
 
 								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
 								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
-								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = _array_sortByProperty(sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId], 'teachingAssignmentId');
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = _array_sortByProperty(
+									sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId], 'teachingAssignmentId'
+								);
 							});
 						}
 						return sectionGroupCostInstructors;
