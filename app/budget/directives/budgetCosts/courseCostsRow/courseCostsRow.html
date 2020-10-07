@@ -1,7 +1,17 @@
 <tr>
-	<td rowspan="2" class="course-costs__table-cell-sequence">
+	<!-- Sequence and Sync Instructor -->
+	<td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="course-costs__table-cell-sequence">
 		<div class="course-costs__sequence-container">
-			{{ sectionGroupCost.sequencePattern }}
+				{{ sectionGroupCost.sequencePattern }}
+				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
+				     uib-tooltip="Update instructors from Live Data"
+				     tooltip-append-to-body="true"
+				     confirm-button="syncInstructor()"
+				     message="Update instructors?"
+				     yes="Update"
+				     no="Cancel"
+				     ng-show="!isLiveDataScenario && !isBudgetRequest && !isSubset()">
+				</div>
 		</div>
 	</td>
 	<!-- Enrollment -->
@@ -137,4 +147,27 @@
 			{{ toCurrency(sectionGroupCost.courseCostSubTotal) }}
 		</div>
 	</td>
+
+	<!-- Comments -->
+    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': divider }">
+      <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
+                  icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
+                  tooltip-message="'View Comments'"
+                  icon-class="'entypo entypo-chat'"
+                  text="'Comments'"
+                  on-click="openAddCourseCommentsModal(sectionGroupCost)">
+      </ipa-button>
+    </td>
+
+    <!-- Total -->
+    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': divider }">
+      <div class="budget-costs__total-container">
+        <div class="budget-costs__label">
+          Total
+        </div>
+        <div>
+          {{ toCurrency(sectionGroupCost.totalCost) }}
+        </div>
+      </div>
+    </td>
 </tr>

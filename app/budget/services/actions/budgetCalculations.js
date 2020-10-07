@@ -561,9 +561,9 @@ class BudgetCalculations {
 							summary.byTerm[term].readerCount += sectionGroupCost.readerCount || 0;
 							summary.byTerm[term].readerCost += sectionGroupCost.readerCost || 0;
 							summary.byTerm[term].supportCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0);
-							summary.byTerm[term].replacementCosts.overall += sectionGroupCost.overrideInstructorCost || 0;
-							summary.byTerm[term].replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost);
-							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + (sectionGroupCost.overrideInstructorCost || 0);
+							var replacementCosts = _self._calculateReplacementCost(summary.byTerm[term].replacementCosts, sectionGroupCost);
+							summary.byTerm[term].replacementCosts = replacementCosts[0];
+							summary.byTerm[term].totalCosts += (sectionGroupCost.taCost || 0) + (sectionGroupCost.readerCost || 0) + replacementCosts[1];
 
 							var units = CourseService.getUnits(sectionGroupCost) || 0;
 
@@ -613,51 +613,60 @@ class BudgetCalculations {
 					}
 				});
 			},
-			_calculateReplacementCost: function (replacementCosts, sectionGroup) {
-				var replacementCost = sectionGroup.overrideInstructorCost;
+			_calculateReplacementCost: function (replacementCosts, sectionGroupCost) {
+				// Initial overalls if not initialized yet for the term
+				replacementCosts.overall = replacementCosts.overall || 0;
+				replacementCosts.unassignedCost = replacementCosts.unassignedCost || 0;
+				replacementCosts.unassignedCount = replacementCosts.unassignedCount || 0;
+				var sectionGroupInstructorCost = 0;
 
-        var instructorTypeId = null;
+				var instructorCosts = sectionGroupCost.sectionGroupCostInstructors || [];
 
-				if (sectionGroup.overrideInstructorTypeId) {
-					instructorTypeId = sectionGroup.overrideInstructorTypeId;
-				} else if (sectionGroup.instructor && sectionGroup.instructor.instructorType && sectionGroup.instructor.instructorType.id) {
-					instructorTypeId = sectionGroup.instructor.instructorType.id;
-				} else {
-					instructorTypeId = sectionGroup.instructorTypeId;
-				}
-
-				var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroup.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroup.instructorId];
-
-				// Course has no instructor
-				if (!instructorTypeId && !instructor) {
-					replacementCosts.unassignedCost = replacementCosts.unassignedCost || 0;
-					replacementCosts.unassignedCost += replacementCost;
-					replacementCosts.unassignedCount = replacementCosts.unassignedCount || 0;
+				if (instructorCosts.length < 1){
 					replacementCosts.unassignedCount += 1;
-
-					return replacementCosts;
 				}
 
-				if (!instructorTypeId) {
-					instructorTypeId = this._calculateInstructorType(instructor.id).id;
+				for (var i = 0; i < instructorCosts.length; i++){
+					var instructorCost = instructorCosts[i];
+					var cost = 0;
+					if (instructorCost.cost){
+						if (typeof instructorCost.cost === "string"){
+							cost = parseFloat(instructorCost.cost.replace(/[^0-9.]/g,''));
+						} else {
+							cost = instructorCost.cost;
+						}
+					} else if (instructorCost.overrideInstructorCost){
+						cost = instructorCost.overrideInstructorCost;
+					}
+					replacementCosts.overall += cost;
+					sectionGroupInstructorCost += cost;
+
+					if (instructorCost.instructorTypeId || instructorCost.instructorId){
+						var instructorTypeId = instructorCost.instructorTypeId;
+
+						if (!instructorTypeId){
+							instructorTypeId = this._calculateInstructorType(instructorCost.instructorId).id;
+						}
+						if (instructorTypeId){
+							if (replacementCosts.instructorTypeIds.indexOf(instructorTypeId) != -1){
+								replacementCosts.instructorTypeCount[instructorTypeId] += 1;
+							} else {
+								replacementCosts.instructorTypeIds.push(instructorTypeId);
+								replacementCosts.instructorTypeCount[instructorTypeId] = 1;
+							}
+							replacementCosts.byInstructorTypeId[instructorTypeId] = replacementCosts.byInstructorTypeId[instructorTypeId] || 0;
+							replacementCosts.byInstructorTypeId[instructorTypeId] += cost;
+						} else {
+							replacementCosts.unassignedCost += cost;
+							replacementCosts.unassignedCount += 1;
+						}
+					}
+					else {
+						replacementCosts.unassignedCost += cost;
+					}
 				}
 
-				var index = replacementCosts.instructorTypeIds.indexOf(instructorTypeId);
-
-				if (index == -1) {
-					replacementCosts.instructorTypeIds.push(instructorTypeId);
-					replacementCosts.instructorTypeCount[instructorTypeId] = 1;
-				} else {
-					replacementCosts.instructorTypeCount[instructorTypeId] += 1;
-				}
-
-				replacementCosts.byInstructorTypeId[instructorTypeId] = replacementCosts.byInstructorTypeId[instructorTypeId] || 0;
-
-				if (!replacementCost) { return replacementCosts; }
-				// Add cost
-				replacementCosts.byInstructorTypeId[instructorTypeId] += replacementCost;
-
-				return replacementCosts;
+				return [replacementCosts, sectionGroupInstructorCost];
 			},
 			_combineReplacementCost: function (replacementCosts, termCosts) {
 				termCosts.instructorTypeIds.forEach(function (instructorTypeId) {

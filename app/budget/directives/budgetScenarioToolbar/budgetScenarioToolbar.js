@@ -3,7 +3,7 @@ import { dateToCalendar } from '../../../shared/helpers/dates';
 
 import './budgetScenarioToolbar.css';
 
-let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions, BudgetService) {
+let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScope, BudgetActions, BudgetService, BudgetReducers) {
 	return {
 		restrict: 'E', // Use this via an element selector <budget-scenario-dropdown></budget-scenario-dropdown>
 		template: require('./budgetScenarioToolbar.html'), // directive html found here:
@@ -31,6 +31,34 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 				scope.$apply();
 			};
 
+			scope.areAddditionalInstructorsUpToDate = function() {
+				var res = true;
+				scope.state.calculatedScheduleCosts.sectionGroupCosts.forEach(function(sectionGroupCost){
+					if (sectionGroupCost.sectionGroup){
+						var sectionGroupCostInstructors = (BudgetReducers._state.sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || []);
+						var currentInstructorIds = sectionGroupCostInstructors.map(function(instructor){
+							return instructor.instructorId;
+						});
+
+						var currentTypeIdsCount = {};
+						for (var sectionGroupCostInstructor of sectionGroupCostInstructors){
+							if (!sectionGroupCostInstructor.instructorId){
+								if (currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId]){
+									currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId] += 1;
+								} else {
+									currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId] = 1;
+								}
+							}
+						}
+
+						const instructors = sectionGroupCost.sectionGroup.assignedInstructors.filter(instructor => (!currentInstructorIds.includes(instructor.id) && (instructor.id ? true : !currentTypeIdsCount[instructor.instructorTypeId] || currentTypeIdsCount[instructor.instructorTypeId]-- < 1)));
+						if (instructors.length !== 0){
+							res = false;
+						}
+					}
+				});
+				return res;
+			};
 			scope.openSupportCostModal = function() {
 				BudgetActions.toggleSupportCostModal();
 			};

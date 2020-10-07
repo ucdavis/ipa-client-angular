@@ -134,6 +134,37 @@ class BudgetActions {
 				const scenarioTrackedChanges = BudgetReducers._state.calculatedScheduleCosts.trackedChanges;
 				const scenarioSectionGroupCosts = BudgetReducers._state.calculatedScheduleCosts.sectionGroupCosts;
 
+				scenarioSectionGroupCosts.forEach( sectionGroupCost => {
+					if (sectionGroupCost.sectionGroup){
+						var sectionGroupCostInstructors = (BudgetReducers._state.sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || []);
+						var currentInstructorIds = sectionGroupCostInstructors.map(function(instructor){
+							return instructor.instructorId;
+						});
+
+						var currentTypeIdsCount = {};
+						for (var sectionGroupCostInstructor of sectionGroupCostInstructors){
+							if (!sectionGroupCostInstructor.instructorId){
+								if (currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId]){
+									currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId] += 1;
+								} else {
+									currentTypeIdsCount[sectionGroupCostInstructor.instructorTypeId] = 1;
+								}
+							}
+						}
+
+						const instructors = sectionGroupCost.sectionGroup.assignedInstructors.map(function(liveDataInstructor){
+							return {
+								instructorId: liveDataInstructor.id,
+								instructorTypeId: liveDataInstructor.instructorTypeId,
+								sectionGroupCostId: sectionGroupCost.id
+							};
+						}).filter(instructor => (!currentInstructorIds.includes(instructor.instructorId) && (instructor.instructorId ? true : !currentTypeIdsCount[instructor.instructorTypeId] || currentTypeIdsCount[instructor.instructorTypeId]-- < 1)));
+						if (instructors.length > 0){
+							this.createSectionGroupCostInstructors(instructors);
+						}
+					}
+				});
+
 				scenarioTrackedChanges.forEach(change => {
 					let sectionGroupCost = scenarioSectionGroupCosts.find(sectionGroupCost => change.sectionGroupCostId === sectionGroupCost.id);
 					let originalSectionGroupCost = JSON.parse(JSON.stringify(sectionGroupCost)); // to revert in case of failure
@@ -459,6 +490,69 @@ class BudgetActions {
 					ScheduleCostCalculations.calculateScheduleCosts();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not add course.", type: "ERROR" });
+				});
+			},
+			createSectionGroupCostInstructors: function (sectionGroupCostInstructors, isLiveData) {
+				var sectionGroupCostId = sectionGroupCostInstructors[0].sectionGroupCostId;
+				BudgetService.createSectionGroupCostInstructors(sectionGroupCostId, sectionGroupCostInstructors).then(function (newSectionGroupCostInstructors) {
+					var action = {
+						type: ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR,
+						payload: {
+							sectionGroupCostInstructors: newSectionGroupCostInstructors
+						}
+					};
+					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateSectionGroups();
+					BudgetCalculations.calculateTotalCost();
+					ScheduleCostCalculations.calculateScheduleCosts();
+					var instructorMsg = sectionGroupCostInstructors.length > 1 ? 'instructors' : 'instructor';
+					if (isLiveData){
+						$rootScope.$emit('toast', { message: `Updated additional ${instructorMsg}.`, type: "SUCCESS" });
+					} else {
+						$rootScope.$emit('toast', { message: `Created additional ${instructorMsg}.`, type: "SUCCESS" });
+					}
+				}, function () {
+					var instructorMsg = sectionGroupCostInstructors.length > 1 ? 'instructors' : 'instructor';
+					if (isLiveData){
+						$rootScope.$emit('toast', { message: `Failed to update additional ${instructorMsg}.`, type: "ERROR" });
+					} else {
+						$rootScope.$emit('toast', { message: `Failed to create additional ${instructorMsg}.`, type: "ERROR" });
+					}
+				});
+			},
+			updateSectionGroupCostInstructor: function (sectionGroupCostInstructor) {
+				BudgetService.updateSectionGroupCostInstructor(sectionGroupCostInstructor.sectionGroupCostId, sectionGroupCostInstructor).then(function (newSectionGroupCostInstructor) {
+					var action = {
+						type: ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR,
+						payload: {
+							sectionGroupCostInstructor: newSectionGroupCostInstructor
+						}
+					};
+					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateSectionGroups();
+					BudgetCalculations.calculateTotalCost();
+					ScheduleCostCalculations.calculateScheduleCosts();
+					$rootScope.$emit('toast', { message: "Updated instructor cost.", type: "SUCCESS" });
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not update instructor cost.", type: "ERROR" });
+				});
+			},
+			deleteSectionGroupCostInstructor: function (sectionGroupCostInstructor){
+				BudgetService.deleteSectionGroupCostInstructor(sectionGroupCostInstructor).then(function (removedSectionGroupCostInstructorId) {
+					var action = {
+						type: ActionTypes.DELETE_SECTION_GROUP_COST_INSTRUCTOR,
+						payload: {
+							removedSectionGroupCostInstructorId: removedSectionGroupCostInstructorId,
+							sectionGroupCostId: sectionGroupCostInstructor.sectionGroupCostId
+						}
+					};
+					BudgetReducers.reduce(action);
+					BudgetCalculations.calculateSectionGroups();
+					BudgetCalculations.calculateTotalCost();
+					ScheduleCostCalculations.calculateScheduleCosts();
+					$rootScope.$emit('toast', { message: "Deleted instructor.", type: "SUCCESS" });
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not delete instructor.", type: "ERROR" });
 				});
 			},
 			asignInstructorType: function(instructorCost) {

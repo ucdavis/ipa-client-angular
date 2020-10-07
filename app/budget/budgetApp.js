@@ -36,8 +36,10 @@ import courseList from "./directives/courseList/courseList.js";
 import budgetCosts from './directives/budgetCosts/budgetCosts.js';
 import budgetCostsPrint from './directives/budgetCosts/budgetCostsPrint/budgetCostsPrint.js';
 import courseCostsRow from './directives/budgetCosts/courseCostsRow/courseCostsRow.js';
-import instructorCostsRow from './directives/budgetCosts/instructorCostsRow/instructorCostsRow.js';
-import instructorAssignmentDropdown from './directives/budgetCosts/instructorCostsRow/instructorAssignmentDropdown/instructorAssignmentDropdown.js';
+import instructorCosts from './directives/budgetCosts/instructorCosts/instructorCosts.js';
+import addInstructorCost from './directives/budgetCosts/addInstructorCost/addInstructorCost.js';
+import addInstructorAssignmentDropdown from './directives/budgetCosts/addInstructorCost/addInstructorAssignmentDropdown/addInstructorAssignmentDropdown.js';
+import editInstructorAssignmentDropdown from './directives/budgetCosts/instructorCosts/editInstructorAssignmentDropdown/editInstructorAssignmentDropdown.js';
 
 import addBudgetScenario from "./directives/modals/addBudgetScenario/addBudgetScenario.js";
 import addCourseComments from "./directives/modals/addCourseComments/addCourseComments.js";
@@ -108,8 +110,10 @@ const budgetApp = angular // eslint-disable-line no-undef
   .directive("budgetScenarioDropdown", budgetScenarioDropdown)
   .directive("budgetCosts", budgetCosts)
   .directive("courseCostsRow", courseCostsRow)
-  .directive("instructorCostsRow", instructorCostsRow)
-  .directive("instructorAssignmentDropdown", instructorAssignmentDropdown)
+  .directive("instructorCosts", instructorCosts)
+  .directive("addInstructorCost", addInstructorCost)
+  .directive("addInstructorAssignmentDropdown", addInstructorAssignmentDropdown)
+  .directive("editInstructorAssignmentDropdown", editInstructorAssignmentDropdown)
   .directive("lineItems", lineItems)
   .directive("lineItemDropdown", lineItemDropdown)
   .directive("budgetSummary", budgetSummary)
@@ -168,7 +172,10 @@ const budgetApp = angular // eslint-disable-line no-undef
     OPEN_ADD_COURSE_MODAL: "OPEN_ADD_COURSE_MODAL",
     UPDATE_COURSE_TAG: "UPDATE_COURSE_TAG",
     UPDATE_SYNC_STATUS: "UPDATE_SYNC_STATUS",
-    TOGGLE_DOWNLOAD_BUDGET_SCENARIOS: "TOGGLE_DOWNLOAD_BUDGET_SCENARIOS"
+    TOGGLE_DOWNLOAD_BUDGET_SCENARIOS: "TOGGLE_DOWNLOAD_BUDGET_SCENARIOS",
+    CREATE_SECTION_GROUP_COST_INSTRUCTOR: "CREATE_SECTION_GROUP_COST_INSTRUCTOR",
+    UPDATE_SECTION_GROUP_COST_INSTRUCTOR: "UPDATE_SECTION_GROUP_COST_INSTRUCTOR",
+    DELETE_SECTION_GROUP_COST_INSTRUCTOR: "DELETE_SECTION_GROUP_COST_INSTRUCTOR"
   });
 
 export default budgetApp;

@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 class BudgetReducers {
 	constructor ($rootScope, $log, BudgetSelectors, ActionTypes) {
 		return {
@@ -343,6 +345,23 @@ class BudgetReducers {
 						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
+				}
+			},
+			reasonCategoryReducers: function (action, reasonCategories) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						reasonCategories = {
+							ids: [],
+							list: []
+						};
+
+						action.payload.reasonCategories.forEach(function(reasonCategory) {
+							reasonCategories.ids.push(reasonCategory.id);
+							reasonCategories.list[reasonCategory.id] = reasonCategory;
+						});
+						return reasonCategories;
+					default:
+						return reasonCategories;
 				}
 			},
 			assignedInstructorReducers: function (action, assignedInstructors) {
@@ -727,6 +746,7 @@ class BudgetReducers {
 							sectionGroup.assignedInstructorNames = [];
 							sectionGroup.assignedInstructorTypeIds = [];
 							sectionGroup.assignedInstructorTypeNames = [];
+							sectionGroup.assignedInstructors = [];
 
 							// calculate assignedInstructors
 							teachingAssignments.ids.forEach(function(teachingAssignmentId) {
@@ -736,16 +756,29 @@ class BudgetReducers {
 
 								if (teachingAssignment.instructorId) {
 									sectionGroup.assignedInstructorIds.push(teachingAssignment.instructorId);
-									var instructor = assignedInstructors.list[teachingAssignment.instructorId];
+									let instructor = { ...assignedInstructors.list[teachingAssignment.instructorId]};
 									var instructorName = instructor.lastName + ", " + instructor.firstName;
 									var instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
 									sectionGroup.assignedInstructorNames.push(instructorName);
 									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
 									sectionGroup.assignedInstructorTypeNames.push(instructorType.description);
+									instructor.teachingAssignmentId = teachingAssignment.id;
+									instructor.sectionGroupId = sectionGroup.id;
+									instructor.instructorTypeId = instructorType.id;
+									instructor.instructorTypeDescription = instructorType.description;
+									instructor.instructorName = instructor.firstName + ' ' + instructor.lastName;
+									sectionGroup.assignedInstructors.push(instructor);
 								} else if (teachingAssignment.instructorTypeId > 0 && !(teachingAssignment.instructorId)) {
 									sectionGroup.assignedInstructorTypeIds.push(teachingAssignment.instructorTypeId);
 									var instructorType = instructorTypes.list[teachingAssignment.instructorTypeId];
 									sectionGroup.assignedInstructorTypeNames.push(instructorType.description);
+									var instructor = {
+										instructorTypeId: teachingAssignment.instructorTypeId,
+										sectionGroupId: sectionGroup.id,
+										instructorTypeDescription: instructorType.description,
+										teachingAssignmentId: teachingAssignment.id
+									};
+									sectionGroup.assignedInstructors.push(instructor);
 								}
 							});
 							// Add to payload
@@ -754,7 +787,6 @@ class BudgetReducers {
 							scheduleSectionGroups.uniqueKeys.push(uniqueKey);
 							scheduleSectionGroups.list[uniqueKey] = sectionGroup;
 						});
-
 						return scheduleSectionGroups;
 					}
 					default:
@@ -787,6 +819,82 @@ class BudgetReducers {
 						return sectionGroupCostComments;
 					default:
 						return sectionGroupCostComments;
+				}
+			},
+			sectionGroupCostInstructorReducers: function (action, sectionGroupCostInstructors) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						sectionGroupCostInstructors = {
+							bySectionGroupCostId : {}
+						};
+
+						action.payload.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
+
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = _array_sortByProperty(
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId], 'teachingAssignmentId'
+							);
+						});
+						return sectionGroupCostInstructors;
+					case ActionTypes.CREATE_SECTION_GROUP_COST_INSTRUCTOR:
+						var newSectionGroupCostInstructors = action.payload.sectionGroupCostInstructors;
+						var teachingAssignmentIds = action.payload.sectionGroupCostInstructors.map((obj) => obj.teachingAssignmentId);
+						var sectionGroupCostId = newSectionGroupCostInstructors[0].sectionGroupCostId;
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] || [];
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId].concat(
+							newSectionGroupCostInstructors).filter(
+								instructor => ((
+									teachingAssignmentIds.includes(instructor.teachingAssignmentId) && instructor.sectionGroupCostId)
+									|| !teachingAssignmentIds.includes(instructor.teachingAssignmentId)
+								));
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = _array_sortByProperty(
+							sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId], 'teachingAssignmentId'
+						);
+						return sectionGroupCostInstructors;
+					case ActionTypes.UPDATE_SECTION_GROUP_COST_INSTRUCTOR:
+						var newSectionGroupCostInstructor = action.payload.sectionGroupCostInstructor;
+						var newSectionGroupCostInstructors = [];
+
+						sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId] || [];
+
+						sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId].forEach(function(sectionGroupCostInstructor){
+							if (sectionGroupCostInstructor.id == newSectionGroupCostInstructor.id){
+								newSectionGroupCostInstructors.push(newSectionGroupCostInstructor);
+							} else {
+								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
+							}
+						});
+						newSectionGroupCostInstructors = _array_sortByProperty(newSectionGroupCostInstructors, 'teachingAssignmentId');
+						sectionGroupCostInstructors.bySectionGroupCostId[newSectionGroupCostInstructor.sectionGroupCostId] = newSectionGroupCostInstructors;
+						return sectionGroupCostInstructors;
+					case ActionTypes.DELETE_SECTION_GROUP_COST_INSTRUCTOR:
+						var removedSectionGroupCostInstructorId = action.payload.removedSectionGroupCostInstructorId;
+						var sectionGroupCostId = action.payload.sectionGroupCostId;
+						var newSectionGroupCostInstructors = [];
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] || [];
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId].forEach(function(sectionGroupCostInstructor){
+							if (sectionGroupCostInstructor.id != removedSectionGroupCostInstructorId){
+								newSectionGroupCostInstructors.push(sectionGroupCostInstructor);
+							}
+						});
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostId] = newSectionGroupCostInstructors;
+						newSectionGroupCostInstructors = _array_sortByProperty(newSectionGroupCostInstructors, 'teachingAssignmentId');
+						return sectionGroupCostInstructors;
+					case ActionTypes.CREATE_BUDGET_SCENARIO:
+						if (action.payload.sectionGroupCostInstructors){
+							action.payload.sectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
+
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
+								sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = _array_sortByProperty(
+									sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId], 'teachingAssignmentId'
+								);
+							});
+						}
+						return sectionGroupCostInstructors;
+					default:
+						return sectionGroupCostInstructors;
 				}
 			},
 			lineItemCommentReducers: function (action, lineItemComments) {
@@ -1131,7 +1239,9 @@ class BudgetReducers {
 				newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
+				newState.reasonCategories = scope.reasonCategoryReducers(action, scope._state.reasonCategories);
 				newState.sectionGroupCostComments = scope.sectionGroupCostCommentReducers(action, scope._state.sectionGroupCostComments);
+				newState.sectionGroupCostInstructors = scope.sectionGroupCostInstructorReducers(action, scope._state.sectionGroupCostInstructors);
 				newState.scheduleSectionGroups = scope.scheduleSectionGroupReducers(action, scope._state.scheduleSectionGroups);
 				newState.assignedInstructors = scope.assignedInstructorReducers(action, scope._state.assignedInstructors);
 				newState.activeInstructors = scope.activeInstructorReducers(action, scope._state.activeInstructors);
@@ -1163,6 +1273,8 @@ class BudgetReducers {
 				newPageState.budget = newState.budget;
 				newPageState.ui = newState.ui;
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
+				newPageState.reasonCategories = _array_sortByProperty(Object.values(newState.reasonCategories.list), ["description"]);
+
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
 				newPageState.tags = newState.tags;

@@ -1,0 +1,8 @@
+.budget-comparison__header-cell-left {
+	text-align: left;
+	padding-left: 20px;
+}
+
+.budget-comparison__header-cell-right {
+	text-align: right;
+}

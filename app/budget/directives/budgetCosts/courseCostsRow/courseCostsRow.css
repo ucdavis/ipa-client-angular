@@ -11,10 +11,11 @@
 .course-costs__sequence-container {
 	width: 100%;
 	background-color: #f8f8f8;
-	height: 128px;
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
 }
 
 .course-costs__number-input {

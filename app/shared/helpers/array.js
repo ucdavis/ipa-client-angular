@@ -152,3 +152,21 @@ export function _array_swap_positions(array, indexA, indexB) {
 
 	return array;
 }
+
+
+export function _array_compare_objects_by_key(arrayA, keyA, arrayB, keyB) {
+	if (!arrayA || !arrayB || !keyA || !keyB){
+		return false;
+	}
+	const arrayAIds = arrayA.map(function(item){
+		return item[keyA];
+	});
+	const arrayBIds = arrayB.map(function(item){
+		return item[keyB];
+	});
+	if (arrayAIds.length !== arrayBIds.length){
+		return false;
+	}
+	const res = arrayAIds.reduce((acc, cur) => (arrayBIds.includes(cur) && acc ), true);
+	return res;
+}

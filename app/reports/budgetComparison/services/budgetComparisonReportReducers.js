@@ -5,6 +5,7 @@ class BudgetComparisonReportReducers {
 				budget: {},
 				courses: {},
 				sectionGroups: {},
+				sectionGroupCostInstructors: {},
 				sections: {},
 				instructorTypes: {},
 				teachingAssignments: {},
@@ -150,6 +151,26 @@ class BudgetComparisonReportReducers {
 						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
+				}
+			},
+			_sectionGroupCostInstructorReducers: function (action, sectionGroupCostInstructors) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return  {};
+					case ActionTypes.GET_PREVIOUS_SECTION_GROUP_COST_INSTRUCTORS:
+						sectionGroupCostInstructors.previous = {
+							instructors: action.payload.sectionGroupCostInstructors,
+							teachingAssignmentIds: action.payload.teachingAssignmentIds
+						};
+						return sectionGroupCostInstructors;
+					case ActionTypes.GET_CURRENT_SECTION_GROUP_COST_INSTRUCTORS:
+						sectionGroupCostInstructors.current = {
+							instructors: action.payload.sectionGroupCostInstructors,
+							teachingAssignmentIds: action.payload.teachingAssignmentIds
+						};
+						return sectionGroupCostInstructors;
+					default:
+						return sectionGroupCostInstructors;
 				}
 			},
 			_budgetScenarioReducers: function (action, budgetScenarios) {
@@ -299,6 +320,7 @@ class BudgetComparisonReportReducers {
 				newState.instructorTypeCosts = scope._instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.instructorCosts = scope._instructorCostReducers(action, scope._state.instructorCosts);
 				newState.sectionGroupCosts = scope._sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
+				newState.sectionGroupCostInstructors = scope._sectionGroupCostInstructorReducers(action, scope._state.sectionGroupCostInstructors);
 				newState.users = scope._userReducers(action, scope._state.users);
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 				newState.userWorkgroupsScenarios = scope._userWorkgroupsScenariosReducers(action, scope._state.userWorkgroupsScenarios);
