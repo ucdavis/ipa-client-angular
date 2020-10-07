@@ -1,59 +1,17 @@
 <div class="budget-costs">
   <h3
-    ng-if="isSnapshot"
+    ng-if="isBudgetRequest"
     style="text-align: center; color: #5b616b"
   >
-    SNAPSHOT
+    BUDGET REQUEST
   </h3>
   <ipa-tabs tab-names="termNav.allTabs"
             active-tab="termNav.activeTab"
             select-tab="setActiveTerm"
             slim="true">
 
-    <!-- Fixed Table Header-->
-    <table class="budget-costs__table budget-costs__table--header">
-      <colgroup>
-        <col style="width: 5%;">
-        <col style="width: 10%;">
-        <col style="width: 10%;">
-        <col style="width: 10%;">
-        <col style="width: 10%;">
-        <col style="width: 10%;">
-        <col style="width: 10%;">
-        <col style="width: 10%;">
-        <col style="width: 12%;">
-        <col style="width: 6%;">
-      </colgroup>
-      <thead>
-        <tr>
-          <th class="budget-costs__table-header"></th> <!-- Spacing for sequence number -->
-          <th class="budget-costs__table-header">
-            <div>Enrollment /</div>
-            <div>Instructor</div>
-          </th>
-          <th class="budget-costs__table-header">Sections</th>
-          <th class="budget-costs__table-header">
-            <div>TAs /</div>
-            <div>Original Instructor</div>
-          </th>
-          <th class="budget-costs__table-header">TA Cost</th>
-          <th class="budget-costs__table-header">
-            <div>Readers /</div>
-            <div>Reason</div>
-          </th>
-          <th class="budget-costs__table-header">Reader Cost</th>
-          <th class="budget-costs__table-header">
-            <div>Support Cost /</div>
-            <div>Instructor Cost</div>
-          </th>
-          <th class="budget-costs__table-header">Comments</th>
-          <th class="budget-costs__table-header">Total</th>
-        </tr>
-      </thead>
-    </table>
-
     <!-- Scrollable Area -->
-    <div class="budget-costs__scrollable-area"> 
+    <div class="budget-costs__scrollable-area">
       <div class="budget-costs__main-container">
 
         <div class="budget-costs__rows-container">
@@ -67,7 +25,7 @@
                 </div>
               </span>
             </div>
-            <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
+            <div ng-repeat="sectionGroupCost in course.sectionGroupCosts" ng-init="last = $last">
               <table class="budget-costs__table">
                 <thead>
                   <colgroup>
@@ -79,61 +37,39 @@
                     <col style="width: 10%;">
                     <col style="width: 10%;">
                     <col style="width: 10%;">
+                    <col style="width: 12%;">
+                    <col style="width: 6%;">
                   </colgroup>
                 </thead>
                 <tbody>
-                  <tr course-costs-row
-                      section-group-cost="sectionGroupCost"
-                      is-live-data-scenario="isLiveDataScenario"
-                      is-snapshot="isSnapshot">
-                  </tr>
                   <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
-                      instructor-costs-row
+                    course-costs-row
+                    section-group-cost="sectionGroupCost"
+                    is-live-data-scenario="isLiveDataScenario"
+                    instructor-count="sectionGroupCost.sectionGroupCostInstructors.length"
+                    is-budget-request="isBudgetRequest">
+                  </tr>
+                  <tr divider="(course.sectionGroupCosts.length > 1 && $last == true && !last)"
+                      ng-repeat="instructor in sectionGroupCost.sectionGroupCostInstructors"
+                      instructor-costs
+                      instructor="instructor"
                       section-group-cost="sectionGroupCost"
+                      is-budget-request="isBudgetRequest"
+                      is-live-data="isLiveDataScenario"
+                      is-first="$first"
                       instructor-assignment-options="instructorAssignmentOptions"
                       regular-instructor-assignment-options="regularInstructorAssignmentOptions"
-                      is-live-data-scenario="isLiveDataScenario"
-                      is-snapshot="isSnapshot">
+                      reason-categories="reasonCategories"
+                  >
                   </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="budget-costs__shared-container">
-          <div ng-repeat="course in scheduleCosts.byTerm[termNav.activeTerm] track by course.uniqueKey">
-            <div class="budget-costs__course-title-space"></div>
-            <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-              <table class="budget-costs__table">
-                <colgroup>
-                  <col style="width: 70%;">
-                  <col style="width: 30%;">
-                </colgroup>
-                <tbody>
-                  <tr>
-                    <!-- Comments -->
-                    <td class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
-                      <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
-                                  icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
-                                  tooltip-message="(isSnapshot && sectionGroupCost.commentCount == 0) ? 'No comments to show' : 'View Comments'"
-                                  icon-class="'entypo entypo-chat'"
-                                  text="'Comments'"
-                                  is-disabled="isSnapshot && sectionGroupCost.commentCount == 0"
-                                  on-click="openAddCourseCommentsModal(sectionGroupCost)">
-                      </ipa-button>
-                    </td>
-                    <!-- Total -->
-                    <td class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': (course.sectionGroupCosts.length > 1 && $last == false) }">
-                      <div class="budget-costs__total-container">
-                        <div class="budget-costs__label">
-                          Total
-                        </div>
-                        <div>
-                          {{ toCurrency(sectionGroupCost.totalCost) }}
-                        </div>
-                      </div>
-                    </td>
+                  <tr divider="(course.sectionGroupCosts.length > 1 && $last == false)"
+                      add-instructor-cost
+                      section-group-cost="sectionGroupCost"
+                      instructor-assignment-options="instructorAssignmentOptions"
+                      is-live-data="isLiveDataScenario"
+                      is-budget-request="isBudgetRequest"
+                      instructor-count="sectionGroupCost.sectionGroupCostInstructors.length"
+                  >
                   </tr>
                 </tbody>
               </table>

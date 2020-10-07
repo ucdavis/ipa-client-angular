@@ -1,7 +1,17 @@
 <tr>
-	<td rowspan="2" class="course-costs__table-cell-sequence">
+	<!-- Sequence and Sync Instructor -->
+	<td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="course-costs__table-cell-sequence">
 		<div class="course-costs__sequence-container">
-			{{ sectionGroupCost.sequencePattern }}
+				{{ sectionGroupCost.sequencePattern }}
+				<div class="glyphicon glyphicon-repeat instructor-costs__revert-ui"
+				     uib-tooltip="Update instructors from Live Data"
+				     tooltip-append-to-body="true"
+				     confirm-button="syncInstructor()"
+				     message="Update instructors?"
+				     yes="Update"
+				     no="Cancel"
+				     ng-show="!isLiveDataScenario && !isBudgetRequest && !isSubset()">
+				</div>
 		</div>
 	</td>
 	<!-- Enrollment -->
@@ -14,9 +24,9 @@
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.enrollment"
 				           on-update="updateSectionGroupCost(sectionGroupCost)"
-				           ng-show="!isLiveDataScenario && !isSnapshot">
+				           ng-show="!isLiveDataScenario && !isBudgetRequest">
 				</ipa-input>
-				<div ng-show="isLiveDataScenario || isSnapshot">
+				<div ng-show="isLiveDataScenario || isBudgetRequest">
 					{{ sectionGroupCost.enrollment }}
 				</div>
 			</div>
@@ -28,7 +38,7 @@
 			     message="Update to schedule total seats of {{ !!(sectionGroupCost.sectionGroup.totalSeats) ? sectionGroupCost.sectionGroup.totalSeats : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!isSnapshot && sectionGroupCost.enrollment != sectionGroupCost.sectionGroup.totalSeats && sectionGroupCost.sectionGroup">
+			     ng-show="!isBudgetRequest && sectionGroupCost.enrollment != sectionGroupCost.sectionGroup.totalSeats && sectionGroupCost.sectionGroup">
 			</div>
 		</div>
 	</td>
@@ -38,7 +48,7 @@
 			Sections
 		</div>
 		<div class="course-costs__edit-container">
-			<div ng-show="!isLiveDataScenario && !isSnapshot" class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario && !isBudgetRequest" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.sectionCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -51,9 +61,9 @@
 			     message="Update to schedule section count of {{ !!(sectionGroupCost.sectionGroup.sectionCount) ? sectionGroupCost.sectionGroup.sectionCount : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!isSnapshot && sectionGroupCost.sectionCount != sectionGroupCost.sectionGroup.sectionCount && sectionGroupCost.sectionGroup">
+			     ng-show="!isBudgetRequest && sectionGroupCost.sectionCount != sectionGroupCost.sectionGroup.sectionCount && sectionGroupCost.sectionGroup">
 			</div>
-			<div ng-show="isLiveDataScenario || isSnapshot">
+			<div ng-show="isLiveDataScenario || isBudgetRequest">
 				{{ sectionGroupCost.sectionCount }}
 			</div>
 		</div>
@@ -64,7 +74,7 @@
 			TAs
 		</div>
 		<div class="course-costs__edit-container">
-			<div ng-show="!isLiveDataScenario && !isSnapshot" class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario && !isBudgetRequest" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.taCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -77,9 +87,9 @@
 			     message="Update to schedule TA count of {{ !!(sectionGroupCost.sectionGroup.teachingAssistantAppointments) ? sectionGroupCost.sectionGroup.teachingAssistantAppointments : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!isSnapshot && sectionGroupCost.taCount != sectionGroupCost.sectionGroup.teachingAssistantAppointments && sectionGroupCost.sectionGroup">
+			     ng-show="!isBudgetRequest && sectionGroupCost.taCount != sectionGroupCost.sectionGroup.teachingAssistantAppointments && sectionGroupCost.sectionGroup">
 			</div>
-			<div ng-show="isLiveDataScenario || isSnapshot">
+			<div ng-show="isLiveDataScenario || isBudgetRequest">
 				{{ sectionGroupCost.taCount || 0 }}
 			</div>
 		</div>
@@ -99,7 +109,7 @@
 			Readers
 		</div>
 		<div class="course-costs__edit-container">
-			<div ng-show="!isLiveDataScenario && !isSnapshot" class="course-costs__number-input">
+			<div ng-show="!isLiveDataScenario && !isBudgetRequest" class="course-costs__number-input">
 				<ipa-input mode="'number'"
 				           value="sectionGroupCost.readerCount"
 				           on-update="updateSectionGroupCost(sectionGroupCost)">
@@ -112,9 +122,9 @@
 			     message="Update to schedule reader count of {{ !!(sectionGroupCost.readerCount) ? sectionGroupCost.readerCount : 'none' }}?"
 			     yes="Update"
 			     no="Cancel"
-			     ng-show="!isSnapshot && sectionGroupCost.readerCount != sectionGroupCost.sectionGroup.readerAppointments && sectionGroupCost.sectionGroup">
+			     ng-show="!isBudgetRequest && sectionGroupCost.readerCount != sectionGroupCost.sectionGroup.readerAppointments && sectionGroupCost.sectionGroup">
 			</div>
-			<div ng-show="isLiveDataScenario || isSnapshot">
+			<div ng-show="isLiveDataScenario || isBudgetRequest">
 				{{ sectionGroupCost.readerCount || 0 }}
 			</div>
 		</div>
@@ -137,4 +147,27 @@
 			{{ toCurrency(sectionGroupCost.courseCostSubTotal) }}
 		</div>
 	</td>
+
+	<!-- Comments -->
+    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-comments" ng-class="{ 'budget-costs__divider': divider }">
+      <ipa-button superscript="sectionGroupCost.commentCount > 0 ? sectionGroupCost.commentCount : ''"
+                  icon-color="sectionGroupCost.commentCount > 0 ? '' : 'gray'"
+                  tooltip-message="'View Comments'"
+                  icon-class="'entypo entypo-chat'"
+                  text="'Comments'"
+                  on-click="openAddCourseCommentsModal(sectionGroupCost)">
+      </ipa-button>
+    </td>
+
+    <!-- Total -->
+    <td rowspan="{{ (instructorCount || 0) + (isLiveDataScenario ? 2 : 3) }}" class="budget-costs__table-cell-total" ng-class="{ 'budget-costs__divider': divider }">
+      <div class="budget-costs__total-container">
+        <div class="budget-costs__label">
+          Total
+        </div>
+        <div>
+          {{ toCurrency(sectionGroupCost.totalCost) }}
+        </div>
+      </div>
+    </td>
 </tr>

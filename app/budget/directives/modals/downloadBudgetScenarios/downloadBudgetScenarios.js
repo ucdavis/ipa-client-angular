@@ -1,5 +1,6 @@
 import './downloadBudgetScenarios.css';
 import { dateToCalendar } from '../../../../shared/helpers/dates';
+import { _array_sortByProperty } from '../../../../shared/helpers/array';
 
 let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService) {
 	return {
@@ -13,18 +14,68 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 		link: function (scope) {
 			scope.isDisabled = false;
 			scope.status = null;
+			scope.isSortedByRecentActivity = false;
 			// {
 			//   "DSS": [sceanrio1, 2, 3],
 			//   "Design": [...]
 			//  }
-			scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios).map(workgroup => ({
-				id: workgroup,
-				budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
-				selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.name === "Live Data") || {}).id}`
-			}));
+
+			scope.sortDepartmentsByRecentActivity = function() {
+				if (scope.isSortedByRecentActivity === false) {
+					scope.isSortedByRecentActivity = true;
+					scope.budgetScenariosAccessible = _array_sortByProperty(scope.budgetScenariosAccessible, "lastModifiedOn", true);
+				} else {
+					scope.isSortedByRecentActivity = false;
+					scope.budgetScenariosAccessible = _array_sortByProperty(scope.budgetScenariosAccessible, "id");
+				}
+			};
 
 			scope.selectBudgetScenario = function(scenario, department){
 				department.selectBudgetScenario = scenario;
+			};
+
+			if (localStorage.getItem("budgetDownloadSelections")) {
+				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
+				scope.isSortedByRecentActivity = JSON.parse(localStorage.getItem("budgetDownloadSorted"));
+
+				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
+			} else {
+				scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
+					.sort()
+					.map(workgroup => ({
+						id: workgroup,
+						budgetScenarios: scope.userWorkgroupsScenarios[workgroup],
+						selectedScenario: `${(scope.userWorkgroupsScenarios[workgroup].find(scenario => scenario.fromLiveData === true) || {}).id}`,
+						lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[workgroup].map(scenario => scenario.lastModifiedOn)),
+						download: true
+					}));
+
+				scope.downloadAllDepartments = true;
+			}
+
+			scope.resetDownloadSelections = function() {
+				scope.budgetScenariosAccessible.forEach(department => {
+					department.selectedScenario = `${(department.budgetScenarios.find(scenario => scenario.fromLiveData === true) || {}).id}`;
+					department.download = true;
+				});
+
+				scope.downloadAllDepartments = true;
+			};
+
+			scope.toggleAllDepartmentDownload = function() {
+				if (scope.downloadAllDepartments) {
+					scope.budgetScenariosAccessible.forEach(department => department.download = false);
+					scope.downloadAllDepartments = false;
+				} else {
+					scope.budgetScenariosAccessible.forEach(department => department.download = true);
+					scope.downloadAllDepartments = true;
+				}
+			};
+
+			scope.toggleDepartmentDownload = function(department) {
+				department.download = !department.download;
+
+				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
 			};
 
 			scope.dateToCalendar = function(date) {
@@ -33,11 +84,15 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 
 			scope.close = function() {
 				BudgetActions.toggleBudgetScenarioModal();
+				localStorage.setItem("budgetDownloadSelections", JSON.stringify(scope.budgetScenariosAccessible));
+				localStorage.setItem("budgetDownloadSorted", JSON.stringify(scope.isSortedByRecentActivity));
 			};
 
 			scope.submit = function() {
 				scope.isDisabled = true;
-				let scenarioIds = scope.budgetScenariosAccessible.filter(scenario => parseInt(scenario.selectedScenario)).map(scenario => ({id: parseInt(scenario.selectedScenario)}));
+				let scenarioIds = scope.budgetScenariosAccessible
+					.filter(department => department.download && parseInt(department.selectedScenario))
+					.map(department => ({id: parseInt(department.selectedScenario)}));
 
 				BudgetService.downloadWorkgroupScenariosExcel(scenarioIds)
 				.then(

@@ -41,8 +41,8 @@ class BudgetService {
 			updateBudgetScenario: function(budgetScenario) {
 				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id, budgetScenario);
 			},
-			createBudgetScenarioSnapshot: function(selectedBudgetScenario) {
-				return ApiService.post("/api/budgetView/budgets/" + selectedBudgetScenario.budgetId + "/budgetScenarios/" + selectedBudgetScenario.id + "/snapshot");
+			createBudgetRequestScenario: function(selectedBudgetScenario) {
+				return ApiService.post("/api/budgetView/budgets/" + selectedBudgetScenario.budgetId + "/budgetScenarios/" + selectedBudgetScenario.id + "/budgetRequest");
 			},
 	
 			// Budget
@@ -79,6 +79,19 @@ class BudgetService {
 			searchCourses: function (query) {
 				return ApiService.get("/courses/search?q=" + query + "&token=" + window.dwToken, null, window.dwUrl);
 			},
+
+			// SectionGroupCostInstructors
+			createSectionGroupCostInstructors: function(sectionGroupCostId, SectionGroupCostInstructor) {
+				return ApiService.post("/api/budgetView/sectionGroupCosts/" + sectionGroupCostId + "/sectionGroupCostInstructors", SectionGroupCostInstructor);
+			},
+
+			updateSectionGroupCostInstructor: function(sectionGroupCostId, sectionGroupCostInstructor) {
+				return ApiService.put("/api/budgetView/sectionGroupCosts/" + sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id, sectionGroupCostInstructor);
+			},
+
+			deleteSectionGroupCostInstructor: function(sectionGroupCostInstructor) {
+				return ApiService.delete("/api/budgetView/sectionGroupCosts/" + sectionGroupCostInstructor.sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id);
+			}
 		};
 	}
 }

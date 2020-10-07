@@ -219,8 +219,24 @@ button.btn.assign-dropdown-btn {
 	overflow-x: hidden;
 }
 
+.assignments__toolbar {
+	display:flex;
+	justify-content: space-between;
+	position: fixed;
+	top: 127px;
+	width: calc(100vw - 255px);
+	background-color: white;
+	margin-top: -10px;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	z-index: 100;
+}
+
+.assignments__table {
+	margin-top: 53px;
+}
+
 .table-toolbar {
-  width: 100%;
   text-align: right;
   padding-bottom: 5px;
 	margin: 0px;

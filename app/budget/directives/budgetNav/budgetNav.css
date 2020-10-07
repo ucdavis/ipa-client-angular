@@ -8,6 +8,7 @@
 	background-color: #F8F8F8;
 	border: 1px solid #e3e3e3;
 	border-radius: 0;
+	z-index: 32;
 }
 
 .budget-nav__nav-container {
