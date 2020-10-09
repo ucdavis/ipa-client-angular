@@ -1,5 +1,6 @@
 import { isNumber } from 'shared/helpers/types';
 import { sequencePatterns, subjectCodes } from 'course/constants';
+import { logData } from './testLogData';
 
 /**
  * @ngdoc function
@@ -20,12 +21,14 @@ class CourseCtrl {
     this.courseService = CourseService;
     this.Term = Term;
     this.authService = AuthService;
-    this.isActivityLogOpen = false;
+    // this.isActivityLogOpen = false; 
 
     $scope.workgroupId = $routeParams.workgroupId;
     $scope.year = $routeParams.year;
     $scope.view = { isAssignTagsDropdownOpen: false };
     $scope.noAccess = validate ? validate.noAccess : null;
+    $scope.isActivityLogOpen = false;
+    $scope.logData = logData;
 
     self.initialize();
   }
@@ -47,7 +50,7 @@ class CourseCtrl {
     }
 
     this.$scope.toggleActivityLogOpen = function() {
-      return this.isActivityLogOpen = !this.isActivityLogOpen;
+      return _self.$scope.isActivityLogOpen = !_self.$scope.isActivityLogOpen;
     };
 
     this.$scope.toggleAssignTagsDropdown = function() {

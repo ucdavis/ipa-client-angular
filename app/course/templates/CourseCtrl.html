@@ -1,7 +1,9 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
 <div class="course-view-container">
-  <ipa-header page-title="Courses"></ipa-header>
+  <ipa-header page-title="Courses">
+    <button class="ipa-header__activity-log--button" uib-tooltip="Activity Log" ng-click="toggleActivityLogOpen()"><i class="fa fa-history"></i> Activity Log</button>
+  </ipa-header>
 
   <ipa-modal
     is-visible="view.state.uiState.isCourseDeleteModalOpen"
@@ -18,7 +20,7 @@
 
   <activity-log
     is-visible="isActivityLogOpen"
-    log-data=""
+    log-data="logData"
   >
   </activity-log>
 
