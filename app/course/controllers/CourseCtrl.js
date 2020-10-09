@@ -20,6 +20,7 @@ class CourseCtrl {
     this.courseService = CourseService;
     this.Term = Term;
     this.authService = AuthService;
+    this.isActivityLogOpen = false;
 
     $scope.workgroupId = $routeParams.workgroupId;
     $scope.year = $routeParams.year;
@@ -44,6 +45,10 @@ class CourseCtrl {
         academicYear: String(i).yearToAcademicYear()
       });
     }
+
+    this.$scope.toggleActivityLogOpen = function() {
+      return this.isActivityLogOpen = !this.isActivityLogOpen;
+    };
 
     this.$scope.toggleAssignTagsDropdown = function() {
       if (_self.$scope.view.isAssignTagsDropdownOpen) {

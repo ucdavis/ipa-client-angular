@@ -16,6 +16,12 @@
     <move-course-modal state="view.state"></move-course-modal>
   </ipa-modal>
 
+  <activity-log
+    is-visible="isActivityLogOpen"
+    log-data=""
+  >
+  </activity-log>
+
   <!-- Handle lack of access -->
   <div ng-if="noAccess">
     <no-access workgroup-name="sharedState.workgroup.name"></no-access>
@@ -103,6 +109,8 @@
         <span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
 
         <span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+
+        <span class="tool-icon glyphicon glyphicon-stats" uib-tooltip="Activity Log" ng-click="toggleActivityLogOpen()"></span>
 
         <active-filters
           filters="view.state.filters"

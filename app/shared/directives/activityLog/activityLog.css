@@ -1,0 +1,70 @@
+.activity-log__dark-overlay {
+  /* A dark translucent div that covers the whole screen */
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.5;
+}
+
+.activity-log__container {
+  /* A centered div above the overlay with a box shadow. */
+  z-index: 100;
+  position: fixed;
+  width: 50%; /* Default */
+
+  /* Center the dialog */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.15);
+}
+
+.activity-log__header {
+  padding-left: 10px;
+  height: 50px;
+  background-color: #303641;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activity-log__content {
+  background-color: white;
+  height: 60vh;
+}
+
+.activity-log__table {
+  margin: 0 auto;
+  width: 95%;
+}
+
+.activity-log__table--cell {
+  padding: 15px;
+}
+
+.activity-log__row--odd {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.activity-log__footer {
+  display: flex;
+  justify-content: center;
+}
+
+.activity-log__dismiss-ui {
+  padding-right: 20px;
+  cursor: pointer;
+  font-size: 21px;
+  line-height: 21px;
+  font-weight: 300;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}

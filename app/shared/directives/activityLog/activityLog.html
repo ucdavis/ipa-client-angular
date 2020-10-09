@@ -1,0 +1,32 @@
+<div class="activity-log" ng-show="isVisible">
+  <div class="activity-log__dark-overlay" ng-click="close()"></div>
+
+  <div class="activity-log__container" ng-style="styles">
+    <div class="activity-log__header">
+      <div>Activity Log</div>
+      <div class="activity-log__dismiss-ui" ng-click="close()">×</div>
+    </div>
+    <div class="activity-log__content">
+      <table class="activity-log__table">
+        <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
+          <th style="width: 90%; padding-left: 15px;"><h3>Message</h3></th>
+          <th style="width: 90%; padding-left: 15px;"><h3>Date</h3></th>
+        </tr>
+        <tr
+          ng-repeat="logEntry in pagedData"
+          ng-class-odd="'activity-log__row--odd'"
+        >
+          <td class="activity-log__table--cell">{{ logEntry.message }}</td>
+          <td class="activity-log__table--cell">{{ logEntry.timestamp }}</td>
+        </tr>
+      </table>
+      <div class="activity-log__footer">
+        <uib-pagination
+          ng-model="currentPage"
+          total-items="totalItems"
+          items-per-page="itemsPerPage"
+        ></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>
