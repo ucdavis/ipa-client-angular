@@ -33,18 +33,20 @@ let activityLog = function () {
         );
       };
 
+      scope.formatMessage = function (message) {
+        return message
+          .replaceAll(/\*{2}(.*?)\*{2}/g, '<strong>$1</strong>')
+          .split('\n');
+      };
+
+      // Modal Methods
       scope.$watch('isVisible', function () {
-        if (scope.isVisible == scope.previousIsVisible) {
-          return;
-        }
         // Watches for changes to isVisible to turn page scrolling on/off
         if (scope.isVisible == true) {
           scope.open();
         } else if (!scope.isVisible) {
           scope.close();
         }
-
-        scope.previousIsVisible = angular.copy(scope.isVisible); // eslint-disable-line no-undef
       });
 
       // Methods
@@ -63,12 +65,6 @@ let activityLog = function () {
         scope.isVisible = true;
         // Disables page scrolling while modal is up
         $('body').css('overflow-y', 'hidden'); // eslint-disable-line no-undef
-      };
-
-      scope.formatMessage = function (message) {
-        return message
-          .replaceAll(/\*{2}(.*?)\*{2}/g, '<strong>$1</strong>')
-          .split('\n');
       };
     },
   };
