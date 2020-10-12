@@ -60,6 +60,12 @@ let activityLog = function () {
         // Disables page scrolling while modal is up
         $('body').css('overflow-y', 'hidden'); // eslint-disable-line no-undef
       };
+
+      scope.formatMessage = function (message) {
+        return message
+          .replaceAll(/\*{2}(.*?)\*{2}/g, '<strong>$1</strong>')
+          .split('\n');
+      };
     },
   };
 };
