@@ -15,6 +15,15 @@ class CourseStateService {
 
     return {
       _state: {},
+      _auditLogReducers: function (action, auditLogs) {
+        switch (action.type) {
+          case ActionTypes.INIT_STATE:
+            auditLogs = action.payload.auditLogs;
+            return auditLogs;
+          default:
+            return auditLogs;
+        }
+      },
       _termReducers: function (action, terms) {
         switch (action.type) {
           case ActionTypes.INIT_STATE:
@@ -583,6 +592,7 @@ class CourseStateService {
         }
 
         let newState = {};
+        newState.auditLogs = scope._auditLogReducers(action, scope._state.auditLogs);
         newState.terms = scope._termReducers(action, scope._state.terms);
         newState.courses = scope._courseReducers(action, scope._state.courses);
         newState.sectionGroups = scope._sectionGroupReducers(action, scope._state.sectionGroups);

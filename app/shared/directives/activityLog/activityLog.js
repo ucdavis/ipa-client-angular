@@ -10,24 +10,28 @@ let activityLog = function () {
     },
     replace: true, // Replace with the template below
     link: function (scope) {
-      scope.totalItems = scope.logData.length;
+      scope.totalItems = 0;
       scope.currentPage = 1;
       scope.itemsPerPage = 8;
       scope.pagedData = [];
 
-      scope.$watch('currentPage', function () {
-        scope.setPagingData(scope.currentPage);
+      scope.$watch('logData', function () {
+        if (scope.logData) {
+          scope.totalItems = scope.logData.length;
+          scope.setPageData();
+        }
       });
 
-      scope.setPagingData = function (page) {
-        scope.pagedData = scope.logData.slice(
-          (page - 1) * scope.itemsPerPage,
-          page * scope.itemsPerPage
+      scope.$watch('currentPage', function () {
+        scope.setPageData();
+      });
+
+      scope.setPageData = function () {
+        scope.pagedData = scope.logData?.slice(
+          (scope.currentPage - 1) * scope.itemsPerPage,
+          scope.currentPage * scope.itemsPerPage
         );
       };
-
-      // Stores a copy of the last state, useful in handling unexpected termination of modal
-      scope.previousIsVisible;
 
       scope.$watch('isVisible', function () {
         if (scope.isVisible == scope.previousIsVisible) {
