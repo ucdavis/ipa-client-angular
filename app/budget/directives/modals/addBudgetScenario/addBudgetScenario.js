@@ -1,4 +1,5 @@
 import './addBudgetScenario.css';
+import { dateToCalendar } from '../../../../shared/helpers/dates';
 
 let addBudgetScenario = function ($rootScope, BudgetActions) {
   return {
@@ -13,7 +14,7 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
       scope.newBudgetScenario = {};
       scope.newBudgetScenario.name = "";
       scope.newBudgetScenario.budgetScenarioId = 0;
-      scope.newBudgetScenario.description = "Schedule Data";
+      scope.newBudgetScenario.description = "Schedule Data (No Costs/Funds)";
       scope.newBudgetScenario.copyFunds = true;
 
       scope.budgetId = attrs.budgetId;
@@ -21,20 +22,27 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
       scope.selectBudgetScenario = function(budgetScenario) {
         if (budgetScenario == null) {
           scope.newBudgetScenario.budgetScenarioId = 0;
-          scope.newBudgetScenario.description = "Schedule Data";
+          scope.newBudgetScenario.description = "Schedule Data (No Costs/Funds)";
         } else {
           scope.newBudgetScenario.budgetScenarioId = budgetScenario.id;
-          scope.newBudgetScenario.description = budgetScenario.name;
+          scope.newBudgetScenario.description = budgetScenario.isSnapshot ? budgetScenario.name + " - SNAPSHOT - " + dateToCalendar(budgetScenario.creationDate) : budgetScenario.name;
         }
       };
 
       scope.submitBudgetScenarioForm = function () {
+        if (scope.newBudgetScenario.budgetScenarioId === 0) {
+          scope.newBudgetScenario.copyFunds = false;
+        }
         BudgetActions.createBudgetScenario(scope.newBudgetScenario, scope.state.budget.id, scope.newBudgetScenario.budgetScenarioId);
         scope.close();
       };
 
       scope.toggleCopyFunds = function () {
         scope.newBudgetScenario.copyFunds = !scope.newBudgetScenario.copyFunds;
+      };
+
+      scope.dateToCalendar = function (date) {
+        return dateToCalendar(date);
       };
 
       scope.close = function() {
