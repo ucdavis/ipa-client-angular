@@ -378,8 +378,7 @@ class ScheduleCostCalculations {
         sectionGroupCost.courseCostSubTotal = sectionGroupCost.taCost + sectionGroupCost.readerCost;
 
         // Instructor Costs
-        //sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
-        sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal;// + sectionGroupCost.instructorCostSubTotal;
+        sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal;
 
         var sectionGroupCostInstructors = BudgetReducers._state.sectionGroupCostInstructors;
         var instructors = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || [];
