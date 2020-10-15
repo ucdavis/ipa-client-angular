@@ -379,13 +379,12 @@ class ScheduleCostCalculations {
 
         // Instructor Costs
         //sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
-
         sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal;// + sectionGroupCost.instructorCostSubTotal;
 
         var sectionGroupCostInstructors = BudgetReducers._state.sectionGroupCostInstructors;
         var instructors = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || [];
         instructors.forEach(function(sectionGroupCostInstructor) {
-          if (sectionGroupCostInstructor.cost){
+          if (sectionGroupCostInstructor.cost !== null){
             sectionGroupCost.totalCost += parseFloat(sectionGroupCostInstructor.cost.toString().replace(/[^0-9.]/g,''));
           } else if (sectionGroupCostInstructor.overrideInstructorCost) {
             sectionGroupCost.totalCost += sectionGroupCostInstructor.overrideInstructorCost;
