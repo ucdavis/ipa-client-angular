@@ -39,6 +39,10 @@ let activityLog = function () {
           .split('\n');
       };
 
+      scope.dateToString = function (date) {
+        return new Date(date).toLocaleString();
+      };
+
       // Modal Methods
       scope.$watch('isVisible', function () {
         // Watches for changes to isVisible to turn page scrolling on/off

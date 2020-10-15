@@ -16,7 +16,7 @@
           ng-repeat="logEntry in pagedData"
           ng-class-odd="'activity-log__row--odd'"
         >
-          <td class="activity-log__table--cell">{{ logEntry.timestamp }}</td>
+          <td class="activity-log__table--cell">{{ dateToString(logEntry.createdOn) }}</td>
           <td
             ng-init="lines = formatMessage(logEntry.message)"
             class="activity-log__table--cell"
