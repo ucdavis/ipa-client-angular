@@ -10,12 +10,12 @@
       <div style="display: flex; justify-content: center">
         <span class="activity-log__datepicker">
           <label for="start">Start date:</label>
-          <input type="date" id="auditLogStart" ng-model="startDate" />
+          <input type="date" id="auditLogStart" ng-model="startDate" min="{{ minDate }}" max="{{ startMax }}" />
         </span>
 
         <span class="activity-log__datepicker">
           <label for="start">End date:</label>
-          <input type="date" id="auditLogEnd" ng-model="endDate" />
+          <input type="date" id="auditLogEnd" ng-model="endDate" min="{{ endMin }}" max="{{ maxDate }}" />
         </span>
       </div>
       <table class="activity-log__table">

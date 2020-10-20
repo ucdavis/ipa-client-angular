@@ -18,6 +18,8 @@ let activityLog = function () {
       scope.endDate;
 
       scope.$watchGroup(['startDate', 'endDate', 'currentPage'], function () {
+        scope.startMax = scope.getDateOnly(scope.endDate);
+        scope.endMin = scope.getDateOnly(scope.startDate);
         scope.setPageData();
       });
 
@@ -26,6 +28,10 @@ let activityLog = function () {
           scope.startDate = new Date(new Date(scope.logData[scope.logData.length - 1].createdOn).toDateString());
           scope.endDate = new Date(new Date().toDateString());
 
+          scope.minDate = scope.getDateOnly(scope.startDate);
+          scope.maxDate = scope.getDateOnly(scope.endDate);
+          scope.startMax = scope.maxDate;
+          scope.endMin = scope.minDate;
           scope.setPageData();
         }
       });
@@ -55,6 +61,11 @@ let activityLog = function () {
 
       scope.dateToString = function (date) {
         return new Date(date).toLocaleString();
+      };
+
+      scope.getDateOnly = function (date) {
+        // yyyy-mm-dd
+        return date.toISOString().split('T')[0];
       };
 
       // Modal Methods
