@@ -23,9 +23,9 @@ let activityLog = function () {
 
       scope.$watch('logData', function () {
         if (scope.logData) {
-          const firstLog = new Date(scope.logData[scope.logData.length - 1].createdOn);
-          scope.startDate = new Date(firstLog.getFullYear(), firstLog.getMonth(), firstLog.getDate());
-          scope.endDate = new Date();
+          scope.startDate = new Date(new Date(scope.logData[scope.logData.length - 1].createdOn).toDateString());
+          scope.endDate = new Date(new Date().toDateString());
+
           scope.setPageData();
         }
       });
