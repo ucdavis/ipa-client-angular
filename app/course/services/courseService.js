@@ -121,6 +121,9 @@ class CourseService {
       },
       searchCoursesFromIPA: function (workgroupId, year, includePrivate) {
         return _self.ApiService.get("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/queryCourses", includePrivate);
+      },
+      getAuditLogs: function (workgroupId) {
+        return _self.ApiService.get("/api/workgroups/" + workgroupId + "/modules/Courses" + "/auditLogs");
       }
     };
   }
