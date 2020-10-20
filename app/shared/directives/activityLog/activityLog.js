@@ -14,20 +14,34 @@ let activityLog = function () {
       scope.currentPage = 1;
       scope.itemsPerPage = 8;
       scope.pagedData = [];
+      scope.startDate;
+      scope.endDate;
+
+      scope.$watchGroup(['startDate', 'endDate', 'currentPage'], function () {
+        scope.setPageData();
+      });
 
       scope.$watch('logData', function () {
         if (scope.logData) {
-          scope.totalItems = scope.logData.length;
+          const firstLog = new Date(scope.logData[scope.logData.length - 1].createdOn);
+          scope.startDate = new Date(firstLog.getFullYear(), firstLog.getMonth(), firstLog.getDate());
+          scope.endDate = new Date();
           scope.setPageData();
         }
       });
 
-      scope.$watch('currentPage', function () {
-        scope.setPageData();
-      });
-
       scope.setPageData = function () {
-        scope.pagedData = scope.logData?.slice(
+        const startTime = new Date(scope.startDate).getTime();
+        // add 1 to get end of day
+        const endTime = scope.endDate.getTime() + (24 * 60 * 60 * 1000 - 1);
+
+        const dateFilteredLogs = scope.logData?.filter((entry) => {
+          return entry.createdOn > startTime && entry.createdOn < endTime;
+        });
+
+        scope.totalItems = dateFilteredLogs.length || 0;
+
+        scope.pagedData = dateFilteredLogs?.slice(
           (scope.currentPage - 1) * scope.itemsPerPage,
           scope.currentPage * scope.itemsPerPage
         );

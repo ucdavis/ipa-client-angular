@@ -7,6 +7,17 @@
       <div class="activity-log__dismiss-ui" ng-click="close()">×</div>
     </div>
     <div class="activity-log__content">
+      <div style="display: flex; justify-content: center">
+        <span class="activity-log__datepicker">
+          <label for="start">Start date:</label>
+          <input type="date" id="auditLogStart" ng-model="startDate" />
+        </span>
+
+        <span class="activity-log__datepicker">
+          <label for="start">End date:</label>
+          <input type="date" id="auditLogEnd" ng-model="endDate" />
+        </span>
+      </div>
       <table class="activity-log__table">
         <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.2)">
           <th style="width: 10%; padding-left: 15px"><h3>Date</h3></th>
