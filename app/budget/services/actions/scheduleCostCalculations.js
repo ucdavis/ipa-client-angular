@@ -380,8 +380,7 @@ class ScheduleCostCalculations {
         // Instructor Costs
         sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal;
 
-        var sectionGroupCostInstructors = BudgetReducers._state.sectionGroupCostInstructors;
-        var instructors = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || [];
+        var instructors = sectionGroupCost.sectionGroupCostInstructors || [];
         instructors.forEach(function(sectionGroupCostInstructor) {
           if (sectionGroupCostInstructor.cost !== null){
             sectionGroupCost.totalCost += parseFloat(sectionGroupCostInstructor.cost.toString().replace(/[^0-9.]/g,''));
