@@ -16,7 +16,6 @@
 }
 
 .add-budget-scenario__main-content {
-	width: 385px;
 	margin: 0 auto;
 }
 
@@ -33,7 +32,7 @@
 }
 
 .add-budget-scenario .dropdown-menu {
-	width: 250px;
+	width: 100%;
 }
 
 .add-budget-scenario .budget-scenario-item {
