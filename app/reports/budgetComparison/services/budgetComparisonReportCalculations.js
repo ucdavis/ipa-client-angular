@@ -569,7 +569,7 @@ class BudgetComparisonReportCalculations {
         expenseItems.ids.forEach(function(expenseItemId){
           var expenseItem = expenseItems.list[expenseItemId];
           var expenseItemCategoryId = expenseItem.expenseItemCategoryId;
-          if(expenseItem.budgetScenarioId === selectedScenarioId){
+          if (expenseItem.budgetScenarioId === selectedScenarioId){
             if (expenses.typeIds.indexOf(expenseItemCategoryId) == -1) {
               expenses.typeIds.push(expenseItemCategoryId);
             }

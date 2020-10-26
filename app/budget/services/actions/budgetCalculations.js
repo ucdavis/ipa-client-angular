@@ -63,7 +63,7 @@ class BudgetCalculations {
 			calculateTotalCost: function() {
 				var courseCosts = 0;
 				var lineItemFunds = 0;
-				var expenseItemFunds = 0;
+				var otherCosts = 0;
 				var scheduleCosts = BudgetReducers._state.calculatedScheduleCosts;
 
 				// Add sectionGroup costs
@@ -84,17 +84,17 @@ class BudgetCalculations {
 
 				// Expenses Costs
 				BudgetReducers._state.calculatedExpenseItems.forEach(function(expenseItem) {
-					expenseItemFunds += expenseItem.amount ? expenseItem.amount : 0;
+					otherCosts += expenseItem.amount && expenseItem.isVisible ? expenseItem.amount : 0;
 				});
 
-				var totalCost = lineItemFunds - courseCosts - expenseItemFunds;
+
+				var totalCost = lineItemFunds - courseCosts - otherCosts;
 
 				BudgetReducers.reduce({
 					type: ActionTypes.CALCULATE_TOTAL_COST,
 					payload: {
 						totalCost: totalCost,
 						funds: lineItemFunds,
-						expenses: expenseItemFunds,
 						scheduleCost: courseCosts,
 						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
 					}
@@ -490,6 +490,7 @@ class BudgetCalculations {
 				var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
 				var scheduleCosts = BudgetReducers._state.calculatedScheduleCosts;
 				var lineItems = BudgetReducers._state.lineItems;
+				var expenseItems = BudgetReducers._state.expenseItems;
 				var activeTerms = selectedBudgetScenario.terms;
 
 				// Calculate lineItem 'cost'
@@ -497,6 +498,12 @@ class BudgetCalculations {
 				lineItems.ids.forEach(function(lineItemId) {
 					var lineItem = lineItems.list[lineItemId];
 					lineItemsAmount += lineItem.amount;
+				});
+
+				var totalOtherCosts = 0;
+				expenseItems.ids.forEach((expenseItemId) => {
+					var expenseItem = expenseItems.list[expenseItemId];
+					totalOtherCosts += expenseItem.amount && expenseItem.isVisible ? expenseItem.amount : 0;
 				});
 
 				var summary = BudgetReducers._state.summary = {};
@@ -508,6 +515,7 @@ class BudgetCalculations {
 					readerCount: 0,
 					readerCost: 0,
 					supportCosts: 0,
+					otherCosts: totalOtherCosts,
 					totalUnits: 0,
 					replacementCosts: {
 						overall: 0,
@@ -531,12 +539,22 @@ class BudgetCalculations {
 				};
 
 				summary.terms.forEach(function(term) {
+					var otherCosts = 0;
+					expenseItems.ids.forEach((expenseItemId) => {
+						var expenseItem = expenseItems.list[expenseItemId];
+						if (expenseItem.termCode.substring(4,6) === term) {
+							otherCosts += parseFloat(expenseItem.amount);
+						}
+
+					});
+
 					summary.byTerm[term] = {
 						taCount: 0,
 						taCost: 0,
 						readerCount: 0,
 						readerCost: 0,
 						supportCosts: 0,
+						otherCosts: otherCosts,
 						totalUnits: 0,
 						replacementCosts: {
 							overall: 0,

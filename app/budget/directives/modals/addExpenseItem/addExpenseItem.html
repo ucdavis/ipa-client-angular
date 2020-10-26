@@ -1,5 +1,31 @@
 <div class="add-expense-item">
 	<form role="form" class="form-horizontal add-expense-item__container">
+		<!--Term-->
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Term</label>
+			<div class="col-sm-5">
+				<div class="input-group" class="category-selection-container">
+					<button class="btn btn-category-dropdown dropdown-toggle"
+									type="button" data-toggle="dropdown"
+									class="btn-category-dropdown">
+						<span class="btn-category-dropdown-label">
+							{{ newExpenseItem.termDescription || 'Select a term'}}
+						</span>
+						<span class="caret"></span>
+					</button>
+
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li ng-repeat="term in state.ui.termNav.budgetScenarioDropdownTerms | orderBy:'description'" class="category-item">
+							<a ng-click="selectExpenseItemTerm(term)">
+								{{ term.description}}
+							</a>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Category</label>
 			<div class="col-sm-5">
@@ -8,7 +34,7 @@
 									type="button" data-toggle="dropdown"
 									class="btn-category-dropdown">
 						<span class="btn-category-dropdown-label">
-							{{ newExpenseItem.categoryDescription }}
+							{{ newExpenseItem.categoryDescription || 'Select a category' }}
 						</span>
 						<span class="caret"></span>
 					</button>

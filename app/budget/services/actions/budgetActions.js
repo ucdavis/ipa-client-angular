@@ -429,8 +429,11 @@ class BudgetActions {
 			},
 			createExpenseItem: function (newExpenseItem, budgetScenarioId, message) {
 				var self = this;
+				var year = BudgetReducers._state.ui.year;
 				// Ensure amount is properly formatted as a float
 				newExpenseItem.amount = newExpenseItem.amount ? parseFloat(newExpenseItem.amount) : null;
+				// Append proper year to term
+				newExpenseItem.termCode = newExpenseItem.termCode ? TermService.termToTermCode(newExpenseItem.termCode, year) : null;
 
 				BudgetService.createExpenseItem(newExpenseItem, budgetScenarioId).then(function (newExpenseItem) {
 					window.ipa_analyze_event('budget', 'expense item');
@@ -459,8 +462,14 @@ class BudgetActions {
 					return;
 				}
 
+				var year = BudgetReducers._state.ui.year;
 				// Ensure amount is properly formatted as a float
-				expenseItem.amount = parseFloat(expenseItem.amount);
+				expenseItem.amount = expenseItem.amount ? parseFloat(expenseItem.amount) : null;
+				// Append proper year to term if needed
+				if (expenseItem.termCode && expenseItem.termCode.length < 6) {
+					expenseItem.termCode = TermService.termToTermCode(expenseItem.termCode, year);
+				}
+
 
 				BudgetService.updateExpenseItem(expenseItem, expenseItem.budgetScenarioId).then(function (results) {
 					window.ipa_analyze_event('budget', 'expense item');

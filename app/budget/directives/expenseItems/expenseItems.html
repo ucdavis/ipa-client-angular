@@ -36,7 +36,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="expenseItem in expenseItems track by $index" ng-show="expenseItem.id > 0">
+            <tr ng-repeat="expenseItem in expenseItems track by $index" ng-show="expenseItem.id > 0 && expenseItem.budgetScenarioId === selectedBudgetScenario.id && expenseItem.isVisible">
                 <!-- Checkbox -->
                 <td ng-if="!ui.isSnapshot" class="expense-items__table-cell do-not-print" ng-class-odd="'expense-items__table-cell--dark'">
                     <div class="expense-items__table-container--checkbox">

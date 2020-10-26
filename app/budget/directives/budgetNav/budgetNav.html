@@ -6,8 +6,8 @@
 		<div class="budget-nav__nav-item" ng-click="setRoute('Schedule Costs')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Schedule Costs' }">
 			Schedule Costs
 		</div>
-		<div class="budget-nav__nav-item" ng-click="setRoute('Additional Expenses')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Additional Expenses' }">
-			Additional Expenses
+		<div class="budget-nav__nav-item" ng-click="setRoute('Other Costs')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Other Costs' }">
+			Other Costs
 		</div>
 		<div class="budget-nav__nav-item" ng-click="setRoute('Funds')" ng-class="{ 'budget-nav__nav-item--active': selectedSection == 'Funds' }">
 			Funds
@@ -22,7 +22,7 @@
 
 	<div class="budget-nav__side-bar">
 
-		<div ng-if="selectedSection == 'Additional Expenses' && !selectedBudgetScenario.isSnapshot">
+		<div ng-if="selectedSection == 'Other Costs' && !selectedBudgetScenario.isSnapshot">
 			<div class="budget-nav__tool">
 				<ipa-button icon-class="'glyphicon glyphicon-trash'"
 				            size="'small'"

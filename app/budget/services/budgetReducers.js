@@ -211,7 +211,7 @@ class BudgetReducers {
 					case ActionTypes.INIT_STATE:
 						expenseItems = {
 							ids: [],
-							list: {}
+							list: {},
 						};
 						action.payload.expenseItems.forEach(function(expenseItem) {
 							expenseItems.ids.push(expenseItem.id);
@@ -272,6 +272,11 @@ class BudgetReducers {
 							});
 						}
 						return expenseItems;
+					case ActionTypes.CALCULATE_SCENARIO_TERMS:
+							expenseItems.ids.forEach(function(expenseItemId) {
+								expenseItems.list[expenseItemId].isVisible = action.payload.selectedScenarioTerms.includes(expenseItems.list[expenseItemId].termCode.substring(4,6));
+							});
+							return expenseItems;
 					default:
 						return expenseItems;
 				}
@@ -1061,7 +1066,7 @@ class BudgetReducers {
 							},
 							sectionNav: {
 								activeTab: action.activeTab || "Summary",
-								allTabs: ["Schedule Costs", "Additional Expenses", "Funds", "Summary", "Instructor List", "Course List"]
+								allTabs: ["Schedule Costs", "Other Costs", "Funds", "Summary", "Instructor List", "Course List"]
 							},
 							termNav: {
 								activeTab: null,
@@ -1372,7 +1377,7 @@ class BudgetReducers {
 				newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 				newState.expenseItems = scope.expenseItemReducers(action, scope._state.expenseItems);
-				newState.expenseItemCategories = scope.expenseItemCategoryReducers(action, scope._state.expenseItemCategories)
+				newState.expenseItemCategories = scope.expenseItemCategoryReducers(action, scope._state.expenseItemCategories);
 				newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);

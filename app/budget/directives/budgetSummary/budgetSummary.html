@@ -223,19 +223,21 @@
 					</td>
 				</tr>
 
-				<!-- Expenses Costs -->
+				<!-- Other Costs -->
 				<tr>
 					<td>
 						<div class="budget-summary__cell-container budget-summary__cell-container--left">
-							Expenses
+							Other Costs
 						</div>
 					</td>
 					<td ng-repeat="term in summary.terms">
-						<div class="budget-summary__cell-container"></div>
+						<div class="budget-summary__cell-container">
+							{{ toCurrency(summary.byTerm[term].otherCosts) }}
+						</div>
 					</td>
 					<td>
-						<div class="budget-summary__cell-container budget-summary__cell-container--last budget-summary__cell-container--last">
-							{{ toCurrency(selectedBudgetScenario.expenses) }}
+						<div class="budget-summary__cell-container budget-summary__cell-container--last">
+							{{ toCurrency(summary.combinedTerms.otherCosts) }}
 						</div>
 					</td>
 				</tr>
