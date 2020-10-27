@@ -75,7 +75,7 @@ let ipaInput = function ($timeout) {
 			scope.enforceNegative = function() {
 				if (!scope.allowNegative || !scope.value) { return; }
 
-				var isNegative = (scope.value[0] == "-");
+				const isNegative = scope.isNegativeCurrency || (scope.value[0] == "-");
 
 				// Remove all instances of '-' from the input value
 				scope.value = scope.value.replace(/-/g, "");
