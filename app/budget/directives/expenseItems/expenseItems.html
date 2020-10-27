@@ -1,15 +1,15 @@
 <div class="expense-items">
 	<h3
-		ng-if="ui.isSnapshot"
+		ng-if="ui.isBudgetRequest"
 		style="text-align: center; color: #5b616b"
 	>
-		SNAPSHOT
+		BUDGET REQUEST
 	</h3>
 
     <table class="expense-items__table">
         <thead>
             <tr>
-                <th ng-if="!ui.isSnapshot" class="expense-items__table-header expense-items__table--checkbox do-not-print">
+                <th ng-if="!ui.isBudgetRequest" class="expense-items__table-header expense-items__table--checkbox do-not-print">
                     <div class="expense-items__table-header-container expense-items__table-container--checkbox">
                         <ipa-checkbox style="'muted'"
                                         is-checked="ui.areAllExpenseItemsSelected"
@@ -17,6 +17,11 @@
                         </ipa-checkbox>
                     </div>
                 </th>
+								<th class="expense-items__table-header expense-items__table--type">
+										<div class="expense-items__table-header-container">
+												Term
+										</div>
+								</th>
                 <th class="expense-items__table-header expense-items__table--type">
                     <div class="expense-items__table-header-container">
                         Type
@@ -38,7 +43,7 @@
         <tbody>
             <tr ng-repeat="expenseItem in expenseItems track by $index" ng-show="expenseItem.id > 0 && expenseItem.budgetScenarioId === selectedBudgetScenario.id && expenseItem.isVisible">
                 <!-- Checkbox -->
-                <td ng-if="!ui.isSnapshot" class="expense-items__table-cell do-not-print" ng-class-odd="'expense-items__table-cell--dark'">
+                <td ng-if="!ui.isBudgetRequest" class="expense-items__table-cell do-not-print" ng-class-odd="'expense-items__table-cell--dark'">
                     <div class="expense-items__table-container--checkbox">
                         <ipa-checkbox style="'muted'"
                                         is-disabled="!(expenseItem.id)"
@@ -46,6 +51,11 @@
                                         click-action="selectExpenseItem(expenseItem)">
                         </ipa-checkbox>
                     </div>
+                </td>
+
+								<!-- Term -->
+                <td class="expense-items__table-cell" ng-class-odd="'expense-items__table-cell--dark'">
+                    {{ expenseItem.termDescription }}
                 </td>
 
                 <!-- Category -->
@@ -64,7 +74,7 @@
                         <div>
                             {{ toCurrency(expenseItem.amount) }}
                         </div>
-                        <div ng-if="!ui.isSnapshot" class="do-not-print">
+                        <div ng-if="!ui.isBudgetRequest" class="do-not-print">
                             <expense-item-dropdown expense-item="expenseItem"></expense-item-dropdown>
                         </div>
                     </div>

@@ -22,7 +22,7 @@
 
 	<div class="budget-nav__side-bar">
 
-		<div ng-if="selectedSection == 'Other Costs' && !selectedBudgetScenario.isSnapshot">
+		<div ng-if="selectedSection == 'Other Costs' && !selectedBudgetScenario.isBudgetRequest">
 			<div class="budget-nav__tool">
 				<ipa-button icon-class="'glyphicon glyphicon-trash'"
 				            size="'small'"
@@ -84,6 +84,9 @@
 				</span>
 				<span class="budget-nav__sub-balance" ng-if="selectedSection == 'Funds'">
 					Funds: {{ toCurrency(selectedBudgetScenario.funds) }}
+				</span>
+				<span class="budget-nav__sub-balance" ng-if="selectedSection == 'Other Costs'">
+					Other Costs: {{ toCurrency(selectedBudgetScenario.otherCosts) }}
 				</span>
 				<span class="budget-nav__sub-balance" ng-if="selectedSection == 'Schedule Costs'">
 					Schedule Costs: {{ toCurrency(selectedBudgetScenario.scheduleCost) }}

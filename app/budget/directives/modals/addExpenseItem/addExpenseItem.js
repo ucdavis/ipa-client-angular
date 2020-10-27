@@ -11,12 +11,8 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       expenseItemToEdit: '<?',
     },
     link: function (scope) {
-
       scope.newExpenseItem = {};
-      /*scope.termCodes = scope.state.ui.termNav.budgetScenarioDropdownTerms.map(function(termCode) {
-        termCode.id = TermService.termToTermCode(termCode.id, state.ui.year)
-      });*/
-      console.log('Expense item ', scope);
+
       if (scope.expenseItemToEdit) {
         scope.newExpenseItem = angular.copy(scope.expenseItemToEdit); // eslint-disable-line no-undef
       }
@@ -62,7 +58,9 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       scope.submitExpenseItemForm = function () {
         scope.newExpenseItem.budgetScenarioId =
           scope.state.selectedBudgetScenario.id;
+
         if (scope.expenseItemToEdit && scope.expenseItemToEdit.id > 0) {
+
           BudgetActions.updateExpenseItem(
             scope.newExpenseItem,
             scope.state.selectedBudgetScenario.id

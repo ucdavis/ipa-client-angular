@@ -226,11 +226,13 @@ class BudgetReducers {
 						return expenseItems;
 					case ActionTypes.CREATE_EXPENSE_ITEM:
 						var newLineItem = action.payload;
+						newLineItem.isVisible = true;
 						expenseItems.ids.push(newLineItem.id);
 						expenseItems.list[newLineItem.id] = newLineItem;
 						return expenseItems;
 					case ActionTypes.UPDATE_EXPENSE_ITEM:
 						var updatedLineItem = action.payload;
+						updatedLineItem.isVisible = true;
 						expenseItems.list[updatedLineItem.id] = updatedLineItem;
 						return expenseItems;
 					case ActionTypes.DELETE_EXPENSE_ITEMS:
@@ -247,30 +249,6 @@ class BudgetReducers {
 						var index = expenseItems.ids.indexOf(expenseItemId);
 						expenseItems.ids.splice(index, 1);
 						delete expenseItems.list[expenseItemId];
-						return expenseItems;
-					case ActionTypes.UPDATE_FILTERS:
-						var selectedFilterDescriptions = action.payload.filters
-							.filter(function(filter) {
-								return filter.selected === true && filter.type === 'accountNumber';
-							}).map(function(filter) {
-								return filter.description;
-							});
-
-						if (selectedFilterDescriptions.length > 0) {
-						expenseItems.ids.forEach(function(expenseItemId) {
-								var slotLineItem = expenseItems.list[expenseItemId];
-
-								if (selectedFilterDescriptions.includes(slotLineItem.accountNumber)) {
-									slotLineItem.hidden = false;
-								} else {
-									slotLineItem.hidden = true;
-								}
-							});
-						} else {
-							expenseItems.ids.forEach(function(expenseItemId) {
-								expenseItems.list[expenseItemId].hidden = false;
-							});
-						}
 						return expenseItems;
 					case ActionTypes.CALCULATE_SCENARIO_TERMS:
 							expenseItems.ids.forEach(function(expenseItemId) {

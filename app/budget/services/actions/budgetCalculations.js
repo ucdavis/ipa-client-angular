@@ -84,7 +84,8 @@ class BudgetCalculations {
 
 				// Expenses Costs
 				BudgetReducers._state.calculatedExpenseItems.forEach(function(expenseItem) {
-					otherCosts += expenseItem.amount && expenseItem.isVisible ? expenseItem.amount : 0;
+					otherCosts += expenseItem.amount && expenseItem.isVisible && expenseItem.budgetScenarioId === BudgetReducers._state.ui.selectedBudgetScenarioId
+						? expenseItem.amount : 0;
 				});
 
 
@@ -503,7 +504,8 @@ class BudgetCalculations {
 				var totalOtherCosts = 0;
 				expenseItems.ids.forEach((expenseItemId) => {
 					var expenseItem = expenseItems.list[expenseItemId];
-					totalOtherCosts += expenseItem.amount && expenseItem.isVisible ? expenseItem.amount : 0;
+					totalOtherCosts += expenseItem.amount && expenseItem.isVisible && expenseItem.budgetScenarioId === selectedBudgetScenario.id
+						? expenseItem.amount : 0;
 				});
 
 				var summary = BudgetReducers._state.summary = {};
@@ -542,7 +544,7 @@ class BudgetCalculations {
 					var otherCosts = 0;
 					expenseItems.ids.forEach((expenseItemId) => {
 						var expenseItem = expenseItems.list[expenseItemId];
-						if (expenseItem.termCode.substring(4,6) === term) {
+						if (expenseItem.termCode.substring(4,6) === term && expenseItem.amount && expenseItem.isVisible && expenseItem.budgetScenarioId === selectedBudgetScenario.id) {
 							otherCosts += parseFloat(expenseItem.amount);
 						}
 
