@@ -96,6 +96,7 @@ class BudgetCalculations {
 					payload: {
 						totalCost: totalCost,
 						funds: lineItemFunds,
+						otherCosts: otherCosts,
 						scheduleCost: courseCosts,
 						budgetScenarioId: BudgetReducers._state.ui.selectedBudgetScenarioId
 					}

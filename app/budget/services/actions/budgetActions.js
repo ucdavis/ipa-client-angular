@@ -483,8 +483,7 @@ class BudgetActions {
 
 					// Close modal
 					self.closeAddExpenseItemModal();
-					//BudgetCalculations.calculateExpenseItems(); TODO remove if not needed
-					//BudgetCalculations.calculateTotalCost(); TODO add support for this
+					BudgetCalculations.calculateTotalCost();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not save expense.", type: "ERROR" });
 				});
