@@ -492,7 +492,6 @@ class BudgetCalculations {
 				var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
 				var scheduleCosts = BudgetReducers._state.calculatedScheduleCosts;
 				var lineItems = BudgetReducers._state.lineItems;
-				var expenseItems = BudgetReducers._state.expenseItems;
 				var activeTerms = selectedBudgetScenario.terms;
 
 				// Calculate lineItem 'cost'
@@ -500,13 +499,6 @@ class BudgetCalculations {
 				lineItems.ids.forEach(function(lineItemId) {
 					var lineItem = lineItems.list[lineItemId];
 					lineItemsAmount += lineItem.amount;
-				});
-
-				var totalOtherCosts = 0;
-				expenseItems.ids.forEach((expenseItemId) => {
-					var expenseItem = expenseItems.list[expenseItemId];
-					totalOtherCosts += expenseItem.amount && expenseItem.isVisible && expenseItem.budgetScenarioId === selectedBudgetScenario.id
-						? expenseItem.amount : 0;
 				});
 
 				var summary = BudgetReducers._state.summary = {};
@@ -518,7 +510,7 @@ class BudgetCalculations {
 					readerCount: 0,
 					readerCost: 0,
 					supportCosts: 0,
-					otherCosts: totalOtherCosts,
+					otherCosts: 0,
 					totalUnits: 0,
 					replacementCosts: {
 						overall: 0,
@@ -542,14 +534,6 @@ class BudgetCalculations {
 				};
 
 				summary.terms.forEach(function(term) {
-					var otherCosts = 0;
-					expenseItems.ids.forEach((expenseItemId) => {
-						var expenseItem = expenseItems.list[expenseItemId];
-						if (expenseItem.termCode.substring(4,6) === term && expenseItem.amount && expenseItem.isVisible && expenseItem.budgetScenarioId === selectedBudgetScenario.id) {
-							otherCosts += parseFloat(expenseItem.amount);
-						}
-
-					});
 
 					summary.byTerm[term] = {
 						taCount: 0,
@@ -557,7 +541,7 @@ class BudgetCalculations {
 						readerCount: 0,
 						readerCost: 0,
 						supportCosts: 0,
-						otherCosts: otherCosts,
+						otherCosts: 0,
 						totalUnits: 0,
 						replacementCosts: {
 							overall: 0,
@@ -580,6 +564,15 @@ class BudgetCalculations {
 				});
 
 				summary.terms.forEach(function(term) {
+					var expenseItems = BudgetReducers._state.expenseItems;
+					expenseItems.ids.forEach((expenseItemId) => {
+						var expenseItem = expenseItems.list[expenseItemId];
+						if (expenseItem.termCode.substring(4,6) === term && expenseItem.amount && expenseItem.isVisible && expenseItem.budgetScenarioId === selectedBudgetScenario.id) {
+							summary.byTerm[term].otherCosts += parseFloat(expenseItem.amount);
+							summary.byTerm[term].totalCosts += parseFloat(expenseItem.amount);
+						}
+					});
+
 					scheduleCosts.byTerm[term].forEach(function(container) {
 						container.sectionGroupCosts.forEach(function(sectionGroupCost) {
 							if (sectionGroupCost.hidden) { return; }
@@ -617,6 +610,7 @@ class BudgetCalculations {
 					summary.combinedTerms.readerCount += summary.byTerm[term].readerCount;
 					summary.combinedTerms.readerCost += summary.byTerm[term].readerCost;
 					summary.combinedTerms.supportCosts += summary.byTerm[term].supportCosts;
+					summary.combinedTerms.otherCosts += summary.byTerm[term].otherCosts;
 					summary.combinedTerms.replacementCosts.overall += summary.byTerm[term].replacementCosts.overall;
 					summary.combinedTerms.replacementCosts = _self._combineReplacementCost(summary.combinedTerms.replacementCosts, summary.byTerm[term].replacementCosts);
 					summary.combinedTerms.replacementCosts.unassignedCost += summary.byTerm[term].replacementCosts.unassignedCost || 0;

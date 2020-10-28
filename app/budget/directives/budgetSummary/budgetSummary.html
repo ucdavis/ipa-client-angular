@@ -187,6 +187,24 @@
 						</div>
 					</td>
 				</tr>
+				<!-- Other Costs -->
+				<tr>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--left">
+							Other Costs
+						</div>
+					</td>
+					<td ng-repeat="term in summary.terms">
+						<div class="budget-summary__cell-container">
+							{{ toCurrency(summary.byTerm[term].otherCosts) }}
+						</div>
+					</td>
+					<td>
+						<div class="budget-summary__cell-container budget-summary__cell-container--last">
+							{{ toCurrency(summary.combinedTerms.otherCosts) }}
+						</div>
+					</td>
+				</tr>
 				<!-- Total Costs -->
 				<tr>
 					<td>
@@ -219,25 +237,6 @@
 					<td>
 						<div class="budget-summary__cell-container budget-summary__cell-container--last ">
 							{{ '-' + toCurrency(selectedBudgetScenario.funds) }}
-						</div>
-					</td>
-				</tr>
-
-				<!-- Other Costs -->
-				<tr>
-					<td>
-						<div class="budget-summary__cell-container budget-summary__cell-container--left">
-							Other Costs
-						</div>
-					</td>
-					<td ng-repeat="term in summary.terms">
-						<div class="budget-summary__cell-container">
-							{{ toCurrency(summary.byTerm[term].otherCosts) }}
-						</div>
-					</td>
-					<td>
-						<div class="budget-summary__cell-container budget-summary__cell-container--last">
-							{{ toCurrency(summary.combinedTerms.otherCosts) }}
 						</div>
 					</td>
 				</tr>
