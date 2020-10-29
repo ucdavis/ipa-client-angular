@@ -39,7 +39,7 @@ let ipaInput = function ($timeout) {
 			scope.enforceNegative = function() {
 				if (!scope.allowNegative || !scope.value) { return; }
 
-				const isNegative = scope.isNegativeCurrency || (scope.value[0] == "-");
+				const isNegative = (scope.value[0] == "-");
 
 				// Remove all instances of '-' from the input value
 				scope.value = scope.value.replace(/-/g, "");
@@ -58,7 +58,7 @@ let ipaInput = function ($timeout) {
 			scope.applyUpdate = function() {
 				if (angular.isUndefined(scope.onUpdate)) { return; } // eslint-disable-line no-undef
 
-				// skip update function if input was blocked
+				// skip update if input was blocked
 				if (scope.preventedInput) {
 					scope.preventedInput = false;
 					return;

@@ -18,8 +18,6 @@ let currencyInput = function ($filter) {
 					return viewValue;
 				}
 
-				scope.isNegativeCurrency = (viewValue[0] === '-');
-
 				// Strips out anything that isn't a number or period
 				var clean = viewValue.toString().replace(/[^0-9.]+/g, '').replace(/\.{2,}/, '.');
 
@@ -66,8 +64,6 @@ let currencyInput = function ($filter) {
 				} else {
 					currencyValue = '$' + $filter('number')(parseFloat(clean));
 				}
-
-				currencyValue = scope.isNegativeCurrency ? "-" + currencyValue : currencyValue;
 
 				element.val(currencyValue);
 			};
