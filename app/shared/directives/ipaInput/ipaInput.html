@@ -1,8 +1,23 @@
 <div>
   <input
     class="ipa-input"
-    ng-show="!mode || mode == 'number'"
+    ng-show="!mode"
     type="text"
+    ng-model="value"
+    ng-blur="onBlur()"
+    placeholder="{{placeHolder}}"
+    ng-readonly="readOnly || labelReadOnly"
+    ng-change="enforceNegative()"
+    ng-keyup="updateInput()"
+    ng-paste="updateInput()"
+    maxlength="{{maxChars}}"
+    ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly, 'ipa-input--invalid': isInvalid }"
+  />
+
+  <input
+    class="ipa-input"
+    ng-show="mode == 'number'"
+    type="number"
     ng-model="value"
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"

@@ -18,58 +18,22 @@ let ipaInput = function ($timeout) {
 		link: function(scope, element) {
 			scope.$watch('mode',function() {
 				if (scope.mode && scope.mode == 'number') {
-					scope.onlyAllowNumberInputs();
+					scope.preventNegative();
 				}
 			});
 
-			// Limits input to numbers and acceptable misc. keys
-			scope.onlyAllowNumberInputs = function() {
+			scope.preventNegative = function() {
 				element.on('keydown', function (e) {
 					// Unicode character codes that represent an actual key on the keyboard.
-					var PERIOD = 190;
-					var NUMPAD_PERIOD = 110;
-					var BACK_SPACE = 8;
-					var LEFT_ARROW = 37;
-					var RIGHT_ARROW = 39;
 					var MINUS = 189;
 					var NUMPAD_MINUS = 109;
 					var ALT_MINUS = 173;
 
-					var acceptableMiscValues = [
-						PERIOD,
-						NUMPAD_PERIOD,
-						BACK_SPACE,
-						LEFT_ARROW,
-						RIGHT_ARROW,
-						MINUS,
-						NUMPAD_MINUS,
-						ALT_MINUS
-					];
-
-					if (scope.isNumericKeyCode(e.keyCode) == false
-					&& (acceptableMiscValues.indexOf(e.keyCode) == -1)) {
-						e.preventDefault();
-					}
-
-					if (!scope.allowNegative && e.keyCode == MINUS) {
+					if (!scope.allowNegative && (e.keyCode == MINUS || e.keyCode === NUMPAD_MINUS || e.keyCode === ALT_MINUS)) {
+						scope.preventedInput = true;
 						e.preventDefault();
 					}
 				});
-			};
-
-			// Returns true if keyCode falls within one of the two numeric ranges.
-			scope.isNumericKeyCode = function (keyCode) {
-				// Numbers on top of keyboard are keyCodes: 48 - 57
-				var MIN_NUMBER_TOP_ROW_KEYCODE = 48;
-				var MAX_NUMBER_TOP_ROW_KEYCODE = 57;
-				// Numbers on keypad are keyCodes: 96 - 105
-				var MIN_NUMBER_PAD_KEYCODE = 96;
-				var MAX_NUMBER_PAD_KEYCODE = 105;
-
-				var isTopRowNumber = (keyCode >= MIN_NUMBER_TOP_ROW_KEYCODE && keyCode <= MAX_NUMBER_TOP_ROW_KEYCODE);
-				var isNumpadNumber = (keyCode >= MIN_NUMBER_PAD_KEYCODE && keyCode <= MAX_NUMBER_PAD_KEYCODE);
-
-				return (isTopRowNumber || isNumpadNumber);
 			};
 
 			scope.enforceNegative = function() {
@@ -93,6 +57,12 @@ let ipaInput = function ($timeout) {
 			// Triggers the update function with default 500ms delay, or uses provided delay override
 			scope.applyUpdate = function() {
 				if (angular.isUndefined(scope.onUpdate)) { return; } // eslint-disable-line no-undef
+
+				// skip update function if input was blocked
+				if (scope.preventedInput) {
+					scope.preventedInput = false;
+					return;
+				}
 
 				scope.delay = scope.updateDelay || 1000;
 				$timeout.cancel(scope.timeOut);
