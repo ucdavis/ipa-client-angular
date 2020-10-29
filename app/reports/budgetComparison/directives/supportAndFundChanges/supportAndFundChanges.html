@@ -88,6 +88,61 @@
         </td>
       </tr>
     </tbody>
+
+    <thead>
+      <tr>
+        <th>
+          <div class="dean-report__header-cell">Amount</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell"></div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell">% Change</div>
+        </th>
+        <th>
+          <div class="dean-report__header-cell dean-report__header-cell--right"></div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container">
+            {{ toCurrency(costs.otherCosts.rawCost) || 'N/A' }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last"></div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last">
+            {{ costs.otherCosts.percentageCost || 'N/A' }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell-container--last"></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+            {{ toCurrency(costs.total.rawCost) || 'N/A' }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total"></div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+              {{ costs.total.percentageCost || 'N/A' }}
+          </div>
+        </td>
+        <td>
+          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last"></div>
+        </td>
+      </tr>
+    </tbody>
   </table>
 
   <table>
@@ -137,62 +192,6 @@
         <td>
           <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
             {{ toCurrency(funding.rawTotal) }}
-          </div>
-        </td>
-        <td>
-          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total"></div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <table>
-    <colgroup>
-      <col style="width: 33%;">
-      <col style="width: 41%;">
-      <col style="width: 25%;">
-    </colgroup>
-    <thead>
-      <tr>
-        <th>
-          <div class="dean-report__header-cell dean-report__header-cell--left">
-            Other Costs
-          </div>
-        </th>
-        <th>
-          <div class="dean-report__header-cell">Amount</div>
-        </th>
-        <th>
-          <div class="dean-report__header-cell dean-report__header-cell--right">% Change</div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="expenseItemCategoryId in expenseItemCategories.current.ids">
-        <td>
-          <div class="dean-report__cell-container dean-report__cell-container--left">
-            {{ expenseItemCategories.current.list[expenseItemCategoryId].description }}
-          </div>
-        </td>
-        <td>
-          <div class="dean-report__cell-container">
-              {{ toCurrency(expenses.types[expenseItemCategoryId].raw) }}
-            </div>
-        </td>
-        <td>
-          <div class="dean-report__cell-container dean-report__cell-container--last">
-              {{ expenses.types[expenseItemCategoryId].percentage || 'N/A' }}
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div class="dean-report__cell-container dean-report__cell-container--left">
-          </div>
-        </td>
-        <td>
-          <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-            {{ toCurrency(expenses.rawTotal) }}
           </div>
         </td>
         <td>

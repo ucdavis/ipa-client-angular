@@ -96,6 +96,71 @@
       </td>
     </tr>
   </tbody>
+
+  <thead>
+    <tr>
+      <th>
+        <div class="dean-report__header-cell"></div>
+      </th>
+      <th>
+        <div class="dean-report__header-cell">Amount</div>
+      </th>
+      <th>
+        <div class="dean-report__header-cell"></div>
+      </th>
+      <th>
+        <div class="dean-report__header-cell"></div>
+      </th>
+      <th>
+        <div class="dean-report__header-cell dean-report__header-cell--right"></div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--left">
+          Other Costs
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ toCurrency(expenses.total) }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container"></div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container"></div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--left">
+          Total Teaching Costs
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
+          {{ toCurrency(costs.total) }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total"></div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total"></div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last"></div>
+      </td>
+    </tr>
+  </tbody>
+
   <thead>
     <tr>
       <th>
@@ -159,69 +224,4 @@
       </td>
     </tr>
   </tbody>
-
-  <thead>
-    <tr>
-      <th>
-        <div class="dean-report__header-cell dean-report__header-cell--left">
-          Other Costs
-        </div>
-      </th>
-      <th>
-        <div class="dean-report__header-cell">Amount</div>
-      </th>
-      <th>
-        <div class="dean-report__header-cell"></div>
-      </th>
-      <th>
-        <div class="dean-report__header-cell"></div>
-      </th>
-      <th>
-        <div class="dean-report__header-cell dean-report__header-cell--right"></div>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="expenseItemCategoryId in expenseItemCategories.current.ids">
-      <td>
-        <div class="dean-report__cell-container dean-report__cell-container--left">
-          {{ expenseItemCategories.current.list[expenseItemCategoryId].description }}
-        </div>
-      </td>
-      <td>
-        <div class="dean-report__cell-container">
-            {{ toCurrency(expenses.types[expenseItemCategoryId]) }}
-          </div>
-      </td>
-      <td>
-        <div class="dean-report__cell-container"></div>
-      </td>
-      <td>
-        <div class="dean-report__cell-container"></div>
-      </td>
-      <td>
-        <div class="dean-report__cell-container dean-report__cell-container--last"></div>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="dean-report__cell-container dean-report__cell-container--left"></div>
-      </td>
-      <td>
-        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total">
-          {{ toCurrency(expenses.total) }}
-        </div>
-      </td>
-      <td>
-        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total"></div>
-      </td>
-      <td>
-        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total"></div>
-      </td>
-      <td>
-        <div class="dean-report__cell-container dean-report__cell--bold dean-report__cell--total dean-report__cell-container--last"></div>
-      </td>
-    </tr>
-  </tbody>
-
 </table>

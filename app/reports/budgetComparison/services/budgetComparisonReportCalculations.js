@@ -48,7 +48,8 @@ class BudgetComparisonReportCalculations {
               budget.current,
               currentSelectedBudgetScenario,
               courses.current,
-              sectionGroups.current
+              sectionGroups.current,
+              expenseItems.current
             ),
             funding: this._generateFunding(
               lineItems.current,
@@ -72,7 +73,8 @@ class BudgetComparisonReportCalculations {
               budget.previous,
               previousSelectedBudgetScenario,
               courses.previous,
-              sectionGroups.previous
+              sectionGroups.previous,
+              expenseItems.previous
             ),
             funding: this._generateFunding(
               lineItems.previous,
@@ -187,7 +189,8 @@ class BudgetComparisonReportCalculations {
         budget,
         selectedScenario,
         courses,
-        sectionGroups
+        sectionGroups,
+        expenseItems
       ) {
         var selectedScenarioId = selectedScenario.id;
         var activeTerms = selectedScenario.terms;
@@ -210,11 +213,15 @@ class BudgetComparisonReportCalculations {
             sectionGroupCosts,
             activeTerms
           ),
+          otherCosts: this._generateExpenses(
+            expenseItems,
+            selectedScenarioId
+          ),
           total: null
         };
 
         costs.total =
-          costs.instructorCosts.total.cost + costs.supportCosts.totalCost;
+          costs.instructorCosts.total.cost + costs.supportCosts.totalCost + costs.otherCosts.total;
 
         return costs;
       },
@@ -636,9 +643,17 @@ class BudgetComparisonReportCalculations {
               previousCosts.supportCosts.totalCost,
               currentCosts.supportCosts.totalCost
             )
+          },
+          otherCosts: {
+            rawCost:
+              currentCosts.otherCosts.total -
+              previousCosts.otherCosts.total,
+            percentageCost: this._percentageChange(
+              previousCosts.otherCosts.total,
+              currentCosts.otherCosts.total
+            )
           }
         };
-
         var instructorTypes =
           BudgetComparisonReportReducers._state.instructorTypes;
 
@@ -700,7 +715,14 @@ class BudgetComparisonReportCalculations {
             currentCosts.instructorCosts.total.scenarioCourses
           )
         };
-
+        costs.total = {
+          rawCost:
+            currentCosts.total - previousCosts.total,
+          percentageCost: _self._percentageChange(
+            previousCosts.total,
+            currentCosts.total
+          )
+        };
         return costs;
       },
       // Generates previous -> current change values for funds
