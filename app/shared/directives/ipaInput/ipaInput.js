@@ -17,7 +17,7 @@ let ipaInput = function ($timeout) {
 		},
 		link: function(scope, element) {
 			scope.$watch('mode',function() {
-				if (scope.mode && scope.mode == 'number') {
+				if (scope.mode && scope.mode == 'number' && !scope.allowNegative) {
 					scope.preventNegative();
 				}
 			});
@@ -39,7 +39,7 @@ let ipaInput = function ($timeout) {
 			scope.enforceNegative = function() {
 				if (!scope.allowNegative || !scope.value) { return; }
 
-				const isNegative = (scope.value[0] == "-");
+				var isNegative = (scope.value[0] == "-");
 
 				// Remove all instances of '-' from the input value
 				scope.value = scope.value.replace(/-/g, "");
@@ -57,12 +57,6 @@ let ipaInput = function ($timeout) {
 			// Triggers the update function with default 500ms delay, or uses provided delay override
 			scope.applyUpdate = function() {
 				if (angular.isUndefined(scope.onUpdate)) { return; } // eslint-disable-line no-undef
-
-				// skip update if input was blocked
-				if (scope.preventedInput) {
-					scope.preventedInput = false;
-					return;
-				}
 
 				scope.delay = scope.updateDelay || 1000;
 				$timeout.cancel(scope.timeOut);
