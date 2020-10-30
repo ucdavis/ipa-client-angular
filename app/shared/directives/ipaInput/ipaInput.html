@@ -1,9 +1,9 @@
 <div>
   <input
     class="ipa-input"
-    ng-show="!mode"
+    ng-if="!mode"
     type="text"
-    ng-model="value"
+    ng-model="$parent.value"
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"
     ng-readonly="readOnly || labelReadOnly"
@@ -16,9 +16,9 @@
 
   <input
     class="ipa-input"
-    ng-show="mode == 'number'"
+    ng-if="mode == 'number'"
     type="number"
-    ng-model="value"
+    ng-model="$parent.value"
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"
     ng-readonly="readOnly || labelReadOnly"
@@ -31,9 +31,9 @@
 
   <input
     class="ipa-input"
-    ng-show="mode == 'currency'"
+    ng-if="mode == 'currency'"
     currency-input
-    ng-model="value"
+    ng-model="$parent.value"
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"
     ng-readonly="readOnly || labelReadOnly"
