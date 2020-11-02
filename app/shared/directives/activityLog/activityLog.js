@@ -18,14 +18,20 @@ let activityLog = function () {
       scope.endDate;
 
       scope.$watchGroup(['startDate', 'endDate', 'currentPage'], function () {
-        scope.startMax = scope.getDateOnly(scope.endDate);
-        scope.endMin = scope.getDateOnly(scope.startDate);
-        scope.setPageData();
+        if (scope.logData && scope.logData.length > 0) {
+          scope.startMax = scope.getDateOnly(scope.endDate);
+          scope.endMin = scope.getDateOnly(scope.startDate);
+          scope.setPageData();
+        }
       });
 
       scope.$watch('logData', function () {
-        if (scope.logData) {
-          scope.startDate = new Date(new Date(scope.logData[scope.logData.length - 1].createdOn).toDateString());
+        if (scope.logData && scope.logData.length > 0) {
+          scope.startDate = new Date(
+            new Date(
+              scope.logData[scope.logData.length - 1].createdOn
+            ).toDateString()
+          );
           scope.endDate = new Date(new Date().toDateString());
 
           scope.minDate = scope.getDateOnly(scope.startDate);
