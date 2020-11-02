@@ -229,7 +229,7 @@ button.btn.assign-dropdown-btn {
 	margin-top: -10px;
 	padding-top: 2em;
 	padding-bottom: 2em;
-	z-index: 100;
+	z-index: 90;
 }
 
 .assignments__table {

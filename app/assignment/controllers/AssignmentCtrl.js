@@ -22,6 +22,7 @@ class AssignmentCtrl {
 		$scope.year = $routeParams.year;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 		$scope.noAccess = validate ? validate.noAccess : null;
+		$scope.isActivityLogOpen = false;
 
 		$scope.view = {
 			workgroupId: $routeParams.workgroupId,
@@ -42,6 +43,14 @@ class AssignmentCtrl {
 		$rootScope.$on('sharedStateSet', function (event, data) {
 			$scope.view.sharedState = data;
 		});
+
+		$scope.toggleActivityLogOpen = function () {
+			AssignmentService.getAuditLogs($scope.workgroupId).then(res => {
+				$scope.auditLogs = res;
+			});
+
+			return $scope.isActivityLogOpen = !$scope.isActivityLogOpen;
+		};
 
 		$scope.showInstructors = function () {
 			self.assignmentActionCreators.showInstructors();
@@ -150,7 +159,7 @@ class AssignmentCtrl {
 			let approvedTeachingAssignments = courseSectionGroups.map(sectionGroup => sectionGroup.teachingAssignmentIds
 				.map(teachingAssignmentId => $scope.view.state.teachingAssignments.list[teachingAssignmentId])
 				.filter(teachingAssignment => teachingAssignment.approved === true));
-			
+
 			$scope.view.selectedCourse.offerings = approvedTeachingAssignments;
 			$scope.$apply();
 		};
