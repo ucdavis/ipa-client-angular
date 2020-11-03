@@ -27,6 +27,7 @@ class BudgetCtrl {
     $scope.noAccess = validate ? validate.noAccess : null;
     $scope.workgroupId = $routeParams.workgroupId;
     $scope.year = $routeParams.year;
+    $scope.isActivityLogOpen = false;
 
     $scope.view = {};
 
@@ -69,6 +70,14 @@ class BudgetCtrl {
         localStorage.removeItem("selectedTerm");
       }
     });
+
+    this.$scope.toggleActivityLogOpen = function() {
+      _self.BudgetService.getAuditLogs(_self.$scope.workgroupId).then(res => {
+        _self.$scope.auditLogs = res;
+      });
+
+      return _self.$scope.isActivityLogOpen = !_self.$scope.isActivityLogOpen;
+    };
   }
 }
 
