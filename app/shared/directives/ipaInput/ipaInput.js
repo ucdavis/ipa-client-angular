@@ -12,81 +12,32 @@ let ipaInput = function ($timeout) {
 			updateDelay: '<?', // If an update function has been specified it will default to 500ms delay, can override that here
 			isInvalid: '<?',
 			maxChars: '<?',
-			allowNegative: '<?',
+			allowNegative: '<?', // Defaults to false, only for 'number' mode
 			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
 		},
 		link: function(scope, element) {
 			scope.$watch('mode',function() {
-				if (scope.mode && scope.mode == 'number') {
-					scope.onlyAllowNumberInputs();
+				if (scope.mode) {
+					scope.enforceNegative();
 				}
 			});
 
-			// Limits input to numbers and acceptable misc. keys
-			scope.onlyAllowNumberInputs = function() {
+			scope.enforceNegative = function() {
 				element.on('keydown', function (e) {
 					// Unicode character codes that represent an actual key on the keyboard.
-					var PERIOD = 190;
-					var NUMPAD_PERIOD = 110;
-					var BACK_SPACE = 8;
-					var LEFT_ARROW = 37;
-					var RIGHT_ARROW = 39;
 					var MINUS = 189;
 					var NUMPAD_MINUS = 109;
 					var ALT_MINUS = 173;
 
-					var acceptableMiscValues = [
-						PERIOD,
-						NUMPAD_PERIOD,
-						BACK_SPACE,
-						LEFT_ARROW,
-						RIGHT_ARROW,
-						MINUS,
-						NUMPAD_MINUS,
-						ALT_MINUS
-					];
-
-					if (scope.isNumericKeyCode(e.keyCode) == false
-					&& (acceptableMiscValues.indexOf(e.keyCode) == -1)) {
-						e.preventDefault();
-					}
-
-					if (!scope.allowNegative && e.keyCode == MINUS) {
+					if (!scope.allowNegative && (e.keyCode == MINUS || e.keyCode === NUMPAD_MINUS || e.keyCode === ALT_MINUS)) {
 						e.preventDefault();
 					}
 				});
 			};
 
-			// Returns true if keyCode falls within one of the two numeric ranges.
-			scope.isNumericKeyCode = function (keyCode) {
-				// Numbers on top of keyboard are keyCodes: 48 - 57
-				var MIN_NUMBER_TOP_ROW_KEYCODE = 48;
-				var MAX_NUMBER_TOP_ROW_KEYCODE = 57;
-				// Numbers on keypad are keyCodes: 96 - 105
-				var MIN_NUMBER_PAD_KEYCODE = 96;
-				var MAX_NUMBER_PAD_KEYCODE = 105;
-
-				var isTopRowNumber = (keyCode >= MIN_NUMBER_TOP_ROW_KEYCODE && keyCode <= MAX_NUMBER_TOP_ROW_KEYCODE);
-				var isNumpadNumber = (keyCode >= MIN_NUMBER_PAD_KEYCODE && keyCode <= MAX_NUMBER_PAD_KEYCODE);
-
-				return (isTopRowNumber || isNumpadNumber);
-			};
-
-			scope.enforceNegative = function() {
-				if (!scope.allowNegative || !scope.value) { return; }
-
-				var isNegative = (scope.value[0] == "-");
-
-				// Remove all instances of '-' from the input value
-				scope.value = scope.value.replace(/-/g, "");
-
-				if (isNegative) {
-					scope.value = "-" + scope.value;
-				}
-			};
-
 			// Main method triggered by template, handles filtering/update callback
 			scope.updateInput = function() {
+				if (!scope.value && scope.value !== 0) { return; }
 				scope.applyUpdate();
 			};
 
