@@ -16,7 +16,7 @@ let supportAndFunds = function (StringService) {
       miscStats: '<',
       budgetScenarioName: '<',
       expenses: '<',
-      expenseItemCategories: '<'
+      expenseItemTypes: '<'
     },
     link: function (scope) {
       console.log(scope);

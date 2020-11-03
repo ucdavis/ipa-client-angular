@@ -21,7 +21,7 @@ class BudgetComparisonReportActions {
 				this._getTeachingAssignments(workgroupId, year, ActionTypes.GET_CURRENT_TEACHING_ASSIGNMENTS);
 				this._getLineItems(workgroupId, year, ActionTypes.GET_CURRENT_LINE_ITEMS);
 				this._getExpenseItems(workgroupId, year, ActionTypes.GET_CURRENT_EXPENSE_ITEMS);
-				this._getExpenseItemCategories(workgroupId, year, ActionTypes.GET_CURRENT_EXPENSE_ITEM_CATEGORIES);
+				this._getExpenseItemTypes(workgroupId, year, ActionTypes.GET_CURRENT_EXPENSE_ITEM_TYPES);
 				this._getBudgetScenarios(workgroupId, year, ActionTypes.GET_CURRENT_BUDGET_SCENARIOS);
 				this._getLineItemCategories(workgroupId, year, ActionTypes.GET_CURRENT_LINE_ITEM_CATEGORIES);
 				this._getInstructorTypeCosts(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPE_COSTS);
@@ -37,7 +37,7 @@ class BudgetComparisonReportActions {
 				this._getTeachingAssignments(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_TEACHING_ASSIGNMENTS);
 				this._getLineItems(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_LINE_ITEMS);
 				this._getExpenseItems(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_EXPENSE_ITEMS);
-				this._getExpenseItemCategories(workgroupId, year, ActionTypes.GET_PREVIOUS_EXPENSE_ITEM_CATEGORIES);
+				this._getExpenseItemTypes(workgroupId, year, ActionTypes.GET_PREVIOUS_EXPENSE_ITEM_TYPES);
 				this._getBudgetScenarios(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_BUDGET_SCENARIOS);
 				this._getLineItemCategories(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_LINE_ITEM_CATEGORIES);
 				this._getInstructorTypeCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPE_COSTS);
@@ -408,24 +408,24 @@ class BudgetComparisonReportActions {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
-			_getExpenseItemCategories: function (workgroupId, year, action) {
+			_getExpenseItemTypes: function (workgroupId, year, action) {
 				var _self = this;
 
-				BudgetComparisonReportService.getExpenseItemCategories().then(function (rawExpenseItemCategories) {
-					let expenseItemCategories = {
+				BudgetComparisonReportService.getExpenseItemTypes().then(function (rawExpenseItemTypes) {
+					let expenseItemTypes = {
 						ids: [],
 						list: {}
 					};
 
-					rawExpenseItemCategories.forEach(function(expenseItemCategory) {
-						expenseItemCategories.ids.push(expenseItemCategory.id);
-						expenseItemCategories.list[expenseItemCategory.id] = expenseItemCategory;
+					rawExpenseItemTypes.forEach(function(expenseItemCategory) {
+						expenseItemTypes.ids.push(expenseItemCategory.id);
+						expenseItemTypes.list[expenseItemCategory.id] = expenseItemCategory;
 					});
 
 					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
-							expenseItemCategories: expenseItemCategories
+							expenseItemTypes: expenseItemTypes
 						}
 					});
 

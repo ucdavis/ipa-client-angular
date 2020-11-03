@@ -13,7 +13,7 @@ let supportAndFundChanges = function () {
       costs: '<',
       funding: '<',
       miscStats: '<',
-      expenseItemCategories: '<',
+      expenseItemTypes: '<',
       expenses: '<'
     },
     link: function (scope) {

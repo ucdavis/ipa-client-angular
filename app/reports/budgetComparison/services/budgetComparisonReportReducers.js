@@ -13,7 +13,7 @@ class BudgetComparisonReportReducers {
 				lineItems: {},
 				lineItemCategories: {},
 				expenseItems: {},
-				expenseItemCategories: {},
+				expenseItemTypes: {},
 				instructorTypeCosts: {},
 				instructorCosts: {},
 				sectionGroupCosts: {},
@@ -126,18 +126,18 @@ class BudgetComparisonReportReducers {
 						return lineItemCategories;
 				}
 			},
-			_expenseItemCategoryReducers: function (action, expenseItemCategories) {
+			_expenseItemCategoryReducers: function (action, expenseItemTypes) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						return {};
-					case ActionTypes.GET_CURRENT_EXPENSE_ITEM_CATEGORIES:
-					expenseItemCategories.current = action.payload.expenseItemCategories;
-						return expenseItemCategories;
-					case ActionTypes.GET_PREVIOUS_EXPENSE_ITEM_CATEGORIES:
-					expenseItemCategories.previous = action.payload.expenseItemCategories;
-						return expenseItemCategories;
+					case ActionTypes.GET_CURRENT_EXPENSE_ITEM_TYPES:
+					expenseItemTypes.current = action.payload.expenseItemTypes;
+						return expenseItemTypes;
+					case ActionTypes.GET_PREVIOUS_EXPENSE_ITEM_TYPES:
+					expenseItemTypes.previous = action.payload.expenseItemTypes;
+						return expenseItemTypes;
 					default:
-						return expenseItemCategories;
+						return expenseItemTypes;
 				}
 			},
 			_instructorTypeCostReducers: function (action, instructorTypeCosts) {//
@@ -351,7 +351,7 @@ class BudgetComparisonReportReducers {
 				newState.budgetScenarios = scope._budgetScenarioReducers(action, scope._state.budgetScenarios);
 				newState.lineItemCategories = scope._lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.expenseItems = scope._expenseItemReducers(action, scope._state.expenseItems);
-				newState.expenseItemCategories = scope._expenseItemCategoryReducers(action, scope._state.expenseItemCategories);
+				newState.expenseItemTypes = scope._expenseItemCategoryReducers(action, scope._state.expenseItemTypes);
 				newState.instructorTypeCosts = scope._instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.instructorCosts = scope._instructorCostReducers(action, scope._state.instructorCosts);
 				newState.sectionGroupCosts = scope._sectionGroupCostReducers(action, scope._state.sectionGroupCosts);

@@ -288,21 +288,21 @@ class BudgetReducers {
 						return lineItemCategories;
 				}
 			},
-			expenseItemCategoryReducers: function (action, expenseItemCategories) {
+			expenseItemCategoryReducers: function (action, expenseItemTypes) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						expenseItemCategories = {
+						expenseItemTypes = {
 							ids: [],
 							list: []
 						};
 
-						action.payload.expenseItemCategories.forEach(function(expenseItemCategory) {
-							expenseItemCategories.ids.push(expenseItemCategory.id);
-							expenseItemCategories.list[expenseItemCategory.id] = expenseItemCategory;
+						action.payload.expenseItemTypes.forEach(function(expenseItemCategory) {
+							expenseItemTypes.ids.push(expenseItemCategory.id);
+							expenseItemTypes.list[expenseItemCategory.id] = expenseItemCategory;
 						});
-						return expenseItemCategories;
+						return expenseItemTypes;
 					default:
-						return expenseItemCategories;
+						return expenseItemTypes;
 				}
 			},
 			sectionGroupCostReducers: function (action, sectionGroupCosts) {
@@ -1355,7 +1355,7 @@ class BudgetReducers {
 				newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 				newState.expenseItems = scope.expenseItemReducers(action, scope._state.expenseItems);
-				newState.expenseItemCategories = scope.expenseItemCategoryReducers(action, scope._state.expenseItemCategories);
+				newState.expenseItemTypes = scope.expenseItemCategoryReducers(action, scope._state.expenseItemTypes);
 				newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
@@ -1395,7 +1395,7 @@ class BudgetReducers {
 				newPageState.ui = newState.ui;
 				newPageState.lineItemCategories = BudgetSelectors.generateLineItemCategories(newState.lineItemCategories);
 				newPageState.reasonCategories = _array_sortByProperty(Object.values(newState.reasonCategories.list), ["description"]);
-				newPageState.expenseItemCategories = newState.expenseItemCategories.list;
+				newPageState.expenseItemTypes = newState.expenseItemTypes.list;
 				newPageState.courses = newState.courses;
 				newPageState.sectionGroups = newState.sectionGroups;
 				newPageState.tags = newState.tags;

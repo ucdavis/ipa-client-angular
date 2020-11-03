@@ -759,8 +759,8 @@ class BudgetComparisonReportCalculations {
       // Generates previous -> current change values for expenses
       _generateExpenseChange(currentExpenses, previousExpenses) {
         var _self = this;
-        var expenseItemCategories =
-          BudgetComparisonReportReducers._state.expenseItemCategories;
+        var expenseItemTypes =
+          BudgetComparisonReportReducers._state.expenseItemTypes;
 
         var expenseChange = {
           types: {},
@@ -768,7 +768,7 @@ class BudgetComparisonReportCalculations {
           percentageTotal: 0
         };
 
-        expenseItemCategories.current.ids.forEach(function(expenseItemCategoryId) {
+        expenseItemTypes.current.ids.forEach(function(expenseItemCategoryId) {
           var currentRaw = currentExpenses.types[expenseItemCategoryId] || 0;
           var previousRaw = previousExpenses.types[expenseItemCategoryId] || 0;
 
