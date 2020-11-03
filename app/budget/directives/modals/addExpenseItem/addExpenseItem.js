@@ -24,7 +24,7 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
           !scope.newExpenseItem.expenseItemCategoryId ||
           scope.newExpenseItem.expenseItemCategoryId == 0
         ) {
-          scope.formValidationErrorMessage += ' You must select a category.';
+          scope.formValidationErrorMessage += ' You must select a type.';
         }
 
         if (
