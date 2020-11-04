@@ -40,9 +40,9 @@
 					</button>
 
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="category in state.expenseItemTypes | orderBy:'description'" class="type-item">
-							<a ng-click="selectExpenseItemType(category)">
-								{{ category.description }}
+						<li ng-repeat="type in state.expenseItemTypes | orderBy:'description'" class="type-item">
+							<a ng-click="selectExpenseItemType(type)">
+								{{ type.description }}
 							</a>
 						</li>
 					</ul>
