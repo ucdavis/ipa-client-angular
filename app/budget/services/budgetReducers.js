@@ -288,7 +288,7 @@ class BudgetReducers {
 						return lineItemCategories;
 				}
 			},
-			expenseItemCategoryReducers: function (action, expenseItemTypes) {
+			expenseItemTypeReducers: function (action, expenseItemTypes) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						expenseItemTypes = {
@@ -296,9 +296,9 @@ class BudgetReducers {
 							list: []
 						};
 
-						action.payload.expenseItemTypes.forEach(function(expenseItemCategory) {
-							expenseItemTypes.ids.push(expenseItemCategory.id);
-							expenseItemTypes.list[expenseItemCategory.id] = expenseItemCategory;
+						action.payload.expenseItemTypes.forEach(function(expenseItemType) {
+							expenseItemTypes.ids.push(expenseItemType.id);
+							expenseItemTypes.list[expenseItemType.id] = expenseItemType;
 						});
 						return expenseItemTypes;
 					default:
@@ -1355,7 +1355,7 @@ class BudgetReducers {
 				newState.sectionGroups = scope.sectionGroupReducers(action, scope._state.sectionGroups);
 				newState.lineItems = scope.lineItemReducers(action, scope._state.lineItems);
 				newState.expenseItems = scope.expenseItemReducers(action, scope._state.expenseItems);
-				newState.expenseItemTypes = scope.expenseItemCategoryReducers(action, scope._state.expenseItemTypes);
+				newState.expenseItemTypes = scope.expenseItemTypeReducers(action, scope._state.expenseItemTypes);
 				newState.lineItemComments = scope.lineItemCommentReducers(action, scope._state.lineItemComments);
 				newState.lineItemCategories = scope.lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.sectionGroupCosts = scope.sectionGroupCostReducers(action, scope._state.sectionGroupCosts);

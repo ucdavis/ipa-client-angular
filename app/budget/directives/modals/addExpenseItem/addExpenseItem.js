@@ -46,7 +46,7 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
         return true;
       };
 
-      scope.selectExpenseItemCategory = function (category) {
+      scope.selectExpenseItemType = function (category) {
         scope.newExpenseItem.expenseItemTypeId = category.id;
         scope.newExpenseItem.typeDescription = category.description;
       };

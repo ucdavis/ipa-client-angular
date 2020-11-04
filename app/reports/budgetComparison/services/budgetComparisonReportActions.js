@@ -417,9 +417,9 @@ class BudgetComparisonReportActions {
 						list: {}
 					};
 
-					rawExpenseItemTypes.forEach(function(expenseItemCategory) {
-						expenseItemTypes.ids.push(expenseItemCategory.id);
-						expenseItemTypes.list[expenseItemCategory.id] = expenseItemCategory;
+					rawExpenseItemTypes.forEach(function(expenseItemType) {
+						expenseItemTypes.ids.push(expenseItemType.id);
+						expenseItemTypes.list[expenseItemType.id] = expenseItemType;
 					});
 
 					BudgetComparisonReportReducers.reduce({

@@ -126,7 +126,7 @@ class BudgetComparisonReportReducers {
 						return lineItemCategories;
 				}
 			},
-			_expenseItemCategoryReducers: function (action, expenseItemTypes) {
+			_expenseItemTypeReducers: function (action, expenseItemTypes) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
 						return {};
@@ -351,7 +351,7 @@ class BudgetComparisonReportReducers {
 				newState.budgetScenarios = scope._budgetScenarioReducers(action, scope._state.budgetScenarios);
 				newState.lineItemCategories = scope._lineItemCategoryReducers(action, scope._state.lineItemCategories);
 				newState.expenseItems = scope._expenseItemReducers(action, scope._state.expenseItems);
-				newState.expenseItemTypes = scope._expenseItemCategoryReducers(action, scope._state.expenseItemTypes);
+				newState.expenseItemTypes = scope._expenseItemTypeReducers(action, scope._state.expenseItemTypes);
 				newState.instructorTypeCosts = scope._instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.instructorCosts = scope._instructorCostReducers(action, scope._state.instructorCosts);
 				newState.sectionGroupCosts = scope._sectionGroupCostReducers(action, scope._state.sectionGroupCosts);

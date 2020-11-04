@@ -5,10 +5,10 @@
 			<label class="col-sm-4 control-label">Term</label>
 			<div class="col-sm-5">
 				<div class="input-group" class="category-selection-container">
-					<button class="btn btn-category-dropdown dropdown-toggle"
+					<button class="btn btn-type-dropdown dropdown-toggle"
 									type="button" data-toggle="dropdown"
-									class="btn-category-dropdown">
-						<span class="btn-category-dropdown-label">
+									class="btn-type-dropdown">
+						<span class="btn-type-dropdown-label">
 							{{ newExpenseItem.termDescription || 'Select a term'}}
 						</span>
 						<span class="caret"></span>
@@ -30,10 +30,10 @@
 			<label class="col-sm-4 control-label">Type</label>
 			<div class="col-sm-5">
 				<div class="input-group" class="category-selection-container">
-					<button class="btn btn-category-dropdown dropdown-toggle"
+					<button class="btn btn-type-dropdown dropdown-toggle"
 									type="button" data-toggle="dropdown"
-									class="btn-category-dropdown">
-						<span class="btn-category-dropdown-label">
+									class="btn-type-dropdown">
+						<span class="btn-type-dropdown-label">
 							{{ newExpenseItem.typeDescription || 'Select a type' }}
 						</span>
 						<span class="caret"></span>
@@ -41,7 +41,7 @@
 
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<li ng-repeat="category in state.expenseItemTypes | orderBy:'description'" class="category-item">
-							<a ng-click="selectExpenseItemCategory(category)">
+							<a ng-click="selectExpenseItemType(category)">
 								{{ category.description }}
 							</a>
 						</li>
