@@ -575,15 +575,15 @@ class BudgetComparisonReportCalculations {
         };
         expenseItems.ids.forEach(function(expenseItemId){
           var expenseItem = expenseItems.list[expenseItemId];
-          var expenseItemCategoryId = expenseItem.expenseItemCategoryId;
+          var expenseItemTypeId = expenseItem.expenseItemTypeId;
           if (expenseItem.budgetScenarioId === selectedScenarioId){
-            if (expenses.typeIds.indexOf(expenseItemCategoryId) == -1) {
-              expenses.typeIds.push(expenseItemCategoryId);
+            if (expenses.typeIds.indexOf(expenseItemTypeId) == -1) {
+              expenses.typeIds.push(expenseItemTypeId);
             }
 
-            expenses.types[expenseItemCategoryId] =
-            expenses.types[expenseItemCategoryId] || 0;
-            expenses.types[expenseItemCategoryId] += (expenseItem.amount || 0);
+            expenses.types[expenseItemTypeId] =
+            expenses.types[expenseItemTypeId] || 0;
+            expenses.types[expenseItemTypeId] += (expenseItem.amount || 0);
             expenses.total += (expenseItem.amount || 0);
           }
         });
@@ -768,16 +768,16 @@ class BudgetComparisonReportCalculations {
           percentageTotal: 0
         };
 
-        expenseItemTypes.current.ids.forEach(function(expenseItemCategoryId) {
-          var currentRaw = currentExpenses.types[expenseItemCategoryId] || 0;
-          var previousRaw = previousExpenses.types[expenseItemCategoryId] || 0;
+        expenseItemTypes.current.ids.forEach(function(expenseItemTypeId) {
+          var currentRaw = currentExpenses.types[expenseItemTypeId] || 0;
+          var previousRaw = previousExpenses.types[expenseItemTypeId] || 0;
 
-          expenseChange.types[expenseItemCategoryId] = {
+          expenseChange.types[expenseItemTypeId] = {
             raw: currentRaw - previousRaw,
             percentage: _self._percentageChange(previousRaw, currentRaw)
           };
 
-          expenseChange.rawTotal += expenseChange.types[expenseItemCategoryId].raw;
+          expenseChange.rawTotal += expenseChange.types[expenseItemTypeId].raw;
         });
 
         expenseChange.percentageTotal = this._percentageChange(

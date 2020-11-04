@@ -11,6 +11,7 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       expenseItemToEdit: '<?',
     },
     link: function (scope) {
+      console.log(scope);
       scope.newExpenseItem = {};
 
       if (scope.expenseItemToEdit) {
@@ -21,8 +22,8 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       scope.isFormValid = function () {
         scope.formValidationErrorMessage = '';
         if (
-          !scope.newExpenseItem.expenseItemCategoryId ||
-          scope.newExpenseItem.expenseItemCategoryId == 0
+          !scope.newExpenseItem.expenseItemTypeId ||
+          scope.newExpenseItem.expenseItemTypeId == 0
         ) {
           scope.formValidationErrorMessage += ' You must select a type.';
         }
@@ -46,8 +47,8 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       };
 
       scope.selectExpenseItemCategory = function (category) {
-        scope.newExpenseItem.expenseItemCategoryId = category.id;
-        scope.newExpenseItem.categoryDescription = category.description;
+        scope.newExpenseItem.expenseItemTypeId = category.id;
+        scope.newExpenseItem.typeDescription = category.description;
       };
 
       scope.selectExpenseItemTerm = function (term) {
