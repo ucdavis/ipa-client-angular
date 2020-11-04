@@ -4,7 +4,7 @@
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Term</label>
 			<div class="col-sm-5">
-				<div class="input-group" class="category-selection-container">
+				<div class="input-group" class="type-selection-container">
 					<button class="btn btn-type-dropdown dropdown-toggle"
 									type="button" data-toggle="dropdown"
 									class="btn-type-dropdown">
@@ -15,7 +15,7 @@
 					</button>
 
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="term in state.ui.termNav.budgetScenarioDropdownTerms | orderBy:'description'" class="category-item">
+						<li ng-repeat="term in state.ui.termNav.budgetScenarioDropdownTerms | orderBy:'description'" class="type-item">
 							<a ng-click="selectExpenseItemTerm(term)">
 								{{ term.description}}
 							</a>
@@ -29,7 +29,7 @@
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Type</label>
 			<div class="col-sm-5">
-				<div class="input-group" class="category-selection-container">
+				<div class="input-group" class="type-selection-container">
 					<button class="btn btn-type-dropdown dropdown-toggle"
 									type="button" data-toggle="dropdown"
 									class="btn-type-dropdown">
@@ -40,7 +40,7 @@
 					</button>
 
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li ng-repeat="category in state.expenseItemTypes | orderBy:'description'" class="category-item">
+						<li ng-repeat="category in state.expenseItemTypes | orderBy:'description'" class="type-item">
 							<a ng-click="selectExpenseItemType(category)">
 								{{ category.description }}
 							</a>
