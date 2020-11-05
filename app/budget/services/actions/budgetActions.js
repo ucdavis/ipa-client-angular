@@ -447,7 +447,6 @@ class BudgetActions {
 
 					// Close modal
 					self.closeAddExpenseItemModal();
-					//BudgetCalculations.calculateExpenseItems(); TODO support if needed
 					BudgetCalculations.calculateTotalCost();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not create expense.", type: "ERROR" });
@@ -1097,7 +1096,6 @@ class BudgetActions {
 							expenseItemIds: expenseItemIds
 						}
 					});
-					//BudgetCalculations.calculateExpenseItems(); TODO support if needed
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete expense items.", type: "ERROR" });
 				});
