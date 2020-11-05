@@ -508,7 +508,7 @@ class BudgetActions {
 
 					$rootScope.$emit('toast', { message: "Deleted expense", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
-					//BudgetCalculations.calculateExpenseItems(); TODO support if needed
+					BudgetCalculations.calculateTotalCost();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete expense.", type: "ERROR" });
 				});

@@ -22,15 +22,6 @@ let expenseItems = function ($rootScope, BudgetActions) {
         );
       };
 
-      scope.hideExpenseItem = function (expenseItem) {
-        expenseItem.hidden = true;
-        BudgetActions.createExpenseItem(
-          expenseItem,
-          scope.selectedBudgetScenario.id,
-          expenseItem.message
-        );
-      };
-
       scope.setActiveTab = function (activeTab) {
         BudgetActions.selectFundsNav(activeTab);
       };
@@ -60,11 +51,6 @@ let expenseItems = function ($rootScope, BudgetActions) {
 
       scope.deleteExpenseItem = function (expenseItem) {
         BudgetActions.deleteExpenseItem(expenseItem);
-      };
-
-      scope.unHideExpenseItem = function (expenseItem) {
-        expenseItem.hidden = false;
-        BudgetActions.updateExpenseItem(expenseItem);
       };
 
       scope.updateExpenseItem = function (expenseItem, propertyName) {
