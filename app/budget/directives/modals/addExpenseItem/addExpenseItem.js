@@ -11,7 +11,6 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       expenseItemToEdit: '<?',
     },
     link: function (scope) {
-      console.log(scope);
       scope.newExpenseItem = {};
 
       if (scope.expenseItemToEdit) {

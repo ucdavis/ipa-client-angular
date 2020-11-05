@@ -19,7 +19,6 @@ let supportAndFunds = function (StringService) {
       expenseItemTypes: '<'
     },
     link: function (scope) {
-      console.log(scope);
       scope.toCurrency = function (value) {
         return toCurrency(value);
       };
