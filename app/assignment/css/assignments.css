@@ -1106,3 +1106,36 @@ li.active-term .dropdown-term-row {
 	color: rgb(153, 153, 153);
 	width: 100%;
 }
+
+@media print {
+  @page {
+    margin: 1cm;
+  }
+
+  .do-not-print {
+    display: none;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  .assignments-container .main-content {
+    display: unset;
+  }
+
+  table {
+    page-break-after: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  td {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  thead {
+    display: table-header-group;
+  }
+}
