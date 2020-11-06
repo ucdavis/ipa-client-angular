@@ -1107,6 +1107,10 @@ li.active-term .dropdown-term-row {
 	width: 100%;
 }
 
+.print-only {
+  display: none;
+}
+
 @media print {
   @page {
     margin: 1cm;

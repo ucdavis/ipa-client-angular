@@ -2,7 +2,8 @@
 <div></div>
 
 <div class="assignments-container">
-	<ipa-header page-title="Assignments"></ipa-header>
+	<ipa-header page-title="Assignments" class="do-not-print"></ipa-header>
+	<h4 class="print-only">Assignments - {{ sharedState.workgroup.name }} - {{ year.yearToAcademicYear() }}</h4>
 
 	<div ng-if="noAccess">
 		<no-access workgroup-name="sharedState.workgroup.name"></no-access>
