@@ -7,8 +7,7 @@ let teachingBalance = function () {
     replace: true,
     scope: {
       costs: '<',
-      funding: '<',
-      expenses: '<'
+      funding: '<'
     },
     link: function (scope) {
       scope.toCurrency = function (value) {

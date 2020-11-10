@@ -427,91 +427,7 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 				});
 			},
-			createExpenseItem: function (newExpenseItem, budgetScenarioId, message) {
-				var self = this;
-				var year = BudgetReducers._state.ui.year;
-				// Ensure amount is properly formatted as a float
-				newExpenseItem.amount = newExpenseItem.amount ? parseFloat(newExpenseItem.amount) : null;
-				// Append proper year to term
-				newExpenseItem.termCode = newExpenseItem.termCode ? TermService.termToTermCode(newExpenseItem.termCode, year) : null;
 
-				BudgetService.createExpenseItem(newExpenseItem, budgetScenarioId).then(function (newExpenseItem) {
-					window.ipa_analyze_event('budget', 'expense item');
-
-					var action = {
-						type: ActionTypes.CREATE_EXPENSE_ITEM,
-						payload: newExpenseItem
-					};
-					$rootScope.$emit('toast', { message: message || "Created expense", type: "SUCCESS" });
-					BudgetReducers.reduce(action);
-
-					// Close modal
-					self.closeAddExpenseItemModal();
-					BudgetCalculations.calculateTotalCost();
-				}, function () {
-					$rootScope.$emit('toast', { message: "Could not create expense.", type: "ERROR" });
-				});
-			},
-			updateExpenseItem: function (expenseItem) {
-				var self = this;
-
-				// Create instead of update if appropriate
-				if (expenseItem.id == null || expenseItem.id == 0) {
-					this.createExpenseItem(expenseItem, expenseItem.budgetScenarioId);
-					return;
-				}
-
-				var year = BudgetReducers._state.ui.year;
-				// Ensure amount is properly formatted as a float
-				expenseItem.amount = expenseItem.amount ? parseFloat(expenseItem.amount) : null;
-				// Append proper year to term if needed
-				if (expenseItem.termCode && expenseItem.termCode.length < 6) {
-					expenseItem.termCode = TermService.termToTermCode(expenseItem.termCode, year);
-				}
-
-
-				BudgetService.updateExpenseItem(expenseItem, expenseItem.budgetScenarioId).then(function (results) {
-					window.ipa_analyze_event('budget', 'expense item');
-
-					var action = {
-						type: ActionTypes.UPDATE_EXPENSE_ITEM,
-						payload: results
-					};
-					$rootScope.$emit('toast', { message: "Saved expense", type: "SUCCESS" });
-					BudgetReducers.reduce(action);
-
-					// Close modal
-					self.closeAddExpenseItemModal();
-					BudgetCalculations.calculateTotalCost();
-				}, function () {
-					$rootScope.$emit('toast', { message: "Could not save expense.", type: "ERROR" });
-				});
-			},
-			deleteExpenseItem: function(expenseItem) {
-				// If the expenseItem is based on a teachingAssignment, do not delete it, instead mark it as hidden
-				if (expenseItem.teachingAssignmentId > 0) {
-					expenseItem.hidden = true;
-					this.updateExpenseItem(expenseItem);
-					return;
-				}
-
-				BudgetService.deleteExpenseItem(expenseItem).then(function (expenseItemId) {
-					window.ipa_analyze_event('budget', 'expense deleted');
-
-					var action = {
-						type: ActionTypes.DELETE_EXPENSE_ITEM,
-						payload: {
-							expenseItemId: expenseItemId
-						}
-					};
-
-					$rootScope.$emit('toast', { message: "Deleted expense", type: "SUCCESS" });
-					BudgetReducers.reduce(action);
-					BudgetCalculations.calculateTotalCost();
-				}, function () {
-					$rootScope.$emit('toast', { message: "Could not delete expense.", type: "ERROR" });
-				});
-			},
 			/**
 			 * Updates existing sectionGroupCost. Happens when TA count, reader count,
 			 * instructor assignment, cost override, etc. are touched.
@@ -904,23 +820,6 @@ class BudgetActions {
 					}
 				});
 			},
-			closeAddExpenseItemModal: function() {
-				var action = {
-					type: ActionTypes.CLOSE_ADD_EXPENSE_ITEM_MODAL,
-					payload: {}
-				};
-
-				BudgetReducers.reduce(action);
-			},
-			openAddExpenseItemModal: function(expenseItemToEdit) {
-				var action = {
-					type: ActionTypes.OPEN_ADD_EXPENSE_ITEM_MODAL,
-					payload: {
-						expenseItemToEdit: expenseItemToEdit
-					}
-				};
-				BudgetReducers.reduce(action);
-			},
 			closeAddLineItemModal: function() {
 				var action = {
 					type: ActionTypes.CLOSE_ADD_LINE_ITEM_MODAL,
@@ -1063,41 +962,6 @@ class BudgetActions {
 					payload: {
 						activeTab: tab
 					}
-				});
-			},
-			toggleSelectExpenseItem: function(expenseItem) {
-				BudgetReducers.reduce({
-					type: ActionTypes.TOGGLE_SELECT_EXPENSE_ITEM,
-					payload: {
-						expenseItem: expenseItem
-					}
-				});
-			},
-			selectAllExpenseItems: function(expenseItems) {
-				BudgetReducers.reduce({
-					type: ActionTypes.SELECT_ALL_EXPENSE_ITEMS,
-					payload: {
-						expenseItems: expenseItems
-					}
-				});
-			},
-			deselectAllExpenseItems: function() {
-				BudgetReducers.reduce({
-					type: ActionTypes.DESELECT_ALL_EXPENSE_ITEMS,
-					payload: {}
-				});
-			},
-			deleteExpenses: function(budgetScenario, expenseItemIds) {
-				BudgetService.deleteExpenseItems(budgetScenario, expenseItemIds).then(function () {
-					$rootScope.$emit('toast', { message: "Deleted expense items", type: "SUCCESS" });
-					BudgetReducers.reduce({
-						type: ActionTypes.DELETE_EXPENSE_ITEMS,
-						payload: {
-							expenseItemIds: expenseItemIds
-						}
-					});
-				}, function () {
-					$rootScope.$emit('toast', { message: "Could not delete expense items.", type: "ERROR" });
 				});
 			},
 			toggleSelectLineItem: function(lineItem) {
