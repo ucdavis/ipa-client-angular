@@ -30,7 +30,7 @@ let contactSupportCallModal = function (SupportCallStatusActionCreators) {
       // Indicates which button started this support call: 'student' or 'instructor'
       scope.supportCallConfigData.initialMessage = scope.selectedParticipants[0]?.message;
       scope.supportCallConfigData.mode = scope.supportCallMode;
-      scope.supportCallConfigData.message = `This is a follow-up reminder to please submit your preferences for ${scope.supportCallConfigData.termCode.getTermCodeDisplayName()}`;
+      scope.supportCallConfigData.message = `This is a follow-up reminder to please submit your preferences for ${scope.supportCallConfigData.termCode.getTermCodeDisplayName()}.`;
       scope.formats = [
         'MMMM dd, yyyy',
         'yyyy/MM/dd',
