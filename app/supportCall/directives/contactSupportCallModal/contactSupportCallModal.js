@@ -1,4 +1,7 @@
-let contactSupportCallModal = function (SupportCallStatusActionCreators, TermService) {
+let contactSupportCallModal = function (
+  SupportCallStatusActionCreators,
+  TermService
+) {
   return {
     restrict: 'E',
     template: require('./contactSupportCallModal.html'),
@@ -11,18 +14,21 @@ let contactSupportCallModal = function (SupportCallStatusActionCreators, TermSer
       workgroupId: '<',
       supportCallMode: '<',
       termShortCode: '<',
-      selectedParticipants: '<'
+      selectedParticipants: '<',
     },
     link: function (scope) {
-      scope.supportCallConfigData = {};
-      scope.supportCallConfigData.selectedParticipants = scope.selectedParticipants;
-      scope.supportCallConfigData.dueDate = new Date();
-      scope.supportCallConfigData.termCode = TermService.termToTermCode(scope.termShortCode, scope.year);
-      scope.supportCallConfigData.initialMessage = scope.selectedParticipants[0]?.message;
+      scope.supportCallConfigData = {
+        // Indicates which button started this support call: 'student' or 'instructor'
+        mode: scope.supportCallMode,
+        selectedParticipants: scope.selectedParticipants,
+        dueDate: new Date(),
+        termCode: TermService.termToTermCode(scope.termShortCode, scope.year),
+        initialMessage: scope.selectedParticipants[0].message,
+      };
 
-      // Indicates which button started this support call: 'student' or 'instructor'
-      scope.supportCallConfigData.mode = scope.supportCallMode;
-      scope.supportCallConfigData.message = `This is a follow-up reminder to please submit your preferences for ${scope.supportCallConfigData.termCode.getTermCodeDisplayName()}.`;
+      scope.supportCallConfigData.message = `This is a follow-up reminder to please submit your preferences for ${scope.supportCallConfigData.termCode.getTermCodeDisplayName()}.`,
+      scope.isFormEmpty = false;
+
       scope.formats = [
         'MMMM dd, yyyy',
         'yyyy/MM/dd',
@@ -79,15 +85,10 @@ let contactSupportCallModal = function (SupportCallStatusActionCreators, TermSer
         scope.isVisible = false;
       };
 
-      scope.isFormIncomplete = function () {
-        if (
-          !scope.supportCallConfigData.message ||
-          scope.supportCallConfigData.message.length == 0
-        ) {
-          return true;
-        }
-
-        return false;
+      scope.isFormEmpty = function () {
+        return scope.supportCallConfigData.message || scope.supportCallConfigData.message.length > 0
+            ? false
+            : true;
       };
     },
   };
