@@ -1,12 +1,13 @@
 <div>
   <input
     class="ipa-input"
-    ng-if="!mode"
+    ng-show="!mode || mode == 'number'"
     type="text"
-    ng-model="$parent.value"
+    ng-model="value"
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"
     ng-readonly="readOnly || labelReadOnly"
+    ng-change="enforceNegative()"
     ng-keyup="updateInput()"
     ng-paste="updateInput()"
     maxlength="{{maxChars}}"
@@ -15,23 +16,9 @@
 
   <input
     class="ipa-input"
-    ng-if="mode == 'number'"
-    type="number"
-    ng-model="$parent.value"
-    ng-blur="onBlur()"
-    placeholder="{{placeHolder}}"
-    ng-readonly="readOnly || labelReadOnly"
-    ng-keyup="updateInput()"
-    ng-paste="updateInput()"
-    maxlength="{{maxChars}}"
-    ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly, 'ipa-input--invalid': isInvalid }"
-  />
-
-  <input
-    class="ipa-input"
-    ng-if="mode == 'currency'"
+    ng-show="mode == 'currency'"
     currency-input
-    ng-model="$parent.value"
+    ng-model="value"
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"
     ng-readonly="readOnly || labelReadOnly"

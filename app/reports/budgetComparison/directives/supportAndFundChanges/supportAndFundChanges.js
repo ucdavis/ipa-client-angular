@@ -13,8 +13,6 @@ let supportAndFundChanges = function () {
       costs: '<',
       funding: '<',
       miscStats: '<',
-      expenseItemTypes: '<',
-      expenses: '<'
     },
     link: function (scope) {
       scope.toCurrency = function (value) {

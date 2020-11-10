@@ -14,11 +14,6 @@
 	background-color: white;
 }
 
-.ipa-header__workgroup-dropdown {
-	max-height: 80vh;
-	overflow-y: auto;
-}
-
 .ipa-header__cog-btn {
 	height: 31px;
 }

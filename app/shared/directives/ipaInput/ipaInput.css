@@ -1,13 +1,9 @@
-input[type=number].ipa-input::-webkit-inner-spin-button,
-input[type=number].ipa-input::-webkit-outer-spin-button {
+input[type=number].ipa-input::-webkit-inner-spin-button, 
+input[type=number].ipa-input::-webkit-outer-spin-button { 
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	margin: 0;
-}
-
-input[type=number].ipa-input {
-	-moz-appearance: textfield;
+	margin: 0; 
 }
 
 .ipa-input {

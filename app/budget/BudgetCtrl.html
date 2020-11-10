@@ -30,19 +30,6 @@
     </ipa-modal>
 
     <ipa-modal
-      is-visible="view.state.ui.isAddExpenseItemModalOpen"
-      header-text="Other Cost"
-    >
-      <add-expense-item
-        ng-if="view.state.ui.isAddExpenseItemModalOpen"
-        state="view.state"
-        is-visible="view.state.ui.isAddExpenseItemModalOpen"
-        expense-item-to-edit="view.state.ui.expenseItemToEdit"
-      >
-      </add-expense-item>
-    </ipa-modal>
-
-    <ipa-modal
       is-visible="view.state.ui.isAddLineItemModalOpen"
       header-text="Line Item"
     >
@@ -134,7 +121,6 @@
       selected-section="view.state.ui.sectionNav.activeTab"
       selected-budget-scenario="view.state.selectedBudgetScenario"
       selected-line-items="view.state.ui.selectedLineItems"
-      selected-expense-items="view.state.ui.selectedExpenseItems"
       filters="view.state.ui.filters"
       funds-nav="view.state.ui.fundsNav.activeTab"
       should-show-course-list="view.state.ui.shouldShowCourseList"
@@ -150,14 +136,6 @@
         selected-budget-scenario="view.state.selectedBudgetScenario"
       >
       </budget-summary>
-      <expense-items
-        class="do-not-print"
-        ng-if="view.state.ui.sectionNav.activeTab == 'Other Costs'"
-        selected-budget-scenario="view.state.selectedBudgetScenario"
-        expense-items="view.state.calculatedExpenseItems"
-        ui="view.state.ui"
-      >
-      </expense-items>
       <line-items
         class="do-not-print"
         ng-if="view.state.ui.sectionNav.activeTab == 'Funds'"
