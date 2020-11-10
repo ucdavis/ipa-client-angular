@@ -1,22 +1,22 @@
 class BudgetExcelService {
-	constructor (TermService) { 
+	constructor (TermService) {
 		return {
 			generateDownload(viewState) {
 				var data = [];
-		
+
 				// SUMMARY EXCEL REPORT
 				var summary = viewState.summary;
-		
+
 				// Header
 				var header = [" "];
-				
+
 				viewState.calculatedScheduleCosts.terms.forEach(function(term) {
 					let termDescription = TermService.getShortTermName(term);
 					header.push(termDescription);
 				});
 				header.push("Total");
 				data.push(header);
-		
+
 				// TA Count
 				var row = [];
 				row.push("TA Count");
@@ -24,53 +24,53 @@ class BudgetExcelService {
 				summary.terms.forEach(function(term) {
 						row.push(summary.byTerm[term].taCount);
 				});
-				row.push(summary.combinedTerms.taCount);	
+				row.push(summary.combinedTerms.taCount);
 				data.push(row);
 				row = [];
-			
+
 				// TA Cost
 				row.push("TA Cost");
 
 				summary.terms.forEach(function(term) {
 						row.push(summary.byTerm[term].taCost);
 				});
-				row.push(summary.combinedTerms.taCost);	
+				row.push(summary.combinedTerms.taCost);
 				data.push(row);
 				row = [];
-			
+
 				// Reader Count
 				row.push("Reader Count");
 
 				summary.terms.forEach(function(term) {
 					row.push(summary.byTerm[term].readerCount);
 				});
-				row.push(summary.combinedTerms.readerCount);	
+				row.push(summary.combinedTerms.readerCount);
 				data.push(row);
 				row = [];
-			
-				// Reader Cost 
+
+				// Reader Cost
 				row.push("Reader Cost ");
 
 				summary.terms.forEach(function(term) {
 					row.push(summary.byTerm[term].readerCost);
 				});
-				row.push(summary.combinedTerms.readerCost);	
+				row.push(summary.combinedTerms.readerCost);
 				data.push(row);
 				row = [];
-			
+
 				// Support Cost
 				row.push("Support Cost");
 
 				summary.terms.forEach(function(term) {
 					row.push(summary.byTerm[term].supportCosts);
 				});
-				row.push(summary.combinedTerms.supportCosts);	
+				row.push(summary.combinedTerms.supportCosts);
 				data.push(row);
 				row = [];
-			
+
 				// Empty row
 				data.push([" "]);
-				
+
 				// Replacement Cost sub-types
 				// Support Cost
 				var instructorTypes = viewState.instructorTypes;
@@ -85,7 +85,7 @@ class BudgetExcelService {
 					data.push(row);
 					row = [];
 				});
-				
+
 				// Replacement Costs
 				row.push("Replacement Costs");
 
@@ -95,11 +95,11 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.replacementCosts.overall);
 				data.push(row);
 				row = [];
-		
+
 				// Empty row
 				data.push([" "]);
-		
-				// Total Teaching Costs	
+
+				// Total Teaching Costs
 				row.push("Total Teaching Costs");
 
 				summary.terms.forEach(function(term) {
@@ -108,7 +108,7 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.totalCosts);
 				data.push(row);
 				row = [];
-		
+
 				// Funds Costs
 				var selectedBudgetScenario = viewState.selectedBudgetScenario;
 				row.push("Funds Costs");
@@ -119,7 +119,7 @@ class BudgetExcelService {
 				row.push(selectedBudgetScenario.funds);
 				data.push(row);
 				row = [];
-		
+
 				// Balance
 				row.push("Balance");
 
@@ -129,10 +129,10 @@ class BudgetExcelService {
 				row.push(selectedBudgetScenario.totalCost);
 				data.push(row);
 				row = [];
-		
+
 				// Empty row
 				data.push([" "]);
-		
+
 				// Total Student Credit Hours
 				// Units Offered
 				row.push("Units Offered");
@@ -143,7 +143,7 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.totalUnits);
 				data.push(row);
 				row = [];
-		
+
 				// Enrollment
 				row.push("Enrollment");
 
@@ -153,7 +153,7 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.enrollment);
 				data.push(row);
 				row = [];
-		
+
 				// Undergrad SCH
 				row.push("Student Credit Hours (Undergrad)");
 
@@ -163,7 +163,7 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.undergradSCH);
 				data.push(row);
 				row = [];
-		
+
 				// Grad SCH
 				row.push("Student Credit Hours (Graduate)");
 
@@ -173,8 +173,8 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.gradSCH);
 				data.push(row);
 				row = [];
-		
-				// Total Student Credit Hours 
+
+				// Total Student Credit Hours
 				row.push("Student Credit Hours");
 
 				summary.terms.forEach(function(term) {
@@ -183,10 +183,10 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.totalSCH);
 				data.push(row);
 				row = [];
-		
+
 				// Empty row
 				data.push([" "]);
-		
+
 				// Lower Div Count
 				row.push("Lower Div Offerings");
 
@@ -196,8 +196,8 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.lowerDivCount);
 				data.push(row);
 				row = [];
-		
-				// Upper Div Count 
+
+				// Upper Div Count
 				row.push("Upper Div Offerings");
 
 				summary.terms.forEach(function(term) {
@@ -206,7 +206,7 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.upperDivCount);
 				data.push(row);
 				row = [];
-		
+
 				// Graduate Count
 				row.push("Graduate Offerings");
 
@@ -216,7 +216,7 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.graduateCount);
 				data.push(row);
 				row = [];
-		
+
 				// Total Offerings
 				row.push("Total Offerings");
 
@@ -226,12 +226,12 @@ class BudgetExcelService {
 				row.push(summary.combinedTerms.totalOfferingsCount);
 				data.push(row);
 				row = [];
-		
+
 				//Creates book
 				var wb = XLSX.utils.book_new(); // eslint-disable-line no-undef
 				// Creates Summary worksheet
 				var ws_summary = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
-		
+
 				// Set column widths
 				var wscols = [
 					{wch: 20},
@@ -241,17 +241,17 @@ class BudgetExcelService {
 					{wch: 15}
 				];
 				ws_summary['!cols'] = wscols;
-		
+
 				/* add worksheet to workbook */
 				XLSX.utils.book_append_sheet(wb, ws_summary, 'Budget Summary'); // eslint-disable-line no-undef
 				// Cleans data for the next sheet
 				data.length = 0;
-		
+
 
 				// SCHEDULE COST REPORT
 				// Header
 				data.push(['Term', 'Subject Code', 'Course Number', 'Title', 'Units High', 'Units Low', 'Sequence', 'Enrollment', 'Current Enrollment', 'Sections', 'Instructor', 'Regular Instructor', 'Reason', 'TAs', 'Readers', 'TA Cost', 'Reader Cost', 'Support Cost', 'Instructor Cost', 'Total Cost']);
-		
+
 				viewState.calculatedScheduleCosts.terms.forEach(function(term) {
 					var scheduleCosts = viewState.calculatedScheduleCosts.byTerm[term];
 
@@ -264,7 +264,7 @@ class BudgetExcelService {
 						row.push(scheduleCosts[i].title);
 						row.push(scheduleCosts[i].unitsHigh);
 						row.push(scheduleCosts[i].unitsLow);
-						
+
 						let sectionGroupCosts = scheduleCosts[i].sectionGroupCosts;
 
 						for (var _i = 0; _i < sectionGroupCosts.length; _i++) {
@@ -288,10 +288,10 @@ class BudgetExcelService {
 						}
 					}
 				});
-				
+
 				// Creates Costs worksheet
 				var ws_costs = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
-		
+
 				// Set column widths
 				var wscols = [
 					{wch: 15},
@@ -316,13 +316,13 @@ class BudgetExcelService {
 					{wch: 13},
 				];
 				ws_costs['!cols'] = wscols;
-		
+
 				/* Add Costs worksheet to workbook */
 				XLSX.utils.book_append_sheet(wb, ws_costs, 'Schedule Costs'); // eslint-disable-line no-undef
 				// Cleans data for the next sheet
 				data.length = 0;
-			
-		
+
+
 				// FUNDS REPORT
 				var lineItems = viewState.calculatedLineItems;
 				// Header
@@ -338,10 +338,10 @@ class BudgetExcelService {
 						row = [];
 					}
 				});
-				
+
 				// Creates Funds worksheet
 				var ws_funds = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
-		
+
 				// Set column widths
 				var wscols = [
 					{wch: 50},
@@ -349,13 +349,13 @@ class BudgetExcelService {
 					{wch: 15}
 				];
 				ws_funds['!cols'] = wscols;
-		
+
 				/* add worksheet to workbook */
 				XLSX.utils.book_append_sheet(wb, ws_funds, 'Funds'); // eslint-disable-line no-undef
 				// Cleans data for the next sheet
 				data.length = 0;
-		
-		
+
+
 				// INSTRUCTOR SALARIES REPORT
 				var instructors = viewState.calculatedInstructors;
 				data.push(['Instructor', 'Type', 'Cost']);
@@ -375,11 +375,11 @@ class BudgetExcelService {
 					if (instructor.instructorCost.overrideCostSource != 'instructor' && instructor.instructorCost.overrideCostSource){
 						row.push(instructor.instructorCost.overrideCost);
 					}
-					
+
 					data.push(row);
 					row = [];
 				});
-		
+
 				var wscols = [
 					{wch: 50},
 					{wch: 50},
@@ -392,8 +392,8 @@ class BudgetExcelService {
 				XLSX.utils.book_append_sheet(wb, ws_salaries, 'Instructor Salaries'); // eslint-disable-line no-undef
 				// Cleans data for the next sheet
 				data.length = 0;
-		
-		
+
+
 				// INSTRUCTOR CATEGORY COST REPORT
 				var instructorTypeCosts = viewState.calculatedInstructorTypeCosts;
 				data.push(['Type', 'Cost']);
@@ -403,19 +403,19 @@ class BudgetExcelService {
 				row.push(viewState.budget.taCost);
 				data.push(row);
 				row = [];
-	
+
 				row.push("Reader");
 				row.push(viewState.budget.readerCost);
 				data.push(row);
 				row = [];
-	
+
 				instructorTypeCosts.forEach(function(instructorTypeCost){
 					row.push(instructorTypeCost.description);
 					row.push(instructorTypeCost.cost);
 					data.push(row);
 					row = [];
 				});
-		
+
 				var wscols = [
 					{wch: 50},
 					{wch: 15}
@@ -427,7 +427,7 @@ class BudgetExcelService {
 				XLSX.utils.book_append_sheet(wb, ws_category_costs, 'Instructor Category Costs'); // eslint-disable-line no-undef
 				// Cleans data for the next sheet
 				data.length = 0;
-		
+
 				/* write workbook */
 				var year = viewState.ui.year;
 				var budgetScenario = viewState.selectedBudgetScenario.name;
@@ -438,7 +438,7 @@ class BudgetExcelService {
 			}
 		};
 	}
-	
+
 }
 
 BudgetExcelService.$inject = ['TermService'];
