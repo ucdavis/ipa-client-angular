@@ -48,7 +48,6 @@ let contactSupportCallModal = function (SupportCallStatusActionCreators) {
 
       scope.dateOptions = {
         formatYear: 'yy',
-        maxDate: new Date(2020, 5, 22),
         minDate: new Date(),
         startingDay: 1,
         showWeeks: false,
@@ -89,6 +88,7 @@ let contactSupportCallModal = function (SupportCallStatusActionCreators) {
       };
 
       scope.isFormIncomplete = function () {
+        debugger;
         if (
           !scope.supportCallConfigData.message ||
           scope.supportCallConfigData.message.length == 0
