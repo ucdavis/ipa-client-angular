@@ -1,4 +1,4 @@
-let contactSupportCallModal = function (SupportCallStatusActionCreators) {
+let contactSupportCallModal = function (SupportCallStatusActionCreators, TermService) {
   return {
     restrict: 'E',
     template: require('./contactSupportCallModal.html'),
@@ -14,21 +14,13 @@ let contactSupportCallModal = function (SupportCallStatusActionCreators) {
       selectedParticipants: '<'
     },
     link: function (scope) {
-      scope.nextYear = parseInt(scope.year) + 1;
       scope.supportCallConfigData = {};
       scope.supportCallConfigData.selectedParticipants = scope.selectedParticipants;
       scope.supportCallConfigData.dueDate = new Date();
-
-      // Generate termCode
-      if (scope.termShortCode < 4) {
-        scope.supportCallConfigData.termCode =
-          scope.nextYear + scope.termShortCode;
-      } else {
-        scope.supportCallConfigData.termCode = scope.year + scope.termShortCode;
-      }
+      scope.supportCallConfigData.termCode = TermService.termToTermCode(scope.termShortCode, scope.year);
+      scope.supportCallConfigData.initialMessage = scope.selectedParticipants[0]?.message;
 
       // Indicates which button started this support call: 'student' or 'instructor'
-      scope.supportCallConfigData.initialMessage = scope.selectedParticipants[0]?.message;
       scope.supportCallConfigData.mode = scope.supportCallMode;
       scope.supportCallConfigData.message = `This is a follow-up reminder to please submit your preferences for ${scope.supportCallConfigData.termCode.getTermCodeDisplayName()}.`;
       scope.formats = [
