@@ -28,9 +28,9 @@ let contactSupportCallModal = function (SupportCallStatusActionCreators) {
       }
 
       // Indicates which button started this support call: 'student' or 'instructor'
+      scope.supportCallConfigData.initialMessage = scope.selectedParticipants[0]?.message;
       scope.supportCallConfigData.mode = scope.supportCallMode;
-      scope.supportCallConfigData.message =
-        'Please consider your preferences for next year. As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.';
+      scope.supportCallConfigData.message = `This is a follow-up reminder to please submit your preferences for ${scope.supportCallConfigData.termCode.getTermCodeDisplayName()}`;
       scope.formats = [
         'MMMM dd, yyyy',
         'yyyy/MM/dd',
@@ -88,7 +88,6 @@ let contactSupportCallModal = function (SupportCallStatusActionCreators) {
       };
 
       scope.isFormIncomplete = function () {
-        debugger;
         if (
           !scope.supportCallConfigData.message ||
           scope.supportCallConfigData.message.length == 0
