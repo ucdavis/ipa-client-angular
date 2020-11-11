@@ -26,16 +26,11 @@
         <ipa-date-picker></ipa-date-picker>
       </div>
     </div>
-
-    <div class="row container-fluid">
-      <h5>Previous Message</h5>
-      <span ng-bind-html="supportCallConfigData.initialMessage"></span>
-    </div>
   </div>
 
   <div class="modal-footer modal-footer--teaching-call">
     <div class="email-style container-fluid">
-      <h5 class="pull-left">Follow-up Message (This will replace the content of the previous message)</h5>
+      <h5 class="pull-left">Message</h5>
       <textarea
         ng-model="supportCallConfigData.message"
         ng-bind-html="supportCallConfigData.message"
@@ -46,7 +41,7 @@
       ></textarea>
     </div>
 
-    <span class="pull-left" style="padding-left: 15px;">Note: A warning email is automatically sent 3 days before the due date if the user has not submitted the form.</span>
+    <span class="pull-left" style="padding-left: 15px;">Note: A reminder email is automatically sent 3 days before the due date if the user has not submitted the form.</span>
 
     <button
       ng-if="!isFormEmpty()"
