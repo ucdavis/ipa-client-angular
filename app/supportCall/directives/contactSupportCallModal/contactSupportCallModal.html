@@ -1,10 +1,14 @@
-<div class="modal-content" style="border-radius: unset;">
+<div class="modal-content" style="border-radius: unset">
   <div class="modal-body">
     <div class="row flex-box container-fluid">
       <div class="teaching-call--info_style">
         <h5 style="margin-top: 0px">
-          <span ng-if="supportCallConfigData.mode == 'instructor'">Instructors</span>
-          <span ng-if="supportCallConfigData.mode == 'supportStaff'">Support Staff</span>
+          <span ng-if="supportCallConfigData.mode == 'instructor'"
+            >Instructors</span
+          >
+          <span ng-if="supportCallConfigData.mode == 'supportStaff'"
+            >Support Staff</span
+          >
         </h5>
         <div
           class="form-control overflow-auto"
@@ -40,24 +44,37 @@
       ></textarea>
     </div>
 
-    <span class="pull-left" style="padding-left: 15px;">Note: A reminder email is automatically sent 3 days before the due date if the user has not submitted the form.</span>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 15px;
+        padding-right: 15px;
+      "
+    >
+      <span>
+        Note: A reminder email is automatically sent 3 days before the due date
+        if the user has not submitted the form.
+      </span>
 
-    <button
-      ng-if="!isFormEmpty()"
-      type="button"
-      class="btn neon-dark-confirm-btn"
-      ng-click="submit()"
-    >
-      Send
-    </button>
-    <button
-      ng-if="isFormEmpty()"
-      tooltip-placement="left"
-      uib-tooltip="You must select a date and message"
-      type="button"
-      class="disabled btn neon-dark-confirm-btn"
-    >
-      Send
-    </button>
+      <button
+        ng-if="!isFormEmpty()"
+        type="button"
+        class="btn neon-dark-confirm-btn"
+        ng-click="submit()"
+      >
+        Send
+      </button>
+      <button
+        ng-if="isFormEmpty()"
+        tooltip-placement="left"
+        uib-tooltip="You must select a date and message"
+        type="button"
+        class="disabled btn neon-dark-confirm-btn"
+      >
+        Send
+      </button>
+    </div>
   </div>
 </div>
