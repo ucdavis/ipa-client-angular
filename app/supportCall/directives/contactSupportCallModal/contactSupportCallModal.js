@@ -11,7 +11,6 @@ let contactSupportCallModal = function (
       isVisible: '=',
       year: '<',
       scheduleId: '<',
-      workgroupId: '<',
       supportCallMode: '<',
       termShortCode: '<',
       selectedParticipants: '<',
@@ -58,15 +57,14 @@ let contactSupportCallModal = function (
       };
 
       scope.submit = function () {
-        var messageInput = $('.support-call-message-input').val();
-        if (messageInput) {
-          scope.supportCallConfigData.message = messageInput.replace(
+        if (scope.supportCallConfigData.message) {
+          scope.supportCallConfigData.message = scope.supportCallConfigData.message.replace(
             /\r?\n/g,
             '<br />'
           );
         }
 
-        if (scope.supportCallConfigData.mode == 'instructor') {
+        if (scope.supportCallConfigData.mode === 'instructor') {
           SupportCallStatusActionCreators.contactInstructorsSupportCall(
             scope.scheduleId,
             scope.supportCallConfigData
