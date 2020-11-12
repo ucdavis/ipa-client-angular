@@ -1,5 +1,5 @@
 class SupportCallStatusCtrl {
-	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportCallStatusActionCreators, AuthService, validate) {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportCallStatusActionCreators, AuthService, TermService, validate) {
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.$location = $location;
@@ -152,6 +152,6 @@ class SupportCallStatusCtrl {
 	}
 }
 
-SupportCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportCallStatusActionCreators', 'AuthService', 'validate'];
+SupportCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportCallStatusActionCreators', 'AuthService', 'TermService', 'validate'];
 
 export default SupportCallStatusCtrl;
