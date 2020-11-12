@@ -22,10 +22,9 @@ let contactSupportCallModal = function (
         selectedParticipants: scope.selectedParticipants,
         dueDate: new Date(),
         termCode: TermService.termToTermCode(scope.termShortCode, scope.year),
-        initialMessage: scope.selectedParticipants[0].message,
       };
 
-      scope.supportCallConfigData.message = `This is a follow-up reminder to please submit your preferences for ${scope.supportCallConfigData.termCode.getTermCodeDisplayName()}.`,
+      scope.supportCallConfigData.message = `This is a follow-up reminder to please submit your preferences for ${scope.supportCallConfigData.termCode.getTermCodeDisplayName()}.`;
       scope.isFormEmpty = false;
 
       scope.formats = [
