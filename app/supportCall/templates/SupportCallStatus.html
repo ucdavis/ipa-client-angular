@@ -27,23 +27,22 @@
 					year="view.year"
 					term-short-code="view.termShortCode"
 					support-call-mode="view.supportCallMode"
-					selected-participants="view.selectedParticipants"
 					is-visible="view.state.openAddSupportCallModal">
 				</add-support-call-modal>
 		</ipa-modal>
 		<ipa-modal
 			is-visible="view.state.openContactModal"
-			header-text="Contact Support Staff"
-			styles="view.modalStyles">
-				<add-support-call-modal
+			header-text="Send Follow-Up">
+				<contact-support-call-modal
 					ng-if="view.state.openContactModal"
 					state="view.state"
 					schedule-id="view.state.misc.scheduleId"
 					year="view.year"
 					term-short-code="view.termShortCode"
 					support-call-mode="view.supportCallMode"
+					selected-participants="view.selectedParticipants"
 					is-visible="view.state.openContactModal">
-				</add-support-call-modal>
+				</contact-support-call-modal>
 		</ipa-modal>
 
 		<!-- Toolbar Buttons -->
@@ -91,7 +90,7 @@
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 						Contact Support Staff
 					</a>
-					<span ng-if="atLeastOneStudentSelected() == false" uib-tooltip="Select at least one instructor to contact">
+					<span ng-if="atLeastOneStudentSelected() == false" uib-tooltip="Select at least one support staff to contact">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 							Contact Support Staff

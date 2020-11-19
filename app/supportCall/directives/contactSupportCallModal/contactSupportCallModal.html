@@ -1,0 +1,81 @@
+<div class="modal-content" style="border-radius: unset">
+  <div class="modal-body">
+    <div class="row flex-box container-fluid">
+      <div class="teaching-call--info_style">
+        <h5 style="margin-top: 0px">
+          <span ng-if="supportCallConfigData.mode == 'instructor'"
+            >Instructors</span
+          >
+          <span ng-if="supportCallConfigData.mode == 'supportStaff'"
+            >Support Staff</span
+          >
+        </h5>
+        <div
+          class="form-control overflow-auto"
+          rows="5"
+          id="comment"
+          style="height: 115px"
+        >
+          <div
+            ng-repeat="participant in supportCallConfigData.selectedParticipants"
+          >
+            {{ participant.lastName }}, {{ participant.firstName }}
+          </div>
+        </div>
+      </div>
+
+      <div style="flex: 0 1 5%"></div>
+
+      <div class="teaching-call--info_style container-fluid">
+        <h5 style="margin-top: 0px">Send Date</h5>
+        <ipa-date-picker></ipa-date-picker>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer modal-footer--teaching-call">
+    <div class="email-style container-fluid">
+      <h5>Message</h5>
+      <textarea
+        ng-model="supportCallConfigData.message"
+        class="form-control"
+        placeholder=""
+        rows="5"
+        id="comment"
+      ></textarea>
+    </div>
+
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 15px;
+        padding-right: 15px;
+      "
+    >
+      <span style="max-width: 75%; text-align: left">
+        Note: A reminder email is automatically sent 3 days before the due date
+        if the user has not submitted the form.
+      </span>
+
+      <button
+        ng-if="!isFormEmpty()"
+        type="button"
+        class="btn neon-dark-confirm-btn"
+        ng-click="submit()"
+      >
+        Send
+      </button>
+      <button
+        ng-if="isFormEmpty()"
+        tooltip-placement="left"
+        uib-tooltip="You must select a date and message"
+        type="button"
+        class="disabled btn neon-dark-confirm-btn"
+      >
+        Send
+      </button>
+    </div>
+  </div>
+</div>
