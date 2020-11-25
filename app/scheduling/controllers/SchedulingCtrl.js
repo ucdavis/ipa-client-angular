@@ -8,7 +8,7 @@ import { nextSequenceNumber } from 'shared/helpers/sections';
  * Controller of the ipaClientAngularApp
  */
 class SchedulingCtrl {
-	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService, ActivityService, validate) {
+	constructor ($scope, $rootScope, $route, $routeParams, Activity, Term, SchedulingActionCreators, AuthService, ActivityService, SchedulingService, validate) {
 		var self = this;
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
@@ -18,8 +18,9 @@ class SchedulingCtrl {
 		this.Term = Term;
 		this.SchedulingActionCreators = SchedulingActionCreators;
 		this.AuthService = AuthService;
+		this.SchedulingService = SchedulingService;
 
-    $scope.noAccess = validate ? validate.noAccess : null;
+		$scope.noAccess = validate ? validate.noAccess : null;
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
 		$scope.termShortCode = $routeParams.termShortCode;
@@ -27,6 +28,7 @@ class SchedulingCtrl {
 			addSharedActivityPopoverIsOpen: {},
 			addActivityPopoverIsOpen: {}
 		};
+		$scope.isActivityLogOpen = false;
 
 		$scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
 		// Meeting codes in the order of popularity
@@ -271,9 +273,17 @@ class SchedulingCtrl {
 		self.$scope.dayIndicatorToDayCodes = function (dayIndicator) {
 			return ActivityService.dayIndicatorToDayCodes(dayIndicator);
 		};
+
+		self.$scope.toggleActivityLogOpen = function() {
+			self.SchedulingService.getAuditLogs(self.$scope.workgroupId).then(res => {
+				self.$scope.auditLogs = res;
+			});
+
+			return self.$scope.isActivityLogOpen = !self.$scope.isActivityLogOpen;
+		};
 	}
 }
 
-SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService', 'ActivityService', 'validate'];
+SchedulingCtrl.$inject = ['$scope', '$rootScope', '$route', '$routeParams', 'Activity', 'Term', 'SchedulingActionCreators', 'AuthService', 'ActivityService', 'SchedulingService', 'validate'];
 
 export default SchedulingCtrl;
