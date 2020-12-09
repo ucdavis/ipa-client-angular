@@ -7,7 +7,8 @@ let ipaModal = function() {
 			onClose: '&?',
 			overrideClickOut: '<?',
 			showDismiss: '<?', // default to true
-			styles: '=?'
+			styles: '=?',
+			contentStyles: '=?'
 		},
 		replace: true, // Replace with the template below
 		transclude: true, // we want to insert custom content inside the directive

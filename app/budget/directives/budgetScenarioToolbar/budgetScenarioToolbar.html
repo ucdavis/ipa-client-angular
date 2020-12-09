@@ -36,7 +36,7 @@
 				message="Are you sure you want to accept all schedule updates in this Scenario from Live Data?<br><br>Affects Instructors, Enrollments, Sections, TAs, and Readers"
 				yes="Confirm"
 				no="Cancel"
-				ng-show="(!state.ui.fromLiveData && state.calculatedScheduleCosts.trackedChanges.length > 0 && !state.ui.syncScenario.showSyncWarning || !areAddditionalInstructorsUpToDate()) && !state.ui.isBudgetRequest">
+				ng-show="!state.ui.fromLiveData && !state.ui.isBudgetRequest && (state.calculatedScheduleCosts.trackedChanges.length > 0 && !state.ui.syncScenario.showSyncWarning || !areAddditionalInstructorsUpToDate())">
 				<i class="glyphicon glyphicon-repeat"></i>
 				<span class="budget-scenario-toolbar__button--text">Accept All Changes</span>
 			</div>

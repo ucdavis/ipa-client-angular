@@ -92,6 +92,19 @@ class BudgetService {
 			deleteSectionGroupCostInstructor: function(sectionGroupCostInstructor) {
 				return ApiService.delete("/api/budgetView/sectionGroupCosts/" + sectionGroupCostInstructor.sectionGroupCostId + "/sectionGroupCostInstructors/" + sectionGroupCostInstructor.id);
 			},
+			// Expense Items
+			createExpenseItem: function(newExpenseItem, budgetScenarioId) {
+				return ApiService.post("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/expenseItems", newExpenseItem);
+			},
+			updateExpenseItem: function(expenseItem, budgetScenarioId) {
+				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/expenseItems/" + expenseItem.id, expenseItem);
+			},
+			deleteExpenseItem: function(expenseItem) {
+				return ApiService.delete("/api/budgetView/expenseItems/" + expenseItem.id);
+			},
+			deleteExpenseItems: function(budgetScenario, expenseItemIds) {
+				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id + "/expenseItems", expenseItemIds);
+			},
 
 			getAuditLogs: function(workgroupId) {
 				return ApiService.get("/api/workgroups/" + workgroupId + "/modules/Budget" + "/auditLogs");

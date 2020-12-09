@@ -14,7 +14,9 @@ let supportAndFunds = function (StringService) {
       costs: '<',
       funding: '<',
       miscStats: '<',
-      budgetScenarioName: '<'
+      budgetScenarioName: '<',
+      expenses: '<',
+      expenseItemTypes: '<'
     },
     link: function (scope) {
       scope.toCurrency = function (value) {
