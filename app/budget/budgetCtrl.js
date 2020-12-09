@@ -72,7 +72,7 @@ class BudgetCtrl {
     });
 
     this.$scope.toggleActivityLogOpen = function() {
-      _self.BudgetService.getAuditLogs(_self.$scope.workgroupId).then(res => {
+      _self.BudgetService.getAuditLogs(_self.$scope.workgroupId, _self.$scope.year).then(res => {
         _self.$scope.auditLogs = res;
       });
 

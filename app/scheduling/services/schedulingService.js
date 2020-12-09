@@ -36,8 +36,8 @@ class SchedulingService {
 			deleteSection: function (section) {
 				return ApiService.delete("/api/courseView/sections/" + section.id);
 			},
-			getAuditLogs: function(workgroupId) {
-				return ApiService.get("/api/workgroups/" + workgroupId + "/modules/Scheduling" + "/auditLogs");
+			getAuditLogs: function(workgroupId, year) {
+				return ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Scheduling" + "/auditLogs");
 			}
 		};
 	}

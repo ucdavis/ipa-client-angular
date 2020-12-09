@@ -45,7 +45,7 @@ class AssignmentCtrl {
 		});
 
 		$scope.toggleActivityLogOpen = function () {
-			AssignmentService.getAuditLogs($scope.workgroupId).then(res => {
+			AssignmentService.getAuditLogs($scope.workgroupId, $scope.year).then(res => {
 				$scope.auditLogs = res;
 			});
 

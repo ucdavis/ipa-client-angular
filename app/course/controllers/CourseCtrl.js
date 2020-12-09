@@ -48,7 +48,7 @@ class CourseCtrl {
 
     this.$scope.toggleActivityLogOpen = function() {
       const _this = _self;
-      _self.courseService.getAuditLogs(_self.$scope.workgroupId).then((res) => {
+      _self.courseService.getAuditLogs(_self.$scope.workgroupId, _self.$scope.year).then((res) => {
         _this.$scope.auditLogs = res;
       });
 

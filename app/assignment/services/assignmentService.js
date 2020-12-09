@@ -108,8 +108,8 @@ class AssignmentService {
 
 				return allTerms;
 			},
-			getAuditLogs: function (workgroupId) {
-				return ApiService.get("/api/workgroups/" + workgroupId + "/modules/Assign Instructors" + "/auditLogs");
+			getAuditLogs: function (workgroupId, year) {
+				return ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Assign Instructors" + "/auditLogs");
 			}
 		};
 	}

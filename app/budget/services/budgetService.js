@@ -106,8 +106,8 @@ class BudgetService {
 				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id + "/expenseItems", expenseItemIds);
 			},
 
-			getAuditLogs: function(workgroupId) {
-				return ApiService.get("/api/workgroups/" + workgroupId + "/modules/Budget" + "/auditLogs");
+			getAuditLogs: function(workgroupId, year) {
+				return ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Budget" + "/auditLogs");
 			}
 		};
 	}

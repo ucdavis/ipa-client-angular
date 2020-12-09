@@ -275,7 +275,7 @@ class SchedulingCtrl {
 		};
 
 		self.$scope.toggleActivityLogOpen = function() {
-			self.SchedulingService.getAuditLogs(self.$scope.workgroupId).then(res => {
+			self.SchedulingService.getAuditLogs(self.$scope.workgroupId, self.$scope.year).then(res => {
 				self.$scope.auditLogs = res;
 			});
 
