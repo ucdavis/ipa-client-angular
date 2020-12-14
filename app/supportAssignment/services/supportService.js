@@ -24,9 +24,11 @@ class SupportService {
 			},
 			updateSectionGroup: function (sectionGroup) {
 				return ApiService.put("/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup);
+			},
+			getAuditLogs: function (workgroupId, year) {
+				return ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Support Staff Assignments" + "/auditLogs");
 			}
 		};
-	
 	}
 }
 
