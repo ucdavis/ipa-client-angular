@@ -423,6 +423,7 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Deleted line item", type: "SUCCESS" });
 					BudgetReducers.reduce(action);
 					BudgetCalculations.calculateLineItems();
+					BudgetCalculations.calculateTotalCost();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete line item.", type: "ERROR" });
 				});
