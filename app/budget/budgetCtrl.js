@@ -41,7 +41,6 @@ class BudgetCtrl {
     this.$scope.currentUser = _self.AuthService.getCurrentUser();
 
     this.$rootScope.$on("budgetStateChanged", function(event, data) {
-      console.log(data);
       _self.$scope.view.state = data;
 
       // Set the active tab
