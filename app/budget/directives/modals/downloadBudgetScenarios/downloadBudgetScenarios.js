@@ -8,6 +8,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 		template: require('./downloadBudgetScenarios.html'),
 		replace: true,
 		scope: {
+			year: '<',
 			budgetScenarios: '<',
 			userWorkgroupsScenarios: '<',
 		},
@@ -34,7 +35,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 				department.selectBudgetScenario = scenario;
 			};
 
-			if (localStorage.getItem("budgetDownloadSelections")) {
+			if (localStorage.getItem("budgetDownloadSelections") && localStorage.getItem("budgetDownloadSelectionsYear") === scope.year) {
 				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
 				scope.isSortedByRecentActivity = JSON.parse(localStorage.getItem("budgetDownloadSorted"));
 
@@ -85,6 +86,7 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			scope.close = function() {
 				BudgetActions.toggleBudgetScenarioModal();
 				localStorage.setItem("budgetDownloadSelections", JSON.stringify(scope.budgetScenariosAccessible));
+				localStorage.setItem("budgetDownloadSelectionsYear", JSON.stringify(scope.year));
 				localStorage.setItem("budgetDownloadSorted", JSON.stringify(scope.isSortedByRecentActivity));
 			};
 
