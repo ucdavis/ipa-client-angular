@@ -47,7 +47,8 @@ class WorkloadSummaryExcelService {
             var assignments = instructor.assignments;
 
             if (assignments.length > 0){
-              row.push(instructor.lastName + ", " + instructor.firstName);
+              const instructorName = instructor.lastName ? instructor.lastName + ", " + instructor.firstName : instructor.fullName;
+              row.push(instructorName);
               assignments.forEach(function(assignment){
                 var firstElement = assignments[0];
 
