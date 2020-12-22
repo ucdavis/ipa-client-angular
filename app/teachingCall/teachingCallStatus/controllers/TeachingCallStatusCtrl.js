@@ -23,6 +23,7 @@ class TeachingCallStatusCtrl {
 			year: $scope.year,
 			workgroupId: $scope.workgroupId
 		};
+		$scope.isActivityLogOpen = false;
 
 		$rootScope.$on('teachingCallStatusStateChanged', function (event, data) {
 			$scope.view.state = data;
@@ -100,6 +101,14 @@ class TeachingCallStatusCtrl {
 		$scope.removeInstructor = function(instructor) {
 			TeachingCallStatusActionCreators.removeInstructorFromTeachingCall($scope.workgroupId, $scope.year, instructor);
 		};
+
+		$scope.toggleActivityLogOpen = function() {
+			TeachingCallStatusService.getAuditLogs($scope.workgroupId, $scope.year).then(res => {
+				$scope.auditLogs = res;
+			});
+			return $scope.isActivityLogOpen = !$scope.isActivityLogOpen;
+		};
+
 	}
 }
 
