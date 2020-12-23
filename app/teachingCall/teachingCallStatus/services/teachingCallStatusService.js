@@ -10,11 +10,15 @@ class TeachingCallStatusService {
 			contactInstructors: function (workgroupId, year, receiptsPayload) {
 				let payload = {};
 				payload.receipts = receiptsPayload;
-	
+
 				return ApiService.put("/api/teachingCallView/" + workgroupId + "/" + year + "/contactInstructors", payload);
 			},
 			removeInstructorFromTeachingCall: function (teachingCallReceiptId) {
 				return ApiService.delete("/api/teachingCallView/teachingCallReceipts/" + teachingCallReceiptId);
+			},
+			getAuditLogs: function (workgroupId, year) {
+				var endpoint = "/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Teaching Calls" + "/auditLogs";
+				return ApiService.get(encodeURI(endpoint));
 			}
 		};
 	}
