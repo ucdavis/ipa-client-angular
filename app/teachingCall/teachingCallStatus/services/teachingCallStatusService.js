@@ -17,7 +17,8 @@ class TeachingCallStatusService {
 				return ApiService.delete("/api/teachingCallView/teachingCallReceipts/" + teachingCallReceiptId);
 			},
 			getAuditLogs: function (workgroupId, year) {
-				return ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Teaching Calls" + "/auditLogs");
+				var endpoint = "/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Teaching Calls" + "/auditLogs";
+				return ApiService.get(encodeURI(endpoint));
 			}
 		};
 	}
