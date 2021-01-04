@@ -1,5 +1,5 @@
 class SupportCallStatusCtrl {
-	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportCallStatusActionCreators, AuthService, TermService, validate) {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportCallStatusActionCreators, AuthService, TermService, validate, SupportCallStatusService) {
 		this.$rootScope = $rootScope;
 		this.$window = $window;
 		this.$location = $location;
@@ -8,6 +8,7 @@ class SupportCallStatusCtrl {
 		this.$uibModal = $uibModal;
 		this.SupportCallStatusActionCreators = SupportCallStatusActionCreators;
 		this.AuthService = AuthService;
+		this.SupportCallStatusService = SupportCallStatusService;
 
 		var _self = this;
 		$window.document.title = "Instructional Support";
@@ -20,6 +21,7 @@ class SupportCallStatusCtrl {
 
 		$scope.instructorsSelected = false;
 		$scope.supportStaffSelected = false;
+		$scope.isActivityLogOpen = false;
 
 		// Generate termCode
 		if ($scope.termShortCode < 4) {
@@ -149,9 +151,17 @@ class SupportCallStatusCtrl {
 			$scope.view.selectedParticipants = selectedParticipants;
 			$scope.view.state.openContactModal = true;
 		};
+
+		$scope.toggleActivityLogOpen = function() {
+			SupportCallStatusService.getAuditLogs($scope.view.workgroupId, $scope.view.year).then(res => {
+				$scope.auditLogs = res;
+			});
+
+			return $scope.view.isActivityLogOpen = !$scope.view.isActivityLogOpen;
+		};
 	}
 }
 
-SupportCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportCallStatusActionCreators', 'AuthService', 'TermService', 'validate'];
+SupportCallStatusCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportCallStatusActionCreators', 'AuthService', 'TermService', 'validate', 'SupportCallStatusService'];
 
 export default SupportCallStatusCtrl;

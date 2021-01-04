@@ -7,7 +7,17 @@
 	                   scheduling-mode="view.state.uiState.calendarMode.activeTab"
 	                   locations="view.state.locations">
 	</scheduling-filter>
+
+	<button
+		class="ipa-header__activity-log--button"
+		uib-tooltip="Activity Log"
+		ng-click="toggleActivityLogOpen()"
+	>
+		<i class="fa fa-history"></i> Activity Log
+	</button>
 </ipa-header>
+
+<activity-log is-visible="isActivityLogOpen" log-data="auditLogs"></activity-log>
 
 <div ng-if="noAccess">
 	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
@@ -140,7 +150,7 @@
 							<!-- List of shared activities -->
 							<ul ng-repeat="sharedActivityId in view.state.sectionGroups.list[view.state.uiState.selectedSectionGroupId].sharedActivityIds track by $index"
 								class="activity-group">
-								<li ng-show="activityMatchesFilters(sharedActivityId)" 
+								<li ng-show="activityMatchesFilters(sharedActivityId)"
 									class="activity-item clickable" ng-class="{ 'active': view.state.uiState.selectedActivityId == sharedActivityId }"
 									ng-click="setSelectedActivity(sharedActivityId)">
 									<span>{{ view.state.activities.list[sharedActivityId].activityTypeCode.activityTypeCode.getActivityCodeDescription().length > 0 ? view.state.activities.list[sharedActivityId].activityTypeCode.activityTypeCode.getActivityCodeDescription() : 'Unknown Activity' }}</span>

@@ -1,6 +1,17 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 <div></div>
-<ipa-header page-title="Budget" class="do-not-print"></ipa-header>
+<ipa-header page-title="Budget" class="do-not-print">
+  <button
+    class="ipa-header__activity-log--button"
+    uib-tooltip="Activity Log"
+    ng-click="toggleActivityLogOpen()"
+  >
+    <i class="fa fa-history"></i> Activity Log
+  </button>
+</ipa-header>
+
+<activity-log is-visible="isActivityLogOpen" log-data="auditLogs">
+</activity-log>
 
 <div class="budget-view">
   <spinner

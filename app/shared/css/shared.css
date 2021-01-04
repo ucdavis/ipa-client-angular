@@ -349,3 +349,13 @@ table.availability-grid tr td {
 .ipa-header .page-specific-ui > div:not(:last-child) {
   margin-right: 20px;
 }
+
+.ipa-header__activity-log--button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 100px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: white;
+}
