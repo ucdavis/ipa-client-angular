@@ -188,7 +188,7 @@ ul.dropdown-menu li div {
 	font-size: 12px;
 }
 
-ul.dropdown-menu li a {
+.assign-instructor-dropdown li a {
 	color: rgb(153, 153, 153);
 	font-size: 12px;
 }
@@ -229,7 +229,7 @@ button.btn.assign-dropdown-btn {
 	margin-top: -10px;
 	padding-top: 2em;
 	padding-bottom: 2em;
-	z-index: 90;
+	z-index: 30;
 }
 
 .assignments__table {
