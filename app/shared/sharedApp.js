@@ -57,6 +57,7 @@ import UserRole from './entities/UserRole.js'; // eslint-disable-line no-unused-
 import Workgroup from './entities/Workgroup.js'; // eslint-disable-line no-unused-vars
 
 // Directives
+import activityLog from './directives/activityLog/activityLog.js';
 import availabilityGrid from './directives/availabilityGrid/availabilityGrid.js';
 import ipaButton from './directives/ipaButton/ipaButton.js';
 import ipaCheckbox from './directives/ipaCheckbox/ipaCheckbox.js';
@@ -266,6 +267,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .service('ActivityService', ActivityService)
 .service('UserService', UserService)
 .service('TagService', TagService)
+.directive('activityLog', activityLog)
 .directive('availabilityGrid', availabilityGrid)
 .directive('ipaButton', ipaButton)
 .directive('ipaCheckbox', ipaCheckbox)

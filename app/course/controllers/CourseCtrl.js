@@ -25,6 +25,7 @@ class CourseCtrl {
     $scope.year = $routeParams.year;
     $scope.view = { isAssignTagsDropdownOpen: false };
     $scope.noAccess = validate ? validate.noAccess : null;
+    $scope.isActivityLogOpen = false;
 
     self.initialize();
   }
@@ -44,6 +45,15 @@ class CourseCtrl {
         academicYear: String(i).yearToAcademicYear()
       });
     }
+
+    this.$scope.toggleActivityLogOpen = function() {
+      const _this = _self;
+      _self.courseService.getAuditLogs(_self.$scope.workgroupId, _self.$scope.year).then((res) => {
+        _this.$scope.auditLogs = res;
+      });
+
+      return _self.$scope.isActivityLogOpen = !_self.$scope.isActivityLogOpen;
+    };
 
     this.$scope.toggleAssignTagsDropdown = function() {
       if (_self.$scope.view.isAssignTagsDropdownOpen) {

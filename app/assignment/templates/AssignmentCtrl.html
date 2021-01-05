@@ -2,7 +2,15 @@
 <div></div>
 
 <div class="assignments-container">
-	<ipa-header page-title="Assignments" class="do-not-print"></ipa-header>
+	<ipa-header page-title="Assignments" class="do-not-print">
+		<button class="ipa-header__activity-log--button" uib-tooltip="Activity Log" ng-click="toggleActivityLogOpen()"><i class="fa fa-history"></i> Activity Log</button>
+	</ipa-header>
+
+	<activity-log
+		is-visible="isActivityLogOpen"
+		log-data="auditLogs"
+	>
+	</activity-log>
 	<h4 class="print-only">Assignments - {{ sharedState.workgroup.name }} - {{ year.yearToAcademicYear() }}</h4>
 
 	<div ng-if="noAccess">

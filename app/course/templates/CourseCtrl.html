@@ -1,7 +1,9 @@
 <nav year="{{ year }}" workgroup-id="{{ workgroupId }}"></nav>
 
 <div class="course-view-container">
-  <ipa-header page-title="Courses"></ipa-header>
+  <ipa-header page-title="Courses">
+    <button class="ipa-header__activity-log--button" uib-tooltip="Activity Log" ng-click="toggleActivityLogOpen()"><i class="fa fa-history"></i> Activity Log</button>
+  </ipa-header>
 
   <ipa-modal
     is-visible="view.state.uiState.isCourseDeleteModalOpen"
@@ -15,6 +17,12 @@
   >
     <move-course-modal state="view.state"></move-course-modal>
   </ipa-modal>
+
+  <activity-log
+    is-visible="isActivityLogOpen"
+    log-data="auditLogs"
+  >
+  </activity-log>
 
   <!-- Handle lack of access -->
   <div ng-if="noAccess">
@@ -103,6 +111,8 @@
         <span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
 
         <span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
+
+        <span class="tool-icon glyphicon glyphicon-stats" uib-tooltip="Activity Log" ng-click="toggleActivityLogOpen()"></span>
 
         <active-filters
           filters="view.state.filters"

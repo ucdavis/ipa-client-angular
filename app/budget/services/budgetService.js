@@ -105,6 +105,10 @@ class BudgetService {
 			deleteExpenseItems: function(budgetScenario, expenseItemIds) {
 				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenario.id + "/expenseItems", expenseItemIds);
 			},
+
+			getAuditLogs: function(workgroupId, year) {
+				return ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Budget" + "/auditLogs");
+			}
 		};
 	}
 }

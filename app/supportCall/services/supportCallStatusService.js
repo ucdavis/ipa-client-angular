@@ -24,6 +24,10 @@ class SupportCallStatusService {
 			},
 			removeStudentFromSupportCall: function(student, scheduleId) {
 				return self.ApiService.delete("/api/supportCallView/schedules/" + scheduleId + "/studentSupportCallResponses/" + student.supportCallResponseId);
+			},
+			getAuditLogs: function (workgroupId, year) {
+				var endpoint = "/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Support Calls" + "/auditLogs";
+				return ApiService.get(encodeURI(endpoint));
 			}
 		};
 	}
