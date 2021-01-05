@@ -229,7 +229,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 								courseHtml += '</div>';
 
 								// Course comments action bar
-								courseHtml += `<button class="btn btn-default course-comments-more" data-course-id=${course.id}><i class="glyphicon glyphicon-share-alt course-comment-more"></i> View/Add Comments</button>`;
+								courseHtml += `<button class="btn btn-default course-comments-more do-not-print" data-course-id=${course.id}><i class="glyphicon glyphicon-share-alt course-comment-more"></i> View/Add Comments</button>`;
 								courseHtml += "</div></div>";
 
 								// Loop over active terms
@@ -446,7 +446,7 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 											courseHtml += "</ul></div>";
 
 											courseHtml += `<div class="instructor-typeahead-placeholder"></div>`;
-											courseHtml += `<button class="btn btn-default btn-toggle-search" data-event-type="toggleInstructorSearch" data-section-group-id=${sectionGroupId}><i class="glyphicon glyphicon-search instructor-search-toggle"></i> Toggle Instructor Search</button>`;
+											courseHtml += `<button class="btn btn-default btn-toggle-search do-not-print" data-event-type="toggleInstructorSearch" data-section-group-id=${sectionGroupId}><i class="glyphicon glyphicon-search instructor-search-toggle"></i> Toggle Instructor Search</button>`;
 
 											courseHtml += `</div>`; // assignment-inputs div
 										}

@@ -1,0 +1,106 @@
+.expense-items__table {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.expense-items__table-header {
+	width: 35%;
+	border-bottom: 1px solid #ddd;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.expense-items__table-header-container {
+	border-right: 1px solid #ddd;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.expense-items__table-cell {
+	padding-left: 15px;
+	padding-right: 15px;
+	height: 43px;
+}
+
+.expense-items__table--checkbox {
+	width: 5%;
+}
+
+.expense-items__table--type {
+	width: 15%;
+}
+
+.expense-items__table--notes {
+	width: 20%;
+}
+
+.expense-items__table--comments {
+	width: 5%;
+}
+
+.expense-items__table--document-number {
+	width: 10%;
+}
+
+.expense-items__table--amount {
+	width: 10%;
+}
+
+.expense-items__table-cell--dark {
+	background-color: #fafafa;
+}
+
+.expense-items__comment-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+}
+
+.expense-items__account-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.expense-items__amount-container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	display: flex;
+	padding-right: 10px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.expense-items__table-header-amount-container {
+	border-right: none;
+	padding-left: 15px;
+}
+
+.expense-items__table-container--checkbox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 28px;
+}
+
+.expense-items__orphan-warn {
+	color: #21A9E1;
+	margin-right: 5px;
+}
+
+.expense-items_-table-header-narrow {
+  width: 3%;
+}
+
+.expense-items__hide-item-ui {
+  margin-left: 10px;
+}
+
+.expense-items__no-funds {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 30px;
+	color: gray;
+}

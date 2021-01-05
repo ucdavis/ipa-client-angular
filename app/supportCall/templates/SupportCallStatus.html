@@ -2,7 +2,15 @@
 <div>
 </div>
 
-<ipa-header page-title="Support Calls"></ipa-header>
+<ipa-header page-title="Support Calls">
+	<button class="ipa-header__activity-log--button" uib-tooltip="Activity Log" ng-click="toggleActivityLogOpen()"><i class="fa fa-history"></i> Activity Log</button>
+</ipa-header>
+
+<activity-log
+	is-visible="view.isActivityLogOpen"
+	log-data="auditLogs"
+>
+</activity-log>
 
 <div ng-if="noAccess">
 	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
@@ -27,23 +35,22 @@
 					year="view.year"
 					term-short-code="view.termShortCode"
 					support-call-mode="view.supportCallMode"
-					selected-participants="view.selectedParticipants"
 					is-visible="view.state.openAddSupportCallModal">
 				</add-support-call-modal>
 		</ipa-modal>
 		<ipa-modal
 			is-visible="view.state.openContactModal"
-			header-text="Contact Support Staff"
-			styles="view.modalStyles">
-				<add-support-call-modal
+			header-text="Send Follow-Up">
+				<contact-support-call-modal
 					ng-if="view.state.openContactModal"
 					state="view.state"
 					schedule-id="view.state.misc.scheduleId"
 					year="view.year"
 					term-short-code="view.termShortCode"
 					support-call-mode="view.supportCallMode"
+					selected-participants="view.selectedParticipants"
 					is-visible="view.state.openContactModal">
-				</add-support-call-modal>
+				</contact-support-call-modal>
 		</ipa-modal>
 
 		<!-- Toolbar Buttons -->
@@ -91,7 +98,7 @@
 						<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 						Contact Support Staff
 					</a>
-					<span ng-if="atLeastOneStudentSelected() == false" uib-tooltip="Select at least one instructor to contact">
+					<span ng-if="atLeastOneStudentSelected() == false" uib-tooltip="Select at least one support staff to contact">
 						<a class="disabled btn btn-default" style="color: #808080;">
 							<i style="padding-right: 5px;" class="glyphicon glyphicon-bullhorn"></i>
 							Contact Support Staff

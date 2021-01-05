@@ -6,7 +6,7 @@
  * Controller of the ipaClientAngularApp
  */
 class SupportAssignmentCtrl {
-	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportActions, $timeout, AuthService) {
+	constructor ($scope, $rootScope, $window, $location, $route, $routeParams, $uibModal, SupportActions, $timeout, AuthService, SupportService) {
 		this.$scope = $scope;
 		this.$rootScope = $rootScope;
 		this.$window = $window;
@@ -17,6 +17,7 @@ class SupportAssignmentCtrl {
 		this.SupportActions = SupportActions;
 		this.$timeout = $timeout;
 		this.AuthService = AuthService;
+		this.SupportService = SupportService;
 
 		var _self = this;
 		$window.document.title = "Instructional Support";
@@ -25,6 +26,7 @@ class SupportAssignmentCtrl {
 		$scope.termShortCode = _self.$routeParams.termShortCode;
 		$scope.nextYear = (parseInt($scope.year) + 1).toString().slice(-2);
 		$scope.view = {};
+		$scope.isActivityLogOpen = false;
 
 		$scope.availabilityModalStyles = {
 			width: "70%"
@@ -35,6 +37,15 @@ class SupportAssignmentCtrl {
 
 	initialize () {
 		var _self = this;
+
+		_self.$scope.toggleActivityLogOpen = function() {
+			_self.SupportService.getAuditLogs(_self.$scope.workgroupId, _self.$scope.year).then(res => {
+				_self.$scope.auditLogs = res;
+			});
+
+			return _self.$scope.isActivityLogOpen = !_self.$scope.isActivityLogOpen;
+		};
+
 		_self.$scope.closeAvailabilityModal = function() {
 			_self.SupportActions.closeAvailabilityModal();
 		};
@@ -189,6 +200,6 @@ class SupportAssignmentCtrl {
 	}
 }
 
-SupportAssignmentCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportActions', '$timeout', 'AuthService'];
+SupportAssignmentCtrl.$inject = ['$scope', '$rootScope', '$window', '$location', '$route', '$routeParams', '$uibModal', 'SupportActions', '$timeout', 'AuthService', 'SupportService'];
 
 export default SupportAssignmentCtrl;

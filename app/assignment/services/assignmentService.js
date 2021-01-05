@@ -20,7 +20,7 @@ class AssignmentService {
 			},
 			download: function (workgroupId, year) {
 				var deferred = $q.defer();
-	
+
 				$http.get(window.serverRoot + "/api/assignmentView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
 				.then(function(payload) {
 					$window.location.href = payload.data.redirect;
@@ -29,7 +29,7 @@ class AssignmentService {
 				function() {
 					deferred.reject();
 				});
-	
+
 				return deferred.promise;
 			},
 			updateCourse: function (course) {
@@ -55,7 +55,7 @@ class AssignmentService {
 			},
 			addInstructorAssignment: function (teachingAssignment, scheduleId) {
 				teachingAssignment.termCode = String(teachingAssignment.termCode);
-	
+
 				return ApiService.post("/api/assignmentView/schedules/" + scheduleId + "/teachingAssignments", teachingAssignment);
 			},
 			updateInstructorAssignment: function (teachingAssignment) {
@@ -65,7 +65,7 @@ class AssignmentService {
 				var scheduleInstructorNote = {};
 				scheduleInstructorNote.instructorComment = comment;
 				scheduleInstructorNote.assignmentsCompleted = assignmentsCompleted;
-	
+
 				return ApiService.post("/api/assignmentView/scheduleInstructorNotes/" + instructorId + "/" + workgroupId + "/" + year, scheduleInstructorNote);
 			},
 			assignStudentToAssociateInstructor: function (sectionGroupId, supportStaffId) {
@@ -105,8 +105,11 @@ class AssignmentService {
 					'02': 'Spring Semester',
 					'03': 'Spring Quarter'
 				};
-	
+
 				return allTerms;
+			},
+			getAuditLogs: function (workgroupId, year) {
+				return ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Assign Instructors" + "/auditLogs");
 			}
 		};
 	}

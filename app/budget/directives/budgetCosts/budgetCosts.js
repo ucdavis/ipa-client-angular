@@ -15,12 +15,10 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 			regularInstructorAssignmentOptions: '<',
 			isLiveDataScenario: '<',
 			isBudgetRequest: '<',
-			tags: '<'
+			tags: '<',
+			reasonCategories: '<'
 		},
 		link: function (scope) {
-			scope.openAddCourseCommentsModal = function(sectionGroupCost) {
-				BudgetActions.openAddCourseCommentsModal(sectionGroupCost);
-			};
 
 			scope.setActiveTerm = function(activeTermTab) {
 				BudgetActions.selectTerm(activeTermTab);
@@ -32,6 +30,10 @@ let budgetCosts = function ($rootScope, BudgetActions, TagService) {
 
 			scope.getTagTextColor = function (color) {
 				return TagService.getTagTextColor(color);
+			};
+
+			scope.addSectionGroupCostInstructor = function(sectionGroupCost) {
+				BudgetActions.toggleSectionGroupCostInstructorModal(sectionGroupCost);
 			};
 		}
 	};

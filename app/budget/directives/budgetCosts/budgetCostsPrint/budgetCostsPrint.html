@@ -10,7 +10,7 @@
             <colgroup>
               <col style="width: 30%;">
             </colgroup>
-      
+
             <thead>
               <tr class="budget-summary-print__header-row">
                 <th>
@@ -31,7 +31,7 @@
                 </th>
               </tr>
             </thead>
-      
+
             <tbody>
               <!-- TA Count -->
               <tr>
@@ -51,7 +51,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- TA Cost -->
               <tr>
                 <td>
@@ -70,7 +70,7 @@
                   </td>
                 </td>
               </tr>
-      
+
               <!-- Reader Count -->
               <tr>
                 <td>
@@ -89,7 +89,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Reader Cost -->
               <tr>
                 <td>
@@ -108,7 +108,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Support Cost -->
               <tr>
                 <td>
@@ -127,7 +127,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Replacement Cost sub-types -->
               <tr ng-repeat="instructorTypeId in summary.combinedTerms.replacementCosts.instructorTypeIds">
                 <td>
@@ -199,7 +199,26 @@
                   </div>
                 </td>
               </tr>
-      
+
+              <!-- Other Costs -->
+              <tr>
+                <td>
+                  <div class="budget-summary-print__cell-container budget-summary-print__cell-container--left">
+                    Other Costs
+                  </div>
+                </td>
+                <td ng-repeat="term in summary.terms">
+                  <div class="budget-summary-print__cell-container">
+                    {{ toCurrency(summary.byTerm[term].otherCosts) }}
+                  </div>
+                </td>
+                <td>
+                  <div class="budget-summary-print__cell-container budget-summary-print__cell-container--last">
+                    {{ toCurrency(summary.combinedTerms.otherCosts) }}
+                  </div>
+                </td>
+              </tr>
+
               <!-- Funds Costs -->
               <tr>
                 <td>
@@ -216,7 +235,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Balance -->
               <tr>
                 <td>
@@ -235,7 +254,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Total Student Credit Hours -->
               <tr>
                 <td>
@@ -254,7 +273,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Enrollment -->
               <tr>
                 <td>
@@ -273,7 +292,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Undergrad SCH-->
               <tr>
                 <td>
@@ -292,7 +311,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Grad SCH-->
               <tr>
                 <td>
@@ -311,7 +330,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Total Student Credit Hours -->
               <tr>
                 <td>
@@ -330,7 +349,7 @@
                   </div>
                 </td>
               </tr>
-      
+
                       <!-- Lower Div Count -->
               <tr>
                 <td>
@@ -349,7 +368,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Upper Div Count -->
               <tr>
                 <td>
@@ -368,7 +387,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Graduate Count -->
               <tr>
                 <td>
@@ -387,7 +406,7 @@
                   </div>
                 </td>
               </tr>
-      
+
               <!-- Total Offerings -->
               <tr>
                 <td>
@@ -411,7 +430,7 @@
         </div>
       </div>
 
- <!-- SCHEDULE COST REPORT -->     
+ <!-- SCHEDULE COST REPORT -->
     <h4 class="page-break-before">Budget Schedule Costs</h4>
     <p><strong>Academic Year: </strong>{{ state.ui.year }}</p>
     <p><strong>Workgroup: </strong>{{ workgroupName }}</p>
@@ -459,7 +478,7 @@
                   </thead>
                 </table>
                 <div ng-repeat="sectionGroupCost in course.sectionGroupCosts">
-                  
+
                   <table class="budget-costs-print__table">
                       <colgroup>
                         <col style="width: 30px;">
@@ -504,7 +523,7 @@
   <p><strong>Academic Year: </strong>{{ state.ui.year }}</p>
   <p><strong>Workgroup: </strong>{{ workgroupName }}</p>
   <p><strong>Scenario: </strong>{{ state.selectedBudgetScenario.name }}</p>
-  
+
   <div class="line-items">
     <table class="line-items-print__table">
       <thead>
@@ -581,7 +600,7 @@
                 <th class="instructor-costs__table__th"><div>Cost</div></th>
               </tr>
             </thead>
-    
+
             <tbody>
               <tr ng-repeat="instructor in state.calculatedInstructors">
                 <td class="instructor-costs__table__td"><div>{{ instructor.lastName }}, {{ instructor.firstName }}</div></td>
@@ -625,7 +644,7 @@
                 <th class="instructor-costs__table__th"><div>Cost</div></th>
               </tr>
             </thead>
-    
+
             <tbody>
               <tr>
                 <td class="instructor-costs__table__td"><div>TA</div></td>
@@ -643,5 +662,5 @@
           </table>
         </div>
     </div>
-  
+
   </div>

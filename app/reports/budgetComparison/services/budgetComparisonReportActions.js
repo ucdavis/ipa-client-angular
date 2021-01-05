@@ -20,11 +20,14 @@ class BudgetComparisonReportActions {
 				this._getInstructorTypes(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPES);
 				this._getTeachingAssignments(workgroupId, year, ActionTypes.GET_CURRENT_TEACHING_ASSIGNMENTS);
 				this._getLineItems(workgroupId, year, ActionTypes.GET_CURRENT_LINE_ITEMS);
+				this._getExpenseItems(workgroupId, year, ActionTypes.GET_CURRENT_EXPENSE_ITEMS);
+				this._getExpenseItemTypes(workgroupId, year, ActionTypes.GET_CURRENT_EXPENSE_ITEM_TYPES);
 				this._getBudgetScenarios(workgroupId, year, ActionTypes.GET_CURRENT_BUDGET_SCENARIOS);
 				this._getLineItemCategories(workgroupId, year, ActionTypes.GET_CURRENT_LINE_ITEM_CATEGORIES);
 				this._getInstructorTypeCosts(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_TYPE_COSTS);
 				this._getInstructorCosts(workgroupId, year, ActionTypes.GET_CURRENT_INSTRUCTOR_COSTS);
 				this._getSectionGroupCosts(workgroupId, year, ActionTypes.GET_CURRENT_SECTION_GROUP_COSTS);
+				this._getSectionGroupCostInstructors(workgroupId, year, ActionTypes.GET_CURRENT_SECTION_GROUP_COST_INSTRUCTORS);
 
 				this._getBudget(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_BUDGET);
 				this._getCourses(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_COURSES);
@@ -33,11 +36,14 @@ class BudgetComparisonReportActions {
 				this._getInstructorTypes(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPES);
 				this._getTeachingAssignments(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_TEACHING_ASSIGNMENTS);
 				this._getLineItems(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_LINE_ITEMS);
+				this._getExpenseItems(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_EXPENSE_ITEMS);
+				this._getExpenseItemTypes(workgroupId, year, ActionTypes.GET_PREVIOUS_EXPENSE_ITEM_TYPES);
 				this._getBudgetScenarios(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_BUDGET_SCENARIOS);
 				this._getLineItemCategories(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_LINE_ITEM_CATEGORIES);
 				this._getInstructorTypeCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_TYPE_COSTS);
 				this._getInstructorCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_INSTRUCTOR_COSTS);
 				this._getSectionGroupCosts(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTION_GROUP_COSTS);
+				this._getSectionGroupCostInstructors(workgroupId, previousYear, ActionTypes.GET_PREVIOUS_SECTION_GROUP_COST_INSTRUCTORS);
 
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId);
@@ -268,7 +274,8 @@ class BudgetComparisonReportActions {
 					let sectionGroupCosts = {
 						ids: [],
 						list: {},
-						bySectionGroupId: {}
+						bySectionGroupId: {},
+						byUniqueKey: {}
 					};
 
 					rawSectionGroupCosts.forEach(function(sectionGroupCost) {
@@ -276,12 +283,45 @@ class BudgetComparisonReportActions {
 						sectionGroupCosts.list[sectionGroupCost.id] = sectionGroupCost;
 						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] = sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId] || [];
 						sectionGroupCosts.bySectionGroupId[sectionGroupCost.sectionGroupId].push(sectionGroupCost.id);
+						var uniqueKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode + "-" + sectionGroupCost.budgetScenarioId;
+						sectionGroupCosts.byUniqueKey[uniqueKey] = sectionGroupCost;
 					});
 
 					BudgetComparisonReportReducers.reduce({
 						type: action,
 						payload: {
 							sectionGroupCosts: sectionGroupCosts
+						}
+					});
+
+					_self._performCalculations();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
+			_getSectionGroupCostInstructors: function (workgroupId, year, action) {
+				var _self = this;
+
+				BudgetComparisonReportService.getSectionGroupCostInstructors(workgroupId, year).then(function (rawSectionGroupCostInstructors) {
+					var sectionGroupCostInstructors = {
+						bySectionGroupCostId : {}
+					};
+					var teachingAssignmentIds = [];
+
+					rawSectionGroupCostInstructors.forEach(function(sectionGroupCostInstructor) {
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId] || [];
+						sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCostInstructor.sectionGroupCostId].push(sectionGroupCostInstructor);
+						if (sectionGroupCostInstructor.teachingAssignmentId){
+							teachingAssignmentIds.push(sectionGroupCostInstructor.teachingAssignmentId);
+						}
+					});
+
+
+					BudgetComparisonReportReducers.reduce({
+						type: action,
+						payload: {
+							sectionGroupCostInstructors: sectionGroupCostInstructors,
+							teachingAssignmentIds: teachingAssignmentIds
 						}
 					});
 
@@ -334,6 +374,58 @@ class BudgetComparisonReportActions {
 						type: action,
 						payload: {
 							lineItems: lineItems
+						}
+					});
+
+					_self._performCalculations();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
+			_getExpenseItems: function (workgroupId, year, action) {
+				var _self = this;
+
+				BudgetComparisonReportService.getExpenseItems(workgroupId, year).then(function (rawExpenseItems) {
+					let expenseItems = {
+						ids: [],
+						list: {}
+					};
+
+					rawExpenseItems.forEach(function(expenseItem) {
+						expenseItems.ids.push(expenseItem.id);
+						expenseItems.list[expenseItem.id] = expenseItem;
+					});
+
+					BudgetComparisonReportReducers.reduce({
+						type: action,
+						payload: {
+							expenseItems: expenseItems
+						}
+					});
+
+					_self._performCalculations();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
+			_getExpenseItemTypes: function (workgroupId, year, action) {
+				var _self = this;
+
+				BudgetComparisonReportService.getExpenseItemTypes().then(function (rawExpenseItemTypes) {
+					let expenseItemTypes = {
+						ids: [],
+						list: {}
+					};
+
+					rawExpenseItemTypes.forEach(function(expenseItemType) {
+						expenseItemTypes.ids.push(expenseItemType.id);
+						expenseItemTypes.list[expenseItemType.id] = expenseItemType;
+					});
+
+					BudgetComparisonReportReducers.reduce({
+						type: action,
+						payload: {
+							expenseItemTypes: expenseItemTypes
 						}
 					});
 
@@ -624,7 +716,7 @@ class BudgetComparisonReportActions {
 						budgetScenarioId: selectedScenarioId
 					}
 				});
-	
+
 				this._performCalculations();
 			},
 			selectPreviousBudgetScenario: function(selectedScenarioId) {
@@ -634,7 +726,7 @@ class BudgetComparisonReportActions {
 						budgetScenarioId: selectedScenarioId
 					}
 				});
-	
+
 				this._performCalculations();
 			},
 			// old frontend excel download method

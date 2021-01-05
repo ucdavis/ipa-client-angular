@@ -188,7 +188,7 @@ ul.dropdown-menu li div {
 	font-size: 12px;
 }
 
-ul.dropdown-menu li a {
+.assign-instructor-dropdown li a {
 	color: rgb(153, 153, 153);
 	font-size: 12px;
 }
@@ -224,12 +224,12 @@ button.btn.assign-dropdown-btn {
 	justify-content: space-between;
 	position: fixed;
 	top: 127px;
-	width: calc(100vw - 255px);
+	width: calc(100vw - 235px);
 	background-color: white;
 	margin-top: -10px;
 	padding-top: 2em;
 	padding-bottom: 2em;
-	z-index: 100;
+	z-index: 30;
 }
 
 .assignments__table {
@@ -238,8 +238,9 @@ button.btn.assign-dropdown-btn {
 
 .table-toolbar {
   text-align: right;
+  padding-right: 20px;
   padding-bottom: 5px;
-	margin: 0px;
+  margin: 0px;
   border-radius: 3px;
 }
 .tool-icon {
@@ -1104,4 +1105,41 @@ li.active-term .dropdown-term-row {
 	font-size: 12px;
 	color: rgb(153, 153, 153);
 	width: 100%;
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 1cm;
+  }
+
+  .do-not-print {
+    display: none;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  .assignments-container .main-content {
+    display: unset;
+  }
+
+  table {
+    page-break-after: auto;
+  }
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  td {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  thead {
+    display: table-header-group;
+  }
 }

@@ -11,6 +11,7 @@ class ScheduleCostCalculations {
         var selectedBudgetScenario = BudgetReducers._state.budgetScenarios.list[BudgetReducers._state.ui.selectedBudgetScenarioId];
         var sectionGroupCosts = BudgetReducers._state.sectionGroupCosts;
         var sectionGroups = BudgetReducers._state.scheduleSectionGroups;
+        var sectionGroupCostInstructors = BudgetReducers._state.sectionGroupCostInstructors;
         var activeTerms = selectedBudgetScenario.terms;
 
         selectedBudgetScenario.budgetedCourseHiddenByTermFilter = false;
@@ -49,6 +50,78 @@ class ScheduleCostCalculations {
 
           var sectionGroupKey = sectionGroupCost.subjectCode + "-" + sectionGroupCost.courseNumber + "-" + sectionGroupCost.sequencePattern + "-" + sectionGroupCost.termCode;
           sectionGroupCost.sectionGroup = sectionGroups.list[sectionGroupKey];
+          sectionGroupCost.sectionGroupCostInstructors = sectionGroupCostInstructors.bySectionGroupCostId[sectionGroupCost.id] || [];
+
+          if (sectionGroupCost.sectionGroup && sectionGroupCost.isLiveData){
+            var teachingAssignmentIds = sectionGroupCost.sectionGroupCostInstructors.map((obj) => obj.teachingAssignmentId);
+            for (var i = 0; i < sectionGroupCost.sectionGroup.assignedInstructors.length; i++){
+              var instructor = sectionGroupCost.sectionGroup.assignedInstructors[i];
+              if (instructor.teachingAssignmentId && !teachingAssignmentIds.includes(instructor.teachingAssignmentId)){
+                teachingAssignmentIds.push(instructor.teachingAssignmentId);
+                var sectionGroupCostInstructor = {
+                  cost: null,
+                  sectionGroupCostInstructorId: null,
+                  teachingAssignmentId: instructor.teachingAssignmentId,
+                  instructorTypeDescription: instructor.instructorTypeDescription,
+                  instructorTypeId: instructor.instructorTypeId,
+                  instructorName: instructor.instructorName,
+                  instructorId: instructor.id
+                };
+                sectionGroupCost.sectionGroupCostInstructors.push(sectionGroupCostInstructor);
+              }
+            }
+
+          }
+
+          sectionGroupCost.sectionGroupCostInstructors = _array_sortByProperty(sectionGroupCost.sectionGroupCostInstructors, 'teachingAssignmentId');
+          sectionGroupCost.sectionGroupCostInstructors.forEach(function (sectionGroupCostInstructor) {
+            sectionGroupCostInstructor.overrideInstructorCost = null;
+            sectionGroupCostInstructor.overrideInstructorCostSource = null;
+            sectionGroupCostInstructor.overrideInstructorCostSourceDescription = null;
+            const isSnapshot = BudgetReducers._state.budgetScenarios.list[sectionGroupCost.budgetScenarioId].isSnapshot;
+
+            if (sectionGroupCostInstructor.instructorId){
+              let instructorId = sectionGroupCostInstructor.instructorId;
+              var instructorCost = isSnapshot
+                ? BudgetReducers._state.instructorCosts.byBudgetScenarioId[sectionGroupCost.budgetScenarioId]?.byInstructorId[instructorId]
+                : BudgetReducers._state.instructorCosts.byInstructorId[instructorId];
+              var instructor = BudgetReducers._state.assignedInstructors.list[instructorId] || BudgetReducers._state.activeInstructors.list[instructorId];
+
+              if (instructorCost && instructorCost.cost > 0) {
+                sectionGroupCostInstructor.overrideInstructorCost = angular.copy(instructorCost.cost); // eslint-disable-line no-undef
+                sectionGroupCostInstructor.overrideInstructorCostSource = "instructor";
+                sectionGroupCostInstructor.overrideInstructorCostSourceDescription = instructor.firstName + " " + instructor.lastName;
+                sectionGroupCostInstructor.newInstructorCost = null;
+                return;
+              }
+              var instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
+              var instructorTypeCost = isSnapshot
+                ? BudgetReducers._state.instructorTypeCosts.byBudgetScenarioId[sectionGroupCost.budgetScenarioId]?.byInstructorTypeId[instructorTypeId]
+                : BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[instructorTypeId];
+
+              if (instructorTypeCost && instructorTypeCost.cost > 0) {
+                sectionGroupCostInstructor.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
+                sectionGroupCostInstructor.overrideInstructorCostSource = "instructor type";
+                sectionGroupCostInstructor.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
+                sectionGroupCostInstructor.newInstructorCost = null;
+                return;
+              }
+
+            } else if (sectionGroupCostInstructor.instructorTypeId > 0){
+                var instructorTypeCost = isSnapshot
+                  ? BudgetReducers._state.instructorTypeCosts.byBudgetScenarioId[sectionGroupCost.budgetScenarioId]?.byInstructorTypeId[instructorTypeId]
+                  : BudgetReducers._state.instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
+
+
+                if (instructorTypeCost) {
+                  sectionGroupCostInstructor.overrideInstructorCost = angular.copy(instructorTypeCost.cost); // eslint-disable-line no-undef
+                  sectionGroupCostInstructor.overrideInstructorCostSource = "instructor type";
+                  sectionGroupCostInstructor.overrideInstructorCostSourceDescription = instructorTypeCost.description + " category";
+                  sectionGroupCostInstructor.newInstructorCost = null;
+                  return;
+                }
+            }
+          });
 
           // Set sectionGroupCost instructor descriptions
           var instructor = BudgetReducers._state.assignedInstructors.list[sectionGroupCost.instructorId] || BudgetReducers._state.activeInstructors.list[sectionGroupCost.instructorId];
@@ -305,9 +378,16 @@ class ScheduleCostCalculations {
         sectionGroupCost.courseCostSubTotal = sectionGroupCost.taCost + sectionGroupCost.readerCost;
 
         // Instructor Costs
-        sectionGroupCost.instructorCostSubTotal = sectionGroupCost.overrideInstructorCost || 0;
+        sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal;
 
-        sectionGroupCost.totalCost = sectionGroupCost.courseCostSubTotal + sectionGroupCost.instructorCostSubTotal;
+        var instructors = sectionGroupCost.sectionGroupCostInstructors || [];
+        instructors.forEach(function(sectionGroupCostInstructor) {
+          if (sectionGroupCostInstructor.cost !== null){
+            sectionGroupCost.totalCost += parseFloat(sectionGroupCostInstructor.cost.toString().replace(/[^0-9.]/g,''));
+          } else if (sectionGroupCostInstructor.overrideInstructorCost) {
+            sectionGroupCost.totalCost += sectionGroupCostInstructor.overrideInstructorCost;
+          }
+        });
       },
       // Find or create a container for this sectionGroupCost
       _findOrAddSectionGroupContainer: function(sectionGroupCost, containers) {

@@ -5,12 +5,15 @@ class BudgetComparisonReportReducers {
 				budget: {},
 				courses: {},
 				sectionGroups: {},
+				sectionGroupCostInstructors: {},
 				sections: {},
 				instructorTypes: {},
 				teachingAssignments: {},
 				budgetScenarios: {},
 				lineItems: {},
 				lineItemCategories: {},
+				expenseItems: {},
+				expenseItemTypes: {},
 				instructorTypeCosts: {},
 				instructorCosts: {},
 				sectionGroupCosts: {},
@@ -46,6 +49,23 @@ class BudgetComparisonReportReducers {
 						return lineItems;
 					default:
 						return lineItems;
+				}
+			},
+			_expenseItemReducers: function (action, expenseItems) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_CURRENT_EXPENSE_ITEMS:
+						expenseItems.current = action.payload.expenseItems;
+						return expenseItems;
+					case ActionTypes.GET_PREVIOUS_EXPENSE_ITEMS:
+						expenseItems.previous = action.payload.expenseItems;
+						return expenseItems;
+					case ActionTypes.TOGGLE_FILTER:
+						expenseItems = action.payload.expenseItems;
+						return expenseItems;
+					default:
+						return expenseItems;
 				}
 			},
 			_userReducers: function (action, users) {
@@ -106,6 +126,20 @@ class BudgetComparisonReportReducers {
 						return lineItemCategories;
 				}
 			},
+			_expenseItemTypeReducers: function (action, expenseItemTypes) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return {};
+					case ActionTypes.GET_CURRENT_EXPENSE_ITEM_TYPES:
+					expenseItemTypes.current = action.payload.expenseItemTypes;
+						return expenseItemTypes;
+					case ActionTypes.GET_PREVIOUS_EXPENSE_ITEM_TYPES:
+					expenseItemTypes.previous = action.payload.expenseItemTypes;
+						return expenseItemTypes;
+					default:
+						return expenseItemTypes;
+				}
+			},
 			_instructorTypeCostReducers: function (action, instructorTypeCosts) {//
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
@@ -150,6 +184,26 @@ class BudgetComparisonReportReducers {
 						return sectionGroupCosts;
 					default:
 						return sectionGroupCosts;
+				}
+			},
+			_sectionGroupCostInstructorReducers: function (action, sectionGroupCostInstructors) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						return  {};
+					case ActionTypes.GET_PREVIOUS_SECTION_GROUP_COST_INSTRUCTORS:
+						sectionGroupCostInstructors.previous = {
+							instructors: action.payload.sectionGroupCostInstructors,
+							teachingAssignmentIds: action.payload.teachingAssignmentIds
+						};
+						return sectionGroupCostInstructors;
+					case ActionTypes.GET_CURRENT_SECTION_GROUP_COST_INSTRUCTORS:
+						sectionGroupCostInstructors.current = {
+							instructors: action.payload.sectionGroupCostInstructors,
+							teachingAssignmentIds: action.payload.teachingAssignmentIds
+						};
+						return sectionGroupCostInstructors;
+					default:
+						return sectionGroupCostInstructors;
 				}
 			},
 			_budgetScenarioReducers: function (action, budgetScenarios) {
@@ -296,9 +350,12 @@ class BudgetComparisonReportReducers {
 				newState.lineItems = scope._lineItemReducers(action, scope._state.lineItems);
 				newState.budgetScenarios = scope._budgetScenarioReducers(action, scope._state.budgetScenarios);
 				newState.lineItemCategories = scope._lineItemCategoryReducers(action, scope._state.lineItemCategories);
+				newState.expenseItems = scope._expenseItemReducers(action, scope._state.expenseItems);
+				newState.expenseItemTypes = scope._expenseItemTypeReducers(action, scope._state.expenseItemTypes);
 				newState.instructorTypeCosts = scope._instructorTypeCostReducers(action, scope._state.instructorTypeCosts);
 				newState.instructorCosts = scope._instructorCostReducers(action, scope._state.instructorCosts);
 				newState.sectionGroupCosts = scope._sectionGroupCostReducers(action, scope._state.sectionGroupCosts);
+				newState.sectionGroupCostInstructors = scope._sectionGroupCostInstructorReducers(action, scope._state.sectionGroupCostInstructors);
 				newState.users = scope._userReducers(action, scope._state.users);
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 				newState.userWorkgroupsScenarios = scope._userWorkgroupsScenariosReducers(action, scope._state.userWorkgroupsScenarios);

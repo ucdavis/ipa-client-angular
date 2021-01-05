@@ -2,7 +2,15 @@
 <div>
 </div>
 
-<ipa-header page-title="Teaching Calls"></ipa-header>
+<ipa-header page-title="Teaching Calls">
+	<button class="ipa-header__activity-log--button" uib-tooltip="Activity Log" ng-click="toggleActivityLogOpen()"><i class="fa fa-history"></i> Activity Log</button>
+</ipa-header>
+
+<activity-log
+	is-visible="isActivityLogOpen"
+	log-data="auditLogs"
+>
+</activity-log>
 
 <div ng-if="noAccess">
 	<no-access workgroup-name="sharedState.workgroup.name"></no-access>
