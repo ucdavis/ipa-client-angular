@@ -137,8 +137,8 @@ class CourseActionCreators {
         });
       },
       updateSectionGroup: function (sectionGroup, newTermCode) {
-        let courseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
-          return previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0);
+        let courseSeats = sectionGroup.sections.reduce(function (previousValue, relatedSection) {
+          return previousValue + (parseInt(relatedSection.seats) || 0);
         }, 0);
 
         if (courseSeats <= sectionGroup.plannedSeats) {
@@ -197,7 +197,7 @@ class CourseActionCreators {
         var self = this;
         CourseService.deleteMultipleCourses(courseIds, workgroupId, year).then(function () {
           window.ipa_analyze_event('courses', 'multiple courses deleted');
-  
+
           $rootScope.$emit('toast', { message: "Deleted courses.", type: "SUCCESS" });
           var action = {
             type: ActionTypes.DELETE_MULTIPLE_COURSES,
@@ -596,7 +596,7 @@ class CourseActionCreators {
         } else {
           sectionGroups = payload.sectionGroups;
           sections = payload.sections;
-        } 
+        }
 
         for (var i = 0; i < sectionGroups.length; i++) {
           var sectionGroup = sectionGroups[i];
