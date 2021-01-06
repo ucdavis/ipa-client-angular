@@ -334,8 +334,10 @@ class CourseStateService {
             return sections;
           case ActionTypes.FETCH_SECTIONS:
             action.payload.sections.forEach(function (sectionData) {
-              sections.list[sectionData.id] = new Section(sectionData);
-              sections.ids.push(sectionData.id);
+              if (!sections.list[sectionData.id] && !sections.ids[sectionData.id]) {
+                sections.list[sectionData.id] = new Section(sectionData);
+                sections.ids.push(sectionData.id);
+              }
             });
             return sections;
           case ActionTypes.ADD_SECTION_GROUP:
