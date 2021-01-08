@@ -316,7 +316,7 @@ class TeachingCallFormCtrl {
 		};
 
 		$scope.updateNavigateAwayGuard = function () {
-			if ($scope.view.state.teachingCallReceipt.isDone == false) {
+			if ($scope.view.state.teachingCallReceipt?.isDone == false) {
 				window.onbeforeunload = function (event) {
 					var message = 'Are you sure you want to leave this page without submitting your preferences?';
 
