@@ -197,7 +197,7 @@ class CourseActionCreators {
         var self = this;
         CourseService.deleteMultipleCourses(courseIds, workgroupId, year).then(function () {
           window.ipa_analyze_event('courses', 'multiple courses deleted');
-  
+
           $rootScope.$emit('toast', { message: "Deleted courses.", type: "SUCCESS" });
           var action = {
             type: ActionTypes.DELETE_MULTIPLE_COURSES,
@@ -585,6 +585,14 @@ class CourseActionCreators {
           }
         });
       },
+      toggleConvertSectionsModal: function(sequencePattern) {
+        CourseStateService.reduce({
+          type: ActionTypes.TOGGLE_CONVERT_SECTIONS_MODAL,
+          payload: {
+            sequencePattern: sequencePattern
+          }
+        });
+      },
       _generateAttentionFlags: function(payload) {
         var sectionGroups = [];
         var sections = [];
@@ -596,7 +604,7 @@ class CourseActionCreators {
         } else {
           sectionGroups = payload.sectionGroups;
           sections = payload.sections;
-        } 
+        }
 
         for (var i = 0; i < sectionGroups.length; i++) {
           var sectionGroup = sectionGroups[i];

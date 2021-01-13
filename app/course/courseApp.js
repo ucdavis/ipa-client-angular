@@ -24,6 +24,7 @@ import censusChart from './directives/censusChart.js';
 import courseTable from './directives/courseTable.js';
 import activeFilters from './directives/activeFilters/activeFilters.js';
 import moveCourseModal from './directives/moveCourseModal/moveCourseModal.js';
+import convertSectionsModal from './directives/convertSectionsModal/convertSectionsModal.js'
 
 // Dependencies
 var dependencies = [
@@ -88,6 +89,7 @@ const courseApp = angular.module("courseApp", dependencies) // eslint-disable-li
 .directive('censusChart', censusChart)
 .directive('courseTable', courseTable)
 .directive('activeFilters', activeFilters)
+.directive('convertSectionsModal', convertSectionsModal)
 .constant('ActionTypes', {
   INIT_STATE: "INIT_STATE",
   NEW_COURSE: "NEW_COURSE",
@@ -124,7 +126,8 @@ const courseApp = angular.module("courseApp", dependencies) // eslint-disable-li
   CLOSE_COURSE_DELETION_MODAL: "CLOSE_COURSE_DELETION_MODAL",
   TOGGLE_MOVE_COURSE_MODAL: "TOGGLE_MOVE_COURSE_MODAL",
   DELETE_MULTIPLE_COURSES: "DELETE_MULTIPLE_COURSES",
-  MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS"
+  MASS_ASSIGN_TAGS: "MASS_ASSIGN_TAGS",
+  TOGGLE_CONVERT_SECTIONS_MODAL: "TOGGLE_CONVERT_SECTIONS_MODAL"
 });
 
 export default courseApp;

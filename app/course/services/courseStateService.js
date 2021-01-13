@@ -446,6 +446,10 @@ class CourseStateService {
               searchingCourseToImport: false,
               selectedCourseRowIds: [],
               isCourseDeleteModalOpen: false,
+              convertSectionsModal: {
+                isVisible: false,
+                newSequence: null
+              },
               moveCourseModal: {
                 show: false,
                 selectedSectionGroup: null,
@@ -565,6 +569,10 @@ class CourseStateService {
             return uiState;
           case ActionTypes.CLOSE_COURSE_DELETION_MODAL:
             uiState.isCourseDeleteModalOpen = false;
+            return uiState;
+          case ActionTypes.TOGGLE_CONVERT_SECTIONS_MODAL:
+            uiState.convertSectionsModal.isVisible = !uiState.convertSectionsModal.isVisible;
+            uiState.convertSectionsModal.sequencePattern = action.payload.sequencePattern;
             return uiState;
           case ActionTypes.TOGGLE_MOVE_COURSE_MODAL:
             uiState.moveCourseModal.show = !uiState.moveCourseModal.show;

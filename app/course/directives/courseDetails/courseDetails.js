@@ -69,8 +69,25 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 
         scope.originalSequencePattern = sequencePattern.toUpperCase();
         scope.view.selectedEntity.sequencePattern = scope.view.selectedEntity.sequencePattern.toUpperCase();
-        CourseActionCreators.updateCourse(scope.view.selectedEntity);
+
+        if(scope.requiresConversion(scope.originalSequencePattern, scope.view.state.courses.list[scope.view.selectedEntity.id].sequencePattern)){
+          CourseActionCreators.toggleConvertSectionsModal(sequencePattern.toUpperCase());
+        } else{
+          CourseActionCreators.updateCourse(scope.view.selectedEntity);
+        }
       };
+
+      scope.requiresConversion = function(oldSequencePattern, newSequencePattern) {
+        if(oldSequencePattern && newSequencePattern){
+          if(oldSequencePattern.length != newSequencePattern.length){
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      }
 
       scope.isSequencePatternUnique = function (sequencePattern) {
         let courseDescription = scope.view.selectedEntity.subjectCode + "-" + scope.view.selectedEntity.courseNumber + "-" + sequencePattern;
