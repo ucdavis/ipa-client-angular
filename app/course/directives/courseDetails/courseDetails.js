@@ -72,6 +72,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 
         if(scope.requiresConversion(scope.originalSequencePattern, scope.view.state.courses.list[scope.view.selectedEntity.id].sequencePattern)){
           CourseActionCreators.toggleConvertSectionsModal(sequencePattern.toUpperCase());
+          scope.originalSequencePattern = null;
         } else{
           CourseActionCreators.updateCourse(scope.view.selectedEntity);
         }
