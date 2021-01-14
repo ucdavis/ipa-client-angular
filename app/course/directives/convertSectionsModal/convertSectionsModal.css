@@ -21,3 +21,11 @@
   background-color: white;
   margin-right: 10px;
 }
+
+.convertion-details {
+  display: flex;
+}
+
+.conversion-details-example {
+  flex: 50%;
+}

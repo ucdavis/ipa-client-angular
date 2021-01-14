@@ -5,7 +5,49 @@
         Are you sure you want to update the sequence pattern from <b>{{selectedEntity.sequencePattern}}</b> to <b>{{sequencePattern}}</b>?
       </div>
       <div>
-        This will also convert the sections that belong to this courses.
+        This will also convert the sections that belong to this course {{selectedEntity.sequencePattern.length > 1 ? 'from lectures to discussions' : 'from discussions to lectures'}}
+        <br><br><b>For Example:</b><br><br>
+        <div class="convertion-details" ng-show="selectedEntity.sequencePattern.length > 1">
+          <div class="conversion-details-example">
+            Before<br><br>
+            XYZ 10 - 001
+            <li>
+              Section 001 Seats 100
+            </li>
+          </div>
+          <div class="conversion-details-example">
+            After<br><br>
+            XYZ 10 - A
+            <li>
+              Section A01 Seats 100
+            </li>
+          </div>
+        </div>
+        <div class="convertion-details" ng-show="selectedEntity.sequencePattern.length <= 1">
+          <div class="conversion-details-example">
+            Before<br><br>
+            XYZ 10 - A
+            <li>
+              Section A01 Seats 25
+            </li>
+            <li>
+              Section A02 Seats 25
+            </li>
+            <li>
+              Section A03 Seats 25
+            </li>
+            <li>
+              Section A04 Seats 25
+            </li>
+          </div>
+          <div class="conversion-details-example">
+            After<br><br>
+            XYZ 10 - 001
+            <li>
+              Section 001 Seats 100
+            </li>
+          </div>
+        </div>
       </div>
     </div>
 
