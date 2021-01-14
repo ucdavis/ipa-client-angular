@@ -59,7 +59,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
           return;
         }
 
-        if (scope.isSequencePatternUnique(sequencePattern) == false) {
+        if (scope.isSequencePatternUnique(sequencePattern, scope.view.selectedEntity.id) == false) {
           scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern already in use";
           return;
         }
@@ -89,7 +89,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
         }
       }
 
-      scope.isSequencePatternUnique = function (sequencePattern) {
+      scope.isSequencePatternUnique = function (sequencePattern, currentCourseId) {
         let courseDescription = scope.view.selectedEntity.subjectCode + "-" + scope.view.selectedEntity.courseNumber + "-" + sequencePattern;
         let isUnique = true;
 
@@ -97,7 +97,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
           let course = scope.view.state.courses.list[courseId];
           let slotCourseDescription = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern;
 
-          if (courseDescription == slotCourseDescription) {
+          if (courseDescription == slotCourseDescription && courseId !== currentCourseId) {
             isUnique = false;
           }
         });
