@@ -49,7 +49,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
         let sequencePattern = scope.view.selectedEntity.sequencePattern;
 
         // Do nothing if sequencePattern is unchanged
-        if (sequencePattern == scope.originalSequencePattern) {
+        if (sequencePattern == scope.view.state.courses.list[scope.view.selectedEntity.id].sequencePattern) {
           scope.courseDetails.sequencePatternTooltipMessage = null;
           return true;
         }
@@ -72,7 +72,6 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 
         if(scope.requiresConversion(scope.originalSequencePattern, scope.view.state.courses.list[scope.view.selectedEntity.id].sequencePattern)){
           CourseActionCreators.toggleConvertSectionsModal(sequencePattern.toUpperCase());
-          scope.originalSequencePattern = scope.view.state.courses.list[scope.view.selectedEntity.id].sequencePattern;
         } else{
           CourseActionCreators.updateCourse(scope.view.selectedEntity);
         }
