@@ -242,7 +242,7 @@ class CourseCtrl {
         _self.$scope.view.selectedEntity = _self.$scope.view.state.sectionGroups.selectedSectionGroup || _self.$scope.view.state.sectionGroups.newSectionGroup;
 
         // Initialize sectionGroup sections if not done already
-        if (_self.$scope.view.selectedEntity && _self.$scope.view.selectedEntity.id && _self.$scope.view.selectedEntity.sectionIds === undefined && _self.$scope.view.state.uiState.sectionsFetchInProgress == false) {
+        if (_self.$scope.view.selectedEntity && _self.$scope.view.selectedEntity.id && _self.$scope.view.state.uiState.sectionsFetchInProgress == false) {
           _self.courseActionCreators.getSectionsBySectionGroup(_self.$scope.view.selectedEntity);
         }
 
