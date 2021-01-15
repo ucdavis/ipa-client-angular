@@ -13,7 +13,7 @@ let convertSectionsModal = function ($rootScope, CourseActionCreators) {
     link: function (scope) {
 
       scope.updateCourse = function () {
-        scope.selectedEntity.sequencePattern = scope.sequencePattern
+        scope.selectedEntity.sequencePattern = scope.sequencePattern;
         CourseActionCreators.updateCourse(scope.selectedEntity);
         scope.isVisible = false;
       };

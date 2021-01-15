@@ -24,7 +24,7 @@ import censusChart from './directives/censusChart.js';
 import courseTable from './directives/courseTable.js';
 import activeFilters from './directives/activeFilters/activeFilters.js';
 import moveCourseModal from './directives/moveCourseModal/moveCourseModal.js';
-import convertSectionsModal from './directives/convertSectionsModal/convertSectionsModal.js'
+import convertSectionsModal from './directives/convertSectionsModal/convertSectionsModal.js';
 
 // Dependencies
 var dependencies = [
