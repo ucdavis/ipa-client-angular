@@ -275,6 +275,7 @@ class CourseStateService {
                 return 0;
               })
               .map(function (section) { return section.id; });
+            sectionGroups.list[action.payload.sectionGroup.id].sections = action.payload.sections;
             return sectionGroups;
           case ActionTypes.CREATE_SECTION:
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.section.sectionGroupId];
