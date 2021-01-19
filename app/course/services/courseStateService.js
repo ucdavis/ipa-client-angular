@@ -314,6 +314,13 @@ class CourseStateService {
           case ActionTypes.END_IMPORT_MODE:
             sectionGroups.importList = null;
             return sectionGroups;
+          case ActionTypes.UPDATE_COURSE:
+              sectionGroups.ids.forEach(function (sectionId) {
+                if(sectionGroups.list[sectionId].sectionIds){
+                  delete sectionGroups.list[sectionId].sectionIds;
+                }
+              })
+              return sectionGroups;
           default:
             return sectionGroups;
         }
