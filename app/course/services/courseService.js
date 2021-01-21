@@ -36,6 +36,8 @@ class CourseService {
         return deferred.promise;
       },
       addSectionGroup: function (sectionGroup) {
+        console.log('creating section group');
+        console.log(sectionGroup);
         return _self.ApiService.post("/api/courseView/sectionGroups/", sectionGroup);
       },
       updateSectionGroup: function (sectionGroup) {
@@ -105,6 +107,8 @@ class CourseService {
         return _self.ApiService.put("/api/courseView/sections/" + section.id, section);
       },
       createSection: function (section) {
+        console.log("Create section");
+        console.log(section);
         if (!section) { return; }
 
         return _self.ApiService.post("/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section);
@@ -124,7 +128,10 @@ class CourseService {
       },
       getAuditLogs: function (workgroupId, year) {
         return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Courses" + "/auditLogs");
-      }
+      },
+      convertCourseOffering: function (workgroupId, year, sectionGroup, newSection) {
+        return _self.ApiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses/" + sectionGroup.courseId + "/sectionGroups/" + sectionGroup.id + "/convert/" + sectionGroup.termCode, newSection);
+      },
     };
   }
 }

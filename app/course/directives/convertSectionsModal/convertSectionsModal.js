@@ -16,7 +16,13 @@ let convertSectionsModal = function (CourseActionCreators) {
 
       scope.convertCourseOffering = function () {
         console.log(scope);
-        CourseActionCreators.convertCourseOffering(scope.workgroupId, scope.year, scope.selectedEntity, scope.sequencePattern);
+        var newSection = {
+          seats: 270,
+          sequenceNumber: "A01"
+        };
+        console.log(newSection);
+        debugger;
+        CourseActionCreators.convertCourseOffering(scope.workgroupId, scope.year, scope.selectedEntity, newSection);
         scope.isVisible = false;
       };
 

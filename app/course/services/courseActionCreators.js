@@ -620,6 +620,16 @@ class CourseActionCreators {
         }
 
         return flagsGenerated;
+      },
+      convertCourseOffering: function (workgroupId, year, sectionGroup, newSection) {
+        CourseService.convertCourseOffering(workgroupId, year, sectionGroup, newSection).then(function (course) {
+          window.ipa_analyze_event('courses', 'course offering converted');
+          console.log("Created new course");
+          console.log(course);
+          $rootScope.$emit('toast', { message: "Converted course offering.", type: "SUCCESS" });
+        }, function () {
+          $rootScope.$emit('toast', { message: "Could not Convert course offering.", type: "ERROR" });
+        });
       }
     };
   }
