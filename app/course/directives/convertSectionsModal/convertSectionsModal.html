@@ -1,11 +1,18 @@
 <div class="convert-sections-modal">
   <form role="form" class="form-horizontal">
     <div class="convert-sections-warning">
+      <div >
+        <strong>Sequence Pattern</strong>
+        <br />
+        <div class="course-details_update-sequence"
+              tooltip-append-to-body="true"
+              tooltip-placement="left"
+              uib-tooltip="{{ courseDetails.sequencePatternTooltipMessage }}">
+          <ipa-input value="sequencePattern">
+          </ipa-input>
+        </div>
       <div>
-        Are you sure you want to update the sequence pattern from <b>{{selectedEntity.sequencePattern}}</b> to <b>{{sequencePattern}}</b>?
-      </div>
-      <div>
-        This will also convert the sections that belong to this course {{selectedEntity.sequencePattern.length > 1 ? 'from lectures to discussions' : 'from discussions to lectures'}}
+        This will also convert the sections that belong to this course offering {{selectedEntity.sequencePattern.length > 1 ? 'from lectures to discussions' : 'from discussions to lectures'}}
         <br><br><b>For Example:</b><br><br>
         <div class="convertion-details" ng-show="selectedEntity.sequencePattern.length > 1">
           <div class="conversion-details-example">
@@ -57,7 +64,7 @@
               class="btn btn-default modal-button">
         Cancel
       </button>
-      <button ng-click="updateCourse()"
+      <button ng-click="convertCourseOffering()"
               type="button"
               class="btn btn-danger modal-button">
         Update course

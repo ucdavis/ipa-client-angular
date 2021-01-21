@@ -107,6 +107,10 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         let course = scope.view.state.courses.list[selectedEntity.courseId];
         return course.isSeries();
       };
+
+      scope.convertOffering = function (){
+        CourseActionCreators.toggleConvertSectionsModal();
+      }
     }
   };
 };

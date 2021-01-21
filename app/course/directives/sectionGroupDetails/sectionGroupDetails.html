@@ -112,6 +112,13 @@
         ></ipa-dropdown>
 
         <button
+          class="btn btn-primary"
+          ng-click="convertOffering()"
+          ng-if="!isLocked()">
+          Convert to {{isSeries() ? "lecture" : "discussion"}}
+        </button>
+
+        <button
           class="btn btn-danger"
           ng-if="!isLocked()"
           confirm-button="removeSectionGroup(view.selectedEntity)"
