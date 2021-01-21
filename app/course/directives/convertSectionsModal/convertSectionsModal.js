@@ -21,7 +21,6 @@ let convertSectionsModal = function (CourseActionCreators) {
           sequenceNumber: "A01"
         };
         console.log(newSection);
-        debugger;
         CourseActionCreators.convertCourseOffering(scope.workgroupId, scope.year, scope.selectedEntity, newSection);
         scope.isVisible = false;
       };

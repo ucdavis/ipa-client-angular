@@ -60,6 +60,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           // Indicate on the textbox that the sectionGroup is offered
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered"); // eslint-disable-line no-undef
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', '0 planned seats' ); // eslint-disable-line
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'value', data.action.payload.sectionGroup.plannedSeats ); // eslint-disable-line
 
 
           return;

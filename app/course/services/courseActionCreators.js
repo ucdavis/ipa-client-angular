@@ -622,11 +622,32 @@ class CourseActionCreators {
         return flagsGenerated;
       },
       convertCourseOffering: function (workgroupId, year, sectionGroup, newSection) {
-        CourseService.convertCourseOffering(workgroupId, year, sectionGroup, newSection).then(function (course) {
+        CourseService.convertCourseOffering(workgroupId, year, sectionGroup, newSection).then(function (details) {
           window.ipa_analyze_event('courses', 'course offering converted');
+          var course = details[0];
+          var sectionGroup = details[1];
           console.log("Created new course");
           console.log(course);
+          console.log("Created new section group");
+          console.log(sectionGroup);
           $rootScope.$emit('toast', { message: "Converted course offering.", type: "SUCCESS" });
+          var action = {
+            type: ActionTypes.CREATE_COURSE,
+            payload: {
+              course: course
+            }
+          };
+          CourseStateService.reduce(action);
+          CourseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
+            var action = {
+            type: ActionTypes.ADD_SECTION_GROUP,
+            payload: {
+              sectionGroup: sectionGroup,
+              sections: sections
+            }
+          };
+          CourseStateService.reduce(action);
+          });
         }, function () {
           $rootScope.$emit('toast', { message: "Could not Convert course offering.", type: "ERROR" });
         });

@@ -124,6 +124,7 @@ class CourseStateService {
             // Insert new course
             courses.list[action.payload.course.id] = new Course(action.payload.course);
             courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
+            courses.ids = _array_sortIdsByProperty(courses.list, ["subjectCode", "courseNumber", "sequencePattern"]);
             return courses;
           case ActionTypes.DELETE_MULTIPLE_COURSES:
             action.payload.courseIds.forEach(function(courseId) {
