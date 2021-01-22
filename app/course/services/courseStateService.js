@@ -253,6 +253,14 @@ class CourseStateService {
             sectionGroups.selectedSectionGroup.sections = action.payload.sections;
             sectionGroups.newSectionGroup = null;
             return sectionGroups;
+          case ActionTypes.CREATE_SECTION_GROUP:
+            sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
+            sectionGroups.list[action.payload.sectionGroup.id].sectionIds = [action.payload.sections[0].id];
+            sectionGroups.ids.push(action.payload.sectionGroup.id);
+            sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+            sectionGroups.selectedSectionGroup.sections = action.payload.sections;
+            sectionGroups.newSectionGroup = null;
+            return sectionGroups;
           case ActionTypes.REMOVE_SECTION_GROUP:
             var sectionGroupIndex = sectionGroups.ids.indexOf(action.payload.sectionGroup.id);
             sectionGroups.ids.splice(sectionGroupIndex, 1);
@@ -351,6 +359,10 @@ class CourseStateService {
             sections.list[action.payload.sections[0].id] = new Section(action.payload.sections[0]);
             sections.ids.push(action.payload.sections[0].id);
             return sections;
+          case ActionTypes.CREATE_SECTION_GROUP:
+              sections.list[action.payload.sections[0].id] = new Section(action.payload.sections[0]);
+              sections.ids.push(action.payload.sections[0].id);
+              return sections;
           case ActionTypes.CREATE_SECTION:
             sections.list[action.payload.section.id] = new Section(action.payload.section);
             sections.ids.push(action.payload.section.id);

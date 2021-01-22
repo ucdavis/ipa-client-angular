@@ -129,8 +129,8 @@ class CourseService {
       getAuditLogs: function (workgroupId, year) {
         return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Courses" + "/auditLogs");
       },
-      convertCourseOffering: function (workgroupId, year, sectionGroup, newSection) {
-        return _self.ApiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses/" + sectionGroup.courseId + "/sectionGroups/" + sectionGroup.id + "/convert/" + sectionGroup.termCode, newSection);
+      convertCourseOffering: function (workgroupId, year, sectionGroup, sequencePattern) {
+        return _self.ApiService.post("/api/courseView/workgroups/" + workgroupId + "/years/" + year + "/courses/" + sectionGroup.courseId + "/sectionGroups/" + sectionGroup.id + "/convert/" + sequencePattern);
       },
     };
   }

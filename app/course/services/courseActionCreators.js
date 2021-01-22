@@ -621,8 +621,17 @@ class CourseActionCreators {
 
         return flagsGenerated;
       },
-      convertCourseOffering: function (workgroupId, year, sectionGroup, newSection) {
-        CourseService.convertCourseOffering(workgroupId, year, sectionGroup, newSection).then(function (details) {
+      convertCourseOffering: function (workgroupId, year, sectionGroup, sequencePattern) {
+
+        var action = {
+          type: ActionTypes.REMOVE_SECTION_GROUP,
+          payload: {
+            sectionGroup: sectionGroup
+          }
+        };
+        CourseStateService.reduce(action);
+
+        CourseService.convertCourseOffering(workgroupId, year, sectionGroup, sequencePattern).then(function (details) {
           window.ipa_analyze_event('courses', 'course offering converted');
           var course = details[0];
           var sectionGroup = details[1];
@@ -631,6 +640,7 @@ class CourseActionCreators {
           console.log("Created new section group");
           console.log(sectionGroup);
           $rootScope.$emit('toast', { message: "Converted course offering.", type: "SUCCESS" });
+
           var action = {
             type: ActionTypes.CREATE_COURSE,
             payload: {
@@ -640,7 +650,7 @@ class CourseActionCreators {
           CourseStateService.reduce(action);
           CourseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
             var action = {
-            type: ActionTypes.ADD_SECTION_GROUP,
+            type: ActionTypes.CREATE_SECTION_GROUP,
             payload: {
               sectionGroup: sectionGroup,
               sections: sections
