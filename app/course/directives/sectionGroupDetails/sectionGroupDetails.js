@@ -1,3 +1,5 @@
+import './sectionGroupDetails.css';
+
 let sectionGroupDetails = function (CourseActionCreators, Term) {
   return {
     restrict: 'E',

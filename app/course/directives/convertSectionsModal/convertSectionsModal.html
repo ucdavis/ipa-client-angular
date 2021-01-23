@@ -2,7 +2,7 @@
   <form role="form" class="form-horizontal">
     <div class="convert-sections-warning">
       <div >
-        <strong>Sequence Pattern</strong>
+        <strong>New Sequence Pattern</strong>
         <br />
         <div class="course-details_update-sequence"
               tooltip-append-to-body="true"
@@ -12,27 +12,28 @@
           </ipa-input>
         </div>
       <div>
-        This will also convert the sections that belong to this course offering {{selectedEntity.sequencePattern.length > 1 ? 'from lectures to discussions' : 'from discussions to lectures'}}
+        <br>
+        This will also convert the sections that belong to this course offering {{isSeries() ? 'from discussions to lectures' : 'from lectures to discussions'}}
         <br><br><b>For Example:</b><br><br>
-        <div class="convertion-details" ng-show="selectedEntity.sequencePattern.length > 1">
+        <div class="convertion-details" ng-show="!isSeries()">
           <div class="conversion-details-example">
-            Before<br><br>
+            <strong>Before</strong><br><br>
             XYZ 10 - 001
             <li>
               Section 001: 100 Seats
             </li>
           </div>
           <div class="conversion-details-example">
-            After<br><br>
+            <strong>After</strong><br><br>
             XYZ 10 - A
             <li>
               Section A01: 100 Seats
             </li>
           </div>
         </div>
-        <div class="convertion-details" ng-show="selectedEntity.sequencePattern.length <= 1">
+        <div class="convertion-details" ng-show="isSeries()">
           <div class="conversion-details-example">
-            Before<br><br>
+            <strong>Before</strong><br><br>
             XYZ 10 - A
             <li>
               Section A01: 25 Seats
@@ -48,7 +49,7 @@
             </li>
           </div>
           <div class="conversion-details-example">
-            After<br><br>
+            <strong>After</strong><br><br>
             XYZ 10 - 001
             <li>
               Section 001 Seats 100
@@ -67,7 +68,7 @@
       <button ng-click="convertCourseOffering()"
               type="button"
               class="btn btn-danger modal-button">
-        Update course
+        Convert
       </button>
     </div>
   </form>

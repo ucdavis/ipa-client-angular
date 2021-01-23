@@ -9,7 +9,8 @@ let convertSectionsModal = function (CourseActionCreators) {
       workgroupId: '<',
       year: '<',
       selectedEntity: '<',
-      isVisible: '='
+      isVisible: '=',
+      state: '='
     },
     link: function (scope) {
       scope.sequencePattern = '';
@@ -22,6 +23,15 @@ let convertSectionsModal = function (CourseActionCreators) {
 
       scope.close = function() {
         scope.isVisible = false;
+      };
+
+      scope.isSeries = function () {
+        if(scope.selectedEntity){
+          let selectedEntity = scope.selectedEntity;
+          let course = scope.state.courses.list[selectedEntity.courseId];
+          return course.isSeries();
+        }
+        return false;
       };
     } // end link
   };
