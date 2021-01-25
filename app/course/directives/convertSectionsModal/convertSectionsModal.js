@@ -28,7 +28,11 @@ let convertSectionsModal = function (CourseActionCreators) {
         if (scope.selectedEntity){
           let selectedEntity = scope.selectedEntity;
           let course = scope.state.courses.list[selectedEntity.courseId];
-          return course.isSeries();
+          if (course){
+            return course.isSeries();
+          } else {
+            return false;
+          }
         }
         return false;
       };

@@ -635,10 +635,6 @@ class CourseActionCreators {
           window.ipa_analyze_event('courses', 'course offering converted');
           var course = details[0];
           var sectionGroup = details[1];
-          console.log("Created new course");
-          console.log(course);
-          console.log("Created new section group");
-          console.log(sectionGroup);
           $rootScope.$emit('toast', { message: "Converted course offering.", type: "SUCCESS" });
 
           var action = {
