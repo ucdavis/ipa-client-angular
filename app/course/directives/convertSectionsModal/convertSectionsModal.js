@@ -25,7 +25,7 @@ let convertSectionsModal = function (CourseActionCreators) {
       };
 
       scope.isSeries = function () {
-        if(scope.selectedEntity){
+        if (scope.selectedEntity){
           let selectedEntity = scope.selectedEntity;
           let course = scope.state.courses.list[selectedEntity.courseId];
           return course.isSeries();
@@ -35,16 +35,16 @@ let convertSectionsModal = function (CourseActionCreators) {
 
       scope.isValid = function () {
         var isValid = false;
-        if(scope.selectedEntity && scope.selectedEntity.sequencePattern){
-          if(scope.isSeries){
-            if(scope.selectedEntity.sequencePattern.length === 1 && isLetter(scope.selectedEntity.sequencePattern[0].toUpperCase())){
+        if (scope.selectedEntity && scope.selectedEntity.sequencePattern){
+          if (scope.isSeries){
+            if (scope.selectedEntity.sequencePattern.length === 1 && isLetter(scope.selectedEntity.sequencePattern[0].toUpperCase())){
               isValid = true;
             } else {
               scope.selectedEntity.sequencePatternTooltipMessage = "Sequence pattern format is incorrect. Valid format is '1 letter' (ex: 'A').";
               isValid = false;
             }
           } else {
-            if(
+            if (
               scope.selectedEntity.sequencePattern.length === 3 &&
               isNumber(scope.selectedEntity.sequencePattern[0]) &&
               isNumber(scope.selectedEntity.sequencePattern[1]) &&
@@ -58,7 +58,7 @@ let convertSectionsModal = function (CourseActionCreators) {
           }
         }
         return isValid;
-      }
+      };
     } // end link
   };
 };

@@ -112,7 +112,7 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
 
       scope.convertOffering = function (){
         CourseActionCreators.toggleConvertSectionsModal();
-      }
+      };
     }
   };
 };

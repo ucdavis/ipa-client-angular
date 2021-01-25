@@ -63,7 +63,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', '0 planned seats' ); // eslint-disable-line
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'value', data.action.payload.sectionGroup.plannedSeats ); // eslint-disable-line
 
-          if(data.action.type == ActionTypes.CREATE_SECTION_GROUP){
+          if (data.action.type == ActionTypes.CREATE_SECTION_GROUP){
             scope.previouslySelectedCourseId = data.state.uiState.selectedCourseId;
             scope.previouslySelectedTermCode = data.state.uiState.selectedTermCode;
 
