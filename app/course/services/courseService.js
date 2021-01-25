@@ -36,8 +36,6 @@ class CourseService {
         return deferred.promise;
       },
       addSectionGroup: function (sectionGroup) {
-        console.log('creating section group');
-        console.log(sectionGroup);
         return _self.ApiService.post("/api/courseView/sectionGroups/", sectionGroup);
       },
       updateSectionGroup: function (sectionGroup) {
@@ -107,8 +105,6 @@ class CourseService {
         return _self.ApiService.put("/api/courseView/sections/" + section.id, section);
       },
       createSection: function (section) {
-        console.log("Create section");
-        console.log(section);
         if (!section) { return; }
 
         return _self.ApiService.post("/api/courseView/sectionGroups/" + section.sectionGroupId + "/sections", section);

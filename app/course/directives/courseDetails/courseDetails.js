@@ -49,7 +49,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
         let sequencePattern = scope.view.selectedEntity.sequencePattern;
 
         // Do nothing if sequencePattern is unchanged
-        if (sequencePattern == scope.view.state.courses.list[scope.view.selectedEntity.id].sequencePattern) {
+        if (sequencePattern == scope.originalSequencePattern) {
           scope.courseDetails.sequencePatternTooltipMessage = null;
           return true;
         }
@@ -59,7 +59,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
           return;
         }
 
-        if (scope.isSequencePatternUnique(sequencePattern, scope.view.selectedEntity.id) == false) {
+        if (scope.isSequencePatternUnique(sequencePattern) == false) {
           scope.courseDetails.sequencePatternTooltipMessage = "Sequence pattern already in use";
           return;
         }
@@ -69,27 +69,10 @@ let courseDetails = function (CourseActionCreators, SectionService) {
 
         scope.originalSequencePattern = sequencePattern.toUpperCase();
         scope.view.selectedEntity.sequencePattern = scope.view.selectedEntity.sequencePattern.toUpperCase();
-
-        if (scope.requiresConversion(scope.originalSequencePattern, scope.view.state.courses.list[scope.view.selectedEntity.id].sequencePattern)){
-          CourseActionCreators.toggleConvertSectionsModal(sequencePattern.toUpperCase());
-        } else {
-          CourseActionCreators.updateCourse(scope.view.selectedEntity);
-        }
+        CourseActionCreators.updateCourse(scope.view.selectedEntity);
       };
 
-      scope.requiresConversion = function(oldSequencePattern, newSequencePattern) {
-        if (oldSequencePattern && newSequencePattern){
-          if (oldSequencePattern.length != newSequencePattern.length) {
-            return true;
-          } else {
-            return false;
-          }
-        } else {
-          return false;
-        }
-      };
-
-      scope.isSequencePatternUnique = function (sequencePattern, currentCourseId) {
+      scope.isSequencePatternUnique = function (sequencePattern) {
         let courseDescription = scope.view.selectedEntity.subjectCode + "-" + scope.view.selectedEntity.courseNumber + "-" + sequencePattern;
         let isUnique = true;
 
@@ -97,7 +80,7 @@ let courseDetails = function (CourseActionCreators, SectionService) {
           let course = scope.view.state.courses.list[courseId];
           let slotCourseDescription = course.subjectCode + "-" + course.courseNumber + "-" + course.sequencePattern;
 
-          if (courseDescription == slotCourseDescription && courseId !== currentCourseId) {
+          if (courseDescription == slotCourseDescription) {
             isUnique = false;
           }
         });
