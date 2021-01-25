@@ -37,7 +37,6 @@ let ipaInput = function ($timeout) {
 
 			// Main method triggered by template, handles filtering/update callback
 			scope.updateInput = function() {
-				console.log("updateInput");
 				scope.applyUpdate();
 			};
 
