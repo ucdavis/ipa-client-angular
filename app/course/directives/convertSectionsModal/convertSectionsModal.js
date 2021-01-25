@@ -40,7 +40,7 @@ let convertSectionsModal = function (CourseActionCreators) {
       scope.isValid = function () {
         var isValid = false;
         if (scope.selectedEntity && scope.selectedEntity.sequencePattern){
-          if (scope.isSeries){
+          if (!scope.isSeries()){
             if (scope.selectedEntity.sequencePattern.length === 1 && isLetter(scope.selectedEntity.sequencePattern[0].toUpperCase())){
               isValid = true;
             } else {
