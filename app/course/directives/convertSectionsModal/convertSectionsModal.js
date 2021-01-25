@@ -1,4 +1,5 @@
 import './convertSectionsModal.css';
+import { isNumber, isLetter } from 'shared/helpers/types';
 
 let convertSectionsModal = function (CourseActionCreators) {
   return {
@@ -13,11 +14,9 @@ let convertSectionsModal = function (CourseActionCreators) {
       state: '='
     },
     link: function (scope) {
-      scope.sequencePattern = '';
 
       scope.convertCourseOffering = function () {
-        console.log(scope);
-        CourseActionCreators.convertCourseOffering(scope.workgroupId, scope.year, scope.selectedEntity, scope.sequencePattern);
+        CourseActionCreators.convertCourseOffering(scope.workgroupId, scope.year, scope.selectedEntity, scope.selectedEntity.sequencePattern.toUpperCase());
         scope.isVisible = false;
       };
 
@@ -33,6 +32,33 @@ let convertSectionsModal = function (CourseActionCreators) {
         }
         return false;
       };
+
+      scope.isValid = function () {
+        var isValid = false;
+        if(scope.selectedEntity && scope.selectedEntity.sequencePattern){
+          if(scope.isSeries){
+            if(scope.selectedEntity.sequencePattern.length === 1 && isLetter(scope.selectedEntity.sequencePattern[0].toUpperCase())){
+              isValid = true;
+            } else {
+              scope.selectedEntity.sequencePatternTooltipMessage = "Sequence pattern format is incorrect. Valid format is '1 letter' (ex: 'A').";
+              isValid = false;
+            }
+          } else {
+            if(
+              scope.selectedEntity.sequencePattern.length === 3 &&
+              isNumber(scope.selectedEntity.sequencePattern[0]) &&
+              isNumber(scope.selectedEntity.sequencePattern[1]) &&
+              isNumber(scope.selectedEntity.sequencePattern[2])
+            ){
+              isValid = true;
+            } else {
+              scope.selectedEntity.sequencePatternTooltipMessage = "Sequence pattern format is incorrect. Valid format is '3 numbers' (ex: '002').";
+              isValid = false;
+            }
+          }
+        }
+        return isValid;
+      }
     } // end link
   };
 };

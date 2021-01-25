@@ -7,8 +7,8 @@
         <div class="course-details_update-sequence"
               tooltip-append-to-body="true"
               tooltip-placement="left"
-              uib-tooltip="{{ courseDetails.sequencePatternTooltipMessage }}">
-          <ipa-input value="sequencePattern">
+              uib-tooltip="{{ selectedEntity.sequencePatternTooltipMessage }}">
+          <ipa-input value="selectedEntity.sequencePattern">
           </ipa-input>
         </div>
       <div>
@@ -66,6 +66,7 @@
         Cancel
       </button>
       <button ng-click="convertCourseOffering()"
+              ng-disabled="!isValid()"
               type="button"
               class="btn btn-danger modal-button">
         Convert
