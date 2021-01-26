@@ -623,19 +623,19 @@ class CourseActionCreators {
       },
       convertCourseOffering: function (workgroupId, year, sectionGroup, sequencePattern) {
 
-        var action = {
-          type: ActionTypes.REMOVE_SECTION_GROUP,
-          payload: {
-            sectionGroup: sectionGroup
-          }
-        };
-        CourseStateService.reduce(action);
-
         CourseService.convertCourseOffering(workgroupId, year, sectionGroup, sequencePattern).then(function (details) {
           window.ipa_analyze_event('courses', 'course offering converted');
           var course = details[0];
           var sectionGroup = details[1];
           $rootScope.$emit('toast', { message: "Converted course offering.", type: "SUCCESS" });
+
+          var action = {
+            type: ActionTypes.REMOVE_SECTION_GROUP,
+            payload: {
+              sectionGroup: sectionGroup
+            }
+          };
+          CourseStateService.reduce(action);
 
           var action = {
             type: ActionTypes.CREATE_COURSE,
