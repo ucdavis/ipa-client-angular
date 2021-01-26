@@ -330,7 +330,7 @@ class BudgetComparisonReportCalculations {
               ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
               : instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
             }
-            if (instructorTypeCost){
+            if (!cost && instructorTypeCost){
               cost = instructorTypeCost.cost;
             }
           }
