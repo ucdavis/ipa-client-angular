@@ -25,6 +25,7 @@ import startTimeDiff from './directives/startTimeDiff/startTimeDiff.js';
 import syncActionList from './directives/syncActionList/syncActionList.js';
 import instructorDiff from './directives/instructorDiff/instructorDiff.js';
 import reportLegend from './directives/reportLegend/reportLegend.js';
+import reportFilter from './directives/reportFilter/reportFilter.js';
 
 // Dependencies
 var dependencies = [
@@ -93,6 +94,7 @@ const registrarReconciliationReportApp = angular.module("registrarReconciliation
 .directive('syncActionList', syncActionList)
 .directive('instructorDiff', instructorDiff)
 .directive('reportLegend', reportLegend)
+.directive('reportFilter', reportFilter)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	UPDATE_SECTION: "UPDATE_SECTION",
