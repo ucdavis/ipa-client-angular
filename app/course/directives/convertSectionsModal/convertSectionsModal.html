@@ -10,7 +10,7 @@
               uib-tooltip="{{ selectedEntity.sequencePatternTooltipMessage }}">
           <ipa-input
             value="selectedEntity.sequencePattern"
-            is-invalid="selectedEntity.sequencePattern && !isValid()">
+            is-invalid="selectedEntity.sequencePattern && (!isValid() || !isUnique())">
           </ipa-input>
         </div>
       <div>
@@ -72,7 +72,7 @@
         Cancel
       </button>
       <button ng-click="convertCourseOffering()"
-              ng-disabled="!isValid()"
+              ng-disabled="!isValid() || !isUnique()"
               type="button"
               class="btn btn-danger modal-button">
         Convert
