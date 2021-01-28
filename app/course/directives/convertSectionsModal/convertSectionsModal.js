@@ -71,7 +71,7 @@ let convertSectionsModal = function (CourseActionCreators) {
         if (scope.selectedEntity && scope.selectedEntity.sequencePattern){
           var sectionGroup = scope.selectedEntity;
           var course = course = scope.state.courses.list[sectionGroup.courseId];
-          var courseDescription = course.subjectCode + "-" + course.courseNumber + "-" + sectionGroup.sequencePattern;
+          var courseDescription = course.subjectCode + "-" + course.courseNumber + "-" + sectionGroup.sequencePattern.toUpperCase();
           isUnique = true;
           scope.selectedEntity.sequencePatternTooltipMessage = null;
 
@@ -92,6 +92,12 @@ let convertSectionsModal = function (CourseActionCreators) {
       }
 
         return isUnique;
+      };
+
+      scope.updateSequencePattern = function(){
+        if (scope.selectedEntity.sequencePattern){
+          scope.selectedEntity.sequencePattern = scope.selectedEntity.sequencePattern.toUpperCase();
+        }
       };
     } // end link
   };
