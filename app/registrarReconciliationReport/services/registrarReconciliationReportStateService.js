@@ -361,27 +361,34 @@ class RegistrarReconciliationReportStateService {
 			_uiStateReducers: function (action, uiState) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						var activityTypeCodes = new Set();
-
-						action.payload.sectionDiffs.forEach(function (sectionDiff) {
-							sectionDiff.dwSection?.activities.forEach(function (activity) {
-								activityTypeCodes.add(activity.typeCode);
-							});
-							sectionDiff.ipaSection?.activities.forEach(function (activity) {
-								activityTypeCodes.add(activity.typeCode);
-							});
-						});
-
-						var filters = Array.from(activityTypeCodes).map((typeCode) => ({
-							typeCode: typeCode,
-							isChecked: true,
-							description: typeCode.getActivityCodeDescription(),
-						}));
-
 						uiState = {
-							filters,
+							filters: []
 						};
 
+						var savedFiltersString = localStorage.getItem("registrarReportActivityTypeFilters");
+
+						if (savedFiltersString) {
+							uiState.filters = JSON.parse(savedFiltersString);
+						} else {
+							var activityTypeCodes = new Set();
+
+							action.payload.sectionDiffs.forEach(function (sectionDiff) {
+								sectionDiff.dwSection?.activities.forEach(function (activity) {
+									activityTypeCodes.add(activity.typeCode);
+								});
+								sectionDiff.ipaSection?.activities.forEach(function (activity) {
+									activityTypeCodes.add(activity.typeCode);
+								});
+							});
+
+							var filters = Array.from(activityTypeCodes).map((typeCode) => ({
+								typeCode: typeCode,
+								isChecked: true,
+								description: typeCode.getActivityCodeDescription(),
+							}));
+
+							uiState.filters = filters;
+						}
 						return uiState;
 					case ActionTypes.UPDATE_FILTERS:
 						uiState = {
@@ -392,7 +399,7 @@ class RegistrarReconciliationReportStateService {
 								return filter;
 							}),
 						};
-
+						localStorage.setItem("registrarReportActivityTypeFilters", JSON.stringify(uiState.filters));
 						return uiState;
 					default:
 						return uiState;
