@@ -82,7 +82,7 @@ let convertSectionsModal = function (CourseActionCreators) {
             if (courseDescription == cDescription) {
               scope.state.sectionGroups.ids.forEach(function(sectionGroupId) {
                 var sg = scope.state.sectionGroups.list[sectionGroupId];
-                if(sg.courseId == c.id && sg.termCode == sectionGroup.termCode){
+                if (sg.courseId == c.id && sg.termCode == sectionGroup.termCode){
                   scope.selectedEntity.sequencePatternTooltipMessage = "Sequence pattern already in use.";
                   isUnique = false;
                 }
