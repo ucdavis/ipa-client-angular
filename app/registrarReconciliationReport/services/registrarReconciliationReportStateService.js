@@ -367,6 +367,9 @@ class RegistrarReconciliationReportStateService {
 							sectionDiff.dwSection?.activities.forEach(function (activity) {
 								activityTypeCodes.add(activity.typeCode);
 							});
+							sectionDiff.ipaSection?.activities.forEach(function (activity) {
+								activityTypeCodes.add(activity.typeCode);
+							});
 						});
 
 						var filters = Array.from(activityTypeCodes).map((typeCode) => ({
@@ -384,7 +387,7 @@ class RegistrarReconciliationReportStateService {
 						uiState = {
 							filters: uiState.filters.map((filter) => {
 								if (filter.typeCode === action.payload.filter.typeCode) {
-									filter.isChecked = !filter.isChecked;
+									filter = action.payload.filter;
 								}
 								return filter;
 							}),

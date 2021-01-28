@@ -358,6 +358,8 @@ class RegistrarReconciliationReportActionCreators {
 				});
 			},
 			updateFilters: function (filter) {
+				filter.isChecked = !filter.isChecked;
+
 				RegistrarReconciliationReportStateService.reduce({
 					type: ActionTypes.UPDATE_FILTERS,
 					payload: {
