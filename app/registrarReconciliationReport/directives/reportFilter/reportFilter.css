@@ -29,3 +29,12 @@
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
+
+.filter-item {
+  display: flex;
+  margin: 2px 10px 2px 2px;
+}
+
+.filter-item__text {
+  margin-left: 6px;
+}
