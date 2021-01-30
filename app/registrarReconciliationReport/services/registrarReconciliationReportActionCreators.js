@@ -1,3 +1,5 @@
+import { sequenceNumberToPattern } from 'shared/helpers/sections';
+
 /**
  * @ngdoc service
  * @name registrarReconciliationReportApp.RegistrarReconciliationReportActionCreators
@@ -222,20 +224,59 @@ class RegistrarReconciliationReportActionCreators {
 					});
 				}
 
-				RegistrarReconciliationReportService.createSection(section).then(function (sectionDiff) {
-					$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
+				// course exists in Banner but not IPA, create course/sectionGroup/section
+				if (section.sectionGroupId === 0) {
+					const termShortCode = $route.current.params.termShortCode;
+					const workgroupId = $route.current.params.workgroupId;
+					const year = $route.current.params.year;
+					const termCode = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, year).code;
 
-					sectionDiff.changes = [];
-					var action = {
-						type: ActionTypes.CREATE_SECTION,
-						payload: {
-							sectionDiff: sectionDiff
-						}
+					const course = {
+						subjectCode: section.subjectCode,
+						courseNumber: section.courseNumber,
+						sequencePattern: sequenceNumberToPattern(section.sequenceNumber),
+						schedule: {
+							workgroup: {
+								id: parseInt(workgroupId),
+							},
+							year: parseInt(year),
+						},
+						sectionGroups: [{
+							sections: [section],
+							termCode: termCode
+						}]
 					};
-					RegistrarReconciliationReportStateService.reduce(action);
-				}, function () {
-					$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
-				});
+
+					RegistrarReconciliationReportService.createCourse(course, workgroupId, year, termCode).then(function (sectionDiff) {
+						$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
+
+						sectionDiff.changes = [];
+						var action = {
+							type: ActionTypes.CREATE_SECTION,
+							payload: {
+								sectionDiff: sectionDiff
+							}
+						};
+						RegistrarReconciliationReportStateService.reduce(action);
+					}, function () {
+						$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
+					});
+				} else {
+					RegistrarReconciliationReportService.createSection(section).then(function (sectionDiff) {
+						$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
+
+						sectionDiff.changes = [];
+						var action = {
+							type: ActionTypes.CREATE_SECTION,
+							payload: {
+								sectionDiff: sectionDiff
+							}
+						};
+						RegistrarReconciliationReportStateService.reduce(action);
+					}, function () {
+						$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
+					});
+				}
 			},
 
 			/**

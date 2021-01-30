@@ -10,7 +10,6 @@ let reportFilter = function (
     replace: true,
     link: function (scope) {
       $rootScope.$on('reportStateChanged', function (event, data) {
-        debugger;
         scope.filters = data.state.uiState.filters;
       });
 
