@@ -224,8 +224,8 @@ class RegistrarReconciliationReportActionCreators {
 					});
 				}
 
-				// course exists in Banner but not IPA, create course/sectionGroup/section
 				if (section.sectionGroupId === 0) {
+					// no sectionGroup could mean no offering in term or no course. send course object with necessary info
 					const termShortCode = $route.current.params.termShortCode;
 					const workgroupId = $route.current.params.workgroupId;
 					const year = $route.current.params.year;
@@ -235,19 +235,13 @@ class RegistrarReconciliationReportActionCreators {
 						subjectCode: section.subjectCode,
 						courseNumber: section.courseNumber,
 						sequencePattern: sequenceNumberToPattern(section.sequenceNumber),
-						schedule: {
-							workgroup: {
-								id: parseInt(workgroupId),
-							},
-							year: parseInt(year),
-						},
 						sectionGroups: [{
 							sections: [section],
 							termCode: termCode
 						}]
 					};
 
-					RegistrarReconciliationReportService.createCourse(course, workgroupId, year, termCode).then(function (sectionDiff) {
+					RegistrarReconciliationReportService.createSectionGroup(course, workgroupId, year, termCode).then(function (sectionDiff) {
 						$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
 
 						sectionDiff.changes = [];
