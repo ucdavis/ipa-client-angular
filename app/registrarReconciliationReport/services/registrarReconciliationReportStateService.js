@@ -365,6 +365,8 @@ class RegistrarReconciliationReportStateService {
 							filters: []
 						};
 
+						var ALLOWED_TYPE_CODES = ["A", "D", "G", "C", "%", "0"];
+
 						var savedFiltersString = localStorage.getItem("registrarReportActivityTypeFilters");
 
 						if (savedFiltersString) {
@@ -381,11 +383,13 @@ class RegistrarReconciliationReportStateService {
 								});
 							});
 
-							var filters = Array.from(activityTypeCodes).map((typeCode) => ({
-								typeCode: typeCode,
-								isChecked: true,
-								description: typeCode.getActivityCodeDescription(),
-							}));
+							var filters = Array.from(activityTypeCodes)
+								.filter(typeCode => !ALLOWED_TYPE_CODES.includes(typeCode))
+								.map((typeCode) => ({
+									typeCode: typeCode,
+									isChecked: true,
+									description: typeCode.getActivityCodeDescription(),
+								}));
 
 							uiState.filters = filters;
 						}
