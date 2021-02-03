@@ -651,7 +651,7 @@ class BudgetCalculations {
 				for (var i = 0; i < instructorCosts.length; i++){
 					var instructorCost = instructorCosts[i];
 					var cost = 0;
-					if (instructorCost.cost){
+					if (instructorCost.cost !== null){
 						if (typeof instructorCost.cost === "string"){
 							cost = parseFloat(instructorCost.cost.replace(/[^0-9.]/g,''));
 						} else {
