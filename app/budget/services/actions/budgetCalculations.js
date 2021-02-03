@@ -386,7 +386,6 @@ class BudgetCalculations {
 
 					instructorCost.instructorTypeCost = instructorTypeCosts.byInstructorTypeId[instructorCost.instructorTypeId];
 
-
 					if (instructorCost.cost) {
 						instructorCost.overrideCost = instructorCost.cost;
 						instructorCost.overrideCostSource = "instructor";
