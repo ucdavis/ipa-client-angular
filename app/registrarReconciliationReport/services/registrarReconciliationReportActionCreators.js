@@ -1,3 +1,5 @@
+import { sequenceNumberToPattern } from 'shared/helpers/sections';
+
 /**
  * @ngdoc service
  * @name registrarReconciliationReportApp.RegistrarReconciliationReportActionCreators
@@ -24,7 +26,7 @@ class RegistrarReconciliationReportActionCreators {
 					// LINTME
 					var termShortCode = calculateCurrentTermShortCode(termStates);// eslint-disable-line no-undef
 				}
-		
+
 				var termCode = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, $route.current.params.year).code;
 
 				RegistrarReconciliationReportService.getTermComparisonReport(workgroupId, year, termCode).then(function (sectionDiffs) {
@@ -49,12 +51,12 @@ class RegistrarReconciliationReportActionCreators {
 						}
 					}
 				});
-			
+
 				// Default to fall quarter if current term cannot be deduced from termStates
 				if (earliestTermCode == null) {
 					return "10";
 				}
-			
+
 				return earliestTermCode.slice(-2);
 			},
 			/**
@@ -195,7 +197,7 @@ class RegistrarReconciliationReportActionCreators {
 				var activity = section.activities[activityIndex];
 				activity.startTime = moment(activity.startTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
 				activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
-	
+
 				RegistrarReconciliationReportService.createActivity(section.id, activity).then(function (createdActivity) {
 					$rootScope.$emit('toast', { message: "Created " + activity.typeCode.getActivityCodeDescription(), type: "SUCCESS" });
 					var action = {
@@ -212,7 +214,7 @@ class RegistrarReconciliationReportActionCreators {
 					$rootScope.$emit('toast', { message: "Could not create activity.", type: "ERROR" });
 				});
 			},
-	
+
 			createSection: function (section) {
 				// Make start/end times IPA friendly format
 				if (section.activities) {
@@ -221,23 +223,56 @@ class RegistrarReconciliationReportActionCreators {
 						activity.endTime = moment(activity.endTime, "HHmm").format("HH:mm:ss"); // eslint-disable-line no-undef
 					});
 				}
-	
-				RegistrarReconciliationReportService.createSection(section).then(function (sectionDiff) {
-					$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
-	
-					sectionDiff.changes = [];
-					var action = {
-						type: ActionTypes.CREATE_SECTION,
-						payload: {
-							sectionDiff: sectionDiff
-						}
+
+				if (section.sectionGroupId === 0) {
+					// no sectionGroup could mean no offering in term or no course. send course object with necessary info
+					const termShortCode = $route.current.params.termShortCode;
+					const workgroupId = $route.current.params.workgroupId;
+					const year = $route.current.params.year;
+					const termCode = Term.prototype.getTermByTermShortCodeAndYear(termShortCode, year).code;
+
+					const course = {
+						subjectCode: section.subjectCode,
+						courseNumber: section.courseNumber,
+						sequencePattern: sequenceNumberToPattern(section.sequenceNumber),
+						sectionGroups: [{
+							sections: [section],
+							termCode: termCode
+						}]
 					};
-					RegistrarReconciliationReportStateService.reduce(action);
-				}, function () {
-					$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
-				});
+
+					RegistrarReconciliationReportService.createSectionGroup(course, workgroupId, year, termCode).then(function (sectionDiff) {
+						$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
+
+						sectionDiff.changes = [];
+						var action = {
+							type: ActionTypes.CREATE_SECTION,
+							payload: {
+								sectionDiff: sectionDiff
+							}
+						};
+						RegistrarReconciliationReportStateService.reduce(action);
+					}, function () {
+						$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
+					});
+				} else {
+					RegistrarReconciliationReportService.createSection(section).then(function (sectionDiff) {
+						$rootScope.$emit('toast', { message: "Created Section", type: "SUCCESS" });
+
+						sectionDiff.changes = [];
+						var action = {
+							type: ActionTypes.CREATE_SECTION,
+							payload: {
+								sectionDiff: sectionDiff
+							}
+						};
+						RegistrarReconciliationReportStateService.reduce(action);
+					}, function () {
+						$rootScope.$emit('toast', { message: "Could not create section.", type: "ERROR" });
+					});
+				}
 			},
-	
+
 			/**
 			 * Assigns instructor to the section's sectionGroup
 			 *
@@ -320,7 +355,7 @@ class RegistrarReconciliationReportActionCreators {
 					childProperty: childProperty,
 					sectionGroupId: sectionGroupId
 				};
-	
+
 				RegistrarReconciliationReportService.createSyncAction(newSyncAction).then(function (syncAction) {
 					$rootScope.$emit('toast', { message: "Created to-do item", type: "SUCCESS" });
 					var action = {
@@ -356,8 +391,18 @@ class RegistrarReconciliationReportActionCreators {
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not delete to-do item.", type: "ERROR" });
 				});
+			},
+			updateFilters: function (filter) {
+				filter.isChecked = !filter.isChecked;
+
+				RegistrarReconciliationReportStateService.reduce({
+					type: ActionTypes.UPDATE_FILTERS,
+					payload: {
+						filter
+					}
+				});
 			}
-		};	
+		};
 	}
 }
 

@@ -86,7 +86,7 @@ class RegistrarReconciliationReportStateService {
 
 								if (sectionChanges) {
 									sectionChanges.forEach(function (change) {
-	
+
 										switch (change.propertyName) {
 											case "instructors":
 												// Code to handle instructors
@@ -163,7 +163,7 @@ class RegistrarReconciliationReportStateService {
 											case "endTime":
 											case "dayIndicator": {
 												let activity = _.find(slotSection.activities, { uniqueKey: change.affectedLocalId }); // eslint-disable-line no-undef
-												
+
 												activity.dwChanges = activity.dwChanges || {};
 												activity.dwChanges[change.propertyName] = { isToDo: false };
 												activity.dwChanges[change.propertyName].value = change.right;
@@ -195,7 +195,7 @@ class RegistrarReconciliationReportStateService {
 						}
 
 						sections.ids.sort();
-	
+
 						// Flag the first section in a sectionGroup as a groupHead
 						var uniqSectionGroupKeys = [];
 						sections.ids.forEach(function (id) {
@@ -225,10 +225,10 @@ class RegistrarReconciliationReportStateService {
 					case ActionTypes.ASSIGN_INSTRUCTOR:
 						section = sections.list[action.payload.section.uniqueKey];
 						var instructorIndex = section.instructors.indexOf(action.payload.instructor);
-	
+
 						// Remove the noLocal flag from the assigned instructor
 						delete section.instructors[instructorIndex].noLocal;
-	
+
 						return sections;
 					case ActionTypes.UNASSIGN_INSTRUCTOR:
 						section = sections.list[action.payload.section.uniqueKey];
@@ -242,7 +242,7 @@ class RegistrarReconciliationReportStateService {
 								return sections.list[sid].activities
 									.some(function (a) { return a.id == action.payload.activity.id; });
 							});
-	
+
 						// Apply the requested changes to all matching activities
 						otherSectionIds.forEach(function (sectionId) {
 							section = sections.list[sectionId];
@@ -256,7 +256,7 @@ class RegistrarReconciliationReportStateService {
 								delete activity.dwChanges;
 							}
 						});
-	
+
 						return sections;
 					case ActionTypes.DELETE_ACTIVITY:
 						// Find sections that have this activity
@@ -265,13 +265,13 @@ class RegistrarReconciliationReportStateService {
 								return sections.list[sid].activities
 									.some(function (a) { return a.id == action.payload.activity.id; });
 							});
-	
+
 						// remove the activity from the section(s)
 						sectionIds.forEach(function (sid) {
 							var activityIndex = sections.list[sid].activities.indexOf(action.payload.activity);
 							sections.list[sid].activities.splice(activityIndex, 1);
 						});
-	
+
 						return sections;
 					case ActionTypes.CREATE_ACTIVITY:
 						section = sections.list[action.payload.section.uniqueKey];
@@ -290,26 +290,26 @@ class RegistrarReconciliationReportStateService {
 						var dwSectionData = action.payload.sectionDiff.dwSection;
 						var sectionChanges = action.payload.sectionDiff.changes;
 						var syncActions = action.payload.sectionDiff.syncActions;
-	
+
 						var sectionKey = ipaSectionData.uniqueKey;
 						var slotSection = sections.list[sectionKey];
 						slotSection.dwHasChanges = false;
 						slotSection.noLocal = false;
 						slotSection.noRemote = false;
-	
+
 						sections.ids.sort();
-	
+
 						return sections;
 					case ActionTypes.CREATE_SYNC_ACTION:
 						section = sections.list[action.payload.sectionUniqueKey];
 						if (!section) { return sections; }
-	
+
 						section = this._togglePropertyToDo(section, action.payload.syncAction);
 						return sections;
 					case ActionTypes.DELETE_SYNC_ACTION:
 						section = sections.list[action.payload.syncAction.sectionUniqueKey];
 						if (!section) { return sections; }
-	
+
 						section = this._togglePropertyToDo(section, action.payload.syncAction, true);
 						return sections;
 					default:
@@ -343,7 +343,7 @@ class RegistrarReconciliationReportStateService {
 							var syncActionData = sectionDiffData.syncActions[j];
 							syncActions.list[syncActionData.id] = new SyncAction(syncActionData);
 						}
-	
+
 						return syncActions;
 					case ActionTypes.CREATE_SYNC_ACTION:
 						syncActions.list[action.payload.syncAction.id] = action.payload.syncAction;
@@ -361,7 +361,49 @@ class RegistrarReconciliationReportStateService {
 			_uiStateReducers: function (action, uiState) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						uiState = {};
+						uiState = {
+							filters: []
+						};
+
+						var ALLOWED_TYPE_CODES = ["A", "D", "G", "C", "%", "0"];
+
+						var savedFiltersString = localStorage.getItem("registrarReportActivityTypeFilters");
+
+						if (savedFiltersString) {
+							uiState.filters = JSON.parse(savedFiltersString);
+						} else {
+							var activityTypeCodes = new Set();
+
+							action.payload.sectionDiffs.forEach(function (sectionDiff) {
+								sectionDiff.dwSection?.activities.forEach(function (activity) {
+									activityTypeCodes.add(activity.typeCode);
+								});
+								sectionDiff.ipaSection?.activities.forEach(function (activity) {
+									activityTypeCodes.add(activity.typeCode);
+								});
+							});
+
+							var filters = Array.from(activityTypeCodes)
+								.filter(typeCode => !ALLOWED_TYPE_CODES.includes(typeCode))
+								.map((typeCode) => ({
+									typeCode: typeCode,
+									isChecked: true,
+									description: typeCode.getActivityCodeDescription(),
+								}));
+
+							uiState.filters = filters;
+						}
+						return uiState;
+					case ActionTypes.UPDATE_FILTERS:
+						uiState = {
+							filters: uiState.filters.map((filter) => {
+								if (filter.typeCode === action.payload.filter.typeCode) {
+									filter = action.payload.filter;
+								}
+								return filter;
+							}),
+						};
+						localStorage.setItem("registrarReportActivityTypeFilters", JSON.stringify(uiState.filters));
 						return uiState;
 					default:
 						return uiState;
@@ -369,30 +411,30 @@ class RegistrarReconciliationReportStateService {
 			},
 			reduce: function (action) {
 				var scope = this;
-	
+
 				if (!action || !action.type) {
 					return;
 				}
-	
+
 				let newState = {};
 				newState.sections = scope._sectionReducers(action, scope._state.sections);
 				newState.syncActions = scope._syncActionReducers(action, scope._state.syncActions);
 				newState.uiState = scope._uiStateReducers(action, scope._state.uiState);
-	
+
 				scope._state = newState;
 				$rootScope.$emit('reportStateChanged', {
 					state: scope._state,
 					action: action
 				});
-	
+
 				$log.debug("Report state updated:");
 				$log.debug(scope._state, action.type);
 			},
-	
+
 			// ------------------------------- //
 			// Helper methods used in reducers //
 			// ------------------------------- //
-	
+
 			/**
 			 * Finds the corresponding property or object in the section
 			 * based on the syncAction, and toggles its isTodo flag
@@ -403,7 +445,7 @@ class RegistrarReconciliationReportStateService {
 			 */
 			_togglePropertyToDo: function (section, syncAction, isDelete) {
 				var child;
-	
+
 				// Decide where to apply the todo flag based on the provided params
 				if (syncAction.sectionProperty && syncAction.childUniqueKey && syncAction.childProperty) {
 					// Toggle child property isTodo (examples: update dayIndicator, startTime...)
@@ -433,7 +475,7 @@ class RegistrarReconciliationReportStateService {
 					// Flag the section itself as todo
 					section.isToDo = isDelete ? false : true;
 				}
-	
+
 				return section;
 			}
 		};

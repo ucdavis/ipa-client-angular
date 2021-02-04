@@ -1,0 +1,13 @@
+<div class="filter-container" ng-show="filters.length > 0">
+  <div class="filter-container__header">Hide Activity Type</div>
+  <ul class="filter" ng-repeat="filter in filters">
+    <li class="filter-item">
+      <ipa-checkbox
+        style="'muted'"
+        is-checked="filter.isChecked"
+        click-action="updateFilter(filter)"
+      ></ipa-checkbox>
+      <span class="filter-item__text">{{filter.description}}</span>
+    </li>
+  </ul>
+</div>
