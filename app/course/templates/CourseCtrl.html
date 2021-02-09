@@ -56,7 +56,7 @@
             ng-click="toggleAssignTagsDropdown()">
           </span>
 
-            <assign-tag-tooltip 
+            <assign-tag-tooltip
               is-visible="view.isAssignTagsDropdownOpen">
             </assign-tag-tooltip>
         </div>
@@ -111,8 +111,6 @@
         <span class="tool-icon glyphicon glyphicon-download-alt" uib-tooltip="Download as Excel" ng-click="download()"></span>
 
         <span class="tool-icon glyphicon glyphicon-print" uib-tooltip="Print" ng-click="print()"></span>
-
-        <span class="tool-icon glyphicon glyphicon-stats" uib-tooltip="Activity Log" ng-click="toggleActivityLogOpen()"></span>
 
         <active-filters
           filters="view.state.filters"
