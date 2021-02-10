@@ -136,29 +136,22 @@ class CourseActionCreators {
         });
       },
       updateSectionGroup: function (sectionGroup, newTermCode) {
-        let courseSeats = sectionGroup.sections.reduce(function (previousValue, relatedSection) {
-          return previousValue + (parseInt(relatedSection.seats) || 0);
-        }, 0);
-
-        if (courseSeats <= sectionGroup.plannedSeats) {
-          if (newTermCode) {
-            sectionGroup.termCode = newTermCode;
-          }
-
-          CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
-            $rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
-            var action = {
-              type: ActionTypes.UPDATE_SECTION_GROUP,
-              payload: {
-                sectionGroup: sectionGroup
-              }
-            };
-            CourseStateService.reduce(action);
-          }, function () {
-            $rootScope.$emit('toast', { message: "Could not update course offering.", type: "ERROR" });
-          });
+        if (newTermCode) {
+          sectionGroup.termCode = newTermCode;
         }
 
+        CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
+          $rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
+          var action = {
+            type: ActionTypes.UPDATE_SECTION_GROUP,
+            payload: {
+              sectionGroup: sectionGroup
+            }
+          };
+          CourseStateService.reduce(action);
+        }, function () {
+          $rootScope.$emit('toast', { message: "Could not update course offering.", type: "ERROR" });
+        });
       },
       removeSectionGroup: function (sectionGroup) {
         if (!sectionGroup) { return; }
@@ -387,32 +380,49 @@ class CourseActionCreators {
         });
       },
       updateSection: function (section) {
+        // blocks update if proposed section seats total is greater than sectionGroup plannedSeats
         let sectionGroup = CourseStateService._state.sectionGroups.list[section.sectionGroupId];
         let maxCourseSeats = sectionGroup.plannedSeats;
-        let proposedCourseSeats;
         let proposedSectionSeats = parseInt(section.seats);
 
-        proposedCourseSeats = sectionGroup.sections.reduce(function (previousValue, relatedSection) {
+        let proposedCourseSeats = sectionGroup.sections.reduce(function (previousValue, relatedSection) {
             return relatedSection.id !== section.id
               ? previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0)
               : previousValue;
           }, proposedSectionSeats);
 
-        if (maxCourseSeats >= proposedCourseSeats){
-          let attempted = [];
-          let successes = [];
-          let promises = [];
-          sectionGroup.sections.forEach(function (item) {
-            let proposedSeatsForSection = CourseStateService._state.sections.list[item.id].seats;
-            if (proposedSeatsForSection != item.seats){
-              item.seats = proposedSeatsForSection;
-              attempted.push(item.sequenceNumber);
-              promises.push(CourseService.updateSection(item));
-            }
-          });
-          if (promises.length == 0){
-            return;
-          }
+        if (maxCourseSeats >= proposedCourseSeats) {
+          CourseService.updateSection(section).then(function (section) {
+            window.ipa_analyze_event('courses', 'section updated');
+
+            $rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
+            var action = {
+              type: ActionTypes.UPDATE_SECTION,
+              payload: {
+                section: section
+              }
+          };
+          this.updateSectionGroup(sectionGroup);
+          CourseStateService.reduce(action);
+        }, function () {
+          $rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
+        });
+        }
+      },
+      updateSections: function (sections, sectionGroup) {
+        let attempted = [];
+        let successes = [];
+        let promises = [];
+
+        sections.forEach(function (section) {
+          attempted.push(section.sequenceNumber);
+          promises.push(CourseService.updateSection(section));
+        });
+
+        if (promises.length == 0) {
+          return;
+        }
+
           Promise.allSettled(promises).then((results) => {
             results.forEach(function (result) {
               if (result.status == 'fulfilled'){
@@ -421,8 +431,7 @@ class CourseActionCreators {
                   type: ActionTypes.UPDATE_SECTION,
                   payload: {
                     section: result.value
-
-                  }
+                  },
                 };
                 CourseStateService.reduce(action);
                 successes.push(result.value.sequenceNumber);
@@ -432,12 +441,10 @@ class CourseActionCreators {
             if (successes.length > 0){
               $rootScope.$emit('toast', { message: "Updated section(s) " + successes.join(), type: "SUCCESS" });
               this.updateSectionGroup(sectionGroup);
+            } else {
+                $rootScope.$emit('toast', { message: "Failed to updated section(s) " + failures.join(), type: "ERROR" });
             }
-            else {
-              $rootScope.$emit('toast', { message: "Failed to updated section(s) " + failures.join(), type: "ERROR" });
-            }
-          });
-        }
+        });
       },
       createSection: function (section) {
         CourseService.createSection(section).then(function (section) {

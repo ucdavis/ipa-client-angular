@@ -60,6 +60,28 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         CourseActionCreators.toggleMoveCourseModal(sectionGroup, termCode);
       };
 
+      scope.updateSection = function (section) {
+        let sectionGroup = scope.view.state.sectionGroups.list[section.sectionGroupId];
+        let proposedSections = sectionGroup.sections.map(section => scope.view.state.sections.list[section.id]);
+        let proposedSectionSeatTotal = sectionGroup.sections.reduce((acc, section) => parseInt(scope.view.state.sections.list[section.id].seats) + acc, 0);
+
+        // check to see if other sections need updating due to previous overflow
+        let outOfSyncSections = sectionGroup.sectionIds.reduce((acc, sectionId) => {
+          let proposedSectionSeats = parseInt(scope.view.state.sections.list[sectionId].seats);
+          let originalSectionSeats = parseInt(sectionGroup.sections.find(section => section.id === sectionId).seats);
+
+          return Number(proposedSectionSeats !== originalSectionSeats) + acc;
+        }, 0);
+
+        if (sectionGroup.plannedSeats >= proposedSectionSeatTotal) {
+          if (outOfSyncSections === 1) {
+            CourseActionCreators.updateSection(section);
+          } else {
+            CourseActionCreators.updateSections(proposedSections, sectionGroup);
+          }
+        }
+      };
+
       scope.updateSectionGroup = function (sectionGroup, termCode) {
         sectionGroup.unitsVariable ? parseFloat(sectionGroup.unitsVariable) : null;
 

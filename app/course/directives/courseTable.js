@@ -517,32 +517,26 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             return;
           }
 
+          let proposedSections = sectionGroup.sections.map(section => scope.view.state.sections.list[section.id]);
+          let proposedSectionSeatTotal = proposedSections.reduce((acc, section) => parseInt(section.seats) + acc, 0);
+          let currentSectionSeatTotal = sectionGroup.sections.reduce((acc, section) => parseInt(section.seats) + acc, 0);
+
           // Save existing sectionGroup
           sectionGroup.plannedSeats = plannedSeats;
-          CourseActionCreators.updateSectionGroup(sectionGroup);
+          if (plannedSeats >= proposedSectionSeatTotal) {
+            CourseActionCreators.updateSectionGroup(sectionGroup);
+          }
 
           // If sequence is numeric sync the seats on the section to the new sectionGroup value
-          let sectionCount = sectionGroup.sections.length;
-          scope.view.state.sections.ids.forEach(function(sectionId) {
-            var section = scope.view.state.sections.list[sectionId];
+          if (sectionGroup.sections.length === 1 && isNumber(sectionGroup.sections[0].sequenceNumber)) {
+            let section = scope.view.state.sections.list[sectionGroup.sections[0].id];
+            section.seats = sectionGroup.plannedSeats;
+            CourseActionCreators.updateSection(section);
+          }
 
-            if (section.sectionGroupId === sectionGroup.id && (isNumber(section.sequenceNumber) || sectionCount === 1)) {
-              section.seats = sectionGroup.plannedSeats;
-              CourseActionCreators.updateSection(section);
-            }
-          });
           // Check if any overflowed sections can be updated.  If yes, update them.
-          let proposedSections = sectionGroup.sections.map(section => scope.view.state.sections.list[section.id]);
-          let proposedSectionSeatTotal = proposedSections.reduce((acc, section) => section.seats + acc, 0);
-          debugger;
-          if (plannedSeats >= proposedSectionSeatTotal) {
-              proposedSections.forEach(function(proposedSection) {
-                let section = sectionGroup.sections.filter(section => section.id === proposedSection.id);
-                debugger;
-                if (proposedSection.seats != section.seats) {
-                  CourseActionCreators.updateSection(proposedSection);
-                }
-              });
+          if (currentSectionSeatTotal !== proposedSectionSeatTotal) {
+            CourseActionCreators.updateSections(proposedSections, sectionGroup);
           }
         } else if (plannedSeats) {
           // Create a new sectionGroup
