@@ -387,27 +387,22 @@ class CourseActionCreators {
         });
       },
       updateSection: function (section) {
-        let maxCourseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.plannedSeats;
+        let sectionGroup = CourseStateService._state.sectionGroups.list[section.sectionGroupId];
+        let maxCourseSeats = sectionGroup.plannedSeats;
         let proposedCourseSeats;
-        if (section){
-          let proposedSectionSeats = parseInt(section.seats);
-          proposedCourseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
+        let proposedSectionSeats = parseInt(section.seats);
+
+        proposedCourseSeats = sectionGroup.sections.reduce(function (previousValue, relatedSection) {
             return relatedSection.id !== section.id
               ? previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0)
               : previousValue;
           }, proposedSectionSeats);
-        }
-        else {
-          proposedCourseSeats = CourseStateService._state.sectionGroups.selectedSectionGroup.sections.reduce(function (previousValue, relatedSection) {
-            return previousValue + parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0;
-          }, 0);
-        }
 
         if (maxCourseSeats >= proposedCourseSeats){
           let attempted = [];
           let successes = [];
           let promises = [];
-          CourseStateService._state.sectionGroups.selectedSectionGroup.sections.forEach(function (item) {
+          sectionGroup.sections.forEach(function (item) {
             let proposedSeatsForSection = CourseStateService._state.sections.list[item.id].seats;
             if (proposedSeatsForSection != item.seats){
               item.seats = proposedSeatsForSection;
@@ -436,7 +431,7 @@ class CourseActionCreators {
             let failures = attempted.filter(x => !successes.includes(x));
             if (successes.length > 0){
               $rootScope.$emit('toast', { message: "Updated section(s) " + successes.join(), type: "SUCCESS" });
-              this.updateSectionGroup(CourseStateService._state.sectionGroups.selectedSectionGroup);
+              this.updateSectionGroup(sectionGroup);
             }
             else {
               $rootScope.$emit('toast', { message: "Failed to updated section(s) " + failures.join(), type: "ERROR" });
