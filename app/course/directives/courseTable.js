@@ -532,10 +532,18 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             }
           });
           // Check if any overflowed sections can be updated.  If yes, update them.
-          if (sectionGroup.sections && sectionGroup.sections.length > 0){
-            CourseActionCreators.updateSection();
+          let proposedSections = sectionGroup.sections.map(section => scope.view.state.sections.list[section.id]);
+          let proposedSectionSeatTotal = proposedSections.reduce((acc, section) => section.seats + acc, 0);
+          debugger;
+          if (plannedSeats >= proposedSectionSeatTotal) {
+              proposedSections.forEach(function(proposedSection) {
+                let section = sectionGroup.sections.filter(section => section.id === proposedSection.id);
+                debugger;
+                if (proposedSection.seats != section.seats) {
+                  CourseActionCreators.updateSection(proposedSection);
+                }
+              });
           }
-
         } else if (plannedSeats) {
           // Create a new sectionGroup
           sectionGroup = {
