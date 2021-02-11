@@ -380,33 +380,20 @@ class CourseActionCreators {
         });
       },
       updateSection: function (section) {
-        // blocks update if proposed section seats total is greater than sectionGroup plannedSeats
-        let sectionGroup = CourseStateService._state.sectionGroups.list[section.sectionGroupId];
-        let maxCourseSeats = sectionGroup.plannedSeats;
-        let proposedSectionSeats = parseInt(section.seats);
+        CourseService.updateSection(section).then(function (section) {
+          window.ipa_analyze_event('courses', 'section updated');
 
-        let proposedCourseSeats = sectionGroup.sections.reduce(function (previousValue, relatedSection) {
-            return relatedSection.id !== section.id
-              ? previousValue + (parseInt(CourseStateService._state.sections.list[relatedSection.id].seats) || 0)
-              : previousValue;
-          }, proposedSectionSeats);
-
-        if (maxCourseSeats >= proposedCourseSeats) {
-          CourseService.updateSection(section).then(function (section) {
-            window.ipa_analyze_event('courses', 'section updated');
-
-            $rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
-            var action = {
-              type: ActionTypes.UPDATE_SECTION,
-              payload: {
-                section: section
-              }
+          $rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
+          var action = {
+            type: ActionTypes.UPDATE_SECTION,
+            payload: {
+              section: section
+            }
           };
           CourseStateService.reduce(action);
         }, function () {
           $rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });
         });
-        }
       },
       updateSections: function (sections, sectionGroup) {
         let attempted = [];
