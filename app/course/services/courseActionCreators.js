@@ -402,7 +402,6 @@ class CourseActionCreators {
                 section: section
               }
           };
-          this.updateSectionGroup(sectionGroup);
           CourseStateService.reduce(action);
         }, function () {
           $rootScope.$emit('toast', { message: "Could not update section.", type: "ERROR" });

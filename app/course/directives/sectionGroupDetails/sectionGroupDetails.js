@@ -1,3 +1,5 @@
+import { isNumber } from '../../../shared/helpers/types';
+
 let sectionGroupDetails = function (CourseActionCreators, Term) {
   return {
     restrict: 'E',
@@ -72,6 +74,12 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
 
           return Number(proposedSectionSeats !== originalSectionSeats) + acc;
         }, 0);
+
+        // sync with sectionGroup if single numeric section
+        if (proposedSections.length === 1 && isNumber(section.sequenceNumber)) {
+          sectionGroup.plannedSeats = section.seats;
+          CourseActionCreators.updateSectionGroup(sectionGroup);
+        }
 
         if (sectionGroup.plannedSeats >= proposedSectionSeatTotal) {
           if (outOfSyncSections === 1) {
