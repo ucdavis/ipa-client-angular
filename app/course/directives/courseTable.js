@@ -525,6 +525,11 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           sectionGroup.plannedSeats = plannedSeats;
           if (plannedSeats >= proposedSectionSeatTotal) {
             CourseActionCreators.updateSectionGroup(sectionGroup);
+
+            // Check if any overflowed sections can be updated.  If yes, update them.
+            if (currentSectionSeatTotal !== proposedSectionSeatTotal) {
+              CourseActionCreators.updateSections(proposedSections, sectionGroup);
+            }
           }
 
           // If sequence is numeric sync the seats on the section to the new sectionGroup value
@@ -532,11 +537,6 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
             let section = scope.view.state.sections.list[sectionGroup.sections[0].id];
             section.seats = sectionGroup.plannedSeats;
             CourseActionCreators.updateSection(section);
-          }
-
-          // Check if any overflowed sections can be updated.  If yes, update them.
-          if (currentSectionSeatTotal !== proposedSectionSeatTotal) {
-            CourseActionCreators.updateSections(proposedSections, sectionGroup);
           }
         } else if (plannedSeats) {
           // Create a new sectionGroup
