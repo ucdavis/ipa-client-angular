@@ -409,27 +409,27 @@ class CourseActionCreators {
           return;
         }
 
-          Promise.allSettled(promises).then((results) => {
-            results.forEach(function (result) {
-              if (result.status == 'fulfilled'){
-                window.ipa_analyze_event('courses', 'section updated');
-                var action = {
-                  type: ActionTypes.UPDATE_SECTION,
-                  payload: {
-                    section: result.value
-                  },
-                };
-                CourseStateService.reduce(action);
-                successes.push(result.value.sequenceNumber);
-              }
-            });
-            let failures = attempted.filter(x => !successes.includes(x));
-            if (successes.length > 0){
-              $rootScope.$emit('toast', { message: "Updated section(s) " + successes.join(), type: "SUCCESS" });
-              this.updateSectionGroup(sectionGroup);
-            } else {
-                $rootScope.$emit('toast', { message: "Failed to updated section(s) " + failures.join(), type: "ERROR" });
+        Promise.allSettled(promises).then((results) => {
+          results.forEach(function (result) {
+            if (result.status == 'fulfilled'){
+              window.ipa_analyze_event('courses', 'section updated');
+              var action = {
+                type: ActionTypes.UPDATE_SECTION,
+                payload: {
+                  section: result.value
+                },
+              };
+              CourseStateService.reduce(action);
+              successes.push(result.value.sequenceNumber);
             }
+          });
+          let failures = attempted.filter(x => !successes.includes(x));
+          if (successes.length > 0){
+            $rootScope.$emit('toast', { message: "Updated section(s) " + successes.join(), type: "SUCCESS" });
+            this.updateSectionGroup(sectionGroup);
+          } else {
+              $rootScope.$emit('toast', { message: "Failed to updated section(s) " + failures.join(), type: "ERROR" });
+          }
         });
       },
       createSection: function (section) {
