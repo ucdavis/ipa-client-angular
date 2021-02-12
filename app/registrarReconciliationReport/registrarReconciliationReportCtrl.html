@@ -43,7 +43,7 @@
 							</td>
 						</tr>
 						<tbody>
-							<tr ng-if="view.state.sections.ids.length > 0" section-diff ng-repeat="sectionId in view.state.sections.ids track by sectionId"></tr>
+							<tr ng-if="view.state.sections.ids.length > 0" section-diff ng-repeat="sectionId in view.state.sections.filteredIds track by sectionId"></tr>
 						</tbody>
 					</table>
 				</div>
@@ -52,6 +52,7 @@
 		</div>
 		<div class="right-details">
 			<report-legend></report-legend>
+			<report-filter></report-filter>
 			<sync-action-list></sync-action-list>
 		</div>
 	</div>

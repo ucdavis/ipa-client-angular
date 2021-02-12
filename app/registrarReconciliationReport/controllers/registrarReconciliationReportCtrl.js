@@ -46,6 +46,8 @@ class registrarReconciliationReportCtrl {
 		this.$rootScope.$on('reportStateChanged', function (event, data) {
 			self.$scope.view.state = data.state;
 
+			generateFilteredDisplay(data);
+
 			self.$scope.view.hasAccess = self.$scope.sharedState.currentUser.isAdmin() ||
 			self.$scope.sharedState.currentUser.hasRole('academicPlanner', self.$scope.sharedState.workgroup.id);
 		});
@@ -79,26 +81,54 @@ class registrarReconciliationReportCtrl {
 			let fullTerm = slotYear + shortTermCode;
 			this.$scope.fullTerms.push(fullTerm);
 		}
+
+		function generateFilteredDisplay(data) {
+			// filter types before setting scope state
+			const uncheckedFilters = data.state.uiState.filters.filter((filter) => filter.isChecked === false);
+			let filteredSectionIds = [];
+
+			if (uncheckedFilters.length > 0) {
+				// filter sections
+				const hiddenTypeCodes = uncheckedFilters.map((filter) => filter.typeCode);
+
+				filteredSectionIds = data.state.sections.ids.filter((sectionId) => {
+					const slotSection = data.state.sections.list[sectionId];
+
+					// only handling sections with 1 activity for now
+					if (slotSection.activities.length === 1) {
+						return !hiddenTypeCodes.includes(slotSection.activities[0].typeCode);
+					}
+
+					// pass on sections with multiple activities for now
+					return true;
+				});
+
+				self.$scope.view.state.sections.filteredIds = filteredSectionIds;
+			} else {
+				self.$scope.view.state.sections.filteredIds =
+				self.$scope.view.state.sections.ids;
+			}
+		}
 	}
 
 	calculateCurrentTermShortCode (termStates) {
 		var earliestTermCode = null;
-	
+
 		termStates.forEach(function(termState) {
-	
+
 			if (termState.state == "ANNUAL_DRAFT") {
-	
+
 				if ((earliestTermCode == null) || earliestTermCode > termState.termCode) {
 					earliestTermCode = termState.termCode;
 				}
 			}
 		});
-	
+
 		// Default to fall quarter if current term cannot be deduced from termStates
 		if (earliestTermCode == null) {
 			return "10";
 		}
-	
+
 		return earliestTermCode.slice(-2);
 	}
 }

@@ -24,6 +24,9 @@ class RegistrarReconciliationReportService {
 			createSection: function (section) {
 				return self.apiService.post("/api/reportView/sectionGroups/" + section.sectionGroupId + "/sections/" + section.sequenceNumber, section);
 			},
+			createSectionGroup: function (course, workgroupId, year, termCode) {
+				return self.apiService.post(`/api/reportView/sectionGroups/workgroups/${workgroupId}/years/${year}/termCode/${termCode}`, course);
+			},
 			updateActivity: function (activity) {
 				return self.apiService.put("/api/reportView/activities/" + activity.id, activity);
 			},

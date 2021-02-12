@@ -490,6 +490,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
           // Actions column
           var popoverTemplate = "Are you sure you want to delete " + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "? <br />" +
+            "<p style='margin: 10px 0;'>This will also <b>delete the sections, activities, preferences, assignments, and course comments</b> that belong to these courses.</p>" +
             "<div class='text-center'><button class='btn btn-red' data-event-type='deleteCourse' data-course-id='" + courseId + "'>Delete</button>" +
             "<button class='btn btn-white' data-event-type='dismissCoursePop'>Cancel</button></div>";
           row += "<td class=\"ui-overlay\"><i class=\"btn add-before entypo-plus-circled\" data-event-type=\"addCourse\" data-index=\"" + rowIdx + "\" ></i>";
