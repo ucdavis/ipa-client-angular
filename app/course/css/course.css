@@ -419,12 +419,6 @@ color: #fff;
   padding: 8px 12px;
   pointer-events: none;
 }
-/* table.courses-table > thead > tr > th { */
-.courses-table--header__sticky {
-  position: sticky;
-  top: 114px;
-  z-index: 10;
-}
 table.courses-table > tbody > tr > td,
 table.courses-table > thead > tr > th {
   vertical-align: middle;
