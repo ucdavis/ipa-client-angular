@@ -68,6 +68,8 @@ class BudgetActions {
 											}
 										});
 									});
+								}, function() {
+									$rootScope.$emit('toast', { message: "Could not load enrollment data.", type: "ERROR" });
 								});
 							});
 						});
