@@ -35,19 +35,9 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
 
           scope.downloadAllDepartments = scope.departmentScenarios.every(department => department.download === true);
         } else if (userWorkgroupsScenarios) {
-          scope.departmentScenarios = Object.keys(userWorkgroupsScenarios)
-            .sort()
-            .map((department) => ({
-              name: department,
-              current: userWorkgroupsScenarios[department].current,
-              previous: userWorkgroupsScenarios[department].previous,
-              selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.fromLiveData === true) || {}).id}`,
-              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.fromLiveData === true) || {}).id}`,
-              lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[department].current.map(scenario => scenario.lastModifiedOn)),
-              download: true
-            }));
+          scope.departmentScenarios = scope.getScenarioOptions(userWorkgroupsScenarios);
 
-            scope.downloadAllDepartments = true;
+          scope.downloadAllDepartments = true;
         }
       }, true);
 
@@ -61,12 +51,22 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
         }
       };
 
+      scope.getScenarioOptions = function(userWorkgroupsScenarios) {
+        return Object.keys(userWorkgroupsScenarios)
+            .sort()
+            .map((department) => ({
+              name: department,
+              current: userWorkgroupsScenarios[department].current,
+              previous: userWorkgroupsScenarios[department].previous,
+              selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.fromLiveData === true) || {}).id}`,
+              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.fromLiveData === true) || {}).id}`,
+              lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[department].current.map(scenario => scenario.lastModifiedOn)),
+              download: true
+            }));
+      }
+
       scope.resetDownloadSelections = function() {
-        scope.departmentScenarios.forEach(departmentScenarios => {
-          departmentScenarios.download = true;
-          departmentScenarios.selectedPrevious = `${departmentScenarios.previous.find(scenario => scenario.fromLiveData === true).id}`;
-          departmentScenarios.selectedCurrent = `${departmentScenarios.current.find(scenario => scenario.fromLiveData === true).id}`;
-        });
+        scope.departmentScenarios = scope.getScenarioOptions(scope.userWorkgroupsScenarios);
         scope.downloadAllDepartments = true;
       };
 
