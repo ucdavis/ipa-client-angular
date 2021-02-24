@@ -63,7 +63,30 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
               lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[department].current.map(scenario => scenario.lastModifiedOn)),
               download: true
             }));
-      }
+      };
+
+      scope.selectBudgetRequests = function() {
+        scope.departmentScenarios = scope.departmentScenarios.map((ds) => {
+          const currentBudgetRequest = ds.current.filter(scenario => scenario.isBudgetRequest === true).sort((a, b) => b.creationDate - a.creationDate)[0];
+          const previousBudgetRequest = ds.previous.filter(scenario => scenario.isBudgetRequest === true).sort((a, b) => b.creationDate - a.creationDate)[0];
+
+          if (currentBudgetRequest !== undefined) {
+            ds.selectedCurrent = currentBudgetRequest.id.toString();
+          } else {
+            const liveDataScenario = ds.current.find(scenario => scenario.fromLiveData === true);
+            ds.selectedCurrent = liveDataScenario.id.toString();
+          }
+
+          if (previousBudgetRequest !== undefined) {
+            ds.selectedPrevious = previousBudgetRequest.id.toString();
+          } else {
+            const liveDataScenario = ds.previous.find(scenario => scenario.fromLiveData === true);
+            ds.selectedPrevious = liveDataScenario.id.toString();
+          }
+
+          return ds;
+        });
+      };
 
       scope.resetDownloadSelections = function() {
         scope.departmentScenarios = scope.getScenarioOptions(scope.userWorkgroupsScenarios);
