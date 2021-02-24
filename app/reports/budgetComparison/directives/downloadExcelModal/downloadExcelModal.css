@@ -1,6 +1,6 @@
 .table-dark tbody {
   display: block;
-  max-height: 80vh;
+  max-height: 50vh;
   overflow: auto;
 }
 .table-dark thead,
