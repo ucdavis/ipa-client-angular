@@ -63,7 +63,7 @@
 
 					<td ng-repeat="termCode in view.state.termCodes">
 						<div style="padding: 20px 15px 20px 15px;" ng-if="instructor.preferencesByTermCode[termCode].length > 0">
-							<div ng-repeat="preference in instructor.preferencesByTermCode[termCode]">
+							<div ng-repeat="preference in instructor.preferencesByTermCode[termCode] | orderBy: 'order'">
 								{{ $index + 1 }}. {{ preference.description }}
 							</div>
 						</div>
