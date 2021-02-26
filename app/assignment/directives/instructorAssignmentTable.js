@@ -685,7 +685,8 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												} else {
 													if (sectionGroup) {
 														course = scope.view.state.courses.list[sectionGroup.courseId];
-														if (course) {
+														if (course && sectionGroup.termCode === teachingAssignment.termCode) {
+															// need to match termCode now that a sectionGroup can move terms
 															interestedCourseIds.push(course.id);
 														}
 													}

@@ -377,7 +377,8 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 													var instructor = scope.view.state.instructors.list[teachingAssignment.instructorId];
 													var priority = scope.calculatePriority(teachingAssignment, instructor);
 
-													if (instructor) {
+													if (instructor && sectionGroup.termCode === teachingAssignment.termCode) {
+														// need to match termCode now that a sectionGroup can move terms
 														interestedInstructorIds.push(instructor.id);
 													}
 
