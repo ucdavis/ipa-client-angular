@@ -3,6 +3,7 @@ var webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
+const dotenv = require('dotenv');
 
 function injectHashesInLinks (content, path) {
   var template = content.toString('utf8');
@@ -154,6 +155,9 @@ module.exports = {
       { from: 'app/assets/images/*', to: 'images', flatten: true },
       { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
     ]),
+     new webpack.DefinePlugin( {
+      "window.serverRoot" : JSON.stringify(dotenv.config().parsed.serverRoot)
+    } ),
     // Copy vendor JS
     new CopyWebpackPlugin([
       { from: 'clientConfig.js', to: 'js', flatten: true },
