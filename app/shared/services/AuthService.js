@@ -13,7 +13,10 @@ class AuthService {
 			validateToken: function (token) {
 				var self = this;
 				var deferred = $q.defer();
-
+				console.log("******");
+				console.log(window.serverRoot);
+				console.log(process.env);
+				console.log("******");
 				$http.post(window.serverRoot + '/login', { token: token }, { withCredentials: true }).then(function (response) {
 					// Token may be null if we are redirecting
 					if (response.data != null && response.data.token !== null) {

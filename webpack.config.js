@@ -155,12 +155,16 @@ module.exports = {
       { from: 'app/assets/images/*', to: 'images', flatten: true },
       { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
     ]),
-     new webpack.DefinePlugin( {
-      "window.serverRoot" : JSON.stringify(dotenv.config().parsed.serverRoot)
+    // Set environment variables
+    new webpack.DefinePlugin( {
+      "window.serverRoot" : JSON.stringify(dotenv.config().parsed.serverRoot),
+      "window.dwUrl": JSON.stringify(dotenv.config().parsed.dwUrl),
+      "window.dwToken": JSON.stringify(dotenv.config().parsed.dwToken),
+      "window.debuggerEnabled": JSON.stringify(dotenv.config().parsed.debuggerEnabled),
+      "window.ipaRunningMode": JSON.stringify(dotenv.config().parsed.ipaRunningMode)
     } ),
     // Copy vendor JS
     new CopyWebpackPlugin([
-      { from: 'clientConfig.js', to: 'js', flatten: true },
       { from: 'node_modules/bootstrap/dist/js/*', to: 'js', flatten: true },
       { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
       { from: 'node_modules/jquery-typeahead/dist/jquery.typeahead.min.js', to: 'js', flatten: true },
