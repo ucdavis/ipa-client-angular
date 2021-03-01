@@ -36,9 +36,17 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 			};
 
 			if (localStorage.getItem("budgetDownloadSelections") && localStorage.getItem("budgetDownloadSelectionsYear") === scope.year) {
-				scope.budgetScenariosAccessible = JSON.parse(localStorage.getItem("budgetDownloadSelections"));
+				const existingDownloadSelections = JSON.parse(localStorage.getItem("budgetDownloadSelections")); 
 				scope.isSortedByRecentActivity = JSON.parse(localStorage.getItem("budgetDownloadSorted"));
 
+				if (scope.userWorkgroupsScenarios && Object.keys(scope.userWorkgroupsScenarios).length > 0) {
+					existingDownloadSelections.forEach(function(department) {
+						department.current = scope.userWorkgroupsScenarios[department.name].current;
+						department.previous = scope.userWorkgroupsScenarios[department.name].previous;
+					});
+				}
+				
+				scope.budgetScenariosAccessible = existingDownloadSelections;
 				scope.downloadAllDepartments = scope.budgetScenariosAccessible.every(department => department.download === true);
 			} else {
 				scope.budgetScenariosAccessible = Object.keys(scope.userWorkgroupsScenarios)
