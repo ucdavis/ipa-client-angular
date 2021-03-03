@@ -52,11 +52,12 @@
 
 .download-excel-modal-footer__status {
   display: flex;
+  justify-content: center;
   align-items: center;
   
 }
 .download-excel-modal-footer__status span {
-  padding: 4px;
+  padding-bottom: 4px;
 }
 
 .download-excel-modal-footer__buttons {

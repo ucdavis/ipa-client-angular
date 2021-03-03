@@ -41,28 +41,19 @@
 			</ipa-checkbox>
 			<span style="margin-left: 8px;">Sort By Recent Activity</span>
 		</div>
-		<div class="download-excel-modal-footer__status">
-			<span ng-show="isDisabled">
-				<i class="glyphicon glyphicon-info-sign" style="padding-left: 10px; padding-right: 8px; color: #21a9e1;"></i> Generating Excel Download - This may take a few minutes.
-			</span>
-			<span ng-show="status && status === 200 && !isDisabled" style="color: #00a651;">
-				<i class="glyphicon glyphicon-ok" style="padding-left: 10px; padding-right: 8px"></i> Excel Download Successful
-			</span>
-			<span ng-show="status && status !== 200 && !isDisabled" style="color: #cc2424;">
-				<i class="glyphicon glyphicon-warning-sign" style="padding-left: 10px; padding-right: 8px"></i> Excel Download Failed
-			</span>
-		</div>
 		<div class="download-excel-modal-footer__buttons">
 			<button 
-							ng-show="!isDisabled"
-							ng-click="close()"
-							type="button"
-							class="btn btn-default modal-button">
+				ng-show="!isDisabled"
+				ng-click="close()"
+				type="button"
+				class="btn btn-default modal-button"
+			>
 				Cancel
 			</button>
 			<button
 				class="btn btn-secondary"
 				confirm-button="resetDownloadSelections()"
+				placement=
 				message="Are you sure you want to reset selections to download all departments and all scenarios to Live Data?"
 			>
 				Reset selections
@@ -74,12 +65,25 @@
 			>
 				Select Latest Budget Requests
 			</button>
-			<button ng-click="submit()"
-				type="button" class="btn neon-dark-confirm-btn"
+			<button
+				ng-click="submit()"
+				type="button"
+				class="btn neon-dark-confirm-btn"
 				ng-disabled="isDisabled"
 			>
 				Download
 			</button>
 		</div>
+	</div>
+	<div class="download-excel-modal-footer__status">
+		<span ng-show="isDisabled">
+			<i class="glyphicon glyphicon-info-sign" style="padding-right: 4px; color: #21a9e1;"></i> Generating Excel Download - This may take a few minutes.
+		</span>
+		<span ng-show="status && status === 200 && !isDisabled" style="color: #00a651;">
+			<i class="glyphicon glyphicon-ok" style="padding-right: 4px"></i> Excel Download Successful
+		</span>
+		<span ng-show="status && status !== 200 && !isDisabled" style="color: #cc2424;">
+			<i class="glyphicon glyphicon-warning-sign" style="padding-right: 4px"></i> Excel Download Failed
+		</span>
 	</div>
 </div>
