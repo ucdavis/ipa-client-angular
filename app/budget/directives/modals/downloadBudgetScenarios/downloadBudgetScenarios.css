@@ -23,11 +23,12 @@
 
 .download-budget-scenarios-footer__status {
   display: flex;
+  justify-content: center;
   align-items: center;
   
 }
 .download-budget-scenarios-footer__status span {
-  padding: 4px;
+  padding-bottom: 4px;
 }
 
 .download-budget-scenarios-footer__buttons {
