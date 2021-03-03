@@ -24,6 +24,9 @@ class WorkloadSummaryService {
 			getUserRoles: function (workgroupId) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/userRoles");
 			},
+			getScheduleInstructorNotes: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/scheduleInstructorNotes");
+			},
 			getSections: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sections");
 			},
