@@ -27,6 +27,7 @@ class WorkloadSummaryActions {
 				this._getInstructorTypes(workgroupId, year);
 				this._getInstructors(workgroupId, year);
 				this._getTeachingAssignments(workgroupId, year);
+				this._getScheduleInstructorNotes(workgroupId, year);
 				this._getSectionGroups(workgroupId, year);
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId, year);
@@ -237,6 +238,32 @@ class WorkloadSummaryActions {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
 			},
+			_getScheduleInstructorNotes: function (workgroupId, year) {
+				var _self = this;
+
+				WorkloadSummaryService.getScheduleInstructorNotes(workgroupId, year).then(function (rawInstructorNotes) {
+					let scheduleInstructorNotes = {
+						ids: [],
+						list: {}
+					};
+
+					rawInstructorNotes.forEach(function(instructorNote) {
+						scheduleInstructorNotes.ids.push(instructorNote.id);
+						scheduleInstructorNotes.list[instructorNote.id] = instructorNote;
+					});
+
+					WorkloadSummaryReducers.reduce({
+						type: ActionTypes.GET_SCHEDULE_INSTRUCTOR_NOTES,
+						payload: {
+							scheduleInstructorNotes,
+						}
+					});
+
+					_self._performCalculations();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
+			},
 			_getSectionGroups: function (workgroupId, year) {
 				var _self = this;
 
@@ -283,9 +310,10 @@ class WorkloadSummaryActions {
 				var instructorTypes = WorkloadSummaryReducers._state.instructorTypes;
 				var users = WorkloadSummaryReducers._state.users;
 				var userRoles = WorkloadSummaryReducers._state.userRoles;
+				var scheduleInstructorNotes = WorkloadSummaryReducers._state.scheduleInstructorNotes;
 				var sections = WorkloadSummaryReducers._state.sections;
 
-				if (sectionGroups && courses && teachingAssignments && instructors && instructorTypes && users && userRoles && sections) {
+				if (sectionGroups && courses && teachingAssignments && instructors && instructorTypes && users && userRoles && scheduleInstructorNotes && sections) {
 					WorkloadSummaryReducers.reduce({
 						type: ActionTypes.INITIAL_FETCH_COMPLETE,
 						payload: {
@@ -389,6 +417,7 @@ class WorkloadSummaryActions {
 						lastOfferedEnrollment: 0,
 						assignmentCount: 0
 					};
+					instructor.note = _self._getInstructorNote(instructor.id);
 
 					var instructorAssignments = _self._getInstructorAssignments(instructorId, teachingAssignments);
 
@@ -721,6 +750,20 @@ class WorkloadSummaryActions {
 				});
 
 				return instructorAssignments;
+			},
+			_getInstructorNote: function (instructorId) {
+				const scheduleInstructorNotes = WorkloadSummaryReducers._state.scheduleInstructorNotes;
+				let instructorComment = null;
+
+				scheduleInstructorNotes.ids.forEach(function(instructorNoteId) {
+					const instructorNote = scheduleInstructorNotes.list[instructorNoteId];
+
+					if (instructorNote.instructorId === instructorId) {
+						instructorComment = instructorNote.instructorComment;
+					}
+				});
+
+				return instructorComment;
 			},
 			_getEnrollmentData: function(isPreviousYear) {
 				var _self = this;
