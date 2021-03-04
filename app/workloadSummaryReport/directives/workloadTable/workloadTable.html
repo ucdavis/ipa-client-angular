@@ -46,6 +46,7 @@
 					<td class="workload-table__name-cell">
 						<span ng-if="instructor.lastName">{{ instructor.lastName }}, {{ instructor.firstName }}</span>
 						<span ng-if="!instructor.lastName">{{ instructor.fullName }}</span>
+						<div ng-if="instructor.note" style="padding: 10px;">Note: {{ instructor.note }}</div>
 					</td>
 					<td>
 						<div class="workload-table__value" ng-repeat="assignment in instructor.assignments">

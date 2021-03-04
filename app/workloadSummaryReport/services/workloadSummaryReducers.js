@@ -58,6 +58,14 @@ class WorkloadSummaryStateService {
 						return teachingAssignments;
 				}
 			},
+			_scheduleInstructorNoteReducers: function (action, scheduleInstructorNotes) {
+				switch (action.type) {
+					case ActionTypes.GET_SCHEDULE_INSTRUCTOR_NOTES:
+						return scheduleInstructorNotes || action.payload.scheduleInstructorNotes;
+					default:
+						return scheduleInstructorNotes;
+				}
+			},
 			_sectionReducers: function (action, sections) {
 				switch (action.type) {
 					case ActionTypes.GET_SECTIONS:
@@ -102,6 +110,7 @@ class WorkloadSummaryStateService {
 				newState.calculations = scope._calculationReducers(action, scope._state.calculations);
 				newState.users = scope._userReducers(action, scope._state.users);
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
+				newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
 
 				scope._state = newState;
 				$rootScope.$emit('workloadSummaryStateChanged', {
