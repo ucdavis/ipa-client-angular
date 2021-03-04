@@ -30,24 +30,23 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
       // }
       scope.$watch('userWorkgroupsScenarios', function(userWorkgroupsScenarios) {
         if (localStorage.getItem("budgetComparisonDownloadSelections")) {
-          scope.departmentScenarios = JSON.parse(localStorage.getItem("budgetComparisonDownloadSelections"));
+          const existingDownloadSelections = JSON.parse(localStorage.getItem("budgetComparisonDownloadSelections"));
           scope.isSortedByRecentActivity = JSON.parse(localStorage.getItem("budgetComparisonDownloadSorted"));
 
+          if (userWorkgroupsScenarios && Object.keys(userWorkgroupsScenarios).length > 0) {
+            existingDownloadSelections.forEach(function(department) {
+              // update with latest scenario lists
+              department.current = userWorkgroupsScenarios[department.name].current;
+              department.previous = userWorkgroupsScenarios[department.name].previous;
+            });
+          } 
+          
+          scope.departmentScenarios = existingDownloadSelections;
           scope.downloadAllDepartments = scope.departmentScenarios.every(department => department.download === true);
         } else if (userWorkgroupsScenarios) {
-          scope.departmentScenarios = Object.keys(userWorkgroupsScenarios)
-            .sort()
-            .map((department) => ({
-              name: department,
-              current: userWorkgroupsScenarios[department].current,
-              previous: userWorkgroupsScenarios[department].previous,
-              selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.fromLiveData === true) || {}).id}`,
-              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.fromLiveData === true) || {}).id}`,
-              lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[department].current.map(scenario => scenario.lastModifiedOn)),
-              download: true
-            }));
+          scope.departmentScenarios = scope.getScenarioOptions(userWorkgroupsScenarios);
 
-            scope.downloadAllDepartments = true;
+          scope.downloadAllDepartments = true;
         }
       }, true);
 
@@ -61,12 +60,45 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
         }
       };
 
-      scope.resetDownloadSelections = function() {
-        scope.departmentScenarios.forEach(departmentScenarios => {
-          departmentScenarios.download = true;
-          departmentScenarios.selectedPrevious = `${departmentScenarios.previous.find(scenario => scenario.fromLiveData === true).id}`;
-          departmentScenarios.selectedCurrent = `${departmentScenarios.current.find(scenario => scenario.fromLiveData === true).id}`;
+      scope.getScenarioOptions = function(userWorkgroupsScenarios) {
+        return Object.keys(userWorkgroupsScenarios)
+            .sort()
+            .map((department) => ({
+              name: department,
+              current: userWorkgroupsScenarios[department].current,
+              previous: userWorkgroupsScenarios[department].previous,
+              selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.fromLiveData === true) || {}).id}`,
+              selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.fromLiveData === true) || {}).id}`,
+              lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[department].current.map(scenario => scenario.lastModifiedOn)),
+              download: true
+            }));
+      };
+
+      scope.selectBudgetRequests = function() {
+        scope.departmentScenarios = scope.departmentScenarios.map((ds) => {
+          const currentBudgetRequest = ds.current.filter(scenario => scenario.isBudgetRequest === true).sort((a, b) => b.creationDate - a.creationDate)[0];
+          const previousBudgetRequest = ds.previous.filter(scenario => scenario.isBudgetRequest === true).sort((a, b) => b.creationDate - a.creationDate)[0];
+
+          if (currentBudgetRequest !== undefined) {
+            ds.selectedCurrent = currentBudgetRequest.id.toString();
+          } else {
+            const liveDataScenario = ds.current.find(scenario => scenario.fromLiveData === true);
+            ds.selectedCurrent = liveDataScenario.id.toString();
+          }
+
+          if (previousBudgetRequest !== undefined) {
+            ds.selectedPrevious = previousBudgetRequest.id.toString();
+          } else {
+            const liveDataScenario = ds.previous.find(scenario => scenario.fromLiveData === true);
+            ds.selectedPrevious = liveDataScenario.id.toString();
+          }
+
+          return ds;
         });
+      };
+
+      scope.resetDownloadSelections = function() {
+        scope.departmentScenarios = scope.getScenarioOptions(scope.userWorkgroupsScenarios);
         scope.downloadAllDepartments = true;
       };
 
