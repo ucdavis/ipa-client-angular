@@ -926,8 +926,8 @@ class AssignmentStateService {
 							uniqueCoursesAdded.push("JointAppointment");
 						} else if (teachingAssignment.interdisciplinaryTeaching) {
 							uniqueCoursesAdded.push("InterdisciplinaryTeaching");
-						} else if (teachingAssignment.courseReleaseWlc) {
-							uniqueCoursesAdded.push("CourseReleaseWlc");
+						} else if (teachingAssignment.workLoadCredit) {
+							uniqueCoursesAdded.push("WorkLoadCredit");
 						} else {
 							var uniqueIdentifier = teachingAssignment.suggestedSubjectCode + teachingAssignment.suggestedCourseNumber + teachingAssignment.suggestedEffectiveTermCode;
 							teachingAssignment.uniqueIdentifier = uniqueIdentifier;

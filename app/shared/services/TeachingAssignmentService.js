@@ -27,8 +27,8 @@ class TeachingAssignmentService {
 					return "Joint Appointment";
 				} else if (teachingAssignment.interdisciplinaryTeaching) {
 					return "Interdisciplinary Teaching";
-				} else if (teachingAssignment.courseReleaseWlc) {
-					return "Course Release - WLC";
+				} else if (teachingAssignment.workLoadCredit) {
+					return "Work Load Credit";
 				} else if (course) {
 					return course.subjectCode + " " + course.courseNumber;
 				}
