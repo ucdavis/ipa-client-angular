@@ -665,7 +665,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													} else if (teachingAssignment.interdisciplinaryTeaching) {
 														preferenceDisplayText = "Interdisciplinary Teaching";
 													} else if (teachingAssignment.workLoadCredit) {
-														preferenceDisplayText = "WORK LOAD CREDIT";
+														preferenceDisplayText = "Work Load Credit";
 													}
 
 													if (firstInterestedCourseAdded === false) {
