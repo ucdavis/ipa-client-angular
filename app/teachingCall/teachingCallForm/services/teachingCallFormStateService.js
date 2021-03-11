@@ -399,7 +399,7 @@ class TeachingCallFormStateService {
 					}
 	
 					// If this is a Non-course preference
-					else if (slotAssignment.inResidence || slotAssignment.workLifeBalance || slotAssignment.leaveOfAbsence || slotAssignment.sabbaticalInResidence || slotAssignment.sabbatical || slotAssignment.courseRelease || slotAssignment.buyout) {
+					else if (slotAssignment.inResidence || slotAssignment.workLifeBalance || slotAssignment.leaveOfAbsence || slotAssignment.sabbaticalInResidence || slotAssignment.sabbatical || slotAssignment.courseRelease || slotAssignment.buyout || slotAssignment.jointAppointment || slotAssignment.interdisciplinaryTeaching || slotAssignment.workLoadCredit) {
 						if (slotAssignment.inResidence) {
 							newPreference.description = "In Residence";
 							newPreference.inResidence = true;
@@ -421,6 +421,15 @@ class TeachingCallFormStateService {
 						} else if (slotAssignment.buyout) {
 							newPreference.description = "Buyout";
 							newPreference.buyout = true;
+						} else if (slotAssignment.jointAppointment) {
+							newPreference.description = "Joint Appointment";
+							newPreference.jointAppointment = true;
+						} else if (slotAssignment.interdisciplinaryTeaching) {
+							newPreference.description = "Interdisciplinary Teaching";
+							newPreference.interdisciplinaryTeaching = true;
+						} else if (slotAssignment.workLoadCredit) {
+							newPreference.description = "Work Load Credit";
+							newPreference.workLoadCredit = true;
 						}
 	
 						newPreference.uniqueIdentifier = newPreference.description;
@@ -559,6 +568,27 @@ class TeachingCallFormStateService {
 					preferenceOptions.push({
 						sabbaticalInResidence: true,
 						description: "Sabbatical In Residence",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						jointAppointment: true,
+						description: "Joint Appointment",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						interdisciplinaryTeaching: true,
+						description: "Interdisciplinary Teaching",
+						scheduleId: scheduleId,
+						instructorId: instructorId,
+						termCode: termCode
+					});
+					preferenceOptions.push({
+						workLoadCredit: true,
+						description: "Work Load Credit",
 						scheduleId: scheduleId,
 						instructorId: instructorId,
 						termCode: termCode
