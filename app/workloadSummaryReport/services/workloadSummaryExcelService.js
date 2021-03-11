@@ -17,7 +17,8 @@ class WorkloadSummaryExcelService {
           'Previous Enrollment (YoY)',
           'Previous Enrollment (Last Offered)',
           'Units',
-          'SCH'
+          'SCH',
+          'Note'
         ];
 
         // Instructors Table
@@ -49,7 +50,7 @@ class WorkloadSummaryExcelService {
             if (assignments.length > 0){
               const instructorName = instructor.lastName ? instructor.lastName + ", " + instructor.firstName : instructor.fullName;
               row.push(instructorName);
-              assignments.forEach(function(assignment){
+              assignments.forEach(function(assignment, i){
                 var firstElement = assignments[0];
 
                 if (assignment != firstElement){
@@ -75,6 +76,7 @@ class WorkloadSummaryExcelService {
 
                 row.push(assignment.units);
                 row.push(assignment.studentCreditHours);
+                if (i === 0) { row.push(instructor.note); }
                 data.push(row);
                 row = [];
               });
@@ -93,6 +95,8 @@ class WorkloadSummaryExcelService {
 
             } else {
               row.push(instructor.lastName + ", " + instructor.firstName);
+              for (let i = 0; i < 8; i++) { row.push(""); }
+              row.push(instructor.note);
               data.push(row);
               row = [];
             }
@@ -213,7 +217,8 @@ class WorkloadSummaryExcelService {
           {wch: 25},
           {wch: 30},
           {wch: 10},
-          {wch: 10}
+          {wch: 10},
+          {wch: 50}
         ];
         ws['!cols'] = wscols;
 
