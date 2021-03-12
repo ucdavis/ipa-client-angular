@@ -172,9 +172,11 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							sectionGroup.teachingAssignmentIds.forEach(function(teachingAssignmentId) {
 								var teachingAssignment = scope.view.state.teachingAssignments.list[teachingAssignmentId];
 								if (!teachingAssignment.instructorId && teachingAssignment.instructorTypeId && teachingAssignment.approved) {
+									// favor sectionGroup termCode if different (i.e. course offering moved)
+									const termCode = sectionGroup.termCode !== teachingAssignment.termCode ? sectionGroup.termCode : teachingAssignment.termCode;
 									unassignedInstructorTypes[teachingAssignment.instructorTypeId] = unassignedInstructorTypes[teachingAssignment.instructorTypeId] || {};
-									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] = unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode] || [];
-									unassignedInstructorTypes[teachingAssignment.instructorTypeId][teachingAssignment.termCode].push(teachingAssignment.sectionGroupId);
+									unassignedInstructorTypes[teachingAssignment.instructorTypeId][termCode] = unassignedInstructorTypes[teachingAssignment.instructorTypeId][termCode] || [];
+									unassignedInstructorTypes[teachingAssignment.instructorTypeId][termCode].push(teachingAssignment.sectionGroupId);
 									unassignedInstructorTypeLength += 1;
 
 									if (unassignedInstructorTypeIds.indexOf(teachingAssignment.instructorTypeId) == -1) {
@@ -272,6 +274,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					}
 
 					if (unassignedInstructorTypeLength) {
+						debugger; unassignedInstructorTypes;
 						unassignedInstructorTypeIds.forEach(function(instructorTypeId) {
 							coursesHtml += "<div class=\"course-list-row\">";
 							coursesHtml += "<div class=\"description-cell\">";
