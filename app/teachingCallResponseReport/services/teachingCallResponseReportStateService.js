@@ -112,6 +112,12 @@ class TeachingCallResponseReportStateService {
 										description = "Leave of Absence";
 									} else if (teachingAssignment.sabbaticalInResidence) {
 										description = "Sabbatical In Residence";
+									} else if (teachingAssignment.jointAppointment) {
+										description = "Joint Appointment";
+									} else if (teachingAssignment.interdisciplinaryTeaching) {
+										description = "Interdisciplinary Teaching";
+									} else if (teachingAssignment.workLoadCredit) {
+										description = "Work Load Credit";
 									} else if (teachingAssignment.suggestedSubjectCode != null && teachingAssignment.suggestedCourseNumber != null) {
 										description = teachingAssignment.suggestedSubjectCode + " " + teachingAssignment.suggestedCourseNumber;
 									} else {

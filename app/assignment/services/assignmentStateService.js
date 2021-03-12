@@ -922,6 +922,12 @@ class AssignmentStateService {
 							uniqueCoursesAdded.push("LeaveOfAbsense");
 						} else if (teachingAssignment.workLifeBalance) {
 							uniqueCoursesAdded.push("WorkLifeBalance");
+						} else if (teachingAssignment.jointAppointment) {
+							uniqueCoursesAdded.push("JointAppointment");
+						} else if (teachingAssignment.interdisciplinaryTeaching) {
+							uniqueCoursesAdded.push("InterdisciplinaryTeaching");
+						} else if (teachingAssignment.workLoadCredit) {
+							uniqueCoursesAdded.push("WorkLoadCredit");
 						} else {
 							var uniqueIdentifier = teachingAssignment.suggestedSubjectCode + teachingAssignment.suggestedCourseNumber + teachingAssignment.suggestedEffectiveTermCode;
 							teachingAssignment.uniqueIdentifier = uniqueIdentifier;

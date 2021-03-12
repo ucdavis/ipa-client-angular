@@ -23,6 +23,12 @@ class TeachingAssignmentService {
 					return "Leave of Absence";
 				} else if (teachingAssignment.sabbaticalInResidence) {
 					return "Sabbatical In Residence";
+				} else if (teachingAssignment.jointAppointment) {
+					return "Joint Appointment";
+				} else if (teachingAssignment.interdisciplinaryTeaching) {
+					return "Interdisciplinary Teaching";
+				} else if (teachingAssignment.workLoadCredit) {
+					return "Work Load Credit";
 				} else if (course) {
 					return course.subjectCode + " " + course.courseNumber;
 				}
