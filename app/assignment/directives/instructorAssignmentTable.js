@@ -73,7 +73,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				|| teachingAssignment.workLifeBalance == true
 				|| teachingAssignment.leaveOfAbsence == true
 				|| teachingAssignment.sabbaticalInResidence == true
-				|| teachingAssignment.inResidence == true) {
+				|| teachingAssignment.inResidence == true
+				|| teachingAssignment.jointAppointment === true
+				|| teachingAssignment.interdisciplinaryTeaching === true
+				|| teachingAssignment.workLoadCredit === true) {
 					return true;
 				}
 
@@ -129,7 +132,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 				|| teachingAssignment.workLifeBalance
 				|| teachingAssignment.leaveOfAbsence
 				|| teachingAssignment.sabbaticalInResidence
-				|| teachingAssignment.sabbatical);
+				|| teachingAssignment.sabbatical
+				|| teachingAssignment.jointAppointment
+				|| teachingAssignment.interdisciplinaryTeaching
+				|| teachingAssignment.workLoadCredit);
 			};
 
 			scope.sortCourses = function (array) {
@@ -573,6 +579,12 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 													displayTitle += "SABBATICAL IN RESIDENCE";
 												} else if (teachingAssignment.sabbatical) {
 													displayTitle += "SABBATICAL";
+												} else if (teachingAssignment.jointAppointment) {
+													displayTitle += "JOINT APPOINTMENT";
+												} else if (teachingAssignment.interdisciplinaryTeaching) {
+													displayTitle += "INTERDISCIPLINARY TEACHING";
+												} else if (teachingAssignment.workLoadCredit) {
+													displayTitle += "WORK LOAD CREDIT";
 												}
 											}
 
@@ -633,7 +645,7 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 												var sectionGroup = scope.view.state.sectionGroups.list[teachingAssignment.sectionGroupId];
 
 												// This teachingAssignment is a buyout/sabb/release
-												if ((teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbaticalInResidence || teachingAssignment.sabbatical)) {
+												if ((teachingAssignment.buyout || teachingAssignment.courseRelease || teachingAssignment.inResidence || teachingAssignment.workLifeBalance || teachingAssignment.leaveOfAbsence || teachingAssignment.sabbaticalInResidence || teachingAssignment.sabbatical || teachingAssignment.jointAppointment || teachingAssignment.interdisciplinaryTeaching || teachingAssignment.workLoadCredit)) {
 													let preferenceDisplayText = "";
 
 													if (teachingAssignment.buyout) {
@@ -650,6 +662,12 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 														preferenceDisplayText = "Sabbatical In Residence";
 													} else if (teachingAssignment.sabbatical) {
 														preferenceDisplayText = "Sabbatical";
+													} else if (teachingAssignment.jointAppointment) {
+														preferenceDisplayText = "Joint Appointment";
+													} else if (teachingAssignment.interdisciplinaryTeaching) {
+														preferenceDisplayText = "Interdisciplinary Teaching";
+													} else if (teachingAssignment.workLoadCredit) {
+														preferenceDisplayText = "Work Load Credit";
 													}
 
 													if (firstInterestedCourseAdded === false) {
@@ -791,6 +809,24 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
 										courseHtml += " href=\"#\">Course Release</a></li>";
 
+										courseHtml += "<li><a";
+										courseHtml += " data-is-joint-appointment=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Joint Appointment</a></li>";
+
+										courseHtml += "<li><a";
+										courseHtml += " data-is-interdisciplinary-teaching=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Interdisciplinary Teaching</a></li>";
+
+										courseHtml += "<li><a";
+										courseHtml += " data-is-work-load-credit=\"true\"";
+										courseHtml += " data-term-code=\"" + termCode + "\"";
+										courseHtml += " data-instructor-id=\"" + instructor.id + "\"";
+										courseHtml += " href=\"#\">Work Load Credit</a></li>";
+
 										courseHtml += "<li role=\"presentation\" class=\"divider courses-separator\"></li>";
 
 										// Loop over all other courses
@@ -864,6 +900,9 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 					var isWorkLifeBalance = $el.data('is-work-life-balance');
 					var isLeaveOfAbsence = $el.data('is-leave-of-absence');
 					var isSabbaticalInResidence = $el.data('is-sabbatical-in-residence');
+					var isJointAppointment = $el.data('is-joint-appointment');
+					var isInterdisciplinaryTeaching = $el.data('is-interdisciplinary-teaching');
+					var isWorkLoadCredit = $el.data('is-work-load-credit');
 					var isBuyout = $el.data('is-buyout');
 					var termCode = $el.data('term-code');
 
@@ -889,7 +928,10 @@ let instructorAssignmentTable = function ($rootScope, AssignmentActionCreators, 
 							workLifeBalance: isWorkLifeBalance,
 							leaveOfAbsence: isLeaveOfAbsence,
 							sabbaticalInResidence: isSabbaticalInResidence,
-							sabbatical: isSabbatical
+							sabbatical: isSabbatical,
+							jointAppointment: isJointAppointment,
+							interdisciplinaryTeaching: isInterdisciplinaryTeaching,
+							workLoadCredit: isWorkLoadCredit
 						};
 
 						AssignmentActionCreators.addAndApproveInstructorAssignment(teachingAssignment, scope.view.state.userInterface.scheduleId);
