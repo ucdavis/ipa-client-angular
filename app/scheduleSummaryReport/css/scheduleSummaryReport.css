@@ -81,11 +81,11 @@ tr.section-activity-diff-row.no-changes * {
 }
 
 .table-toolbar {
-  width: 100%;
-  text-align: right;
-  padding-bottom: 5px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding-bottom: 5px;
 	margin: 0px;
-  border-radius: 3px;
 }
 .tool-icon {
   margin: 0 0.5em;
