@@ -23,6 +23,16 @@ class ScheduleSummaryReportCtrl {
 
 		$scope.term = Term.prototype.getTermByTermShortCodeAndYear($scope.termShortCode, $scope.year);
 		$scope.view = {};
+		$scope.view.ui = {
+			filterOptions: [{ description: 'Hide Instructor Types', selected: false }],
+			hideInstructorTypes: false
+		};
+
+		$scope.toggleFilter = function (filter) {
+			filter.selected = !filter.selected;
+
+			$scope.view.ui.hideInstructorTypes = $scope.view.ui.filterOptions.find((option) => option.description = 'Hide Instructor Types').selected;
+		};
 
 		// Remove cloak if the url is incomplete, no payload or state calculations are necessary.
 		if ($scope.termShortCode == null) {

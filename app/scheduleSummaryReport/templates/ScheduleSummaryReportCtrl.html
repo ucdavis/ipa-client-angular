@@ -17,19 +17,28 @@
     <div class="row hidden-print">
       <div class="col-sm-12">
         <div class="table-toolbar">
-        <div class="btn-group" uib-tooltip="Download as Excel">
-          <span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li style="cursor: pointer;">
-              <a ng-click="download(true)">Download {{ getTermName(termShortCode) }} as Excel</a>
-            </li>
-            <li style="cursor: pointer;">
-              <a ng-click="download(false)">Download All Terms as Excel</a>
-            </li>
-            <li style="cursor: pointer;">
-              <a ng-click="downloadSimpleView()">Download All Terms w/o Section Details as Excel</a>
-            </li>
-          </ul>
+          <ipa-filter
+            items="view.ui.filterOptions"
+            title="'Filters'"
+            tooltip="'Filters'"
+            button-icon="'glyphicon-filter'"
+            select-item="toggleFilter(item)"
+            border-less="true"
+          ></ipa-filter>
+
+          <div class="btn-group" uib-tooltip="Download as Excel">
+            <span class="tool-icon glyphicon glyphicon-download-alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li style="cursor: pointer;">
+                <a ng-click="download(true)">Download {{ getTermName(termShortCode) }} as Excel</a>
+              </li>
+              <li style="cursor: pointer;">
+                <a ng-click="download(false)">Download All Terms as Excel</a>
+              </li>
+              <li style="cursor: pointer;">
+                <a ng-click="downloadSimpleView()">Download All Terms w/o Section Details as Excel</a>
+              </li>
+            </ul>
           </div>
 
           <span
@@ -135,10 +144,10 @@
                           ? 'Unassigned'
                           : instructor.instructorName
                       }}
-                      ({{ instructor.instructorType }})<span
-                        ng-if="$last == false"
-                        >,
+                      <span ng-if="!view.ui.hideInstructorTypes">
+                        ({{ instructor.instructorType }})
                       </span>
+                      <span ng-if="$last == false">, </span>
                     </div>
                   </div>
 
