@@ -8,13 +8,17 @@ let massImportSummary = function (CourseActionCreators) {
        * Sends the selected courses to IPA-WEB to be imported to the schedule
        */
       scope.importCoursesAndSectionGroups = function () {
-        var selectedCourseIds = scope.view.state.courses.importList
-          .filter(function (c) { return c.import;})
-          .map(function (c) { return c.subjectCode + c.courseNumber + c.sequencePattern + c.effectiveTermCode; });
+        var selectedCourses = scope.view.state.courses.importList.filter(function (c) { return c.import;});
 
         var sectionGroupImports = scope.view.state.sectionGroups.importList.filter(function (sg) {
-          var sgCourseId = sg.subjectCode + sg.courseNumber + sg.sequencePattern + sg.effectiveTermCode;
-          return selectedCourseIds.indexOf(sgCourseId) >= 0;
+          const course = selectedCourses.find(c => c.subjectCode === sg.subjectCode && c.courseNumber === sg.courseNumber && c.sequencePattern === sg.sequencePattern);
+
+          // use existing course on the schedule if SG effectiveTermCode differs
+          if (course !== undefined && sg.effectiveTermCode !== course.effectiveTermCode) {
+            sg.effectiveTermCode = course.effectiveTermCode;
+          }
+
+          return course !== undefined;
         });
 
         scope.view.state.uiState.massImportInProgress = true;
@@ -24,10 +28,10 @@ let massImportSummary = function (CourseActionCreators) {
 
         if (scope.view.state.uiState.massImportSource == 'IPA') {
           CourseActionCreators.importCoursesAndSectionGroupsFromIPA(
-            sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length, importTimes, importAssignments);
+            sectionGroupImports, scope.workgroupId, scope.year, selectedCourses.length, importTimes, importAssignments);
         } else {
           CourseActionCreators.importCoursesAndSectionGroups(
-            sectionGroupImports, scope.workgroupId, scope.year, selectedCourseIds.length, importTimes, importAssignments);
+            sectionGroupImports, scope.workgroupId, scope.year, selectedCourses.length, importTimes, importAssignments);
         }
       };
     }
