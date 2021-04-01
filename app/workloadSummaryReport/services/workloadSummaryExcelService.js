@@ -107,6 +107,8 @@ class WorkloadSummaryExcelService {
               row = [];
 
             } else {
+              row.push(academicYear);
+              row.push(instructorType);
               row.push(instructor.lastName + ", " + instructor.firstName);
               for (let i = 0; i < 8; i++) { row.push(""); }
               row.push(instructor.note);
