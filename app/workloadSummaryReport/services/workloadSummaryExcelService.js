@@ -6,11 +6,15 @@ class WorkloadSummaryExcelService {
         var data = [];
         var row = [];
 
+        const academicYear = localStorage.year.yearToAcademicYear();
         // INSTRUCTORS TABLE REPORT
         // Table header
         var header = [
-          'Instructor',
+          'Year',
+          'Instructor Type',
+          'Name',
           'Term',
+          'Course Type',
           'Description',
           'Offering',
           'Enrollment / Seats',
@@ -25,7 +29,6 @@ class WorkloadSummaryExcelService {
         state.calculations.calculatedView.instructorTypeIds.forEach(function(instructorTypeId){
           var description = state.instructorTypes.list[instructorTypeId].description;
           var instructorType = description.toUpperCase();
-          row.push(instructorType);
           data.push(row);
           row = [];
           data.push(header);
@@ -49,15 +52,25 @@ class WorkloadSummaryExcelService {
 
             if (assignments.length > 0){
               const instructorName = instructor.lastName ? instructor.lastName + ", " + instructor.firstName : instructor.fullName;
-              row.push(instructorName);
               assignments.forEach(function(assignment, i){
-                var firstElement = assignments[0];
+                let courseType = "";
+                const courseNumbers = parseInt(assignment.description.replace(/\D/g, ''));
 
-                if (assignment != firstElement){
-                  row.push(" ");
+                if (isNaN(courseNumbers)) {
+                  courseType = assignment.description;
+                } else if (courseNumbers < 100) {
+                  courseType = "Lower";
+                } else if (courseNumbers >= 200) {
+                  courseType = "Grad";
+                } else {
+                  courseType = "Upper";
                 }
 
+                row.push(academicYear);
+                row.push(instructorType);
+                row.push(instructorName);
                 row.push(assignment.term);
+                row.push(courseType);
                 row.push(assignment.description);
                 row.push(assignment.sequencePattern);
                 var actualEnrollment = assignment.actualEnrollment || 0;
