@@ -95,9 +95,9 @@ class WorkloadSummaryExcelService {
               });
 
               // Totals for instructor
-              row.push(" ","Totals");
+              row.push("", "", "Totals");
               row.push(instructor.totals.assignmentCount);
-              row.push(" ");
+              row.push("", "", "");
               row.push (instructor.totals.actualEnrollment + " / " + instructor.totals.seats);
               row.push (instructor.totals.previousEnrollment);
               row.push (instructor.totals.lastOfferedEnrollment);
