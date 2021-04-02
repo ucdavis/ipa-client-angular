@@ -224,16 +224,19 @@ class WorkloadSummaryExcelService {
 
         // Set column widths
         var wscols = [
-          {wch: 30},
-          {wch: 25},
           {wch: 20},
+          {wch: 24},
+          {wch: 24},
+          {wch: 24},
+          {wch: 22},
+          {wch: 22},
+          {wch: 10},
           {wch: 20},
-          {wch: 20},
-          {wch: 25},
+          {wch: 22},
           {wch: 30},
           {wch: 10},
           {wch: 10},
-          {wch: 50}
+          {wch: 50},
         ];
         ws['!cols'] = wscols;
 
