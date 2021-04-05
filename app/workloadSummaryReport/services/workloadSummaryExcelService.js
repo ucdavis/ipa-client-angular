@@ -6,11 +6,14 @@ class WorkloadSummaryExcelService {
         var data = [];
         var row = [];
 
-        const academicYear = localStorage.year.yearToAcademicYear();
+        const year = localStorage.year;
+        const academicYear = year.yearToAcademicYear();
+        const workgroupName = JSON.parse(localStorage.workgroup).name;
         // INSTRUCTORS TABLE REPORT
         // Table header
         var header = [
           'Year',
+          'Department',
           'Instructor Type',
           'Name',
           'Term',
@@ -67,6 +70,7 @@ class WorkloadSummaryExcelService {
                 }
 
                 row.push(academicYear);
+                row.push(workgroupName);
                 row.push(instructorType);
                 row.push(instructorName);
                 row.push(assignment.term);
@@ -95,7 +99,7 @@ class WorkloadSummaryExcelService {
               });
 
               // Totals for instructor
-              row.push("", "", "Totals");
+              row.push("", "", "", "Totals");
               row.push(instructor.totals.assignmentCount);
               row.push("", "", "");
               row.push (instructor.totals.actualEnrollment + " / " + instructor.totals.seats);
@@ -108,6 +112,7 @@ class WorkloadSummaryExcelService {
 
             } else {
               row.push(academicYear);
+              row.push(workgroupName);
               row.push(instructorType);
               row.push(instructor.lastName + ", " + instructor.firstName);
               for (let i = 0; i < 8; i++) { row.push(""); }
@@ -117,9 +122,9 @@ class WorkloadSummaryExcelService {
             }
 
           });
-          row.push(" ");
-          data.push(row);
-          row = [];
+          // row.push(" ");
+          // data.push(row);
+          // row = [];
         });
 
         // UNASSIGNED COURSES TABLE REPORT
@@ -225,6 +230,7 @@ class WorkloadSummaryExcelService {
         // Set column widths
         var wscols = [
           {wch: 20},
+          {wch: 15},
           {wch: 24},
           {wch: 24},
           {wch: 24},
@@ -246,9 +252,6 @@ class WorkloadSummaryExcelService {
         data.length = 0;
 
         /* Write workbook */
-        var workgroup = JSON.parse(localStorage.workgroup);
-        var workgroupName = workgroup.name;
-        var year = JSON.parse(localStorage.year);
         var filename = "WorkloadSummary-Report-" + workgroupName + "-" + year + ".xlsx";
         XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
       }
