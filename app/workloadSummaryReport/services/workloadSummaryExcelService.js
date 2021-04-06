@@ -32,8 +32,6 @@ class WorkloadSummaryExcelService {
         state.calculations.calculatedView.instructorTypeIds.forEach(function(instructorTypeId){
           var description = state.instructorTypes.list[instructorTypeId].description;
           var instructorType = description.toUpperCase();
-          data.push(row);
-          row = [];
           data.push(header);
 
           var instructors = state.calculations.calculatedView.byInstructorType[instructorTypeId];
