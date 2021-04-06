@@ -28,11 +28,12 @@ class WorkloadSummaryExcelService {
           'Note'
         ];
 
+        data.push(header);
+
         // Instructors Table
         state.calculations.calculatedView.instructorTypeIds.forEach(function(instructorTypeId){
           var description = state.instructorTypes.list[instructorTypeId].description;
           var instructorType = description.toUpperCase();
-          data.push(header);
 
           var instructors = state.calculations.calculatedView.byInstructorType[instructorTypeId];
           // Sort instructors by last name
