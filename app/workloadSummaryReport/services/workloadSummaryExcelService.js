@@ -9,10 +9,7 @@ class WorkloadSummaryExcelService {
         // INSTRUCTORS TABLE REPORT
         // Table header
         var header = [
-          'Year',
-          'Department',
-          'Instructor Type',
-          'Name',
+          'Instructor',
           'Term',
           'Description',
           'Offering',
