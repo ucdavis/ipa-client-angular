@@ -169,11 +169,6 @@ class WorkloadSummaryExcelService {
         data.push(row);
         row = [];
 
-        // Empty row
-        row.push(" ");
-        data.push(row);
-        row = [];
-
         // TOTALS TABLE REPORT
         row.push("ASSIGNMENT TOTALS");
           data.push(row);
