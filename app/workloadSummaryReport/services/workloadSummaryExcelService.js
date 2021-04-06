@@ -224,6 +224,8 @@ class WorkloadSummaryExcelService {
 
         /* Add worksheet to workbook */
         XLSX.utils.book_append_sheet(wb, ws, 'Workload Summary Report'); // eslint-disable-line no-undef
+        XLSX.utils.book_append_sheet(wb, this.generateRawDataSheet(), 'Raw Assignments Data'); // eslint-disable-line no-undef
+
         // Cleans data for the next sheet
         data.length = 0;
 
