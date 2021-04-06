@@ -224,6 +224,8 @@ class WorkloadSummaryExcelService {
 
         /* Add worksheet to workbook */
         XLSX.utils.book_append_sheet(wb, ws, 'Workload Summary Report'); // eslint-disable-line no-undef
+        XLSX.utils.book_append_sheet(wb, this.generateRawDataSheet(), 'Raw Assignments Data'); // eslint-disable-line no-undef
+
         // Cleans data for the next sheet
         data.length = 0;
 
@@ -233,6 +235,136 @@ class WorkloadSummaryExcelService {
         var year = JSON.parse(localStorage.year);
         var filename = "WorkloadSummary-Report-" + workgroupName + "-" + year + ".xlsx";
         XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
+      },
+      generateRawDataSheet() {
+        const state = WorkloadSummaryReducers._state;
+        const year = localStorage.year;
+        const academicYear = year.yearToAcademicYear();
+        const workgroupName = JSON.parse(localStorage.workgroup).name;
+
+        let data = [];
+        let row = [];
+
+        let headers = [
+          'Year',
+          'Department',
+          'Instructor Type',
+          'Name',
+          'Term',
+          'Course Type',
+          'Description',
+          'Offering',
+          'Enrollment / Seats',
+          'Previous Enrollment (YoY)',
+          'Previous Enrollment (Last Offered)',
+          'Units',
+          'SCH',
+          'Note'
+        ];
+
+        data.push(headers);
+
+        state.calculations.calculatedView.instructorTypeIds.forEach(function(instructorTypeId){
+          var description = state.instructorTypes.list[instructorTypeId].description;
+          var instructorType = description.toUpperCase();
+
+          var instructors = state.calculations.calculatedView.byInstructorType[instructorTypeId];
+          // Sort instructors by last name
+          instructors.sort(function(a,b){
+            var nameA = a.lastName;
+            var nameB = b.lastName;
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0;
+          });
+
+          instructors.forEach(function(instructor){
+            var assignments = instructor.assignments;
+
+            if (assignments.length > 0){
+              const instructorName = instructor.lastName ? instructor.lastName + ", " + instructor.firstName : instructor.fullName;
+              assignments.forEach(function(assignment, i){
+                let courseType = "";
+                const courseNumbers = parseInt(assignment.description.replace(/\D/g, ''));
+
+                if (isNaN(courseNumbers)) {
+                  courseType = assignment.description;
+                } else if (courseNumbers < 100) {
+                  courseType = "Lower";
+                } else if (courseNumbers >= 200) {
+                  courseType = "Grad";
+                } else {
+                  courseType = "Upper";
+                }
+
+                row.push(academicYear);
+                row.push(workgroupName);
+                row.push(instructorType);
+                row.push(instructorName);
+                row.push(assignment.term);
+                row.push(courseType);
+                row.push(assignment.description);
+                row.push(assignment.sequencePattern);
+                var actualEnrollment = assignment.actualEnrollment || 0;
+                var seats = assignment.seats || 0;
+                var enrollmentPercentage = assignment.enrollmentPercentage || 0;
+                row.push(actualEnrollment + " / " + seats + " (" + enrollmentPercentage + " %)");
+                row.push(assignment.previousEnrollment);
+                var lastOfferedTermDescription = assignment.lastOfferedTermDescription;
+
+                if (lastOfferedTermDescription) {
+                  row.push(assignment.lastOfferedEnrollment + " (" + assignment.lastOfferedTermDescription + ")");
+
+                } else {
+                  row.push(assignment.lastOfferedEnrollment);
+                }
+
+                row.push(assignment.units);
+                row.push(assignment.studentCreditHours);
+                if (i === 0) { row.push(instructor.note); }
+                data.push(row);
+                row = [];
+              });
+            } else {
+              row.push(academicYear);
+              row.push(workgroupName);
+              row.push(instructorType);
+              row.push(instructor.lastName + ", " + instructor.firstName);
+              for (let i = 0; i < 8; i++) { row.push(""); }
+              row.push(instructor.note);
+              data.push(row);
+              row = [];
+            }
+
+          });
+        });
+
+        let rawDataSheet = XLSX.utils.aoa_to_sheet(data); // eslint-disable-line no-undef
+
+        // Set column widths
+        const cols = [
+          {wch: 10},
+          {wch: 15},
+          {wch: 24},
+          {wch: 24},
+          {wch: 24},
+          {wch: 22},
+          {wch: 22},
+          {wch: 10},
+          {wch: 20},
+          {wch: 22},
+          {wch: 30},
+          {wch: 10},
+          {wch: 10},
+          {wch: 50},
+        ];
+        rawDataSheet['!cols'] = cols;
+
+        return rawDataSheet;
       }
     };
   }
