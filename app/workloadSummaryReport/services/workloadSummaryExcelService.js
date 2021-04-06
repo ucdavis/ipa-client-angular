@@ -6,9 +6,6 @@ class WorkloadSummaryExcelService {
         var data = [];
         var row = [];
 
-        const year = localStorage.year;
-        const academicYear = year.yearToAcademicYear();
-        const workgroupName = JSON.parse(localStorage.workgroup).name;
         // INSTRUCTORS TABLE REPORT
         // Table header
         var header = [
@@ -17,7 +14,6 @@ class WorkloadSummaryExcelService {
           'Instructor Type',
           'Name',
           'Term',
-          'Course Type',
           'Description',
           'Offering',
           'Enrollment / Seats',
@@ -28,12 +24,14 @@ class WorkloadSummaryExcelService {
           'Note'
         ];
 
-        data.push(header);
-
         // Instructors Table
         state.calculations.calculatedView.instructorTypeIds.forEach(function(instructorTypeId){
           var description = state.instructorTypes.list[instructorTypeId].description;
           var instructorType = description.toUpperCase();
+          row.push(instructorType);
+          data.push(row);
+          row = [];
+          data.push(header);
 
           var instructors = state.calculations.calculatedView.byInstructorType[instructorTypeId];
           // Sort instructors by last name
@@ -54,26 +52,15 @@ class WorkloadSummaryExcelService {
 
             if (assignments.length > 0){
               const instructorName = instructor.lastName ? instructor.lastName + ", " + instructor.firstName : instructor.fullName;
+              row.push(instructorName);
               assignments.forEach(function(assignment, i){
-                let courseType = "";
-                const courseNumbers = parseInt(assignment.description.replace(/\D/g, ''));
+                var firstElement = assignments[0];
 
-                if (isNaN(courseNumbers)) {
-                  courseType = assignment.description;
-                } else if (courseNumbers < 100) {
-                  courseType = "Lower";
-                } else if (courseNumbers >= 200) {
-                  courseType = "Grad";
-                } else {
-                  courseType = "Upper";
+                if (assignment != firstElement){
+                  row.push(" ");
                 }
 
-                row.push(academicYear);
-                row.push(workgroupName);
-                row.push(instructorType);
-                row.push(instructorName);
                 row.push(assignment.term);
-                row.push(courseType);
                 row.push(assignment.description);
                 row.push(assignment.sequencePattern);
                 var actualEnrollment = assignment.actualEnrollment || 0;
@@ -98,9 +85,9 @@ class WorkloadSummaryExcelService {
               });
 
               // Totals for instructor
-              row.push("", "", "", "Totals");
+              row.push(" ","Totals");
               row.push(instructor.totals.assignmentCount);
-              row.push("", "", "");
+              row.push(" ");
               row.push (instructor.totals.actualEnrollment + " / " + instructor.totals.seats);
               row.push (instructor.totals.previousEnrollment);
               row.push (instructor.totals.lastOfferedEnrollment);
@@ -110,9 +97,6 @@ class WorkloadSummaryExcelService {
               row = [];
 
             } else {
-              row.push(academicYear);
-              row.push(workgroupName);
-              row.push(instructorType);
               row.push(instructor.lastName + ", " + instructor.firstName);
               for (let i = 0; i < 8; i++) { row.push(""); }
               row.push(instructor.note);
@@ -121,9 +105,9 @@ class WorkloadSummaryExcelService {
             }
 
           });
-          // row.push(" ");
-          // data.push(row);
-          // row = [];
+          row.push(" ");
+          data.push(row);
+          row = [];
         });
 
         // UNASSIGNED COURSES TABLE REPORT
@@ -166,6 +150,11 @@ class WorkloadSummaryExcelService {
         row.push(totals.previousEnrollment);
         row.push(totals.units);
         row.push(totals.studentCreditHours);
+        data.push(row);
+        row = [];
+
+        // Empty row
+        row.push(" ");
         data.push(row);
         row = [];
 
@@ -223,20 +212,16 @@ class WorkloadSummaryExcelService {
 
         // Set column widths
         var wscols = [
+          {wch: 30},
+          {wch: 25},
           {wch: 20},
-          {wch: 15},
-          {wch: 24},
-          {wch: 24},
-          {wch: 24},
-          {wch: 22},
-          {wch: 22},
-          {wch: 10},
           {wch: 20},
-          {wch: 22},
+          {wch: 20},
+          {wch: 25},
           {wch: 30},
           {wch: 10},
           {wch: 10},
-          {wch: 50},
+          {wch: 50}
         ];
         ws['!cols'] = wscols;
 
@@ -244,9 +229,11 @@ class WorkloadSummaryExcelService {
         XLSX.utils.book_append_sheet(wb, ws, 'Workload Summary Report'); // eslint-disable-line no-undef
         // Cleans data for the next sheet
         data.length = 0;
-        XLSX.utils.book_append_sheet(wb, this.generateRawDataSheet(), 'Raw Assignments Data'); // eslint-disable-line no-undef
 
         /* Write workbook */
+        var workgroup = JSON.parse(localStorage.workgroup);
+        var workgroupName = workgroup.name;
+        var year = JSON.parse(localStorage.year);
         var filename = "WorkloadSummary-Report-" + workgroupName + "-" + year + ".xlsx";
         XLSX.writeFile(wb, filename); // eslint-disable-line no-undef
       },
