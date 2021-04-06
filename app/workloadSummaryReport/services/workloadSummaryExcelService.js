@@ -238,15 +238,14 @@ class WorkloadSummaryExcelService {
       },
       generateRawDataSheet() {
         const state = WorkloadSummaryReducers._state;
-        let data = [];
-        let row = [];
-
         const year = localStorage.year;
         const academicYear = year.yearToAcademicYear();
         const workgroupName = JSON.parse(localStorage.workgroup).name;
-        // INSTRUCTORS TABLE REPORT
-        // Table header
-        let header = [
+
+        let data = [];
+        let row = [];
+
+        let headers = [
           'Year',
           'Department',
           'Instructor Type',
@@ -263,7 +262,7 @@ class WorkloadSummaryExcelService {
           'Note'
         ];
 
-        data.push(header);
+        data.push(headers);
 
         state.calculations.calculatedView.instructorTypeIds.forEach(function(instructorTypeId){
           var description = state.instructorTypes.list[instructorTypeId].description;
