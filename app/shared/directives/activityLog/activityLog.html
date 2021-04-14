@@ -7,16 +7,37 @@
       <div class="activity-log__dismiss-ui" ng-click="close()">×</div>
     </div>
     <div class="activity-log__content">
-      <div style="display: flex; justify-content: center">
+      <div style="display: flex; justify-content: center; align-items: center">
+        <span style="margin-right: 3em; margin-left: auto;"></span>
         <span class="activity-log__datepicker">
           <label for="start">Start date:</label>
-          <input type="date" id="auditLogStart" ng-model="startDate" min="{{ minDate }}" max="{{ startMax }}" />
+          <input
+            type="date"
+            id="auditLogStart"
+            ng-model="startDate"
+            min="{{ minDate }}"
+            max="{{ startMax }}"
+          />
         </span>
 
         <span class="activity-log__datepicker">
           <label for="start">End date:</label>
-          <input type="date" id="auditLogEnd" ng-model="endDate" min="{{ endMin }}" max="{{ maxDate }}" />
+          <input
+            type="date"
+            id="auditLogEnd"
+            ng-model="endDate"
+            min="{{ endMin }}"
+            max="{{ maxDate }}"
+          />
         </span>
+        <span></span>
+        <button
+          class="btn btn-default"
+          style="margin-right: 3em; margin-left: auto"
+          ng-click="download()"
+        >
+           Download
+        </button>
       </div>
       <table class="activity-log__table">
         <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.2)">
@@ -27,14 +48,16 @@
           ng-repeat="logEntry in pagedData"
           ng-class-odd="'activity-log__row--odd'"
         >
-          <td class="activity-log__table--cell">{{ dateToString(logEntry.createdOn) }}</td>
+          <td class="activity-log__table--cell">
+            {{ dateToString(logEntry.createdOn) }}
+          </td>
           <td
             ng-init="lines = formatMessage(logEntry.message)"
             class="activity-log__table--cell"
-            style="display: flex; flex-direction: column;"
+            style="display: flex; flex-direction: column"
           >
             <span ng-bind-html="lines[0]"></span
-            ><span ng-bind-html="lines[1]" style="text-indent: 1em;"></span>
+            ><span ng-bind-html="lines[1]" style="text-indent: 1em"></span>
           </td>
         </tr>
       </table>
