@@ -1,6 +1,6 @@
 import './activityLog.css';
 
-let activityLog = function (ApiService) {
+let activityLog = function (ApiService, AuditLogService) {
   return {
     restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
     template: require('./activityLog.html'), // directive html found here:
@@ -105,8 +105,10 @@ let activityLog = function (ApiService) {
       scope.download = function () {
         const workgroupId = JSON.parse(localStorage.workgroup).id;
         const year = localStorage.year;
+        const module = location.pathname.split('/')[1];
+        const moduleName = AuditLogService.getFullModuleName(module);
 
-        ApiService.postWithResponseType("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Budget" + "/auditLogs/download", '', '', 'arraybuffer')
+        ApiService.postWithResponseType("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/" + encodeURIComponent(moduleName) + "/auditLogs/download", '', '', 'arraybuffer')
           .then(response => {
             var url = window.URL.createObjectURL(
               new Blob([response.data], { type: 'application/vnd.ms-excel' })
