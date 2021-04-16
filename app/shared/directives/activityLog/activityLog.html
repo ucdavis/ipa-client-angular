@@ -7,36 +7,37 @@
       <div class="activity-log__dismiss-ui" ng-click="close()">×</div>
     </div>
     <div class="activity-log__content">
-      <div style="display: flex; justify-content: center; align-items: center">
-        <span style="margin-right: 3em; margin-left: auto;"></span>
-        <span class="activity-log__datepicker">
-          <label for="start">Start date:</label>
-          <input
-            type="date"
-            id="auditLogStart"
-            ng-model="startDate"
-            min="{{ minDate }}"
-            max="{{ startMax }}"
-          />
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="margin-left: 3em;">
+          <span>
+            <label for="start">Start date:</label>
+            <input
+              type="date"
+              id="start"
+              ng-model="startDate"
+              min="{{ minDate }}"
+              max="{{ startMax }}"
+            />
+          </span>
+          <span style="margin-left: 1em;">
+            <label for="end">End date:</label>
+            <input
+              type="date"
+              id="end"
+              ng-model="endDate"
+              min="{{ endMin }}"
+              max="{{ maxDate }}"
+            />
+          </span>
         </span>
 
-        <span class="activity-log__datepicker">
-          <label for="start">End date:</label>
-          <input
-            type="date"
-            id="auditLogEnd"
-            ng-model="endDate"
-            min="{{ endMin }}"
-            max="{{ maxDate }}"
-          />
-        </span>
-        <span></span>
         <button
           class="btn btn-default"
-          style="margin-right: 3em; margin-left: auto"
+          style="margin-top: 20px; margin-right: 3em; margin-bottom: 20px"
           ng-click="download()"
         >
-           Download
+          <span class="glyphicon glyphicon-download-alt" style="margin-right: 3px;"></span>
+          Download as Excel
         </button>
       </div>
       <table class="activity-log__table">
@@ -62,14 +63,16 @@
         </tr>
       </table>
       <div class="activity-log__footer">
-        <uib-pagination
-          ng-model="currentPage"
-          total-items="totalItems"
-          items-per-page="itemsPerPage"
-          force-ellipses="true"
-          max-size="10"
-          boundary-link-numbers="true"
-        ></uib-pagination>
+        <span style="flex: 1; display: flex; justify-content: center">
+          <uib-pagination
+            ng-model="currentPage"
+            total-items="totalItems"
+            items-per-page="itemsPerPage"
+            force-ellipses="true"
+            max-size="10"
+            boundary-link-numbers="true"
+          ></uib-pagination>
+        </span>
       </div>
     </div>
   </div>
