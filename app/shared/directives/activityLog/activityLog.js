@@ -116,7 +116,7 @@ let activityLog = function (ApiService, AuditLogService) {
             var a = window.document.createElement('a'); // eslint-disable-line
             a.href = url;
             var workgroupInfo = JSON.parse(localStorage.getItem('workgroup'));
-            a.download = `Audit-Log-${workgroupInfo.name}-${localStorage.getItem('year')}.xlsx`;
+            a.download = `Audit-Log-${workgroupInfo.name}-${localStorage.getItem('year')}-${moduleName}.xlsx`;
             window.document.body.appendChild(a); // eslint-disable-line
             a.click();
             a.remove();  //afterwards we remove the element again
