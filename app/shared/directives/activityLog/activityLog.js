@@ -16,6 +16,7 @@ let activityLog = function (ApiService, AuditLogService) {
       scope.pagedData = [];
       scope.startDate;
       scope.endDate;
+      scope.isDisabled = false;
 
       scope.$watchGroup(['startDate', 'endDate', 'currentPage'], function () {
         if (scope.logData && scope.logData.length > 0) {
@@ -103,6 +104,7 @@ let activityLog = function (ApiService, AuditLogService) {
       };
 
       scope.download = function () {
+        scope.isDisabled = true;
         const workgroupId = JSON.parse(localStorage.workgroup).id;
         const year = localStorage.year;
         const module = location.pathname.split('/')[1];
@@ -120,6 +122,8 @@ let activityLog = function (ApiService, AuditLogService) {
             window.document.body.appendChild(a); // eslint-disable-line
             a.click();
             a.remove();  //afterwards we remove the element again
+
+            scope.isDisabled = false;
           });
       };
     },
