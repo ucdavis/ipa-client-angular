@@ -20,6 +20,7 @@ import types from './helpers/types.js'; // eslint-disable-line no-unused-vars
 import SharedCtrl from './controllers/SharedCtrl.js';
 
 // Services
+import AuditLogService from './services/AuditLogService.js';
 import AuthService from './services/AuthService.js';
 import ApiService from './services/ApiService.js';
 import TeachingAssignmentService from './services/TeachingAssignmentService.js';
@@ -261,6 +262,7 @@ const sharedApp = angular.module("sharedApp", sharedAppDependencies) // eslint-d
 .config(config)
 .controller('SharedCtrl', SharedCtrl)
 .service('ApiService', ApiService)
+.service('AuditLogService', AuditLogService)
 .service('AuthService', AuthService)
 .service('TeachingAssignmentService', TeachingAssignmentService)
 .service('SectionService', SectionService)
