@@ -40,16 +40,17 @@
 
 .activity-log__content {
   background-color: white;
-  height: 50%;
-}
-
-.activity-log__datepicker {
-  margin: 10px;
 }
 
 .activity-log__table {
   margin: 0 auto;
   width: 95%;
+}
+
+.activity-log__tbody {
+  display: block;
+  max-height: 50vh;
+  overflow-y: auto;
 }
 
 .activity-log__table--cell {

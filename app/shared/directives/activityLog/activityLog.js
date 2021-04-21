@@ -1,6 +1,6 @@
 import './activityLog.css';
 
-let activityLog = function () {
+let activityLog = function (ApiService, AuditLogService) {
   return {
     restrict: 'E', // Use this via an element selector <ipa-modal></ipa-modal>
     template: require('./activityLog.html'), // directive html found here:
@@ -16,6 +16,7 @@ let activityLog = function () {
       scope.pagedData = [];
       scope.startDate;
       scope.endDate;
+      scope.isDisabled = false;
 
       scope.$watchGroup(['startDate', 'endDate', 'currentPage'], function () {
         if (scope.logData && scope.logData.length > 0) {
@@ -100,6 +101,30 @@ let activityLog = function () {
         scope.isVisible = true;
         // Disables page scrolling while modal is up
         $('body').css('overflow-y', 'hidden'); // eslint-disable-line no-undef
+      };
+
+      scope.download = function () {
+        scope.isDisabled = true;
+        const workgroupId = JSON.parse(localStorage.workgroup).id;
+        const year = localStorage.year;
+        const module = location.pathname.split('/')[1];
+        const moduleName = AuditLogService.getFullModuleName(module);
+
+        ApiService.postWithResponseType("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/" + encodeURIComponent(moduleName) + "/auditLogs/download", '', '', 'arraybuffer')
+          .then(response => {
+            var url = window.URL.createObjectURL(
+              new Blob([response.data], { type: 'application/vnd.ms-excel' })
+            );
+            var a = window.document.createElement('a'); // eslint-disable-line
+            a.href = url;
+            var workgroupInfo = JSON.parse(localStorage.getItem('workgroup'));
+            a.download = `Audit-Log-${workgroupInfo.name}-${localStorage.getItem('year')}-${moduleName}.xlsx`;
+            window.document.body.appendChild(a); // eslint-disable-line
+            a.click();
+            a.remove();  //afterwards we remove the element again
+
+            scope.isDisabled = false;
+          });
       };
     },
   };

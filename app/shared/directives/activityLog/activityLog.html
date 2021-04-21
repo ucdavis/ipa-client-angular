@@ -7,46 +7,75 @@
       <div class="activity-log__dismiss-ui" ng-click="close()">×</div>
     </div>
     <div class="activity-log__content">
-      <div style="display: flex; justify-content: center">
-        <span class="activity-log__datepicker">
-          <label for="start">Start date:</label>
-          <input type="date" id="auditLogStart" ng-model="startDate" min="{{ minDate }}" max="{{ startMax }}" />
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="margin-left: 3em;">
+          <span>
+            <label for="start">Start date:</label>
+            <input
+              type="date"
+              id="start"
+              ng-model="startDate"
+              min="{{ minDate }}"
+              max="{{ startMax }}"
+            />
+          </span>
+          <span style="margin-left: 1em;">
+            <label for="end">End date:</label>
+            <input
+              type="date"
+              id="end"
+              ng-model="endDate"
+              min="{{ endMin }}"
+              max="{{ maxDate }}"
+            />
+          </span>
         </span>
 
-        <span class="activity-log__datepicker">
-          <label for="start">End date:</label>
-          <input type="date" id="auditLogEnd" ng-model="endDate" min="{{ endMin }}" max="{{ maxDate }}" />
-        </span>
+        <button
+          class="btn btn-default"
+          style="margin-top: 20px; margin-right: 3em; margin-bottom: 20px"
+          ng-click="download()"
+          ng-disabled="isDisabled"
+        >
+          <span class="glyphicon glyphicon-download-alt" style="margin-right: 3px;"></span>
+          Download as Excel
+        </button>
       </div>
       <table class="activity-log__table">
-        <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.2)">
-          <th style="width: 10%; padding-left: 15px"><h3>Date</h3></th>
-          <th style="width: 90%; padding-left: 15px"><h3>Message</h3></th>
-        </tr>
-        <tr
-          ng-repeat="logEntry in pagedData"
-          ng-class-odd="'activity-log__row--odd'"
-        >
-          <td class="activity-log__table--cell">{{ dateToString(logEntry.createdOn) }}</td>
-          <td
-            ng-init="lines = formatMessage(logEntry.message)"
-            class="activity-log__table--cell"
-            style="display: flex; flex-direction: column;"
+        <tbody class="activity-log__tbody">
+          <tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.2)">
+            <th style="width: 10%; padding-left: 15px"><h3>Date</h3></th>
+            <th style="width: 90%; padding-left: 15px"><h3>Message</h3></th>
+          </tr>
+          <tr
+            ng-repeat="logEntry in pagedData"
+            ng-class-odd="'activity-log__row--odd'"
           >
-            <span ng-bind-html="lines[0]"></span
-            ><span ng-bind-html="lines[1]" style="text-indent: 1em;"></span>
-          </td>
-        </tr>
+            <td class="activity-log__table--cell">
+              {{ dateToString(logEntry.createdOn) }}
+            </td>
+            <td
+              ng-init="lines = formatMessage(logEntry.message)"
+              class="activity-log__table--cell"
+              style="display: flex; flex-direction: column"
+            >
+              <span ng-bind-html="lines[0]"></span
+              ><span ng-bind-html="lines[1]" style="text-indent: 1em"></span>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <div class="activity-log__footer">
-        <uib-pagination
-          ng-model="currentPage"
-          total-items="totalItems"
-          items-per-page="itemsPerPage"
-          force-ellipses="true"
-          max-size="10"
-          boundary-link-numbers="true"
-        ></uib-pagination>
+        <span style="flex: 1; display: flex; justify-content: center">
+          <uib-pagination
+            ng-model="currentPage"
+            total-items="totalItems"
+            items-per-page="itemsPerPage"
+            force-ellipses="true"
+            max-size="10"
+            boundary-link-numbers="true"
+          ></uib-pagination>
+        </span>
       </div>
     </div>
   </div>
