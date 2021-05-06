@@ -62,7 +62,7 @@
     "selectize": "0.12.6",
     "toastr": "2.1.4",
     "ui-select": "0.19.8",
-    "underscore": "1.8.3",
+    "underscore": "1.12.1",
     "xlsx": "0.14.1"
   },
   "engines": {
