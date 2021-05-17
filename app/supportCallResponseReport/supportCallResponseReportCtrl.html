@@ -161,7 +161,7 @@
           </td>
 
           <!-- preferences -->
-          <td ng-if="view.state.ui.showPreferences">
+          <td ng-if="view.state.ui.showPreferences && supportStaff.supportCallResponse.submitted">
             <div class="support-call-response-report__cell">
               <div ng-repeat="preference in supportStaff.preferences" class="support-call-response-report__cell--preference">
                   <p
@@ -177,6 +177,10 @@
                 </div>
               </div>
             </div>
+          </td>
+
+          <td ng-if="view.state.ui.showPreferences && !supportStaff.supportCallResponse.submitted">
+            <div class="support-call-response-report__cell"></div>
           </td>
 
           <!-- teaching qualifications -->
