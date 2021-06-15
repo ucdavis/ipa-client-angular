@@ -387,8 +387,8 @@ class RegistrarReconciliationReportStateService {
 							}));
 
 						var localFilters = JSON.parse(localStorage.getItem("registrarReportActivityTypeFilters"));
-debugger;
-						if (JSON.stringify(localFilters.map(f => f.typeCode).sort()) === JSON.stringify(remoteFilters.map(f => f.typeCode).sort())) {
+
+						if (JSON.stringify(localFilters?.map(f => f.typeCode).sort()) === JSON.stringify(remoteFilters.map(f => f.typeCode).sort())) {
 							uiState.filters = localFilters;
 						} else {
 							uiState.filters = remoteFilters;
