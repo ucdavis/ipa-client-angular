@@ -250,7 +250,9 @@ class RegistrarReconciliationReportStateService {
 							// Apply the changes on the activity
 							activity[action.payload.property] = action.payload.activity[action.payload.property];
 							// Delete the applied change from the dwChanges object
-							delete activity.dwChanges[action.payload.property];
+							if (activity.dwChanges) {
+								delete activity.dwChanges[action.payload.property];
+							}
 							// Delete dwChanges if this was the last change
 							if (Object.keys(activity.dwChanges).length === 0) {
 								delete activity.dwChanges;
