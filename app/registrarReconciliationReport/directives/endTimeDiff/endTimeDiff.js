@@ -12,7 +12,7 @@ let endTimeDiff = function (RegistrarReconciliationReportActionCreators) {
 				var activity = {
 					id: scope.activity.id,
 					typeCode: scope.activity.typeCode,
-					endTime: moment(endTime, "HHmm").format("HH:mm:ss") // eslint-disable-line no-undef
+					endTime: endTime !== null ? moment(endTime, "HHmm").format("HH:mm:ss") : null // eslint-disable-line no-undef
 				};
 				RegistrarReconciliationReportActionCreators.updateActivity(activity, 'endTime');
 			};
