@@ -124,6 +124,7 @@ class CourseStateService {
             // Insert new course
             courses.list[action.payload.course.id] = new Course(action.payload.course);
             courses.ids.splice(newCourseIndex, 0, action.payload.course.id);
+            courses.ids = _array_sortIdsByProperty(courses.list, ["subjectCode", "courseNumber", "sequencePattern"]);
             return courses;
           case ActionTypes.DELETE_MULTIPLE_COURSES:
             action.payload.courseIds.forEach(function(courseId) {
@@ -252,6 +253,14 @@ class CourseStateService {
             sectionGroups.selectedSectionGroup.sections = action.payload.sections;
             sectionGroups.newSectionGroup = null;
             return sectionGroups;
+          case ActionTypes.CREATE_SECTION_GROUP:
+            sectionGroups.list[action.payload.sectionGroup.id] = new SectionGroup(action.payload.sectionGroup);
+            sectionGroups.list[action.payload.sectionGroup.id].sectionIds = [action.payload.sections[0].id];
+            sectionGroups.ids.push(action.payload.sectionGroup.id);
+            sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+            sectionGroups.selectedSectionGroup.sections = action.payload.sections;
+            sectionGroups.newSectionGroup = null;
+            return sectionGroups;
           case ActionTypes.REMOVE_SECTION_GROUP:
             var sectionGroupIndex = sectionGroups.ids.indexOf(action.payload.sectionGroup.id);
             sectionGroups.ids.splice(sectionGroupIndex, 1);
@@ -275,6 +284,7 @@ class CourseStateService {
                 return 0;
               })
               .map(function (section) { return section.id; });
+            sectionGroups.list[action.payload.sectionGroup.id].sections = action.payload.sections;
             return sectionGroups;
           case ActionTypes.CREATE_SECTION:
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.section.sectionGroupId];
@@ -314,6 +324,13 @@ class CourseStateService {
           case ActionTypes.END_IMPORT_MODE:
             sectionGroups.importList = null;
             return sectionGroups;
+          case ActionTypes.UPDATE_COURSE:
+              sectionGroups.ids.forEach(function (sectionId) {
+                if (sectionGroups.list[sectionId].sectionIds){
+                  delete sectionGroups.list[sectionId].sectionIds;
+                }
+              });
+              return sectionGroups;
           default:
             return sectionGroups;
         }
@@ -344,6 +361,10 @@ class CourseStateService {
             sections.list[action.payload.sections[0].id] = new Section(action.payload.sections[0]);
             sections.ids.push(action.payload.sections[0].id);
             return sections;
+          case ActionTypes.CREATE_SECTION_GROUP:
+              sections.list[action.payload.sections[0].id] = new Section(action.payload.sections[0]);
+              sections.ids.push(action.payload.sections[0].id);
+              return sections;
           case ActionTypes.CREATE_SECTION:
             sections.list[action.payload.section.id] = new Section(action.payload.section);
             sections.ids.push(action.payload.section.id);
@@ -448,6 +469,10 @@ class CourseStateService {
               searchingCourseToImport: false,
               selectedCourseRowIds: [],
               isCourseDeleteModalOpen: false,
+              convertSectionsModal: {
+                isVisible: false,
+                newSequence: null
+              },
               moveCourseModal: {
                 show: false,
                 selectedSectionGroup: null,
@@ -567,6 +592,10 @@ class CourseStateService {
             return uiState;
           case ActionTypes.CLOSE_COURSE_DELETION_MODAL:
             uiState.isCourseDeleteModalOpen = false;
+            return uiState;
+          case ActionTypes.TOGGLE_CONVERT_SECTIONS_MODAL:
+            uiState.convertSectionsModal.isVisible = !uiState.convertSectionsModal.isVisible;
+            uiState.convertSectionsModal.sequencePattern = action.payload.sequencePattern;
             return uiState;
           case ActionTypes.TOGGLE_MOVE_COURSE_MODAL:
             uiState.moveCourseModal.show = !uiState.moveCourseModal.show;

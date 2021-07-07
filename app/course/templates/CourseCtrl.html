@@ -12,6 +12,12 @@
   </ipa-modal>
 
   <ipa-modal
+    is-visible="view.state.uiState.convertSectionsModal.isVisible"
+    header-text="Convert Course Offering">
+      <convert-sections-modal is-visible="view.state.uiState.convertSectionsModal.isVisible" selected-entity="view.selectedEntity" workgroup-id="workgroupId" year="year" state="view.state"></convert-sections-modal>
+  </ipa-modal>
+
+  <ipa-modal
     is-visible="view.state.uiState.moveCourseModal.show"
     header-text="Confirm Move Offering"
   >

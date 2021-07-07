@@ -38,6 +38,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         ActionTypes.UPDATE_SECTION_GROUP,
         ActionTypes.REMOVE_SECTION_GROUP,
         ActionTypes.ADD_SECTION_GROUP,
+        ActionTypes.CREATE_SECTION_GROUP,
         ActionTypes.DELETE_MULTIPLE_COURSES,
         ActionTypes.MASS_ASSIGN_TAGS,
         ActionTypes.CREATE_SECTION,
@@ -56,11 +57,30 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           return;
         }
 
-        if (data.action.type == ActionTypes.ADD_SECTION_GROUP) {
+        if (data.action.type == ActionTypes.ADD_SECTION_GROUP || data.action.type == ActionTypes.CREATE_SECTION_GROUP) {
           // Indicate on the textbox that the sectionGroup is offered
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"]').addClass("is-offered"); // eslint-disable-line no-undef
           $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'placeholder', '0 planned seats' ); // eslint-disable-line
+          $('tr[data-course-id="' + data.action.payload.sectionGroup.courseId + '"] td[data-term-code="' + data.action.payload.sectionGroup.termCode + '"] input').attr( 'value', data.action.payload.sectionGroup.plannedSeats ); // eslint-disable-line
 
+          if (data.action.type == ActionTypes.CREATE_SECTION_GROUP){
+            scope.previouslySelectedCourseId = data.state.uiState.selectedCourseId;
+            scope.previouslySelectedTermCode = data.state.uiState.selectedTermCode;
+
+            // Remove existing highlighting
+            element.find('tbody > tr').removeClass("selected-tr");
+            element.find('tbody > tr > td').removeClass("selected-td");
+
+            data.state.uiState.selectedCourseId = data.action.payload.sectionGroup.courseId;
+            $('tr[data-course-id="' + data.state.uiState.selectedCourseId + '"] td[data-term-code="' + data.state.uiState.selectedTermCode + '"]').addClass("selected-td"); // eslint-disable-line no-undef
+
+            scope.manuallyDeselectAllCourseRows();
+            scope.manuallyToggleSelectedCourse(data.state.uiState.selectedCourseId);
+            CourseActionCreators.deselectAllCourseRows();
+            CourseActionCreators.toggleSelectCourse(data.state.uiState.selectedCourseId);
+
+            return;
+          }
 
           return;
         }

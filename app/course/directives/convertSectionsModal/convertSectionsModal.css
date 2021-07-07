@@ -1,0 +1,34 @@
+.convert-sections-modal .convert-sections-modal-footer {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.convert-sections-modal .convert-sections-warning {
+  padding: 20px;
+}
+
+.convert-sections-modal .sub-detail {
+  font-weight: bold;
+  font-size: 14px;
+  padding-top: 15px;
+}
+
+.convert-sections-modal .btn-default {
+  background-color: white;
+  margin-right: 10px;
+}
+
+.convertion-details {
+  display: flex;
+}
+
+.conversion-details-example {
+  flex: 50%;
+}
+
+.course-details_update-sequence {
+  width: 135px;
+}

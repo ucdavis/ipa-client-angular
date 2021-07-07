@@ -1,3 +1,5 @@
+import './sectionGroupDetails.css';
+
 let sectionGroupDetails = function (CourseActionCreators, Term) {
   return {
     restrict: 'E',
@@ -106,6 +108,10 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         let selectedEntity = scope.view.selectedEntity;
         let course = scope.view.state.courses.list[selectedEntity.courseId];
         return course.isSeries();
+      };
+
+      scope.convertOffering = function (){
+        CourseActionCreators.toggleConvertSectionsModal();
       };
     }
   };

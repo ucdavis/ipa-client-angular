@@ -111,6 +111,15 @@
           overflow-auto="true"
         ></ipa-dropdown>
 
+        <div class="section-group-details__convert-offering-container">
+          <button
+            class="btn btn-primary"
+            ng-click="convertOffering()"
+            ng-if="!isLocked()">
+            Convert to {{isSeries() ? "Lecture" : "Discussion"}}
+          </button>
+        </div>
+
         <button
           class="btn btn-danger"
           ng-if="!isLocked()"

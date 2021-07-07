@@ -582,6 +582,14 @@ class CourseActionCreators {
           }
         });
       },
+      toggleConvertSectionsModal: function(sequencePattern) {
+        CourseStateService.reduce({
+          type: ActionTypes.TOGGLE_CONVERT_SECTIONS_MODAL,
+          payload: {
+            sequencePattern: sequencePattern
+          }
+        });
+      },
       _generateAttentionFlags: function(payload) {
         var sectionGroups = [];
         var sections = [];
@@ -609,6 +617,43 @@ class CourseActionCreators {
         }
 
         return flagsGenerated;
+      },
+      convertCourseOffering: function (workgroupId, year, sectionGroup, sequencePattern) {
+
+        CourseService.convertCourseOffering(workgroupId, year, sectionGroup, sequencePattern).then(function (details) {
+          window.ipa_analyze_event('courses', 'course offering converted');
+          var course = details[0];
+          var sectionGroup = details[1];
+          $rootScope.$emit('toast', { message: "Converted course offering.", type: "SUCCESS" });
+
+          var action = {
+            type: ActionTypes.REMOVE_SECTION_GROUP,
+            payload: {
+              sectionGroup: sectionGroup
+            }
+          };
+          CourseStateService.reduce(action);
+
+          var action = {
+            type: ActionTypes.CREATE_COURSE,
+            payload: {
+              course: course
+            }
+          };
+          CourseStateService.reduce(action);
+          CourseService.getSectionsBySectionGroupId(sectionGroup.id).then(function (sections) {
+            var action = {
+            type: ActionTypes.CREATE_SECTION_GROUP,
+            payload: {
+              sectionGroup: sectionGroup,
+              sections: sections
+            }
+          };
+          CourseStateService.reduce(action);
+          });
+        }, function () {
+          $rootScope.$emit('toast', { message: "Could not Convert course offering.", type: "ERROR" });
+        });
       }
     };
   }

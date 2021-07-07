@@ -1,0 +1,87 @@
+<div class="convert-sections-modal">
+  <form role="form" class="form-horizontal">
+    <div class="convert-sections-warning">
+      <div >
+        <strong>New Sequence Pattern</strong>
+        <br />
+        <div class="course-details_update-sequence"
+              tooltip-append-to-body="true"
+              tooltip-placement="left"
+              uib-tooltip="{{ selectedEntity.sequencePatternTooltipMessage }}">
+          <ipa-input
+            value="selectedEntity.sequencePattern"
+            is-invalid="selectedEntity.sequencePattern && (!isValid() || !isUnique())"
+            on-update="updateSequencePattern()"
+            on-blur="updateSequencePattern()"
+            update-delay="50">
+          </ipa-input>
+        </div>
+      <div>
+        <br>
+        After conversion <strong>teaching assignments</strong> and the <strong>Live Data budget scenario</strong> will be updated to reflect the change.
+        <br>
+        <i>All non-live data budget scenarios will be updated <strong>unless</strong> they have a conflicting offering.</i>
+        <br>
+        <i>Budget requests will <strong>not</strong> be updated.</i>
+        <br><br>
+        Additionally, sections that belong to this course offering will be converted from <strong>{{isSeries() ? 'discussions to lectures' : 'lectures to discussions'}}</strong>
+        <br><br><b>For Example:</b><br><br>
+        <div class="convertion-details" ng-show="!isSeries()">
+          <div class="conversion-details-example">
+            <strong>Before</strong><br><br>
+            XYZ 10 - 001
+            <li>
+              Section 001: 100 Seats
+            </li>
+          </div>
+          <div class="conversion-details-example">
+            <strong>After</strong><br><br>
+            XYZ 10 - A
+            <li>
+              Section A01: 100 Seats
+            </li>
+          </div>
+        </div>
+        <div class="convertion-details" ng-show="isSeries()">
+          <div class="conversion-details-example">
+            <strong>Before</strong><br><br>
+            XYZ 10 - A
+            <li>
+              Section A01: 25 Seats
+            </li>
+            <li>
+              Section A02: 25 Seats
+            </li>
+            <li>
+              Section A03: 25 Seats
+            </li>
+            <li>
+              Section A04: 25 Seats
+            </li>
+          </div>
+          <div class="conversion-details-example">
+            <strong>After</strong><br><br>
+            XYZ 10 - 001
+            <li>
+              Section 001 Seats 100
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="convert-sections-modal-footer">
+      <button ng-click="close()"
+              type="button"
+              class="btn btn-default modal-button">
+        Cancel
+      </button>
+      <button ng-click="convertCourseOffering()"
+              ng-disabled="!isValid() || !isUnique()"
+              type="button"
+              class="btn btn-danger modal-button">
+        Convert
+      </button>
+    </div>
+  </form>
+</div>
