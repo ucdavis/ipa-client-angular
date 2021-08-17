@@ -67,6 +67,7 @@ class SupportSelectors {
 						sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences.push(preference);
 						processedSupportStaffIds.push(preference.supportStaffId);
 					});
+					sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences = _array_sortByProperty(sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences, ["priority", "lastName"]);
 	
 					// Add SupportStaff preferences
 					sectionGroup.teachingAssistantAssignmentOptions.supportStaffPreferences = [];
@@ -83,6 +84,7 @@ class SupportSelectors {
 						sectionGroup.teachingAssistantAssignmentOptions.supportStaffPreferences.push(preference);
 						processedSupportStaffIds.push(preference.supportStaffId);
 					});
+					sectionGroup.teachingAssistantAssignmentOptions.supportStaffPreferences = _array_sortByProperty(sectionGroup.teachingAssistantAssignmentOptions.supportStaffPreferences, ["priority", "lastName"]);
 	
 					// Add Other options
 					sectionGroup.teachingAssistantAssignmentOptions.other = [];
