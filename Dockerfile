@@ -1,7 +1,6 @@
 FROM node:10 AS builder
 WORKDIR /usr/src
 COPY . .
-COPY clientConfig.js.staging clientConfig.js
 RUN npm install
 RUN npm run build
 

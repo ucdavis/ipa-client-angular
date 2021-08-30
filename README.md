@@ -26,13 +26,15 @@ $ docker-compose run -p 80:80 -p 443:443 web
 
 # Deployment
 ### Test
-1. Create a `clientConfig.js.staging` file in the root folder
+1. Create a `clientConfig.js` file in the root folder, if copying from the example make sure to se the dw token
 2. Go to AWS ECR > `ipa-client-test`
 3. Follow the steps under `View push commands`
 4. Go to AWS ECS > Clusters > Default > `ipa-client-test`
 5. Update service to `Force New Deployment`
 
-### Production
-1. Log in to Jenkins
-2. Build and Deploy ipa-client-angular
-3. Hit `Build Now`
+### Test
+1. Create a `clientConfig.js` file in the root folder
+2. Go to AWS ECR > `ipa-client-prod`
+3. Follow the steps under `View push commands`
+4. Go to AWS ECS > Clusters > Default > `ipa-client-prod`
+5. Update service to `Force New Deployment`

@@ -551,7 +551,9 @@ table.locked-courses-table th {
   width: 100%;
 }
 table.courses-table thead th {
-  position: relative;
+  position: sticky;
+  top: 114px;
+  z-index: 10;
 }
 table.courses-table thead th.sorting-asc:after {
   content: "\e876";

@@ -79,13 +79,19 @@ class CourseStateService {
               });
               // Add only non-duplicates
               if (matchingCourse === undefined && matchingImportCourse === undefined) {
+                const effectiveTermCode = action.payload.sectionGroups.find(
+                  (sectionGroup) =>
+                    sectionGroup.courseNumber === sg.courseNumber &&
+                    sectionGroup.subjectCode === sg.subjectCode &&
+                    sectionGroup.sequencePattern === sg.sequencePattern
+                ).effectiveTermCode;
 
                 importList.push(new Course({
                   subjectCode: sg.subjectCode,
                   courseNumber: sg.courseNumber,
                   title: sg.title,
                   sequencePattern: sg.sequencePattern,
-                  effectiveTermCode: sg.effectiveTermCode,
+                  effectiveTermCode: effectiveTermCode,
                   unitsLow: sg.creditHoursLow,
                   unitsHigh: sg.creditHoursHigh,
                   import: true
@@ -230,6 +236,8 @@ class CourseStateService {
               });
               // Add only non-duplicates
               if (matchingImportSectionGroup === undefined) {
+                const effectiveTermCode = action.payload.sectionGroups.find(sectionGroup => sectionGroup.courseNumber === sg.courseNumber && sectionGroup.subjectCode === sg.subjectCode && sectionGroup.sequencePattern === sg.sequencePattern).effectiveTermCode;
+
                 sectionGroups.importList.push(new SectionGroup({
                   subjectCode: action.payload.subjectCode || sg.subjectCode,
                   courseNumber: sg.courseNumber,
@@ -239,7 +247,7 @@ class CourseStateService {
                   termCode: sg.termCode,
                   unitsLow: sg.creditHoursLow,
                   unitsHigh: sg.creditHoursHigh,
-                  effectiveTermCode: sg.effectiveTermCode
+                  effectiveTermCode: effectiveTermCode
                 }));
               }
             });

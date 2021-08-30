@@ -316,6 +316,7 @@ class AssignmentActionCreators {
 							if (sectionGroup) {
 								sectionGroup.isAssigned = true;
 								sectionGroup.showTheStaff = false;
+								sectionGroup.teachingAssignmentIds = [teachingAssignment.id];
 							}
 
 							_self.AssignmentService.getCourses(workgroupId, year).then(function (courses) {

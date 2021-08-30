@@ -1,6 +1,6 @@
 .table-dark tbody {
   display: block;
-  max-height: 233px;
+  max-height: 50vh;
   overflow: auto;
 }
 .table-dark thead,
@@ -23,11 +23,12 @@
 
 .download-budget-scenarios-footer__status {
   display: flex;
+  justify-content: center;
   align-items: center;
   
 }
 .download-budget-scenarios-footer__status span {
-  padding: 4px;
+  padding-bottom: 4px;
 }
 
 .download-budget-scenarios-footer__buttons {

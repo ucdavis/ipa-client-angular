@@ -313,7 +313,7 @@ class BudgetComparisonReportCalculations {
           var instructorId = sectionGroupCostInstructor.instructorId;
 
           // If cost not explicitly set find implicit value
-          if (!cost){
+          if (cost === null){
             // Check if instructor has explicit cost
             if (instructorId){
               var instructorCost = selectedScenario.isSnapshot

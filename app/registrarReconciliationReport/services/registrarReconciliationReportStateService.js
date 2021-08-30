@@ -250,7 +250,9 @@ class RegistrarReconciliationReportStateService {
 							// Apply the changes on the activity
 							activity[action.payload.property] = action.payload.activity[action.payload.property];
 							// Delete the applied change from the dwChanges object
-							delete activity.dwChanges[action.payload.property];
+							if (activity.dwChanges) {
+								delete activity.dwChanges[action.payload.property];
+							}
 							// Delete dwChanges if this was the last change
 							if (Object.keys(activity.dwChanges).length === 0) {
 								delete activity.dwChanges;
@@ -365,34 +367,35 @@ class RegistrarReconciliationReportStateService {
 							filters: []
 						};
 
-						var ALLOWED_TYPE_CODES = ["A", "D", "G", "C", "%", "0"];
+						var ALLOWED_TYPE_CODES = ["A", "D", "G", "C", "%", "0"]; // activities that are always displayed in table
 
-						var savedFiltersString = localStorage.getItem("registrarReportActivityTypeFilters");
+						var activityTypeCodes = new Set();
 
-						if (savedFiltersString) {
-							uiState.filters = JSON.parse(savedFiltersString);
-						} else {
-							var activityTypeCodes = new Set();
-
-							action.payload.sectionDiffs.forEach(function (sectionDiff) {
-								sectionDiff.dwSection?.activities.forEach(function (activity) {
-									activityTypeCodes.add(activity.typeCode);
-								});
-								sectionDiff.ipaSection?.activities.forEach(function (activity) {
-									activityTypeCodes.add(activity.typeCode);
-								});
+						action.payload.sectionDiffs.forEach(function (sectionDiff) {
+							sectionDiff.dwSection?.activities.forEach(function (activity) {
+								activityTypeCodes.add(activity.typeCode);
 							});
+							sectionDiff.ipaSection?.activities.forEach(function (activity) {
+								activityTypeCodes.add(activity.typeCode);
+							});
+						});
 
-							var filters = Array.from(activityTypeCodes)
-								.filter(typeCode => !ALLOWED_TYPE_CODES.includes(typeCode))
-								.map((typeCode) => ({
-									typeCode: typeCode,
-									isChecked: true,
-									description: typeCode.getActivityCodeDescription(),
-								}));
+						var remoteFilters = Array.from(activityTypeCodes)
+							.filter(typeCode => !ALLOWED_TYPE_CODES.includes(typeCode))
+							.map((typeCode) => ({
+								typeCode: typeCode,
+								isChecked: true,
+								description: typeCode.getActivityCodeDescription(),
+							}));
 
-							uiState.filters = filters;
+						var localFilters = JSON.parse(localStorage.getItem("registrarReportActivityTypeFilters"));
+
+						if (JSON.stringify(localFilters?.map(f => f.typeCode).sort()) === JSON.stringify(remoteFilters.map(f => f.typeCode).sort())) {
+							uiState.filters = localFilters;
+						} else {
+							uiState.filters = remoteFilters;
 						}
+						
 						return uiState;
 					case ActionTypes.UPDATE_FILTERS:
 						uiState = {
@@ -403,7 +406,9 @@ class RegistrarReconciliationReportStateService {
 								return filter;
 							}),
 						};
-						localStorage.setItem("registrarReportActivityTypeFilters", JSON.stringify(uiState.filters));
+
+						localStorage.setItem("registrarReportActivityTypeFilters", angular.toJson(uiState.filters)); // eslint-disable-line no-undef
+
 						return uiState;
 					default:
 						return uiState;
