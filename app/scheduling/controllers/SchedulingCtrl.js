@@ -29,6 +29,7 @@ class SchedulingCtrl {
 			addActivityPopoverIsOpen: {}
 		};
 		$scope.isActivityLogOpen = false;
+		$scope.isNotesModalOpen = false;
 
 		$scope.days = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
 		// Meeting codes in the order of popularity
@@ -280,6 +281,18 @@ class SchedulingCtrl {
 			});
 
 			return self.$scope.isActivityLogOpen = !self.$scope.isActivityLogOpen;
+		};
+
+		self.$scope.toggleNotesModal = function(sectionGroupId) {
+			const sectionGroup = $scope.view.state.sectionGroups.list[sectionGroupId];
+			const course = $scope.view.state.courses.list[sectionGroup.courseId];
+			$scope.schedulingNoteDetails = {
+				course,
+				sectionGroup
+			};
+			
+			$scope.isNotesModalOpen = true;
+			$scope.apply;
 		};
 	}
 }

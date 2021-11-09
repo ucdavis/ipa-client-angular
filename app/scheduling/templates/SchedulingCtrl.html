@@ -17,6 +17,16 @@
 	</button>
 </ipa-header>
 
+<ipa-modal
+	is-visible="isNotesModalOpen"
+	header-text="Scheduling Notes"
+>
+	<scheduling-notes
+		scheduling-note-details="schedulingNoteDetails"
+	>
+	</scheduling-notes>
+</ipa-modal>
+
 <activity-log is-visible="isActivityLogOpen" log-data="auditLogs"></activity-log>
 
 <div ng-if="noAccess">
@@ -77,6 +87,13 @@
 								{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].subjectCode }}
 								{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].courseNumber }}
 								- {{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].sequencePattern }}
+							<!-- <ipa-button
+								icon-class="'entypo entypo-chat'"
+								icon-color="view.state.sectionGroups.list[sectionGroupId].schedulingNotes.length > 0 ? '' : 'gray'"
+								size="'slim'"
+								superscript="view.state.sectionGroups.list[sectionGroupId].schedulingNotes.length"
+								on-click="toggleNotesModal(sectionGroupId);$event.stopPropagation()">
+							</ipa-button> -->
 							</span>
 							<br />
 							<small class="text-muted">{{ view.state.courses.list[view.state.sectionGroups.list[sectionGroupId].courseId].title }}</small>
@@ -114,6 +131,15 @@
 									</div>
 								</div>
 							</small>
+						</div>
+						<div class="section-group-notes" ng-click="$event.stopPropagation()">
+							<ipa-button
+								icon-class="'entypo entypo-chat'"
+								icon-color="view.state.sectionGroups.list[sectionGroupId].schedulingNotes.length > 0 ? '' : 'gray'"
+								superscript="view.state.sectionGroups.list[sectionGroupId].schedulingNotes.length"
+								on-click="toggleNotesModal(sectionGroupId)"
+							>
+							</ipa-button>
 						</div>
 					</li>
 				</ul>

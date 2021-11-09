@@ -1,0 +1,23 @@
+<div class="scheduling_notes_modal">
+	<div>
+		<h3>{{ schedulingNoteDetails.course.subjectCode }} {{ schedulingNoteDetails.course.courseNumber }} - {{ schedulingNoteDetails.course.sequencePattern }} - {{ schedulingNoteDetails.course.title }}</h3>
+			<strong>{{ schedulingNoteDetails.sectionGroup.termCode.getTermCodeDisplayName() }}</strong>
+		</div>
+		<textarea ng-model="schedulingNote" maxlength="600" rows="4"></textarea>
+		<div class="scheduling_notes_modal__form-controls">
+			<button ng-click="addNote()" class="btn btn-info neon-dark-confirm-btn">Add Note</button>
+			<span>{{ 600 - schedulingNote.length }}</span>
+		</div>
+		
+	<div class="scheduling_notes_modal__comments-count">{{ schedulingNoteDetails.sectionGroup.schedulingNotes.length }} Note(s)</div>
+
+	<div ng-repeat="note in schedulingNoteDetails.sectionGroup.schedulingNotes" class="scheduling_notes_modal__comment-container">
+		<div class="scheduling_notes_modal__comment-header">
+			{{ note.authorName }}&nbsp;
+			<span class="scheduling_notes_modal__comment-date">
+				{{ dateToCalendar(note.creationDate) }}
+			</span>
+		</div>
+		<div class="scheduling_notes_modal__comment-body">{{ note.message }}</div>
+	</div>
+</div>
