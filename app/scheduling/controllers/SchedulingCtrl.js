@@ -290,7 +290,7 @@ class SchedulingCtrl {
 				course,
 				sectionGroup
 			};
-			
+
 			$scope.isNotesModalOpen = true;
 			$scope.apply;
 		};
