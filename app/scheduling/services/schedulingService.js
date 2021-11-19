@@ -36,6 +36,9 @@ class SchedulingService {
 			deleteSection: function (section) {
 				return ApiService.delete("/api/courseView/sections/" + section.id);
 			},
+			createSchedulingNote: function(sectionGroupId, message) {
+				return ApiService.post("/api/schedulingView/sectionGroups/" + sectionGroupId + "/schedulingNotes", message);
+			},
 			getAuditLogs: function(workgroupId, year) {
 				return ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Scheduling" + "/auditLogs");
 			}

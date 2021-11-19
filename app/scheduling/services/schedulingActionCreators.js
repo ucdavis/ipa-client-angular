@@ -377,6 +377,18 @@ class SchedulingActionCreators {
 						selectedActivityId: selectionIsVisible ? SchedulingStateService._state.uiState.selectedActivityId : null
 					}
 				});
+			},
+			createSchedulingNote: function (sectionGroupId, message) {
+				SchedulingService.createSchedulingNote(sectionGroupId, message).then(function (newSchedulingNote) {
+					const action = {
+						type: ActionTypes.CREATE_SCHEDULING_NOTE,
+						payload: {
+							sectionGroupId,
+							schedulingNote: newSchedulingNote
+						}
+					};
+					SchedulingStateService.reduce(action);
+				});
 			}
 		};
 	}

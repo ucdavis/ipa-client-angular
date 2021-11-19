@@ -195,6 +195,12 @@ class SchedulingStateService {
 							}
 						});
 						return sectionGroups;
+					case ActionTypes.CREATE_SCHEDULING_NOTE:
+						sectionGroups.list[action.payload.sectionGroupId].schedulingNotes = [
+							...sectionGroups.list[action.payload.sectionGroupId].schedulingNotes,
+							action.payload.schedulingNote,
+						];
+						return sectionGroups;
 					default:
 						return sectionGroups;
 				}

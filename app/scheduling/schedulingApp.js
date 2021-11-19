@@ -25,6 +25,7 @@ import freeformTimeSelector from './directives/activityDetails/timeEditor/freefo
 import standardTimeSelector from './directives/activityDetails/timeEditor/standardTimeSelector/standardTimeSelector.js';
 import schedulingFilter from './directives/schedulingFilter/schedulingFilter.js';
 import departmentalRoomCalendar from './directives/departmentalRoomCalendar/departmentalRoomCalendar.js';
+import schedulingNotes from './directives/schedulingNotes/schedulingNotes.js';
 
 // Dependencies
 var dependencies = [
@@ -94,6 +95,7 @@ const schedulingApp = angular.module("schedulingApp", dependencies) // eslint-di
 .directive('freeformTimeSelector', freeformTimeSelector)
 .directive('standardTimeSelector', standardTimeSelector)
 .directive('schedulingFilter', schedulingFilter)
+.directive('schedulingNotes', schedulingNotes)
 .constant('ActionTypes', {
 	INIT_STATE: "INIT_STATE",
 	SECTION_GROUP_SELECTED: "SECTION_GROUP_SELECTED",
@@ -118,7 +120,8 @@ const schedulingApp = angular.module("schedulingApp", dependencies) // eslint-di
 	TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY: "TOGGLE_SHOW_ONLY_PRIMARY_ACTIVITY",
 	CALCULATE_SECTION_GROUPS: "CALCULATE_SECTION_GROUPS",
 	APPLY_FILTER_TO_SELECTION: "APPLY_FILTER_TO_SELECTION",
-	RENDER_CALENDAR: "RENDER_CALENDAR"
+	RENDER_CALENDAR: "RENDER_CALENDAR",
+	CREATE_SCHEDULING_NOTE: "CREATE_SCHEDULING_NOTE"
 });
 
 // Injecting these templates into schedulingApp so uib-popover-template can see them

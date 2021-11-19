@@ -244,6 +244,13 @@ a.activity-event i.activity-remove,
 	justify-content: center;
 	align-items: center;
 }
+.section-group-notes {
+	flex: 0 0 2em;
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	align-items: center;
+}
 
 .activity__event--location-conflict {
 	color: #f4bd00;
