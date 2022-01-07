@@ -52,6 +52,10 @@ class ScheduleSummaryReportCtrl {
 			ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, null, true);
 		};
 
+		$scope.downloadCourseListings = function () {
+			ScheduleSummaryReportService.downloadCourseListings($scope.workgroupId, $scope.year, null);
+		};
+
 		$scope.getTermName = function(termCode) {
 			return TermService.getShortTermName(termCode);
 		};

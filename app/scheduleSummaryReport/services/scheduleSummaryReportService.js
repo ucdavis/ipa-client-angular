@@ -35,6 +35,23 @@ class ScheduleSummaryReportService {
 					});
 	
 				return deferred.promise;
+			},
+			downloadCourseListings: function (workgroupId, year) {
+				var deferred = $q.defer();
+				let endpoint;
+
+				endpoint = window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel/courseListings";
+				
+				$http.get(endpoint, { withCredentials: true })
+					.then(function (payload) {
+						$window.location.href = payload.data.redirect;
+						deferred.resolve(payload.data);
+					},
+					function () {
+						deferred.reject();
+					});
+	
+				return deferred.promise;
 			}
 		};
 	}
