@@ -49,6 +49,17 @@
 		<div class="teaching-call-status teaching-call-status-buttons">
 			<div class="teaching-call-status__table-ui">
 
+				<div ng-show="view.state.ui.isInMaintenanceWindow" class="teaching-call-status__message">
+					<div class="teaching-call-status__message-icon">
+						<i class="entypo-attention"></i>
+					</div>
+						<div class="teaching-call-status__message-container">
+						<div class="teaching-call-status__message-text">
+							Nightly maintenance - emails will resume sending at 7:00am.
+						</div>
+					</div>
+				</div>
+
 				<div ng-show="view.state.ui.haveUnsentEmails" class="teaching-call-status__message">
 					<div class="teaching-call-status__message-icon">
 						<i class="entypo-attention"></i>

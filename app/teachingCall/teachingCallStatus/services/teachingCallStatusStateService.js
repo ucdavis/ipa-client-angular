@@ -1,3 +1,4 @@
+import { isInMaintenanceWindow } from 'shared/helpers/dates';
 class TeachingCallStatusStateService {
 	constructor ($rootScope, $log, ActionTypes, UserService) {
 		return {
@@ -103,6 +104,7 @@ class TeachingCallStatusStateService {
 							selectedInstructorIds: [],
 							instructorsInCalls: false,
 							haveUnsentEmails: false,
+							isInMaintenanceWindow: isInMaintenanceWindow(new Date()),
 							scheduleHasCourses: action.scheduleHasCourses
 						};
 						return ui;
