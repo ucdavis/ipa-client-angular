@@ -43,3 +43,15 @@ export function isCurrentTerm(termStart, termEnd) {
 
 	return false;
 }
+
+/**
+ * 
+ * @param {Date} date
+ * @returns {boolean} true if date is between maintenance hours
+ */
+export function isInMaintenanceWindow(date) {
+	const MAINTENANCE_START_HOUR = 23;
+	const MAINTENANCE_END_HOUR = 7;
+
+	return date.getHours() >= MAINTENANCE_START_HOUR || date.getHours() < MAINTENANCE_END_HOUR;
+}

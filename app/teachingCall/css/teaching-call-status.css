@@ -298,14 +298,17 @@
 	justify-content: flex-end;
 }
 
+.teaching-call-status__message-row {
+	display: flex;
+	justify-content: center;
+}
+
 .teaching-call-status__message {
 	padding: 15px 20px;
 	border: 1px solid #21A9E1;
 	border-radius: 3px;
 	font-weight: 500;
 	display: flex;
-	width: 40%;
-	margin-right: 90px;
 }
 
 .teaching-call-status__message-container {

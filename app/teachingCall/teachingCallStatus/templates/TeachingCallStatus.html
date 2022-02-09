@@ -48,18 +48,6 @@
 		<!-- Toolbar Buttons -->
 		<div class="teaching-call-status teaching-call-status-buttons">
 			<div class="teaching-call-status__table-ui">
-
-				<div ng-show="view.state.ui.haveUnsentEmails" class="teaching-call-status__message">
-					<div class="teaching-call-status__message-icon">
-						<i class="entypo-attention"></i>
-					</div>
-					<div class="teaching-call-status__message-container">
-						<div class="teaching-call-status__message-text">
-							E-mails will be sent in the next few minutes.
-						</div>
-					</div>
-				</div>
-
 				<div class="teaching-call-status__submission-container">
 					<a class="btn btn-default"
 					   ng-click="openAddInstructorsModal()">
@@ -82,6 +70,30 @@
 			</div>
 
 			<div class="column-hover-ui">
+			</div>
+		</div>
+		
+		<div class="teaching-call-status__message-row">
+			<div ng-show="view.state.ui.isInMaintenanceWindow" class="teaching-call-status__message">
+				<div class="teaching-call-status__message-icon">
+					<i class="entypo-attention"></i>
+				</div>
+					<div class="teaching-call-status__message-container">
+					<div class="teaching-call-status__message-text">
+						Nightly maintenance - E-mail sending will resume at 7:00am.
+					</div>
+				</div>
+			</div>
+			
+			<div ng-show="!view.state.ui.isInMaintenanceWindow && view.state.ui.haveUnsentEmails" class="teaching-call-status__message">
+				<div class="teaching-call-status__message-icon">
+					<i class="entypo-attention"></i>
+				</div>
+				<div class="teaching-call-status__message-container">
+					<div class="teaching-call-status__message-text">
+						E-mails will be sent in the next few minutes.
+					</div>
+				</div>
 			</div>
 		</div>
 
