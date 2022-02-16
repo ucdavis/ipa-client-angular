@@ -17,7 +17,10 @@ let instructorCostsLiveData = function (BudgetActions) {
 		},
 		replace: true,
 		link: function (scope) {
+			scope.isPendingUpdate = false;
+
 			scope.updateInstructorCost = function (instructor) {
+				scope.isPendingUpdate = true;
 				// IPA Input tracks cost as string
 				// Backend sends cost as float
 				var cost = null;
