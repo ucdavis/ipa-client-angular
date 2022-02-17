@@ -15,6 +15,7 @@
 				<tr ng-repeat="department in departmentScenarios">
 					<td style="width: 25px; vertical-align: middle;"><ipa-checkbox is-checked="department.download" click-action="toggleDepartmentDownload(department)"></ipa-checkbox></td>
 					<td style="padding-left: 10px; vertical-align: middle;">
+						<i ng-show="department.showWarning" class="glyphicon glyphicon-warning-sign" style="color: #cc2424;"></i>
 						{{ department.name }}<br>
 						<small style="color:rgba(0, 0, 0, 0.6);">Last Active: {{ dateToCalendar(department.lastModifiedOn) }}</small>
 					</td>
@@ -77,6 +78,9 @@
 		</div>
 	</div>
 	<div class="download-excel-modal-footer__status">
+		<span ng-show="showScenarioWarning" style="color: #cc2424;">
+			<i class="glyphicon glyphicon-warning-sign"style="padding-right: 4px"></i> Department is missing budget scenario - download will fail if department is selected.
+		</span>
 		<span ng-show="isDisabled">
 			<i class="glyphicon glyphicon-info-sign" style="padding-right: 4px; color: #21a9e1;"></i> Generating Excel Download - This may take a few minutes.
 		</span>

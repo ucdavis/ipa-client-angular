@@ -17,6 +17,7 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
       scope.previousYear = (parseInt(localStorage.getItem('year')) - 1).toString().yearToAcademicYear();
       scope.currentYear = localStorage.getItem('year').yearToAcademicYear();
       scope.isSortedByRecentActivity = false;
+      scope.showScenarioWarning = false;
 
       // {
       //   "DSS": {
@@ -42,10 +43,11 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
           } 
           
           scope.departmentScenarios = existingDownloadSelections;
+          scope.showScenarioWarning = scope.isAnyWorkgroupMissingScenarios(userWorkgroupsScenarios);
           scope.downloadAllDepartments = scope.departmentScenarios.every(department => department.download === true);
         } else if (userWorkgroupsScenarios) {
           scope.departmentScenarios = scope.getScenarioOptions(userWorkgroupsScenarios);
-
+          scope.showScenarioWarning = scope.isAnyWorkgroupMissingScenarios(userWorkgroupsScenarios);
           scope.downloadAllDepartments = true;
         }
       }, true);
@@ -60,6 +62,16 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
         }
       };
 
+      scope.isAnyWorkgroupMissingScenarios = function (workgroupScenarios) {
+        if (workgroupScenarios) {
+          return Object.keys(workgroupScenarios).map(departmentName => {
+            const isCurrentEmpty = workgroupScenarios[departmentName].current.length === 0;
+            const isPreviousEmpty = workgroupScenarios[departmentName].previous.length === 0;
+            return isCurrentEmpty || isPreviousEmpty;
+          }).some((v) => v === true);
+        }
+      };
+
       scope.getScenarioOptions = function(userWorkgroupsScenarios) {
         return Object.keys(userWorkgroupsScenarios)
             .sort()
@@ -70,7 +82,8 @@ let downloadExcelModal = function (BudgetComparisonReportActions, BudgetComparis
               selectedPrevious: `${(userWorkgroupsScenarios[department].previous.find(scenario => scenario.fromLiveData === true) || {}).id}`,
               selectedCurrent: `${(userWorkgroupsScenarios[department].current.find(scenario => scenario.fromLiveData === true) || {}).id}`,
               lastModifiedOn: Math.max(...scope.userWorkgroupsScenarios[department].current.map(scenario => scenario.lastModifiedOn)),
-              download: true
+              download: true,
+              showWarning: userWorkgroupsScenarios[department].current.length === 0 || userWorkgroupsScenarios[department].previous.length === 0
             }));
       };
 
