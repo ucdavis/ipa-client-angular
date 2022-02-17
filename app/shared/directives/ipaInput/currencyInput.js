@@ -59,8 +59,6 @@ let currencyInput = function ($filter) {
 					currencyValue = '$' + $filter('number')(parseFloat(clean)) + '.';
 				} else if (clean.indexOf('.') != -1 && dotSplit[dotSplit.length - 1].length == 1) {
 					currencyValue = '$' + $filter('number')(parseFloat(clean), 1);
-				} else if (clean.indexOf('.') != -1 && dotSplit[dotSplit.length - 1].length == 1) {
-					currencyValue = '$' + $filter('number')(parseFloat(clean), 2);
 				} else {
 					currencyValue = '$' + $filter('number')(parseFloat(clean));
 				}

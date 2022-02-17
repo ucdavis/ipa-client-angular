@@ -10,7 +10,7 @@ class InstructorFormSelectors {
 					sectionGroup = self.addInstructorPreferencesToSectionGroup(sectionGroup, supportStaff, instructorPreferences);
 		
 					// Add support staff data
-					sectionGroup = self.addEligibleSupportStaffToSectionGroup(sectionGroup, supportStaff, studentPreferences);
+					sectionGroup = self.addEligibleSupportStaffToSectionGroup(sectionGroup, supportStaff, studentPreferences); // eslint-disable-line no-unused-vars
 				});
 		
 				return sectionGroups;
