@@ -3,6 +3,7 @@ var webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 function injectHashesInLinks (content, path) {
   var template = content.toString('utf8');
@@ -87,7 +88,6 @@ module.exports = {
               presets: ['@babel/preset-env'],
             }
           },
-          "eslint-loader"
         ],
         exclude: /node_modules/
       },
@@ -104,23 +104,29 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     // Copy html to output path (dist)
-    new CopyWebpackPlugin([
-      {
-        from: 'app/**/*.html',
-        to: '',
-        flatten: true,
-        transform: function (content, path) { return injectHashesInLinks(content, path); }
-      }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'app/**/*.html',
+          to: '',
+          flatten: true,
+          transform: function (content, path) { return injectHashesInLinks(content, path); }
+        }
+      ]
+    }),
     // Copy json status to output path (dist)
-    new CopyWebpackPlugin([
-      { from: 'app/**/*.json', to: '', flatten: true }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'app/**/*.json', to: '', flatten: true }
+      ]
+    }),
     // Copy css to output /css inside output path (dist)
-    new CopyWebpackPlugin([
-      { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
-      { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
+        { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
+      ]
+    }),
     // Concat lib CSS
     new ConcatPlugin({
       sourceMap: false,
@@ -144,24 +150,30 @@ module.exports = {
       ],
     }),
     // Copy fonts to output /fonts inside output path (dist)
-    new CopyWebpackPlugin([
-      { from: 'vendor/fonts/**/*', to: 'fonts', flatten: true },
-      { from: 'node_modules/bootstrap/dist/fonts/**/*', to: 'fonts', flatten: true },
-      { from: 'vendor/font/**/*', to: 'font', flatten: true }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'vendor/fonts/**/*', to: 'fonts', flatten: true },
+        { from: 'node_modules/bootstrap/dist/fonts/**/*', to: 'fonts', flatten: true },
+        { from: 'vendor/font/**/*', to: 'font', flatten: true }
+      ]
+    }),
     // Copy assets to output /fonts inside output path (dist)
-    new CopyWebpackPlugin([
-      { from: 'app/assets/images/*', to: 'images', flatten: true },
-      { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'app/assets/images/*', to: 'images', flatten: true },
+        { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
+      ]
+    }),
     // Copy vendor JS
-    new CopyWebpackPlugin([
-      { from: 'clientConfig.js', to: 'js', flatten: true },
-      { from: 'node_modules/bootstrap/dist/js/*', to: 'js', flatten: true },
-      { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
-      { from: 'node_modules/jquery-typeahead/dist/jquery.typeahead.min.js', to: 'js', flatten: true },
-      { from: 'vendor/js/*', to: 'js', flatten: true },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'clientConfig.js', to: 'js', flatten: true },
+        { from: 'node_modules/bootstrap/dist/js/*', to: 'js', flatten: true },
+        { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
+        { from: 'node_modules/jquery-typeahead/dist/jquery.typeahead.min.js', to: 'js', flatten: true },
+        { from: 'vendor/js/*', to: 'js', flatten: true },
+      ]
+    }),
     // Concat lib JS
     new ConcatPlugin({
       uglify: false,
@@ -184,13 +196,18 @@ module.exports = {
       sourceMap: false,
       fileName: 'js/snippets.js',
       filesToConcat: ['./vendor/js/googleAnalytics.js'],
-    })
+    }),
+    new ESLintPlugin()
   ],
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    compress: true,
+    client: {
+      overlay: false,
+      progress: true
+    },
+    static: {
+      directory: path.join(__dirname, "dist"),
+    },
     port: 9000,
-    inline: true,
     proxy: {
       "/*": {
         target: "http://localhost:9000",
