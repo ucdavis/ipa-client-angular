@@ -26,6 +26,7 @@ let confirmButton = function ($document, $timeout) {
 			element.popover({
 				content: html,
 				html: true,
+				sanitize: false,
 				trigger: "manual",
 				title: title,
 				placement: placement,
