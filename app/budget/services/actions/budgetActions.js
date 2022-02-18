@@ -61,7 +61,11 @@ class BudgetActions {
 
 									currentCensusSnapshot.forEach(function(courseCensus) {
 										sectionGroupCosts.forEach(function(sectionGroupCost) {
-											if (sectionGroupCost.courseNumber == courseCensus.courseNumber && sectionGroupCost.termCode == courseCensus.termCode && courseCensus.sequenceNumber.includes(sectionGroupCost.sequencePattern)) {
+											const censusSequencePattern = isNaN(Number(courseCensus.sequenceNumber)) ? courseCensus.sequenceNumber.charAt(0) : courseCensus.sequenceNumber;
+											const sectionGroupCostKey = `${sectionGroupCost.subjectCode}-${sectionGroupCost.courseNumber}-${sectionGroupCost.termCode}-${sectionGroupCost.sequencePattern}`;
+											const courseCensusKey = `${courseCensus.subjectCode}-${courseCensus.courseNumber}-${courseCensus.termCode}-${censusSequencePattern}`;
+
+											if (sectionGroupCostKey === courseCensusKey) {
 												sectionGroupCost.currentEnrollment ?
 													(sectionGroupCost.currentEnrollment += courseCensus.currentEnrolledCount) :
 													sectionGroupCost.currentEnrollment = courseCensus.currentEnrolledCount;
