@@ -27,6 +27,10 @@ class WorkloadSummaryReportCtrl {
 			WorkloadSummaryActions.download();
 		};
 
+		$scope.export = function() {
+			WorkloadSummaryActions.export();
+		};
+
 		$scope.goToSection = function(id) {
 			var tableSection = $scope.view.state.instructorTypes.list[id].description;
 			$anchorScroll(tableSection);
