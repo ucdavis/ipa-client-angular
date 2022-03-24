@@ -30,10 +30,10 @@ class WorkloadSummaryService {
 			getSections: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sections");
 			},
-			downloadWorkloadSummary: function (workgroupId, year) {
+			downloadWorkloadSummary: function (workgroupIds, year) {
 				var deferred = $q.defer();
 	
-				$http.get(window.serverRoot + "/api/workloadSummaryReport/" + workgroupId + "/years/" + year + "/generateExcel", { withCredentials: true })
+				$http.get(window.serverRoot + "/api/workloadSummaryReport/" + workgroupIds + "/years/" + year + "/generateExcel", { withCredentials: true })
 					.then(function (payload) {
 						$window.location.href = payload.data.redirect;
 						deferred.resolve(payload.data);

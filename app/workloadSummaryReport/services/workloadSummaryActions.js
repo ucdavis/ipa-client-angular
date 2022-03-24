@@ -38,7 +38,12 @@ class WorkloadSummaryActions {
 			},
 			export: function() {
 				const { workgroupId, year } = $route.current.params;
-				WorkloadSummaryService.downloadWorkloadSummary(workgroupId, year);
+				WorkloadSummaryService.downloadWorkloadSummary([workgroupId], year);
+			},
+			exportAll: function() {
+				const workgroupIds = JSON.parse(localStorage.getItem("currentUser"))?.userRoles.filter(ur => ur.roleName === 'academicPlanner').map(ur => ur.workgroupId);
+				const year = $route.current.params.year;
+				WorkloadSummaryService.downloadWorkloadSummary(workgroupIds, year);
 			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;

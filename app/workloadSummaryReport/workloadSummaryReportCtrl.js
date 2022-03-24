@@ -10,6 +10,7 @@ class WorkloadSummaryReportCtrl {
 		$scope.noAccess = validate ? validate.noAccess : null;
 		$scope.workgroupId = $routeParams.workgroupId;
 		$scope.year = $routeParams.year;
+		$scope.departmentName = JSON.parse(localStorage.getItem("workgroup")).name;
 
 		$scope.view = {};
 
@@ -29,6 +30,10 @@ class WorkloadSummaryReportCtrl {
 
 		$scope.export = function() {
 			WorkloadSummaryActions.export();
+		};
+
+		$scope.exportAll = function() {
+			WorkloadSummaryActions.exportAll();
 		};
 
 		$scope.goToSection = function(id) {
