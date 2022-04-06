@@ -57,6 +57,11 @@
 							Support Staff
 						</a>
 					</li>
+					<li ng-if="isPlanner || isAdmin" ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'download' }">
+						<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=download">
+							Downloads
+						</a>
+					</li>
 				</ul>
 			</li>
 			<!-- handle UI for users with a sing role, but not multiple -->
