@@ -10,24 +10,38 @@ let downloadSummary = function (ApiService) {
         link: function (scope) {
             const year = localStorage.getItem("year");
             const workgroupId = JSON.parse(localStorage.getItem("workgroup")).id;
+            scope.isLoading = true;
             scope.disableGenerate = true;
             scope.disableDownload = true;
 
             ApiService.get(`/api/workloadSummaryReport/download/status`).then(metadata => {
                 if (metadata) {
-                    const emptyFile = metadata.contentLength === 0;
+                    const isEmptyFile = metadata.contentLength === 0;
+                    const isLessThanOneHourAgo = scope.IsDateLessThanOneHourAgo(metadata.lastModified);
 
-                    scope.disableDownload = emptyFile;
-                    scope.disableGenerate = emptyFile && scope.IsDateMoreThanOneHourAgo(metadata.lastModified);
-                    scope.lastModified = emptyFile ? "" : new Date(metadata.lastModified).toLocaleString();
+                    if (isEmptyFile && isLessThanOneHourAgo) {
+                        scope.disableDownload = true;
+                        scope.disableGenerate = true;
+                        scope.fileStatus = "In progress, check back later.";
+                    } else if (isEmptyFile && !isLessThanOneHourAgo) {
+                        scope.disableDownload = true;
+                        scope.disableGenerate = false;
+                        scope.fileStatus = "File creation failed, please try again.";
+                    } else {
+                        scope.disableDownload = false;
+                        scope.disableGenerate = false;
+                        scope.fileStatus = "Created: " + new Date(metadata.lastModified).toLocaleString();
+                    }
                 } else {
                     scope.disableDownload = true;
                     scope.disableGenerate = false;
                 }
+                scope.isLoading = false;
             });
 
             scope.generate = () => {
                 scope.disableGenerate = true;
+                scope.fileStatus = "In progress, check back later.";
 
                 // const workgroupIds = JSON.parse(localStorage.getItem("currentUser"))?.userRoles.filter(r => r.roleName === "academicPlanner").map(r => r.workgroupId);
                 ApiService.get(`/api/workloadSummaryReport/${workgroupId}/years/${year}/generateMultiple`);
@@ -48,7 +62,7 @@ let downloadSummary = function (ApiService) {
                     });
             };
 
-            scope.IsDateMoreThanOneHourAgo = (date) => {
+            scope.IsDateLessThanOneHourAgo = (date) => {
                 const oneHour = 60 * 60 * 1000;
                 const oneHourAgo = Date.now() - oneHour;
 

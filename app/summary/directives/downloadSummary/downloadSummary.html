@@ -3,14 +3,14 @@
     <thead>
       <tr>
         <th>Report</th>
-        <th>Last Created</th>
+        <th>Status</th>
         <th></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody ng-show="!isLoading">
       <tr>
         <td>LS Workload Summary</td>
-        <td>{{ lastModified }}</td>
+        <td>{{ fileStatus }}</td>
         <td>
           <ipa-button
             text="'Generate'"
