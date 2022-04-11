@@ -27,22 +27,6 @@
             uib-tooltip="Download as Excel"
             ng-click="download()"
           ></span>
-          <span class="btn-group" uib-tooltip="Export assignments data">
-            <span class="tool-icon glyphicon glyphicon-share" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-            <ul class="dropdown-menu dropdown-menu-right">
-              <li style="cursor: pointer;">
-                <a ng-click="export()">Export {{departmentName}}</a>
-              </li>
-              <li style="cursor: pointer;">
-                <a ng-click="exportAll()">Export ALL departments</a>
-              </li>
-            </ul>
-          </span>
-          <span
-            class="tool-icon glyphicon glyphicon-save-file"
-            uib-tooltip="Download generated file"
-            ng-click="downloadAll()"
-          ></span>
           <span
             class="tool-icon glyphicon glyphicon-print"
             uib-tooltip="Print"

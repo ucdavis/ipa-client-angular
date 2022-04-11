@@ -36,69 +36,6 @@ class WorkloadSummaryActions {
 			download: function() {
 				WorkloadSummaryExcelService.generateDownload();
 			},
-			downloadAll: function() {
-				return WorkloadSummaryService.downloadAll();
-			},
-			export: function() {
-				const { workgroupId, year } = $route.current.params;
-				WorkloadSummaryService.downloadWorkloadSummary([workgroupId], year);
-			},
-			exportAll: function() {
-				// const workgroupIds = JSON.parse(localStorage.getItem("currentUser"))?.userRoles.filter(ur => ur.roleName === 'academicPlanner').map(ur => ur.workgroupId);
-				const workgroupIds = [
-					24,
-					82,
-					18,
-					19,
-					83,
-					64,
-					84,
-					12,
-					81,
-					25,
-					42,
-					41,
-					61,
-					37,
-					36,
-					60,
-					58,
-					48,
-					49,
-					39,
-					38,
-					50,
-					51,
-					45,
-					40,
-					16,
-					66,
-					69,
-					46,
-					53,
-					59,
-					65,
-					76,
-					89,
-					54,
-					14,
-					56,
-					17,
-					28,
-					43,
-					78,
-					93,
-					94,
-					95,
-					96,
-					97,
-					67,
-					99,
-					100,
-				];
-				const year = $route.current.params.year;
-				WorkloadSummaryService.generateMultiple(workgroupIds, year);
-			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
 
