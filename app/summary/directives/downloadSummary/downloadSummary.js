@@ -14,7 +14,7 @@ let downloadSummary = function (ApiService) {
             scope.disableGenerate = true;
             scope.disableDownload = true;
 
-            ApiService.get(`/api/workloadSummaryReport/download/status`).then(metadata => {
+            ApiService.get(`/api/workloadSummaryReport/years/${year}/download/status`).then(metadata => {
                 if (metadata) {
                     const isEmptyFile = metadata.contentLength === 0;
                     const isLessThanOneHourAgo = scope.IsDateLessThanOneHourAgo(metadata.lastModified);
@@ -55,7 +55,7 @@ let downloadSummary = function (ApiService) {
                         );
                         var a = window.document.createElement('a'); // eslint-disable-line
                         a.href = url;
-                        a.download = `Workload Report ${year}.xlsx`;
+                        a.download = `${year} Workload Summary Report.xlsx`;
                         window.document.body.appendChild(a); // eslint-disable-line
                         a.click();
                         a.remove();  //afterwards we remove the element again
