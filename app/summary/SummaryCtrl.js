@@ -23,6 +23,7 @@
 
     var currentUser = AuthService.getCurrentUser();
     var isAdmin = currentUser.isAdmin();
+    var isDeansOffice = currentUser.isDeansOffice();
     var isAcademicPlanner = currentUser.hasRole('academicPlanner', $scope.workgroupId);
     var isReviewer = currentUser.hasRole('reviewer', $scope.workgroupId);
     var isInstructor = currentUser.isInstructor($scope.workgroupId);
@@ -31,6 +32,7 @@
     $scope.hasAcademicPlannerSummaryAccess = isAcademicPlanner || isAdmin || isReviewer;
     $scope.hasInstructorSummaryAccess = isInstructor || isAdmin;
     $scope.hasInstructionalSupportSummaryAccess = isInstructionalSupport || isAdmin;
+    $scope.hasDownloadSummaryAccess = isDeansOffice || isAdmin;
 
     var self = this;
     // Update the view mode when the url param changes

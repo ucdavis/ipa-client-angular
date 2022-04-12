@@ -6,10 +6,14 @@ let downloadSummary = function (ApiService) {
         template: require('./downloadSummary.html'),
         replace: true,
         scope: {
+            workgroup: '=',
+            year: '=',
+            hasAccess: '='
         },
         link: function (scope) {
-            const year = localStorage.getItem("year");
-            const workgroupId = JSON.parse(localStorage.getItem("workgroup")).id;
+            const workgroupId = scope.workgroup.id;
+            const year = scope.year;
+
             scope.isLoading = true;
             scope.disableGenerate = true;
             scope.disableDownload = true;
@@ -43,12 +47,11 @@ let downloadSummary = function (ApiService) {
                 scope.disableGenerate = true;
                 scope.fileStatus = "In progress, check back later.";
 
-                // const workgroupIds = JSON.parse(localStorage.getItem("currentUser"))?.userRoles.filter(r => r.roleName === "academicPlanner").map(r => r.workgroupId);
                 ApiService.get(`/api/workloadSummaryReport/${workgroupId}/years/${year}/generateMultiple`);
             };
 
             scope.download = () => {
-                ApiService.postWithResponseType(`/api/workloadSummaryReport/${workgroupId}/years/${year}/downloadMultiple`, "", "", 'arraybuffer').then(
+                ApiService.postWithResponseType(`/api/workloadSummaryReport/${scope.workgroup.id}/years/${year}/downloadMultiple`, "", "", 'arraybuffer').then(
                     response => {
                         var url = window.URL.createObjectURL(
                             new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })

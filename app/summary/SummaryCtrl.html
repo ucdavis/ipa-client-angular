@@ -25,7 +25,11 @@
                  year="year">
 </support-summary>
 
-<download-summary ng-if="view.mode == 'download'"></download-summary>
+<download-summary ng-if="view.mode == 'download'" 
+                  workgroup="sharedState.workgroup"
+                  year="year"
+                  has-access="hasDownloadSummaryAccess">
+</download-summary>
 
 <p class="text-center" ng-if="view.mode == 'unknown'">
 	Unknown User Role

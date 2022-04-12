@@ -1,5 +1,7 @@
 <div style="margin: 30px 15% 30px 15%">
-  <table style="width: 100%">
+  <no-access ng-if="!hasAccess" workgroup-name="workgroup.name"></no-access>
+
+  <table ng-if="hasAccess" style="width: 100%">
     <thead>
       <tr>
         <th>Report</th>
