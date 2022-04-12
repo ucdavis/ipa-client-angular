@@ -7,10 +7,13 @@
         <th></th>
       </tr>
     </thead>
-    <tbody ng-show="!isLoading">
+    <tbody>
       <tr>
         <td>LS Workload Summary</td>
-        <td>{{ fileStatus }}</td>
+        <td>
+          <spinner ng-show="isLoading" size="20"></spinner>
+          <span ng-show="!isLoading"> {{ fileStatus }} </span>
+        </td>
         <td>
           <ipa-button
             text="'Generate'"
