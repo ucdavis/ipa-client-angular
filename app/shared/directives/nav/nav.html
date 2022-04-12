@@ -81,6 +81,12 @@
 					<span class="title">Summary</span>
 				</a>
 			</li>
+			<li ng-if="isDeansOffice || isAdmin" ng-class="{ 'active': currentBaseHref == 'summary' && view.mode == 'download' }">
+				<a ng-href="/summary/{{ workgroupId }}/{{ year }}?mode=download">
+					<i class="entypo-download"></i>
+					<span class="title">Downloads</span>
+				</a>
+			</li>
 			<li ng-if="sharedState.currentUser.isAdmin()" ng-class="{ 'active': currentBaseHref == 'admin' }">
 				<a ng-href="/admin/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-cog"></i>

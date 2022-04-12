@@ -23,6 +23,7 @@ let nav = function ($location, $rootScope, AuthService, Term) {
 			scope.isInstructor = scope.sharedState.currentUser.isInstructor(scope.sharedState.workgroup.id);
 			scope.isSupportStaff = scope.sharedState.currentUser.isSupportStaff(scope.sharedState.workgroup.id);
 			scope.isAdmin = scope.sharedState.currentUser.isAdmin();
+			scope.isDeansOffice = scope.sharedState.currentUser.isDeansOffice();
 			scope.isPlanner = scope.sharedState.currentUser.isPlanner(scope.sharedState.workgroup.id);
 
 			// If a user fills multiple types of roles, the nav should open those summary screens

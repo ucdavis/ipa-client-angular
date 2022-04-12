@@ -1,0 +1,37 @@
+<div style="margin: 30px 15% 30px 15%">
+  <no-access ng-if="!hasAccess" workgroup-name="workgroup.name"></no-access>
+
+  <table ng-if="hasAccess" style="width: 100%">
+    <thead>
+      <tr>
+        <th>Report</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>LS Workload Summary</td>
+        <td>
+          <spinner ng-show="isLoading" size="20"></spinner>
+          <span ng-show="!isLoading"> {{ fileStatus }} </span>
+        </td>
+        <td>
+          <ipa-button
+            text="'Generate'"
+            size="'small'"
+            on-click="generate()"
+            is-disabled="disableGenerate"
+            tooltip-message="'This can take up to an hour. You will receive an email when file is ready for download.'"
+          ></ipa-button>
+          <ipa-button
+            text="'Download'"
+            size="'small'"
+            on-click="download()"
+            is-disabled="disableDownload"
+          ></ipa-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

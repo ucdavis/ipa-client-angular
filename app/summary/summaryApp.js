@@ -15,6 +15,7 @@ import TermService from './../shared/services/TermService.js';
 // Directives
 import workgroupSummary from './directives/workgroupSummary/workgroupSummary.js';
 import supportSummary from './directives/supportSummary/supportSummary.js';
+import downloadSummary from './directives/downloadSummary/downloadSummary.js';
 
 import instructorSummary from './directives/instructorSummary/instructorSummary.js';
 import instructorHeader from './directives/instructorSummary/instructorHeader/instructorHeader.js';
@@ -72,6 +73,7 @@ const summaryApp = angular.module("summaryApp", dependencies) // eslint-disable-
 .directive('workgroupSummary', workgroupSummary)
 .directive('instructorSummary', instructorSummary)
 .directive('supportSummary', supportSummary)
+.directive('downloadSummary', downloadSummary)
 .directive('instructorHeader', instructorHeader)
 .directive('scheduledCourses', scheduledCourses)
 .directive('supportCalls', supportCalls)

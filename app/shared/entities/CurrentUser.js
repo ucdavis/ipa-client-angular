@@ -61,6 +61,10 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 					});
 			},
 
+			isDeansOffice: function() {
+				return this.hasRole("deansOffice", 0);
+			},
+
 			isSupportStaff: function (workgroupId) {
 				var roleNames = ["studentMasters", "studentPhd", "instructionalSupport"];
 				return this.hasRoles(roleNames, workgroupId);
