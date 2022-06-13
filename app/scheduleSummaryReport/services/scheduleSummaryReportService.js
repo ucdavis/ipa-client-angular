@@ -35,6 +35,21 @@ class ScheduleSummaryReportService {
 					});
 	
 				return deferred.promise;
+			},
+			downloadAnnualView: function (workgroupId, year) {
+				var deferred = $q.defer();
+				let endpoint = window.serverRoot + "/api/scheduleSummaryReportView/workgroups/" + workgroupId + "/years/" + year + "/generateExcel/annualView";
+
+				$http.get(endpoint, { withCredentials: true })
+					.then(function (payload) {
+						$window.location.href = payload.data.redirect;
+						deferred.resolve(payload.data);
+					},
+					function () {
+						deferred.reject();
+					});
+	
+				return deferred.promise;
 			}
 		};
 	}

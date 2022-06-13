@@ -48,6 +48,10 @@ class ScheduleSummaryReportCtrl {
 			}
 		};
 
+		$scope.downloadAnnualView = function () {
+			ScheduleSummaryReportService.downloadAnnualView($scope.workgroupId, $scope.year);
+		};
+
 		$scope.downloadSimpleView = function () {
 			ScheduleSummaryReportService.downloadSchedule($scope.workgroupId, $scope.year, null, true);
 		};
