@@ -24,7 +24,7 @@
   bottom: 0;
   width: 280px;
   background: #303641;
-  z-index: 5;
+  z-index: 10;
   display: none;
   margin-top: 9%;
 }

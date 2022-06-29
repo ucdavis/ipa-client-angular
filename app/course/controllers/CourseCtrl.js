@@ -276,6 +276,7 @@ class CourseCtrl {
 
       _self.$scope.view.newCourseSearchQuery = null;
       _self.$scope.view.state.courses.newCourse = null;
+      _self.$scope.view.selectedEntityType = null;
     };
 
     this.$scope.termToggled = function (id) {
