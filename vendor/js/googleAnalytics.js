@@ -4,7 +4,7 @@ if(window.ipaRunningMode === 'production') {
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   
-  ga('create', 'UA-83774200-1', 'auto'); // eslint-disable-line no-undef
+  ga('create', 'UA-228898121-1', 'auto'); // eslint-disable-line no-undef
   ga('send', 'pageview'); // eslint-disable-line no-undef
 }
 
