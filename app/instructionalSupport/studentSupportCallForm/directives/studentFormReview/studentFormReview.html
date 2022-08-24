@@ -42,6 +42,19 @@
 		</div>
 	</div>
 
+	<div class="student-form-review__row">
+		<div class="student-form-review__icon" ng-if="state.supportCallResponse.submitted">
+			<i class="glyphicon glyphicon-ok text-success"></i> 
+		</div>
+		<div class="student-form-review__icon" ng-if="state.supportCallResponse.submitted === false">
+			<i class="glyphicon glyphicon-unchecked text-warn"></i> 
+		</div>
+
+		<div>
+			Preferences submitted
+		</div>
+	</div>
+
 	<div>
 		<div class="student-form-review__submit"
 			ng-if="state.supportCallResponse.submitted == false">
