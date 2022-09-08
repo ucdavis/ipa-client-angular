@@ -217,7 +217,8 @@
 
 </div>
 
-<div class="fixed right-details hidden-print" ng-style="{ 'visibility': view.selectedEntityType ? 'visible' : 'hidden' }">
+<div class="fixed right-details hidden-print"
+  ng-style="{ 'visibility': view.selectedEntityType || view.state.uiState.massImportMode ? 'visible' : 'hidden' }">
   <new-course ng-if="view.selectedEntity && view.selectedEntityType == 'newCourse'"></new-course>
   <course-details ng-if="view.selectedEntity && view.selectedEntityType == 'course'"></course-details>
   <section-group-details ng-if="view.selectedEntity && view.selectedEntityType == 'sectionGroup'"></section-group-details>
