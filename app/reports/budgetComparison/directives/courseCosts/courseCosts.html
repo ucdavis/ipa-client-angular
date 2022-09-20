@@ -37,7 +37,57 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="instructorTypeId in instructorTypes.current.ids">
+    <tr ng-repeat="instructorTypeId in primaryInstructorTypeIds">
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--left">
+          {{ instructorTypes.current.list[instructorTypeId].description }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ toCurrency(costs.instructorCosts.byType[instructorTypeId].cost) }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ costs.instructorCosts.coursesWithCosts[instructorTypeId] || 0 }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ costs.instructorCosts.scenarioCourses[instructorTypeId] || 0 }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last"></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--left">
+          <!-- Sub-total row -->
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          -
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          -
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell--bold">
+          {{ costs.instructorCosts.subtotal.courses }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last"></div>
+      </td>
+    </tr>
+    <tr ng-repeat="instructorTypeId in secondaryInstructorTypeIds">
       <td>
         <div class="dean-report__cell-container dean-report__cell-container--left">
           {{ instructorTypes.current.list[instructorTypeId].description }}

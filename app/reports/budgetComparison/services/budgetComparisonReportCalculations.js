@@ -357,12 +357,22 @@ class BudgetComparisonReportCalculations {
         sectionGroups
       ) {
         var _self = this;
+
+        // Sub-total for Ladder Faculty, New Faculty, Lecturer SOE, Cont. Lecturer
+        const subtotalInstructorIds = [6, 9, 8, 5];
+
         var instructionCosts = {
           byType: {},
           byTypeNoCost: {},
           scenarioCourses: {},
           coursesWithCosts: {},
           unassigned: 0,
+          subtotal: {
+            cost: 0,
+            courses: 0,
+            scenarioCourses: 0,
+            coursesWithCosts: 0
+          },
           total: {
             cost: 0,
             courses: 0,
@@ -452,6 +462,11 @@ class BudgetComparisonReportCalculations {
                 instructionCosts.byType[instructorTypeId].cost += cost;
                 instructionCosts.total.cost += cost;
                 instructionCosts.total.courses += 1;
+
+                if (subtotalInstructorIds.includes(instructorTypeId)) {
+                  instructionCosts.subtotal.cost += cost;
+                  instructionCosts.subtotal.courses += 1;
+                }
               } else {
                 instructionCosts.unassigned += 1;
               }
@@ -464,6 +479,11 @@ class BudgetComparisonReportCalculations {
                 instructionCosts.byTypeNoCost[instructorTypeId] += 1;
                 instructionCosts.total.cost += cost;
                 instructionCosts.total.courses += 1;
+
+                if (subtotalInstructorIds.includes(instructorTypeId)) {
+                  instructionCosts.subtotal.cost += cost;
+                  instructionCosts.subtotal.courses += 1;
+                }
               } else {
                 instructionCosts.unassigned += 1;
               }
@@ -695,6 +715,26 @@ class BudgetComparisonReportCalculations {
             )
           };
         });
+        costs.instructorCosts.subtotal = {
+          rawCost:
+            currentCosts.instructorCosts.subtotal.cost -
+            previousCosts.instructorCosts.subtotal.cost,
+          rawCourses:
+            currentCosts.instructorCosts.subtotal.courses -
+            previousCosts.instructorCosts.subtotal.courses,
+          percentageCost: _self._percentageChange(
+            previousCosts.instructorCosts.subtotal.cost,
+            currentCosts.instructorCosts.subtotal.cost
+          ),
+          percentageCourses: _self._percentageChange(
+            previousCosts.instructorCosts.subtotal.courses,
+            currentCosts.instructorCosts.subtotal.courses
+          ),
+          percentageCoursesCount: _self._percentageChange(
+            previousCosts.instructorCosts.subtotal.scenarioCourses,
+            currentCosts.instructorCosts.subtotal.scenarioCourses
+          )
+        };
         costs.instructorCosts.total = {
           rawCost:
             currentCosts.instructorCosts.total.cost -
