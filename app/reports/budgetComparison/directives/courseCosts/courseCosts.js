@@ -17,6 +17,9 @@ let courseCosts = function (StringService) {
       budgetScenarioName: '<'
     },
     link: function (scope) {
+      scope.primaryInstructorTypeIds = [6, 9, 8, 5];
+      scope.secondaryInstructorTypeIds = [1, 2, 4, 10, 3, 7];
+
       scope.toCurrency = function (value) {
         return toCurrency(value);
       };

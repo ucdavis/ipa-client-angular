@@ -135,7 +135,7 @@
 				</tr>
 
 				<!-- Replacement Cost sub-types -->
-				<tr ng-repeat="instructorTypeId in summary.combinedTerms.replacementCosts.instructorTypeIds">
+				<tr ng-repeat="instructorTypeId in orderedInstructorTypeIds">
 					<td>
 						<div class="budget-summary__cell-container budget-summary__cell-container--left">
 							{{ instructorTypes.list[instructorTypeId].description }}

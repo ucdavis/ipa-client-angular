@@ -13,6 +13,10 @@ let budgetSummary = function ($rootScope, TermService) {
 			selectedBudgetScenario: '<'
 		},
 		link: function (scope) {
+			scope.instructorIdDisplayOrder = [6, 9, 8, 5, 1, 2, 4, 10, 3, 7];
+			scope.activeInstructorTypeIds = scope.summary.combinedTerms.replacementCosts.instructorTypeIds;
+			scope.orderedInstructorTypeIds = scope.instructorIdDisplayOrder.filter(id => scope.activeInstructorTypeIds.includes(id));
+
 			scope.getTermName = function(term) {
 				return TermService.getShortTermName(term);
 			};
