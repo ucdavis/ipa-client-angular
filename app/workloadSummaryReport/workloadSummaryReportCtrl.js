@@ -14,7 +14,7 @@ class WorkloadSummaryReportCtrl {
 		$scope.view = {};
 
 		$rootScope.$on('workloadSummaryStateChanged', function (event, data) {
-			if (data.state.calculations.calculatedView.instructorTypeIds) {
+			if (data.state.calculations.calculatedView?.instructorTypeIds) {
 				const instructorIdDisplayOrder = [6, 9, 8, 5, 1, 2, 4, 10, 3, 7];
 				data.state.calculations.calculatedView.instructorTypeIds = instructorIdDisplayOrder.filter(id => data.state.calculations.calculatedView.instructorTypeIds.includes(id));
 			}
