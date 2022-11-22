@@ -7,8 +7,7 @@
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"
     ng-readonly="readOnly || labelReadOnly"
-    ng-keyup="updateInput()"
-    ng-paste="updateInput()"
+    ng-change="updateInput()"
     maxlength="{{maxChars}}"
     ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly, 'ipa-input--invalid': isInvalid }"
   />
@@ -21,8 +20,7 @@
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"
     ng-readonly="readOnly || labelReadOnly"
-    ng-keyup="updateInput()"
-    ng-paste="updateInput()"
+    ng-change="updateInput()"
     maxlength="{{maxChars}}"
     ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly, 'ipa-input--invalid': isInvalid }"
   />
@@ -35,8 +33,7 @@
     ng-blur="onBlur()"
     placeholder="{{placeHolder}}"
     ng-readonly="readOnly || labelReadOnly"
-    ng-keyup="updateInput()"
-    ng-paste="updateInput()"
+    ng-change="updateInput()"
     maxlength="{{maxChars}}"
     ng-class="{'ipa-input--read-only': readOnly, 'ipa-input--label-read-only': labelReadOnly }"
   />
