@@ -18,6 +18,7 @@ class CourseStateService {
       _termReducers: function (action, terms) {
         switch (action.type) {
           case ActionTypes.INIT_STATE:
+          case ActionTypes.IMPORT_COURSES:
             terms = {
               ids: []
             };
@@ -220,6 +221,9 @@ class CourseStateService {
             for (var i = 0; i < length; i++) {
               sectionGroupData = action.payload.sectionGroups[i];
               sectionGroupsList[sectionGroupData.id] = new SectionGroup(sectionGroupData);
+              sectionGroupsList[sectionGroupData.id].sections = action.payload.sections?.filter(function(section) {
+                return (section.sectionGroupId === sectionGroupData.id);
+              });
               sectionGroups.ids.push(sectionGroupData.id);
             }
             sectionGroups.list = sectionGroupsList;
@@ -329,6 +333,7 @@ class CourseStateService {
       _sectionReducers: function (action, sections) {
         switch (action.type) {
           case ActionTypes.INIT_STATE:
+          case ActionTypes.IMPORT_COURSES:
             sections = {
               list: {},
               ids: []
@@ -371,6 +376,7 @@ class CourseStateService {
       _tagReducers: function (action, tags) {
         switch (action.type) {
           case ActionTypes.INIT_STATE:
+          case ActionTypes.IMPORT_COURSES:
             tags = {
               ids: [],
               list: {},
