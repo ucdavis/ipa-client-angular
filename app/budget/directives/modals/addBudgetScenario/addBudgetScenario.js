@@ -25,7 +25,7 @@ let addBudgetScenario = function ($rootScope, BudgetActions) {
           scope.newBudgetScenario.description = "Schedule Data (No Costs/Funds)";
         } else {
           scope.newBudgetScenario.budgetScenarioId = budgetScenario.id;
-          scope.newBudgetScenario.description = budgetScenario.isSnapshot ? budgetScenario.name + " - SNAPSHOT - " + dateToCalendar(budgetScenario.creationDate) : budgetScenario.name;
+          scope.newBudgetScenario.description = budgetScenario.name;
         }
       };
 

@@ -15,7 +15,7 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
               <li ng-repeat="budgetScenario in state.budgetScenarios" class="budget-scenario-item">
                 <a ng-click="selectBudgetScenario(budgetScenario)">
-                  {{ budgetScenario.name }} {{ budgetScenario.isSnapshot ? " - SNAPSHOT - " + dateToCalendar(budgetScenario.creationDate) : "" }}
+                  {{ budgetScenario.name }}
                 </a>
               </li>
               <li role="presentation" class="divider courses-separator"></li>

@@ -252,20 +252,20 @@ class BudgetComparisonReportCalculations {
 
           // If an instructor is set
           if (!courseCost && sectionGroupCostInstructor.instructorId) {
-            instructorCost = selectedScenario.isSnapshot
+            instructorCost = selectedScenario.isBudgetRequest
               ? instructorCosts.byBudgetScenarioId[selectedScenario.id].byInstructorId[sectionGroupCostInstructor.instructorId]
               : instructorCosts.byInstructorId[sectionGroupCostInstructor.instructorId];
 
             instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
 
             // if no explicit instructor cost, attempt to find instructorType cost
-            instructorTypeCost = selectedScenario.isSnapshot
+            instructorTypeCost = selectedScenario.isBudgetRequest
               ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[instructorTypeId]
               : instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
             // If only instructorType is set
           } else if (!courseCost && sectionGroupCostInstructor.instructorTypeId) {
-            instructorTypeCost = selectedScenario.isSnapshot
+            instructorTypeCost = selectedScenario.isBudgetRequest
               ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
               : instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
 
@@ -316,7 +316,7 @@ class BudgetComparisonReportCalculations {
           if (cost === null){
             // Check if instructor has explicit cost
             if (instructorId){
-              var instructorCost = selectedScenario.isSnapshot
+              var instructorCost = selectedScenario.isBudgetRequest
               ? instructorCosts.byBudgetScenarioId[selectedScenario.id].byInstructorId[sectionGroupCostInstructor.instructorId]
               : instructorCosts.byInstructorId[sectionGroupCostInstructor.instructorId];
               if (instructorCost){
@@ -326,7 +326,7 @@ class BudgetComparisonReportCalculations {
 
             // Check if instructor type has explicit cost
             if (!cost && instructorTypeId){
-              var instructorTypeCost = selectedScenario.isSnapshot
+              var instructorTypeCost = selectedScenario.isBudgetRequest
               ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
               : instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
             }
