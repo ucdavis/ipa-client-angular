@@ -253,20 +253,20 @@ class BudgetComparisonReportCalculations {
           // If an instructor is set
           if (!courseCost && sectionGroupCostInstructor.instructorId) {
             instructorCost = selectedScenario.isBudgetRequest
-              ? instructorCosts.byBudgetScenarioId[selectedScenario.id].byInstructorId[sectionGroupCostInstructor.instructorId]
+              ? instructorCosts.byBudgetScenarioId[selectedScenario.id]?.byInstructorId[sectionGroupCostInstructor.instructorId]
               : instructorCosts.byInstructorId[sectionGroupCostInstructor.instructorId];
 
             instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
 
             // if no explicit instructor cost, attempt to find instructorType cost
             instructorTypeCost = selectedScenario.isBudgetRequest
-              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[instructorTypeId]
+              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id]?.byInstructorTypeId[instructorTypeId]
               : instructorTypeCosts.byInstructorTypeId[instructorTypeId];
 
             // If only instructorType is set
           } else if (!courseCost && sectionGroupCostInstructor.instructorTypeId) {
             instructorTypeCost = selectedScenario.isBudgetRequest
-              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
+              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id]?.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
               : instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
 
             instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
@@ -317,7 +317,7 @@ class BudgetComparisonReportCalculations {
             // Check if instructor has explicit cost
             if (instructorId){
               var instructorCost = selectedScenario.isBudgetRequest
-              ? instructorCosts.byBudgetScenarioId[selectedScenario.id].byInstructorId[sectionGroupCostInstructor.instructorId]
+              ? instructorCosts.byBudgetScenarioId[selectedScenario.id]?.byInstructorId[sectionGroupCostInstructor.instructorId]
               : instructorCosts.byInstructorId[sectionGroupCostInstructor.instructorId];
               if (instructorCost){
                 cost = instructorCost.cost;
@@ -327,7 +327,7 @@ class BudgetComparisonReportCalculations {
             // Check if instructor type has explicit cost
             if (!cost && instructorTypeId){
               var instructorTypeCost = selectedScenario.isBudgetRequest
-              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id].byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
+              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id]?.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
               : instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
             }
             if (!cost && instructorTypeCost){
