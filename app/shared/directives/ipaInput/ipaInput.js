@@ -18,9 +18,18 @@ let ipaInput = function ($timeout) {
 		link: function(scope, element) {
 			scope.$watch('mode',function() {
 				if (scope.mode) {
+					scope.disableScroll();
 					scope.enforceNegative();
 				}
 			});
+
+			scope.disableScroll = function() {
+				element.on('wheel', function (e) {
+					if (scope.mode) {
+						e.preventDefault();
+					}
+				});
+			};
 
 			scope.enforceNegative = function() {
 				element.on('keydown', function (e) {
