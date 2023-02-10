@@ -16,6 +16,8 @@ let ipaInput = function ($timeout) {
 			mode: '<?' // Options are 'number' (only allow characters 0-9), and 'currency' (currency style formatting and input enforcement)
 		},
 		link: function(scope, element) {
+			scope.prevValue = scope.value;
+
 			scope.$watch('mode',function() {
 				if (scope.mode) {
 					scope.disableScroll();
@@ -46,6 +48,8 @@ let ipaInput = function ($timeout) {
 
 			// Main method triggered by template, handles filtering/update callback
 			scope.updateInput = function() {
+				if (scope.mode === 'currency') { return; }
+
 				scope.applyUpdate();
 			};
 
@@ -63,7 +67,7 @@ let ipaInput = function ($timeout) {
 				if (angular.isUndefined(scope.onUpdate)) { return; } // eslint-disable-line no-undef
 
 				// $timeout.cancel will return true if there was time remaining
-				var needToUpdate = $timeout.cancel(scope.timeOut);
+				var needToUpdate = $timeout.cancel(scope.timeOut) || scope.prevValue !== scope.value;
 
 				if (needToUpdate) {
 					scope.onUpdate();
