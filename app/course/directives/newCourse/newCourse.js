@@ -36,7 +36,33 @@ let newCourse = function (CourseActionCreators, CourseService, SectionService) {
 
       scope.searchCourses = function (query) {
         return CourseService.searchCourses(query).then(function (courseSearchResults) {
-          return courseSearchResults.slice(0, 20);
+          const prefix = query.slice(0, 3).toUpperCase();
+          const subjectCodes = courseSearchResults.map(r => r.subjectCode);
+
+          const basePlaceholder = {
+            "title": "Placeholder",
+            "effectiveTermCode": "000000",
+            "subjectCode": prefix,
+            "creditHoursLow": 0,
+            "creditHoursHigh": 0
+          };
+
+          const placeholders = subjectCodes.includes(prefix) ? [
+            {
+              ...basePlaceholder,
+              "courseNumber": "0xx",
+            },
+            {
+              ...basePlaceholder,
+              "courseNumber": "1xx",
+          },
+            {
+              ...basePlaceholder,
+              "courseNumber": "2xx",
+          }
+          ] : [];
+
+          return [...courseSearchResults.slice(0, 20), ...placeholders];
         }, function () {
           // FIXME
           // $rootScope.$emit('toast', { message: "Could not search courses.", type: "ERROR" });
