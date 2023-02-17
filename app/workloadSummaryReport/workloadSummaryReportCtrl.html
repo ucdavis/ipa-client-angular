@@ -11,6 +11,25 @@
   <div class="row hidden-print">
     <div class="col-sm-12">
       <div class="table-toolbar">
+        <div style="display: flex; align-items: center;">
+          <ipa-dropdown
+            ng-show="view.state.workloadSnapshots.list.length > 0"
+            button-text="view.state.workloadSnapshots.selected.name || 'Snapshots'"
+            items="view.state.workloadSnapshots.list"
+            select-item="selectSnapshot(item)"
+            style="'minimal'">
+          </ipa-dropdown>
+          <span style="margin-left: 10px;">
+            <ipa-button
+              ng-show="view.state.workloadSnapshots.selected"
+              icon-class="'glyphicon glyphicon-repeat'"
+              size="'small'"
+              tooltip-message="'Clear Snapshot'"
+              on-click="clearSnapshot()">
+            </ipa-button>
+          </span>
+        </div>
+
         <span class="anchor-links">
           Jump to: 
           <span ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds">
@@ -25,7 +44,7 @@
           <span
             class="tool-icon glyphicon glyphicon-download-alt"
             uib-tooltip="Download as Excel"
-            ng-click="download()"
+            ng-click="download(view.state.workloadSnapshots.selected.id)"
           ></span>
           <span
             class="tool-icon glyphicon glyphicon-print"
@@ -37,18 +56,27 @@
     </div>
   </div>
 
-  <div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-init="instructorTypeDescription = view.state.instructorTypes.list[instructorTypeId].description" ng-class="{'workload-table__last':$last }">
-    <div class="workload-summary__table-label" id="{{ instructorTypeDescription }}">
-      {{ instructorTypeDescription }}
-    </div>
-    <workload-table instructors="view.state.calculations.calculatedView.byInstructorType[instructorTypeId]"
-                    totals="view.state.calculations.calculatedView.totals.byInstructorTypeId[instructorTypeId]"></workload-table>
-  </div>
-  <workload-unassigned-table courses="view.state.calculations.calculatedView.unassignedCourses"
-                             totals="view.state.calculations.calculatedView.unassignedTotals"></workload-unassigned-table>
+  <workload-snapshot 
+    ng-if="view.state.workloadSnapshots.selected"
+    workload-assignments="view.state.workloadSnapshots.selected.workloadAssignments"
+    snapshot="view.state.workloadSnapshots.selected"
+    >
+  </workload-snapshot>
 
-  <workload-totals workload-totals="view.state.calculations.calculatedView.workloadTotals"
-                   combined-totals="view.state.calculations.calculatedView.combinedTotals"></workload-totals>
+  <div ng-if="!view.state.workloadSnapshots.selected">
+    <div ng-repeat="instructorTypeId in view.state.calculations.calculatedView.instructorTypeIds" ng-init="instructorTypeDescription = view.state.instructorTypes.list[instructorTypeId].description" ng-class="{'workload-table__last':$last }">
+      <div class="workload-summary__table-label" id="{{ instructorTypeDescription }}">
+        {{ instructorTypeDescription }}
+      </div>
+      <workload-table instructors="view.state.calculations.calculatedView.byInstructorType[instructorTypeId]"
+      totals="view.state.calculations.calculatedView.totals.byInstructorTypeId[instructorTypeId]"></workload-table>
+    </div>
+    <workload-unassigned-table courses="view.state.calculations.calculatedView.unassignedCourses"
+    totals="view.state.calculations.calculatedView.unassignedTotals"></workload-unassigned-table>
+    
+    <workload-totals workload-totals="view.state.calculations.calculatedView.workloadTotals"
+    combined-totals="view.state.calculations.calculatedView.combinedTotals"></workload-totals>
+  </div>
 </div>
 
 <back-to-top></back-to-top>

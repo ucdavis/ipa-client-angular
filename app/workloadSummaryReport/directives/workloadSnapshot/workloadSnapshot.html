@@ -1,0 +1,423 @@
+<div>
+  <!-- By Instructor Types -->
+  <div class="workload-table" ng-repeat="instructors in snapshot.byInstructorTypeList" ng-init="instructorType = instructors[0].instructorType">
+    <div class="workload-table__label" id="{{ instructorType }}">
+      {{ instructorType }}
+    </div>
+    <div class="workload-table__container">
+      <table class="workload-table__table">
+        <colgroup>
+          <col style="width: 16%;">
+          <col style="width: 15%;">
+          <col style="width: 13%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 5%;">
+          <col style="width: 10%;">
+        </colgroup>
+        <tbody>
+          <tr>
+            <td class="workload-table__header-cell workload-table__header-cell--first">
+              Instructor
+            </td>
+            <td class="workload-table__header-cell">
+              Term
+            </td>
+            <td class="workload-table__header-cell">
+              Description
+            </td>
+            <td class="workload-table__header-cell">
+              Offering
+            </td>
+            <td class="workload-table__header-cell">
+              Enrollment / Seats
+            </td>
+            <td class="workload-table__header-cell">
+              Previous Enrollment (YoY)
+            </td>
+            <td class="workload-table__header-cell">
+              Previous Enrollment (Last Offered)
+            </td>
+            <td class="workload-table__header-cell">
+              Units
+            </td>
+            <td class="workload-table__header-cell workload-table__header-cell--last">
+              SCH
+            </td>
+          </tr>
+          <tr class="workload-table__row" ng-repeat="instructor in instructors | orderBy: 'name'">
+            <td class="workload-table__name-cell">
+              <span>{{ instructor.name }}</span>
+              <div ng-if="instructor.assignments[0].instructorNote" style="padding: 10px;">Note: {{ instructor.assignments[0].instructorNote }}</div>
+            </td>
+            <td>
+              <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+                {{ assignment.term }}
+              </div>
+              <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+                ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+                Totals
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+                {{ assignment.description }}
+              </div>
+              <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+                ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+                {{ instructor.totals.assignmentCount }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+                {{ assignment.offering }}
+              </div>
+              <div class="workload-table__value workload-table__value--totals"
+                ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+                {{ assignment.census }}&nbsp;/&nbsp;{{ assignment.plannedSeats }}&nbsp;<span
+                  ng-if="assignment.actualEnrollment" class="workload-table__enrollment-percent">(&nbsp;{{
+                  assignment.enrollmentPercentage
+                  }}%&nbsp;)</span>
+              </div>
+              <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+                ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+                {{ instructor.totals.actualEnrollment }} / {{ instructor.totals.seats }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+                {{ assignment.previousYearCensus }}
+              </div>
+              <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+                ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+                {{ instructor.totals.previousEnrollment }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+                {{ assignment.lastOfferedEnrollment }} <span ng-if="assignment.lastOfferedTermDescription"
+                  class="workload-table__last-offered-term">{{ assignment.lastOfferedTermDescription }}</span>
+              </div>
+              <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+                ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+                {{ instructor.totals.lastOfferedEnrollment }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+                {{ assignment.units }}
+              </div>
+              <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+                ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+                {{ instructor.totals.units }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
+                {{ assignment.studentCreditHours }} / {{ assignment.studentMaxCreditHours }}&nbsp;<span
+                  ng-if="assignment.studentCreditHours" class="workload-table__enrollment-percent">({{
+                  assignment.studentCreditHoursPercentage }}%)</span>
+              </div>
+              <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
+                ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
+                {{ instructor.totals.studentCreditHours }} / {{ instructor.totals.studentMaxCreditHours
+                }}
+              </div>
+            </td>
+          </tr>
+
+          <!-- Table totals -->
+          <tr class="workload-table__row" ng-init="totals = snapshot.totals[instructorType]">
+            <td class="workload-table__name-cell"></td>
+            <td></td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.assignmentCount }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar"></div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.enrollment }} / {{ totals.seats }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.previousEnrollment }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.lastOfferedEnrollment }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.units }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.studentCreditHours }} / {{ totals.studentMaxCreditHours }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Unassigned -->
+  <div>
+    <div class="workload-totals__header">
+      Unassigned Courses
+    </div>
+    <div class="workload-totals__content">
+      <table class="workload-table__table">
+        <colgroup>
+          <col style="width: 16%;">
+          <col style="width: 16%;">
+          <col style="width: 16%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+        </colgroup>
+        <tbody>
+          <tr>
+            <td class="workload-table__header-cell workload-table__header-cell--first">
+              Term
+            </td>
+            <td class="workload-table__header-cell">
+              Description
+            </td>
+            <td class="workload-table__header-cell">
+              Offering
+            </td>
+            <td class="workload-table__header-cell">
+              Enrollment / Seats
+            </td>
+            <td class="workload-table__header-cell">
+              Previous Enrollment
+            </td>
+            <td class="workload-table__header-cell">
+              Units
+            </td>
+            <td class="workload-table__header-cell workload-table__header-cell--last">
+              SCH
+            </td>
+          </tr>
+          <tr ng-repeat="unassignedCourse in snapshot.unassignedCourses"
+            class="workload-table__row">
+            <td>
+              <div class="workload-table__value">
+                {{ unassignedCourse.term }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value">
+                {{ unassignedCourse.description }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value">
+                {{ unassignedCourse.sequencePattern }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value">
+                {{ unassignedCourse.enrollment }} / {{ unassignedCourse.seats }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value">
+                {{ unassignedCourse.previousEnrollment }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value">
+                {{ unassignedCourse.units }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value">
+                {{ unassignedCourse.studentCreditHours }} / {{ unassignedCourse.studentMaxCreditHours }}
+              </div>
+            </td>
+          </tr>
+
+          <!-- Table totals -->
+          <tr class="workload-table__row">
+            <td class="workload-table__name-cell"></td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ courses.length }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar"></div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.enrollment }} / {{ totals.seats }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.previousEnrollment }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.units }}
+              </div>
+            </td>
+            <td>
+              <div class="workload-table__value workload-table__value--type-totals-bar">
+                {{ totals.studentCreditHours }} / {{ totals.studentMaxCreditHours }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Combined Totals -->
+  <div class="workload-totals">
+    <div class="workload-summary__table-label">
+      Assignment Totals
+    </div>
+    <div class="workload-totals__content">
+      <table class="workload-table__table">
+        <colgroup>
+          <col style="width: 16%;">
+          <col style="width: 16%;">
+          <col style="width: 16%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+        </colgroup>
+        <tbody>
+          <tr>
+            <td class="workload-table__header-cell workload-table__header-cell--first">
+              Totals
+            </td>
+            <td class="workload-table__header-cell workload-table__header-cell--first">
+              Instructors
+            </td>
+            <td class="workload-table__header-cell">
+              Assignments
+            </td>
+            <td class="workload-table__header-cell">
+              Enrollment / Seats
+            </td>
+            <td class="workload-table__header-cell">
+              Previous Enrollment
+            </td>
+            <td class="workload-table__header-cell">
+              Units
+            </td>
+            <td class="workload-table__header-cell workload-table__header-cell--last">
+              SCH
+            </td>
+          </tr>
+          <tr ng-repeat="(group, total) in snapshot.categoryTotals">
+            <td class="workload-totals__cell workload-totals__cell--first">
+              <div>
+                {{ group }}
+              </div>
+            </td>
+            <td class="workload-totals__cell workload-totals__cell--first">
+              <div>
+                {{ total.instructorCount }}
+              </div>
+            </td>
+            <td class="workload-totals__cell">
+              {{ total.assignmentCount }}
+            </td>
+            <td class="workload-totals__cell">
+              <div>
+                {{ total.enrollment }} / {{ total.seats }}
+              </div>
+            </td>
+            <td class="workload-totals__cell">
+              <div>
+                {{ total.previousEnrollment }}
+              </div>
+            </td>
+            <td class="workload-totals__cell">
+              <div>
+                {{ total.units }}
+              </div>
+            </td>
+            <td class="workload-totals__cell workload-totals__cell--last">
+              <div>
+                {{ total.studentCreditHours }} / {{ total.studentMaxCreditHours }}
+              </div>
+            </td>
+          </tr>
+
+          <!-- Table totals -->
+          <tr class="workload-table__row">
+            <td class="workload-table__name-cell workload-table__value workload-table__value--totals">Totals</td>
+            <td>
+              <div
+                class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+                {{ snapshot.combinedTotals.instructorCount }}
+              </div>
+            </td>
+            <td>
+              <div
+                class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+                {{ snapshot.combinedTotals.assignmentCount }}
+              </div>
+            </td>
+            <td>
+              <div
+                class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+                {{ snapshot.combinedTotals.enrollment }}
+                / {{ snapshot.combinedTotals.seats }}
+              </div>
+            </td>
+            <td>
+              <div
+                class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+                {{ snapshot.combinedTotals.previousEnrollment }}
+              </div>
+            </td>
+            <td>
+              <div
+                class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+                {{ snapshot.combinedTotals.units }}
+              </div>
+            </td>
+            <td>
+              <div
+                class="workload-table__value workload-table__value--type-totals-bar workload-table__value workload-table__value--totals">
+                {{ snapshot.combinedTotals.studentCreditHours }} / {{ snapshot.combinedTotals.studentMaxCreditHours }}
+              </div>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="workload-totals__warning">
+      <div>
+        Variable unit courses without defined units do not count toward SCH calculations
+      </div>
+    </div>
+  </div>
+</div>
