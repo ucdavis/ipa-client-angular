@@ -197,6 +197,10 @@ class SupportAssignmentCtrl {
 		// Set the active tab according to the URL
 		// Otherwise redirect to the default view
 		_self.$scope.setActiveTab(_self.$routeParams.tab || "courses");
+
+		_self.$scope.download = function() {
+			_self.SupportService.download(_self.$scope.workgroupId, _self.$scope.year, _self.$scope.termShortCode);
+		};
 	}
 }
 

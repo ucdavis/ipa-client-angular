@@ -1,5 +1,9 @@
 class SupportService {
-	constructor (ApiService) {
+	constructor ($http, $q, $window, ApiService) {
+		this.$http = $http;
+		this.$q = $q;
+		this.$window = $window;
+
 		return {
 			getInitialState: function(workgroupId, year, termShortCode) {
 				return ApiService.get("/api/instructionalSupportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termShortCode);
@@ -28,11 +32,27 @@ class SupportService {
 			getAuditLogs: function (workgroupId, year) {
 				var endpoint = "/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Support Staff Assignments" + "/auditLogs";
 				return ApiService.get(encodeURI(endpoint));
+			},
+			download: function(workgroupId, year, termShortCode) {
+				var deferred = $q.defer();
+
+				const url = window.serverRoot + "/api/instructionalSupportView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termShortCode + "/generateExcel";
+		
+				$http.get(url, { withCredentials: true })
+				.then(function(payload) {
+					$window.location.href = payload.data.redirect;
+					deferred.resolve(payload.data);
+				},
+				function() {
+					deferred.reject();
+				});
+		
+				return deferred.promise;
 			}
 		};
 	}
 }
 
-SupportService.$inject = ['ApiService'];
+SupportService.$inject = ['$http', '$q', '$window', 'ApiService'];
 
 export default SupportService;
