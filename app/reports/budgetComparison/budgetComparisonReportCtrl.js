@@ -14,6 +14,13 @@ class BudgetComparisonReportCtrl {
     $scope.view = {};
     $scope.activeFilters = [];
 
+    $scope.years = [
+      {id: 0, description: '2020', selected: false},
+      {id: 1, description: '2021', selected: false},
+      {id: 2, description: '2022', selected: false},
+      {id: 3, description: '2023', selected: false}
+  ];
+
     $rootScope.$on('budgetComparisonReportStateChanged', function (event, data) {
       $scope.view.state = data.state;
     });
