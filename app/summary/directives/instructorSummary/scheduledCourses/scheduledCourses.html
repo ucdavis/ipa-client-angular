@@ -40,10 +40,10 @@
 							{{ instructorAssignment.meetings[0].location }}
 						</div>
 						<div class="scheduled-courses-table__cell scheduled-courses-table__cell--gray">
-							<div ng-if="course.teachingAssistants.length > 0" ng-repeat="teachingAssistant in course.teachingAssistants">
+							<div ng-if="instructorAssignment.teachingAssistants.length > 0" ng-repeat="teachingAssistant in instructorAssignment.teachingAssistants">
 								{{ teachingAssistant.lastName }}, {{ teachingAssistant.firstName }}
 							</div>
-							<div ng-if="course.teachingAssistants.length == 0" ng-repeat="teachingAssistant in course.teachingAssistants">
+							<div ng-if="instructorAssignment.teachingAssistants.length == 0">
 								No TA information
 							</div>
 						</div>

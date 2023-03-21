@@ -56,7 +56,8 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 						description: description,
 						termCode: scheduledTermCode,
 						meetings: meetings,
-						sectionGroupId: sectionGroup ? sectionGroup.id : null
+						sectionGroupId: sectionGroup ? sectionGroup.id : null,
+						teachingAssistants: sectionGroup.teachingAssistants
 					};
 
 					scope.instructorAssignments.push(instructorAssignment);
