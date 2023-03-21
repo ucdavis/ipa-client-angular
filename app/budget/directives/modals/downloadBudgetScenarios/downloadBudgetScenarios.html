@@ -59,7 +59,15 @@
 				placement="top"
 				message="Are you sure you want to select the last Budget Request snapshot created by each department?"
 			>
-				Select Latest Budget Requests
+				Select Latest
+			</button>
+			<button
+				class="btn btn-info"
+				confirm-button="selectApprovedBudgetRequests()"
+				placement="top"
+				message="Are you sure you want to select the approved Budget Request created by each department?"
+			>
+				Select Approved
 			</button>
 			<button
 				ng-click="submit()"

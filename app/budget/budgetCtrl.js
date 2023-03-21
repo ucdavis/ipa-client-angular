@@ -40,6 +40,7 @@ class BudgetCtrl {
     var _self = this;
 
     this.$scope.currentUser = _self.AuthService.getCurrentUser();
+    this.$scope.isDeansOffice = _self.AuthService.getCurrentUser().isDeansOffice();
 
     this.$rootScope.$on("budgetStateChanged", function(event, data) {
       _self.$scope.view.state = data;

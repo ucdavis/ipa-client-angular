@@ -10,7 +10,8 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 		replace: true, // Replace with the template
 
 		scope: {
-			state: '<'
+			state: '<',
+			isDeansOffice: '<'
 		},
 		link: function (scope) {
 			scope.displayScenarioRenameUI = false;
@@ -86,6 +87,10 @@ let budgetScenarioToolbar = function($window, $location, $routeParams, $rootScop
 			scope.createBudgetRequestScenario = function() {
 				scope.budgetRequestInProgress = true;
 				BudgetActions.createBudgetRequestScenario(scope.state.selectedBudgetScenario);
+			};
+
+			scope.approveBudgetRequestScenario = function() {
+				BudgetActions.approveBudgetRequestScenario(scope.state.selectedBudgetScenario);
 			};
 
 			// Verifies that name is unique (within budgets for that schedule) and at least 1 character long.

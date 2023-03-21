@@ -3,7 +3,7 @@
     ng-if="selectedBudgetScenario.isBudgetRequest"
     style="text-align: center; color: #5b616b"
   >
-    BUDGET REQUEST
+    <span ng-show="selectedBudgetScenario.isApproved">APPROVED</span> BUDGET REQUEST
   </h3>
   <div ng-if="!selectedBudgetScenario.isBudgetRequest" class="instructor-list__warning">
     Note: Salaries and Category Costs listed below are applied across all

@@ -282,6 +282,28 @@ class BudgetActions {
 					$rootScope.$emit('toast', { message: "Could not create budget request.", type: "ERROR" });
 				});
 			},
+			approveBudgetRequestScenario: function (selectedBudgetScenario) {
+				let self = this;
+				BudgetService.approveBudgetRequestScenario(selectedBudgetScenario).then(
+					function (results) {
+						let action = {
+							type: ActionTypes.APPROVE_BUDGET_REQUEST,
+							payload: results
+						};
+
+						$rootScope.$emit('toast', { message: "Approved budget request", type: "SUCCESS" });
+						BudgetReducers.reduce(action);
+						self.selectBudgetScenario(results.budgetScenario.id);
+						self.attachInstructorTypesToInstructors();
+
+						// Perform follow up calculations
+						// BudgetCalculations.calculateInstructors();
+						// BudgetCalculations.calculateLineItems();
+						// BudgetCalculations.calculateInstructorTypeCosts();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not create budget request.", type: "ERROR" });
+				});
+			},
 			deleteBudgetScenario: function (budgetScenarioId) {
 				var self = this;
 
@@ -1011,6 +1033,7 @@ class BudgetActions {
 			selectBudgetScenario: function(selectedScenarioId) {
 				var fromLiveData = false;
 				let isBudgetRequest = false;
+				let isApproved = false;
 
 				// If scenarioId was not provided, attempt to use currently selected scenario
 				if (selectedScenarioId == null) {
@@ -1027,6 +1050,7 @@ class BudgetActions {
 					var budgetScenario = BudgetReducers._state.budgetScenarios.list[selectedScenarioId];
 					fromLiveData = budgetScenario.fromLiveData;
 					isBudgetRequest = budgetScenario.isBudgetRequest;
+					isApproved = budgetScenario.isApproved;
 				}
 
 				var year = BudgetReducers._state.ui.year;
@@ -1039,7 +1063,8 @@ class BudgetActions {
 					payload: {
 						budgetScenarioId: selectedScenarioId,
 						fromLiveData: fromLiveData,
-						isBudgetRequest: isBudgetRequest
+						isBudgetRequest: isBudgetRequest,
+						isApproved: isApproved
 					}
 				};
 
