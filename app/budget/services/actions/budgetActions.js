@@ -285,15 +285,15 @@ class BudgetActions {
 			approveBudgetRequestScenario: function (selectedBudgetScenario) {
 				let self = this;
 				BudgetService.approveBudgetRequestScenario(selectedBudgetScenario).then(
-					function (results) {
+					function (response) {
 						let action = {
 							type: ActionTypes.APPROVE_BUDGET_REQUEST,
-							payload: results
+							payload: response
 						};
 
 						$rootScope.$emit('toast', { message: "Approved budget request", type: "SUCCESS" });
 						BudgetReducers.reduce(action);
-						self.selectBudgetScenario(results.budgetScenario.id);
+						self.selectBudgetScenario(response.id);
 						self.attachInstructorTypesToInstructors();
 
 						// Perform follow up calculations
@@ -301,7 +301,7 @@ class BudgetActions {
 						// BudgetCalculations.calculateLineItems();
 						// BudgetCalculations.calculateInstructorTypeCosts();
 				}, function () {
-					$rootScope.$emit('toast', { message: "Could not create budget request.", type: "ERROR" });
+					$rootScope.$emit('toast', { message: "Could not approve budget request.", type: "ERROR" });
 				});
 			},
 			deleteBudgetScenario: function (budgetScenarioId) {
