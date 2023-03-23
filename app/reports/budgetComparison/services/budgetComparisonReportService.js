@@ -34,6 +34,9 @@ class BudgetComparisonReportService {
 			getBudgetScenarios: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/budgetScenarios");
 			},
+			getBudgetScenarioYears: function (workgroupId) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/budgetScenarios");
+			},
 			getLineItemCategories: function () {
 				return _self.ApiService.get("/api/lineItemCategories");
 			},

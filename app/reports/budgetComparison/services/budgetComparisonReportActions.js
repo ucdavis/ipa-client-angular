@@ -3,8 +3,9 @@ class BudgetComparisonReportActions {
 		return {
 			getInitialState: function () {
 				var workgroupId = $route.current.params.workgroupId;
-				var year = $route.current.params.year;
-				var previousYear = String(parseInt($route.current.params.year) - 1);
+				debugger;
+				var year = localStorage.getItem("budgetComparisonCurrentYear") || $route.current.params.year;
+				var previousYear = localStorage.getItem("budgetComparisonPreviousYear") || String(parseInt($route.current.params.year) - 1);
 
 				BudgetComparisonReportReducers._state = {};
 
@@ -12,6 +13,9 @@ class BudgetComparisonReportActions {
 					type: ActionTypes.INIT_STATE,
 					payload: {}
 				});
+debugger;
+				// check for years that have scenarios, use to populate year drop down
+				this._getBudgetScenarioYears(workgroupId);
 
 				this._getBudget(workgroupId, year, ActionTypes.GET_CURRENT_BUDGET);
 				this._getCourses(workgroupId, year, ActionTypes.GET_CURRENT_COURSES);
@@ -456,6 +460,28 @@ class BudgetComparisonReportActions {
 					});
 
 					_self._performCalculations();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
+				});
+			},
+			_getBudgetScenarioYears: function (workgroupId) {
+				// var _self = this;
+
+				BudgetComparisonReportService.getBudgetScenarioYears(workgroupId).then(function (response) {
+console.log(response)
+					// rawBudgetScenarios.forEach(function(budgetScenario) {
+					// 	budgetScenarios.ids.push(budgetScenario.id);
+					// 	budgetScenarios.list[budgetScenario.id] = budgetScenario;
+					// });
+
+					// BudgetComparisonReportReducers.reduce({
+					// 	type: action,
+					// 	payload: {
+					// 		budgetScenarios: budgetScenarios
+					// 	}
+					// });
+
+					// _self._performCalculations();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});

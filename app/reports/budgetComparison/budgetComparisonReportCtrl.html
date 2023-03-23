@@ -61,7 +61,7 @@
 
 <div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="do-not-print budget-comparison-report__scenario-selector-tray">
   <div class="budget-comparison-report__scenario-selector-container">
-    <ipa-dropdown items="years" button-text="'Previous'">
+    <ipa-dropdown items="years" select-item="changePreviousYear(item)" button-text="'Previous'">
       year
     </ipa-dropdown>
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
@@ -93,7 +93,7 @@
                     is-current="false"
                     instructor-types="view.state.instructorTypes"
                     line-item-categories="view.state.lineItemCategories"
-                    year="(year-1)"
+                    year="previousYear"
                     budget-scenario-name="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario.name">
       </course-costs>
     </div>

@@ -7,7 +7,8 @@ class BudgetComparisonReportCtrl {
     this.$routeParams = $routeParams;
 
     $scope.workgroupId = $routeParams.workgroupId;
-    $scope.year = $routeParams.year;
+    $scope.year = localStorage.getItem("budgetComparisonCurrentYear") || $routeParams.year;
+    $scope.previousYear = localStorage.getItem("budgetComparisonPreviousYear") || $scope.year - 1 ;
     $scope.noAccess = validate ? validate.noAccess : null;
     $scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
@@ -24,6 +25,13 @@ class BudgetComparisonReportCtrl {
     $rootScope.$on('budgetComparisonReportStateChanged', function (event, data) {
       $scope.view.state = data.state;
     });
+
+    $scope.changePreviousYear = function(year) {
+      // override the year?
+      $scope.previousYear = year.description;
+      localStorage.setItem("budgetComparisonPreviousYear", year.description);
+      BudgetComparisonReportActions.getInitialState();
+    };
 
     $scope.toggleFilter = function(filter) {
       filter.selected = !filter.selected;
