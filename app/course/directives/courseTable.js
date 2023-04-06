@@ -41,6 +41,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         ActionTypes.DELETE_MULTIPLE_COURSES,
         ActionTypes.MASS_ASSIGN_TAGS,
         ActionTypes.CREATE_SECTION,
+        ActionTypes.UPDATE_SECTION,
         ActionTypes.REMOVE_SECTION
       ];
 

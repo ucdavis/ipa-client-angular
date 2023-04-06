@@ -278,6 +278,7 @@ class CourseStateService {
             sectionGroups.list[action.payload.sectionGroup.id].plannedSeats = action.payload.sectionGroup.plannedSeats;
             sectionGroups.list[action.payload.sectionGroup.id].termCode = action.payload.sectionGroup.termCode;
             sectionGroups.selectedSectionGroup = sectionGroups.list[action.payload.sectionGroup.id];
+            sectionGroups.selectedSectionGroup.requiresAttention = action.payload.requiresAttention;
             return sectionGroups;
           case ActionTypes.FETCH_SECTIONS:
             sectionGroups.list[action.payload.sectionGroup.id].sectionIds = action.payload.sections
@@ -294,6 +295,9 @@ class CourseStateService {
             sectionGroups.selectedSectionGroup.sectionIds.push(action.payload.section.id);
             sectionGroups.selectedSectionGroup.sections.push(new Section(action.payload.section));
             sectionGroups.selectedSectionGroup.requiresAttention = false;
+            return sectionGroups;
+          case ActionTypes.UPDATE_SECTION:
+            sectionGroups.selectedSectionGroup.requiresAttention = action.payload.requiresAttention;
             return sectionGroups;
           case ActionTypes.REMOVE_SECTION:
             var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
@@ -482,8 +486,9 @@ class CourseStateService {
             uiState.sectionsFetchInProgress = false;
             return uiState;
           case ActionTypes.CREATE_SECTION:
+          case ActionTypes.UPDATE_SECTION:
           case ActionTypes.REMOVE_SECTION:
-            uiState.requiresAttention = action.payload.requiresAttention;
+            uiState.requiresAttention = action.payload.flaggedSectionGroups > 0;
             uiState.flaggedSectionGroups = action.payload.flaggedSectionGroups;
             return uiState;
           case ActionTypes.BEGIN_FETCH_CENSUS:
@@ -512,6 +517,8 @@ class CourseStateService {
           case ActionTypes.UPDATE_SECTION_GROUP:
             uiState.selectedCourseId = action.payload.sectionGroup.courseId;
             uiState.selectedTermCode = action.payload.sectionGroup.termCode;
+            uiState.requiresAttention = action.payload.flaggedSectionGroups > 0;
+            uiState.flaggedSectionGroups = action.payload.flaggedSectionGroups;
             return uiState;
           case ActionTypes.CLOSE_NEW_COURSE_DETAILS:
             uiState.tableLocked = false;

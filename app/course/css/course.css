@@ -428,6 +428,7 @@ table.courses-table > tbody > tr > td:not(:nth-child(2)) {
   text-align: center;
 }
 .text-warning {
+  font-size: 1.2em;
   color: #f7d227;
 }
 .right-details {
