@@ -140,8 +140,7 @@ class CourseActionCreators {
           sectionGroup.termCode = newTermCode;
         }
 
-        // check if we need to flag the offering
-        const { requiresAttention, flaggedSectionGroups } = this._calculateWarning();
+        const { requiresAttention, flaggedSectionGroups } = this._calculateSelectedSectionGroupWarning();
 
         CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
           $rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
@@ -385,11 +384,10 @@ class CourseActionCreators {
         });
       },
       updateSection: function (section) {
+        const {requiresAttention, flaggedSectionGroups} = this._calculateSelectedSectionGroupWarning();
+
         CourseService.updateSection(section).then(function (section) {
           window.ipa_analyze_event('courses', 'section updated');
-
-          // check if we need to flag the offering
-          const {requiresAttention, flaggedSectionGroups} = this._calculateWarning();
 
           $rootScope.$emit('toast', { message: "Updated section " + section.sequenceNumber, type: "SUCCESS" });
           var action = {
@@ -621,7 +619,7 @@ class CourseActionCreators {
 
         return flagsGenerated;
       },
-      _calculateWarning: function() {
+      _calculateSelectedSectionGroupWarning: function() {
         const selectedSectionGroup = CourseStateService._state.sectionGroups.selectedSectionGroup;
         const sections = selectedSectionGroup.sections.map(section => CourseStateService._state.sections.list[section.id]);
         const sectionsSeatTotal = sections.reduce((acc, section) => acc += section.seats, 0);
