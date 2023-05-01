@@ -36,6 +36,9 @@ class WorkloadSummaryActions {
 			download: function() {
 				WorkloadSummaryExcelService.generateDownload();
 			},
+			downloadHistorical: function() {
+				WorkloadSummaryService.downloadHistorical($route.current.params.workgroupId, $route.current.params.year);
+			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
 
