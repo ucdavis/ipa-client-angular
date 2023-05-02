@@ -140,7 +140,7 @@ class CourseActionCreators {
           sectionGroup.termCode = newTermCode;
         }
 
-        const { requiresAttention, flaggedSectionGroups } = this._calculateSelectedSectionGroupWarning();
+        const { requiresAttention, flaggedSectionGroups } = this._calculateSelectedSectionGroupWarning(sectionGroup);
 
         CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
           $rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
@@ -384,7 +384,7 @@ class CourseActionCreators {
         });
       },
       updateSection: function (section) {
-        const {requiresAttention, flaggedSectionGroups} = this._calculateSelectedSectionGroupWarning();
+        const { requiresAttention, flaggedSectionGroups } = this._calculateSelectedSectionGroupWarning();
 
         CourseService.updateSection(section).then(function (section) {
           window.ipa_analyze_event('courses', 'section updated');
@@ -423,14 +423,11 @@ class CourseActionCreators {
               window.ipa_analyze_event('courses', 'section updated');
 
               const section = result.value;
-              const {requiresAttention, flaggedSectionGroups} = this._calculateWarningFromSection(section);
 
               var action = {
                 type: ActionTypes.UPDATE_SECTION,
                 payload: {
-                  section,
-                  requiresAttention,
-                  flaggedSectionGroups
+                  section
                 },
               };
               CourseStateService.reduce(action);
@@ -619,8 +616,9 @@ class CourseActionCreators {
 
         return flagsGenerated;
       },
-      _calculateSelectedSectionGroupWarning: function() {
-        const selectedSectionGroup = CourseStateService._state.sectionGroups.selectedSectionGroup;
+      _calculateSelectedSectionGroupWarning: function(sectionGroup) {
+        const selectedSectionGroup = sectionGroup || CourseStateService._state.sectionGroups.selectedSectionGroup;
+
         const sections = selectedSectionGroup.sections.map(section => CourseStateService._state.sections.list[section.id]);
         const sectionsSeatTotal = sections.reduce((acc, section) => acc += section.seats, 0);
         const requiresAttention = sectionsSeatTotal !== selectedSectionGroup.plannedSeats;
