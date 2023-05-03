@@ -617,14 +617,17 @@ class CourseActionCreators {
         return flagsGenerated;
       },
       _calculateSelectedSectionGroupWarning: function(sectionGroup) {
+        let requiresAttention = false;
         const selectedSectionGroup = sectionGroup || CourseStateService._state.sectionGroups.selectedSectionGroup;
 
-        const sections = selectedSectionGroup.sections.map(section => CourseStateService._state.sections.list[section.id]);
-        const sectionsSeatTotal = sections.reduce((acc, section) => acc += section.seats, 0);
-        const requiresAttention = sectionsSeatTotal !== selectedSectionGroup.plannedSeats;
+        if (selectedSectionGroup) {
+          const sections = selectedSectionGroup.sections.map(section => CourseStateService._state.sections.list[section.id]);
+          const sectionsSeatTotal = sections.reduce((acc, section) => acc += section.seats, 0);
+          requiresAttention = sectionsSeatTotal !== selectedSectionGroup.plannedSeats; 
+        }
         const flaggedSectionGroups = CourseStateService._state.sectionGroups.ids.filter(id => id !== selectedSectionGroup.id).map(id => CourseStateService._state.sectionGroups.list[id]).filter(sg => sg.requiresAttention).length + Number(requiresAttention);
 
-        return {requiresAttention, flaggedSectionGroups};
+        return { requiresAttention, flaggedSectionGroups };
       }
     };
   }
