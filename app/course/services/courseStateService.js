@@ -297,7 +297,8 @@ class CourseStateService {
             sectionGroups.selectedSectionGroup.requiresAttention = false;
             return sectionGroups;
           case ActionTypes.UPDATE_SECTION:
-            sectionGroups.selectedSectionGroup.requiresAttention = action.payload.requiresAttention;
+            var sectionGroup = sectionGroups.selectedSectionGroup || sectionGroups.list[action.payload.section.sectionGroupId];
+            sectionGroup.requiresAttention = action.payload.requiresAttention;
             return sectionGroups;
           case ActionTypes.REMOVE_SECTION:
             var sectionIdIndex = sectionGroups.list[action.payload.section.sectionGroupId].sectionIds.indexOf(action.payload.section.id);
