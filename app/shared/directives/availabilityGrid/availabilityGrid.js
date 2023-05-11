@@ -91,6 +91,8 @@ let availabilityGrid = function($timeout) {
 					dragClass = dragValue === 0 ? 'unavailable' : 'available';
 					$(this).removeClass('available unavailable'); // eslint-disable-line no-undef
 					$(this).addClass(dragClass); // eslint-disable-line no-undef
+					$(this).children('.availability-grid-cell').removeClass('available unavailable'); // eslint-disable-line no-undef
+					$(this).children('.availability-grid-cell').addClass(dragClass); // eslint-disable-line no-undef
 					return false; // prevent text selection
 				})
 				.delegate('td','mouseover', function() {
@@ -102,6 +104,8 @@ let availabilityGrid = function($timeout) {
 
 						$(this).removeClass('available unavailable'); // eslint-disable-line no-undef
 						$(this).addClass(dragClass); // eslint-disable-line no-undef
+						$(this).children('.availability-grid-cell').removeClass('available unavailable'); // eslint-disable-line no-undef
+						$(this).children('.availability-grid-cell').addClass(dragClass); // eslint-disable-line no-undef
 					}
 				})
 				.bind("selectstart", function () {

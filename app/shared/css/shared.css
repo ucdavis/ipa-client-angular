@@ -177,6 +177,18 @@ table.availability-grid tr td {
   text-align: center;
 }
 
+.availability-grid-cell {
+  visibility: hidden;
+  font-size: 1.5em;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.availability-grid-cell.unavailable {
+  visibility: visible;
+}
+
 /* ---------------------- IPA Header -----------------------*/
 .ipa-header {
   position: sticky;
