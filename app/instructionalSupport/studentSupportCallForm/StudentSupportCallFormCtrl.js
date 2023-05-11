@@ -33,6 +33,7 @@ class StudentSupportCallFormCtrl {
 	
 		$rootScope.$on('studentStateChanged', function (event, data) {
 			$scope.view.state = data;
+			$scope.updateNavigateAwayGuard();
 		});
 
 		$scope.closeCommentModal = function() {
@@ -70,6 +71,26 @@ class StudentSupportCallFormCtrl {
 		};
 	
 		$scope.termCode = $scope.termShortCodeToTermCode($scope.termShortCode);
+
+		$scope.updateNavigateAwayGuard = function () {
+			if ($scope.view.state.supportCallResponse?.submitted == false) {
+				window.onbeforeunload = function (event) {
+					var message = 'Are you sure you want to leave this page without submitting your preferences?';
+
+					if (typeof event == 'undefined') {
+						event = window.event;
+					}
+
+					if (event) {
+						event.returnValue = message;
+					}
+
+					return message;
+				};
+			} else {
+				window.onbeforeunload = null;
+			}
+		};
 
 	}
 }

@@ -17,6 +17,10 @@
 }
 
 .student-support-call-form__sidebar {
+	position: sticky;
+	position: -webkit-sticky;
+	top: 162px;
+	align-self: flex-start;
 	flex: 1 0 0px;
 }
 

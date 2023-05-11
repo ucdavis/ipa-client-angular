@@ -10,6 +10,8 @@ let studentFormReview = function (StudentFormActions) {
 		},
 		link: function (scope) {
 			scope.submitStudentPreferences = function() {
+				window.onbeforeunload = null;
+
 				var newSupportCallResponse = angular.copy(scope.state.supportCallResponse); // eslint-disable-line no-undef
 				newSupportCallResponse.submitted = true;
 				StudentFormActions.submitPreferences(newSupportCallResponse, scope.state.misc.workgroupId, scope.state.misc.year);
