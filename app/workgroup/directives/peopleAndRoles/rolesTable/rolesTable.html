@@ -1,7 +1,7 @@
 <div class="roles-table">
-	<div class="row roles-table__search-container">
+	<div class="roles-table__search-container">
 		<!-- this is search bar -->
-		<div class="col-md-4 pull-right">
+		<div class="roles-table__search-container--input">
 			<div class="input-group search-input">
 				<input type="text" ng-model="users.searchQuery" placeholder="Search by name or login ID" uib-typeahead="person.name for person in searchUsers($viewValue)"
 					ng-change="searchOnChange()" typeahead-loading="view.loadingPeople" typeahead-no-results="view.noResults"
@@ -34,6 +34,9 @@
 				</span>
 			</div>
 			<!-- /input-group -->
+		</div>
+		<div class="roles-table__search-container--toolbar">
+			<button class="btn" ng-click="download()">Export</button>
 		</div>
 		<!-- /.col-lg-6 -->
 	</div>

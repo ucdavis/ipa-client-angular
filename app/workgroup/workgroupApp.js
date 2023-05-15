@@ -10,6 +10,7 @@ import WorkgroupCtrl from './controllers/WorkgroupCtrl.js';
 import WorkgroupActionCreators from './services/workgroupActionCreators.js';
 import WorkgroupService from './services/workgroupService.js';
 import WorkgroupStateService from './services/workgroupStateService.js';
+import WorkgroupExcelService from './services/workgroupExcelService.js';
 
 // Shared services
 import ApiService from './../shared/services/ApiService.js';
@@ -77,6 +78,7 @@ const workgroupApp = angular.module("workgroupApp", dependencies) // eslint-disa
 .service('WorkgroupActionCreators', WorkgroupActionCreators)
 .service('WorkgroupService', WorkgroupService)
 .service('WorkgroupStateService', WorkgroupStateService)
+.service('WorkgroupExcelService', WorkgroupExcelService)
 .service('ApiService', ApiService)
 .service('TermService', TermService)
 .directive('peopleAndRoles', peopleAndRoles)
