@@ -6,7 +6,8 @@ let lineItemDropdown = function (BudgetActions) {
 		template: require('./lineItemDropdown.html'),
 		replace: true,
 		scope: {
-			lineItem: '<'
+			lineItem: '<',
+			isDeansOffice: '<'
 		},
 		link: function (scope) {
 			scope.openEditLineItemModal = function(lineItem) {

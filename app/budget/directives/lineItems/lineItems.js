@@ -10,10 +10,13 @@ let lineItems = function ($rootScope, BudgetActions) {
 		scope: {
 			selectedBudgetScenario: '<',
 			ui: '<',
-			lineItems: '<'
+			lineItems: '<',
+			currentUser: '<'
 			// '<' This is proper one way binding, as opposed to string interpoation or passing value as a function that can be called
 		},
 		link: function (scope) {
+			scope.isDeansOffice = scope.currentUser.isDeansOffice();
+
 			scope.addLineItem = function(lineItem) {
 				BudgetActions.createLineItem(lineItem, scope.selectedBudgetScenario.id, lineItem.message);
 			};

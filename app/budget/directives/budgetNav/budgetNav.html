@@ -42,6 +42,16 @@
 
 		<div class="budget-nav__line-item-tools" ng-if="selectedSection == 'Funds' && !selectedBudgetScenario.isBudgetRequest">
 
+			<div class="budget-nav__tool" ng-if="fundsNav == 'Funds' && isDeansOffice">
+				<ipa-button icon-class="'glyphicon glyphicon-lock'"
+				            size="'small'"
+				            is-disabled="selectedLineItems.length == 0"
+				            disabled-tooltip-message="'No line items selected'"
+				            on-click="lockLineItems()"
+				            tooltip-message="'Lock line items'">
+				</ipa-button>
+			</div>
+
 			<div class="budget-nav__tool" ng-if="fundsNav == 'Funds'">
 				<ipa-button icon-class="'glyphicon glyphicon-trash'"
 				            size="'small'"
@@ -56,16 +66,6 @@
 			<div class="budget-nav__tool" ng-if="fundsNav == 'Suggested'">
 				<line-item-filters filters="filters.lineItems">
 				</line-item-filters>
-			</div>
-
-			<div class="budget-nav__tool" ng-if="fundsNav == 'Funds'">
-				<ipa-button icon-class="'glyphicon glyphicon-lock'"
-				            size="'small'"
-				            is-disabled="selectedLineItems.length == 0"
-				            disabled-tooltip-message="'No line items selected'"
-				            on-click="lockLineItems()"
-				            tooltip-message="'Lock line items'">
-				</ipa-button>
 			</div>
 
 			<div class="budget-nav__tool" ng-if="fundsNav == 'Funds'">

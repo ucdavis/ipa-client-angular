@@ -15,9 +15,12 @@ let budgetNav = function ($rootScope, BudgetActions) {
 			selectedExpenseItems: '<',
 			filters: '<',
 			fundsNav: '<',
-			shouldShowCourseList: '<'
+			shouldShowCourseList: '<',
+			currentUser: '<'
 		},
 		link: function(scope) {
+			scope.isDeansOffice = scope.currentUser.isDeansOffice();
+
 			scope.setRoute = function(selectedRoute) {
 				BudgetActions.setRoute(selectedRoute);
 			};
