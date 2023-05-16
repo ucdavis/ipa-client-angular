@@ -124,7 +124,10 @@
 							<div>
 								{{ toCurrency(lineItem.amount) }}
 							</div>
-							<div ng-if="!ui.isBudgetRequest" class="do-not-print">
+							<div ng-if="lineItem.isLocked">
+								<i class="glyphicon glyphicon-lock"></i>
+							</div>
+							<div ng-if="!ui.isBudgetRequest && !lineItem.isLocked" class="do-not-print">
 								<line-item-dropdown line-item="lineItem"></line-item-dropdown>
 							</div>
 						</div>

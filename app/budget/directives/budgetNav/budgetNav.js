@@ -35,6 +35,10 @@ let budgetNav = function ($rootScope, BudgetActions) {
 				BudgetActions.openAddCourseModal();
 			};
 
+			scope.lockLineItems = function() {
+				BudgetActions.lockLineItems(scope.selectedBudgetScenario, scope.selectedLineItems.filter(id => id !== undefined));
+			};
+
 			scope.deleteLineItems = function() {
 				BudgetActions.deleteLineItems(scope.selectedBudgetScenario, scope.selectedLineItems);
 			};
