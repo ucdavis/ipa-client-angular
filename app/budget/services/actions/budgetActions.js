@@ -1139,21 +1139,19 @@ class BudgetActions {
 						type: ActionTypes.UPDATE_LINE_ITEM,
 						payload: results
 					});
-					// BudgetCalculations.calculateLineItems();
+					BudgetCalculations.calculateLineItems();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not lock line item.", type: "ERROR" });
 				});
 			},
 			lockLineItems: function(budgetScenario, lineItemIds) {
-				debugger;
-				
 				BudgetService.updateLineItems(budgetScenario, lineItemIds).then(function (results) {
 					$rootScope.$emit('toast', { message: "Locked line items", type: "SUCCESS" });
 					BudgetReducers.reduce({
 						type: ActionTypes.UPDATE_LINE_ITEMS,
 						payload: results
 					});
-					// BudgetCalculations.calculateLineItems();
+					BudgetCalculations.calculateLineItems();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not lock line items.", type: "ERROR" });
 				});
