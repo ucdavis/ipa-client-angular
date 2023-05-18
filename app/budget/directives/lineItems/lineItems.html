@@ -125,7 +125,8 @@
 								{{ toCurrency(lineItem.amount) }}
 							</div>
 							<div ng-if="lineItem.isLocked">
-								<i class="glyphicon glyphicon-lock"></i>
+								<i ng-if="!isDeansOffice" class="glyphicon entypo-lock"></i>
+								<i ng-if="isDeansOffice" class="glyphicon entypo-lock" uib-tooltip="Click to unlock" style="cursor: pointer;" ng-click="unlockLineItem(lineItem)"></i>
 							</div>
 							<div ng-if="!ui.isBudgetRequest && !lineItem.isLocked" class="do-not-print">
 								<line-item-dropdown line-item="lineItem" is-deans-office="isDeansOffice"></line-item-dropdown>

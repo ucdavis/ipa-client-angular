@@ -75,6 +75,11 @@ let lineItems = function ($rootScope, BudgetActions) {
 			scope.toCurrency = function(amount) {
 				return toCurrency(amount);
 			};
+
+			scope.unlockLineItem = function(lineItem) {
+				const unlockedLineItem = {...lineItem, isLocked: false};
+				BudgetActions.updateLineItem(unlockedLineItem);
+			};
 		} // end link
 	};
 };
