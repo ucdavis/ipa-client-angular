@@ -52,7 +52,7 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupExcelSe
 
 			scope.download = function() {
 				WorkgroupExcelService.generateDownload();
-			}
+			};
 		}
 	};
 };
