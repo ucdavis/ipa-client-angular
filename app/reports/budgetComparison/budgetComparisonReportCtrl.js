@@ -33,6 +33,12 @@ class BudgetComparisonReportCtrl {
       BudgetComparisonReportActions.getInitialState();
     };
 
+    $scope.changeCurrentYear = function(year) {
+      $scope.currentYear = year.description;
+      localStorage.setItem("budgetComparisonCurrentYear", year.description);
+      BudgetComparisonReportActions.getInitialState();
+    };
+
     $scope.toggleFilter = function(filter) {
       filter.selected = !filter.selected;
 
