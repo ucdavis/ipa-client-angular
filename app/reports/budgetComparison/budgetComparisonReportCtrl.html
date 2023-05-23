@@ -61,7 +61,7 @@
 
 <div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="do-not-print budget-comparison-report__scenario-selector-tray">
   <div class="budget-comparison-report__scenario-selector-container">
-    <ipa-dropdown items="years" select-item="changePreviousYear(item)" button-text="previousYear" style="'minimal'" overflow-auto="true"></ipa-dropdown>
+    <ipa-dropdown items="view.state.ui.years.previous" select-item="changePreviousYear(item)" button-text="previousYear" style="'minimal'" overflow-auto="true"></ipa-dropdown>
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
                               selected-budget-scenario="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario"
                               is-current="false"
@@ -69,7 +69,7 @@
     </budget-scenario-selector>
   </div>
   <div class="budget-comparison-report__scenario-selector-container">
-    <ipa-dropdown items="years" select-item="changeCurrentYear(item)" button-text="year" style="'minimal'" overflow-auto="true"></ipa-dropdown>
+    <div style="height: 100%"></div>
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.currentBudgetScenarios"
                               selected-budget-scenario="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario"
                               is-current="true"

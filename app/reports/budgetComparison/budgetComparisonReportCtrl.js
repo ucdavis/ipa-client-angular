@@ -7,20 +7,18 @@ class BudgetComparisonReportCtrl {
     this.$routeParams = $routeParams;
 
     $scope.workgroupId = $routeParams.workgroupId;
-    $scope.year = localStorage.getItem("budgetComparisonCurrentYear") || $routeParams.year;
-    $scope.previousYear = localStorage.getItem("budgetComparisonPreviousYear") || $scope.year - 1 ;
+    $scope.year = $routeParams.year;
+    $scope.previousYear = localStorage.getItem("budgetComparisonCurrentYear") === $scope.year ? localStorage.getItem("budgetComparisonPreviousYear") : $scope.year - 1;
     $scope.noAccess = validate ? validate.noAccess : null;
     $scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
     $scope.view = {};
     $scope.activeFilters = [];
 
-    $scope.years = [
-      {id: 0, description: '2020', selected: false},
-      {id: 1, description: '2021', selected: false},
-      {id: 2, description: '2022', selected: false},
-      {id: 3, description: '2023', selected: false}
-  ];
+    window.onbeforeunload = function () {
+      localStorage.removeItem("budgetComparisonPreviousYear");
+      localStorage.removeItem("budgetComparisonCurrentYear");
+    };
 
     $rootScope.$on('budgetComparisonReportStateChanged', function (event, data) {
       $scope.view.state = data.state;
@@ -28,15 +26,12 @@ class BudgetComparisonReportCtrl {
 
     $scope.changePreviousYear = function(year) {
       // override the year?
-      $scope.previousYear = year.description;
-      localStorage.setItem("budgetComparisonPreviousYear", year.description);
-      BudgetComparisonReportActions.getInitialState();
-    };
-
-    $scope.changeCurrentYear = function(year) {
-      $scope.currentYear = year.description;
-      localStorage.setItem("budgetComparisonCurrentYear", year.description);
-      BudgetComparisonReportActions.getInitialState();
+      if ($scope.previousYear !== year.description) {
+        $scope.previousYear = year.description;
+        localStorage.setItem("budgetComparisonPreviousYear", year.description);
+        localStorage.setItem("budgetComparisonCurrentYear", $routeParams.year);
+        BudgetComparisonReportActions.getInitialState();
+      }
     };
 
     $scope.toggleFilter = function(filter) {

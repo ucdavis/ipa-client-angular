@@ -3,9 +3,8 @@ class BudgetComparisonReportActions {
 		return {
 			getInitialState: function () {
 				var workgroupId = $route.current.params.workgroupId;
-				debugger;
-				var year = localStorage.getItem("budgetComparisonCurrentYear") || $route.current.params.year;
-				var previousYear = localStorage.getItem("budgetComparisonPreviousYear") || String(parseInt($route.current.params.year) - 1);
+				var year = $route.current.params.year;
+				var previousYear = localStorage.getItem("budgetComparisonCurrentYear") === year ? localStorage.getItem("budgetComparisonPreviousYear") : String(parseInt($route.current.params.year) - 1);
 
 				BudgetComparisonReportReducers._state = {};
 
@@ -13,9 +12,8 @@ class BudgetComparisonReportActions {
 					type: ActionTypes.INIT_STATE,
 					payload: {}
 				});
-debugger;
 				// check for years that have scenarios, use to populate year drop down
-				this._getBudgetScenarioYears(workgroupId);
+				this._getBudgetScenarioYears(workgroupId, year, ActionTypes.GET_SCENARIO_YEARS);
 
 				this._getBudget(workgroupId, year, ActionTypes.GET_CURRENT_BUDGET);
 				this._getCourses(workgroupId, year, ActionTypes.GET_CURRENT_COURSES);
@@ -464,24 +462,21 @@ debugger;
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
 			},
-			_getBudgetScenarioYears: function (workgroupId) {
-				// var _self = this;
-
+			_getBudgetScenarioYears: function (workgroupId, year, action) {
 				BudgetComparisonReportService.getBudgetScenarioYears(workgroupId).then(function (response) {
-console.log(response)
-					// rawBudgetScenarios.forEach(function(budgetScenario) {
-					// 	budgetScenarios.ids.push(budgetScenario.id);
-					// 	budgetScenarios.list[budgetScenario.id] = budgetScenario;
-					// });
+					const sortedYears = response.sort();
+					const endIndex = sortedYears.indexOf(Number(year));
+					// just use the last 5 years for now
 
-					// BudgetComparisonReportReducers.reduce({
-					// 	type: action,
-					// 	payload: {
-					// 		budgetScenarios: budgetScenarios
-					// 	}
-					// });
+					const years = endIndex - 5 > 0 ? sortedYears.slice(endIndex - 5, endIndex + 1) : sortedYears.slice(0, endIndex + 1);
+					const yearOptions = years.map((year, index) => ({id: index, description: year, selected: false}));
 
-					// _self._performCalculations();
+					BudgetComparisonReportReducers.reduce({
+						type: action,
+						payload: {
+							years: yearOptions
+						}
+					});
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Budget Comparison Report information.", type: "ERROR" });
 				});
