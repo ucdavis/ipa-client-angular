@@ -325,7 +325,7 @@ class BudgetComparisonReportReducers {
 						ui = { filters: [], showDownloadModal: false, years: {previous: [], current: []} };
 						return ui;
 					case ActionTypes.GET_SCENARIO_YEARS:
-						ui.years.previous = action.payload.years.slice(0, -1);
+						ui.years.previous = action.payload.years;
 						ui.years.current = action.payload.years;
 						return ui;
 					case ActionTypes.GENERATE_FILTERS:
