@@ -8,15 +8,45 @@ class BudgetComparisonReportCtrl {
 
     $scope.workgroupId = $routeParams.workgroupId;
     $scope.year = $routeParams.year;
+    $scope.previousYear = localStorage.getItem("budgetComparisonPreviousYear") || $scope.year - 1;
+    $scope.nextYear = localStorage.getItem("budgetComparisonPreviousYear") || $scope.year;
     $scope.noAccess = validate ? validate.noAccess : null;
     $scope.sharedState = $scope.sharedState || AuthService.getSharedState();
 
     $scope.view = {};
     $scope.activeFilters = [];
 
+    // track year on page load to check if we navigate to another year
+    localStorage.setItem("budgetComparisonYear", $scope.year);
+
+    window.onbeforeunload = function () {
+      localStorage.removeItem("budgetComparisonPreviousYear");
+      localStorage.removeItem("budgetComparisonNextYear");
+    };
+
     $rootScope.$on('budgetComparisonReportStateChanged', function (event, data) {
       $scope.view.state = data.state;
     });
+
+    $scope.changePreviousYear = function(year) {
+      const previousYear = year.description;
+
+      // override the year?
+      if ($scope.previousYear !== previousYear) {
+        $scope.previousYear = previousYear;
+        localStorage.setItem("budgetComparisonPreviousYear", previousYear);
+        BudgetComparisonReportActions.getInitialState();
+      }
+    };
+
+    $scope.changeNextYear = function(year) {
+      const nextYear = year.description;
+      if ($scope.year !== nextYear) {
+        $scope.nextYear = nextYear;
+        localStorage.setItem("budgetComparisonNextYear", nextYear);
+        BudgetComparisonReportActions.getInitialState();
+      }
+    };
 
     $scope.toggleFilter = function(filter) {
       filter.selected = !filter.selected;

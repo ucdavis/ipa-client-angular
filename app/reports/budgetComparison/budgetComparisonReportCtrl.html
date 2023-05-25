@@ -61,6 +61,7 @@
 
 <div ng-show="!noAccess && view.state.calculations.calculatedView.ui.currentBudgetScenarios" class="do-not-print budget-comparison-report__scenario-selector-tray">
   <div class="budget-comparison-report__scenario-selector-container">
+    <ipa-dropdown items="view.state.ui.years.previous" select-item="changePreviousYear(item)" button-text="previousYear" style="'minimal'" overflow-auto="true"></ipa-dropdown>
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.previousBudgetScenarios"
                               selected-budget-scenario="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario"
                               is-current="false"
@@ -68,6 +69,7 @@
     </budget-scenario-selector>
   </div>
   <div class="budget-comparison-report__scenario-selector-container">
+    <ipa-dropdown items="view.state.ui.years.current" select-item="changeNextYear(item)" button-text="nextYear" style="'minimal'" overflow-auto="true"></ipa-dropdown>
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.currentBudgetScenarios"
                               selected-budget-scenario="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario"
                               is-current="true"
@@ -87,7 +89,7 @@
                     is-current="false"
                     instructor-types="view.state.instructorTypes"
                     line-item-categories="view.state.lineItemCategories"
-                    year="(year-1)"
+                    year="previousYear"
                     budget-scenario-name="view.state.calculations.calculatedView.ui.previousSelectedBudgetScenario.name">
       </course-costs>
     </div>
@@ -98,7 +100,7 @@
                     is-current="true"
                     instructor-types="view.state.instructorTypes"
                     line-item-categories="view.state.lineItemCategories"
-                    year="year"
+                    year="nextYear"
                     budget-scenario-name="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario.name">
       </course-costs>
     </div>

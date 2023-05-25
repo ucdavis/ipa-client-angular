@@ -30,10 +30,11 @@
 }
 
 .budget-comparison-report__scenario-selector-container {
-  width: 30%;
-  margin-right: 10px;
+  width: 33%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .show-when-printing {
