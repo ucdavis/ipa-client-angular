@@ -295,11 +295,6 @@ class BudgetActions {
 						BudgetReducers.reduce(action);
 						self.selectBudgetScenario(response.id);
 						self.attachInstructorTypesToInstructors();
-
-						// Perform follow up calculations
-						// BudgetCalculations.calculateInstructors();
-						// BudgetCalculations.calculateLineItems();
-						// BudgetCalculations.calculateInstructorTypeCosts();
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not approve budget request.", type: "ERROR" });
 				});
