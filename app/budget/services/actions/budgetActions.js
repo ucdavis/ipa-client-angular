@@ -1150,7 +1150,6 @@ class BudgetActions {
 				});
 			},
 			lockLineItem: function(lineItem) {
-				debugger;
 				const lockedLineItem = {...lineItem, isLocked: true};
 				
 				BudgetService.updateLineItem(lockedLineItem, lineItem.budgetScenarioId).then(function (results) {
