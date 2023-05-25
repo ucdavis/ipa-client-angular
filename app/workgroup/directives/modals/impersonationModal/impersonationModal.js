@@ -43,10 +43,14 @@ let impersonationModal = function(AuthService) {
       };
 
       scope.canBeImpersonated = function(user) {
+        if (AuthService.getCurrentUser().isAdmin()) {
+          return true;
+        }
+
         var canBeImpersonated = false;
 
         for (let userRole of user.userRoles) {
-          if (userRole.role == 'admin') {
+          if (userRole.role == 'admin' || userRole.role === 'deansOffice') {
             canBeImpersonated = false;
             return;
           }
