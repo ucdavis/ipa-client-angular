@@ -172,6 +172,13 @@ class BudgetReducers {
 						var updatedLineItem = action.payload;
 						lineItems.list[updatedLineItem.id] = updatedLineItem;
 						return lineItems;
+					case ActionTypes.UPDATE_LINE_ITEMS:
+						var updatedLineItems = action.payload;
+
+						updatedLineItems.forEach(lineItem => {
+							lineItems.list[lineItem.id] = lineItem;
+						});
+						return lineItems;
 					case ActionTypes.DELETE_LINE_ITEMS:
 						action.payload.lineItemIds.forEach(function(lineItemId) {
 							var index = lineItems.ids.indexOf(lineItemId);
@@ -1269,6 +1276,10 @@ class BudgetReducers {
 					case ActionTypes.DESELECT_ALL_LINE_ITEMS:
 						ui.selectedLineItems = [];
 						ui.areAllLineItemsSelected = false;
+						return ui;
+					case ActionTypes.UPDATE_LINE_ITEMS:
+						var updatedLineItemIds = action.payload.map((lineItem) => lineItem.id);
+						ui.selectedLineItems = ui.selectedLineItems.filter((lineItemId) => !updatedLineItemIds.includes(lineItemId));
 						return ui;
 					case ActionTypes.DELETE_LINE_ITEMS:
 						action.payload.lineItemIds.forEach(function(lineItemId) {

@@ -1149,6 +1149,33 @@ class BudgetActions {
 					payload: {}
 				});
 			},
+			lockLineItem: function(lineItem) {
+				debugger;
+				const lockedLineItem = {...lineItem, isLocked: true};
+				
+				BudgetService.updateLineItem(lockedLineItem, lineItem.budgetScenarioId).then(function (results) {
+					$rootScope.$emit('toast', { message: "Locked line item", type: "SUCCESS" });
+					BudgetReducers.reduce({
+						type: ActionTypes.UPDATE_LINE_ITEM,
+						payload: results
+					});
+					BudgetCalculations.calculateLineItems();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not lock line item.", type: "ERROR" });
+				});
+			},
+			lockLineItems: function(budgetScenario, lineItemIds) {
+				BudgetService.updateLineItems(budgetScenario, lineItemIds).then(function (results) {
+					$rootScope.$emit('toast', { message: "Locked line items", type: "SUCCESS" });
+					BudgetReducers.reduce({
+						type: ActionTypes.UPDATE_LINE_ITEMS,
+						payload: results
+					});
+					BudgetCalculations.calculateLineItems();
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not lock line items.", type: "ERROR" });
+				});
+			},
 			deleteLineItems: function(budgetScenario, lineItemIds) {
 				BudgetService.deleteLineItems(budgetScenario, lineItemIds).then(function () {
 					$rootScope.$emit('toast', { message: "Deleted line items", type: "SUCCESS" });
