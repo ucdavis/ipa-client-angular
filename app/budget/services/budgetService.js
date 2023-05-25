@@ -44,6 +44,9 @@ class BudgetService {
 			createBudgetRequestScenario: function(selectedBudgetScenario) {
 				return ApiService.post("/api/budgetView/budgets/" + selectedBudgetScenario.budgetId + "/budgetScenarios/" + selectedBudgetScenario.id + "/budgetRequest");
 			},
+			approveBudgetRequestScenario: function(selectedBudgetScenario) {
+				return ApiService.put("/api/budgetView/budgets/" + selectedBudgetScenario.budgetId + "/budgetScenarios/" + selectedBudgetScenario.id + "/budgetRequest");
+			},
 
 			// Budget
 			updateBudget: function(budget) {

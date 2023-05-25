@@ -3,7 +3,7 @@
 		ng-if="ui.isBudgetRequest"
 		style="text-align: center; color: #5b616b"
 	>
-		BUDGET REQUEST
+		<span ng-show="selectedBudgetScenario.isApproved">APPROVED</span> BUDGET REQUEST
 	</h3>
 	<ipa-tabs tab-names="ui.fundsNav.allTabs"
 	          active-tab="ui.fundsNav.activeTab"

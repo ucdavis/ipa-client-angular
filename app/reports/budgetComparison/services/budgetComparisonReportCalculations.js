@@ -866,7 +866,7 @@ class BudgetComparisonReportCalculations {
 
         budgetScenarios.ids.forEach(function(budgetScenarioId) {
           var budgetScenario = budgetScenarios.list[budgetScenarioId];
-          budgetScenario.description = budgetScenario.name;
+          budgetScenario.description = budgetScenario.isApproved ? `${budgetScenario.name} (Approved)` : budgetScenario.name;
           scenarios.push(budgetScenarios.list[budgetScenarioId]);
         });
 
