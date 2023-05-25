@@ -418,7 +418,8 @@ class WorkloadSummaryActions {
 						actualEnrollment: 0,
 						previousEnrollment: 0,
 						lastOfferedEnrollment: 0,
-						assignmentCount: 0
+						assignmentCount: 0,
+						workloadCount: 0
 					};
 					instructor.note = _self._getInstructorNote(instructor.id);
 
@@ -498,6 +499,11 @@ class WorkloadSummaryActions {
 							calculatedView.totals.byInstructorTypeId[instructorTypeId].studentMaxCreditHours += assignment.studentMaxCreditHours;
 						}
 
+						// Workload minimum only applies to Ladder Faculty. "In Residence" assignments do not count towards workload.
+						if (instructorTypeId === 6 && teachingAssignment.inResidence === false) {
+							instructor.totals.workloadCount += 1;
+						}
+
 						instructor.assignments.push(assignment);
 
 						instructor.totals.units += assignment.units || 0;
@@ -510,6 +516,11 @@ class WorkloadSummaryActions {
 						instructor.totals.lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
 						instructor.totals.assignmentCount += 1;
 					});
+
+
+					if (instructorTypeId === 6 && instructor.totals.workloadCount < _self._getWorkloadMinimum()) {
+						instructor.displayWarning = true;
+					}
 
 					instructor.assignments = _array_sortByProperty(instructor.assignments, ["termCode", "description"]);
 
@@ -881,6 +892,25 @@ class WorkloadSummaryActions {
 				});
 
 				return matchingSections;
+			},
+			_getWorkloadMinimum: function() {
+				const SOCIAL_SCIENCE_WORKGROUP_IDS = [12, 18, 19, 24, 25, 64, 81, 82, 83, 84];
+				const HARCS_WORKGROUP_IDS = [16, 17, 36, 37, 38, 39, 40, 41, 42, 43, 45, 46, 48, 49, 50, 51, 53, 54, 56, 58, 59, 60, 61, 65, 66, 78, 89, 93, 94, 95, 96, 97, 99, 100];
+				const MPS_WORKGROUP_IDS = [14, 28, 67, 69, 76];
+
+				const DSS_MINIMUM = 4;
+				const HARCS_MINIMUM = 4;
+				const MPS_MINIMUM = 3;
+	
+				const workgroupId = Number(JSON.parse(localStorage.workgroup).id);
+	
+				if (SOCIAL_SCIENCE_WORKGROUP_IDS.includes(workgroupId)) {
+					return DSS_MINIMUM;
+				} else if (HARCS_WORKGROUP_IDS.includes(workgroupId)) {
+					return HARCS_MINIMUM;
+				} else if (MPS_WORKGROUP_IDS.includes(workgroupId)) {
+					return MPS_MINIMUM;
+				}
 			}
 		};
 	}
