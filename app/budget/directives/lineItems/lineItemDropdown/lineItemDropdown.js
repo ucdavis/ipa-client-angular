@@ -18,7 +18,8 @@ let lineItemDropdown = function (BudgetActions) {
 				BudgetActions.lockLineItem(lineItem);
 
 				$(".line-item-dropdown").removeClass("open"); // eslint-disable-line no-undef
-			}
+			};
+
 			scope.deleteLineItem = function(lineItem) {
 				BudgetActions.deleteLineItem(lineItem);
 
