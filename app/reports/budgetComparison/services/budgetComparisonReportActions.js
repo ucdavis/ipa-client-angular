@@ -3,8 +3,17 @@ class BudgetComparisonReportActions {
 		return {
 			getInitialState: function () {
 				var workgroupId = $route.current.params.workgroupId;
-				var year = $route.current.params.year;
-				var previousYear = localStorage.getItem("budgetComparisonCurrentYear") === year ? localStorage.getItem("budgetComparisonPreviousYear") : String(parseInt($route.current.params.year) - 1);
+				var year = localStorage.getItem("budgetComparisonNextYear") || $route.current.params.year;
+				var previousYear = localStorage.getItem("budgetComparisonPreviousYear") || String(parseInt($route.current.params.year) - 1);
+
+				// if we navigated to another year, reset values
+				if ($route.current.params.year !== localStorage.getItem("budgetComparisonYear")) {
+					previousYear = String(parseInt($route.current.params.year) - 1);
+					year = $route.current.params.year;
+
+					localStorage.removeItem("budgetComparisonPreviousYear");
+					localStorage.removeItem("budgetComparisonNextYear");
+				}
 
 				BudgetComparisonReportReducers._state = {};
 

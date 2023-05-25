@@ -69,7 +69,7 @@
     </budget-scenario-selector>
   </div>
   <div class="budget-comparison-report__scenario-selector-container">
-    <div style="height: 100%"></div>
+    <ipa-dropdown items="view.state.ui.years.current" select-item="changeNextYear(item)" button-text="nextYear" style="'minimal'" overflow-auto="true"></ipa-dropdown>
     <budget-scenario-selector budget-scenarios="view.state.calculations.calculatedView.ui.currentBudgetScenarios"
                               selected-budget-scenario="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario"
                               is-current="true"
@@ -100,7 +100,7 @@
                     is-current="true"
                     instructor-types="view.state.instructorTypes"
                     line-item-categories="view.state.lineItemCategories"
-                    year="year"
+                    year="nextYear"
                     budget-scenario-name="view.state.calculations.calculatedView.ui.currentSelectedBudgetScenario.name">
       </course-costs>
     </div>
