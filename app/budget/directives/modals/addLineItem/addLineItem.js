@@ -43,6 +43,16 @@ let addLineItem = function ($rootScope, BudgetActions) {
 				scope.newLineItem.categoryDescription = category.description;
 			};
 
+			scope.selectLineItemTerm = function (term) {
+				scope.newLineItem.termCode = term.id;
+				scope.newLineItem.termDescription = term.description;
+			};
+
+			scope.selectLineItemType = function(type) {
+				scope.newLineItem.lineItemTypeId = type.id;
+				scope.newLineItem.typeDescription = type.description;
+			};
+
 			scope.submitLineItemForm = function () {
 				scope.newLineItem.budgetScenarioId = scope.state.selectedBudgetScenario.id;
 				if (scope.lineItemToEdit && scope.lineItemToEdit.id > 0) {

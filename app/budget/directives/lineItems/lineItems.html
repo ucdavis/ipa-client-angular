@@ -22,9 +22,19 @@
 							</ipa-checkbox>
 						</div>
 					</th>
-					<th class="line-items__table-header line-items__table--type">
+					<th class="line-items__table-header" style="width: 6%">
+						<div class="line-items__table-header-container">
+							Term
+						</div>
+					</th>
+					<th class="line-items__table-header" style="width: 8%">
 						<div class="line-items__table-header-container">
 							Type
+						</div>
+					</th>
+					<th class="line-items__table-header line-items__table--type">
+						<div class="line-items__table-header-container">
+							Category
 						</div>
 					</th>
 					<th class="line-items__table-header">
@@ -66,6 +76,14 @@
 							              click-action="selectLineItem(lineItem)">
 							</ipa-checkbox>
 						</div>
+					</td>
+
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						{{ lineItem.termDescription }}
+					</td>
+
+					<td class="line-items__table-cell" ng-class-odd="'line-items__table-cell--dark'">
+						{{ lineItem.typeDescription }}
 					</td>
 
 					<!-- Category -->

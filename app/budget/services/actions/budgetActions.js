@@ -376,6 +376,7 @@ class BudgetActions {
 				var self = this;
 				// Ensure amount is properly formatted as a float
 				newLineItem.amount = newLineItem.amount ? parseFloat(newLineItem.amount) : null;
+				newLineItem.termCode = TermService.termToTermCode(newLineItem.termCode, BudgetReducers._state.ui.year);
 
 				BudgetService.createLineItem(newLineItem, budgetScenarioId).then(function (newLineItem) {
 					window.ipa_analyze_event('budget', 'line item created');
@@ -397,6 +398,7 @@ class BudgetActions {
 			},
 			updateLineItem: function (lineItem) {
 				var self = this;
+				lineItem.termCode = TermService.termToTermCode(lineItem.termCode, BudgetReducers._state.ui.year);
 
 				// Create instead of update if appropriate
 				if (lineItem.id == null || lineItem.id == 0) {
