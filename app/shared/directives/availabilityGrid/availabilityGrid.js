@@ -6,6 +6,7 @@ let availabilityGrid = function($timeout) {
 		scope: {
 			blob: '=',
 			readOnly: '=',
+			hideText: '<',
 			onChange: '&'
 		},
 		link: function(scope, element) {
