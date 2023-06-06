@@ -6,11 +6,18 @@ let lineItemDropdown = function (BudgetActions) {
 		template: require('./lineItemDropdown.html'),
 		replace: true,
 		scope: {
-			lineItem: '<'
+			lineItem: '<',
+			isDeansOffice: '<'
 		},
 		link: function (scope) {
 			scope.openEditLineItemModal = function(lineItem) {
 				BudgetActions.openAddLineItemModal(lineItem);
+			};
+
+			scope.lockLineItem = function(lineItem) {
+				BudgetActions.lockLineItem(lineItem);
+
+				$(".line-item-dropdown").removeClass("open"); // eslint-disable-line no-undef
 			};
 
 			scope.deleteLineItem = function(lineItem) {

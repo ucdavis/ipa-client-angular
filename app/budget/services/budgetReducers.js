@@ -25,6 +25,15 @@ class BudgetReducers {
 						var newBudgetScenario = action.payload.budgetScenario;
 						budgetScenarios.list[newBudgetScenario.id] = newBudgetScenario;
 						return budgetScenarios;
+					case ActionTypes.APPROVE_BUDGET_REQUEST:
+						var approvedScenario  = action.payload;
+
+						for (const scenarioId in budgetScenarios.list) {
+							budgetScenarios.list[scenarioId].isApproved = false;
+						}
+						
+						budgetScenarios.list[approvedScenario.id] = approvedScenario;
+						return budgetScenarios;
 					case ActionTypes.CALCULATE_TOTAL_COST:
 						var budgetScenarioId = action.payload.budgetScenarioId;
 						var budgetScenario = budgetScenarios.list[budgetScenarioId];
@@ -162,6 +171,13 @@ class BudgetReducers {
 					case ActionTypes.UPDATE_LINE_ITEM:
 						var updatedLineItem = action.payload;
 						lineItems.list[updatedLineItem.id] = updatedLineItem;
+						return lineItems;
+					case ActionTypes.UPDATE_LINE_ITEMS:
+						var updatedLineItems = action.payload;
+
+						updatedLineItems.forEach(lineItem => {
+							lineItems.list[lineItem.id] = lineItem;
+						});
 						return lineItems;
 					case ActionTypes.DELETE_LINE_ITEMS:
 						action.payload.lineItemIds.forEach(function(lineItemId) {
@@ -1018,7 +1034,9 @@ class BudgetReducers {
 			uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						var isBudgetRequest = action.payload.budgetScenarios.find(scenario => scenario.id == action.selectedBudgetScenarioId).isBudgetRequest;
+						var selectedScenario = action.payload.budgetScenarios.find(scenario => scenario.id == action.selectedBudgetScenarioId);
+						var isBudgetRequest = selectedScenario.isBudgetRequest;
+						var isApproved = selectedScenario.isApproved;
 						ui = {
 							addCourseModal: {
 								isOpen: false
@@ -1076,6 +1094,7 @@ class BudgetReducers {
 							lineItemDetails: {},
 							sectionGroupCostDetails: {},
 							selectedBudgetScenarioId: parseInt(action.selectedBudgetScenarioId),
+							isApproved: isApproved,
 							isBudgetRequest: isBudgetRequest,
 							createInProgress: false,
 							selectedTerm: action.selectedTerm,
@@ -1186,6 +1205,9 @@ class BudgetReducers {
 						});
 						ui.createInProgress = false;
 						return ui;
+					case ActionTypes.APPROVE_BUDGET_REQUEST:
+						ui.isApproved = true;
+						return ui;
 					case ActionTypes.SELECT_TERM:
 						ui.selectedTerm = action.payload.term;
 						ui.termNav.activeTab = action.payload.activeTermTab;
@@ -1254,6 +1276,10 @@ class BudgetReducers {
 					case ActionTypes.DESELECT_ALL_LINE_ITEMS:
 						ui.selectedLineItems = [];
 						ui.areAllLineItemsSelected = false;
+						return ui;
+					case ActionTypes.UPDATE_LINE_ITEMS:
+						var updatedLineItemIds = action.payload.map((lineItem) => lineItem.id);
+						ui.selectedLineItems = ui.selectedLineItems.filter((lineItemId) => !updatedLineItemIds.includes(lineItemId));
 						return ui;
 					case ActionTypes.DELETE_LINE_ITEMS:
 						action.payload.lineItemIds.forEach(function(lineItemId) {
@@ -1329,6 +1355,7 @@ class BudgetReducers {
 						ui.shouldShowCourseList = !action.payload.fromLiveData && !action.payload.isBudgetRequest;
 						ui.fromLiveData = action.payload.fromLiveData;
 						ui.isBudgetRequest = action.payload.isBudgetRequest;
+						ui.isApproved = action.payload.isApproved;
 						ui.selectedBudgetScenarioId = parseInt(action.payload.budgetScenarioId);
 						return ui;
 					case ActionTypes.DELETE_BUDGET_SCENARIO:

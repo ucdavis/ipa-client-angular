@@ -322,7 +322,11 @@ class BudgetComparisonReportReducers {
 			_uiReducers: function (action, ui) {
 				switch (action.type) {
 					case ActionTypes.INIT_STATE:
-						ui = { filters: [], showDownloadModal: false };
+						ui = { filters: [], showDownloadModal: false, years: {previous: [], current: []} };
+						return ui;
+					case ActionTypes.GET_SCENARIO_YEARS:
+						ui.years.previous = action.payload.years;
+						ui.years.current = action.payload.years;
 						return ui;
 					case ActionTypes.GENERATE_FILTERS:
 						ui.filters = action.payload.filters;

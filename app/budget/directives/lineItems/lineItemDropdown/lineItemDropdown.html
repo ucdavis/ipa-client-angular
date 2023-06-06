@@ -15,6 +15,11 @@
 				</span>
 			</a>
 		</li>
+		<li ng-if="isDeansOffice">
+			<a ng-click="lockLineItem(lineItem)">
+				<span>Lock</span>
+			</a>
+		</li>
 		<li class="line-item-row">
 			<a class="budget-scenario-item"
 			   uib-tooltip="Delete line item"

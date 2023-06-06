@@ -1,7 +1,18 @@
 .roles-table__search-container {
+	display: flex;
+	width: 100%;
 	padding-top: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
+}
+
+.roles-table__search-container--input {
+	margin-left: auto;
+	width: 50%
+}
+
+.roles-table__search-container--toolbar {
+	margin-left: auto;
 }
 
 .roles-table__table {

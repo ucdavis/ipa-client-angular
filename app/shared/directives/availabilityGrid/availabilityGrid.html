@@ -15,6 +15,7 @@
 				data-day="{{d}}"
 				data-hour="{{h}}"
 				ng-class="{'unavailable': availability[d][h] == 0, 'available': availability[d][h] == 1, 'clickable': !readOnly }">
+				<span class="availability-grid-cell" ng-class="{'unavailable': availability[d][h] == 0}">{{ hideText ? "" : "Unavailable" }}</span>
 			</td>
 		</tr>
 	</tbody>

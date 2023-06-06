@@ -140,12 +140,16 @@ class CourseActionCreators {
           sectionGroup.termCode = newTermCode;
         }
 
+        const { requiresAttention, flaggedSectionGroups } = this._calculateSelectedSectionGroupWarning(sectionGroup);
+
         CourseService.updateSectionGroup(sectionGroup).then(function (sectionGroup) {
           $rootScope.$emit('toast', { message: "Updated course offering for " + sectionGroup.termCode.getTermCodeDisplayName(), type: "SUCCESS" });
           var action = {
             type: ActionTypes.UPDATE_SECTION_GROUP,
             payload: {
-              sectionGroup: sectionGroup
+              sectionGroup: sectionGroup,
+              requiresAttention,
+              flaggedSectionGroups
             }
           };
           CourseStateService.reduce(action);
@@ -380,6 +384,8 @@ class CourseActionCreators {
         });
       },
       updateSection: function (section) {
+        const { requiresAttention, flaggedSectionGroups } = this._calculateSelectedSectionGroupWarning();
+
         CourseService.updateSection(section).then(function (section) {
           window.ipa_analyze_event('courses', 'section updated');
 
@@ -387,7 +393,9 @@ class CourseActionCreators {
           var action = {
             type: ActionTypes.UPDATE_SECTION,
             payload: {
-              section: section
+              section: section,
+              requiresAttention,
+              flaggedSectionGroups
             }
           };
           CourseStateService.reduce(action);
@@ -413,10 +421,13 @@ class CourseActionCreators {
           results.forEach(function (result) {
             if (result.status == 'fulfilled'){
               window.ipa_analyze_event('courses', 'section updated');
+
+              const section = result.value;
+
               var action = {
                 type: ActionTypes.UPDATE_SECTION,
                 payload: {
-                  section: result.value
+                  section
                 },
               };
               CourseStateService.reduce(action);
@@ -590,13 +601,35 @@ class CourseActionCreators {
             return (section.sectionGroupId === sectionGroup.id);
           });
 
-          if (sectionGroup.sections.length === 0 && sectionGroup.plannedSeats) {
+          const sectionsSeatTotal = sectionGroup.sections.reduce((acc, section) => {
+            return acc += section.seats;
+          }, 0);
+
+          const hasNoSections = sectionGroup.sections.length === 0 && sectionGroup.plannedSeats;
+          const hasIncorrectSeats = sectionsSeatTotal != sectionGroup.plannedSeats;
+
+          if (hasNoSections || hasIncorrectSeats) {
             sectionGroup.requiresAttention = true;
             flagsGenerated += 1;
           }
         }
 
         return flagsGenerated;
+      },
+      _calculateSelectedSectionGroupWarning: function(sectionGroup) {
+        let requiresAttention = false;
+        let flaggedSectionGroups = 0;
+        const selectedSectionGroup = sectionGroup || CourseStateService._state.sectionGroups.selectedSectionGroup;
+
+        if (selectedSectionGroup) {
+          const sections = selectedSectionGroup.sections.map(section => CourseStateService._state.sections.list[section.id]);
+          const sectionsSeatTotal = sections.reduce((acc, section) => acc += section.seats, 0);
+
+          requiresAttention = sectionsSeatTotal !== selectedSectionGroup.plannedSeats;
+          flaggedSectionGroups = CourseStateService._state.sectionGroups.ids.filter(id => id !== selectedSectionGroup.id).map(id => CourseStateService._state.sectionGroups.list[id]).filter(sg => sg.requiresAttention).length + Number(requiresAttention);
+        }
+
+        return { requiresAttention, flaggedSectionGroups };
       }
     };
   }

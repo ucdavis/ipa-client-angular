@@ -17,6 +17,9 @@ class BudgetService {
 			updateLineItem: function(lineItem, budgetScenarioId) {
 				return ApiService.put("/api/budgetView/budgetScenarios/" + budgetScenarioId + "/lineItems/" + lineItem.id, lineItem);
 			},
+			updateLineItems: function(budgetScenario, lineItemIds) {
+				return ApiService.post("/api/budgetView/budgetScenarios/" + budgetScenario.id + "/lineItems/lock", lineItemIds);
+			},
 			deleteLineItem: function(lineItem) {
 				return ApiService.delete("/api/budgetView/lineItems/" + lineItem.id);
 			},
@@ -43,6 +46,9 @@ class BudgetService {
 			},
 			createBudgetRequestScenario: function(selectedBudgetScenario) {
 				return ApiService.post("/api/budgetView/budgets/" + selectedBudgetScenario.budgetId + "/budgetScenarios/" + selectedBudgetScenario.id + "/budgetRequest");
+			},
+			approveBudgetRequestScenario: function(selectedBudgetScenario) {
+				return ApiService.put("/api/budgetView/budgets/" + selectedBudgetScenario.budgetId + "/budgetScenarios/" + selectedBudgetScenario.id + "/budgetRequest");
 			},
 
 			// Budget

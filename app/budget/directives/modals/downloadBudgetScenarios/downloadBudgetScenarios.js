@@ -76,7 +76,28 @@ let downloadBudgetScenarios = function ($rootScope, BudgetActions, BudgetService
 					return department;
 				});
 			};
-			
+
+			scope.selectApprovedBudgetRequests = function() {
+				scope.budgetScenariosAccessible = scope.budgetScenariosAccessible.map((department) => {
+					const approvedRequest = department.budgetScenarios.find(scenario => scenario.isApproved);
+
+					// if no approved request, return latest request
+					if (approvedRequest !== undefined) {
+						department.selectedScenario = approvedRequest.id.toString();
+					} else if (department.budgetScenarios.some(scenario => scenario.isBudgetRequest)){
+						const latestRequest = department.budgetScenarios.filter(scenario => scenario.isBudgetRequest === true).sort((a, b) => b.creationDate - a.creationDate)[0];
+
+						department.selectedScenario = latestRequest.id.toString();
+					} else {
+						const liveDataScenario = department.budgetScenarios.find(scenario => scenario.fromLiveData === true);
+
+						department.selectedScenario = liveDataScenario.id.toString();
+					}
+					
+					return department;
+				});
+			};
+
 			scope.resetDownloadSelections = function() {
 				scope.budgetScenariosAccessible.forEach(department => {
 					department.selectedScenario = `${(department.budgetScenarios.find(scenario => scenario.fromLiveData === true) || {}).id}`;

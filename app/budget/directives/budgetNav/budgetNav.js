@@ -15,9 +15,12 @@ let budgetNav = function ($rootScope, BudgetActions) {
 			selectedExpenseItems: '<',
 			filters: '<',
 			fundsNav: '<',
-			shouldShowCourseList: '<'
+			shouldShowCourseList: '<',
+			currentUser: '<'
 		},
 		link: function(scope) {
+			scope.isDeansOffice = scope.currentUser.isDeansOffice();
+
 			scope.setRoute = function(selectedRoute) {
 				BudgetActions.setRoute(selectedRoute);
 			};
@@ -33,6 +36,10 @@ let budgetNav = function ($rootScope, BudgetActions) {
 
 			scope.openAddCourseModal = function() {
 				BudgetActions.openAddCourseModal();
+			};
+
+			scope.lockLineItems = function() {
+				BudgetActions.lockLineItems(scope.selectedBudgetScenario, scope.selectedLineItems.filter(id => id !== undefined));
 			};
 
 			scope.deleteLineItems = function() {

@@ -287,7 +287,7 @@ class WorkloadSummaryExcelService {
 
             if (assignments.length > 0){
               const instructorName = instructor.lastName ? instructor.lastName + ", " + instructor.firstName : instructor.fullName;
-              assignments.forEach(function(assignment, i){
+              assignments.forEach(function(assignment){
                 let courseType = "";
                 const courseNumbers = parseInt(assignment.description.replace(/\D/g, ''));
 
@@ -325,7 +325,7 @@ class WorkloadSummaryExcelService {
 
                 row.push(assignment.units);
                 row.push(assignment.studentCreditHours);
-                if (i === 0) { row.push(instructor.note); }
+                row.push(instructor.note);
                 data.push(row);
                 row = [];
               });

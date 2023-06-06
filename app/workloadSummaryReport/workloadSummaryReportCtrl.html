@@ -47,6 +47,11 @@
             ng-click="download(view.state.workloadSnapshots.selected.id)"
           ></span>
           <span
+            class="tool-icon glyphicon glyphicon-stats"
+            uib-tooltip="Download Five Year Report &nbsp;&nbsp; (can take up to a minute)"
+            ng-click="downloadHistorical()"
+          ></span>
+          <span
             class="tool-icon glyphicon glyphicon-print"
             uib-tooltip="Print"
             ng-click="print()"

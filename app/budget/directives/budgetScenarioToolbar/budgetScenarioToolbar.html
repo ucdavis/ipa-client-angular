@@ -29,6 +29,16 @@
 				<span ng-if="budgetRequestInProgress" class="budget-scenario-toolbar__button--text">Creating Budget Request...</span>
 				<span ng-if="!budgetRequestInProgress" class="budget-scenario-toolbar__button--text">Create Budget Request</span>
 			</button>
+			<button
+				ng-if="isDeansOffice && state.ui.isBudgetRequest && !state.ui.isApproved"
+				class="budget-scenario-toolbar__button"
+				uib-tooltip="Mark budget request as approved"
+				tooltip-append-to-body="true"
+				ng-click="approveBudgetRequestScenario()"
+			>
+				<i class="glyphicon glyphicon-ok"></i>
+				<span class="budget-scenario-toolbar__button--text">Approve Request</span>
+			</button>
 			<div class="budget-scenario-toolbar__button"
 				uib-tooltip="Accept all schedule updates from Live Data"
 				tooltip-append-to-body="true"

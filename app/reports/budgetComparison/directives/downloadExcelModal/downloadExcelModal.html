@@ -21,12 +21,12 @@
 					</td>
 					<td>
 						<select style="width: 100%; padding:4px 8px;" ng-model="department.selectedPrevious">
-							<option ng-repeat="scenario in department.previous" value={{scenario.id}}>{{scenario.name}}</option>
+							<option ng-repeat="scenario in department.previous" value={{scenario.id}}>{{scenario.name}} {{ scenario.isApproved ? "(Approved)" : "" }}</option>
 						</select>
 					</td>
 					<td>
 						<select style="width: 100%; padding:4px 8px;" ng-model="department.selectedCurrent">
-							<option ng-repeat="scenario in department.current" value={{scenario.id}}>{{scenario.name}}</option>
+							<option ng-repeat="scenario in department.current" value={{scenario.id}}>{{scenario.name}} {{ scenario.isApproved ? "(Approved)" : "" }}</option>
 						</select>
 					</td>
 				</tr>

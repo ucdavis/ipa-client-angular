@@ -3,7 +3,7 @@
 		ng-if="selectedBudgetScenario.isBudgetRequest"
 		style="text-align: center; color: #5b616b"
 	>
-		BUDGET REQUEST
+		<span ng-show="selectedBudgetScenario.isApproved">APPROVED</span> BUDGET REQUEST
 	</h3>
 	<div class="budget-summary__hidden-budgeted-warning do-not-print" ng-if="selectedBudgetScenario.budgetedCourseHiddenByTermFilter">
 		Note: There are budgeted courses not being accounted for in the table below. Use the Term Filter

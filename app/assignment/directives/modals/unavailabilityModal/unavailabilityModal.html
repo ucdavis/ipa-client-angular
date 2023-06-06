@@ -14,6 +14,7 @@
         <div class="flex-unavability_chart-children" ng-repeat="teachingCallResponse in teachingCallResponses">
           <availability-grid blob="teachingCallResponse.availabilityBlob"
             on-change="saveUnavailabilities(teachingCallResponse, blob)"
+            hide-text="true"
             read-only="true" style="width: 90%;"></availability-grid>
         </div>
       </div>

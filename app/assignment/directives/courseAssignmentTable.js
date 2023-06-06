@@ -155,10 +155,11 @@ let courseAssignmentTable = function ($rootScope, AssignmentActionCreators) {
 						$.each(scope.view.state.courses.ids, function (i, courseId) { // eslint-disable-line no-undef
 							var course = scope.view.state.courses.list[courseId];
 
+							const isPlaceholder = course.courseNumber.toLowerCase().includes("xx");
 							// Converts string courseNumber into an int without the sequencePattern
-							var courseNumber = parseInt(course.courseNumber, 10);
+							var courseNumber = isPlaceholder ? parseInt(course.courseNumber, 10) * 100 : parseInt(course.courseNumber, 10);
 
-							if (scope.lowerDivisionTable == true && (courseNumber < 1 || courseNumber > 99)) { return; }
+							if (scope.lowerDivisionTable == true && courseNumber > 99) { return; }
 							if (scope.upperDivisionTable == true && (courseNumber < 100 || courseNumber > 199)) { return; }
 							if (scope.graduateTable == true && (courseNumber < 200 || courseNumber > 299)) { return; }
 							if (scope.professionalTable == true && (courseNumber < 300 || courseNumber > 499)) { return; }

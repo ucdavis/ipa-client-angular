@@ -1,6 +1,6 @@
 import './rolesTable.css';
 
-let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService) {
+let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupExcelService, WorkgroupService) {
 	return {
 		restrict: 'E',
 		template: require('./rolesTable.html'),
@@ -48,6 +48,10 @@ let rolesTable = function ($rootScope, WorkgroupActionCreators, WorkgroupService
 				scope.users.newUser;
 				WorkgroupActionCreators.createUser(scope.ui.workgroupId, scope.users.newUser, scope.activeRoleId);
 				scope.clearUserSearch();
+			};
+
+			scope.download = function() {
+				WorkgroupExcelService.generateDownload();
 			};
 		}
 	};

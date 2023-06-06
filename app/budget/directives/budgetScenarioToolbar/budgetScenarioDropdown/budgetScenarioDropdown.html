@@ -39,7 +39,7 @@
 		<li ng-repeat="budgetRequest in budgetRequests" class="budget-scenario-dropdown__row">
 			<a ng-click="selectBudgetScenario(budgetRequest)" class="budget-scenario-item">
 				<span>
-					<span>{{ budgetRequest.name }}</span>
+					{{ budgetRequest.name }} {{ budgetRequest.isApproved ? "(Approved)" : "" }}
 				</span>
 				<div class="budget-scenario-dropdown__hover-ui">
 					<ipa-button
