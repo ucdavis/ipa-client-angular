@@ -14,6 +14,11 @@
 					</button>
 
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li class="type-item">
+							<a ng-click="selectLineItemTerm()">
+								All
+							</a>
+						</li>
 						<li ng-repeat="term in state.ui.termNav.budgetScenarioDropdownTerms" class="type-item">
 							<a ng-click="selectLineItemTerm(term)">
 								{{ term.description}}

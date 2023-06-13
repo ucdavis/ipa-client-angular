@@ -44,8 +44,13 @@ let addLineItem = function ($rootScope, BudgetActions) {
 			};
 
 			scope.selectLineItemTerm = function (term) {
-				scope.newLineItem.termCode = term.id;
-				scope.newLineItem.termDescription = term.description;
+				if (term === null) {
+					scope.newLineItem.termCode = null;
+					scope.newLineItem.termDescription = "All";
+				} else {
+					scope.newLineItem.termCode = term.id;
+					scope.newLineItem.termDescription = term.description;
+				}
 			};
 
 			scope.selectLineItemType = function(type) {
