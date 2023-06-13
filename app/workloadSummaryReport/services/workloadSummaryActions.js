@@ -35,6 +35,7 @@ class WorkloadSummaryActions {
 				this._getWorkloadSnapshots(workgroupId, year);
 			},
 			download: function(snapshotId) {
+				// backend generated download
 				if (snapshotId) {
 					WorkloadSummaryService.downloadWorkloadSnapshot(snapshotId);
 				} else {
@@ -43,10 +44,8 @@ class WorkloadSummaryActions {
 					WorkloadSummaryService.downloadWorkloadSummary(workgroupId, year);
 				}
 
-				// backend generated download
-
 				// frontend generated download
-				// WorkloadSummaryExcelService;
+				WorkloadSummaryExcelService.generateDownload();
 			},
 			selectSnapshot: function(snapshot) {
 				let selectedSnapshot = null;
