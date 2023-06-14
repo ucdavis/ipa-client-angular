@@ -44,7 +44,7 @@ let addLineItem = function ($rootScope, BudgetActions) {
 			};
 
 			scope.selectLineItemTerm = function (term) {
-				if (term === null) {
+				if (term === undefined) {
 					scope.newLineItem.termCode = null;
 					scope.newLineItem.termDescription = "All";
 				} else {
