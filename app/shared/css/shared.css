@@ -266,7 +266,7 @@ table.availability-grid tr td {
 }
 
 .ipa-header .header--work-group .dropdown-menu li a {
-  display: inline-block;
+  display: block;
 }
 
 .ipa-header .header--work-group .dropdown-menu li a:hover {
