@@ -259,7 +259,7 @@ class BudgetComparisonReportCalculations {
         instructorCosts,
         sectionGroupCostInstructors
       ) {
-        // debugger;
+
         var assignmentCosts = [];
         if (!sectionGroupCostInstructors){
           sectionGroupCostInstructors = BudgetComparisonReportReducers._state.sectionGroupCostInstructors.previous.instructors.bySectionGroupCostId[sectionGroupCost.id]
@@ -319,7 +319,6 @@ class BudgetComparisonReportCalculations {
         return assignmentCosts;
       },
       _calculateCourseTotalCost(selectedScenario, sectionGroupCost, instructorTypeCosts, instructorCosts) {
-        // debugger;
         let totalCost = 0;
 
         // cost attached to course
@@ -371,11 +370,11 @@ class BudgetComparisonReportCalculations {
           }
         }
           totalCost += cost;
-          // debugger;
+        
         // ta/reader cost
         totalCost += selectedScenario.taCost * sectionGroupCost.taCount;
         totalCost += selectedScenario.readerCost * sectionGroupCost.readerCount;
-// debugger;
+
         return totalCost;
 
       },
