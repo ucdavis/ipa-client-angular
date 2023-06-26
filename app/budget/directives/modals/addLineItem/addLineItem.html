@@ -1,6 +1,61 @@
 <div class="add-line-item">
 	<form role="form" class="form-horizontal add-line-item__container">
 		<div class="form-group">
+			<label class="col-sm-4 control-label">Term</label>
+			<div class="col-sm-5">
+				<div class="input-group" class="category-selection-container">
+					<button class="btn btn-category-dropdown dropdown-toggle"
+									type="button" data-toggle="dropdown"
+									class="btn-category-dropdown">
+						<span class="btn-category-dropdown-label">
+							{{ newLineItem.termDescription || 'Select a term'}}
+						</span>
+						<span class="caret"></span>
+					</button>
+
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li class="type-item">
+							<a ng-click="selectLineItemTerm()">
+								All
+							</a>
+						</li>
+						<li ng-repeat="term in state.ui.termNav.budgetScenarioDropdownTerms" class="type-item">
+							<a ng-click="selectLineItemTerm(term)">
+								{{ term.description}}
+							</a>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Type</label>
+			<div class="col-sm-5">
+				<div class="input-group" class="category-selection-container">
+					<button class="btn btn-category-dropdown dropdown-toggle"
+									type="button" data-toggle="dropdown"
+									class="btn-category-dropdown">
+						<span class="btn-category-dropdown-label">
+							{{ newLineItem.typeDescription || 'Select a type' }}
+						</span>
+						<span class="caret"></span>
+					</button>
+
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li ng-repeat="type in state.lineItemTypes | orderBy:'description'" class="type-item">
+							<a ng-click="selectLineItemType(type)">
+								{{ type.description }}
+							</a>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
 			<label class="col-sm-4 control-label">Category</label>
 			<div class="col-sm-5">
 				<div class="input-group" class="category-selection-container">
