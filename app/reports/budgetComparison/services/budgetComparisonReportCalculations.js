@@ -125,7 +125,7 @@ class BudgetComparisonReportCalculations {
         });
       },
       // Generates stats on seats and # of courses per area
-      _generateMiscStats(sectionGroupCosts, selectedScenario, instructorTypeCosts, instructorCosts) {
+      _generateMiscStats(sectionGroupCosts, selectedScenario, instructorTypeCosts, instructorCosts, sectionGroupCostInstructors) {
         var selectedScenarioId = selectedScenario.id;
 
         var miscStats = {
@@ -171,7 +171,7 @@ class BudgetComparisonReportCalculations {
           var courseNumber = parseInt(sectionGroupCost.courseNumber);
           var seats = sectionGroupCost.enrollment;
 
-          const cost = this._calculateCourseTotalCost(selectedScenario, sectionGroupCost, instructorTypeCosts, instructorCosts);
+          const cost = this._calculateCourseTotalCost(selectedScenario, sectionGroupCost, instructorTypeCosts, instructorCosts, sectionGroupCostInstructors);
           
           if (courseNumber < 100) {
             miscStats.lower.cost += cost;
@@ -251,80 +251,15 @@ class BudgetComparisonReportCalculations {
         instructorCosts,
         sectionGroupCostInstructors
       ) {
+        let assignmentCost = 0;
 
-        var assignmentCosts = [];
-        if (!sectionGroupCostInstructors){
-          sectionGroupCostInstructors = BudgetComparisonReportReducers._state.sectionGroupCostInstructors.previous.instructors.bySectionGroupCostId[sectionGroupCost.id]
-          || BudgetComparisonReportReducers._state.sectionGroupCostInstructors.current.instructors.bySectionGroupCostId[sectionGroupCost.id] || [];
-        }
+        const slotSectionGroupCostInstructors = sectionGroupCostInstructors.instructors.bySectionGroupCostId[sectionGroupCost.id] || [];
 
-
-        for (var i = 0; i < sectionGroupCostInstructors.length; i++){
-          var sectionGroupCostInstructor = sectionGroupCostInstructors[i];
+        for (var i = 0; i < slotSectionGroupCostInstructors.length; i++){
+          var sectionGroupCostInstructor = slotSectionGroupCostInstructors[i];
+          var instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
 
           var cost = null;
-          var instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
-
-          var instructorTypeCost = null;
-          var instructorCost = null;
-          var courseCost = sectionGroupCostInstructor.cost;
-
-          // If an instructor is set
-          if (!courseCost && sectionGroupCostInstructor.instructorId) {
-            instructorCost = selectedScenario.isBudgetRequest
-              ? instructorCosts.byBudgetScenarioId[selectedScenario.id]?.byInstructorId[sectionGroupCostInstructor.instructorId]
-              : instructorCosts.byInstructorId[sectionGroupCostInstructor.instructorId];
-
-            instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
-
-            // if no explicit instructor cost, attempt to find instructorType cost
-            instructorTypeCost = selectedScenario.isBudgetRequest
-              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id]?.byInstructorTypeId[instructorTypeId]
-              : instructorTypeCosts.byInstructorTypeId[instructorTypeId];
-
-            // If only instructorType is set
-          } else if (!courseCost && sectionGroupCostInstructor.instructorTypeId) {
-            instructorTypeCost = selectedScenario.isBudgetRequest
-              ? instructorTypeCosts.byBudgetScenarioId[selectedScenario.id]?.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId]
-              : instructorTypeCosts.byInstructorTypeId[sectionGroupCostInstructor.instructorTypeId];
-
-            instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
-          }
-
-          if (courseCost || courseCost == 0) {
-            cost = courseCost;
-          } else if (instructorCost) {
-            cost = instructorCost.cost;
-          } else if (instructorTypeCost) {
-            cost = instructorTypeCost.cost;
-          } else {
-            cost = null;
-          }
-          if (cost && instructorTypeId){
-            assignmentCosts.push({
-              cost: cost,
-              instructorTypeId: instructorTypeId
-            });
-          }
-
-        }
-
-        return assignmentCosts;
-      },
-      _calculateCourseTotalCost(selectedScenario, sectionGroupCost, instructorTypeCosts, instructorCosts) {
-        let totalCost = 0;
-
-        // cost attached to course
-        totalCost += sectionGroupCost.cost;
-
-        const sectionGroupCostInstructors = BudgetComparisonReportReducers._state.sectionGroupCostInstructors.previous.instructors.bySectionGroupCostId[sectionGroupCost.id]
-          || BudgetComparisonReportReducers._state.sectionGroupCostInstructors.current.instructors.bySectionGroupCostId[sectionGroupCost.id] || [];
-
-        let cost = 0;
-        for (var i = 0; i < sectionGroupCostInstructors.length; i++){
-          var sectionGroupCostInstructor = sectionGroupCostInstructors[i];
-          var instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
-
           var instructorTypeCost = null;
           var instructorCost = null;
           var courseCost = sectionGroupCostInstructor.cost;
@@ -360,9 +295,15 @@ class BudgetComparisonReportCalculations {
           } else {
             cost = 0;
           }
+
+          assignmentCost += cost;
         }
 
-        totalCost += cost;
+        return assignmentCost;
+      },
+      _calculateCourseTotalCost(selectedScenario, sectionGroupCost, instructorTypeCosts, instructorCosts, sectionGroupCostInstructors) {
+        let totalCost = 0;
+        totalCost += this._calculateAssignmentCost(selectedScenario, sectionGroupCost, instructorTypeCosts, instructorCosts, sectionGroupCostInstructors);
         totalCost += selectedScenario.taCost * sectionGroupCost.taCount;
         totalCost += selectedScenario.readerCost * sectionGroupCost.readerCount;
 
