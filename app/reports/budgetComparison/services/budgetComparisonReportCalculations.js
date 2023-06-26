@@ -29,14 +29,6 @@ class BudgetComparisonReportCalculations {
           budgetScenarios.previous
         );
 
-        // const previousAssignmentCosts = this._calculateAssignmentCost(
-        //   currentSelectedBudgetScenario,
-        //   sectionGroupCosts.previous,
-        //   instructorTypeCosts.previous,
-        //   instructorCosts.previous,
-        //   sectionGroupCostInstructors.previous
-        //   );
-
         var calculatedView = {
           ui: {
             currentSelectedBudgetScenario: currentSelectedBudgetScenario,
@@ -316,6 +308,7 @@ class BudgetComparisonReportCalculations {
           }
 
         }
+
         return assignmentCosts;
       },
       _calculateCourseTotalCost(selectedScenario, sectionGroupCost, instructorTypeCosts, instructorCosts) {
