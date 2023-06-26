@@ -320,8 +320,7 @@ class BudgetComparisonReportCalculations {
         const sectionGroupCostInstructors = BudgetComparisonReportReducers._state.sectionGroupCostInstructors.previous.instructors.bySectionGroupCostId[sectionGroupCost.id]
           || BudgetComparisonReportReducers._state.sectionGroupCostInstructors.current.instructors.bySectionGroupCostId[sectionGroupCost.id] || [];
 
-
-          let cost = 0;
+        let cost = 0;
         for (var i = 0; i < sectionGroupCostInstructors.length; i++){
           var sectionGroupCostInstructor = sectionGroupCostInstructors[i];
           var instructorTypeId = sectionGroupCostInstructor.instructorTypeId;
@@ -362,14 +361,12 @@ class BudgetComparisonReportCalculations {
             cost = 0;
           }
         }
-          totalCost += cost;
-        
-        // ta/reader cost
+
+        totalCost += cost;
         totalCost += selectedScenario.taCost * sectionGroupCost.taCount;
         totalCost += selectedScenario.readerCost * sectionGroupCost.readerCount;
 
         return totalCost;
-
       },
       _calculateInstructorTypeCosts(
         selectedScenario,
