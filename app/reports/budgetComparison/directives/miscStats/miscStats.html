@@ -60,6 +60,28 @@
         </div>
       </td>
     </tr>
+    <tr>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ toCurrency(miscStats.lower.cost) }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ toCurrency(miscStats.upper.cost) }}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container">
+          {{ toCurrency(miscStats.grad.cost )}}
+        </div>
+      </td>
+      <td>
+        <div class="dean-report__cell-container dean-report__cell-container--last dean-report__cell--bold">
+          {{ toCurrency(miscStats.total.cost) }}
+        </div>
+      </td>
+    </tr>
   </tbody>
   <!-- Misc stats (seats) -->
   <thead>
