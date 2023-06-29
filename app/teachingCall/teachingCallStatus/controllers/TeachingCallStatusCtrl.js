@@ -109,6 +109,13 @@ class TeachingCallStatusCtrl {
 			return $scope.isActivityLogOpen = !$scope.isActivityLogOpen;
 		};
 
+		$scope.lockTeachingCalls = function() {
+			TeachingCallStatusActionCreators.lockTeachingCalls($scope.workgroupId, $scope.year, $scope.view.state.ui.selectedInstructorIds);
+		};
+
+		$scope.unlockTeachingCall = function(teachingCall) {
+			TeachingCallStatusActionCreators.unlockTeachingCall(teachingCall.id);
+		};
 	}
 }
 

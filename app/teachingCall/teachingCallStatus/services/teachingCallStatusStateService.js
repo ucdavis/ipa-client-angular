@@ -39,6 +39,11 @@ class TeachingCallStatusStateService {
 						teachingCallReceipts.ids.splice(index, 1);
 						delete teachingCallReceipts.list[receiptId];
 						return teachingCallReceipts;
+					case ActionTypes.TOGGLE_LOCK:
+						action.payload.teachingCallReceipts.forEach(receipt => {
+							teachingCallReceipts.list[receipt.id] = receipt;
+						});
+						return teachingCallReceipts;
 					default:
 						return teachingCallReceipts;
 				}
