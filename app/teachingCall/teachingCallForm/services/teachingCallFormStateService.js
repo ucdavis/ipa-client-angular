@@ -14,6 +14,7 @@ class TeachingCallFormStateService {
 							comments: null, // Array of teachingCallComments
 							newComment: null, // "Only Fridays please"
 							isDone: null, // True
+							isLocked: false,
 							scheduleId: action.payload.scheduleId,
 							terms: [],
 							instructorId: action.payload.instructorId,
@@ -39,6 +40,7 @@ class TeachingCallFormStateService {
 							pageState.hideNonCourseOptions = teachingCallReceipt.hideNonCourseOptions;
 							pageState.termsBlob = teachingCallReceipt.termsBlob;
 							pageState.isDone = teachingCallReceipt.isDone;
+							pageState.isLocked = teachingCallReceipt.locked;
 							pageState.dueDate = teachingCallReceipt.dueDate;
 							pageState.comments = teachingCallReceipt.comments;
 							pageState.teachingCallReceiptId = teachingCallReceipt.id;
