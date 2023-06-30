@@ -218,7 +218,6 @@ class TeachingCallStatusActionCreators {
 			},
 			// Generates DTO's for each teachingCallReceipt/instructor and sorts them by instructorType
 			_calculateInstructorsInCall: function() {
-				debugger;
 				var teachingCallReceipts = TeachingCallStatusStateService._state.teachingCallReceipts;
 				var instructorTypes = TeachingCallStatusStateService._state.instructorTypes;
 				var instructors = TeachingCallStatusStateService._state.instructors;
