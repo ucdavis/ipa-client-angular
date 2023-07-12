@@ -17,7 +17,7 @@ class TeachingCallStatusService {
 				return ApiService.delete("/api/teachingCallView/teachingCallReceipts/" + teachingCallReceiptId);
 			},
 			lockTeachingCalls: function(workgroupId, year, instructorIds) {
-				return ApiService.post(`/api/teachingCallView/${workgroupId}/${year}/close`, instructorIds);
+				return ApiService.post(`/api/teachingCallView/${workgroupId}/${year}/lock`, instructorIds);
 			},
 			unlockTeachingCall: function(teachingCallReceiptId) {
 				return ApiService.post(`/api/teachingCallView/teachingCallReceipts/${teachingCallReceiptId}/unlock`);
