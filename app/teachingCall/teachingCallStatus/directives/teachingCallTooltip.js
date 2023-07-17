@@ -63,6 +63,7 @@ let teachingCallTooltip = function ($document, $timeout) {
 				termsBlob = attrs.termsBlob || "no termsBlob",
 				showUnavail = attrs.showUnavail || "no showUnavail",
 				showSeats = attrs.showSeats == "true",
+				lockAfterDueDate = attrs.lockAfterDueDate == "true",
 				title = attrs.title || "Confirm",
 				placement = attrs.placement || "bottom";
 
@@ -71,6 +72,7 @@ let teachingCallTooltip = function ($document, $timeout) {
 			}
 			var collectUnavailDescription = showUnavail ? 'Yes' : 'No';
 			var showSeatsDescription = showSeats ? 'Yes' : 'No';
+			const lockAfterDueDateDescription = lockAfterDueDate ? 'Yes' : 'No';
 			var termsList = scope.termsBlobToTerms(termsBlob);
 
 			var html = "<div id=\"button-" + buttonId + "\" style=\"position: relative; width: 250px;\">";
@@ -78,6 +80,7 @@ let teachingCallTooltip = function ($document, $timeout) {
 			html += '<p class="confirmbutton-msg"><b>Terms:</b> ' + termsList + '</p>';
 			html += '<p class="confirmbutton-msg"><b>Collect Unavailabilities</b>: ' + collectUnavailDescription + '</p>';
 			html += '<p class="confirmbutton-msg"><b>Show Seats</b>: ' + showSeatsDescription + '</p>';
+			html += '<p class="confirmbutton-msg"><b>Lock after due date</b>: ' + lockAfterDueDateDescription + '</p>';
 
 			if (message && message.length > 0) {
 				html += '<p class="confirmbutton-msg"><b>Email:</b> ' + message + '</p>';
