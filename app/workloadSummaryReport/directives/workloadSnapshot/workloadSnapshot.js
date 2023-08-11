@@ -49,6 +49,8 @@ let workloadSnapshot = function () {
 				// byInstructorType: [{"Associate": [{name: "inst 1", assignments: []}, {}]}]
 				// order instructor type alpha
 				console.log(scope.snapshot);
+
+				scope.round = (num) => Math.floor(num);
 		}
 	};
 };

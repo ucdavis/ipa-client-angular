@@ -80,10 +80,11 @@
             </td>
             <td>
               <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
-                {{ assignment.census }}&nbsp;/&nbsp;{{ assignment.plannedSeats }}&nbsp;<span
-                  ng-if="assignment.actualEnrollment" class="workload-table__enrollment-percent">(&nbsp;{{
-                  assignment.enrollmentPercentage
-                  }}%&nbsp;)</span>
+                {{ assignment.census }}&nbsp;/&nbsp;{{ assignment.plannedSeats }}
+                <span
+                  ng-if="assignment.census > 0" class="workload-table__enrollment-percent">
+                    (&nbsp;{{ round(assignment.census / assignment.plannedSeats * 100) }}%&nbsp;)
+                </span>
               </div>
               <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
                 ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
@@ -92,7 +93,7 @@
             </td>
             <td>
               <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
-                {{ assignment.previousYearCensus }}
+                {{ assignment.previousYearCensus || assignment.offering ? "0" : "" }}
               </div>
               <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
                 ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
@@ -120,9 +121,11 @@
             </td>
             <td>
               <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
-                {{ assignment.studentCreditHours }} / {{ assignment.studentMaxCreditHours }}&nbsp;<span
-                  ng-if="assignment.studentCreditHours" class="workload-table__enrollment-percent">({{
-                  assignment.studentCreditHoursPercentage }}%)</span>
+                {{ assignment.studentCreditHours || (assignment.offering ? "0" : "") }} / {{ assignment.studentMaxCreditHours || (assignment.offering ? "0" : "") }}
+                <span
+                  ng-if="assignment.studentCreditHours" class="workload-table__enrollment-percent">
+                  ({{ round(assignment.studentCreditHours / assignment.studentMaxCreditHours * 100) }}%)
+                </span>
               </div>
               <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
                 ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
@@ -354,7 +357,7 @@
             </td>
             <td class="workload-totals__cell">
               <div>
-                {{ total.previousEnrollment }}
+                {{ total.previousEnrollment || "0" }}
               </div>
             </td>
             <td class="workload-totals__cell">
