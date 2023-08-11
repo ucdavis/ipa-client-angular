@@ -59,6 +59,7 @@ class WorkloadSummaryActions {
 						lastOfferedEnrollment: 0,
 						previousEnrollment: 0,
 						seats: 0,
+						studentCreditHours: 0,
 						studentMaxCreditHours: 0,
 						units: 0
 					},
@@ -69,6 +70,7 @@ class WorkloadSummaryActions {
 						lastOfferedEnrollment: 0,
 						previousEnrollment: 0,
 						seats: 0,
+						studentCreditHours: 0,
 						studentMaxCreditHours: 0,
 						units: 0
 					},
@@ -79,6 +81,7 @@ class WorkloadSummaryActions {
 						lastOfferedEnrollment: 0,
 						previousEnrollment: 0,
 						seats: 0,
+						studentCreditHours: 0,
 						studentMaxCreditHours: 0,
 						units: 0
 					}
