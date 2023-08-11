@@ -130,6 +130,7 @@ class WorkloadSummaryActions {
 						}
 
 						if (assignment.termCode !== null) {
+							const unitsValue = Number(assignment.units) ? Number(assignment.units) : 0;
 							assignment.term = TermService.getTermName(assignment.termCode);
 
 							if (assignment.lastOfferedCensus !== null) {
@@ -137,7 +138,7 @@ class WorkloadSummaryActions {
 								assignment.lastOfferedTermDescription = assignment.lastOfferedCensus.slice(-7);
 							}
 
-							assignment.studentMaxCreditHours = Number(assignment.units) * Number(assignment.plannedSeats);
+							assignment.studentMaxCreditHours = unitsValue * Number(assignment.plannedSeats);
 							byInstructorType[assignment.instructorType][assignment.name].assignments.push(assignment);
 
 							byInstructorType[assignment.instructorType][assignment.name].totals.actualEnrollment += Number(assignment.census);
@@ -148,7 +149,7 @@ class WorkloadSummaryActions {
 							byInstructorType[assignment.instructorType][assignment.name].totals.seats += Number(assignment.plannedSeats);
 							byInstructorType[assignment.instructorType][assignment.name].totals.studentCreditHours += assignment.studentCreditHours;
 							byInstructorType[assignment.instructorType][assignment.name].totals.studentMaxCreditHours += assignment.studentMaxCreditHours;
-							byInstructorType[assignment.instructorType][assignment.name].totals.units += Number(assignment.units);
+							byInstructorType[assignment.instructorType][assignment.name].totals.units += unitsValue;
 
 							if (assignment.instructorType === "Unassigned") {
 								categoryTotals["Unassigned"].enrollment += Number(assignment.census);
@@ -157,7 +158,7 @@ class WorkloadSummaryActions {
 								categoryTotals["Unassigned"].previousEnrollment += Number(assignment.previousYearCensus);
 								categoryTotals["Unassigned"].seats += Number(assignment.plannedSeats);
 								categoryTotals["Unassigned"].studentMaxCreditHours += assignment.studentMaxCreditHours;
-								categoryTotals["Unassigned"].units += Number(assignment.units);
+								categoryTotals["Unassigned"].units += unitsValue;
 							} else if (assignment.name === "TBD") {
 								categoryTotals["TBD Instructors"].instructorCount += 1;
 								categoryTotals["TBD Instructors"].enrollment += Number(assignment.census);
@@ -166,7 +167,7 @@ class WorkloadSummaryActions {
 								categoryTotals["TBD Instructors"].previousEnrollment += Number(assignment.previousYearCensus);
 								categoryTotals["TBD Instructors"].seats += Number(assignment.plannedSeats);
 								categoryTotals["TBD Instructors"].studentMaxCreditHours += assignment.studentMaxCreditHours;
-								categoryTotals["TBD Instructors"].units += Number(assignment.units);
+								categoryTotals["TBD Instructors"].units += unitsValue;
 
 								totals[assignment.instructorType].enrollment += Number(assignment.census);
 								totals[assignment.instructorType].assignmentCount += 1;
@@ -174,7 +175,7 @@ class WorkloadSummaryActions {
 								totals[assignment.instructorType].previousEnrollment += Number(assignment.previousYearCensus);
 								totals[assignment.instructorType].seats += Number(assignment.plannedSeats);
 								totals[assignment.instructorType].studentMaxCreditHours += assignment.studentMaxCreditHours;
-								totals[assignment.instructorType].units += Number(assignment.units);
+								totals[assignment.instructorType].units += unitsValue;
 							} else if (assignment.offering !== null) {
 								categoryTotals["Assigned"].enrollment += Number(assignment.census);
 								categoryTotals["Assigned"].assignmentCount += 1;
@@ -183,7 +184,7 @@ class WorkloadSummaryActions {
 								categoryTotals["Assigned"].seats += Number(assignment.plannedSeats);
 								categoryTotals["Assigned"].studentCreditHours += assignment.studentCreditHours;
 								categoryTotals["Assigned"].studentMaxCreditHours += assignment.studentMaxCreditHours;
-								categoryTotals["Assigned"].units += Number(assignment.units);
+								categoryTotals["Assigned"].units += unitsValue;
 
 								totals[assignment.instructorType].enrollment += Number(assignment.census);
 								totals[assignment.instructorType].assignmentCount += 1;
@@ -192,7 +193,7 @@ class WorkloadSummaryActions {
 								totals[assignment.instructorType].seats += Number(assignment.plannedSeats);
 								totals[assignment.instructorType].studentCreditHours += assignment.studentCreditHours;
 								totals[assignment.instructorType].studentMaxCreditHours += assignment.studentMaxCreditHours;
-								totals[assignment.instructorType].units += Number(assignment.units);
+								totals[assignment.instructorType].units += unitsValue;
 							}
 						}
 					});
