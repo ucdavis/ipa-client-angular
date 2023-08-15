@@ -93,7 +93,7 @@
             </td>
             <td>
               <div class="workload-table__value" ng-repeat="assignment in instructor.assignments">
-                {{ assignment.previousYearCensus || assignment.offering ? "0" : "" }}
+                {{ assignment.previousYearCensus || (assignment.offering ? "0" : "") }}
               </div>
               <div ng-if="instructor.assignments.length > 0" class="workload-table__value workload-table__value--totals"
                 ng-class="{'workload-table__value--totals-bar': instructor.assignments.length > 0 }">
