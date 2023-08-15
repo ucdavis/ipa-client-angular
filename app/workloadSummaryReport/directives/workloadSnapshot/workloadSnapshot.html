@@ -47,7 +47,7 @@
               SCH
             </td>
           </tr>
-          <tr class="workload-table__row" ng-repeat="instructor in instructors | orderBy: 'name'">
+          <tr class="workload-table__row" ng-repeat="instructor in instructors"> 
             <td class="workload-table__name-cell">
               <span>{{ instructor.name }}</span>
               <div ng-if="instructor.assignments[0].instructorNote" style="padding: 10px;">Note: {{ instructor.assignments[0].instructorNote }}</div>

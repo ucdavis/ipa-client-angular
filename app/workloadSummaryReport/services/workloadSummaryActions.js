@@ -219,7 +219,6 @@ class WorkloadSummaryActions {
 						combinedTotals.units += subtotal.units;
 					}
 
-
 					// flatten one level for easier rendering
 					const instructorTypes = Object.keys(byInstructorType);
 					instructorTypes.forEach(instructorType => {
@@ -236,11 +235,20 @@ class WorkloadSummaryActions {
 					const instructorTypeOrder = DISPLAY_ORDER.map(id => instructorTypeLookup.find(instructorType => instructorType.id === id).description);
 					const displayOrder = instructorTypeOrder.filter(type => instructorTypes.includes(type));
 
+					const byInstructorTypeList = displayOrder.map(type => {
+						const instructors = byInstructorType[type];
+						const namedInstructors = instructors.filter(i => i.name !== "TBD").sort((a, b) => a.name.localeCompare(b.name));
+						const unnamedInstructors = instructors.filter(i => i.name === "TBD");
+
+						return namedInstructors.concat(unnamedInstructors);
+					});
+					debugger;
+
 					selectedSnapshot = {
 						id: snapshot.id,
 						name: snapshot.name,
 						byInstructorType,
-						byInstructorTypeList: displayOrder.map(type => byInstructorType[type]),
+						byInstructorTypeList,
 						categoryTotals,
 						combinedTotals,
 						totals,
