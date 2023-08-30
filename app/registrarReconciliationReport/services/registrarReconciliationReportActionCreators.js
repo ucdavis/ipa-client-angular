@@ -283,15 +283,26 @@ class RegistrarReconciliationReportActionCreators {
 				var _this = this;
 				RegistrarReconciliationReportService.assignInstructor(section.sectionGroupId, instructor).then(function () {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
-					var action = {
-						type: ActionTypes.ASSIGN_INSTRUCTOR,
-						payload: {
-							section: section,
-							instructor: instructor
-						}
-					};
-					RegistrarReconciliationReportStateService.reduce(action);
-					_this.updateSectionReconciliation(section);
+
+					let sections = [];
+
+					if (section.groupHead) {
+						sections = Object.values(RegistrarReconciliationReportStateService._state.sections.list).filter(s => s.sectionGroupId === section.sectionGroupId);
+					} else {
+						sections = [section];
+					}
+
+					sections.forEach(section => {
+						var action = {
+							type: ActionTypes.ASSIGN_INSTRUCTOR,
+							payload: {
+								section: section,
+								instructor: instructor
+							}
+						};
+						RegistrarReconciliationReportStateService.reduce(action);
+						_this.updateSectionReconciliation(section);
+					});
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not assign instructor.", type: "ERROR" });
 				});
@@ -306,15 +317,26 @@ class RegistrarReconciliationReportActionCreators {
 				var _this = this;
 				RegistrarReconciliationReportService.unAssignInstructor(section.sectionGroupId, instructor).then(function () {
 					$rootScope.$emit('toast', { message: "Assigned " + instructor.firstName + " " + instructor.lastName + " to " + section.title, type: "SUCCESS" });
-					var action = {
-						type: ActionTypes.UNASSIGN_INSTRUCTOR,
-						payload: {
-							section: section,
-							instructor: instructor
-						}
-					};
-					RegistrarReconciliationReportStateService.reduce(action);
-					_this.updateSectionReconciliation(section);
+
+					let sections = [];
+
+					if (section.groupHead) {
+						sections = Object.values(RegistrarReconciliationReportStateService._state.sections.list).filter(s => s.sectionGroupId === section.sectionGroupId);
+					} else {
+						sections = [section];
+					}
+
+					sections.forEach(section => {
+						var action = {
+							type: ActionTypes.UNASSIGN_INSTRUCTOR,
+							payload: {
+								section: section,
+								instructor: instructor
+							}
+						};
+						RegistrarReconciliationReportStateService.reduce(action);
+						_this.updateSectionReconciliation(section);
+					});
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not unassign instructor.", type: "ERROR" });
 				});

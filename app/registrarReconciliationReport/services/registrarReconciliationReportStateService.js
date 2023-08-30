@@ -224,7 +224,7 @@ class RegistrarReconciliationReportStateService {
 						return sections;
 					case ActionTypes.ASSIGN_INSTRUCTOR:
 						section = sections.list[action.payload.section.uniqueKey];
-						var instructorIndex = section.instructors.indexOf(action.payload.instructor);
+						var instructorIndex = section.instructors.findIndex(instructor => instructor.uniqueKey === action.payload.instructor.uniqueKey);
 
 						// Remove the noLocal flag from the assigned instructor
 						delete section.instructors[instructorIndex].noLocal;
@@ -232,7 +232,7 @@ class RegistrarReconciliationReportStateService {
 						return sections;
 					case ActionTypes.UNASSIGN_INSTRUCTOR:
 						section = sections.list[action.payload.section.uniqueKey];
-						var instructorIndex = section.instructors.indexOf(action.payload.instructor);
+						var instructorIndex = section.instructors.findIndex(instructor => instructor.uniqueKey === action.payload.instructor.uniqueKey);
 						section.instructors.splice(instructorIndex, 1);
 						return sections;
 					case ActionTypes.UPDATE_ACTIVITY:
