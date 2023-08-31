@@ -137,7 +137,9 @@
 .teaching-call-status .header-left-cell {
 	display: flex;
 	align-items: center;
-	border: 1px solid #ebebeb;
+	border-top:  1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	border-bottom: 1px solid #ebebeb;
 	color: #a6a7aa;
 	background-color: #f5f5f6;
 	min-height: 36px;
@@ -147,7 +149,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid #ebebeb;
+	border-top:  1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	border-bottom: 1px solid #ebebeb;
 	color: #a6a7aa;
 	background-color: #f5f5f6;
 	min-height: 36px;
@@ -158,23 +162,27 @@
 }
 
 .teaching-call-status .column-name {
-	flex: 7 1 0px;
+	flex: 3 1 0px;
 }
 
 .teaching-call-status .column-last {
-	flex: 3 1 0px;
+	flex: 2 1 0px;
 }
 
 .teaching-call-status .column-submitted {
-	flex: 3 1 0px;
+	flex: 1 1 0px;
 }
 
 .teaching-call-status .column-due {
-	flex: 3 1 0px;
+	flex: 2 1 0px;
 }
 
 .teaching-call-status .column-next {
-	flex: 3 1 0px;
+	flex: 2 1 0px;
+}
+
+.teaching-call-status .column-updated {
+	flex: 2 1 0px;
 }
 
 .teaching-call-status .column-locked {

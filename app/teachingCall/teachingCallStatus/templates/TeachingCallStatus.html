@@ -130,7 +130,7 @@
 
 					<!-- table header -->
 					<div class="teaching-call-status__instructor-header">
-						<div class="header-cell first-cell cell column-checkbox">
+						<div class="header-cell first-cell column-checkbox">
 							<input ng-click="toggleInstructorType(instructorTypeId)"
 							       ng-checked="areAllInstructorsOfTypeSelected(instructorTypeId)"
 							       type="checkbox">
@@ -142,7 +142,7 @@
 						<div class="header-cell column-last">Last Contacted</div>
 						<div class="header-cell column-next">Next Contact</div>
 						<div class="header-cell column-due">Due Date</div>
-						<div class="header-cell column-due">Updated At</div>
+						<div class="header-cell column-updated">Updated At</div>
 						<div class="header-cell column-locked">Locked</div>
 						<div class="column-hover-ui"></div>
 					</div>
@@ -184,7 +184,7 @@
 							{{ instructor.nextContactAt }}
 						</div>
 						<div class="column-due cell">{{ instructor.dueDate }}</div>
-						<div class="column-next cell">{{ dateToString(instructor.updatedAt) }}</div>
+						<div class="column-updated cell">{{ dateToString(instructor.updatedAt) }}</div>
 						<div class="column-locked cell"><i ng-if="instructor.locked" ng-click="unlockTeachingCall(instructor)" class="glyphicon glyphicon-lock" uib-tooltip="Unlock form"></i></div>
 						<div class="column-hover-ui">
 							<span class="remove-instructor-ui entypo-minus-circled clickable hovrable"
