@@ -254,7 +254,7 @@ class RegistrarReconciliationReportStateService {
 								delete activity.dwChanges[action.payload.property];
 							}
 							// Delete dwChanges if this was the last change
-							if (Object.keys(activity.dwChanges).length === 0) {
+							if (activity.dwChanges && Object.keys(activity.dwChanges).length === 0) {
 								delete activity.dwChanges;
 							}
 						});

@@ -148,7 +148,7 @@ class RegistrarReconciliationReportActionCreators {
 							});
 
 					// Check if slot section has changes
-					var sectionHasChanges = slotSection.dwChanges;
+					var sectionHasChanges = slotSection?.dwChanges;
 
 					var dwHasChanges;
 					if (instructorsHasChanges || activitiesHasChanges || sectionHasChanges){
