@@ -172,6 +172,35 @@ class TeachingCallStatusActionCreators {
 					}
 				});
 			},
+			lockTeachingCalls: function(workgroupId, year, instructorIds) {
+				const self = this;
+
+				TeachingCallStatusService.lockTeachingCalls(workgroupId, year, instructorIds).then(res => {
+					TeachingCallStatusStateService.reduce({
+						type: ActionTypes.TOGGLE_LOCK,
+						payload: {
+							teachingCallReceipts: res
+						}
+					});
+
+					self._calculateInstructorsInCall();
+				});
+
+			},
+			unlockTeachingCall: function(teachingCallId) {
+				const self = this;
+
+				TeachingCallStatusService.unlockTeachingCall(teachingCallId).then(res => {
+					TeachingCallStatusStateService.reduce({
+						type: ActionTypes.TOGGLE_LOCK,
+						payload: {
+							teachingCallReceipts: [res]
+						}
+					});
+	
+					self._calculateInstructorsInCall();
+				});
+			},
 			// Generate's a DTO that lists all instructors NOT in a teachingCall, broken up by instructorType
 			_calculateEligibleInstructors: function() {
 				var instructorsEligibleForCall = [];

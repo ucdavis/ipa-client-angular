@@ -28,3 +28,7 @@ export function setCharAt(str, index, chr) {
 
 	return str.substr(0,index) + chr + str.substr(index + 1);
 }
+
+export function dateToString(date) {
+	return new Date(date).toLocaleString();
+}

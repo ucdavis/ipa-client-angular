@@ -55,7 +55,7 @@
 						Call Instructors
 					</a>
 				</div>
-				<div>
+				<div class="teaching-call-status__submission-container">
 					<a ng-if="atLeastOneInstructorSelected()" ng-click="openContactInstructorsModal()" class="btn btn-default">
 						<i class="glyphicon glyphicon-bullhorn teaching-call-status__btn-icon"></i>
 						Send Follow-Up
@@ -66,6 +66,16 @@
 							Send Follow-Up
 						</a>
 					</span>
+				</div>
+				<div>
+					<a ng-if="atLeastOneInstructorSelected()" class="btn btn-default" ng-click="lockTeachingCalls()">
+						<i class="glyphicon glyphicon-lock teaching-call-status__btn-icon"></i>
+						Lock Forms
+					</a>
+					<a ng-if="!(atLeastOneInstructorSelected())" class="disabled btn btn-default">
+						<i class="glyphicon glyphicon-lock teaching-call-status__btn-icon"></i>
+						Lock Forms
+					</a>
 				</div>
 			</div>
 
@@ -120,7 +130,7 @@
 
 					<!-- table header -->
 					<div class="teaching-call-status__instructor-header">
-						<div class="header-cell first-cell cell column-checkbox">
+						<div class="header-cell first-cell column-checkbox">
 							<input ng-click="toggleInstructorType(instructorTypeId)"
 							       ng-checked="areAllInstructorsOfTypeSelected(instructorTypeId)"
 							       type="checkbox">
@@ -132,6 +142,8 @@
 						<div class="header-cell column-last">Last Contacted</div>
 						<div class="header-cell column-next">Next Contact</div>
 						<div class="header-cell column-due">Due Date</div>
+						<div class="header-cell column-updated">Updated At</div>
+						<div class="header-cell column-locked">Locked</div>
 						<div class="column-hover-ui"></div>
 					</div>
 
@@ -154,6 +166,7 @@
 										terms-blob="{{instructor.termsBlob}}"
 										show-unavail="{{instructor.showUnavailabilities}}"
 										show-seats="{{instructor.showSeats}}"
+										lock-after-due-date="{{instructor.lockAfterDueDate}}"
 										message="{{instructor.message}}"
 										placement="right">
 									</i>
@@ -171,6 +184,8 @@
 							{{ instructor.nextContactAt }}
 						</div>
 						<div class="column-due cell">{{ instructor.dueDate }}</div>
+						<div class="column-updated cell">{{ dateToString(instructor.updatedAt) }}</div>
+						<div class="column-locked cell"><i ng-if="instructor.locked" ng-click="unlockTeachingCall(instructor)" class="glyphicon glyphicon-lock" uib-tooltip="Unlock form"></i></div>
 						<div class="column-hover-ui">
 							<span class="remove-instructor-ui entypo-minus-circled clickable hovrable"
 							      tooltip-placement="left"

@@ -116,6 +116,24 @@
           <label>Hide non-course options (e.g. sabbatical)</label>
         </div>
       </div>
+      <div ng-if="!startTeachingCallConfig.dueDate" style="padding-left: 20px;"  uib-tooltip="You must select a due date first">
+        <div class="checkbox checkbox-replace color-primary neon-cb-replacement">
+          <label class="cb-wrapper disabled">
+          </label>
+          <label>Lock forms after due date</label>
+        </div>
+      </div>
+      <div ng-if="startTeachingCallConfig.dueDate" ng-click="startTeachingCallConfig.lockAfterDueDate = !startTeachingCallConfig.lockAfterDueDate" style="padding-left: 20px;">
+        <div class="checkbox checkbox-replace color-primary neon-cb-replacement" ng-class="{ 'checked': startTeachingCallConfig.lockAfterDueDate }">
+          <label ng-if="!startTeachingCallConfig.dueDate" class="cb-wrapper disabled">
+            <div class="disabled"></div>
+          </label>
+          <label ng-if="startTeachingCallConfig.dueDate" class="cb-wrapper">
+            <div class="checked"></div>
+          </label>
+          <label>Lock forms after due date</label>
+        </div>
+      </div>
     </div>
 
     <textarea ng-if="startTeachingCallConfig.sendEmail == true"

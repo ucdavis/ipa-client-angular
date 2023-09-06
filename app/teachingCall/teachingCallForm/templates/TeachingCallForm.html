@@ -91,7 +91,7 @@
             class="preference-row"
           >
             <div class="priority-cell outline">
-              <div class="priority-child select-preference-btn">
+              <div ng-if="!view.state.isLocked" class="priority-child select-preference-btn">
                 <i
                   ng-if="$first == false"
                   ng-click="raisePriority(preference, term.preferences, term.termCode)"
@@ -117,12 +117,13 @@
                   {{ generateDisplayRank(preference, term.preferences) }}
                 </div>
               </div>
-              <div class="priority-child"></div>
+              <div ng-if="!view.state.isLocked" class="priority-child"></div>
             </div>
 
             <div class="preference-cell outline">
               <div>{{ preference.description }} {{ preference.title }}</div>
               <button
+                ng-if="!view.state.isLocked"
                 type="button"
                 class="btn btn-white remove-preference-btn"
                 confirm-button="removePreference(preference)"
@@ -150,7 +151,7 @@
           <!-- end preferences -->
 
           <!-- add preference -->
-          <div class="preference-row">
+          <div ng-if="!view.state.isLocked" class="preference-row">
             <div class="priority-cell outline"></div>
 
             <div class="preference-cell outline">
@@ -256,6 +257,7 @@
         <availability-grid
           blob="term.availabilityBlob"
           on-change="saveTeachingCallResponse(term, blob, 3000)"
+          read-only="view.state.isLocked"
         >
         </availability-grid>
       </div>
@@ -263,8 +265,8 @@
     <!-- additional message -->
     <div id="teaching-call--additional-information" class="row">
       <div class="col-md-12">
-        <h5>Comments</h5>
-        <div class="teaching-call-form-comment-input-container">
+        <h5 ng-if="!view.state.isLocked">Comments</h5>
+        <div ng-if="!view.state.isLocked" class="teaching-call-form-comment-input-container">
           <div class=" teaching-call-form-comment-input-textarea">
             <textarea
               class="form-control"
@@ -371,7 +373,7 @@
 
     <!-- Real submit button to set teachingCallResponse state to isDone -->
     <button
-      ng-if="!view.state.isDone"
+      ng-if="!view.state.isDone && !view.state.isLocked"
       type="button"
       class="btn btn-white"
       confirm-button="submitTeachingCallForm()"
@@ -387,7 +389,7 @@
 
     <!-- disabled pretend submit button -->
     <button
-      ng-if="view.state.isDone && view.state.formHasChanges == false"
+      ng-if="view.state.isDone && view.state.isLocked && view.state.formHasChanges == false"
       uib-tooltip="No changes to save."
       type="button"
       class="disabled btn btn-white"
@@ -397,7 +399,7 @@
 
     <!-- pretend submit button -->
     <button
-      ng-if="view.state.isDone && view.state.formHasChanges == true"
+      ng-if="view.state.isDone && view.state.isLocked && view.state.formHasChanges == true"
       ng-click="pretendSubmitForm()"
       type="button"
       class="btn btn-primary"
