@@ -1,5 +1,7 @@
 import 'TeachingCall/css/teaching-call-status.css';
 
+import { dateToString } from 'shared/helpers/string';
+
 class TeachingCallStatusCtrl {
 	constructor ($scope, $rootScope, $window, $route, $routeParams, TeachingCallStatusActionCreators, TeachingCallStatusService, AuthService, validate) {
 		this.AuthService = AuthService;
@@ -109,6 +111,17 @@ class TeachingCallStatusCtrl {
 			return $scope.isActivityLogOpen = !$scope.isActivityLogOpen;
 		};
 
+		$scope.lockTeachingCalls = function() {
+			TeachingCallStatusActionCreators.lockTeachingCalls($scope.workgroupId, $scope.year, $scope.view.state.ui.selectedInstructorIds);
+		};
+
+		$scope.unlockTeachingCall = function(teachingCall) {
+			TeachingCallStatusActionCreators.unlockTeachingCall(teachingCall.id);
+		};
+
+		$scope.dateToString = function(date) {
+			return date ? dateToString(date) : "";
+		};
 	}
 }
 

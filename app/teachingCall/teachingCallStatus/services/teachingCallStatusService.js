@@ -16,6 +16,12 @@ class TeachingCallStatusService {
 			removeInstructorFromTeachingCall: function (teachingCallReceiptId) {
 				return ApiService.delete("/api/teachingCallView/teachingCallReceipts/" + teachingCallReceiptId);
 			},
+			lockTeachingCalls: function(workgroupId, year, instructorIds) {
+				return ApiService.post(`/api/teachingCallView/${workgroupId}/${year}/lock`, instructorIds);
+			},
+			unlockTeachingCall: function(teachingCallReceiptId) {
+				return ApiService.post(`/api/teachingCallView/teachingCallReceipts/${teachingCallReceiptId}/unlock`);
+			},
 			getAuditLogs: function (workgroupId, year) {
 				var endpoint = "/api/workgroups/" + workgroupId + "/years/" + year + "/modules/Teaching Calls" + "/auditLogs";
 				return ApiService.get(encodeURI(endpoint));

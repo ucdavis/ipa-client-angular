@@ -10,10 +10,12 @@ class TeachingCallFormStateService {
 							showUnavailabilities: null, // False
 							showSeats: null, // Default is True
 							hideNonCourseOptions: null, // Defaults to False
+							lockAfterDueDate: null,
 							dueDate: null, // "dec 15th 2016"
 							comments: null, // Array of teachingCallComments
 							newComment: null, // "Only Fridays please"
 							isDone: null, // True
+							isLocked: false,
 							scheduleId: action.payload.scheduleId,
 							terms: [],
 							instructorId: action.payload.instructorId,
@@ -37,8 +39,10 @@ class TeachingCallFormStateService {
 							pageState.showUnavailabilities = teachingCallReceipt.showUnavailabilities;
 							pageState.showSeats = teachingCallReceipt.showSeats;
 							pageState.hideNonCourseOptions = teachingCallReceipt.hideNonCourseOptions;
+							pageState.lockAfterDueDate = teachingCallReceipt.lockAfterDueDate;
 							pageState.termsBlob = teachingCallReceipt.termsBlob;
 							pageState.isDone = teachingCallReceipt.isDone;
+							pageState.isLocked = teachingCallReceipt.locked;
 							pageState.dueDate = teachingCallReceipt.dueDate;
 							pageState.comments = teachingCallReceipt.comments;
 							pageState.teachingCallReceiptId = teachingCallReceipt.id;
