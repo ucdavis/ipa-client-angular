@@ -36,6 +36,10 @@ class WorkloadSummaryReportCtrl {
 			WorkloadSummaryActions.downloadHistorical();
 		};
 
+		$scope.downloadMultiple = function() {
+			WorkloadSummaryActions.toggleDownloadModal();
+		};
+
 		$scope.goToSection = function(id) {
 			var tableSection = $scope.view.state.instructorTypes.list[id].description;
 			$anchorScroll(tableSection);

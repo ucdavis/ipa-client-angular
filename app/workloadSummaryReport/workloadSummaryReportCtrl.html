@@ -6,6 +6,17 @@
   <no-access workgroup-name="sharedState.workgroup.name"></no-access>
 </div>
 
+<ipa-modal
+  is-visible="view.state.ui.showDownloadModal"
+  header-text="Please select Snapshots to download"
+  override-click-out="true"
+  show-dismiss="false">
+  <workload-download-modal
+    user-workgroup-snapshots="view.state.ui.userWorkgroupSnapshots"
+    download-status="view.state.ui.downloadStatus">
+  </workload-download-modal>
+</ipa-modal>
+
 <div ng-if="!noAccess && view.state && view.state.calculations.isInitialFetchComplete && view.state.calculations.dwCallsCompleted == view.state.calculations.dwCallsOpened">
 
   <div class="row hidden-print">
@@ -41,11 +52,17 @@
         </span>
 
         <span>
-          <span
-            class="tool-icon glyphicon glyphicon-download-alt"
-            uib-tooltip="Download as Excel"
-            ng-click="download(view.state.workloadSnapshots.selected.id)"
-          ></span>
+          <div class="btn-group" style="vertical-align: inherit;">
+          <span data-toggle="dropdown" class="tool-icon glyphicon glyphicon-download-alt" aria-haspopup="true" aria-expanded="false"></span>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li style="cursor: pointer;">
+                <a ng-click="download(view.state.workloadSnapshots.selected.id)">Download as Excel</a>
+              </li>
+              <li style="cursor: pointer;">
+                <a ng-click="downloadMultiple()">Download Multiple Departments as Excel</a>
+              </li>
+            </ul>
+        </div>
           <span
             class="tool-icon glyphicon glyphicon-stats"
             uib-tooltip="Download Five Year Report &nbsp;&nbsp; (can take up to a minute)"

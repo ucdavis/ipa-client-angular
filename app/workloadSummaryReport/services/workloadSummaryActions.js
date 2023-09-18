@@ -33,6 +33,7 @@ class WorkloadSummaryActions {
 				this._getUserRoles(workgroupId, year);
 				this._getSections(workgroupId, year);
 				this._getWorkloadSnapshots(workgroupId, year);
+				this._getUserWorkgroupSnapshots(year);
 			},
 			download: function(snapshotId) {
 				// backend generated download
@@ -242,7 +243,6 @@ class WorkloadSummaryActions {
 
 						return namedInstructors.concat(unnamedInstructors);
 					});
-					debugger;
 
 					selectedSnapshot = {
 						id: snapshot.id,
@@ -263,6 +263,11 @@ class WorkloadSummaryActions {
 			},
 			downloadHistorical: function() {
 				WorkloadSummaryService.downloadHistorical($route.current.params.workgroupId, $route.current.params.year);
+			},
+			toggleDownloadModal: function() {
+				WorkloadSummaryReducers.reduce({
+					type: ActionTypes.TOGGLE_DOWNLOAD_MODAL
+				});
 			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
@@ -534,6 +539,17 @@ class WorkloadSummaryActions {
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
+			},
+			_getUserWorkgroupSnapshots: function (year) {
+				WorkloadSummaryService.getUserWorkgroupSnapshots(year).then(function (userWorkgroupSnapshots) {
+
+					WorkloadSummaryReducers.reduce({
+						type: ActionTypes.GET_USER_WORKGROUP_SNAPSHOTS,
+						payload: userWorkgroupSnapshots
+					});
+				}), function () {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				};
 			},
 			_performCalculations: function () {
 				this._isInitialFetchComplete();

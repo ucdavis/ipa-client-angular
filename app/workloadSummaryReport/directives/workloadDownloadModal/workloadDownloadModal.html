@@ -1,0 +1,82 @@
+<div class="workload-download-modal">
+  <div>
+    <table class="table table-dark" id="workload-download-modal-table" style="font-size: 12px;">
+      <thead style="border-bottom: 1px solid #ddd; margin-bottom: -1px;">
+        <tr>
+          <th style="width: 25px;">
+            <ipa-checkbox is-checked="downloadAllDepartments"
+              click-action="toggleAllDepartmentDownloads()"></ipa-checkbox>
+          </th>
+          <th scope="col" style="padding-left: 10px;"><strong>Department</strong></th>
+          <th scope="col"><strong>Snapshot 1</strong></th>
+          <th scope="col"><strong>Snapshot 2</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="department in departmentSnapshots">
+          <td style="width: 25px; vertical-align: middle;"><ipa-checkbox is-checked="department.download"
+              click-action="toggleDepartmentDownload(department)"></ipa-checkbox></td>
+          <td style="padding-left: 10px; vertical-align: middle;">
+            <i ng-show="department.showWarning" class="glyphicon glyphicon-warning-sign" style="color: #cc2424;"></i>
+            {{ department.name }}<br>
+            <small style="color:rgba(0, 0, 0, 0.6);">Last Active: {{
+              dateToCalendar(department.lastActivity) }}</small>
+          </td>
+          <td>
+            <select style="width: 100%; padding:4px 8px;" ng-model="department.selectedPrevious">
+              <option ng-repeat="snapshot in department.snapshots" value={{snapshot.id}}>
+                {{ snapshot.name }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <select style="width: 100%; padding:4px 8px;" ng-model="department.selectedNext">
+              <option ng-repeat="snapshot in department.snapshots" value={{snapshot.id}}>
+                {{ snapshot.name }}
+              </option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="workload-download-modal-footer">
+    <div style="display: flex; margin-left: 8px;">
+      <ipa-checkbox is-checked="isSortedByRecentActivity" click-action="sortDepartmentsByRecentActivity()">
+      </ipa-checkbox>
+      <span style="margin-left: 8px;">Sort By Recent Activity</span>
+    </div>
+    <div class="workload-download-modal-footer__buttons">
+      <button ng-show="!isDisabled" ng-click="close()" type="button" class="btn btn-default modal-button">
+        Cancel
+      </button>
+      <button class="btn btn-secondary" confirm-button="resetDownloadSelections()"
+        placement=message="Are you sure you want to reset selections Live Data?">
+        Reset selections
+      </button>
+      <button class="btn btn-info" confirm-button="selectLatestSnapshots()" placement="top"
+        message="Are you sure you want to select the last snapshot created by each department?">
+        Select Latest Snapshots
+      </button>
+      <button ng-click="submit()" type="button" class="btn neon-dark-confirm-btn" ng-disabled="isDisabled">
+        Download
+      </button>
+    </div>
+  </div>
+  <div class="workload-download-modal-footer__status">
+    <span ng-show="showScenarioWarning" style="color: #cc2424;">
+      <i class="glyphicon glyphicon-warning-sign" style="padding-right: 4px"></i> Department is missing snapshots -
+      download will fail if department is selected.
+    </span>
+    <span ng-show="isDisabled">
+      <i class="glyphicon glyphicon-info-sign" style="padding-right: 4px; color: #21a9e1;"></i> Generating Excel
+      Download - You will receive an email once it is completed.
+    </span>
+    <span ng-show="status && status === 200 && !isDisabled" style="color: #00a651;">
+      <i class="glyphicon glyphicon-ok" style="padding-right: 4px"></i> Excel Download Successful
+    </span>
+    <span ng-show="status && status !== 200 && !isDisabled" style="color: #cc2424;">
+      <i class="glyphicon glyphicon-warning-sign" style="padding-right: 4px"></i> Excel Download Failed
+    </span>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import workloadSnapshot from './directives/workloadSnapshot/workloadSnapshot.js'
 import workloadTable from './directives/workloadTable/workloadTable.js';
 import workloadTotals from './directives/workloadTotals/workloadTotals.js';
 import workloadUnassignedTable from './directives/workloadUnassignedTable/workloadUnassignedTable.js';
+import workloadDownloadModal from './directives/workloadDownloadModal/workloadDownloadModal';
 
 // Services
 import WorkloadSummaryActions from './services/workloadSummaryActions.js';
@@ -67,6 +68,7 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 .directive('workloadTable', workloadTable)
 .directive('workloadTotals', workloadTotals)
 .directive('workloadUnassignedTable', workloadUnassignedTable)
+.directive('workloadDownloadModal', workloadDownloadModal)
 .controller('WorkloadSummaryReportCtrl', WorkloadSummaryReportCtrl)
 .service('WorkloadSummaryActions', WorkloadSummaryActions)
 .service('WorkloadSummaryExcelService', WorkloadSummaryExcelService)
@@ -93,7 +95,9 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 	SELECT_WORKLOAD_SNAPSHOT: "SELECT_WORKLOAD_SNAPSHOT",
 	CALCULATE_VIEW: "CALCULATE_VIEW",
 	BEGIN_CENSUS_DATA_FETCH: "BEGIN_CENSUS_DATA_FETCH",
-	INITIAL_FETCH_COMPLETE: "INITIAL_FETCH_COMPLETE"
+	INITIAL_FETCH_COMPLETE: "INITIAL_FETCH_COMPLETE",
+	GET_USER_WORKGROUP_SNAPSHOTS: "GET_USER_WORKGROUP_SNAPSHOTS",
+	TOGGLE_DOWNLOAD_MODAL: "TOGGLE_DOWNLOAD_MODAL"
 });
 
 export default workloadSummaryReportApp;

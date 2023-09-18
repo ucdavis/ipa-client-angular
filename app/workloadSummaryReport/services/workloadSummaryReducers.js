@@ -110,6 +110,24 @@ class WorkloadSummaryStateService {
 						return calculations;
 				}
 			},
+			_uiReducers: function (action, ui) {
+				switch (action.type) {
+					case ActionTypes.INIT_STATE:
+						ui = {
+							showDownloadModal: false,
+							userWorkgroupSnapshots: {}
+						};
+						return ui;
+					case ActionTypes.GET_USER_WORKGROUP_SNAPSHOTS:
+						ui.userWorkgroupSnapshots = action.payload;
+						return ui;
+					case ActionTypes.TOGGLE_DOWNLOAD_MODAL:
+						ui.showDownloadModal = !ui.showDownloadModal;
+						return ui;
+					default:
+						return ui;
+				}
+			},
 			reduce: function (action) {
 				var scope = this;
 
@@ -125,6 +143,7 @@ class WorkloadSummaryStateService {
 				newState.userRoles = scope._userRoleReducers(action, scope._state.userRoles);
 				newState.scheduleInstructorNotes = scope._scheduleInstructorNoteReducers(action, scope._state.scheduleInstructorNotes);
 				newState.workloadSnapshots = scope._workloadSnapshotReducers(action, scope._state.workloadSnapshots);
+				newState.ui = scope._uiReducers(action, scope._state.ui);
 
 				scope._state = newState;
 				$rootScope.$emit('workloadSummaryStateChanged', {

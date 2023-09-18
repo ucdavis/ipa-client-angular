@@ -33,6 +33,12 @@ class WorkloadSummaryService {
 			getWorkloadSnapshots: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/workloadSnapshots");
 			},
+			getUserWorkgroupSnapshots: function (year) {
+				return _self.ApiService.get("/api/years/" + year + "/workloadSnapshots");
+			},
+			downloadMultipleSnapshots: function (departmentSnapshots, workgroupId, year) {
+				return _self.ApiService.post(`/api/workloadSummaryReport/${workgroupId}/years/${year}/generateMultiple`, departmentSnapshots);
+			},
 			downloadWorkloadSnapshot: function (workloadSnapshotId) {
 				var deferred = $q.defer();
 	

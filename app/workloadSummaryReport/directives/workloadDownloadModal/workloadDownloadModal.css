@@ -1,0 +1,74 @@
+.table-dark tbody {
+  display: block;
+  max-height: 50vh;
+  overflow: auto;
+}
+.table-dark thead,
+.table-dark tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.neon-dark-confirm-btn,
+.neon-dark-confirm-btn:focus,
+.neon-dark-confirm-btn:active,
+.neon-dark-confirm-btn {
+  background-color: rgb(48, 54, 65);
+  border-color: rgb(48, 54, 65);
+  color: white;
+}
+
+.neon-dark-confirm-btn:hover {
+  background-color: rgb(18, 24, 35); /* Darker Version for hover */
+  color: white;
+}
+
+.neon-dark-confirm-btn.disabled,
+.neon-dark-confirm-btn.disabled:hover,
+.neon-dark-confirm-btn.disabled:focus,
+.neon-dark-confirm-btn.disabled:active {
+  background-color: rgb(48, 54, 65);
+  color: white;
+}
+
+/* override to match Budget module */
+.btn-default {
+  color: #303641;
+  background-color: white;
+  border: 1px solid #d6d6d6;
+}
+
+.table-toolbar .dropdown-menu {
+  min-width: 200px;
+}
+
+#workload-download-modal-table {
+  margin-bottom: 0;
+}
+
+.workload-download-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+}
+
+.workload-download-modal-footer__status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.workload-download-modal-footer__status span {
+  padding-bottom: 4px;
+}
+
+.workload-download-modal-footer__buttons {
+  display: flex;
+  align-items: center;
+}
+
+.workload-download-modal-footer button {
+  display: inline-block;
+  margin: 8px;
+}
