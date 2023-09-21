@@ -12,7 +12,6 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
     },
     link: function (scope) {
       scope.isDisabled = false;
-      scope.status = null;
       scope.workgroupId = JSON.parse(localStorage.getItem('workgroup')).id;
       scope.year = parseInt(localStorage.getItem('year'));
       scope.isSortedByRecentActivity = false;
@@ -134,20 +133,8 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
           }
           );
 
-        WorkloadSummaryService.downloadMultipleSnapshots(departmentSnapshots, scope.workgroupId, scope.year).then((res) => {
-          var url = window.URL.createObjectURL(
-            new Blob([res.data], { type: 'application/vnd.ms-excel' })
-          );
-          var a = window.document.createElement('a'); // eslint-disable-line angular/document-service
-          a.href = url;
-          a.download = 'Budget Comparison Report Download.xlsx';
-          window.document.body.appendChild(a); // eslint-disable-line angular/document-service
-          a.click();
-          a.remove(); //afterwards we remove the element again
 
-          scope.status = res.status;
-          scope.isDisabled = false;
-        });
+        WorkloadSummaryService.downloadMultipleSnapshots(departmentSnapshots, scope.workgroupId, scope.year);
       };
 
       scope.dateToCalendar = function (date) {
