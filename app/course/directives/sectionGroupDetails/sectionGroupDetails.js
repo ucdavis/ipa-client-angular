@@ -121,9 +121,17 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
           if (sg.sectionIds.length > 0) { return null; }
           else { return course.sequencePattern; }
         } if (sg.sectionIds.length > 0) {
-          // Calculate next section sequence if sections already exist
-          var lstSectionId = sg.sectionIds[sg.sectionIds.length - 1];
-          var lastSection = scope.view.state.sections.list[lstSectionId];
+          // Calculate next section sequence if sections already exist, ignoring Repeating Only sections
+          let lastIndex = sg.sections.length - 1;
+          let lastSectionId = sg.sectionIds[lastIndex];
+          let lastSection = scope.view.state.sections.list[lastSectionId];
+
+          while (isNaN(lastSection.sequenceNumber.slice(-2))) {
+            lastIndex -= 1;
+            lastSectionId = sg.sectionIds[lastIndex];
+            lastSection = scope.view.state.sections.list[lastSectionId];
+          }
+
           var number = ("0" + (parseInt(lastSection.sequenceNumber.slice(-2)) + 1)).slice(-2);
           return course.sequencePattern + number;
         } else {
