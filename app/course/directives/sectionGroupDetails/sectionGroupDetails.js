@@ -46,8 +46,8 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         return scope.view.state.uiState.tableLocked;
       };
 
-      scope.addSection = function (seats) {
-        var sequenceNumber = scope.nextSequence();
+      scope.addSection = function (seats, repeatingOnly) {
+        var sequenceNumber = scope.nextSequence(repeatingOnly);
         var sectionGroupId = scope.view.selectedEntity.id;
         var section = {
           sectionGroupId: sectionGroupId,
@@ -110,12 +110,18 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
        * - no sections -> the parent course sequencePattern + 01
        * - sections exists -> increments the last section
        */
-      scope.nextSequence = function () {
+      scope.nextSequence = function (repeatingOnly) {
         var sg = scope.view.selectedEntity;
         // SectionGroup does not exist...
         if (!(sg.id && sg.sectionIds)) { return null; }
 
         var course = scope.view.state.courses.list[sg.courseId];
+
+        // special section for students repeating lecture without discussion/lab
+        if (repeatingOnly === true) {
+          return course.sequencePattern + "RO";
+        }
+
         if (course.isSeries() === false) {
           // Numeric sections: return sequencePattern iff no sections exist
           if (sg.sectionIds.length > 0) { return null; }
@@ -138,6 +144,14 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
           // Default to 'X01' for the first section
           return course.sequencePattern + "01";
         }
+      };
+
+      scope.hasROSection = function () {
+        const sectionGroup = scope.view.selectedEntity;
+        const course = scope.view.state.courses.list[sectionGroup.courseId];
+
+        // only Series courses can have RO sections
+        return !course.isSeries() || sectionGroup.sections.some(section => section.sequenceNumber.includes("RO"));
       };
 
       scope.isSeries = function () {
