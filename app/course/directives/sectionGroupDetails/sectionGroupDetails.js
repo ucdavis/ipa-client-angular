@@ -151,7 +151,7 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         const course = scope.view.state.courses.list[sectionGroup.courseId];
 
         // only Series courses can have RO sections
-        return !course.isSeries() || sectionGroup.sections.some(section => section.sequenceNumber.includes("RO"));
+        return !course.isSeries() || sectionGroup.sections?.some(section => section.sequenceNumber.includes("RO"));
       };
 
       scope.isSeries = function () {
