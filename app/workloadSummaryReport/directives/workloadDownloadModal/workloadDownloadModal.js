@@ -25,7 +25,6 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
       }, true);
 
       scope.sortDepartmentsByRecentActivity = function () {
-        debugger;
         if (scope.isSortedByRecentActivity === false) {
           scope.isSortedByRecentActivity = true;
           scope.departmentSnapshots = _array_sortByProperty(scope.departmentSnapshots, "lastActivity", true);
@@ -70,15 +69,10 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
       };
 
       scope.selectLatestSnapshots = function () {
-        debugger;
-
         scope.departmentSnapshots = scope.departmentSnapshots.map((department) => {
-          debugger;
           const selectedNext = department.snapshots.filter(snapshot => snapshot.id !== 0).map(snapshot => snapshot.id).sort()[0]?.toString();
 
-          const nextState = { ...department, selectedNext };
-          // return {...department, selectedNext};
-          return nextState;
+          return { ...department, selectedNext };
         });
       };
 
@@ -114,7 +108,6 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
 
       scope.submit = function () {
         scope.isDisabled = true;
-debugger;
         // track workgroupId for Live Data report and snapshotId
         // {
         //   workgroupId: [snapshotId1, snapshotId2],
@@ -126,12 +119,8 @@ debugger;
         scope.departmentSnapshots
           .filter(department => department.download)
           .forEach((department) => {
-            if (department.workgroupId === undefined) {
-              debugger;
-            }
             departmentSnapshots[department.workgroupId] = [parseInt(department.selectedPrevious), parseInt(department.selectedNext)].filter(id => id > 0);
-          }
-          );
+          });
 
 
         WorkloadSummaryService.downloadMultipleSnapshots(departmentSnapshots, scope.workgroupId, scope.year);
