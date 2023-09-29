@@ -18,7 +18,10 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
       scope.showSnapshotWarning = false;
 
       scope.$watch('userWorkgroupSnapshots', function (userWorkgroupsSnapshots) {
-        if (userWorkgroupsSnapshots) {
+        if (localStorage.getItem("workloadSnapshotDownloadSelections")) {
+          scope.departmentSnapshots = JSON.parse(localStorage.getItem("workloadSnapshotDownloadSelections"));
+          scope.isSortedByRecentActivity = JSON.parse(localStorage.getItem("workloadSnapshotDownloadSorted"));
+        } else if (userWorkgroupsSnapshots) {
           scope.departmentSnapshots = scope.getScenarioOptions(userWorkgroupsSnapshots);
           scope.showSnapshotWarning = scope.isAnyWorkgroupMissingSnapshots(userWorkgroupsSnapshots);
         }
@@ -102,8 +105,8 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
       scope.close = function () {
         scope.status = null;
         WorkloadSummaryActions.toggleDownloadModal();
-        localStorage.setItem("budgetComparisonDownloadSelections", JSON.stringify(scope.departmentScenarios));
-        localStorage.setItem("budgetComparisonDownloadSorted", JSON.stringify(scope.isSortedByRecentActivity));
+        localStorage.setItem("workloadSnapshotDownloadSelections", JSON.stringify(scope.departmentSnapshots));
+        localStorage.setItem("workloadSnapshotDownloadSorted", JSON.stringify(scope.isSortedByRecentActivity));
       };
 
       scope.submit = function () {
