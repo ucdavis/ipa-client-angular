@@ -58,13 +58,13 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
           .map((department) => {
             return ({
               name: department,
-              workgroupId: userWorkgroupSnapshots[department][0]?.workgroupId,
-              snapshots: [liveDataOption, ...userWorkgroupSnapshots[department]],
+              workgroupId: userWorkgroupSnapshots[department].workgroupId,
+              snapshots: [liveDataOption, ...userWorkgroupSnapshots[department].snapshots],
               selectedPrevious: '0',
               selectedNext: '0',
               download: true,
-              lastActivity: userWorkgroupSnapshots[department].map(snapshot => snapshot.createdOn).sort().slice(-1)[0],
-              showWarning: userWorkgroupSnapshots[department].length === 0
+              lastActivity: userWorkgroupSnapshots[department].snapshots.map(snapshot => snapshot.createdOn).sort().slice(-1)[0],
+              showWarning: userWorkgroupSnapshots[department].snapshots.length === 0
             });
           });
       };
@@ -114,7 +114,7 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
 
       scope.submit = function () {
         scope.isDisabled = true;
-
+debugger;
         // track workgroupId for Live Data report and snapshotId
         // {
         //   workgroupId: [snapshotId1, snapshotId2],

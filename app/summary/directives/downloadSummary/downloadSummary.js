@@ -73,7 +73,7 @@ let downloadSummary = function (ApiService) {
                     reportName = `Snapshots`;
                 }
 
-                ApiService.postWithResponseType(`/api/workloadSummaryReport/${scope.workgroup.id}/years/${year}/downloadMultiple/${file}`, "", "", 'arraybuffer').then(
+                ApiService.postWithResponseType(`/api/workloadSummaryReport/years/${year}/downloadMultiple/${file}`, "", "", 'arraybuffer').then(
                     response => {
                         var url = window.URL.createObjectURL(
                             new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
