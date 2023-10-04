@@ -115,6 +115,7 @@ class WorkloadSummaryStateService {
 					case ActionTypes.INIT_STATE:
 						ui = {
 							showDownloadModal: false,
+							showModalDismiss: false,
 							userWorkgroupSnapshots: {}
 						};
 						return ui;
@@ -123,6 +124,9 @@ class WorkloadSummaryStateService {
 						return ui;
 					case ActionTypes.TOGGLE_DOWNLOAD_MODAL:
 						ui.showDownloadModal = !ui.showDownloadModal;
+						return ui;
+					case ActionTypes.DOWNLOAD_MULTIPLE:
+						ui.showModalDismiss = !ui.showModalDismiss;
 						return ui;
 					default:
 						return ui;

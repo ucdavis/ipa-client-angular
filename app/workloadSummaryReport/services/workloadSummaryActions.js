@@ -48,6 +48,13 @@ class WorkloadSummaryActions {
 				// frontend generated download
 				WorkloadSummaryExcelService.generateDownload();
 			},
+			downloadMultiple: function(departmentSnapshots, workgroupId, year) {
+				WorkloadSummaryReducers.reduce({
+					type: ActionTypes.DOWNLOAD_MULTIPLE
+				});
+
+				WorkloadSummaryService.downloadMultipleSnapshots(departmentSnapshots, workgroupId, year);
+			},
 			selectSnapshot: function(snapshot) {
 				let selectedSnapshot = null;
 

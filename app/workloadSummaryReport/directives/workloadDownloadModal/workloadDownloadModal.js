@@ -2,7 +2,7 @@ import './workloadDownloadModal.css';
 import { _array_sortByProperty } from '../../../shared/helpers/array';
 import { dateToCalendar } from '../../../shared/helpers/dates';
 
-let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummaryService) {
+let workloadDownloadModal = function (WorkloadSummaryActions) {
   return {
     restrict: 'E',
     template: require('./workloadDownloadModal.html'),
@@ -125,8 +125,7 @@ let workloadDownloadModal = function (WorkloadSummaryActions, WorkloadSummarySer
             departmentSnapshots[department.workgroupId] = [parseInt(department.selectedPrevious), parseInt(department.selectedNext)].filter(id => id > 0);
           });
 
-
-        WorkloadSummaryService.downloadMultipleSnapshots(departmentSnapshots, scope.workgroupId, scope.year);
+        WorkloadSummaryActions.downloadMultiple(departmentSnapshots, scope.workgroupId, scope.year);
       };
 
       scope.dateToCalendar = function (date) {
