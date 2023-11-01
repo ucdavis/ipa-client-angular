@@ -172,6 +172,10 @@ function config ($httpProvider, $compileProvider, $logProvider, IdleProvider, $l
 	// Configure Idle settings
 	IdleProvider.idle(240 * 60); // 28 minutes: After this amount of time passes without the user performing an action the user is considered idle
 	IdleProvider.timeout(2 * 60); // 2 minute: The amount of time the user has to respond before they have been considered timed out
+
+	// Configure Bootstrap sanitizer for popovers/tooltips
+	var popoverDefaults = $.fn.popover.Constructor.DEFAULTS.whiteList;
+	popoverDefaults['button'] = ['data-event-type', 'data-course-id', 'data-teaching-assignment-id', 'data-section-group-id', 'data-instructor-type-id'];
 }
 
 config.$inject = ['$httpProvider', '$compileProvider', '$logProvider', 'IdleProvider', '$locationProvider'];
