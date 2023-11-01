@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/ucdavis/ipa-client-angular#readme",
   "devDependencies": {
-    "@babel/core": "^7.23",
-    "@babel/eslint-parser": "^7.22",
-    "@babel/preset-env": "^7.23",
+    "@babel/core": "^7.15",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-env": "^7.16",
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^6.4.1",
