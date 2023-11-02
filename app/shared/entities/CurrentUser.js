@@ -40,7 +40,7 @@ const CurrentUser = angular.module('CurrentUser', ['UserRole'])
 				if (!this.userRoles) { return []; }
 				return _.uniq( // eslint-disable-line no-undef
 					this.userRoles
-						.filter(function (ur) { return ur.workgroupId > 0; })
+						.filter(function (ur) { return ur.workgroupId > 0 && ur.roleName !== 'presence'; })
 						.map(function (ur) { return { id: ur.workgroupId, name: ur.workgroupName }; }),
 					'id'
 				);
