@@ -14,6 +14,10 @@ let expenseItems = function ($rootScope, BudgetActions) {
       // '<' This is proper one way binding, as opposed to string interpoation or passing value as a function that can be called
     },
     link: function (scope) {
+      if (scope.expenseItems) {
+        scope.expenseItems = scope.expenseItems.sort((a, b) => a.termCode - b.termCode);
+      }
+
       scope.addExpenseItem = function (expenseItem) {
         BudgetActions.createExpenseItem(
           expenseItem,

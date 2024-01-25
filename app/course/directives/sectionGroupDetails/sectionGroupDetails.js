@@ -46,8 +46,8 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
         return scope.view.state.uiState.tableLocked;
       };
 
-      scope.addSection = function (seats) {
-        var sequenceNumber = scope.nextSequence();
+      scope.addSection = function (seats, repeatingOnly) {
+        var sequenceNumber = scope.nextSequence(repeatingOnly);
         var sectionGroupId = scope.view.selectedEntity.id;
         var section = {
           sectionGroupId: sectionGroupId,
@@ -110,26 +110,48 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
        * - no sections -> the parent course sequencePattern + 01
        * - sections exists -> increments the last section
        */
-      scope.nextSequence = function () {
+      scope.nextSequence = function (repeatingOnly) {
         var sg = scope.view.selectedEntity;
         // SectionGroup does not exist...
         if (!(sg.id && sg.sectionIds)) { return null; }
 
         var course = scope.view.state.courses.list[sg.courseId];
+
+        // special section for students repeating lecture without discussion/lab
+        if (repeatingOnly === true) {
+          return course.sequencePattern + "RO";
+        }
+
         if (course.isSeries() === false) {
           // Numeric sections: return sequencePattern iff no sections exist
           if (sg.sectionIds.length > 0) { return null; }
           else { return course.sequencePattern; }
         } if (sg.sectionIds.length > 0) {
-          // Calculate next section sequence if sections already exist
-          var lstSectionId = sg.sectionIds[sg.sectionIds.length - 1];
-          var lastSection = scope.view.state.sections.list[lstSectionId];
+          // Calculate next section sequence if sections already exist, ignoring Repeating Only sections
+          let lastIndex = sg.sections.length - 1;
+          let lastSectionId = sg.sectionIds[lastIndex];
+          let lastSection = scope.view.state.sections.list[lastSectionId];
+
+          while (isNaN(lastSection.sequenceNumber.slice(-2))) {
+            lastIndex -= 1;
+            lastSectionId = sg.sectionIds[lastIndex];
+            lastSection = scope.view.state.sections.list[lastSectionId];
+          }
+
           var number = ("0" + (parseInt(lastSection.sequenceNumber.slice(-2)) + 1)).slice(-2);
           return course.sequencePattern + number;
         } else {
           // Default to 'X01' for the first section
           return course.sequencePattern + "01";
         }
+      };
+
+      scope.hasROSection = function () {
+        const sectionGroup = scope.view.selectedEntity;
+        const course = scope.view.state.courses.list[sectionGroup.courseId];
+
+        // only Series courses can have RO sections
+        return !course.isSeries() || sectionGroup.sections?.some(section => section.sequenceNumber.includes("RO"));
       };
 
       scope.isSeries = function () {

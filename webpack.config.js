@@ -136,7 +136,7 @@ module.exports = {
         './node_modules/fullcalendar/dist/fullcalendar.css',
         './node_modules/ng-notify/dist/ng-notify.min.css',
         './node_modules/ui-select/dist/select.css',
-        './node_modules/selectize/dist/css/selectize.default.css',
+        './node_modules/@selectize/selectize/dist/css/selectize.default.css',
         './node_modules/jquery-typeahead/dist/jquery.typeahead.min.css'
       ],
     }),
@@ -187,7 +187,7 @@ module.exports = {
         './app/shared/helpers/string_prototypes.js',
         './node_modules/fullcalendar/dist/fullcalendar.js',
         './node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
-        'selectize/dist/js/standalone/selectize.js'
+        './node_modules/@selectize/selectize/dist/js/selectize.js'
       ],
     }),
     // Production Snippets from various 3rd party services
