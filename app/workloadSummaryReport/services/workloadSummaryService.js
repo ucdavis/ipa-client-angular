@@ -30,6 +30,29 @@ class WorkloadSummaryService {
 			getSections: function (workgroupId, year) {
 				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/sections");
 			},
+			getWorkloadSnapshots: function (workgroupId, year) {
+				return _self.ApiService.get("/api/workgroups/" + workgroupId + "/years/" + year + "/workloadSnapshots");
+			},
+			getUserWorkgroupSnapshots: function (year) {
+				return _self.ApiService.get("/api/years/" + year + "/workloadSnapshots");
+			},
+			downloadMultipleSnapshots: function (departmentSnapshots, workgroupId, year) {
+				return _self.ApiService.post(`/api/workloadSummaryReport/${workgroupId}/years/${year}/generateMultiple`, departmentSnapshots);
+			},
+			downloadWorkloadSnapshot: function (workloadSnapshotId) {
+				var deferred = $q.defer();
+	
+				$http.get(window.serverRoot + "/api/workloadSnapshots/" + workloadSnapshotId + "/generateExcel", { withCredentials: true })
+					.then(function (payload) {
+						$window.location.href = payload.data.redirect;
+						deferred.resolve(payload.data);
+					},
+					function () {
+						deferred.reject();
+					});
+	
+				return deferred.promise;
+			},
 			downloadWorkloadSummary: function (workgroupId, year) {
 				var deferred = $q.defer();
 	

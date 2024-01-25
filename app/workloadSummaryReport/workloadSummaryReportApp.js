@@ -2,9 +2,11 @@
 import './workloadSummaryReport.css';
 
 // Directives
+import workloadSnapshot from './directives/workloadSnapshot/workloadSnapshot.js';
 import workloadTable from './directives/workloadTable/workloadTable.js';
 import workloadTotals from './directives/workloadTotals/workloadTotals.js';
 import workloadUnassignedTable from './directives/workloadUnassignedTable/workloadUnassignedTable.js';
+import workloadDownloadModal from './directives/workloadDownloadModal/workloadDownloadModal';
 
 // Services
 import WorkloadSummaryActions from './services/workloadSummaryActions.js';
@@ -62,9 +64,11 @@ config.$inject = ['$routeProvider'];
 
 // App declaration
 const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", dependencies) // eslint-disable-line no-undef
+.directive('workloadSnapshot', workloadSnapshot)
 .directive('workloadTable', workloadTable)
 .directive('workloadTotals', workloadTotals)
 .directive('workloadUnassignedTable', workloadUnassignedTable)
+.directive('workloadDownloadModal', workloadDownloadModal)
 .controller('WorkloadSummaryReportCtrl', WorkloadSummaryReportCtrl)
 .service('WorkloadSummaryActions', WorkloadSummaryActions)
 .service('WorkloadSummaryExcelService', WorkloadSummaryExcelService)
@@ -87,9 +91,14 @@ const workloadSummaryReportApp = angular.module("workloadSummaryReportApp", depe
 	GET_CALCULATIONS: "GET_CALCULATIONS",
 	GET_SCHEDULE_INSTRUCTOR_NOTES: "GET_SCHEDULE_INSTRUCTOR_NOTES",
 	GET_SECTIONS: "GET_SECTIONS",
+	GET_WORKLOAD_SNAPSHOTS: "GET_WORKLOAD_SNAPSHOTS",
+	SELECT_WORKLOAD_SNAPSHOT: "SELECT_WORKLOAD_SNAPSHOT",
 	CALCULATE_VIEW: "CALCULATE_VIEW",
 	BEGIN_CENSUS_DATA_FETCH: "BEGIN_CENSUS_DATA_FETCH",
-	INITIAL_FETCH_COMPLETE: "INITIAL_FETCH_COMPLETE"
+	INITIAL_FETCH_COMPLETE: "INITIAL_FETCH_COMPLETE",
+	GET_USER_WORKGROUP_SNAPSHOTS: "GET_USER_WORKGROUP_SNAPSHOTS",
+	TOGGLE_DOWNLOAD_MODAL: "TOGGLE_DOWNLOAD_MODAL",
+	DOWNLOAD_MULTIPLE: "DOWNLOAD_MULTIPLE"
 });
 
 export default workloadSummaryReportApp;

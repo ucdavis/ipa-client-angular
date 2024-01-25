@@ -1,7 +1,9 @@
 th {
-    font-weight: 700;
+  font-weight: 700;
 }
 
-th, td {
-    text-align: center;
+th,
+td {
+  padding-bottom: 1em;
+  text-align: center;
 }

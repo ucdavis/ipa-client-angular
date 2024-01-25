@@ -28,17 +28,28 @@ class WorkloadSummaryReportCtrl {
 			$scope.sharedState = data;
 		});
 
-		$scope.download = function() {
-			WorkloadSummaryActions.download();
+		$scope.download = function(snapshotId) {
+			WorkloadSummaryActions.download(snapshotId);
 		};
 
 		$scope.downloadHistorical = function() {
 			WorkloadSummaryActions.downloadHistorical();
 		};
 
+		$scope.downloadMultiple = function() {
+			WorkloadSummaryActions.toggleDownloadModal();
+		};
+
 		$scope.goToSection = function(id) {
 			var tableSection = $scope.view.state.instructorTypes.list[id].description;
 			$anchorScroll(tableSection);
+		};
+
+		$scope.selectSnapshot = function(snapshot) {
+			WorkloadSummaryActions.selectSnapshot(snapshot);
+		};
+		$scope.clearSnapshot = function() {
+			WorkloadSummaryActions.selectSnapshot(null);
 		};
 	}
 }

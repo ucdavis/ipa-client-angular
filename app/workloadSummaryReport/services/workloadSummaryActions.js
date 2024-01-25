@@ -2,7 +2,7 @@ import { _array_sortByProperty } from 'shared/helpers/array';
 import { sequenceNumberToPattern } from 'shared/helpers/sections';
 
 class WorkloadSummaryActions {
-	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, CourseService, $route, WorkloadSummaryExcelService) {
+	constructor(WorkloadSummaryReducers, WorkloadSummaryService, $rootScope, ActionTypes, Roles, TermService, DwService, TeachingAssignmentService, InstructorTypeService, CourseService, $route) {
 		this.WorkloadSummaryReducers = WorkloadSummaryReducers;
 		this.WorkloadSummaryService = WorkloadSummaryService;
 		this.$rootScope = $rootScope;
@@ -32,12 +32,245 @@ class WorkloadSummaryActions {
 				this._getUsers(workgroupId, year);
 				this._getUserRoles(workgroupId, year);
 				this._getSections(workgroupId, year);
+				this._getWorkloadSnapshots(workgroupId, year);
+				this._getUserWorkgroupSnapshots(year);
 			},
-			download: function() {
-				WorkloadSummaryExcelService.generateDownload();
+			download: function(snapshotId) {
+				if (snapshotId) {
+					WorkloadSummaryService.downloadWorkloadSnapshot(snapshotId);
+				} else {
+					const workgroupId = $route.current.params.workgroupId;
+					const year = $route.current.params.year;
+					WorkloadSummaryService.downloadWorkloadSummary(workgroupId, year);
+				}
+			},
+			downloadMultiple: function(departmentSnapshots, workgroupId, year) {
+				WorkloadSummaryReducers.reduce({
+					type: ActionTypes.DOWNLOAD_MULTIPLE
+				});
+
+				WorkloadSummaryService.downloadMultipleSnapshots(departmentSnapshots, workgroupId, year);
+			},
+			selectSnapshot: function(snapshot) {
+				let selectedSnapshot = null;
+
+				let byInstructorType = {};
+				let categoryTotals = {
+					"Assigned": {
+						instructorCount: 0,
+						enrollment: 0,
+						assignmentCount: 0,
+						lastOfferedEnrollment: 0,
+						previousEnrollment: 0,
+						seats: 0,
+						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
+						units: 0
+					},
+					"Unassigned": {
+						instructorCount: 0,
+						enrollment: 0,
+						assignmentCount: 0,
+						lastOfferedEnrollment: 0,
+						previousEnrollment: 0,
+						seats: 0,
+						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
+						units: 0
+					},
+					"TBD Instructors": {
+						instructorCount: 0,
+						enrollment: 0,
+						assignmentCount: 0,
+						lastOfferedEnrollment: 0,
+						previousEnrollment: 0,
+						seats: 0,
+						studentCreditHours: 0,
+						studentMaxCreditHours: 0,
+						units: 0
+					}
+				};
+				let combinedTotals = {
+					instructorCount: 0,
+					enrollment: 0,
+					assignmentCount: 0,
+					lastOfferedEnrollment: 0,
+					previousEnrollment: 0,
+					seats: 0,
+					studentMaxCreditHours: 0,
+					units: 0
+				};
+				let totals = {};
+
+				if (snapshot) {
+					snapshot.workloadAssignments.forEach(assignment => {
+						if (byInstructorType[assignment.instructorType] === undefined) {
+							byInstructorType[assignment.instructorType] = {};
+							totals[assignment.instructorType] = {
+								enrollment: 0,
+								assignmentCount: 0,
+								lastOfferedEnrollment: 0,
+								previousEnrollment: 0,
+								seats: 0,
+								studentCreditHours: 0,
+								studentMaxCreditHours: 0,
+								units: 0
+							};
+						}
+
+						if (byInstructorType[assignment.instructorType][assignment.name] === undefined) {
+							byInstructorType[assignment.instructorType][assignment.name] = {
+								name: assignment.name,
+								instructorType: assignment.instructorType,
+								assignments: [],
+								totals: {
+									actualEnrollment: 0,
+									assignmentCount: 0,
+									lastOfferedEnrollment: 0,
+									previousEnrollment: 0,
+									seats: 0,
+									studentCreditHours: 0,
+									studentMaxCreditHours: 0,
+									units: 0
+								}
+							};
+						}
+
+						if (assignment.termCode !== null) {
+							const unitsValue = Number(assignment.units) ? Number(assignment.units) : 0;
+							assignment.term = TermService.getTermName(assignment.termCode);
+
+							if (assignment.lastOfferedCensus !== null) {
+								assignment.lastOfferedEnrollment = parseInt(assignment.lastOfferedCensus.split(' ')[0]);
+								assignment.lastOfferedTermDescription = assignment.lastOfferedCensus.slice(-7);
+							}
+
+							assignment.studentMaxCreditHours = unitsValue * Number(assignment.plannedSeats);
+							byInstructorType[assignment.instructorType][assignment.name].assignments.push(assignment);
+
+							byInstructorType[assignment.instructorType][assignment.name].totals.actualEnrollment += Number(assignment.census);
+							byInstructorType[assignment.instructorType][assignment.name].totals.assignmentCount += 1;
+
+							byInstructorType[assignment.instructorType][assignment.name].totals.lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
+							byInstructorType[assignment.instructorType][assignment.name].totals.previousEnrollment += Number(assignment.previousYearCensus);
+							byInstructorType[assignment.instructorType][assignment.name].totals.seats += Number(assignment.plannedSeats);
+							byInstructorType[assignment.instructorType][assignment.name].totals.studentCreditHours += assignment.studentCreditHours;
+							byInstructorType[assignment.instructorType][assignment.name].totals.studentMaxCreditHours += assignment.studentMaxCreditHours;
+							byInstructorType[assignment.instructorType][assignment.name].totals.units += unitsValue;
+
+							if (assignment.instructorType === "Unassigned") {
+								categoryTotals["Unassigned"].enrollment += Number(assignment.census);
+								categoryTotals["Unassigned"].assignmentCount += 1;
+								categoryTotals["Unassigned"].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
+								categoryTotals["Unassigned"].previousEnrollment += Number(assignment.previousYearCensus);
+								categoryTotals["Unassigned"].seats += Number(assignment.plannedSeats);
+								categoryTotals["Unassigned"].studentMaxCreditHours += assignment.studentMaxCreditHours;
+								categoryTotals["Unassigned"].units += unitsValue;
+							} else if (assignment.name === "TBD") {
+								categoryTotals["TBD Instructors"].instructorCount += 1;
+								categoryTotals["TBD Instructors"].enrollment += Number(assignment.census);
+								categoryTotals["TBD Instructors"].assignmentCount += 1;
+								categoryTotals["TBD Instructors"].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
+								categoryTotals["TBD Instructors"].previousEnrollment += Number(assignment.previousYearCensus);
+								categoryTotals["TBD Instructors"].seats += Number(assignment.plannedSeats);
+								categoryTotals["TBD Instructors"].studentMaxCreditHours += assignment.studentMaxCreditHours;
+								categoryTotals["TBD Instructors"].units += unitsValue;
+
+								totals[assignment.instructorType].enrollment += Number(assignment.census);
+								totals[assignment.instructorType].assignmentCount += 1;
+								totals[assignment.instructorType].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
+								totals[assignment.instructorType].previousEnrollment += Number(assignment.previousYearCensus);
+								totals[assignment.instructorType].seats += Number(assignment.plannedSeats);
+								totals[assignment.instructorType].studentMaxCreditHours += assignment.studentMaxCreditHours;
+								totals[assignment.instructorType].units += unitsValue;
+							} else if (assignment.offering !== null) {
+								categoryTotals["Assigned"].enrollment += Number(assignment.census);
+								categoryTotals["Assigned"].assignmentCount += 1;
+								categoryTotals["Assigned"].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
+								categoryTotals["Assigned"].previousEnrollment += Number(assignment.previousYearCensus);
+								categoryTotals["Assigned"].seats += Number(assignment.plannedSeats);
+								categoryTotals["Assigned"].studentCreditHours += assignment.studentCreditHours;
+								categoryTotals["Assigned"].studentMaxCreditHours += assignment.studentMaxCreditHours;
+								categoryTotals["Assigned"].units += unitsValue;
+
+								totals[assignment.instructorType].enrollment += Number(assignment.census);
+								totals[assignment.instructorType].assignmentCount += 1;
+								totals[assignment.instructorType].lastOfferedEnrollment += assignment.lastOfferedEnrollment || 0;
+								totals[assignment.instructorType].previousEnrollment += Number(assignment.previousYearCensus);
+								totals[assignment.instructorType].seats += Number(assignment.plannedSeats);
+								totals[assignment.instructorType].studentCreditHours += assignment.studentCreditHours;
+								totals[assignment.instructorType].studentMaxCreditHours += assignment.studentMaxCreditHours;
+								totals[assignment.instructorType].units += unitsValue;
+							}
+						}
+					});
+
+					const types = Object.keys(byInstructorType).filter(type => type !== "Unassigned");
+					types.forEach(t => {
+						categoryTotals["Assigned"].instructorCount += Object.keys(byInstructorType[t]).length;
+					});
+
+					for (const category in categoryTotals) {
+						const subtotal = categoryTotals[category];
+
+						combinedTotals.instructorCount += subtotal.instructorCount;
+						combinedTotals.enrollment += subtotal.enrollment;
+						combinedTotals.assignmentCount += subtotal.assignmentCount;
+						combinedTotals.lastOfferedEnrollment += subtotal.lastOfferedEnrollment;
+						combinedTotals.previousEnrollment += subtotal.previousEnrollment;
+						combinedTotals.seats += subtotal.seats;
+						combinedTotals.studentMaxCreditHours += subtotal.studentMaxCreditHours;
+						combinedTotals.units += subtotal.units;
+					}
+
+					// flatten one level for easier rendering
+					const instructorTypes = Object.keys(byInstructorType);
+					instructorTypes.forEach(instructorType => {
+						byInstructorType[instructorType] = Object.values(byInstructorType[instructorType]);
+
+						// sort assignments for display
+						byInstructorType[instructorType].forEach(instructor => {
+							instructor.assignments = _array_sortByProperty(instructor.assignments, ["termCode", "description"]);
+						});
+					});
+
+					const DISPLAY_ORDER = [6, 9, 8, 5, 1, 2, 4, 10, 3, 7];
+					const instructorTypeLookup = Object.values(WorkloadSummaryReducers._state.instructorTypes.list);
+					const instructorTypeOrder = DISPLAY_ORDER.map(id => instructorTypeLookup.find(instructorType => instructorType.id === id).description);
+					const displayOrder = instructorTypeOrder.filter(type => instructorTypes.includes(type));
+
+					const byInstructorTypeList = displayOrder.map(type => {
+						const instructors = byInstructorType[type];
+						const namedInstructors = instructors.filter(i => i.name !== "TBD").sort((a, b) => a.name.localeCompare(b.name));
+						const unnamedInstructors = instructors.filter(i => i.name === "TBD");
+
+						return namedInstructors.concat(unnamedInstructors);
+					});
+
+					selectedSnapshot = {
+						id: snapshot.id,
+						name: snapshot.name,
+						byInstructorType,
+						byInstructorTypeList,
+						categoryTotals,
+						combinedTotals,
+						totals,
+						unassignedCourses: byInstructorType['Unassigned'] !== undefined ? _array_sortByProperty(byInstructorType['Unassigned'][0].assignments, ["termCode", "description"]) : null
+					};
+				}
+
+				WorkloadSummaryReducers.reduce({
+					type: ActionTypes.SELECT_WORKLOAD_SNAPSHOT,
+					payload: selectedSnapshot
+				});
 			},
 			downloadHistorical: function() {
 				WorkloadSummaryService.downloadHistorical($route.current.params.workgroupId, $route.current.params.year);
+			},
+			toggleDownloadModal: function() {
+				WorkloadSummaryReducers.reduce({
+					type: ActionTypes.TOGGLE_DOWNLOAD_MODAL
+				});
 			},
 			_getCourses: function (workgroupId, year) {
 				var _self = this;
@@ -292,6 +525,34 @@ class WorkloadSummaryActions {
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
 				});
+			},
+			_getWorkloadSnapshots: function (workgroupId, year) {
+				WorkloadSummaryService.getWorkloadSnapshots(workgroupId, year).then(function (workloadSnapshots) {
+					// add description field for ipaDropdown
+					const snapshots = workloadSnapshots.map(sn => ({description: sn.name, ...sn}));
+					const payload = {
+						list: snapshots,
+						selected: null
+					};
+
+					WorkloadSummaryReducers.reduce({
+						type: ActionTypes.GET_WORKLOAD_SNAPSHOTS,
+						payload
+					});
+				}, function () {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				});
+			},
+			_getUserWorkgroupSnapshots: function (year) {
+				WorkloadSummaryService.getUserWorkgroupSnapshots(year).then(function (userWorkgroupSnapshots) {
+
+					WorkloadSummaryReducers.reduce({
+						type: ActionTypes.GET_USER_WORKGROUP_SNAPSHOTS,
+						payload: userWorkgroupSnapshots
+					});
+				}), function () {
+					$rootScope.$emit('toast', { message: "Could not load Workload Summary Report information.", type: "ERROR" });
+				};
 			},
 			_performCalculations: function () {
 				this._isInitialFetchComplete();
@@ -916,6 +1177,6 @@ class WorkloadSummaryActions {
 	}
 }
 
-WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', 'CourseService', '$route', 'WorkloadSummaryExcelService'];
+WorkloadSummaryActions.$inject = ['WorkloadSummaryReducers', 'WorkloadSummaryService', '$rootScope', 'ActionTypes', 'Roles', 'TermService', 'DwService', 'TeachingAssignmentService', 'InstructorTypeService', 'CourseService', '$route'];
 
 export default WorkloadSummaryActions;
