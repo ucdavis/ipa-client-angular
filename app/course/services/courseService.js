@@ -97,7 +97,7 @@ class CourseService {
         return _self.ApiService.delete("/api/courseView/courses/" + course.id + "/tags/" + tag.id);
       },
       getSectionsBySectionGroupId: function (sectionGroupId) {
-        return _self.ApiService.get("/api/courseView/sectionGroups/" + sectionGroupId + "/sections/");
+        return _self.ApiService.get("/api/courseView/sectionGroups/" + sectionGroupId + "/sections");
       },
       updateSection: function (section) {
         if (!section) { return; }
