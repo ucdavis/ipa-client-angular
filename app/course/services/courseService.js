@@ -36,7 +36,7 @@ class CourseService {
         return deferred.promise;
       },
       addSectionGroup: function (sectionGroup) {
-        return _self.ApiService.post("/api/courseView/sectionGroups/", sectionGroup);
+        return _self.ApiService.post("/api/courseView/sectionGroups", sectionGroup);
       },
       updateSectionGroup: function (sectionGroup) {
         return _self.ApiService.put("/api/courseView/sectionGroups/" + sectionGroup.id, sectionGroup);
