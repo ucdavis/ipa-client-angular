@@ -1,4 +1,4 @@
-FROM node:16.14 AS builder
+FROM node:18 AS builder
 WORKDIR /usr/src
 COPY . .
 RUN npm install
