@@ -290,14 +290,9 @@ class WorkloadSummaryActions {
 					courses.ids.forEach(function (courseId) {
 						var course = courses.list[courseId];
 						course.census = [];
-						var SNAPSHOT_CODE = "CURRENT";
 
 						DwService.getDwCensusData(course.subjectCode, course.courseNumber).then(function (courseCensus) {
-							courseCensus.forEach(function (census) {
-								if (census.snapshotCode === SNAPSHOT_CODE) {
-									course.census.push(census);
-								}
-							});
+							course.census = courseCensus;
 						});
 					});
 
@@ -1050,7 +1045,6 @@ class WorkloadSummaryActions {
 					}
 				});
 
-				var SNAPSHOT_CODE = "CURRENT";
 				var termCodes = this._getScheduleTermCodes(isPreviousYear);
 				var subjectCodes = this._getScheduleSubjectCodes();
 				var openCalls = WorkloadSummaryReducers._state.calculations.dwCallsOpened;
@@ -1062,31 +1056,29 @@ class WorkloadSummaryActions {
 
 						DwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
 							censusSections.forEach(function(censusSection) {
-								if (censusSection.snapshotCode == SNAPSHOT_CODE) {
-									var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber) + TermService.termCodeToTerm(censusSection.termCode);
+								var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber) + TermService.termCodeToTerm(censusSection.termCode);
 
-									WorkloadSummaryReducers._state.sectionGroups.ids.forEach(function(sectionGroupId) {
-										var sectionGroup = WorkloadSummaryReducers._state.sectionGroups.list[sectionGroupId];
-										var course = WorkloadSummaryReducers._state.courses.list[sectionGroup.courseId];
-										var sectionGroupUniqueKey = course.subjectCode + course.courseNumber + course.sequencePattern + TermService.termCodeToTerm(sectionGroup.termCode);
+								WorkloadSummaryReducers._state.sectionGroups.ids.forEach(function(sectionGroupId) {
+									var sectionGroup = WorkloadSummaryReducers._state.sectionGroups.list[sectionGroupId];
+									var course = WorkloadSummaryReducers._state.courses.list[sectionGroup.courseId];
+									var sectionGroupUniqueKey = course.subjectCode + course.courseNumber + course.sequencePattern + TermService.termCodeToTerm(sectionGroup.termCode);
 
-										sectionGroup.maxEnrollment = sectionGroup.maxEnrollment || 0;
-										sectionGroup.actualEnrollment = sectionGroup.actualEnrollment || 0;
-										sectionGroup.previousEnrollment = sectionGroup.previousEnrollment || 0;
+									sectionGroup.maxEnrollment = sectionGroup.maxEnrollment || 0;
+									sectionGroup.actualEnrollment = sectionGroup.actualEnrollment || 0;
+									sectionGroup.previousEnrollment = sectionGroup.previousEnrollment || 0;
 
-										if (sectionGroupUniqueKey == censusSectionGroupKey) {
-											if (isPreviousYear) {
-												sectionGroup.previousEnrollment += censusSection.currentEnrolledCount;
-											} else {
-												sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
-												sectionGroup.maxEnrollment = 0;
-												_self._getSectionsForSectionGroup(sectionGroup).forEach(function(section) {
-													sectionGroup.maxEnrollment += section.seats;
-												});
-											}
+									if (sectionGroupUniqueKey == censusSectionGroupKey) {
+										if (isPreviousYear) {
+											sectionGroup.previousEnrollment += censusSection.currentEnrolledCount;
+										} else {
+											sectionGroup.actualEnrollment += censusSection.currentEnrolledCount;
+											sectionGroup.maxEnrollment = 0;
+											_self._getSectionsForSectionGroup(sectionGroup).forEach(function(section) {
+												sectionGroup.maxEnrollment += section.seats;
+											});
 										}
-									});
-								}
+									}
+								});
 							});
 
 							completedCalls += 1;

@@ -55,11 +55,7 @@ class BudgetActions {
 							activeTermCodes.forEach(function(termCode) {
 								DwService.getDwCensusData(subjectCode, null, termCode).then(function(censuses) {
 									// match courseNumber and TermCode and inject currentEnrollment number
-									const currentCensusSnapshot = censuses.filter(function(census) {
-										return census.snapshotCode == "CURRENT";
-									});
-
-									currentCensusSnapshot.forEach(function(courseCensus) {
+									censuses.forEach(function(courseCensus) {
 										sectionGroupCosts.forEach(function(sectionGroupCost) {
 											const censusSequencePattern = isNaN(Number(courseCensus.sequenceNumber)) ? courseCensus.sequenceNumber.charAt(0) : courseCensus.sequenceNumber;
 											const sectionGroupCostKey = `${sectionGroupCost.subjectCode}-${sectionGroupCost.courseNumber}-${sectionGroupCost.termCode}-${sectionGroupCost.sequencePattern}`;

@@ -36,29 +36,26 @@ class ScheduleSummaryReportActionCreators {
 				});
 			},
 			_getEnrollmentData: function(year, termCode) {
-				var SNAPSHOT_CODE = "CURRENT";
 				var termCode = termService.termToTermCode(termCode, year);
 				var subjectCodes = this._getScheduleSubjectCodes();
 
 				subjectCodes.forEach(function(subjectCode) {
 					dwService.getDwCensusData(subjectCode, null, termCode).then(function(censusSections) {
 						censusSections.forEach(function(censusSection) {
-							if (censusSection.snapshotCode == SNAPSHOT_CODE) {
-								var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber);
+							var censusSectionGroupKey = censusSection.subjectCode + censusSection.courseNumber + sequenceNumberToPattern(censusSection.sequenceNumber);
 
-								scheduleSummaryReportStateService._state.sectionGroups.ids.forEach(function(sectionGroupId) {
-									var sectionGroup = scheduleSummaryReportStateService._state.sectionGroups.list[sectionGroupId];
-									var sectionGroupUniqueKey = sectionGroup.subjectCode + sectionGroup.courseNumber + sectionGroup.sequencePattern;
+							scheduleSummaryReportStateService._state.sectionGroups.ids.forEach(function(sectionGroupId) {
+								var sectionGroup = scheduleSummaryReportStateService._state.sectionGroups.list[sectionGroupId];
+								var sectionGroupUniqueKey = sectionGroup.subjectCode + sectionGroup.courseNumber + sectionGroup.sequencePattern;
 
-									if (sectionGroupUniqueKey == censusSectionGroupKey) {
-										sectionGroup.sections.forEach(function(section) {
-											if (section.sequenceNumber == censusSection.sequenceNumber) {
-												section.enrollment = censusSection.currentEnrolledCount;
-											}
-										});
-									}
-								});
-							}
+								if (sectionGroupUniqueKey == censusSectionGroupKey) {
+									sectionGroup.sections.forEach(function(section) {
+										if (section.sequenceNumber == censusSection.sequenceNumber) {
+											section.enrollment = censusSection.currentEnrolledCount;
+										}
+									});
+								}
+							});
 						});
 					}, function () {
 						$rootScope.$emit('toast', { message: "Could not retrieve enrollment data.", type: "ERROR" });

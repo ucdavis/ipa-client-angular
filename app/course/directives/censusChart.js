@@ -30,7 +30,7 @@ let censusChart = function ($rootScope, $timeout) {
         // Gets the "CURRENT" snapshot of the given property (e.g. currentEnrolledCount, maxEnrollmentCount)
         var getCurrentCensusForProperty = function (property) {
           var sequenceFilteredCensus = scope.census.filter(function(courseCensus) {
-            return courseCensus.sequenceNumber.includes(scope.sequencePattern) && courseCensus.snapshotCode === "CURRENT";
+            return courseCensus.sequenceNumber.includes(scope.sequencePattern);
           });
 
           var censusByTermCode = {};
