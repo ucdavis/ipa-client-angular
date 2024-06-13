@@ -27,35 +27,33 @@ let censusChart = function ($rootScope, $timeout) {
           return;
         }
 
-        // Gets the "CURRENT" snapshot of the given property (e.g. currentEnrolledCount, maxEnrollmentCount)
-        var getCurrentCensusForProperty = function (property) {
+        var getCensusProperty = function (property) {
           var sequenceFilteredCensus = scope.census.filter(function(courseCensus) {
-            return courseCensus.sequenceNumber.includes(scope.sequencePattern);
+            const isLaboratory = courseCensus.scheduleCode === 'C'; // count Laboratory sections as one course
+            return courseCensus.sequenceNumber.includes(scope.sequencePattern) || isLaboratory;
           });
 
           var censusByTermCode = {};
+          let propertyTotalByTermCode = {};
 
           sequenceFilteredCensus.forEach(function(courseCensus) {
             censusByTermCode[courseCensus.termCode] ? censusByTermCode[courseCensus.termCode].push(courseCensus) : censusByTermCode[courseCensus.termCode] = [courseCensus];
           });
 
-          for (var termCode in censusByTermCode) {
-            var baseCensusObj = censusByTermCode[termCode].length > 0 ? JSON.parse(JSON.stringify(censusByTermCode[termCode][0])) : null;
-            baseCensusObj[property] = 0;
 
-            censusByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, currentValue) {
-              accumulator[property] += currentValue[property];
+          for (const termCode in censusByTermCode) {
+            propertyTotalByTermCode[termCode] = censusByTermCode[termCode].reduce(function(accumulator, currentValue) {
+              accumulator += currentValue[property];
               return accumulator;
-            }, baseCensusObj);
+            }, 0);
           }
 
           var lastFiveYears = Array.from([4, 3, 2, 1, 0], function (k) { return moment().year() - k; }); // eslint-disable-line no-undef
 
           return lastFiveYears.map(function(year) {
             var termCode = year + (scope.term.termCode + '').slice(-2);
-            var courseCensus = censusByTermCode[termCode];
 
-            return courseCensus ? courseCensus[property] : 0;
+            return propertyTotalByTermCode[termCode] || 0;
           });
         };
 
@@ -72,7 +70,7 @@ let censusChart = function ($rootScope, $timeout) {
             borderColor: "rgba(179,181,198,1)",
             pointBackgroundColor: "rgba(179,181,198,1)",
             pointBorderColor: "#fff",
-            data: getCurrentCensusForProperty("maxEnrollmentCount")
+            data: getCensusProperty("maxEnrollmentCount")
           },
           {
             label: "Enrollment",
@@ -81,7 +79,7 @@ let censusChart = function ($rootScope, $timeout) {
             borderColor: "rgba(200,181,150,1)",
             pointBackgroundColor: "rgba(200,181,150,1)",
             pointBorderColor: "#fff",
-            data: getCurrentCensusForProperty("currentEnrolledCount")
+            data: getCensusProperty("currentEnrolledCount")
           }
         ];
 
