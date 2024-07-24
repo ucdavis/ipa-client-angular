@@ -61,7 +61,7 @@
     "toastr": "2.1.4",
     "ui-select": "0.19.8",
     "underscore": "1.13.2",
-    "xlsx": "0.18.2"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "engines": {
     "node": "18"
