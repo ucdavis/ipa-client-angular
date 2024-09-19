@@ -320,72 +320,8 @@
 				<h3>Couldn't find what you need?</h3>
 
 				<p>
-					If you'd like to contact the team for any reason, please feel free to get in touch.
+					Email us at <strong><a href="mailto:ipahelp@ucdavis.edu">ipahelp@ucdavis.edu</a></strong> and we'll get back to you as soon as possible.
 				</p>
-
-				<form id="contact-form" class="contact-form" role="form" method="POST" action="#" enctype="application/x-www-form-urlencoded">
-
-					<div class="form-group">
-						<input type="text" name="name" class="form-control" placeholder="Name:" />
-					</div>
-
-					<div class="form-group">
-						<input type="text" name="email" class="form-control" placeholder="E-mail:" />
-					</div>
-
-					<div class="form-group">
-						<textarea class="form-control" name="message" placeholder="Message:" rows="6"></textarea>
-					</div>
-
-					<div class="form-group text-right">
-						<button class="btn btn-primary" name="send">Send</button>
-					</div>
-
-				</form>
-
-			</div>
-
-			<div class="col-sm-offset-1 col-sm-4">
-
-				<div class="info-entry">
-
-					<h3>Support</h3>
-
-					<p>
-						E-Mail: <a href="mailto:ipahelp@ucdavis.edu">ipahelp@ucdavis.edu</a><br />
-					</p>
-
-				</div>
-
-				<!-- <div class="info-entry">
-
-					<h4>Call Us</h4>
-
-					<p>
-						Phone: +1 (52) 2215-251<br />
-						Fax: +1 (22) 5138-219<br />
-						info@laborator.al
-					</p>
-
-					<ul class="social-networks">
-						<li>
-							<a href="#">
-								<i class="entypo-instagram"></i>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="entypo-twitter"></i>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="entypo-facebook"></i>
-							</a>
-						</li>
-					</ul>
-
-				</div> -->
 
 			</div>
 
@@ -424,34 +360,6 @@
 
 <!-- JavaScripts initializations and stuff -->
 <script src="/js/neon-custom.js"></script>
-
-<script type="text/javascript">
-	function submitForm(e) {
-		e.preventDefault();
-
-		var name = $("form input[name=name]").val();
-		var email = $("form input[name=email]").val();
-		var message = $("form textarea[name=message]").val();
-
-		$.post("https://api.ipa.ucdavis.edu/contactFormSubmission", {
-			name: name,
-			email: email,
-			message: message
-		}, function() {
-			$("form#contact-form").html("<p><b style=\"color: #111;\">Thanks for your feedback. Our team has received it and will be in touch.</b></p>");
-		}).fail(function() {
-			$("form#contact-form").html("<p><b style=\"color: #f11;\">Uh oh, something went wrong while submitting your message. Please alert IT of this issue.</b></p>");
-			console.error("Server returned non-OK status code.");
-		})
-	}
-
-	$("form#contact-form button").on("click", submitForm);
-
-	$('#portfolio-toggle').click(function(){
-		var isCollapsed = this.classList.contains("collapsed");
-	    this.innerHTML = this.value = isCollapsed ?  'Hide video tutorials' : 'Show video tutorials';
-	});
-</script>
 
 </body>
 </html>
