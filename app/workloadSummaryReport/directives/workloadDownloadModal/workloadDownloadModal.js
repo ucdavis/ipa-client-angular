@@ -18,9 +18,14 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
       scope.showSnapshotWarning = false;
 
       scope.$watch('userWorkgroupSnapshots', function (userWorkgroupsSnapshots) {
-        if (localStorage.getItem("workloadSnapshotDownloadSelections")) {
-          scope.departmentSnapshots = JSON.parse(localStorage.getItem("workloadSnapshotDownloadSelections"));
-          scope.isSortedByRecentActivity = JSON.parse(localStorage.getItem("workloadSnapshotDownloadSorted"));
+        const workloadSnapshotDownloadSettings = JSON.parse(localStorage.getItem('workloadSnapshotDownloadSettings'));
+
+        if (
+          workloadSnapshotDownloadSettings?.year === scope.year &&
+          workloadSnapshotDownloadSettings?.snapshots.length === Object.keys(userWorkgroupsSnapshots ?? {}).length
+        ) {
+          scope.departmentSnapshots = workloadSnapshotDownloadSettings.snapshots;
+          scope.isSortedByRecentActivity = workloadSnapshotDownloadSettings.isSorted;
         } else if (userWorkgroupsSnapshots) {
           scope.departmentSnapshots = scope.getScenarioOptions(userWorkgroupsSnapshots);
           scope.showSnapshotWarning = scope.isAnyWorkgroupMissingSnapshots(userWorkgroupsSnapshots);
@@ -105,8 +110,12 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
       scope.close = function () {
         scope.status = null;
         WorkloadSummaryActions.toggleDownloadModal();
-        localStorage.setItem("workloadSnapshotDownloadSelections", JSON.stringify(scope.departmentSnapshots));
-        localStorage.setItem("workloadSnapshotDownloadSorted", JSON.stringify(scope.isSortedByRecentActivity));
+        localStorage.setItem('workloadSnapshotDownloadSettings', JSON.stringify({
+            snapshots: scope.departmentSnapshots,
+            year: scope.year,
+            isSorted: scope.isSortedByRecentActivity
+          })
+        );
       };
 
       scope.submit = function () {
