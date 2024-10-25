@@ -18,19 +18,55 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
       scope.showSnapshotWarning = false;
 
       scope.$watch('userWorkgroupSnapshots', function (userWorkgroupsSnapshots) {
-        const workloadSnapshotDownloadSettings = JSON.parse(localStorage.getItem('workloadSnapshotDownloadSettings'));
+        const downloadSettings = JSON.parse(localStorage.getItem('workloadSnapshotDownloadSettings'));
+        const workgroupsSnapshotsLength = Object.keys(userWorkgroupsSnapshots || {}).length;
+
+        if (workgroupsSnapshotsLength > 0) {
+          scope.selectableYears = scope.getSelectableYears(userWorkgroupsSnapshots);
+        }
 
         if (
-          workloadSnapshotDownloadSettings?.year === scope.year &&
-          workloadSnapshotDownloadSettings?.snapshots.length === Object.keys(userWorkgroupsSnapshots ?? {}).length
+          downloadSettings &&
+          workgroupsSnapshotsLength > 0 &&
+          !scope.prevYear && !scope.nextYear &&
+          downloadSettings.selections.length === workgroupsSnapshotsLength
         ) {
-          scope.departmentSnapshots = workloadSnapshotDownloadSettings.snapshots;
-          scope.isSortedByRecentActivity = workloadSnapshotDownloadSettings.isSorted;
-        } else if (userWorkgroupsSnapshots) {
+          scope.departmentSnapshots = scope.getScenarioOptions(userWorkgroupsSnapshots);
+          scope.departmentSnapshots = scope.departmentSnapshots.map(d => {
+            const savedSelection = downloadSettings.selections.find(s => s.workgroupId === d.workgroupId);
+
+            d.selectedNext = savedSelection.selectedNext;
+            d.selectedPrevious = savedSelection.selectedPrevious;
+
+            return d;
+          });
+
+          scope.prevYear = downloadSettings.prevYear;
+          scope.nextYear = downloadSettings.nextYear;
+          scope.isSortedByRecentActivity = downloadSettings.isSorted;
+        } else if (!downloadSettings && workgroupsSnapshotsLength > 0) {
+          scope.selectableYears = scope.getSelectableYears(userWorkgroupsSnapshots);
+          scope.prevYear = scope.selectableYears[0];
+          scope.nextYear = scope.selectableYears[0];
+
           scope.departmentSnapshots = scope.getScenarioOptions(userWorkgroupsSnapshots);
           scope.showSnapshotWarning = scope.isAnyWorkgroupMissingSnapshots(userWorkgroupsSnapshots);
         }
       }, true);
+
+      scope.onPrevYearChange = function (prevYear) {
+        scope.departmentSnapshots.prevYear = prevYear;
+        scope.departmentSnapshots.forEach(d => {
+          d.prevYearFilteredSnapshots = [{ id: 0, name: "Live Data" }, ...d.snapshots.filter(s => s.year === prevYear)];
+        });
+      };
+
+      scope.onNextYearChange = function (nextYear) {
+        scope.departmentSnapshots.nextYear = nextYear;
+        scope.departmentSnapshots.forEach(d => {
+          d.nextYearFilteredSnapshots = [{ id: 0, name: "Live Data" }, ...d.snapshots.filter(s => s.year === nextYear)];
+        });
+      };
 
       scope.sortDepartmentsByRecentActivity = function () {
         if (scope.isSortedByRecentActivity === false) {
@@ -52,6 +88,11 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
         }
       };
 
+      scope.getSelectableYears = function (userWorkgroupsSnapshots) {
+        const selectableYears = [...new Set(Object.values(userWorkgroupsSnapshots).flatMap(s => s.years))];
+        return selectableYears.length ? selectableYears : [scope.year];
+      };
+
       scope.getScenarioOptions = function (userWorkgroupSnapshots) {
         // each row gets Live Data as an option
         // two columns with the same options
@@ -63,10 +104,14 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
         return Object.keys(userWorkgroupSnapshots)
           .sort()
           .map((department) => {
+            const snapshots = userWorkgroupSnapshots[department].snapshots;
+            
             return ({
               name: department,
               workgroupId: userWorkgroupSnapshots[department].workgroupId,
-              snapshots: [liveDataOption, ...userWorkgroupSnapshots[department].snapshots],
+              snapshots: snapshots,
+              prevYearFilteredSnapshots: [liveDataOption, ...snapshots.filter(s => s.year === scope.year)],
+              nextYearFilteredSnapshots: [liveDataOption, ...snapshots.filter(s => s.year === scope.year)],
               selectedPrevious: '0',
               selectedNext: '0',
               download: true,
@@ -78,9 +123,10 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
 
       scope.selectLatestSnapshots = function () {
         scope.departmentSnapshots = scope.departmentSnapshots.map((department) => {
-          const selectedNext = department.snapshots.filter(snapshot => snapshot.id !== 0).map(snapshot => snapshot.id).sort()[0]?.toString();
+          const selectedPrevious = department.prevYearFilteredSnapshots.filter(snapshot => snapshot.id !== 0).map(snapshot => snapshot.id).sort()[0]?.toString();
+          const selectedNext = department.nextYearFilteredSnapshots.filter(snapshot => snapshot.id !== 0).map(snapshot => snapshot.id).sort()[0]?.toString();
 
-          return { ...department, selectedNext };
+          return { ...department, selectedPrevious: selectedPrevious || '0', selectedNext: selectedNext || '0' };
         });
       };
 
@@ -88,6 +134,8 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
         scope.departmentSnapshots = scope.departmentSnapshots.map((department) => {
           return { ...department, selectedPrevious: '0', selectedNext: '0' };
         });
+        scope.prevYear = scope.selectableYears[0];
+        scope.nextYear = scope.selectableYears[0];
         scope.downloadAllDepartments = true;
       };
 
@@ -110,9 +158,18 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
       scope.close = function () {
         scope.status = null;
         WorkloadSummaryActions.toggleDownloadModal();
+
+        const departmentSelections = scope.departmentSnapshots.map(d => ({
+            workgroupId: d.workgroupId,
+            selectedNext: d.selectedNext,
+            selectedPrevious: d.selectedPrevious
+          }));
+
         localStorage.setItem('workloadSnapshotDownloadSettings', JSON.stringify({
-            snapshots: scope.departmentSnapshots,
-            year: scope.year,
+            selections: departmentSelections,
+            // year: scope.year,
+            prevYear: scope.prevYear,
+            nextYear: scope.nextYear,
             isSorted: scope.isSortedByRecentActivity
           })
         );
@@ -131,7 +188,19 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
         scope.departmentSnapshots
           .filter(department => department.download)
           .forEach((department) => {
-            departmentSnapshots[department.workgroupId] = [parseInt(department.selectedPrevious), parseInt(department.selectedNext)].filter(id => id > 0);
+            let downloads = {};
+
+            downloads.prev = {
+              snapshotId: parseInt(department.selectedPrevious),
+              liveDataYear: scope.prevYear
+            };
+
+            downloads.next = {
+              snapshotId: parseInt(department.selectedNext),
+              liveDataYear: scope.nextYear
+            };
+
+            departmentSnapshots[department.workgroupId] = downloads;
           });
 
         WorkloadSummaryActions.downloadMultiple(departmentSnapshots, scope.workgroupId, scope.year);
