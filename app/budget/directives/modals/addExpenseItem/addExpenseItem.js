@@ -11,6 +11,7 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       expenseItemToEdit: '<?',
     },
     link: function (scope) {
+      debugger;
       scope.newExpenseItem = {};
 
       if (scope.expenseItemToEdit) {
@@ -56,6 +57,7 @@ let addExpenseItem = function ($rootScope, BudgetActions) {
       };
 
       scope.submitExpenseItemForm = function () {
+        debugger;
         scope.newExpenseItem.budgetScenarioId =
           scope.state.selectedBudgetScenario.id;
 
