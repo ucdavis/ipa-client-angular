@@ -230,8 +230,9 @@ table.availability-grid tr td {
 }
 
 .ipa-header .year-display {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-weight: 500;
 }
 
 .ipa-header .ipa-header__year a {
@@ -246,7 +247,6 @@ table.availability-grid tr td {
 }
 
 .ipa-header .ipa-header__year li a:hover {
-  background-color: white !important;
   cursor: pointer;
 }
 
