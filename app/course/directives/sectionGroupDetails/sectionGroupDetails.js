@@ -75,6 +75,8 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
           return Number(proposedSectionSeats !== originalSectionSeats) + acc;
         }, 0);
 
+        if (outOfSyncSections === 0) { return; } // prevent extra update on input blur
+
         // sync with sectionGroup if single numeric section
         if (proposedSections.length === 1 && isNumber(section.sequenceNumber)) {
           sectionGroup.plannedSeats = section.seats;

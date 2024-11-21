@@ -511,6 +511,9 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
         var sectionGroup = _.findWhere(scope.view.state.sectionGroups.list, { courseId: courseId, termCode: termCode }); // eslint-disable-line no-undef
         var plannedSeats = $el.val() === "" ? null : parseInt($el.val());
 
+        const course = scope.view.state.courses.list[courseId];
+        const isNumericSection = isNumber(course.sequencePattern);
+
         if (isNaN(plannedSeats)) { return; }
 
         if (sectionGroup) {
@@ -525,8 +528,10 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
 
           // Save existing sectionGroup
           sectionGroup.plannedSeats = plannedSeats;
-          if (plannedSeats >= proposedSectionSeatTotal) {
-            CourseActionCreators.updateSectionGroup(sectionGroup);
+          if (!isNumericSection) {
+            if (plannedSeats >= proposedSectionSeatTotal) {
+              CourseActionCreators.updateSectionGroup(sectionGroup);
+            }
 
             // Check if any overflowed sections can be updated.  If yes, update them.
             if (currentSectionSeatTotal !== proposedSectionSeatTotal) {
@@ -535,10 +540,11 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           }
 
           // If sequence is numeric sync the seats on the section to the new sectionGroup value
-          if (sectionGroup.sections.length === 1 && isNumber(sectionGroup.sections[0].sequenceNumber)) {
+          if (isNumericSection && sectionGroup.sections.length === 1) {
             let section = scope.view.state.sections.list[sectionGroup.sections[0].id];
             section.seats = sectionGroup.plannedSeats;
             CourseActionCreators.updateSection(section);
+            CourseActionCreators.updateSectionGroup(sectionGroup);
           }
         } else if (plannedSeats) {
           // Create a new sectionGroup

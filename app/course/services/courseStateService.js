@@ -298,6 +298,7 @@ class CourseStateService {
             return sectionGroups;
           case ActionTypes.UPDATE_SECTION:
             var sectionGroup = sectionGroups.selectedSectionGroup || sectionGroups.list[action.payload.section.sectionGroupId];
+            sectionGroup.sections = sectionGroup.sections.map(slotSection => slotSection.id === action.payload.section.id ? action.payload.section : slotSection);
             sectionGroup.requiresAttention = action.payload.requiresAttention;
             return sectionGroups;
           case ActionTypes.REMOVE_SECTION:
