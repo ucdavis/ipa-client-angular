@@ -1459,6 +1459,7 @@ export var subjectCodes = [
   'LINC',
   'LINE',
   'LINN',
+  'LTS',
   'MAE',
   'MAS',
   'MAT',
