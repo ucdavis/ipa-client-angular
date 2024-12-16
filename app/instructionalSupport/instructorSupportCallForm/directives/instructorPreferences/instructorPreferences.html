@@ -1,6 +1,6 @@
 <div class="instructor-preferences">
   <ul class="instructor-support-call-form__support-staff-list">
-    <li ng-repeat="instructorPreference in sectionGroup.instructorPreferences | orderBy: 'priority'">
+    <li ng-repeat="instructorPreference in instructorPreferences | orderBy: 'priority'">
       <support-staff support-staff="instructorPreference"
                      instructor-preference="instructorPreference"
                      priority="instructorPreference.priority"
@@ -16,14 +16,28 @@
 
   <div class="instructor-preferences__interested" ng-show="sectionGroup.eligibleSupportStaff.preferred.length > 0">
     <h5>Interested</h5>
-    <ul class="instructor-support-call-form__support-staff-list">
-      <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.preferred">
-        <support-staff support-staff="supportStaff"
-                      priority="supportStaff.priority"
-                      active="(supportStaff.supportStaffId == activeSupportStaffId)">
-        </support-staff>
-      </li>
-    </ul>
+    <div ng-if="activeAppointmentType === 'teachingAssistant'">
+      <ul class="instructor-support-call-form__support-staff-list">
+        <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.tas">
+          <support-staff support-staff="supportStaff"
+                        priority="supportStaff.priority"
+                        active="(supportStaff.supportStaffId == activeSupportStaffId)"
+                        type="activeAppointmentType">
+          </support-staff>
+        </li>
+      </ul>
+    </div>
+    <div ng-if="activeAppointmentType === 'reader'">
+      <ul class="instructor-support-call-form__support-staff-list">
+        <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.readers">
+          <support-staff support-staff="supportStaff"
+                        priority="supportStaff.priority"
+                        active="(supportStaff.supportStaffId == activeSupportStaffId)"
+                        type="activeAppointmentType">
+          </support-staff>
+        </li>
+      </ul>
+    </div>
   </div>
   <div class="instructor-preferences__other">
     <h5>Other</h6>

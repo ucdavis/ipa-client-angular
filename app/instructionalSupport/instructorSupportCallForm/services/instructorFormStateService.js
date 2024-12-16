@@ -71,9 +71,21 @@ class InstructorFormStateService {
 
             activeSectionGroupId = allTabs[0] ? allTabs[0].id : null;
 
+            // add appointment type
+            var tabsByAppointmentType = [];
+            allTabs.forEach(tab => {
+                if (tab.teachingAssistantAppointments > 0) {
+                  tabsByAppointmentType.push({...tab, appointmentType: "teachingAssistant"});
+                }
+                if (tab.readerAppointments > 0) {
+                  tabsByAppointmentType.push({...tab, appointmentType: "reader"});
+                }
+            });
+
             misc = {
-              allTabs: allTabs,
+              allTabs: tabsByAppointmentType,
               activeSectionGroupId: activeSectionGroupId,
+              activeAppointmentType: tabsByAppointmentType[0]?.appointmentType,
               activeSupportStaffId: activeSupportStaffId
             };
 
@@ -81,6 +93,7 @@ class InstructorFormStateService {
             return misc;
             case ActionTypes.SELECT_SECTION_GROUP:
               misc.activeSectionGroupId = action.payload.activeSectionGroupId;
+              misc.activeAppointmentType = action.payload.activeAppointmentType;
               misc.activeSupportStaffId = null;
               return misc;
             case ActionTypes.SELECT_SUPPORT_STAFF:

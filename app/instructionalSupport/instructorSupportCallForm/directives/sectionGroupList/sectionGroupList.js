@@ -7,6 +7,7 @@ let sectionGroupList = function (InstructorFormActions) {
     replace: true,
     scope: {
       activeSectionGroupId: '<',
+      activeAppointmentType: '<',
       allTabs: '<'
     },
     link: function (scope) {

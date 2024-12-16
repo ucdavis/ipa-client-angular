@@ -11,15 +11,24 @@ let instructorPreferences = function ($rootScope, InstructorFormActions) {
     scope: {
       sectionGroup: '=',
       supportStaffList: '<',
-      activeSupportStaffId: '<'
+      activeSupportStaffId: '<',
+      activeAppointmentType: '<'
     },
     link: function (scope) {
       scope.filteredSupportStaff = scope.sectionGroup.eligibleSupportStaff.other;
+      scope.instructorPreferences = filterInstructorPreferences(scope.sectionGroup.instructorPreferences, scope.activeAppointmentType);
 
       $rootScope.$on('instructorFormStateChanged', function (event, data) {
         scope.sectionGroup = data.sectionGroups.list[data.misc.activeSectionGroupId];
+        scope.instructorPreferences = filterInstructorPreferences(scope.sectionGroup.instructorPreferences, data.misc.activeAppointmentType);
         scope.filteredSupportStaff = scope.sectionGroup.eligibleSupportStaff.other;
       });
+
+      function filterInstructorPreferences(instructorPreferences, activeAppointmentType) {
+        return instructorPreferences.filter((ip) =>
+          ip.appointmentType ? ip.appointmentType === activeAppointmentType : ip
+        );
+      }
 
       scope.filterSupportStaff = function (searchQuery) {
         if (searchQuery.length >= 1) {
@@ -45,7 +54,7 @@ let instructorPreferences = function ($rootScope, InstructorFormActions) {
       };
 
       scope.addPreference = function(sectionGroupId, supportStaffId) {
-        InstructorFormActions.addInstructorPreference(sectionGroupId, supportStaffId);
+        InstructorFormActions.addInstructorPreference(sectionGroupId, supportStaffId, scope.activeAppointmentType);
       };
 
       scope.deleteInstructorPreference = function(preference) {

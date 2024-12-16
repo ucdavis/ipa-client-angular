@@ -4,8 +4,8 @@ class InstructorFormService {
 			getInitialState: function(workgroupId, year, termShortCode) {
 				return ApiService.get("/api/instructionalSupportInstructorFormView/workgroups/" + workgroupId + "/years/" + year + "/termCode/" + termShortCode);
 			},
-			addInstructorPreference: function(sectionGroupId, supportStaffId) {
-				return ApiService.post("/api/instructionalSupportInstructorFormView/sectionGroups/" + sectionGroupId + "/supportStaff/" + supportStaffId);
+			addInstructorPreference: function(sectionGroupId, supportStaffId, appointmentType) {
+				return ApiService.post("/api/instructionalSupportInstructorFormView/sectionGroups/" + sectionGroupId + "/supportStaff/" + supportStaffId + "/type/" + appointmentType);
 			},
 			updateSupportCallResponse: function(instructorSupportCallResponse) {
 				return ApiService.put("/api/instructionalSupportInstructorFormView/instructorSupportCallResponses/" + instructorSupportCallResponse.id, instructorSupportCallResponse);

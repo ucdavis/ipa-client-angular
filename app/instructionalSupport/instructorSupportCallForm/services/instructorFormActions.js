@@ -55,7 +55,8 @@ class InstructorFormActions {
         InstructorFormStateService.reduce({
           type: ActionTypes.SELECT_SECTION_GROUP,
           payload:  {
-            activeSectionGroupId: sectionGroup.id
+            activeSectionGroupId: sectionGroup.id,
+            activeAppointmentType: sectionGroup.appointmentType
           }
         });
       },
@@ -70,7 +71,7 @@ class InstructorFormActions {
         });
       },
       addInstructorPreference: function (supportStaffId) {
-        InstructorFormService.addInstructorPreference(InstructorFormStateService._state.misc.activeSectionGroupId, supportStaffId).then(function (newPreference) {
+        InstructorFormService.addInstructorPreference(InstructorFormStateService._state.misc.activeSectionGroupId, supportStaffId, InstructorFormStateService._state.misc.activeAppointmentType).then(function (newPreference) {
           $rootScope.$emit('toast', { message: "Added Preference", type: "SUCCESS" });
           window.ipa_analyze_event('faculty_ta_form', 'added_support_staff_preference', newPreference.id);
 

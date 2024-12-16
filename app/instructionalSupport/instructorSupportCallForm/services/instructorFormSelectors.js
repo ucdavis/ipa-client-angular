@@ -53,6 +53,8 @@ class InstructorFormSelectors {
 				});
 	
 				sectionGroup.eligibleSupportStaff.preferred = [];
+				sectionGroup.eligibleSupportStaff.tas = [];
+				sectionGroup.eligibleSupportStaff.readers = [];
 	
 				studentPreferences.ids.forEach(function (preferenceId) {
 					var preference = studentPreferences.list[preferenceId];
@@ -67,6 +69,12 @@ class InstructorFormSelectors {
 						preference.fullName = slotSupportStaff.fullName;
 	
 						sectionGroup.eligibleSupportStaff.preferred.push(preference);
+
+						if (preference.type === "reader") {
+							sectionGroup.eligibleSupportStaff.readers.push(preference);
+						} else {
+							sectionGroup.eligibleSupportStaff.tas.push(preference);
+						}
 					}
 				});
 	
