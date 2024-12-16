@@ -48,7 +48,7 @@
 					<div class="ipa-table__body-cell ipa-table__body-cell--small">
 					</div>
 					<div class="ipa-table__body-cell ipa-table__body-cell--large">
-						{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }}
+						{{ preference.subjectCode }} {{ preference.courseNumber }} - {{ preference.sequencePattern }} ({{ preference.type.camelToTitle() }})
 					</div>
 					<div class="ipa-table__body-cell ipa-table__body-cell--medium">
 						<div ng-show="state.supportCallResponse.collectPreferenceComments && (!preference.comment || preference.comment.length == 0)">

@@ -141,3 +141,10 @@ String.prototype.getWeekDays = function () {
 
 	return dayStr;
 };
+
+String.prototype.camelToTitle = function() {
+	return this
+		.replace(/([A-Z])/g, ' $1') // Add a space before uppercase letters
+		.replace(/^./, (char) => char.toUpperCase()) // Capitalize the first character
+		.trim(); // Remove leading/trailing spaces
+};
