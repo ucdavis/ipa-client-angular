@@ -144,7 +144,8 @@ class SupportSelectors {
 						sectionGroup.readerAssignmentOptions.supportStaffPreferences.push(preference);
 						processedSupportStaffIds.push(preference.supportStaffId);
 					});
-	
+					sectionGroup.readerAssignmentOptions.supportStaffPreferences = _array_sortByProperty(sectionGroup.readerAssignmentOptions.supportStaffPreferences, ["priority", "lastName"]);
+
 					// Add Other options
 					sectionGroup.readerAssignmentOptions.other = [];
 					supportStaffList.ids.forEach(function(supportStaffId) {
@@ -157,7 +158,8 @@ class SupportSelectors {
 						supportStaff.supportStaffId = supportStaff.id;
 						sectionGroup.readerAssignmentOptions.other.push(supportStaff);
 					});
-	
+
+					sectionGroup.readerAssignmentOptions.other = _array_sortByProperty(sectionGroup.readerAssignmentOptions.other, ["lastName"]);
 
 					// Add instructor preference comment to sectionGroup by following the relationship
 					// sectionGroups -> instructorPreferences -> instructorSupportCallResponses
