@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 class InstructorFormSelectors {
 	constructor () {
 		return {
@@ -87,7 +89,11 @@ class InstructorFormSelectors {
 						sectionGroup.eligibleSupportStaff.other.push(staff);
 					}
 				});
-	
+
+				sectionGroup.eligibleSupportStaff.tas = _array_sortByProperty(sectionGroup.eligibleSupportStaff.tas, ["priority", "lastName"]);
+				sectionGroup.eligibleSupportStaff.readers = _array_sortByProperty(sectionGroup.eligibleSupportStaff.readers, ["priority", "lastName"]);
+				sectionGroup.eligibleSupportStaff.other = _array_sortByProperty(sectionGroup.eligibleSupportStaff.other, ["lastName"]);
+
 				return sectionGroup;
 			}
 		};
