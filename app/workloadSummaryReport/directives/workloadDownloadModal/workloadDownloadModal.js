@@ -136,8 +136,6 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
         scope.departmentSnapshots = scope.departmentSnapshots.map((department) => {
           return { ...department, selectedPrevious: '0', selectedNext: '0' };
         });
-        scope.prevYear = scope.selectableYears[0];
-        scope.nextYear = scope.selectableYears[0];
         scope.downloadAllDepartments = true;
       };
 
