@@ -58,6 +58,7 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
         scope.departmentSnapshots.prevYear = prevYear;
         scope.departmentSnapshots.forEach(d => {
           d.prevYearFilteredSnapshots = [{ id: 0, name: "Live Data" }, ...d.snapshots.filter(s => s.year === prevYear)];
+          d.selectedPrevious = '0';
         });
       };
 
@@ -65,6 +66,7 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
         scope.departmentSnapshots.nextYear = nextYear;
         scope.departmentSnapshots.forEach(d => {
           d.nextYearFilteredSnapshots = [{ id: 0, name: "Live Data" }, ...d.snapshots.filter(s => s.year === nextYear)];
+          d.selectedNext = '0';
         });
       };
 
