@@ -90,7 +90,7 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
 
       scope.getSelectableYears = function (userWorkgroupsSnapshots) {
         const selectableYears = [...new Set(Object.values(userWorkgroupsSnapshots).flatMap(s => s.years))];
-        return selectableYears.length ? selectableYears : [scope.year];
+        return selectableYears.length ? selectableYears.sort() : [scope.year];
       };
 
       scope.getScenarioOptions = function (userWorkgroupSnapshots) {
