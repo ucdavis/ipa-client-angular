@@ -1,3 +1,5 @@
+import { _array_sortByProperty } from 'shared/helpers/array';
+
 class InstructorFormSelectors {
 	constructor () {
 		return {
@@ -53,6 +55,8 @@ class InstructorFormSelectors {
 				});
 	
 				sectionGroup.eligibleSupportStaff.preferred = [];
+				sectionGroup.eligibleSupportStaff.tas = [];
+				sectionGroup.eligibleSupportStaff.readers = [];
 	
 				studentPreferences.ids.forEach(function (preferenceId) {
 					var preference = studentPreferences.list[preferenceId];
@@ -67,6 +71,12 @@ class InstructorFormSelectors {
 						preference.fullName = slotSupportStaff.fullName;
 	
 						sectionGroup.eligibleSupportStaff.preferred.push(preference);
+
+						if (preference.type === "reader") {
+							sectionGroup.eligibleSupportStaff.readers.push(preference);
+						} else {
+							sectionGroup.eligibleSupportStaff.tas.push(preference);
+						}
 					}
 				});
 	
@@ -79,7 +89,11 @@ class InstructorFormSelectors {
 						sectionGroup.eligibleSupportStaff.other.push(staff);
 					}
 				});
-	
+
+				sectionGroup.eligibleSupportStaff.tas = _array_sortByProperty(sectionGroup.eligibleSupportStaff.tas, ["priority", "lastName"]);
+				sectionGroup.eligibleSupportStaff.readers = _array_sortByProperty(sectionGroup.eligibleSupportStaff.readers, ["priority", "lastName"]);
+				sectionGroup.eligibleSupportStaff.other = _array_sortByProperty(sectionGroup.eligibleSupportStaff.other, ["lastName"]);
+
 				return sectionGroup;
 			}
 		};

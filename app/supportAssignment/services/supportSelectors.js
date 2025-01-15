@@ -61,7 +61,11 @@ class SupportSelectors {
 						if (preference.sectionGroupId != sectionGroup.id) {
 							return;
 						}
-	
+
+						if (preference.appointmentType && preference.appointmentType !== 'teachingAssistant') {
+							return;
+						}
+
 						preference = self.addSupportStaffData(preference, supportStaffList);
 	
 						sectionGroup.teachingAssistantAssignmentOptions.instructorPreferences.push(preference);
@@ -108,6 +112,22 @@ class SupportSelectors {
 					sectionGroup.readerAssignmentOptions = {};
 					sectionGroup.readerAssignmentOptions.instructorPreferences = [];
 	
+					instructorPreferences.ids.forEach(function(preferenceId) {
+						var preference = instructorPreferences.list[preferenceId];
+	
+						if (preference.sectionGroupId != sectionGroup.id) {
+							return;
+						}
+						if (preference.appointmentType && preference.appointmentType !== 'reader') {
+							return;
+						}
+	
+						preference = self.addSupportStaffData(preference, supportStaffList);
+	
+						sectionGroup.readerAssignmentOptions.instructorPreferences.push(preference);
+						processedSupportStaffIds.push(preference.supportStaffId);
+					});
+					sectionGroup.readerAssignmentOptions.instructorPreferences = _array_sortByProperty(sectionGroup.readerAssignmentOptions.instructorPreferences, ["priority", "lastName"]);
 	
 					// Add SupportStaff preferences
 					sectionGroup.readerAssignmentOptions.supportStaffPreferences = [];
@@ -124,7 +144,8 @@ class SupportSelectors {
 						sectionGroup.readerAssignmentOptions.supportStaffPreferences.push(preference);
 						processedSupportStaffIds.push(preference.supportStaffId);
 					});
-	
+					sectionGroup.readerAssignmentOptions.supportStaffPreferences = _array_sortByProperty(sectionGroup.readerAssignmentOptions.supportStaffPreferences, ["priority", "lastName"]);
+
 					// Add Other options
 					sectionGroup.readerAssignmentOptions.other = [];
 					supportStaffList.ids.forEach(function(supportStaffId) {
@@ -137,7 +158,8 @@ class SupportSelectors {
 						supportStaff.supportStaffId = supportStaff.id;
 						sectionGroup.readerAssignmentOptions.other.push(supportStaff);
 					});
-	
+
+					sectionGroup.readerAssignmentOptions.other = _array_sortByProperty(sectionGroup.readerAssignmentOptions.other, ["lastName"]);
 
 					// Add instructor preference comment to sectionGroup by following the relationship
 					// sectionGroups -> instructorPreferences -> instructorSupportCallResponses
