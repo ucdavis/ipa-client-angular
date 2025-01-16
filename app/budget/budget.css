@@ -6,6 +6,18 @@
   margin-bottom: 10px;
 }
 
+.budget-view__menu {
+  position: fixed;
+  top: 115px;
+  left: 200px;
+  width: calc(100% - 200px);
+}
+
+.budget-view__menu--collapsed {
+  left: 65px;
+  width: calc(100% - 65px);
+}
+
 .budget-view__course-costs-container {
   margin-bottom: 30px;
 }

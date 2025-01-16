@@ -135,25 +135,27 @@
       </download-budget-scenarios>
     </ipa-modal>
 
-    <budget-scenario-toolbar
-      state="view.state"
-      is-deans-office="isDeansOffice"
-      class="do-not-print"
-    ></budget-scenario-toolbar>
-
-    <budget-nav
-      class="budget-view__nav-container"
-      total-balance="view.state.selectedBudgetScenario.summary.totalBalance"
-      selected-section="view.state.ui.sectionNav.activeTab"
-      selected-budget-scenario="view.state.selectedBudgetScenario"
-      selected-line-items="view.state.ui.selectedLineItems"
-      selected-expense-items="view.state.ui.selectedExpenseItems"
-      filters="view.state.ui.filters"
-      funds-nav="view.state.ui.fundsNav.activeTab"
-      should-show-course-list="view.state.ui.shouldShowCourseList"
-      current-user="currentUser"
-    >
-    </budget-nav>
+    <div class="budget-view__menu" ng-class="{'budget-view__menu--collapsed': isSidebarCollapsed}">
+      <budget-scenario-toolbar
+        state="view.state"
+        is-deans-office="isDeansOffice"
+        class="do-not-print"
+      >
+      </budget-scenario-toolbar>
+      <budget-nav
+        class="budget-view__nav-container"
+        total-balance="view.state.selectedBudgetScenario.summary.totalBalance"
+        selected-section="view.state.ui.sectionNav.activeTab"
+        selected-budget-scenario="view.state.selectedBudgetScenario"
+        selected-line-items="view.state.ui.selectedLineItems"
+        selected-expense-items="view.state.ui.selectedExpenseItems"
+        filters="view.state.ui.filters"
+        funds-nav="view.state.ui.fundsNav.activeTab"
+        should-show-course-list="view.state.ui.shouldShowCourseList"
+        current-user="currentUser"
+      >
+      </budget-nav>
+    </div>
 
     <div class="page-content">
       <budget-summary

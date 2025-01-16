@@ -42,6 +42,11 @@ class BudgetCtrl {
     this.$scope.currentUser = _self.AuthService.getCurrentUser();
     this.$scope.isDeansOffice = _self.AuthService.getCurrentUser().isDeansOffice();
 
+    this.$scope.isSidebarCollapsed = _self.AuthService.isSidebarCollapsed();
+    this.$rootScope.$on('sidebarStateToggled', function (event, isSidebarCollapsed) {
+      _self.$scope.isSidebarCollapsed = isSidebarCollapsed;
+    });
+
     this.$rootScope.$on("budgetStateChanged", function(event, data) {
       _self.$scope.view.state = data;
 

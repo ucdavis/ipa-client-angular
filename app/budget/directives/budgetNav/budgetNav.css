@@ -1,10 +1,6 @@
 .budget-nav {
 	display: flex;
 	justify-content: space-between;
-	position: fixed;
-	top: 161px;
-	left: 200px;
-	width: calc(100vw - 200px);
 	background-color: #F8F8F8;
 	border: 1px solid #e3e3e3;
 	border-radius: 0;
