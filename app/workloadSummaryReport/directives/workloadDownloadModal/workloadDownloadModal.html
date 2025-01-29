@@ -8,8 +8,20 @@
               click-action="toggleAllDepartmentDownloads()"></ipa-checkbox>
           </th>
           <th scope="col" style="padding-left: 10px;"><strong>Department</strong></th>
-          <th scope="col"><strong>Snapshot 1</strong></th>
-          <th scope="col"><strong>Snapshot 2</strong></th>
+          <th scope="col" style="text-align: center;">
+            <select style="padding:4px 8px;" 
+              ng-model="prevYear" 
+              ng-options="year for year in selectableYears"
+              ng-change="onPrevYearChange(prevYear)">
+            </select>
+          </th>
+          <th scope="col" style="text-align: center;">
+            <select style="padding:4px 8px;" 
+              ng-model="nextYear" 
+              ng-options="year for year in selectableYears"
+              ng-change="onNextYearChange(nextYear)">
+            </select>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -24,14 +36,14 @@
           </td>
           <td>
             <select style="width: 100%; padding:4px 8px;" ng-model="department.selectedPrevious">
-              <option ng-repeat="snapshot in department.snapshots" value={{snapshot.id}}>
+              <option ng-repeat="snapshot in department.prevYearFilteredSnapshots" value={{snapshot.id}}>
                 {{ snapshot.name }}
               </option>
             </select>
           </td>
           <td>
             <select style="width: 100%; padding:4px 8px;" ng-model="department.selectedNext">
-              <option ng-repeat="snapshot in department.snapshots" value={{snapshot.id}}>
+              <option ng-repeat="snapshot in department.nextYearFilteredSnapshots" value={{snapshot.id}}>
                 {{ snapshot.name }}
               </option>
             </select>
@@ -50,8 +62,8 @@
       <button ng-show="!isDisabled" ng-click="close()" type="button" class="btn btn-default modal-button">
         Cancel
       </button>
-      <button class="btn btn-secondary" confirm-button="resetDownloadSelections()"
-        placement=message="Are you sure you want to reset selections Live Data?">
+      <button class="btn btn-secondary" confirm-button="resetDownloadSelections()" placement="top"
+        message="Are you sure you want to reset selections Live Data?">
         Reset selections
       </button>
       <button class="btn btn-info" confirm-button="selectLatestSnapshots()" placement="top"
