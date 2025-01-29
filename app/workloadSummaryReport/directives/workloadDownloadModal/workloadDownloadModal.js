@@ -29,7 +29,7 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
           downloadSettings &&
           workgroupsSnapshotsLength > 0 &&
           !scope.prevYear && !scope.nextYear &&
-          downloadSettings.selections.length === workgroupsSnapshotsLength
+          downloadSettings?.selections?.length === workgroupsSnapshotsLength
         ) {
           scope.departmentSnapshots = scope.getScenarioOptions(userWorkgroupsSnapshots);
           scope.departmentSnapshots = scope.departmentSnapshots.map(d => {
