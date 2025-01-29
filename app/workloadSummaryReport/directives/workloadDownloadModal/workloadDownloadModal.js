@@ -29,14 +29,14 @@ let workloadDownloadModal = function (WorkloadSummaryActions) {
           downloadSettings &&
           workgroupsSnapshotsLength > 0 &&
           !scope.prevYear && !scope.nextYear &&
-          downloadSettings.selections?.length === workgroupsSnapshotsLength
+          downloadSettings?.selections?.length === workgroupsSnapshotsLength
         ) {
           scope.departmentSnapshots = scope.getScenarioOptions(userWorkgroupsSnapshots);
           scope.departmentSnapshots = scope.departmentSnapshots.map(d => {
             const savedSelection = downloadSettings.selections.find(s => s.workgroupId === d.workgroupId);
 
-            d.selectedNext = savedSelection?.selectedNext;
-            d.selectedPrevious = savedSelection?.selectedPrevious;
+            d.selectedNext = savedSelection.selectedNext;
+            d.selectedPrevious = savedSelection.selectedPrevious;
 
             return d;
           });
