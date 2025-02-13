@@ -47,8 +47,8 @@ class SupportCallResponseReportCtrl {
           }
         ));
 
-        const currentSupportStaffIds = _self.$scope.view.state.supportCallResponses.map(response => response.supportStaffId);
-        const currentSupportStaff = _self.$scope.view.state.supportStaff.filter(supportStaff => currentSupportStaffIds.includes(supportStaff.id));
+        const currentSupportStaffIds = new Set(_self.$scope.view.state.supportCallResponses.map(response => response.supportStaffId));
+        const currentSupportStaff = _self.$scope.view.state.supportStaff.filter(supportStaff => currentSupportStaffIds.has(supportStaff.id));
         if (_self.$scope.view.state.ui.showSubmitted === true) {
           _self.$scope.filteredSupportStaff = currentSupportStaff.filter(staff => {
             return staff.preferences.length > 0;
