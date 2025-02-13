@@ -47,12 +47,14 @@ class SupportCallResponseReportCtrl {
           }
         ));
 
+        const currentSupportStaffIds = _self.$scope.view.state.supportCallResponses.map(response => response.supportStaffId);
+        const currentSupportStaff = _self.$scope.view.state.supportStaff.filter(supportStaff => currentSupportStaffIds.includes(supportStaff.id));
         if (_self.$scope.view.state.ui.showSubmitted === true) {
-          _self.$scope.filteredSupportStaff = _self.$scope.view.state.supportStaff.filter(staff => {
+          _self.$scope.filteredSupportStaff = currentSupportStaff.filter(staff => {
             return staff.preferences.length > 0;
           });
         } else {
-          _self.$scope.filteredSupportStaff = _self.$scope.view.state.supportStaff;
+          _self.$scope.filteredSupportStaff = currentSupportStaff;
         }
     });
 
