@@ -11,6 +11,7 @@
   top: 115px;
   left: 200px;
   width: calc(100% - 200px);
+  z-index: 10;
 }
 
 .budget-view__menu--collapsed {

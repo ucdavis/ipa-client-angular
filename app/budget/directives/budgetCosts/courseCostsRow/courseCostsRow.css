@@ -5,6 +5,7 @@
 }
 
 .course-costs__table-cell-sequence {
+	height: 100%;
 	padding-left: 20px;
 }
 

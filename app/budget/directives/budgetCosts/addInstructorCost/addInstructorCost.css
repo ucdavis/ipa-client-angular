@@ -1,3 +1,7 @@
+.add-instructor-cost__row {
+	height: 100%;
+}
+
 .add-instructor-cost__none-assigned {
 	font-style: italic;
 	color: #b1b1b1;

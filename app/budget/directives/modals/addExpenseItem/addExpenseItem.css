@@ -23,6 +23,8 @@
 
 .add-expense-item .dropdown-menu {
 	width: 325px;
+	height: 20vh;
+	overflow-y: auto;
 }
 
 .add-expense-item .type-item {
