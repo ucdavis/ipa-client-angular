@@ -21,6 +21,7 @@ let addInstructorsModal = function (TermService, TeachingCallStatusActionCreator
       scope.startTeachingCallConfig.hideNonCourseOptions = false;
       scope.startTeachingCallConfig.sendEmail = true;
       scope.startTeachingCallConfig.lockAfterDueDate = false;
+      scope.startTeachingCallConfig.sendWithoutCourses = false;
       scope.startTeachingCallConfig.message = "Please consider your teaching for next year in light of what you have taught in recent years.";
       scope.startTeachingCallConfig.message += " As always, we will attempt to accommodate your requests, but we may need to ask some of you to make changes in order to balance our course offerings effectively.";
     
