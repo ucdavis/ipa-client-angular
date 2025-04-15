@@ -1,5 +1,35 @@
 <nav year="{{ year }}" term-short-code="{{ termShortCode }}" workgroup-id="{{ workgroupId }}"></nav>
 
+<ipa-modal is-visible="showUpdatesModal" header-text="Review Updates" on-close="closeUpdatesModal">
+	<div style="max-height: 50vh; overflow-y: auto; font-size: 14px;">
+		<table class="table table-striped">
+			<tbody>
+				<tr ng-repeat="update in pendingUpdates | orderBy:'uniqueKey'">
+					<td>
+						<input type="checkbox" ng-model="update.isChecked">
+					</td>
+					<td>
+						<strong>{{ update.uniqueKey }}</strong>
+					</td>
+					<td>
+						<span ng-if="update.property === 'seats'">Update seats from {{ update.section.seats }} to {{ update.value }}</span>
+						<span ng-if="update.property === 'crn'">Update CRN from {{ update.section.crn || 'No CRN'}} to {{ update.value }}</span>
+						<span ng-if="update.property === 'startTime'">Update start from {{ update.activity.startTime.toStandardTime() }} to {{ update.value.toStandardTime() }}</span>
+						<span ng-if="update.property === 'endTime'">Update end from {{ update.activity.endTime.toStandardTime() }} to {{ update.value.toStandardTime() }}</span>
+						<span ng-if="update.property === 'bannerLocation'">Update location from {{ update.activity.bannerLocation }} to {{ update.value }}</span>
+						<span ng-if="update.property === 'assign'">Unassign {{ update.instructor.lastName }}</span>
+						<span ng-if="update.property === 'unassign'">Assign {{ update.instructor.lastName }}</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div style="text-align: right; padding: 10px;">
+		<button ng-click="closeUpdatesModal()" class="btn btn-secondary">Cancel</button>
+		<button ng-click="applyUpdates()" class="btn btn-primary">Confirm</button>
+	</div>
+</ipa-modal>
+
 <div class="report-container">
 
 	<ipa-header page-title="Registrar Reconciliation Report"></ipa-header>
@@ -51,6 +81,7 @@
 
 		</div>
 		<div class="right-details">
+			<button ng-if="showBulkUpdateButton" ng-click="acceptBannerUpdates()" class="btn btn-secondary" style="margin-bottom: 10px; width: 100%;">Accept Banner Updates</button>
 			<report-legend></report-legend>
 			<report-filter></report-filter>
 			<sync-action-list></sync-action-list>
