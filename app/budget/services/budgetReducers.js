@@ -460,8 +460,10 @@ class BudgetReducers {
 						};
 
 						action.payload.reasonCategories.forEach(function(reasonCategory) {
-							reasonCategories.ids.push(reasonCategory.id);
-							reasonCategories.list[reasonCategory.id] = reasonCategory;
+							if (!reasonCategory.archived) {
+								reasonCategories.ids.push(reasonCategory.id);
+								reasonCategories.list[reasonCategory.id] = reasonCategory;
+							}
 						});
 						return reasonCategories;
 					default:
