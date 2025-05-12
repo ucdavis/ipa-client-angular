@@ -55,12 +55,18 @@ class SectionService {
 				if (isLetter(sequenceNumber[0])) {
 					return sequenceNumber[0].toUpperCase() + sequenceNumber.slice(1);
 				}
+
+				// Honors sequence
+				if (/^0U\d$/.test(sequenceNumber)) { return sequenceNumber; }
 			},
 			isSequencePatternValid: function (sequencePattern) {
 				// Must exist to be valid
 				if (!sequencePattern) { return false; }
 
 				var stringSequenceNumber = String(sequencePattern);
+
+				// Honors sequence
+				if (/^0U\d$/.test(sequencePattern)) { return true; }
 
 				// First character must be a letter or number
 				if (isNumber(stringSequenceNumber[0]) == false && isLetter(stringSequenceNumber[0]) == false) { return false; }

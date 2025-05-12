@@ -33,6 +33,11 @@ export function nextSequenceNumber(course, sectionGroup, sections) {
 export function sequenceNumberToPattern(sequenceNumber) {
 	if (sequenceNumber.length != 3) { return null; }
 
+	// Honors sequence
+	if (/^0U\d$/.test(sequenceNumber)) {
+		return sequenceNumber;
+	}
+
 	// sequencePattern is letter based (example 'A02')
 	if (sequenceNumber.toLowerCase() != sequenceNumber.toUpperCase()) {
 		return sequenceNumber[0].toUpperCase();
