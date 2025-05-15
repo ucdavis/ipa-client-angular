@@ -124,7 +124,7 @@ let sectionGroupDetails = function (CourseActionCreators, Term) {
           return course.sequencePattern + "RO";
         }
 
-        if (course.isSeries() === false) {
+        if (course.isSeries() === false || /^0U\d$/.test(course.sequencePattern)) {
           // Numeric sections: return sequencePattern iff no sections exist
           if (sg.sectionIds.length > 0) { return null; }
           else { return course.sequencePattern; }
