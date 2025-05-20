@@ -39,7 +39,7 @@ function config ($routeProvider) {
 			validate: function (AuthService, $route, BudgetComparisonReportActions) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
-						var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+						var hasAccess = AuthService.getCurrentUser().hasAccess(['academicPlanner', 'reviewer'], $route.current.params.workgroupId);
 
 						if (hasAccess) {
 							return BudgetComparisonReportActions.getInitialState();

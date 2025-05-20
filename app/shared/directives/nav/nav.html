@@ -100,27 +100,27 @@
 
 			<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 			<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-			<li ng-class="{ 'active': currentBaseHref == 'courses' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+			<li ng-class="{ 'active': currentBaseHref == 'courses' }" ng-if="userHasRoles(['academicPlanner'])">
 				<a ng-href="/courses/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-book"></i>
 					<span class="title">Courses</span>
 				</a>
 			</li>
 			<li ng-class="{ 'active': currentBaseHref == 'assignments' || currentBaseHref == 'teachingCalls', 'opened': expanded == 'assignments' || (!expanded && (currentBaseHref == 'assignments' || currentBaseHref == 'teachingCalls')) }"
-				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
+				ng-if="userHasRoles(['academicPlanner'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('assignments')">
 					<i class="entypo-user-add"></i>
 					<span class="title">Instructors</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'assignments' || (!expanded && (currentBaseHref == 'assignments' || currentBaseHref == 'teachingCalls')) }">
 					<li ng-class="{ 'active': currentBaseHref == 'assignments' && currentEndHref != 'teachingCallStatus' }"
-						ng-if="userHasRoles(['academicPlanner','reviewer'])">
+						ng-if="userHasRoles(['academicPlanner'])">
 						<a ng-href="/assignments/{{ workgroupId }}/{{ year }}">
 							<span class="title">Assign Instructors</span>
 						</a>
 					</li>
 					<li ng-class="{ 'active': currentBaseHref == 'teachingCalls' && currentEndHref == 'teachingCallStatus' }"
-						ng-if="userHasRoles(['academicPlanner','reviewer'])">
+						ng-if="userHasRoles(['academicPlanner'])">
 						<a ng-href="/teachingCalls/{{ workgroupId }}/{{ year }}/teachingCallStatus">
 							<span class="title">Teaching Calls</span>
 						</a>
@@ -128,7 +128,7 @@
 				</ul>
 			</li>
 
-			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+			<li ng-class="{ 'active': currentBaseHref == 'scheduling' }" ng-if="userHasRoles(['academicPlanner'])">
 				<a ng-href="/scheduling/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
 					<i class="entypo-calendar"></i>
 					<span class="title">Schedule</span>
@@ -136,7 +136,7 @@
 			</li>
 
 			<li ng-class="{ 'active': currentBaseHref == 'supportCalls' || currentBaseHref == 'supportAssignments', 'opened': expanded == 'support' || (!expanded && (currentBaseHref == 'supportCalls' || currentBaseHref == 'supportAssignments')) }" 
-				ng-if="userHasRoles(['academicPlanner','reviewer'])" class="has-sub root-level">
+				ng-if="userHasRoles(['academicPlanner', 'reviewer'])" class="has-sub root-level">
 				<a class="clickable" ng-click="toggleMenuItem('support')">
 					<i class="entypo-users"></i>
 					<span class="title">TAs & Readers</span>
@@ -147,7 +147,7 @@
 							Support Assignments
 						</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'supportCalls' }">
+					<li ng-class="{ 'active': currentBaseHref == 'supportCalls' }" ng-if="userHasRoles(['academicPlanner'])">
 						<a ng-href="/supportCalls/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03'}}">
 							Support Calls
 						</a>
@@ -155,7 +155,7 @@
 				</ul>
 			</li>
 
-			<li ng-class="{ 'active': currentBaseHref == 'budget' }" ng-if="userHasRoles(['academicPlanner','reviewer'])">
+			<li ng-class="{ 'active': currentBaseHref == 'budget' }" ng-if="userHasRoles(['academicPlanner'])">
 				<a ng-href="/budget/{{ workgroupId }}/{{ year }}">
 					<i class="entypo-chart-pie"></i>
 					<span class="title">Budget</span>
@@ -171,7 +171,7 @@
 					<span class="title">Reports</span>
 				</a>
 				<ul ng-class="{ 'visible': expanded == 'reports' || (!expanded && (currentBaseHref == 'registrarReconciliationReport' || currentBaseHref == 'scheduleSummaryReport' || currentBaseHref == 'teachingCallResponseReport' || currentBaseHref == 'workloadSummaryReport' || currentBaseHref == 'supportCallResponseReport' || currentBaseHref == 'reports') ) }">
-					<li ng-class="{ 'active': currentBaseHref == 'registrarReconciliationReport' }">
+					<li ng-class="{ 'active': currentBaseHref == 'registrarReconciliationReport' }" ng-if="userHasRoles(['academicPlanner'])">
 						<a ng-href="/registrarReconciliationReport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03' }}">
 						Registrar Reconciliation
 					</a>
@@ -181,7 +181,7 @@
 						Schedule Summary
 					</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'teachingCallResponseReport' }">
+					<li ng-class="{ 'active': currentBaseHref == 'teachingCallResponseReport' }" ng-if="userHasRoles(['academicPlanner'])">
 						<a ng-href="/teachingCallResponseReport/{{ workgroupId }}/{{ year }}">
 						Teaching Call Response
 					</a>
@@ -191,7 +191,7 @@
 							Workload Summary
 						</a>
 					</li>
-					<li ng-class="{ 'active': currentBaseHref == 'supportCallResponseReport' }">
+					<li ng-class="{ 'active': currentBaseHref == 'supportCallResponseReport' }" ng-if="userHasRoles(['academicPlanner'])">
 						<a ng-href="/supportCallResponseReport/{{ workgroupId }}/{{ year }}/{{ termShortCode || '03' }}">
 							Support Call Response
 						</a>

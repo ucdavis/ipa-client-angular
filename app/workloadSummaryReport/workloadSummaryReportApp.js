@@ -40,7 +40,7 @@ function config ($routeProvider) {
 				return AuthService.validate().then(function () {
 					if ($route.current.params.workgroupId) {
 						if ($route.current.params.workgroupId) {
-							var hasAccess = AuthService.getCurrentUser().hasAccess('academicPlanner', $route.current.params.workgroupId);
+							var hasAccess = AuthService.getCurrentUser().hasAccess(['academicPlanner', 'reviewer'], $route.current.params.workgroupId);
 
 							if (hasAccess) {
 								return WorkloadSummaryActions.getInitialState();
