@@ -55,7 +55,13 @@ function config ($routeProvider) {
 				} else {
 					return AuthService.validate().then(function () {
 						if ($route.current.params.workgroupId) {
-							SupportActions.getInitialState();
+							var hasAccess = AuthService.getCurrentUser().hasAccess(['academicPlanner', 'reviewer'], $route.current.params.workgroupId);
+
+							if (hasAccess) {
+								return SupportActions.getInitialState();
+							} else {
+								return { noAccess: true };
+							}
 						}
 					});
 				}

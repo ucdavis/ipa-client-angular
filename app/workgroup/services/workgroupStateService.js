@@ -240,6 +240,7 @@ class WorkgroupStateService {
 									"Academic Planner",
 									"Instructor",
 									"Student",
+									"Reviewer",
 									"Presence"],
 							},
 							instructorTypes: [],
