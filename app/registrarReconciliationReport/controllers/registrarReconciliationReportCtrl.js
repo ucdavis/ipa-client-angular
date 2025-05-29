@@ -56,7 +56,7 @@ class registrarReconciliationReportCtrl {
 			);
 
 			self.$scope.view.hasAccess = self.$scope.sharedState.currentUser.isAdmin() ||
-			self.$scope.sharedState.currentUser.hasRole(['academicPlanner', 'reviewer'], self.$scope.sharedState.workgroup.id);
+			self.$scope.sharedState.currentUser.hasRole(['academicPlanner'], self.$scope.sharedState.workgroup.id);
 		});
 
 		this.$scope.allTerms = ['05', '06', '07', '08', '09', '10', '01', '02', '03'];
