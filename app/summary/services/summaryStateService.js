@@ -73,6 +73,24 @@ class SummaryStateService {
 									appointmentType: supportAssignment.appointmentType
 								};
 							});
+
+							sectionGroups.list[sectionGroup.id].readers = action.payload.supportAssignments.filter(function(supportAssignment) {
+								return supportAssignment.appointmentType == "reader" && supportAssignment.sectionGroupId == sectionGroup.id;
+							}).map(function(supportAssignment) {
+								var supportStaff = supportStaffList.list[supportAssignment.supportStaffId];
+								return {
+									id: supportStaff.id,
+									supportStaffId: supportStaff.id,
+									supportAssignmentId: supportAssignment.id,
+									sectionGroupId: sectionGroup.id,
+									firstName: supportStaff.firstName,
+									lastName: supportStaff.lastName,
+									fullName: supportStaff.fullName,
+									loginId: supportStaff.loginId,
+									appointmentPercentage: supportAssignment.appointmentPercentage,
+									appointmentType: supportAssignment.appointmentType
+								};
+							});
 						});
 	
 						return sectionGroups;

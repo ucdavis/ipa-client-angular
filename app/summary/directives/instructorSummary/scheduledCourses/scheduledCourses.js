@@ -57,7 +57,8 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 						termCode: scheduledTermCode,
 						meetings: meetings,
 						sectionGroupId: sectionGroup ? sectionGroup.id : null,
-						teachingAssistants: sectionGroup?.teachingAssistants
+						teachingAssistants: sectionGroup?.teachingAssistants,
+						readers: sectionGroup?.readers
 					};
 
 					scope.instructorAssignments.push(instructorAssignment);
@@ -80,6 +81,7 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 					title: course.title,
 					meetings: meetings,
 					teachingAssistants: sectionGroup.teachingAssistants,
+					readers: sectionGroup.readers,
 					sequencePattern: course.sequencePattern
 				};
 

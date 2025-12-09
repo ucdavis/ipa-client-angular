@@ -10,6 +10,7 @@
 			<div class="scheduled-courses-table__header-cell">Time</div>
 			<div class="scheduled-courses-table__header-cell">Location</div>
 			<div class="scheduled-courses-table__header-cell">Teaching Assistant(s)</div>
+			<div class="scheduled-courses-table__header-cell">Reader(s)</div>
 		</div>
 
 		<div class="scheduled-courses-table__content" ng-repeat="termCode in termCodes">
@@ -45,6 +46,14 @@
 							</div>
 							<div ng-if="instructorAssignment.teachingAssistants.length == 0">
 								No TA information
+							</div>
+						</div>
+						<div class="scheduled-courses-table__cell scheduled-courses-table__cell--gray">
+							<div ng-if="instructorAssignment.readers.length > 0" ng-repeat="reader in instructorAssignment.readers">
+								{{ reader.lastName }}, {{ reader.firstName }}
+							</div>
+							<div ng-if="instructorAssignment.readers.length == 0">
+								No Reader information
 							</div>
 						</div>
 					</div>
