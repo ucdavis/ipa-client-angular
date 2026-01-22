@@ -120,7 +120,7 @@
                     >{{ sectionGroup.subjectCode }}
                     {{ sectionGroup.courseNumber }}</b
                   >
-                  {{ sectionGroup.title }}
+                  {{ sectionGroup.title }}<span ng-if="sectionGroup.topic">: {{ sectionGroup.topic }}</span>
                 </div>
 
                 <!-- Instructors -->

@@ -31,6 +31,17 @@
         <div class="right-details-group">
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
+              <strong>Topic</strong>
+              <br />
+              <input auto-input ng-if="!view.state.uiState.tableLocked" type="text" class="form-control course-title-edit" on-enter="updateTopic()"
+                on-blur="updateTopic()" help-text-placement="bottom" ng-model="view.selectedEntity.topic" />
+              <p ng-if="view.state.uiState.tableLocked" ng-bind="view.selectedEntity.topic" class="form-control-static"></p>
+            </div>
+          </div>
+        </div>
+        <div class="right-details-group">
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
               <strong>Tags</strong>
               <br />
               <selectize config="tagsSelectConfig" ng-model="view.selectedEntity.tagIds" ng-if="!view.state.uiState.tableLocked"></selectize>
@@ -46,10 +57,11 @@
             <div class="col-sm-10 col-sm-offset-1">
               <strong>Sequence Pattern</strong>
               <br />
-              <div class="new-course__create-btn"
-                    tooltip-append-to-body="true"
-                    tooltip-placement="left"
-                    uib-tooltip="{{ courseDetails.sequencePatternTooltipMessage }}">
+              <div
+                tooltip-append-to-body="true"
+                tooltip-placement="left"
+                uib-tooltip="{{ courseDetails.sequencePatternTooltipMessage }}"
+              >
                 <ipa-input value="view.selectedEntity.sequencePattern"
                             on-update="updateSequencePattern()"
                             on-blur="updateSequencePattern()"

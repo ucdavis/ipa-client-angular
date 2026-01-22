@@ -53,6 +53,7 @@ class ScheduleSummaryReportStateService {
 							slotSectionGroup.courseNumber = slotCourse.courseNumber;
 							slotSectionGroup.title = slotCourse.title;
 							slotSectionGroup.sequencePattern = slotCourse.sequencePattern;
+							slotSectionGroup.topic = slotCourse.topic;
 
 							// Set units value
 							
