@@ -45,10 +45,6 @@ let courseDetails = function (CourseActionCreators, SectionService) {
         }
       };
 
-      scope.updateTopic = function () {
-        CourseActionCreators.updateCourse(scope.view.selectedEntity);
-      };
-
       scope.updateSequencePattern = function () {
         let sequencePattern = scope.view.selectedEntity.sequencePattern;
 

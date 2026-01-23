@@ -841,13 +841,13 @@ width: 180px;
   color: #cc2424;
 }
 
-.section-group-details__variable-units--container {
-  display: flex;
-  align-items: center;
+.section-group-details__input--container {
+  margin-bottom: 20px;
 }
 
-.section-group-details__variable-units--label {
-  margin: 0px 5px;
+.section-group-details__input--label {
+  font-weight: bold;
+  text-align: start;
 }
 
 .section-group-details__terms-dropdown {

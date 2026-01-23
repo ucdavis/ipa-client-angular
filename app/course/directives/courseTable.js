@@ -439,7 +439,7 @@ let courseTable = function ($rootScope, $timeout, CourseActionCreators, $compile
           if (course.isFiltered || course.matchesTagFilters === false) { return; }
 
           // First column
-          row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + (course.topic ? `: ${course.topic}` : "") + "<br />";
+          row += "<td class=\"course-cell\"><strong>" + course.subjectCode + " " + course.courseNumber + " - " + course.sequencePattern + "</strong> <br />" + course.title + "<br />";
           if (course.tagIds.length) {
             row += "<div class=\"hidden-print\">";
             $.each(course.tagIds, function (i, tagId) { // eslint-disable-line no-undef
