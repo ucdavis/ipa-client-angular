@@ -1304,6 +1304,7 @@ export var subjectCodes = [
   'EPI',
   'EPM',
   'EPP',
+  'EPS',
   'ERGN',
   'ERS',
   'ESM',
