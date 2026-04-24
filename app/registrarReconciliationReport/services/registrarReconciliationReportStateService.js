@@ -197,11 +197,11 @@ class RegistrarReconciliationReportStateService {
 						sections.ids.sort();
 
 						// Flag the first section in a sectionGroup as a groupHead
-						var uniqSectionGroupKeys = [];
+						var groupHeadIds = new Set();
 						sections.ids.forEach(function (id) {
-							var uniqueKey = sectionList[id].uniqueKey;
-							if (uniqSectionGroupKeys.indexOf(uniqueKey) < 0) {
-								uniqSectionGroupKeys.push(uniqueKey);
+							const sectionGroupId = sectionList[id].sectionGroupId;
+							if (!groupHeadIds.has(sectionGroupId)) {
+								groupHeadIds.add(sectionGroupId);
 								sectionList[id].groupHead = true;
 							}
 						});

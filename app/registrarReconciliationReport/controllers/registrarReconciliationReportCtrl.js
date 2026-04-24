@@ -84,22 +84,27 @@ class registrarReconciliationReportCtrl {
 				.filter((section) => section.dwHasChanges)
 				.forEach((section) => {
 					section.instructors.forEach((instructor) => {
+						if (!section.groupHead) {
+							return;
+						}
+						const sectionUniqueKey = isNaN(Number(section.sequenceNumber)) ?  section.uniqueKey.slice(0, -2) : section.uniqueKey;
+
 						if (instructor.noRemote) {
 							updates.push({
 								section: section,
 								property: 'unassign',
 								instructor: instructor,
-								uniqueKey: section.uniqueKey,
+								uniqueKey: sectionUniqueKey,
 								isChecked: true,
 							});
 						}
-						
+
 						if (instructor.noLocal) {
 							updates.push({
 								section: section,
 								property: 'assign',
 								instructor: instructor,
-								uniqueKey: section.uniqueKey,
+								uniqueKey: sectionUniqueKey,
 								isChecked: true,
 							});
 						}
