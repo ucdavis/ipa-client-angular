@@ -111,12 +111,12 @@ class RegistrarReconciliationReportActionCreators {
 				});
 			},
 			updateSectionReconciliation: function (updatedSection) {
-				var sectionKey;
+				var sectionKeys;
 				var sections = RegistrarReconciliationReportStateService._state.sections;
 				// When updatedSection is received after updateActivity()
 				// Look for sectionKey by the id of the change
 				if (updatedSection.activityState){
-					sectionKey = sections.ids
+					sectionKeys = sections.ids
 					.filter(function (slotId) {
 						return sections.list[slotId].activities
 							.some(function (a) { return a.id == updatedSection.id; });
@@ -124,47 +124,35 @@ class RegistrarReconciliationReportActionCreators {
 				// When updatedSection is received after updateSection() or unAssignInstructor()
 				// sectionKey is provided by updatedSection
 				} else {
-					sectionKey = sections.sectionsKeyById[updatedSection.id];
+					sectionKeys = [sections.sectionsKeyById[updatedSection.id]];
 				}
 
+				sectionKeys.forEach(function (sectionKey) {
 					var slotSection = sections.list[sectionKey];
+					if (!slotSection) { return; }
 
 					// Check if slot instructors has changes
-					var instructorsHasChanges = sections.ids
-							.some(function (slotSectionKey) {
-								if (sectionKey == slotSectionKey) {
-								return sections.list[slotSectionKey].instructors
-									.some(function (i) { return i.noRemote || i.noLocal; });
-								}
-							});
+					var instructorsHasChanges = slotSection.instructors
+						.some(function (i) { return i.noRemote || i.noLocal; });
 
 					// Check if slot activities has changes
-					var activitiesHasChanges = sections.ids
-							.some(function (slotSectionKey) {
-								if (sectionKey == slotSectionKey) {
-								return sections.list[slotSectionKey].activities
-									.some(function (i) { return i.dwChanges || i.noLocal || i.noRemote; });
-								}
-							});
-
+					var activitiesHasChanges = slotSection.activities
+						.some(function (a) { return a.dwChanges || a.noLocal || a.noRemote; });
+					
 					// Check if slot section has changes
-					var sectionHasChanges = slotSection?.dwChanges;
+					var sectionHasChanges = slotSection.dwChanges;
 
-					var dwHasChanges;
-					if (instructorsHasChanges || activitiesHasChanges || sectionHasChanges){
-						dwHasChanges = true;
-					} else {
-						dwHasChanges = false;
-					}
+					var dwHasChanges = !!(instructorsHasChanges || activitiesHasChanges || sectionHasChanges);
 
-				var action = {
-					type: ActionTypes.UPDATE_SECTION_RECONCILIATION,
-					payload: {
-						sectionKey: sectionKey,
-						dwHasChanges: dwHasChanges
-					}
-				};
-				RegistrarReconciliationReportStateService.reduce(action);
+					var action = {
+						type: ActionTypes.UPDATE_SECTION_RECONCILIATION,
+						payload: {
+							sectionKey: sectionKey,
+							dwHasChanges: dwHasChanges
+						}
+					};
+					RegistrarReconciliationReportStateService.reduce(action);
+				});
 			},
 			/**
 			 * Deletes an activity
