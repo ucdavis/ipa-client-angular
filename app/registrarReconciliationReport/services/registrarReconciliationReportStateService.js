@@ -197,12 +197,15 @@ class RegistrarReconciliationReportStateService {
 						sections.ids.sort();
 
 						// Flag the first section in a sectionGroup as a groupHead
-						var groupHeadIds = new Set();
+						var groupHeadKeys = new Set();
 						sections.ids.forEach(function (id) {
-							const sectionGroupId = sectionList[id].sectionGroupId;
-							if (!groupHeadIds.has(sectionGroupId)) {
-								groupHeadIds.add(sectionGroupId);
-								sectionList[id].groupHead = true;
+							var section = sectionList[id];
+							section.isLetterSection = isNaN(Number(section.sequenceNumber));
+							var sequencePattern = section.isLetterSection ? section.sequenceNumber.charAt(0) : section.sequenceNumber;
+							var groupKey = section.subjectCode + '-' + section.courseNumber + '-' + sequencePattern;
+							if (!groupHeadKeys.has(groupKey)) {
+								groupHeadKeys.add(groupKey);
+								section.groupHead = true;
 							}
 						});
 
