@@ -52,7 +52,7 @@ class registrarReconciliationReportCtrl {
 			generateFilteredDisplay(data);
 
 			self.$scope.showBulkUpdateButton = Object.values(self.$scope.view.state.sections.list).some(
-				(section) => section.dwChanges || (section.id && (section.noLocal === false || section.noRemote === false))
+				(section) => section.dwHasChanges && !section.noLocal && !section.noRemote
 			);
 
 			self.$scope.view.hasAccess = self.$scope.sharedState.currentUser.isAdmin() ||
@@ -81,7 +81,7 @@ class registrarReconciliationReportCtrl {
 			let updates = [];
 			
 			Object.values(this.view.state.sections.list)
-				.filter((section) => section.dwHasChanges)
+				.filter((section) => section.dwHasChanges && !section.noLocal && !section.noRemote)
 				.forEach((section) => {
 					section.instructors.forEach((instructor) => {
 						if (!section.groupHead) {
