@@ -83,33 +83,6 @@ class registrarReconciliationReportCtrl {
 			Object.values(this.view.state.sections.list)
 				.filter((section) => section.dwHasChanges && !section.noLocal && !section.noRemote)
 				.forEach((section) => {
-					section.instructors.forEach((instructor) => {
-						if (!section.groupHead) {
-							return;
-						}
-						const sectionUniqueKey = isNaN(Number(section.sequenceNumber)) ?  section.uniqueKey.slice(0, -2) : section.uniqueKey;
-
-						if (instructor.noRemote) {
-							updates.push({
-								section: section,
-								property: 'unassign',
-								instructor: instructor,
-								uniqueKey: sectionUniqueKey,
-								isChecked: true,
-							});
-						}
-
-						if (instructor.noLocal) {
-							updates.push({
-								section: section,
-								property: 'assign',
-								instructor: instructor,
-								uniqueKey: sectionUniqueKey,
-								isChecked: true,
-							});
-						}
-					});
-
 					// activity changes
 					section.activities.forEach((activity) => {
 						if (activity.dwChanges) {
@@ -159,8 +132,6 @@ class registrarReconciliationReportCtrl {
 				startTime: (update) => self.registrarReconciliationReportActionCreators.updateActivity({ id: update.activity.id, typeCode: update.activity.typeCode, startTime: update.value ? moment(update.value, "HHmm").format("HH:mm:ss") : null }, 'startTime'), // eslint-disable-line no-undef
 				endTime: (update) => self.registrarReconciliationReportActionCreators.updateActivity({ id: update.activity.id, typeCode: update.activity.typeCode, endTime: update.value ? moment(update.value, "HHmm").format("HH:mm:ss") : null }, 'endTime'), // eslint-disable-line no-undef
 				bannerLocation: (update) => self.registrarReconciliationReportActionCreators.updateActivity({ id: update.activity.id, typeCode: update.activity.typeCode, bannerLocation: update.value }, 'bannerLocation'),
-				unassign: (update) => self.registrarReconciliationReportActionCreators.unAssignInstructor(update.section, update.instructor),
-				assign: (update) => self.registrarReconciliationReportActionCreators.assignInstructor(update.section, update.instructor),
 			};
 
 			for (const update of self.$scope.pendingUpdates) {
