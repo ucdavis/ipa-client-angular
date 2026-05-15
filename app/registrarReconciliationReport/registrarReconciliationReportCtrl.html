@@ -14,6 +14,7 @@
 					<td>
 						<span ng-if="update.property === 'seats'">Update seats from {{ update.section.seats }} to {{ update.value }}</span>
 						<span ng-if="update.property === 'crn'">Update CRN from {{ update.section.crn || 'No CRN'}} to {{ update.value }}</span>
+						<span ng-if="update.property === 'dayIndicator'">Update days from {{ update.activity.dayIndicator.getWeekDays() }} to {{ update.value.getWeekDays() }}</span>
 						<span ng-if="update.property === 'startTime'">Update start from {{ update.activity.startTime.toStandardTime() }} to {{ update.value.toStandardTime() }}</span>
 						<span ng-if="update.property === 'endTime'">Update end from {{ update.activity.endTime.toStandardTime() }} to {{ update.value.toStandardTime() }}</span>
 						<span ng-if="update.property === 'bannerLocation'">Update location from {{ update.activity.bannerLocation }} to {{ update.value }}</span>
