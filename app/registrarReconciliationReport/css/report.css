@@ -16,7 +16,7 @@ table.section-diff-table > thead > tr > th {
 }
 
 table.section-diff-table > tbody > tr.section-diff-row > td:first-child {
-	border-top: none;
+	border-top: 1px solid #ddd;
 	border-left: 1px solid #ddd;
 }
 
@@ -27,10 +27,6 @@ table.section-diff-table > tbody > tr.section-diff-row:last-child > td {
 table.section-diff-table > tbody > tr.section-diff-row > td {
 	line-height: 1.2em;
 	border-right: 1px solid #ddd;
-}
-
-table.section-diff-table > tbody > tr.section-diff-row.head-section > td {
-	border-top: 1px solid #ddd;
 }
 
 tr.section-diff-row.no-changes *,

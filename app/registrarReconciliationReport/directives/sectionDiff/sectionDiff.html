@@ -1,17 +1,16 @@
 <tr class="section-diff-row" ng-class="{
 	'no-changes': !section.dwHasChanges,
 	'no-local has-changes': section.noLocal && !section.isToDo,
-	'no-remote has-changes': section.noRemote && !section.isToDo,
-	'head-section': section.groupHead }" ng-click="setActiveChangeAction($event, section, $index)">
+	'no-remote has-changes': section.noRemote && !section.isToDo }" ng-click="setActiveChangeAction($event, section, $index)">
 
 	<!-- SectionGroup Title: Subject Code, Course Number, and Title -->
 	<td>
-		<div class="section-diff-element section-unique-key" ng-if="section.groupHead">
+		<div class="section-diff-element section-unique-key">
 			{{ section.subjectCode }} {{ section.courseNumber }} {{ section.title }}
 		</div>
 
 		<!-- Instructors -->
-		<div class="section-group-instructors" ng-show="section.groupHead">
+		<div class="section-group-instructors">
 			<instructor-diff
 			ng-repeat="instructor in section.instructors track by $index"
 			unique-index="{{ section.subjectCode + '-'+ section.courseNumber + '-' + section.sequenceNumber + '-' + instructor.uniqueKey }}">
