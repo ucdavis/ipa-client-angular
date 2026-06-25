@@ -637,6 +637,8 @@ td.sg-cell {
 
 td.sg-cell input[type=number] {
   border-style: dashed;
+  padding-right: 1px;
+  padding-left: 16px;
   text-align: center;
   font-size: 14px;
 }
