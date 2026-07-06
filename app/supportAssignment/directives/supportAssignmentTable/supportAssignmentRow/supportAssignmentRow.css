@@ -17,6 +17,11 @@
 	min-height: 31px;
 }
 
+.support-assignment-row__count {
+	font-weight: normal;
+	color: #888;
+}
+
 /* Violates BEM to override bootstrap CSS */
 .active.support-assignment-row__delete-icon {
 	box-shadow: none;

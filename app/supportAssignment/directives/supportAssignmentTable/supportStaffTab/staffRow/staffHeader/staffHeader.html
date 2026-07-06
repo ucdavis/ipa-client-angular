@@ -1,6 +1,7 @@
 <div class="staff-header">
 	<div class="staff-header__name">
 		{{ supportStaff.lastName }}, {{ supportStaff.firstName }}
+		<span class="staff-header__count">IPA TA Assignment{{ supportStaff.cumulativeTaAssignments === 1 ? '' : 's' }}: {{ supportStaff.cumulativeTaAssignments }}</span>
 	</div>
 	<div class="staff-header__details">
 		<div class="staff-header__input-container">

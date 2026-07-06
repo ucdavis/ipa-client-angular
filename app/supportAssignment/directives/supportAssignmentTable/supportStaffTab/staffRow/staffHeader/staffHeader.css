@@ -8,6 +8,12 @@
 	margin-bottom: 15px;
 }
 
+.staff-header__count {
+	display: block;
+	font-weight: normal;
+	color: #888;
+}
+
 .staff-header__details {
 	display: flex;
 }
