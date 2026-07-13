@@ -1478,6 +1478,7 @@ export var subjectCodes = [
   'MGT',
   'MGTC',
   'MGTN',
+  'MGV',
   'MHI',
   'MIB',
   'MIBN',
