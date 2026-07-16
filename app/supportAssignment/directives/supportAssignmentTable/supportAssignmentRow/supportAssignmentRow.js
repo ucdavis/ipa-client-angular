@@ -7,7 +7,7 @@ let supportAssignmentRow = function (SupportActions) {
 		replace: true,
 		scope: {
 			name: '<',
-			count: '<?',
+			quarterCount: '<?',
 			onDelete: "&",
 			supportAssignment: '<',
 			readOnly: '<?'

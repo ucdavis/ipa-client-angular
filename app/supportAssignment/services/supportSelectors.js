@@ -443,7 +443,7 @@ class SupportSelectors {
 						entity.lastName = supportStaff.lastName;
 						entity.loginId = supportStaff.loginId;
 						entity.fullName = supportStaff.fullName;
-						entity.cumulativeTaAssignments = supportStaff.cumulativeTaAssignments;
+						entity.taQuarterCount = supportStaff.taQuarterCount;
 						entity.supportStaffid = supportStaff.id;
 					}
 				});
