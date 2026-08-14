@@ -133,9 +133,12 @@ class StudentFormActions {
 				});
 			},
 			submitPreferences: function (supportCallResponse, workgroupId, year) {
-				StudentFormService.updateSupportCallResponse(supportCallResponse).then(function () {
-					$rootScope.$emit('toast', { message: "Updated preferences", type: "SUCCESS" });
-					$window.location.href = "/summary/" + workgroupId + "/" + year + "?mode=instructionalSupport";
+				StudentFormService.updateSupportCallResponse(supportCallResponse).then(function (payload) {
+					if (payload && payload.submitted) {
+						$rootScope.$emit('toast', { message: "Submitted preferences", type: "SUCCESS" });
+						$window.location.href = "/summary/" + workgroupId + "/" + year + "?mode=instructionalSupport";
+						return;
+					}
 				}, function () {
 					$rootScope.$emit('toast', { message: "Could not update preferences.", type: "ERROR" });
 				});
