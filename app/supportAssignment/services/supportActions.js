@@ -454,7 +454,7 @@ class SupportActions {
 	
 					// Generate assignmentOptions for preferences
 					supportStaff.supportStaffPreferences.forEach(function(preference) {
-						var assignmentOption = self.generateAssignmentOption(supportStaff.id, null, preference.sectionGroupId, preference.type, preference.priority);
+						var assignmentOption = self.generateAssignmentOption(supportStaff.id, null, preference.sectionGroupId, preference.type, preference.displayRank);
 	
 						if (preference.type == "teachingAssistant") {
 							options.ta.preferences.push(assignmentOption);

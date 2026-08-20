@@ -1,3 +1,5 @@
+import { addDisplayRanks } from 'shared/helpers/studentSupportPreferences';
+
 class SupportCallResponseReportStateService {
   constructor(
     $rootScope,
@@ -65,6 +67,8 @@ class SupportCallResponseReportStateService {
         switch (action.type) {
           case ActionTypes.INIT_STATE: {
             supportStaff = action.payload.supportStaff;
+
+            addDisplayRanks(action.payload.studentSupportPreferences);
 
             supportStaff.map((supportStaff) => {
               supportStaff.supportCallResponse = action.payload.studentSupportCallResponses.find(

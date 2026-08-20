@@ -1,4 +1,5 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
+import { addDisplayRanks } from 'shared/helpers/studentSupportPreferences';
 
 class InstructorFormStateService {
   constructor ($rootScope, $log, InstructorFormSelectors, ActionTypes) {
@@ -173,6 +174,8 @@ class InstructorFormStateService {
               list: {},
               array: action.payload.studentSupportPreferences
             };
+
+            addDisplayRanks(action.payload.studentSupportPreferences);
 
             action.payload.studentSupportPreferences.forEach(function(slotStudentPreference) {
               studentPreferences.ids.push(slotStudentPreference.id);

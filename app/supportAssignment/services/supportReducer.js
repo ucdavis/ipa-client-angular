@@ -1,4 +1,5 @@
 import { _object_search_properties } from 'shared/helpers/object';
+import { addDisplayRanks } from 'shared/helpers/studentSupportPreferences';
 
 class SupportReducer {
 	constructor ($rootScope, $log, SupportSelectors, ActionTypes) {
@@ -309,6 +310,8 @@ class SupportReducer {
 							list: {}
 						};
 	
+						addDisplayRanks(action.payload.studentSupportPreferences);
+
 						action.payload.studentSupportPreferences.forEach(function(preference) {
 							supportStaffPreferences.list[preference.id] = preference;
 							supportStaffPreferences.ids.push(preference.id);

@@ -1,4 +1,5 @@
 import { _array_sortByProperty } from 'shared/helpers/array';
+import { addDisplayRanks } from 'shared/helpers/studentSupportPreferences';
 
 /*
 	Selectors are pure javascript functions that translate the normalized state into nested objects for the view
@@ -20,7 +21,7 @@ class StudentFormSelectors {
 					newPreferences.push(preference);
 				});
 
-				return newPreferences;
+				return addDisplayRanks(newPreferences);
 			},
 			generatePotentialPreferences: function (supportAssignments, courses, sectionGroups, termCode) {
 				var self = this;

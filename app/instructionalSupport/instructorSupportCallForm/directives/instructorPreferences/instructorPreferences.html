@@ -20,7 +20,7 @@
       <ul class="instructor-support-call-form__support-staff-list">
         <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.tas">
           <support-staff support-staff="supportStaff"
-                        priority="supportStaff.priority"
+                        priority="supportStaff.displayRank"
                         active="(supportStaff.supportStaffId == activeSupportStaffId)"
                         type="activeAppointmentType">
           </support-staff>
@@ -31,7 +31,7 @@
       <ul class="instructor-support-call-form__support-staff-list">
         <li ng-repeat="supportStaff in sectionGroup.eligibleSupportStaff.readers">
           <support-staff support-staff="supportStaff"
-                        priority="supportStaff.priority"
+                        priority="supportStaff.displayRank"
                         active="(supportStaff.supportStaffId == activeSupportStaffId)"
                         type="activeAppointmentType">
           </support-staff>
