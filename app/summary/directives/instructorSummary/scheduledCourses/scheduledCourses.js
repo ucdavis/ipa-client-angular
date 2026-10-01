@@ -58,6 +58,7 @@ let scheduledCourses = function ($rootScope, TeachingAssignmentService) {
 						meetings: meetings,
 						sectionGroupId: sectionGroup ? sectionGroup.id : null,
 						teachingAssistants: sectionGroup?.teachingAssistants,
+						teachingAssistantAppointments: sectionGroup?.teachingAssistantAppointments,
 						readers: sectionGroup?.readers
 					};
 

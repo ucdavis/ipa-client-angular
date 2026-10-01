@@ -44,7 +44,10 @@
 							<div ng-if="instructorAssignment.teachingAssistants.length > 0" ng-repeat="teachingAssistant in instructorAssignment.teachingAssistants">
 								{{ teachingAssistant.lastName }}, {{ teachingAssistant.firstName }}
 							</div>
-							<div ng-if="instructorAssignment.teachingAssistants.length == 0">
+							<div ng-if="instructorAssignment.teachingAssistants.length == 0 && instructorAssignment.teachingAssistantAppointments">
+								{{ instructorAssignment.teachingAssistantAppointments }} TA(s) requested
+							</div>
+							<div ng-if="instructorAssignment.teachingAssistants.length == 0 && !instructorAssignment.teachingAssistantAppointments">
 								No TA information
 							</div>
 						</div>
