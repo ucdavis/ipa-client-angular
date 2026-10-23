@@ -1,4 +1,4 @@
-FROM node:22 AS builder
+FROM node:22.23.4 AS builder
 WORKDIR /usr/src
 COPY . .
 RUN npm install
