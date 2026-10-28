@@ -60,7 +60,7 @@
     "ng-notify": "0.7.1",
     "toastr": "2.1.4",
     "ui-select": "0.19.8",
-    "underscore": "1.13.2",
+    "underscore": "1.13.8",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "engines": {
