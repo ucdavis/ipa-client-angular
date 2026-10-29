@@ -1,9 +1,34 @@
+const fs = require('fs');
 const path = require('path');
 var webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ConcatPlugin = require('webpack-concat-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+
+// Concatenates files into one asset (webpack-concat-plugin doesn't support webpack 5)
+class ConcatPlugin {
+  constructor ({ fileName, filesToConcat }) {
+    this.fileName = fileName;
+    this.filesToConcat = filesToConcat;
+  }
+
+  apply (compiler) {
+    compiler.hooks.thisCompilation.tap('ConcatPlugin', (compilation) => {
+      compilation.hooks.processAssets.tap(
+        { name: 'ConcatPlugin', stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL },
+        () => {
+          var files = this.filesToConcat
+            .flatMap((pattern) => pattern.includes('*') ? fs.globSync(pattern, { cwd: __dirname }).sort() : [pattern])
+            .map((file) => path.resolve(__dirname, file));
+          files = [...new Set(files)];
+          files.forEach((file) => compilation.fileDependencies.add(file));
+          var content = files.map((file) => fs.readFileSync(file, 'utf8')).join('\n');
+          compilation.emitAsset(this.fileName, new webpack.sources.RawSource(content));
+        }
+      );
+    });
+  }
+}
 
 function injectHashesInLinks (content, path) {
   var template = content.toString('utf8');
@@ -93,7 +118,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: 'raw-loader' 
+        type: 'asset/source'
       },
       {
         test: /\.css$/,
@@ -129,7 +154,6 @@ module.exports = {
     }),
     // Concat lib CSS
     new ConcatPlugin({
-      sourceMap: false,
       fileName: 'css/lib.css',
       filesToConcat: [
         './node_modules/bootstrap/dist/css/bootstrap.css',
@@ -142,7 +166,6 @@ module.exports = {
     }),
     // Concat shared CSS
     new ConcatPlugin({
-      sourceMap: false,
       fileName: 'css/shared.css',
       filesToConcat: [
         './app/shared/**/*.css',
@@ -176,8 +199,6 @@ module.exports = {
     }),
     // Concat lib JS
     new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
       fileName: 'js/lib.js',
       filesToConcat: [
         './node_modules/jquery/dist/jquery.js',
@@ -192,8 +213,6 @@ module.exports = {
     }),
     // Production Snippets from various 3rd party services
     new ConcatPlugin({
-      uglify: false,
-      sourceMap: false,
       fileName: 'js/snippets.js',
       filesToConcat: ['./vendor/js/googleAnalytics.js'],
     }),

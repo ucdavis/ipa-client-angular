@@ -9,12 +9,12 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js';
 
 // Helpers
-import array from './helpers/array.js'; // eslint-disable-line no-unused-vars
-import dates from './helpers/dates.js'; // eslint-disable-line no-unused-vars
-import object from './helpers/object.js'; // eslint-disable-line no-unused-vars
-import sections from './helpers/sections.js'; // eslint-disable-line no-unused-vars
-import string from './helpers/string.js'; // eslint-disable-line no-unused-vars
-import types from './helpers/types.js'; // eslint-disable-line no-unused-vars
+import './helpers/array.js';
+import './helpers/dates.js';
+import './helpers/object.js';
+import './helpers/sections.js';
+import './helpers/string.js';
+import './helpers/types.js';
 
 // Controllers
 import SharedCtrl from './controllers/SharedCtrl.js';
