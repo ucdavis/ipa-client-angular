@@ -133,8 +133,7 @@ module.exports = {
       patterns: [
         {
           from: 'app/**/*.html',
-          to: '',
-          flatten: true,
+          to: '[name][ext]',
           transform: function (content, path) { return injectHashesInLinks(content, path); }
         }
       ]
@@ -142,14 +141,14 @@ module.exports = {
     // Copy json status to output path (dist)
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'app/**/*.json', to: '', flatten: true }
+        { from: 'app/**/*.json', to: '[name][ext]' }
       ]
     }),
     // Copy css to output /css inside output path (dist)
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'vendor/css/**/*.css', to: 'css', flatten: true },
-        { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css', flatten: true }
+        { from: 'vendor/css/**/*.css', to: 'css/[name][ext]' },
+        { from: 'node_modules/bootstrap/dist/css/**/*.css', to: 'css/[name][ext]' }
       ]
     }),
     // Concat lib CSS
@@ -175,26 +174,26 @@ module.exports = {
     // Copy fonts to output /fonts inside output path (dist)
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'vendor/fonts/**/*', to: 'fonts', flatten: true },
-        { from: 'node_modules/bootstrap/dist/fonts/**/*', to: 'fonts', flatten: true },
-        { from: 'vendor/font/**/*', to: 'font', flatten: true }
+        { from: 'vendor/fonts/**/*', to: 'fonts/[name][ext]' },
+        { from: 'node_modules/bootstrap/dist/fonts/**/*', to: 'fonts/[name][ext]' },
+        { from: 'vendor/font/**/*', to: 'font/[name][ext]' }
       ]
     }),
     // Copy assets to output /fonts inside output path (dist)
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'app/assets/images/*', to: 'images', flatten: true },
-        { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker', flatten: true }
+        { from: 'app/assets/images/*', to: 'images/[name][ext]' },
+        { from: 'app/assets/images/colorpicker/*', to: 'images/colorpicker/[name][ext]' }
       ]
     }),
     // Copy vendor JS
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'clientConfig.js', to: 'js', flatten: true },
-        { from: 'node_modules/bootstrap/dist/js/*', to: 'js', flatten: true },
-        { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js', flatten: true },
-        { from: 'node_modules/jquery-typeahead/dist/jquery.typeahead.min.js', to: 'js', flatten: true },
-        { from: 'vendor/js/*', to: 'js', flatten: true },
+        { from: 'clientConfig.js', to: 'js/[name][ext]' },
+        { from: 'node_modules/bootstrap/dist/js/*', to: 'js/[name][ext]' },
+        { from: 'node_modules/fuse.js/dist/fuse.min.js', to: 'js/[name][ext]' },
+        { from: 'node_modules/jquery-typeahead/dist/jquery.typeahead.min.js', to: 'js/[name][ext]' },
+        { from: 'vendor/js/*', to: 'js/[name][ext]' },
       ]
     }),
     // Concat lib JS
@@ -219,6 +218,7 @@ module.exports = {
     new ESLintPlugin()
   ],
   devServer: {
+    host: 'localhost',
     client: {
       overlay: false,
       progress: true
@@ -227,31 +227,28 @@ module.exports = {
       directory: path.join(__dirname, "dist"),
     },
     port: 9000,
-    proxy: {
-      "/*": {
-        target: "http://localhost:9000",
-        bypass: function(req, res, proxyOptions) {
-          if ((req.url.indexOf("/reports") > -1 ) && (req.url != "/reports.html")) { return "/reports.html"; }
-          if ((req.url.indexOf("/summary") > -1 ) && (req.url != "/summary.html")) { return "/summary.html"; }
-          if ((req.url.indexOf("/admin") > -1 ) && (req.url != "/admin.html")) { return "/admin.html"; }
-          if ((req.url.indexOf("/budget") > -1 ) && (req.url != "/budget.html")) { return "/budget.html"; }
-          if ((req.url.indexOf("/workgroups") > -1 ) && (req.url != "/workgroup.html")) { return "/workgroup.html"; }
-          if ((req.url.indexOf("/courses") > -1 ) && (req.url != "/course.html")) { return "/course.html"; }
-          if ((req.url.indexOf("/assignments") > -1 ) && (req.url != "/assignment.html")) { return "/assignment.html"; }
-          if ((req.url.indexOf("/instructionalSupport") > -1 ) && (req.url != "/instructionalSupport.html")) { return "/instructionalSupport.html"; }
-          if ((req.url.indexOf("/teachingCalls") > -1 ) && (req.url != "/teachingCall.html")) { return "/teachingCall.html"; }
-          if ((req.url.indexOf("/supportCalls") > -1 ) && (req.url != "/supportCall.html")) { return "/supportCall.html"; }
-          if ((req.url.indexOf("/supportAssignments") > -1 ) && (req.url != "/supportAssignment.html")) { return "/supportAssignment.html"; }
-          if ((req.url.indexOf("/scheduling") > -1 ) && (req.url != "/scheduling.html")) { return "/scheduling.html"; }
-          if ((req.url.indexOf("/registrarReconciliationReport") > -1 ) && (req.url != "/registrarReconciliationReport.html")) { return "/registrarReconciliationReport.html"; }
-          if ((req.url.indexOf("/teachingCallResponseReport") > -1 ) && (req.url != "/teachingCallResponseReport.html")) { return "/teachingCallResponseReport.html"; }
-          if ((req.url.indexOf("/scheduleSummaryReport") > -1 ) && (req.url != "/scheduleSummaryReport.html")) { return "/scheduleSummaryReport.html"; }
-          if ((req.url.indexOf("/supportCallResponseReport") > -1 ) && (req.url != "/supportCallResponseReport.html")) { return "/supportCallResponseReport.html"; }
-          if ((req.url.indexOf("/workloadSummaryReport") > -1 ) && (req.url != "/workloadSummaryReport.html")) { return "/workloadSummaryReport.html"; }
-
-          return req.url;
-        }
-      }
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/reports(\/|$)/, to: '/reports.html' },
+        { from: /^\/summary(\/|$)/, to: '/summary.html' },
+        { from: /^\/admin(\/|$)/, to: '/admin.html' },
+        { from: /^\/budget(\/|$)/, to: '/budget.html' },
+        { from: /^\/workgroups(\/|$)/, to: '/workgroup.html' },
+        { from: /^\/courses(\/|$)/, to: '/course.html' },
+        { from: /^\/assignments(\/|$)/, to: '/assignment.html' },
+        { from: /^\/instructionalSupport(\/|$)/, to: '/instructionalSupport.html' },
+        { from: /^\/teachingCalls(\/|$)/, to: '/teachingCall.html' },
+        { from: /^\/supportCalls(\/|$)/, to: '/supportCall.html' },
+        { from: /^\/supportAssignments(\/|$)/, to: '/supportAssignment.html' },
+        { from: /^\/scheduling(\/|$)/, to: '/scheduling.html' },
+        { from: /^\/registrarReconciliationReport(\/|$)/, to: '/registrarReconciliationReport.html' },
+        { from: /^\/teachingCallResponseReport(\/|$)/, to: '/teachingCallResponseReport.html' },
+        { from: /^\/scheduleSummaryReport(\/|$)/, to: '/scheduleSummaryReport.html' },
+        { from: /^\/supportCallResponseReport(\/|$)/, to: '/supportCallResponseReport.html' },
+        { from: /^\/workloadSummaryReport(\/|$)/, to: '/workloadSummaryReport.html' },
+        // Leave other paths unchanged so unknown routes still 404 instead of falling back to index.html
+        { from: /./, to: (context) => context.parsedUrl.pathname }
+      ]
     }
   }
 };
