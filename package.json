@@ -62,6 +62,6 @@
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "engines": {
-    "node": "^22.15.0"
+    "node": "^26.0.0"
   }
 }
